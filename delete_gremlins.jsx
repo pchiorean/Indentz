@@ -1,5 +1,5 @@
 ﻿/*
-    Delete gremlins v1.1
+    Delete gremlins v1.2
     © March 2020, Paul Chiorean
     This script does some househeeping.
 */
