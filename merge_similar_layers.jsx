@@ -1,5 +1,5 @@
 /*
-    Merge similar layers v1.0
+    Merge similar layers v1.2
     © March 2020, Paul Chiorean
     This script will merge similar layers, wreaking havoc on your file.
 */
@@ -21,7 +21,7 @@ if (bgLayer.isValid) {
     doc.layers.add({
         name: "bg",
         layerColor: UIColors.RED
-    }).move(LocationOptions.AT_END)
+    }).move(LocationOptions.AT_BEGINNING)
 }
 if (artLayer.isValid) {
     artLayer.layerColor = UIColors.LIGHT_BLUE
@@ -90,6 +90,10 @@ var docLayer = doc.layers.item("AW");
 if (docLayer.isValid) {
     artLayer.merge(docLayer)
 }
+var docLayer = doc.layers.item("Layout");
+if (docLayer.isValid) {
+    artLayer.merge(docLayer)
+}
 
 var docLayer = doc.layers.item("Type");
 if (docLayer.isValid) {
@@ -113,6 +117,11 @@ if (docLayer.isValid) {
     hwLayer.merge(docLayer)
 }
 
+var docLayer = doc.layers.item("wh");
+if (docLayer.isValid) {
+    hwLayer.merge(docLayer)
+}
+
 var docLayer = doc.layers.item("Guides");
 if (docLayer.isValid) {
     guidesLayer.merge(docLayer)
@@ -124,6 +133,10 @@ if (docLayer.isValid) {
 }
 
 var docLayer = doc.layers.item("diecut");
+if (docLayer.isValid) {
+    dieLayer.merge(docLayer)
+}
+var docLayer = doc.layers.item("cut lines");
 if (docLayer.isValid) {
     dieLayer.merge(docLayer)
 }
