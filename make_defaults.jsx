@@ -1,5 +1,5 @@
 ﻿/*
-    Make defaults v1.3
+    Make defaults v1.3.1
     © March 2020, Paul Chiorean
     This script sets some defaults (settings, layers, swatches) and 
     creates 'safe area' frames based on the page margins, if defined.
@@ -79,7 +79,7 @@ if (bgLayer.isValid) {
     doc.layers.add({
         name: "bg",
         layerColor: UIColors.RED
-    }).move(LocationOptions.AT_END)
+    })//.move(LocationOptions.AT_END)
 }
 if (artLayer.isValid) {
     artLayer.layerColor = UIColors.LIGHT_BLUE
