@@ -35,9 +35,7 @@ function pageBleedSize(page) {
 // ***TODO*** If selection = multiple objects, resize it proportionally as an unit
 if (doc.selection.length != 0) {
     var docPage = doc.selection[0].parentPage.documentOffset;
-    if (pageBleedSize(docPage) != false) {
-        doc.selection[0].geometricBounds = pageBleedSize(docPage)
-    }
+    doc.selection[0].geometricBounds = pageBleedSize(docPage)
 } else {
     // alert("Please select an object and try again.")
 }
