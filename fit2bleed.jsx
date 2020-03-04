@@ -1,5 +1,5 @@
 /*
-    Fit to bleedbox v1.1
+    Fit to bleedbox v1.2
     © March 2020, Paul Chiorean
     This script resizes the selection to page bleedbox.
 */
@@ -14,6 +14,11 @@ function pageBleedSize(page) {
         left: doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
         bottom: doc.documentPreferences.properties.documentBleedBottomOffset,
         right: doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
+    }
+    // Reverse left with right if left-hand page
+	if (doc.pages[page].side == PageSideOptions.LEFT_HAND) {
+        pageBleed.left = doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
+        pageBleed.right = doc.documentPreferences.properties.documentBleedInsideOrLeftOffset;
     }
     if (pageBleed.top + pageBleed.left + pageBleed.bottom + pageBleed.right != 0) {
         var b_y1 = pageSize[0] - pageBleed.top;

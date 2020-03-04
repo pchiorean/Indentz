@@ -1,5 +1,5 @@
 /*
-    Fit to margins v1.2.1
+    Fit to margins v1.3
     © March 2020, Paul Chiorean
     This script resizes the selection to page margins.
 */
@@ -9,8 +9,23 @@ var doc = app.activeDocument;
 // Function to calculate safe area coordinates from page margin size
 // ***TODO*** Check filenames for safe area size
 function pageSafeArea(page) {
-    var pageSize = doc.pages[page].bounds;
-    var pageMargins = doc.pages[page].marginPreferences;
+    var pageSize = doc.pages[page].bounds; // check for spreads
+    if (doc.pages[page].side != PageSideOptions.LEFT_HAND) {
+        var pageMargins = {
+            top: doc.pages[page].marginPreferences.top,
+            bottom: doc.pages[page].marginPreferences.bottom,
+            left: doc.pages[page].marginPreferences.left,
+            right: doc.pages[page].marginPreferences.right
+        }
+    } else {
+        // Reverse left and right if left-hand page
+        var pageMargins = {
+            top: doc.pages[page].marginPreferences.top,
+            bottom: doc.pages[page].marginPreferences.bottom,
+            left: doc.pages[page].marginPreferences.right,
+            right: doc.pages[page].marginPreferences.left
+        }
+    }
     if (pageMargins.top + pageMargins.left + pageMargins.bottom + pageMargins.right != 0) {
         var m_y1 = pageMargins.top;
         var m_x1 = pageMargins.left;
