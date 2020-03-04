@@ -1,5 +1,5 @@
 /*
-    Safe area v1.2
+    Safe area v1.2.1
     © March 2020, Paul Chiorean
     This script creates 'safe area' frames based on the page margins, if defined.
 */
@@ -28,7 +28,7 @@ function pageSafeArea(page) {
 function SafeAreaItems(i) {
     for (var j = 0; j < doc.pages[i].pageItems.length; j++) {
         if (doc.pages[i].pageItems.item(j).label == "safe area") {
-            return true;
+            return true
         }
     }
 }
@@ -54,10 +54,10 @@ try {
 try {
     doc.colors.add({
         name: "Safe area",
-        model: ColorModel.SPOT,
+        model: ColorModel.PROCESS,
         space: ColorSpace.CMYK,
         colorValue: [0, 100, 0, 0]
-    });
+    })
 } catch (e) {}
 
 // For every page, create 'safe area' frame if it doesn't exist and page margins are defined
@@ -73,7 +73,7 @@ for (var i = 0; i < doc.pages.length; i++) {
             strokeWeight: "0.5pt",
             strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
             strokeType: "$ID/Canned Dashed 3x2",
-            overprintStroke: true
-        });
+            overprintStroke: false
+        })
     }
 }

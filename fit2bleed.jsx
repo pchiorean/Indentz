@@ -1,5 +1,5 @@
 /*
-    Fit to bleedbox v1.0
+    Fit to bleedbox v1.0.1
     © March 2020, Paul Chiorean
     This script resizes the selection to page bleedbox.
 */
@@ -15,9 +15,9 @@ function pageBleedSize(page) {
         var b_x1 = pageSize[1] - pageBleed;
         var b_y2 = pageSize[2] + pageBleed;
         var b_x2 = pageSize[3] + pageBleed;
-        return [b_y1, b_x1, b_y2, b_x2];
+        return [b_y1, b_x1, b_y2, b_x2]
     } else {
-        return false;
+        return pageSize
     }
 }
 
@@ -26,10 +26,8 @@ function pageBleedSize(page) {
 if (doc.selection.length != 0) {
     var docPage = doc.selection[0].parentPage.documentOffset;
     if (pageBleedSize(docPage) != false) {
-        doc.selection[0].geometricBounds = pageBleedSize(docPage);
-    } else {
-        doc.selection[0].geometricBounds = pageSize;
+        doc.selection[0].geometricBounds = pageBleedSize(docPage)
     }
 } else {
-    // alert("Please select an object and try again.");
+    // alert("Please select an object and try again.")
 }

@@ -1,5 +1,5 @@
 ﻿/*
-    Make defaults v1.3.1
+    Make defaults v1.3.2
     © March 2020, Paul Chiorean
     This script sets some defaults (settings, layers, swatches) and 
     creates 'safe area' frames based on the page margins, if defined.
@@ -58,7 +58,7 @@ try {
 try {
     doc.colors.add({
         name: "Safe area",
-        model: ColorModel.SPOT,
+        model: ColorModel.PROCESS,
         space: ColorSpace.CMYK,
         colorValue: [0, 100, 0, 0]
     })
@@ -173,7 +173,7 @@ for (var i = 0; i < doc.pages.length; i++) {
             strokeWeight: "0.5pt",
             strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
             strokeType: "$ID/Canned Dashed 3x2",
-            overprintStroke: true
+            overprintStroke: false
         });
     }
 }

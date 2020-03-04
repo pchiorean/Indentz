@@ -11,7 +11,7 @@ var doc = app.activeDocument;
 if (doc.selection.length != 0) {
     var docPage = doc.selection[0].parentPage.documentOffset;
     var pageSize = doc.pages[docPage].bounds;
-    doc.selection[0].geometricBounds = pageSize;
+    doc.selection[0].geometricBounds = pageSize
 } else {
-    // alert("Please select an object and try again.");
+    // alert("Please select an object and try again.")
 }
