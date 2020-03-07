@@ -1,5 +1,5 @@
 ﻿/*
-    Delete gremlins v1.2
+    Delete gremlins v1.2.1
     © March 2020, Paul Chiorean
     This script does some househeeping.
 */
@@ -12,12 +12,15 @@ doc.cmykProfile = "ISO Coated v2 (ECI)"
 doc.rgbProfile = "sRGB IEC61966-2.1"
 doc.guidePreferences.guidesShown = true;
 doc.guidePreferences.guidesLocked = false;
+doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;
+doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
 doc.viewPreferences.showFrameEdges = true;
 doc.viewPreferences.cursorKeyIncrement = "0.2mm";
 doc.textPreferences.leadingKeyIncrement = "0.5pt";
 doc.textPreferences.kerningKeyIncrement = 5;
 doc.textPreferences.baselineShiftKeyIncrement = "0.1pt";
 doc.pasteboardPreferences.pasteboardMargins = ["150mm", "25mm"];
+doc.documentPreferences.intent = DocumentIntentOptions.PRINT_INTENT;
 doc.transparencyPreferences.blendingSpace = BlendingSpace.CMYK;
 app.transformPreferences.adjustStrokeWeightWhenScaling = true;
 app.transformPreferences.adjustEffectsWhenScaling = true;

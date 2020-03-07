@@ -1,5 +1,5 @@
 ﻿/*
-    Make defaults v1.3.2
+    Make defaults v1.3.4
     © March 2020, Paul Chiorean
     This script sets some defaults (settings, layers, swatches) and 
     creates 'safe area' frames based on the page margins, if defined.
@@ -13,12 +13,15 @@ doc.cmykProfile = "ISO Coated v2 (ECI)";
 doc.rgbProfile = "sRGB IEC61966-2.1";
 doc.guidePreferences.guidesShown = true;
 doc.guidePreferences.guidesLocked = false;
+doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;
+doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
 doc.viewPreferences.showFrameEdges = true;
 doc.viewPreferences.cursorKeyIncrement = "0.2mm";
 doc.textPreferences.leadingKeyIncrement = "0.5pt";
 doc.textPreferences.kerningKeyIncrement = 5;
 doc.textPreferences.baselineShiftKeyIncrement = "0.1pt";
 doc.pasteboardPreferences.pasteboardMargins = ["150mm", "25mm"];
+doc.documentPreferences.intent = DocumentIntentOptions.PRINT_INTENT;
 doc.transparencyPreferences.blendingSpace = BlendingSpace.CMYK;
 app.transformPreferences.adjustStrokeWeightWhenScaling = true;
 app.transformPreferences.adjustEffectsWhenScaling = true;
@@ -73,13 +76,15 @@ var guidesLayer = doc.layers.item("guides");
 var safeLayer = doc.layers.item("safe area");
 var dieLayer = doc.layers.item("dielines");
 
+// ***TODO*** Before creating them, check for similar layers
+
 if (bgLayer.isValid) {
     bgLayer.layerColor = UIColors.RED
 } else {
     doc.layers.add({
         name: "bg",
         layerColor: UIColors.RED
-    })//.move(LocationOptions.AT_END)
+    }) //.move(LocationOptions.AT_END)
 }
 if (artLayer.isValid) {
     artLayer.layerColor = UIColors.LIGHT_BLUE
@@ -133,49 +138,3 @@ if (guidesLayer.isValid) {
         printable: false
     }).move(LocationOptions.after, safeLayer)
 }
-
-// Add safe area rectangle(s)
-// Function to calculate safe area coordinates from page margin size
-// ***TODO*** Check filenames for safe area size
-function pageSafeArea(page) {
-    var pageSize = doc.pages[page].bounds;
-    var pageMargins = doc.pages[page].marginPreferences;
-    if (pageMargins.top + pageMargins.left + pageMargins.bottom + pageMargins.right != 0) {
-        var m_y1 = pageMargins.top;
-        var m_x1 = pageMargins.left;
-        var m_y2 = pageSize[2] - pageMargins.bottom;
-        var m_x2 = pageSize[3] - pageMargins.right;
-        return [m_y1, m_x1, m_y2, m_x2]
-    } else {
-        return false
-    }
-}
-
-// Function to check for items labeled 'safe area'
-function SafeAreaItems(i) {
-    for (var j = 0; j < doc.pages[i].pageItems.length; j++) {
-        if (doc.pages[i].pageItems.item(j).label == "safe area") {
-            return true;
-        }
-    }
-}
-
-// For every page, create 'safe area' frame if it doesn't exist and page margins are defined
-for (var i = 0; i < doc.pages.length; i++) {
-    if ((pageSafeArea(i) != false) && (SafeAreaItems(i) != true)) {
-        doc.pages[i].rectangles.add({
-            itemLayer: safeLayer.name,
-            label: "safe area",
-            geometricBounds: pageSafeArea(i),
-            contentType: ContentType.UNASSIGNED,
-            fillColor: "None",
-            strokeColor: "Safe area",
-            strokeWeight: "0.5pt",
-            strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
-            strokeType: "$ID/Canned Dashed 3x2",
-            overprintStroke: false
-        });
-    }
-}
-
-//doc.activeLayer = safeLayer;
