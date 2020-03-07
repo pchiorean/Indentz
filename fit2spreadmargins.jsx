@@ -1,10 +1,14 @@
 /*
-    Fit to spread margins v1.0
+    Fit to spread margins v1.1
     © March 2020, Paul Chiorean
     This script resizes the selection to the page margins or, if not defined, to the page size. If page is part of a spread, resize to the spread margins (or size).
 */
 
 var doc = app.activeDocument;
+
+    // Save setting and set ruler origin to spread
+    var ro = doc.viewPreferences.rulerOrigin;
+    doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 
 if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
     var parentPage = doc.selection[0].parentPage;
@@ -16,13 +20,14 @@ if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
     // alert("Please select an object not on pasteboard and try again.")
 }
 
-function spreadSafeArea(s) {
-    // Save setting and set ruler origin to spread
-    var ro = doc.viewPreferences.rulerOrigin;
-    doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
+// Restore ruler origin setting
+doc.viewPreferences.rulerOrigin = ro;
 
+
+function spreadSafeArea(s) {
     var spreadPages = doc.spreads[s].pages; // spread pages
     var firstPage = spreadPages.firstItem(); // first page of spread
+    var lastPage = spreadPages.lastItem(); // last page of spread
     if (spreadPages.length == 1) {
         // Spread is single page
         var spreadSize = firstPage.bounds;
@@ -39,7 +44,6 @@ function spreadSafeArea(s) {
         }
     } else {
         // Spread is multiple pages
-        var lastPage = spreadPages.lastItem(); // last page of spread
         var spreadSize = [firstPage.bounds[0], firstPage.bounds[1], lastPage.bounds[2], lastPage.bounds[3]]
         var spreadMargins = {
             top: firstPage.marginPreferences.top,
@@ -60,8 +64,6 @@ function spreadSafeArea(s) {
 
         // alert("current spread = " + s + "\rspreadSize = [" + spreadSize[0] + ", " + spreadSize[1] + ", " + spreadSize[2] + ", " + spreadSize[3] + "]\r" + "spreadMargins.left = " + spreadMargins.left + "\rspreadMargins.right = " + spreadMargins.right + "\r" + "spreadSafeArea = [" + [m_y1, m_x1, m_y2, m_x2] + "]");
 
-        // Restore ruler origin
-        doc.viewPreferences.rulerOrigin = ro;
         return [m_y1, m_x1, m_y2, m_x2]
     } else {
         return spreadSize
