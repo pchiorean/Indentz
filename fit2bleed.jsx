@@ -1,7 +1,7 @@
 /*
     Fit to bleedbox v1.4.1
     © March 2020, Paul Chiorean
-    This script resizes the selection to the spread bleedbox.
+    This script resizes the selection to the spread bleedbox or, if not defined, to the page size.
 */
 
 var doc = app.activeDocument;
