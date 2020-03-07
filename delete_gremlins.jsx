@@ -1,5 +1,5 @@
 ﻿/*
-    Delete gremlins v1.2.1
+    Delete gremlins v1.3
     © March 2020, Paul Chiorean
     This script does some househeeping.
 */
@@ -74,9 +74,9 @@ function normalizeCMYK( /*Document*/ doc, swa, a, r, o, t, k, i) {
 normalizeCMYK(app.properties.activeDocument);
 
 // Delete empty pages
-for (var i = 0; i < doc.pages.length; i++) {
-    if (doc.pages[i].pageItems.length == 0) {
-        doc.pages[i].remove();
+for (var i = 0; i < doc.spreads.length; i++) {
+    if (doc.spreads[i].pageItems.length == 0) {
+        doc.spreads[i].remove();
     }
 }
 
