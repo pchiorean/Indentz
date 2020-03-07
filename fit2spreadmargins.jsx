@@ -24,8 +24,8 @@ if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
 doc.viewPreferences.rulerOrigin = ro;
 
 
-function spreadSafeArea(s) {
-    var spreadPages = doc.spreads[s].pages; // spread pages
+function spreadSafeArea(spread) {
+    var spreadPages = doc.spreads[spread].pages; // spread pages
     var firstPage = spreadPages.firstItem(); // first page of spread
     var lastPage = spreadPages.lastItem(); // last page of spread
     if (spreadPages.length == 1) {
