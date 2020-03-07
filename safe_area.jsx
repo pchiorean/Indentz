@@ -57,7 +57,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 // Function to calculate safe area coordinates from page margin size
 function pageSafeArea(page) {
     var curPage = doc.pages[page];
-    var pageSize = page.bounds;
+    var pageSize = curPage.bounds;
     var pageMargins = page.marginPreferences;
     // Reverse left and right margins if left-hand page
     if (curPage.side == PageSideOptions.LEFT_HAND) {
