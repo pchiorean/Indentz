@@ -1,5 +1,5 @@
 /*
-    Safe area v1.3
+    Safe area v1.3.1
     © March 2020, Paul Chiorean
     This script creates 'safe area' frames based on the page margins, if defined.
 */
@@ -56,13 +56,13 @@ for (var i = 0; i < doc.pages.length; i++) {
 
 // Function to calculate safe area coordinates from page margin size
 function pageSafeArea(page) {
-    var page = doc.pages[page];
+    var curPage = doc.pages[page];
     var pageSize = page.bounds;
     var pageMargins = page.marginPreferences;
     // Reverse left and right margins if left-hand page
-    if (page.side == PageSideOptions.LEFT_HAND) {
-        pageMargins.left = page.marginPreferences.right;
-        pageMargins.right = page.marginPreferences.left
+    if (curPage.side == PageSideOptions.LEFT_HAND) {
+        pageMargins.left = curPage.marginPreferences.right;
+        pageMargins.right = curPage.marginPreferences.left
     }
     if (pageMargins.top + pageMargins.left + pageMargins.bottom + pageMargins.right != 0) {
         var m_y1 = pageSize[0] + pageMargins.top;

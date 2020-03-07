@@ -1,5 +1,5 @@
 /*
-    Fit to page margins v1.0.1
+    Fit to page margins v1.0.2
     © March 2020, Paul Chiorean
     This script resizes the selection to the page margins or, if not defined, to the page size.
 */
@@ -11,10 +11,10 @@ var ro = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 
 if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
-    var parentPage = doc.selection[0].parentPage;
-    // var parentSpread = doc.selection[0].parentPage.parent;
+    var selPage = doc.selection[0].parentPage;
+    var selSpread = doc.selection[0].parentPage.parent;
     for (i = 0; i < doc.selection.length; i++) {
-        doc.selection[i].geometricBounds = pageSafeArea(parentPage)
+        doc.selection[i].geometricBounds = pageSafeArea(selPage)
     }
 } else {
     // alert("Please select an object not on pasteboard and try again.")
