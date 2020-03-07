@@ -11,7 +11,8 @@ var scope = "spread"; // "spread" or "page";
 
 // Create 'safe area' layer and move it below 'dielines' layer, or 1st
 if (safeLayer.isValid) {
-    safeLayer.layerColor = UIColors.YELLOW
+    safeLayer.layerColor = UIColors.YELLOW,
+    safeLayer.visible = true
 } else {
     doc.layers.add({
         name: "safe area",
