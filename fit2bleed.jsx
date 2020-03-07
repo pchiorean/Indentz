@@ -1,10 +1,19 @@
 /*
-    Fit to bleedbox v1.2
+    Fit to bleedbox v1.3
     © March 2020, Paul Chiorean
     This script resizes the selection to page bleedbox.
 */
 
 var doc = app.activeDocument;
+
+// If something is selected, resize it to bleedbox, if defined
+// ***TODO*** If selection = multiple objects, resize it proportionally as an unit
+if (doc.selection.length != 0) {
+    var docPage = doc.selection[0].parentPage.documentOffset;
+    doc.selection[0].geometricBounds = pageBleedSize(docPage)
+} else {
+    // alert("Please select an object and try again.")
+}
 
 // Function to calculate bleedbox coordinates
 function pageBleedSize(page) {
@@ -29,13 +38,4 @@ function pageBleedSize(page) {
     } else {
         return pageSize
     }
-}
-
-// If something is selected, resize it to bleedbox, if defined
-// ***TODO*** If selection = multiple objects, resize it proportionally as an unit
-if (doc.selection.length != 0) {
-    var docPage = doc.selection[0].parentPage.documentOffset;
-    doc.selection[0].geometricBounds = pageBleedSize(docPage)
-} else {
-    // alert("Please select an object and try again.")
 }
