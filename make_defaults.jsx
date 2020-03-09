@@ -1,5 +1,5 @@
 ﻿/*
-    Make defaults v1.3.4
+    Make defaults v1.3.5
     © March 2020, Paul Chiorean
     This script sets some defaults (settings, layers, swatches) and 
     creates 'safe area' frames based on the page margins, if defined.
@@ -78,21 +78,13 @@ var dieLayer = doc.layers.item("dielines");
 
 // ***TODO*** Before creating them, check for similar layers
 
-if (bgLayer.isValid) {
-    bgLayer.layerColor = UIColors.RED
-} else {
-    doc.layers.add({
-        name: "bg",
-        layerColor: UIColors.RED
-    }) //.move(LocationOptions.AT_END)
-}
 if (artLayer.isValid) {
     artLayer.layerColor = UIColors.LIGHT_BLUE
 } else {
     doc.layers.add({
         name: "artwork",
         layerColor: UIColors.LIGHT_BLUE
-    }).move(LocationOptions.before, bgLayer)
+    }) //.move(LocationOptions.before, bgLayer)
 }
 if (txtLayer.isValid) {
     txtLayer.layerColor = UIColors.GREEN
@@ -137,4 +129,12 @@ if (guidesLayer.isValid) {
         layerColor: UIColors.MAGENTA,
         printable: false
     }).move(LocationOptions.after, safeLayer)
+}
+if (bgLayer.isValid) {
+    bgLayer.layerColor = UIColors.RED
+} else {
+    doc.layers.add({
+        name: "bg",
+        layerColor: UIColors.RED
+    }).move(LocationOptions.AT_END)
 }
