@@ -6,6 +6,7 @@
 
 // Variables
 var doc = app.activeDocument
+
 var bgLayerName = "bg";
 var artLayerName = "artwork";
 var txtLayerName = "type";
@@ -13,6 +14,7 @@ var hwLayerName = "HW";
 var guidesLayerName = "guides";
 var safeLayerName = "safe area";
 var dieLayerName = "dielines";
+
 var cutSwatchName = "Cut";
 var foldSwatchName = "Fold";
 var safeSwatchName = "Safe area";
