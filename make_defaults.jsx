@@ -1,13 +1,23 @@
 ﻿/*
-    Make defaults v1.3.5
+    Make defaults v1.4
     © March 2020, Paul Chiorean
-    This script sets some defaults (settings, layers, swatches) and 
-    creates 'safe area' frames based on the page margins, if defined.
+    This script sets default settings, swatches & layers, and merges similar layers.
 */
 
+// Variables
 var doc = app.activeDocument
+var bgLayerName = "bg";
+var artLayerName = "artwork";
+var txtLayerName = "type";
+var hwLayerName = "HW";
+var guidesLayerName = "guides";
+var safeLayerName = "safe area";
+var dieLayerName = "dielines";
+var cutSwatchName = "Cut";
+var foldSwatchName = "Fold";
+var safeSwatchName = "Safe area";
 
-// Initialization
+// Settings
 doc.zeroPoint = [0, 0];
 doc.cmykProfile = "ISO Coated v2 (ECI)";
 doc.rgbProfile = "sRGB IEC61966-2.1";
@@ -44,7 +54,7 @@ try {
 } catch (e) {}
 try {
     doc.colors.add({
-        name: "Cut",
+        name: cutSwatchName,
         model: ColorModel.SPOT,
         space: ColorSpace.CMYK,
         colorValue: [0, 100, 0, 0]
@@ -52,7 +62,7 @@ try {
 } catch (e) {}
 try {
     doc.colors.add({
-        name: "Fold",
+        name: foldSwatchName,
         model: ColorModel.SPOT,
         space: ColorSpace.CMYK,
         colorValue: [100, 0, 0, 0]
@@ -60,7 +70,7 @@ try {
 } catch (e) {}
 try {
     doc.colors.add({
-        name: "Safe area",
+        name: safeSwatchName,
         model: ColorModel.PROCESS,
         space: ColorSpace.CMYK,
         colorValue: [0, 100, 0, 0]
@@ -68,29 +78,27 @@ try {
 } catch (e) {}
 
 // Make default layers
-var bgLayer = doc.layers.item("bg");
-var artLayer = doc.layers.item("artwork");
-var txtLayer = doc.layers.item("type");
-var hwLayer = doc.layers.item("HW");
-var guidesLayer = doc.layers.item("guides");
-var safeLayer = doc.layers.item("safe area");
-var dieLayer = doc.layers.item("dielines");
-
-// ***TODO*** Before creating them, check for similar layers
+var bgLayer = doc.layers.item(bgLayerName);
+var artLayer = doc.layers.item(artLayerName);
+var txtLayer = doc.layers.item(txtLayerName);
+var hwLayer = doc.layers.item(hwLayerName);
+var guidesLayer = doc.layers.item(guidesLayerName);
+var safeLayer = doc.layers.item(safeLayerName);
+var dieLayer = doc.layers.item(dieLayerName);
 
 if (artLayer.isValid) {
     artLayer.layerColor = UIColors.LIGHT_BLUE
 } else {
     doc.layers.add({
-        name: "artwork",
+        name: artLayerName,
         layerColor: UIColors.LIGHT_BLUE
-    }) //.move(LocationOptions.before, bgLayer)
+    }).move(LocationOptions.AT_BEGINNING)
 }
 if (txtLayer.isValid) {
     txtLayer.layerColor = UIColors.GREEN
 } else {
     doc.layers.add({
-        name: "type",
+        name: txtLayerName,
         layerColor: UIColors.GREEN
     }).move(LocationOptions.before, artLayer)
 }
@@ -98,7 +106,7 @@ if (hwLayer.isValid) {
     hwLayer.layerColor = UIColors.LIGHT_GRAY
 } else {
     doc.layers.add({
-        name: "HW",
+        name: hwLayerName,
         layerColor: UIColors.LIGHT_GRAY
     }).move(LocationOptions.before, txtLayer)
 }
@@ -106,7 +114,7 @@ if (dieLayer.isValid) {
     dieLayer.layerColor = UIColors.RED
 } else {
     doc.layers.add({
-        name: "dielines",
+        name: dieLayerName,
         layerColor: UIColors.RED
     })
 }
@@ -115,7 +123,7 @@ if (safeLayer.isValid) {
     safeLayer.layerColor = UIColors.YELLOW
 } else {
     doc.layers.add({
-        name: "safe area",
+        name: safeLayerName,
         layerColor: UIColors.YELLOW
     })
 }
@@ -125,7 +133,7 @@ if (guidesLayer.isValid) {
     guidesLayer.printable = false
 } else {
     doc.layers.add({
-        name: "guides",
+        name: guidesLayerName,
         layerColor: UIColors.MAGENTA,
         printable: false
     }).move(LocationOptions.after, safeLayer)
@@ -134,7 +142,54 @@ if (bgLayer.isValid) {
     bgLayer.layerColor = UIColors.RED
 } else {
     doc.layers.add({
-        name: "bg",
+        name: bgLayerName,
         layerColor: UIColors.RED
     }).move(LocationOptions.AT_END)
+}
+
+// Merge similar layers
+for (i = 0; i < doc.layers.length; i++) {
+    var docLayer = doc.layers.item(i);
+    switch (docLayer.name) {
+        case "BG":
+            bgLayer.merge(docLayer);
+            i--;
+            break;
+        case "Artwork":
+        case "AW":
+        case "Layout":
+        case "Layer_lucru":
+            artLayer.merge(docLayer);
+            i--;
+            break;
+        case "Type":
+        case "TEXT":
+        case "Text":
+        case "text":
+        case "txt":
+            txtLayer.merge(docLayer);
+            i--;
+            break;
+        case "WHW":
+        case "WH":
+        case "wh":
+        case "hw":
+            hwLayer.merge(docLayer);
+            i--;
+            break;
+        case "Guides":
+            guidesLayer.merge(docLayer);
+            i--;
+            break;
+        case "Visible":
+        case "vizibil":
+            safeLayer.merge(docLayer);
+            i--;
+            break;
+        case "diecut":
+        case "cut lines":
+            dieLayer.merge(docLayer);
+            i--;
+            break;
+    }
 }
