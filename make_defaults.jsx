@@ -54,6 +54,7 @@ try {
         colorValue: [60, 40, 40, 100]
     })
 } catch (e) {}
+
 try {
     doc.colors.add({
         name: cutSwatchName,
@@ -62,6 +63,7 @@ try {
         colorValue: [0, 100, 0, 0]
     })
 } catch (e) {}
+
 try {
     doc.colors.add({
         name: foldSwatchName,
@@ -70,6 +72,7 @@ try {
         colorValue: [100, 0, 0, 0]
     })
 } catch (e) {}
+
 try {
     doc.colors.add({
         name: safeSwatchName,
@@ -80,9 +83,9 @@ try {
 } catch (e) {}
 
 // Delete unused layers
-try {
-    app.menuActions.item("$ID/Delete Unused Layers").invoke();
-} catch (e) {}
+// try {
+//     app.menuActions.item("$ID/Delete Unused Layers").invoke();
+// } catch (e) {}
 
 // Make default layers
 var bgLayer = doc.layers.item(bgLayerName);
@@ -93,15 +96,32 @@ var guidesLayer = doc.layers.item(guidesLayerName);
 var safeLayer = doc.layers.item(safeLayerName);
 var dieLayer = doc.layers.item(dieLayerName);
 
+doc.activeLayer = doc.layers.item(0);
+
 if (artLayer.isValid) {
     artLayer.layerColor = UIColors.LIGHT_BLUE
 } else {
     doc.layers.add({
         name: artLayerName,
         layerColor: UIColors.LIGHT_BLUE
-    })
+    }) //.move(LocationOptions.AT_BEGINNING)
 }
-artLayer.move(LocationOptions.AT_BEGINNING);
+for (i = 0; i < doc.layers.length; i++) {
+    var docLayer = doc.layers.item(i);
+    switch (docLayer.name) {
+        case "Artwork":
+        case "AW":
+        case "Layout":
+        case "Ebene 1":
+        case "Layer_lucru":
+            artLayer.merge(docLayer);
+            i--;
+            break;
+    }
+}
+if (txtLayer.isValid) {
+    artLayer.move(LocationOptions.after, txtLayer)
+}
 
 if (txtLayer.isValid) {
     txtLayer.layerColor = UIColors.GREEN
@@ -109,9 +129,21 @@ if (txtLayer.isValid) {
     doc.layers.add({
         name: txtLayerName,
         layerColor: UIColors.GREEN
-    })
+    }).move(LocationOptions.before, artLayer)
 }
-txtLayer.move(LocationOptions.before, artLayer);
+for (i = 0; i < doc.layers.length; i++) {
+    var docLayer = doc.layers.item(i);
+    switch (docLayer.name) {
+        case "Type":
+        case "TEXT":
+        case "Text":
+        case "text":
+        case "txt":
+            txtLayer.merge(docLayer);
+            i--;
+            break;
+    }
+}
 
 if (hwLayer.isValid) {
     hwLayer.layerColor = UIColors.LIGHT_GRAY
@@ -119,9 +151,20 @@ if (hwLayer.isValid) {
     doc.layers.add({
         name: hwLayerName,
         layerColor: UIColors.LIGHT_GRAY
-    })
+    }).move(LocationOptions.before, txtLayer)
 }
-hwLayer.move(LocationOptions.before, txtLayer);
+for (i = 0; i < doc.layers.length; i++) {
+    var docLayer = doc.layers.item(i);
+    switch (docLayer.name) {
+        case "WHW":
+        case "WH":
+        case "wh":
+        case "hw":
+            hwLayer.merge(docLayer);
+            i--;
+            break;
+    }
+}
 
 if (dieLayer.isValid) {
     dieLayer.layerColor = UIColors.RED
@@ -132,6 +175,17 @@ if (dieLayer.isValid) {
     })
 }
 dieLayer.move(LocationOptions.AT_BEGINNING);
+for (i = 0; i < doc.layers.length; i++) {
+    var docLayer = doc.layers.item(i);
+    switch (docLayer.name) {
+        case "diecut":
+        case "cut lines":
+            dieLayer.merge(docLayer);
+            i--;
+            break;
+    }
+}
+
 if (safeLayer.isValid) {
     safeLayer.layerColor = UIColors.YELLOW
 } else {
@@ -141,6 +195,17 @@ if (safeLayer.isValid) {
     })
 }
 safeLayer.move(LocationOptions.after, dieLayer);
+for (i = 0; i < doc.layers.length; i++) {
+    var docLayer = doc.layers.item(i);
+    switch (docLayer.name) {
+        case "Visible":
+        case "vizibil":
+            safeLayer.merge(docLayer);
+            i--;
+            break;
+    }
+}
+
 if (guidesLayer.isValid) {
     guidesLayer.layerColor = UIColors.MAGENTA;
     guidesLayer.printable = false
@@ -151,17 +216,24 @@ if (guidesLayer.isValid) {
         printable: false
     }).move(LocationOptions.after, safeLayer)
 }
+for (i = 0; i < doc.layers.length; i++) {
+    var docLayer = doc.layers.item(i);
+    switch (docLayer.name) {
+        case "Guides":
+            guidesLayer.merge(docLayer);
+            i--;
+            break;
+    }
+}
+
 if (bgLayer.isValid) {
     bgLayer.layerColor = UIColors.RED
 } else {
     doc.layers.add({
         name: bgLayerName,
         layerColor: UIColors.RED
-    })
+    }).move(LocationOptions.AT_END)
 }
-bgLayer.move(LocationOptions.AT_END);
-
-// Merge similar layers
 for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
     switch (docLayer.name) {
@@ -169,41 +241,53 @@ for (i = 0; i < doc.layers.length; i++) {
             bgLayer.merge(docLayer);
             i--;
             break;
-        case "Artwork":
-        case "AW":
-        case "Layout":
-        case "Layer_lucru":
-            artLayer.merge(docLayer);
-            i--;
-            break;
-        case "Type":
-        case "TEXT":
-        case "Text":
-        case "text":
-        case "txt":
-            txtLayer.merge(docLayer);
-            i--;
-            break;
-        case "WHW":
-        case "WH":
-        case "wh":
-        case "hw":
-            hwLayer.merge(docLayer);
-            i--;
-            break;
-        case "Guides":
-            guidesLayer.merge(docLayer);
-            i--;
-            break;
-        case "Visible":
-        case "vizibil":
-            safeLayer.merge(docLayer);
-            i--;
-            break;
-        case "diecut":
-        case "cut lines":
-            dieLayer.merge(docLayer);
-            i--;
-            break;
     }
 }
+
+// Merge similar layers
+// for (i = 0; i < doc.layers.length; i++) {
+//     var docLayer = doc.layers.item(i);
+//     switch (docLayer.name) {
+//         case "BG":
+//             bgLayer.merge(docLayer);
+//             i--;
+//             break;
+//         case "Artwork":
+//         case "AW":
+//         case "Layout":
+//         case "Ebene 1":
+//         case "Layer_lucru":
+//             artLayer.merge(docLayer);
+//             i--;
+//             break;
+//         case "Type":
+//         case "TEXT":
+//         case "Text":
+//         case "text":
+//         case "txt":
+//             txtLayer.merge(docLayer);
+//             i--;
+//             break;
+//         case "WHW":
+//         case "WH":
+//         case "wh":
+//         case "hw":
+//             hwLayer.merge(docLayer);
+//             i--;
+//             break;
+//         case "Guides":
+//             guidesLayer.merge(docLayer);
+//             i--;
+//             break;
+//         case "Visible":
+//         case "vizibil":
+//             safeLayer.merge(docLayer);
+//             i--;
+//             break;
+//         case "diecut":
+//         case "cut lines":
+//             dieLayer.merge(docLayer);
+//             i--;
+//             break;
+//     }
+// }
