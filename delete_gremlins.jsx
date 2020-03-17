@@ -1,5 +1,5 @@
 ﻿/*
-    Delete gremlins v1.3
+    Delete gremlins v1.3.1
     © March 2020, Paul Chiorean
     This script does some househeeping.
 */
@@ -33,10 +33,10 @@ doc.selection = []
 doc.selectionKeyObject = null
 
 // Delete unused swatches
-for (var s = doc.unusedSwatches.length - 1; s >= 0; s--) {
-    var name = doc.unusedSwatches[s].name;
+for (var i = doc.unusedSwatches.length - 1; i >= 0; i--) {
+    var name = doc.unusedSwatches[i].name;
     if (name != "") {
-        doc.unusedSwatches[s].remove();
+        doc.unusedSwatches[i].remove();
     }
 }
 
@@ -73,7 +73,7 @@ function normalizeCMYK( /*Document*/ doc, swa, a, r, o, t, k, i) {
 };
 normalizeCMYK(app.properties.activeDocument);
 
-// Delete empty pages
+// Delete empty spreads
 for (var i = 0; i < doc.spreads.length; i++) {
     if (doc.spreads[i].pageItems.length == 0) {
         doc.spreads[i].remove();
@@ -85,7 +85,7 @@ try {
     app.menuActions.item("$ID/Delete Unused Layers").invoke();
 } catch (e) {}
 
-// If exists, show 'Guides' layer
+// Show 'Guides' layer
 try {
     doc.layers.item("guides" | "Guides").visible = true;
 } catch (e) {}

@@ -1,21 +1,25 @@
 /*
-    Safe area v1.4
+    Safe area v1.4.1
     © March 2020, Paul Chiorean
     This script creates 'safe area' frames, on every page or spread, if doesn't already exist and if margins are defined.
 */
 
 var doc = app.activeDocument;
-var safeLayer = doc.layers.item("safe area");
-var dieLayer = doc.layers.item("dielines");
 var scope = "spread"; // "spread" or "page";
 
+var safeLayerName = "safe area";
+var dieLayerName = "dielines";
+var safeSwatchName = "Safe area";
+
 // Create 'safe area' layer and move it below 'dielines' layer, or 1st
+var safeLayer = doc.layers.item(safeLayerName);
+var dieLayer = doc.layers.item(dieLayerName);
 if (safeLayer.isValid) {
     safeLayer.layerColor = UIColors.YELLOW,
     safeLayer.visible = true
 } else {
     doc.layers.add({
-        name: "safe area",
+        name: safeLayerName,
         layerColor: UIColors.YELLOW,
         visible: true,
         locked: false
@@ -30,7 +34,7 @@ try {
 // Create 'Safe area' color
 try {
     doc.colors.add({
-        name: "Safe area",
+        name: safeSwatchName,
         model: ColorModel.PROCESS,
         space: ColorSpace.CMYK,
         colorValue: [0, 100, 0, 0]
@@ -42,12 +46,12 @@ switch (scope) {
         for (var i = 0; i < doc.pages.length; i++) {
             if ((pageSafeArea(i) != false) && (safeLayerItems(doc.pages[i]) != true)) {
                 doc.pages[i].rectangles.add({
-                    itemLayer: safeLayer.name,
+                    itemLayer: safeLayerName,
                     label: "safe area",
                     geometricBounds: pageSafeArea(i),
                     contentType: ContentType.UNASSIGNED,
                     fillColor: "None",
-                    strokeColor: "Safe area",
+                    strokeColor: safeSwatchName,
                     strokeWeight: "0.5pt",
                     strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
                     strokeType: "$ID/Canned Dashed 3x2",
@@ -60,12 +64,12 @@ switch (scope) {
         for (var i = 0; i < doc.spreads.length; i++) {
             if ((spreadSafeArea(i) != false) && (safeLayerItems(doc.spreads[i]) != true)) {
                 doc.spreads[i].pages.firstItem().rectangles.add({
-                    itemLayer: safeLayer.name,
+                    itemLayer: safeLayerName,
                     label: "safe area",
                     geometricBounds: spreadSafeArea(i),
                     contentType: ContentType.UNASSIGNED,
                     fillColor: "None",
-                    strokeColor: "Safe area",
+                    strokeColor: safeSwatchName,
                     strokeWeight: "0.5pt",
                     strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
                     strokeType: "$ID/Canned Dashed 3x2",

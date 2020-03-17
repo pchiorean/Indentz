@@ -79,6 +79,11 @@ try {
     })
 } catch (e) {}
 
+// Delete unused layers
+try {
+    app.menuActions.item("$ID/Delete Unused Layers").invoke();
+} catch (e) {}
+
 // Make default layers
 var bgLayer = doc.layers.item(bgLayerName);
 var artLayer = doc.layers.item(artLayerName);
@@ -94,24 +99,30 @@ if (artLayer.isValid) {
     doc.layers.add({
         name: artLayerName,
         layerColor: UIColors.LIGHT_BLUE
-    }).move(LocationOptions.AT_BEGINNING)
+    })
 }
+artLayer.move(LocationOptions.AT_BEGINNING);
+
 if (txtLayer.isValid) {
     txtLayer.layerColor = UIColors.GREEN
 } else {
     doc.layers.add({
         name: txtLayerName,
         layerColor: UIColors.GREEN
-    }).move(LocationOptions.before, artLayer)
+    })
 }
+txtLayer.move(LocationOptions.before, artLayer);
+
 if (hwLayer.isValid) {
     hwLayer.layerColor = UIColors.LIGHT_GRAY
 } else {
     doc.layers.add({
         name: hwLayerName,
         layerColor: UIColors.LIGHT_GRAY
-    }).move(LocationOptions.before, txtLayer)
+    })
 }
+hwLayer.move(LocationOptions.before, txtLayer);
+
 if (dieLayer.isValid) {
     dieLayer.layerColor = UIColors.RED
 } else {
@@ -146,8 +157,9 @@ if (bgLayer.isValid) {
     doc.layers.add({
         name: bgLayerName,
         layerColor: UIColors.RED
-    }).move(LocationOptions.AT_END)
+    })
 }
+bgLayer.move(LocationOptions.AT_END);
 
 // Merge similar layers
 for (i = 0; i < doc.layers.length; i++) {
