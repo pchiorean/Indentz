@@ -20,9 +20,9 @@ if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
     // alert("Please select an object not on pasteboard and try again.")
 }
 
-
 // Restore ruler origin setting
 doc.viewPreferences.rulerOrigin = ro;
+
 
 function spreadBleedSize(spread) {
     var spreadPages = doc.spreads[spread].pages; // spread pages
