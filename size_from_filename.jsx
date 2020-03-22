@@ -1,5 +1,5 @@
 /*
-    Size from filename v1.1
+    Size from filename v1.1.1
     © March 2020, Paul Chiorean
     This script sets every page size and margins based on the filename.
     It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_safe area).
@@ -14,12 +14,15 @@ doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 // app.generalPreferences.objectsMoveWithPage = false;
 
 var docName = doc.name.substr(0, doc.name.lastIndexOf(".")); // name w/o extension
-var sizeArray = docName.match(/_\d{2,}x\d{2,}/ig); // match '_000x000' pairs
+var sizeArray = docName.match(/_\d{2,}([\.,]\d{1,2})?x\d{2,}([\.,]\d{1,2})?/ig); // match '_000x000' pairs
+alert(sizeArray);
 
 if (sizeArray != null) { // at least one pair of dimensions
-    for (i = 0; i < sizeArray.length; i++) { // clean up underscores
+    for (i = 0; i < sizeArray.length; i++) { // clean up
         sizeArray[i] = sizeArray[i].replace(/_/g, "");
+        sizeArray[i] = sizeArray[i].replace(/,/g, ".");
     }
+alert(sizeArray);
     switch (sizeArray.length) {
         case 1: // one pair; page size
             var p = 0;
