@@ -1,5 +1,5 @@
 /*
-    Size from filename v1.1.1
+    Size from filename v1.1.2
     © March 2020, Paul Chiorean
     This script sets every page size and margins based on the filename.
     It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_safe area).
@@ -17,9 +17,9 @@ var docName = doc.name.substr(0, doc.name.lastIndexOf(".")); // name w/o extensi
 var sizeArray = docName.match(/_\d{2,}([\.,]\d{1,2})?x\d{2,}([\.,]\d{1,2})?/ig); // match '_000x000' pairs
 
 if (sizeArray != null) { // at least one pair of dimensions
-    for (i = 0; i < sizeArray.length; i++) { // clean up
-        sizeArray[i] = sizeArray[i].replace(/_/g, "");
-        sizeArray[i] = sizeArray[i].replace(/,/g, ".");
+    for (i = 0; i < sizeArray.length; i++) {
+        sizeArray[i] = sizeArray[i].replace(/_/g, ""); // clean up underscores
+        sizeArray[i] = sizeArray[i].replace(/,/g, "."); // replace commas
     }
     switch (sizeArray.length) {
         case 1: // one pair; page size
@@ -47,14 +47,15 @@ if (sizeArray != null) { // at least one pair of dimensions
 
 function resizePages(p, m) {
     var pageSize = sizeArray[p].split("x");
-    var pageSizeMM = { // page size in millimeters
+    var pageSize = {
         width: Number(pageSize[0]),
         height: Number(pageSize[1])
     }
     var pageSizePT = { // page size in points
-        width: pageSizeMM.width / 0.352777777777778,
-        height: pageSizeMM.height / 0.352777777777778
+        width: pageSize.width / 0.352777777777778,
+        height: pageSize.height / 0.352777777777778
     }
+
     // Resize pages
     for (var i = 0; i < doc.pages.length; i++) {
         doc.pages[i].layoutRule = LayoutRuleOptions.OFF;
@@ -64,19 +65,20 @@ function resizePages(p, m) {
             [pageSizePT.width, pageSizePT.height]);
     }
     // Also set document size
-    doc.documentPreferences.pageWidth = pageSizeMM.width;
-    doc.documentPreferences.pageHeight = pageSizeMM.height;
+    doc.documentPreferences.pageWidth = pageSize.width;
+    doc.documentPreferences.pageHeight = pageSize.height;
 
-    if (m != null) { // margins
+    // Set margins
+    if (m != null) {
         var pageMargins = sizeArray[m].split("x");
-        var pageMarginsMM = {
-            top: (pageSizeMM.height - pageMargins[1]) / 2,
-            left: (pageSizeMM.width - pageMargins[0]) / 2,
-            bottom: (pageSizeMM.height - pageMargins[1]) / 2,
-            right: (pageSizeMM.width - pageMargins[0]) / 2
+        var pageMargins = {
+            top: (pageSize.height - pageMargins[1]) / 2,
+            left: (pageSize.width - pageMargins[0]) / 2,
+            bottom: (pageSize.height - pageMargins[1]) / 2,
+            right: (pageSize.width - pageMargins[0]) / 2
         }
         for (var i = 0; i < doc.pages.length; i++) {
-            doc.pages[i].marginPreferences.properties = pageMarginsMM;
+            doc.pages[i].marginPreferences.properties = pageMargins;
         }
     }
 }
