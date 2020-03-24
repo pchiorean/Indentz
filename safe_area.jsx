@@ -1,11 +1,16 @@
 /*
-    Safe area v1.4.3
+    Safe area v1.5
     © March 2020, Paul Chiorean
     This script creates 'safe area' frames, on every page or spread, if doesn't already exist and if margins are defined.
 */
 
 var doc = app.activeDocument;
 var scope = "page"; // "spread" or "page";
+
+// Sets page dimensions from filename
+try {
+    app.doScript(File(app.activeScript.path + "/size_from_filename.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions");
+} catch (e) {}
 
 var safeLayerName = "safe area";
 var dieLayerName = "dielines";
