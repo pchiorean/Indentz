@@ -1,5 +1,5 @@
 ﻿/*
-    Delete gremlins v1.3.1
+    Delete gremlins v1.3.3
     © March 2020, Paul Chiorean
     This script does some househeeping.
 */
@@ -7,9 +7,9 @@
 var doc = app.activeDocument
 
 // Initialization
-doc.zeroPoint = [0, 0]
-doc.cmykProfile = "ISO Coated v2 (ECI)"
-doc.rgbProfile = "sRGB IEC61966-2.1"
+doc.zeroPoint = [0, 0];
+doc.cmykProfile = "ISO Coated v2 (ECI)"; // ?cmykProfileList
+doc.rgbProfile = "sRGB IEC61966-2.1";
 doc.guidePreferences.guidesShown = true;
 doc.guidePreferences.guidesLocked = false;
 doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;
@@ -29,14 +29,13 @@ app.clipboardPreferences.pasteRemembersLayers = true;
 app.activeWindow.transformReferencePoint = AnchorPoint.CENTER_ANCHOR;
 doc.pageItemDefaults.fillColor = "None";
 doc.pageItemDefaults.strokeColor = "None";
-doc.selection = []
-doc.selectionKeyObject = null
+doc.selection = [];
 
 // Delete unused swatches
 for (var i = doc.unusedSwatches.length - 1; i >= 0; i--) {
     var name = doc.unusedSwatches[i].name;
     if (name != "") {
-        doc.unusedSwatches[i].remove();
+        doc.unusedSwatches[i].remove()
     }
 }
 
@@ -70,27 +69,27 @@ function normalizeCMYK( /*Document*/ doc, swa, a, r, o, t, k, i) {
             t.name = k
         } catch (_) {} // prevent read-only errors
     }
-};
+}
 normalizeCMYK(app.properties.activeDocument);
 
 // Delete empty spreads
 for (var i = 0; i < doc.spreads.length; i++) {
     if (doc.spreads[i].pageItems.length == 0) {
-        doc.spreads[i].remove();
+        doc.spreads[i].remove()
     }
 }
 
 // Delete unused layers
 try {
-    app.menuActions.item("$ID/Delete Unused Layers").invoke();
+    app.menuActions.item("$ID/Delete Unused Layers").invoke()
 } catch (e) {}
 
 // Show 'Guides' layer
 try {
-    doc.layers.item("guides" | "Guides").visible = true;
+    doc.layers.item("guides" | "Guides").visible = true
 } catch (e) {}
 
 // Delete all guides
 if (doc.guides.length > 0) {
-    doc.guides.everyItem().remove();
+    doc.guides.everyItem().remove()
 }

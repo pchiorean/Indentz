@@ -1,5 +1,5 @@
 ﻿/*
-    Prepare4Print v1.0
+    Prepare4Print v1.1
     © March 2020, Paul Chiorean
     This script hides 'safe area' and moves 'dielines' to separate page(s).
 */
@@ -16,7 +16,7 @@ try { dieLayer.visible = true } catch (e) {}; // Show 'dielines' layer
 function dieLayerItems(i) {
     for (var j = 0; j < doc.pages[i].pageItems.length; j++) {
         if (doc.pages[i].pageItems.item(j).itemLayer.name == dieLayer.name) {
-            return true;
+            return true
         }
     }
 }
@@ -31,10 +31,10 @@ if (dieLayer.isValid) {
                 var pageItem = doc.pages[i].pageItems.item(j);
                 if (pageItem.itemLayer.name == dieLayer.name) {
                     if (pageItem.locked) {
-                        pageItem.locked = false;
+                        pageItem.locked = false
                     }
                     pageItem.remove();
-                    j--;
+                    j--
                 }
             }
             // Delete non-dielines from next page
@@ -42,18 +42,18 @@ if (dieLayer.isValid) {
                 var pageItem = doc.pages[i + 1].pageItems.item(j);
                 if (pageItem.itemLayer.name !== dieLayer.name) {
                     if (pageItem.locked) {
-                        pageItem.locked = false;
+                        pageItem.locked = false
                     }
                     pageItem.remove();
-                    j--;
+                    j--
                 }
             }
             // If empty, delete page
             if (doc.pages[i].pageItems.length == 0) {
-                doc.pages[i].remove();
+                doc.pages[i].remove()
             }
             // Skip next page
-            i++;
+            i++
         }
     }
 }

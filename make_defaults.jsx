@@ -1,12 +1,12 @@
 ﻿/*
-    Make defaults v1.4
+    Make defaults v1.4.4
     © March 2020, Paul Chiorean
     This script sets default settings, swatches & layers, and merges similar layers.
 */
 
-// Variables
-var doc = app.activeDocument
+var doc = app.activeDocument;
 
+// Layer names
 var bgLayerName = "bg";
 var artLayerName = "artwork";
 var txtLayerName = "type";
@@ -15,13 +15,15 @@ var guidesLayerName = "guides";
 var safeLayerName = "safe area";
 var dieLayerName = "dielines";
 
+// Swatch names
 var cutSwatchName = "Cut";
 var foldSwatchName = "Fold";
 var safeSwatchName = "Safe area";
+var uvSwatchName = "Varnish";
 
 // Settings
 doc.zeroPoint = [0, 0];
-doc.cmykProfile = "ISO Coated v2 (ECI)";
+doc.cmykProfile = "ISO Coated v2 (ECI)"; // ?cmykProfileList
 doc.rgbProfile = "sRGB IEC61966-2.1";
 doc.guidePreferences.guidesShown = true;
 doc.guidePreferences.guidesLocked = false;
@@ -43,7 +45,11 @@ app.activeWindow.transformReferencePoint = AnchorPoint.CENTER_ANCHOR;
 doc.pageItemDefaults.fillColor = "None";
 doc.pageItemDefaults.strokeColor = "None";
 doc.selection = [];
-doc.selectionKeyObject = null;
+
+// Sets page dimensions from filename
+try {
+    app.doScript(File(app.activeScript.path + "/size_from_filename.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions");
+} catch (e) {}
 
 // Add default swatches
 try {
@@ -54,7 +60,6 @@ try {
         colorValue: [60, 40, 40, 100]
     })
 } catch (e) {}
-
 try {
     doc.colors.add({
         name: cutSwatchName,
@@ -63,7 +68,6 @@ try {
         colorValue: [0, 100, 0, 0]
     })
 } catch (e) {}
-
 try {
     doc.colors.add({
         name: foldSwatchName,
@@ -72,7 +76,6 @@ try {
         colorValue: [100, 0, 0, 0]
     })
 } catch (e) {}
-
 try {
     doc.colors.add({
         name: safeSwatchName,
@@ -81,13 +84,21 @@ try {
         colorValue: [0, 100, 0, 0]
     })
 } catch (e) {}
+try {
+    doc.colors.add({
+        name: uvwatchName,
+        model: ColorModel.PROCESS,
+        space: ColorSpace.CMYK,
+        colorValue: [0, 10, 70, 0]
+    })
+} catch (e) {}
 
 // Delete unused layers
 // try {
 //     app.menuActions.item("$ID/Delete Unused Layers").invoke();
 // } catch (e) {}
 
-// Make default layers
+// Make default layers (and merge with similar)
 var bgLayer = doc.layers.item(bgLayerName);
 var artLayer = doc.layers.item(artLayerName);
 var txtLayer = doc.layers.item(txtLayerName);
@@ -98,6 +109,7 @@ var dieLayer = doc.layers.item(dieLayerName);
 
 doc.activeLayer = doc.layers.item(0);
 
+// Artwork layer
 if (artLayer.isValid) {
     artLayer.layerColor = UIColors.LIGHT_BLUE
 } else {
@@ -112,17 +124,19 @@ for (i = 0; i < doc.layers.length; i++) {
         case "Artwork":
         case "AW":
         case "Layout":
+        case "layout":
         case "Ebene 1":
         case "Layer_lucru":
             artLayer.merge(docLayer);
             i--;
-            break;
+            break
     }
 }
 if (txtLayer.isValid) {
     artLayer.move(LocationOptions.after, txtLayer)
 }
 
+// Type layer
 if (txtLayer.isValid) {
     txtLayer.layerColor = UIColors.GREEN
 } else {
@@ -141,10 +155,11 @@ for (i = 0; i < doc.layers.length; i++) {
         case "txt":
             txtLayer.merge(docLayer);
             i--;
-            break;
+            break
     }
 }
 
+// HW layer
 if (hwLayer.isValid) {
     hwLayer.layerColor = UIColors.LIGHT_GRAY
 } else {
@@ -162,10 +177,11 @@ for (i = 0; i < doc.layers.length; i++) {
         case "hw":
             hwLayer.merge(docLayer);
             i--;
-            break;
+            break
     }
 }
 
+// Dielines layer
 if (dieLayer.isValid) {
     dieLayer.layerColor = UIColors.RED
 } else {
@@ -182,10 +198,11 @@ for (i = 0; i < doc.layers.length; i++) {
         case "cut lines":
             dieLayer.merge(docLayer);
             i--;
-            break;
+            break
     }
 }
 
+// Safe area layer
 if (safeLayer.isValid) {
     safeLayer.layerColor = UIColors.YELLOW
 } else {
@@ -202,10 +219,11 @@ for (i = 0; i < doc.layers.length; i++) {
         case "vizibil":
             safeLayer.merge(docLayer);
             i--;
-            break;
+            break
     }
 }
 
+// Guides layer
 if (guidesLayer.isValid) {
     guidesLayer.layerColor = UIColors.MAGENTA;
     guidesLayer.printable = false
@@ -222,10 +240,11 @@ for (i = 0; i < doc.layers.length; i++) {
         case "Guides":
             guidesLayer.merge(docLayer);
             i--;
-            break;
+            break
     }
 }
 
+// Background layer
 if (bgLayer.isValid) {
     bgLayer.layerColor = UIColors.RED
 } else {
@@ -240,6 +259,6 @@ for (i = 0; i < doc.layers.length; i++) {
         case "BG":
             bgLayer.merge(docLayer);
             i--;
-            break;
+            break
     }
 }

@@ -1,11 +1,11 @@
 /*
-    Safe area v1.4.2
+    Safe area v1.4.3
     © March 2020, Paul Chiorean
     This script creates 'safe area' frames, on every page or spread, if doesn't already exist and if margins are defined.
 */
 
 var doc = app.activeDocument;
-var scope = "spread"; // "spread" or "page";
+var scope = "page"; // "spread" or "page";
 
 var safeLayerName = "safe area";
 var dieLayerName = "dielines";
@@ -77,7 +77,7 @@ switch (scope) {
                 })
             }
         }
-        break;
+        break
 }
 
 // Function to calculate safe area coordinates from page margins
@@ -130,7 +130,7 @@ function spreadSafeArea(spread) {
         }
         // Reverse left and right margins if left-hand page
         if (firstPage.side == PageSideOptions.LEFT_HAND) {
-            spreadMargins.left = firstPage.marginPreferences.right;
+            spreadMargins.left = firstPage.marginPreferences.right
         }
     }
     if (spreadMargins.top + spreadMargins.left + spreadMargins.bottom + spreadMargins.right != 0) {
@@ -152,7 +152,7 @@ function safeLayerItems(scope) {
             break;
         case "Spread":
             var scope = doc.spreads[scope.index];
-            break;
+            break
     }
     for (var i = 0; i < scope.pageItems.length; i++) {
         if (scope.pageItems.item(i).label == "safe area") {

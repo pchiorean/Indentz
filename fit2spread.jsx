@@ -1,5 +1,5 @@
 /*
-    Fit to spread v1.0
+    Fit to spread v1.1
     © March 2020, Paul Chiorean
     This script resizes the selection to the spread size.
 */
@@ -29,9 +29,9 @@ function spreadSize(spread) {
     var firstPage = spreadPages.firstItem();
     var lastPage = spreadPages.lastItem();
     if (spreadPages.length == 1) { // Spread is single page
-        var spreadSize = firstPage.bounds;
+        var spreadSize = firstPage.bounds
     } else { // Spread is multiple pages
-        var spreadSize = [firstPage.bounds[0], firstPage.bounds[1], lastPage.bounds[2], lastPage.bounds[3]]
+        var spreadSize = [firstPage.bounds[0], firstPage.bounds[1], lastPage.bounds[2], lastPage.bounds[3]];
     }
     return spreadSize
 }
