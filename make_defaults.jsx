@@ -1,5 +1,5 @@
 ﻿/*
-    Make defaults v1.4.4
+    Make defaults v1.4.5
     © March 2020, Paul Chiorean
     This script sets default settings, swatches & layers, and merges similar layers.
 */
@@ -126,6 +126,7 @@ for (i = 0; i < doc.layers.length; i++) {
         case "Layout":
         case "layout":
         case "Ebene 1":
+        case "Calque 1":
         case "Layer_lucru":
             artLayer.merge(docLayer);
             i--;
