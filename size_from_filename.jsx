@@ -1,5 +1,5 @@
 /*
-    Size from filename v1.1.4
+    Size from filename v1.2
     © March 2020, Paul Chiorean
     This script sets every page size and margins based on the filename.
     It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_safe area).
@@ -14,11 +14,13 @@ doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 // app.generalPreferences.objectsMoveWithPage = false;
 
 var docName = doc.name.substr(0, doc.name.lastIndexOf(".")); // name w/o extension
-var sizeArray = docName.match(/[_-]\d{2,}([\.,]\d{1,2})?x\d{2,}([\.,]\d{1,2})?/ig); // match '_000x000' pairs
+var sizeArray = docName.match(/[_-]\d{2,}([\.,]\d{1,2})?\s?([cm]m)?\s?x\s?\d{2,}([\.,]\d{1,2})?\s?([cm]m)?/ig); // match '_000x000' pairs with optional decimals, whitespace & mm/cm
 
 if (sizeArray != null) { // at least one pair of dimensions
     for (i = 0; i < sizeArray.length; i++) {
         sizeArray[i] = sizeArray[i].replace(/[_-]/g, ""); // clean up underscores
+        sizeArray[i] = sizeArray[i].replace(/\s/g, ""); // clean up whitespace
+        sizeArray[i] = sizeArray[i].replace(/[cm]m/g, ""); // clean up mm/cm
         sizeArray[i] = sizeArray[i].replace(/,/g, ".") // replace commas
     }
     switch (sizeArray.length) {
@@ -37,10 +39,10 @@ if (sizeArray != null) { // at least one pair of dimensions
     resizePages(p, m);
 
     // Check for bleed
-    var bleedArray = /_\d{2,}x\d{2,}[_+](\d{1,3})\s?[cm]m/i.exec(docName); // match '_000x000_(00)mm'
+    var bleedArray = /[_+](\d{1,3})\s?(?:[cm]m)(?:.*)$/i.exec(docName); // match '_(00)[mm]' at end
     if (bleedArray != null) {
         doc.documentPreferences.documentBleedUniformSize = true;
-        doc.documentPreferences.documentBleedTopOffset = bleedArray[1]
+        doc.documentPreferences.documentBleedTopOffset = bleedArray[1];
     }
 }
 
