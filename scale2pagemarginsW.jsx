@@ -1,5 +1,5 @@
 /*
-    Scale to page margins v1.0
+    Scale to page margins v1.0.0
     © March 2020, Paul Chiorean
     This script scales the selection to the page left/right margins.
 */

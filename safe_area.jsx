@@ -1,5 +1,5 @@
 /*
-    Safe area v1.5
+    Safe area v1.5.0
     © March 2020, Paul Chiorean
     This script sets page(s) size and margins based on the filename 
     and creates 'safe area' frames, on every page or spread, 

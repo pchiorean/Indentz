@@ -1,5 +1,5 @@
 /*
-    Fit to page v1.2
+    Fit to page v1.2.0
     © March 2020, Paul Chiorean
     This script resizes the selection to the page size.
 */

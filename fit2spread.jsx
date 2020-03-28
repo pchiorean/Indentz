@@ -1,5 +1,5 @@
 /*
-    Fit to spread v1.1
+    Fit to spread v1.1.0
     © March 2020, Paul Chiorean
     This script resizes the selection to the spread size.
 */
