@@ -1,5 +1,5 @@
 /*
-    Resize page to selection v1.0
+    Size from selection v1.0
     © March 2020, Paul Chiorean
     This script sets the page size to the selection bounds.
 */
