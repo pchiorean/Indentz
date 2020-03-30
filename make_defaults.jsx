@@ -1,5 +1,5 @@
 ﻿/*
-    Make defaults v1.4.6
+    Make defaults v1.5
     © March 2020, Paul Chiorean
     This script sets default settings, swatches & layers, and merges similar layers.
 */
@@ -23,7 +23,11 @@ var uvSwatchName = "Varnish";
 
 // Settings
 doc.zeroPoint = [0, 0];
-doc.cmykProfile = "ISO Coated v2 (ECI)"; // ?cmykProfileList
+for (i = 0; i < doc.cmykProfileList.length; i++) {
+    if (/ISO\sCoated\sv2/.exec(doc.cmykProfileList[i])) {
+        doc.cmykProfile = doc.cmykProfileList[i]; break;
+    }
+}
 doc.rgbProfile = "sRGB IEC61966-2.1";
 doc.guidePreferences.guidesShown = true;
 doc.guidePreferences.guidesLocked = false;
