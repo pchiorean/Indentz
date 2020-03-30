@@ -1,5 +1,5 @@
 ﻿/*
-    Make defaults v1.4.5
+    Make defaults v1.4.6
     © March 2020, Paul Chiorean
     This script sets default settings, swatches & layers, and merges similar layers.
 */
@@ -218,6 +218,7 @@ for (i = 0; i < doc.layers.length; i++) {
     switch (docLayer.name) {
         case "Visible":
         case "vizibil":
+        case "Vis. area":
             safeLayer.merge(docLayer);
             i--;
             break
