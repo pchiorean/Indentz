@@ -1,5 +1,5 @@
 /*
-    Size from filename v1.2.0
+    Size from filename v1.2.1
     © March 2020, Paul Chiorean
     This script sets every page size and margins based on the filename.
     It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_safe area).
@@ -49,7 +49,7 @@ if (sizeArray != null) { // at least one pair of dimensions
 
 function resizePages(p, m) {
     var pageSize = sizeArray[p].split("x");
-    var pageSize = {
+    pageSize = {
         width: Number(pageSize[0]),
         height: Number(pageSize[1])
     }
@@ -59,7 +59,7 @@ function resizePages(p, m) {
     }
 
     // Resize pages
-    for (var i = 0; i < doc.pages.length; i++) {
+    for (i = 0; i < doc.pages.length; i++) {
         doc.pages[i].layoutRule = LayoutRuleOptions.OFF;
         doc.pages[i].resize(CoordinateSpaces.INNER_COORDINATES,
             AnchorPoint.CENTER_ANCHOR,
@@ -73,13 +73,13 @@ function resizePages(p, m) {
     // Set margins
     if (m != null) {
         var pageMargins = sizeArray[m].split("x");
-        var pageMargins = {
+        pageMargins = {
             top: (pageSize.height - pageMargins[1]) / 2,
             left: (pageSize.width - pageMargins[0]) / 2,
             bottom: (pageSize.height - pageMargins[1]) / 2,
             right: (pageSize.width - pageMargins[0]) / 2
         }
-        for (var i = 0; i < doc.pages.length; i++) {
+        for (i = 0; i < doc.pages.length; i++) {
             doc.pages[i].marginPreferences.properties = pageMargins
         }
     }
