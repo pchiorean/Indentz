@@ -1,5 +1,5 @@
 /*
-    Size from filename v1.2.1
+    Size from filename v1.2.2
     © March 2020, Paul Chiorean
     This script sets every page size and margins based on the filename.
     It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_safe area).
@@ -37,13 +37,13 @@ if (sizeArray != null) { // at least one pair of dimensions
             }
     }
     resizePages(p, m);
+}
 
-    // Check for bleed
-    var bleedArray = /[_+](\d{1,3})\s?(?:[cm]m)(?:.*)$/i.exec(docName); // match '_(00)[mm]' at end
-    if (bleedArray != null) {
-        doc.documentPreferences.documentBleedUniformSize = true;
-        doc.documentPreferences.documentBleedTopOffset = bleedArray[1];
-    }
+// Check for bleed
+var bleedArray = /[_+](\d{1,3})\s?(?:[cm]m)(?:.*)$/i.exec(docName); // match '_(00)[mm]' at end
+if (bleedArray != null) {
+    doc.documentPreferences.documentBleedUniformSize = true;
+    doc.documentPreferences.documentBleedTopOffset = bleedArray[1];
 }
 
 
