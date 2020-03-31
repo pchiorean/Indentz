@@ -1,5 +1,5 @@
 ﻿/*
-    Delete gremlins v1.3.3
+    Delete gremlins v1.3.4
     © March 2020, Paul Chiorean
     This script does some househeeping.
 */
@@ -8,7 +8,11 @@ var doc = app.activeDocument
 
 // Initialization
 doc.zeroPoint = [0, 0];
-doc.cmykProfile = "ISO Coated v2 (ECI)"; // ?cmykProfileList
+try {
+    doc.cmykProfile = "ISO Coated v2 (ECI)";
+} catch (e) {
+    doc.cmykProfile = "Coated FOGRA39 (ISO 12647-2:2004)";
+}
 doc.rgbProfile = "sRGB IEC61966-2.1";
 doc.guidePreferences.guidesShown = true;
 doc.guidePreferences.guidesLocked = false;
