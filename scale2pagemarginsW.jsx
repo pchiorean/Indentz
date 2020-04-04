@@ -1,10 +1,11 @@
 /*
-    Scale to page margins v1.0.0
+    Scale to page margins v1.1.0
     © March 2020, Paul Chiorean
     This script scales the selection to the page left/right margins.
 */
 
 var doc = app.activeDocument;
+var sel = doc.selection; // save selection
 
 // Remember layers for grouping/ungrouping
 app.generalPreferences.ungroupRemembersLayers = true;
@@ -41,8 +42,9 @@ if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
     doc.align(selObj, DistributeOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
     doc.align(selObj, DistributeOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
 
-    // Ungroup selection
+    // Ungroup and restore selection
     try { selObj.ungroup() } catch (e) {}
+    app.select(sel);
 
 } else {
     // alert("Please select an object not on pasteboard and try again.")
