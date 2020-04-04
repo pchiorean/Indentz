@@ -4,7 +4,7 @@
     This script does some househeeping.
 */
 
-var doc = app.activeDocument
+var doc = app.activeDocument;
 
 // Initialization
 doc.zeroPoint = [0, 0];
