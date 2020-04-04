@@ -5,6 +5,7 @@
 */
 
 var doc = app.activeDocument;
+var sel = doc.selection; // save selection
 // doc.adjustLayoutPreferences.enableAdjustLayout = false;
 // doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 // app.generalPreferences.objectsMoveWithPage = false;
@@ -32,8 +33,9 @@ if (doc.selection.length != 0) {
     var selObjBR = selObj.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
     selPage.reframe(CoordinateSpaces.SPREAD_COORDINATES, [selObjTL[0], selObjBR[0]]);
 
-    // Ungroup selection
+    // Ungroup and restore selection
     try { selObj.ungroup() } catch (e) {}
+    app.select(sel);
 } else {
     // alert("Please select an object and try again.")
 }
