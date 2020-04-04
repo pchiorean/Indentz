@@ -1,6 +1,6 @@
 /*
     Scale to page margins v1.2.0
-    © March 2020, Paul Chiorean
+    © April 2020, Paul Chiorean
     This script scales the selection to the page top/bottom margins.
 */
 
@@ -45,7 +45,6 @@ if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
     // Ungroup and restore selection
     try { selObj.ungroup() } catch (e) {}
     app.select(sel);
-
 } else {
     // alert("Please select an object not on pasteboard and try again.")
 }
