@@ -1,5 +1,5 @@
 /*
-    Scale to page margins v1.1.0
+    Scale to page margins v1.2.0
     © March 2020, Paul Chiorean
     This script scales the selection to the page top/bottom margins.
 */
@@ -29,8 +29,8 @@ if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
     var H_pg = selPage.bounds[2] - selPage.bounds[0];
     var W_mg = W_pg - (selPage.marginPreferences.left + selPage.marginPreferences.right);
     var H_mg = H_pg - (selPage.marginPreferences.top + selPage.marginPreferences.bottom);
-    var W_obj = selObj.geometricBounds[3] - selObj.geometricBounds[1];
-    var H_obj = selObj.geometricBounds[2] - selObj.geometricBounds[0];
+    var W_obj = selObj.visibleBounds[3] - selObj.visibleBounds[1];
+    var H_obj = selObj.visibleBounds[2] - selObj.visibleBounds[0];
 
     var objSF = H_mg / H_obj;
     var matrix = app.transformationMatrices.add({
