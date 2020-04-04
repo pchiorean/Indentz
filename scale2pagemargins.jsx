@@ -1,26 +1,30 @@
 /*
-    Scale to page margins v1.2.0
+    Scale to page margins v1.3.0
     © April 2020, Paul Chiorean
-    This script scales the selection to the page margins.
+    This script scales the selected objects to the page margins.
 */
 
 var doc = app.activeDocument;
 var sel = doc.selection; // save selection
 
-// Remember layers for grouping/ungrouping
-app.generalPreferences.ungroupRemembersLayers = true;
-app.clipboardPreferences.pasteRemembersLayers = true;
-
 if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
+    // Remember layers for grouping/ungrouping
+    var uRL = app.generalPreferences.ungroupRemembersLayers;
+    var pRL = app.clipboardPreferences.pasteRemembersLayers;
+    app.generalPreferences.ungroupRemembersLayers = true;
+    app.clipboardPreferences.pasteRemembersLayers = true;
+
     var selObj = doc.selection;
     var selPage = selObj[0].parentPage;
+    var flagUngroup = false;
 
     if (selObj.length > 1) { // if multiple selection, group it
         var selObjArray = [];
         for (i = 0; i < selObj.length; i++) {
             selObjArray.push(selObj[i])
         }
-        selObj = selPage.groups.add(selObjArray)
+        selObj = selPage.groups.add(selObjArray);
+        flagUngroup = true
     } else {
         selObj = selObj[0]
     }
@@ -46,8 +50,12 @@ if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
     doc.align(selObj, DistributeOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
 
     // Ungroup and restore selection
-    try { selObj.ungroup() } catch (e) {}
+    if (flagUngroup) { selObj.ungroup() };
     app.select(sel);
+
+    // Restore layer grouping settings
+    app.generalPreferences.ungroupRemembersLayers = uRL;
+    app.clipboardPreferences.pasteRemembersLayers = pRL;
 } else {
     // alert("Please select an object not on pasteboard and try again.")
 }
