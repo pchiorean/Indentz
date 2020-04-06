@@ -200,7 +200,9 @@ for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
     switch (docLayer.name) {
         case "diecut":
+        case "Die Cut":
         case "cut lines":
+        case "Stanze":
             dieLayer.merge(docLayer);
             i--;
             break
@@ -263,6 +265,7 @@ for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
     switch (docLayer.name) {
         case "BG":
+        case "HG":
             bgLayer.merge(docLayer);
             i--;
             break
