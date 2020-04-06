@@ -1,44 +1,40 @@
 /*
-    Zoom to selection v1.2.0
+    Zoom to selection v1.2.1
     © April 2020, Paul Chiorean
     This script zooms to the selected objects.
 */
 
 var doc = app.activeDocument;
 var window = app.activeWindow;
+var selObj = doc.selection;
 
-if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
-    var selObj = doc.selection;
-    var selPage = selObj[0].parentPage;
-
-    var selObjY1 = selObj[0].geometricBounds[0];
-    var selObjX1 = selObj[0].geometricBounds[1];
-    var selObjY2 = selObj[0].geometricBounds[2];
-    var selObjX2 = selObj[0].geometricBounds[3];
-    for (i = 0; i < selObj.length; i++) {
-        if (selObj[i].geometricBounds[0] < selObjY1) {
-            selObjY1 = selObj[i].geometricBounds[0]
+if (selObj.length != 0) {
+    var selObj_y1 = selObj[0].visibleBounds[0];
+    var selObj_x1 = selObj[0].visibleBounds[1];
+    var selObj_y2 = selObj[0].visibleBounds[2];
+    var selObj_x2 = selObj[0].visibleBounds[3];
+    for (i = 1; i < selObj.length; i++) {
+        if (selObj[i].visibleBounds[0] < selObj_y1) {
+            selObj_y1 = selObj[i].visibleBounds[0]
         }
-        if (selObj[i].geometricBounds[1] < selObjX1) {
-            selObjX1 = selObj[i].geometricBounds[1]
+        if (selObj[i].visibleBounds[1] < selObj_x1) {
+            selObj_x1 = selObj[i].visibleBounds[1]
         }
-        if (selObj[i].geometricBounds[2] > selObjY2) {
-            selObjY2 = selObj[i].geometricBounds[2]
+        if (selObj[i].visibleBounds[2] > selObj_y2) {
+            selObj_y2 = selObj[i].visibleBounds[2]
         }
-        if (selObj[i].geometricBounds[3] > selObjX2) {
-            selObjX2 = selObj[i].geometricBounds[3]
+        if (selObj[i].visibleBounds[3] > selObj_x2) {
+            selObj_x2 = selObj[i].visibleBounds[3]
         }
     }
-    var W_sel = selObjX2 - selObjX1;
-    var H_sel = selObjY2 - selObjY1;
+    var W_sel = selObj_x2 - selObj_x1;
+    var H_sel = selObj_y2 - selObj_y1;
 
     var W_win = window.bounds[3] - window.bounds[1];
     var H_win = (window.bounds[2] - window.bounds[0]) * 1.33;
 
     var zoom = H_win / H_sel;
-    if (W_sel * zoom > W_win) {
-        zoom = W_win / W_sel
-    }
+    if (W_sel * zoom > W_win) { zoom = W_win / W_sel }
     zoom = zoom * 13.3;
 
     window.zoom(ZoomOptions.fitPage);
