@@ -1,5 +1,5 @@
 ﻿/*
-    Delete gremlins v1.3.5
+    Delete gremlins v1.3.6
     © April 2020, Paul Chiorean
     This script does some househeeping.
 */
@@ -54,7 +54,7 @@ normalizeCMYK(app.properties.activeDocument);
 
 // Delete empty spreads
 for (var i = 0; i < doc.spreads.length; i++) {
-    if (doc.spreads[i].pageItems.length == 0) {
+    if (doc.spreads[i].pageItems.length == 0 && doc.spreads.length > 1) {
         doc.spreads[i].remove();
     }
 }
