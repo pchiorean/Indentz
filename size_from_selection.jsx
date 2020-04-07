@@ -1,5 +1,5 @@
 /*
-    Size from selection v1.3.0
+    Size from selection v1.3.1
     © April 2020, Paul Chiorean
     This script sets the page size to the selection bounds.
 */
@@ -10,8 +10,8 @@ var doc = app.activeDocument;
 // app.generalPreferences.objectsMoveWithPage = false;
 
 var sel = doc.selection; // save selection
-if (doc.selection.length != 0) {
-    var selObj = doc.selection;
+if (sel.length != 0) {
+    var selObj = sel;
     var selPage = selObj[0].parent.pages[0]; // 1st page of parent spread
     var flagUngroup = false;
 

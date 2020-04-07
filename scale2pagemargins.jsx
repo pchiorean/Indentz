@@ -1,5 +1,5 @@
 /*
-    Scale to page margins v1.4.1
+    Scale to page margins v1.4.2
     © April 2020, Paul Chiorean
     This script scales the selected objects to the page margins.
 */
@@ -7,14 +7,14 @@
 var doc = app.activeDocument;
 var sel = doc.selection; // save selection
 
-if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
+if (sel.length != 0 && sel[0].parentPage != null) {
     // Remember layers for grouping/ungrouping
     var uRL = app.generalPreferences.ungroupRemembersLayers;
     var pRL = app.clipboardPreferences.pasteRemembersLayers;
     app.generalPreferences.ungroupRemembersLayers = true;
     app.clipboardPreferences.pasteRemembersLayers = true;
 
-    var selObj = doc.selection;
+    var selObj = sel;
     var selPage = selObj[0].parentPage;
     var flagUngroup = false;
 
@@ -43,7 +43,7 @@ if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
         verticalScaleFactor: objSF
     });
 
-    selObj.transform(CoordinateSpaces.pasteboardCoordinates, AnchorPoint.CENTER_ANCHOR, matrix);
+    selObj.transform(CoordinateSpaces.PASTEBOARD_COORDINATES, AnchorPoint.CENTER_ANCHOR, matrix);
     doc.align(selObj, DistributeOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
     doc.align(selObj, DistributeOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
 

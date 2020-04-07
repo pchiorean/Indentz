@@ -1,15 +1,16 @@
 /*
-    Fit to page margins v1.0.4
+    Fit to page margins v1.0.5
     © March 2020, Paul Chiorean
     This script resizes the selection to the page margins.
 */
 
 var doc = app.activeDocument;
+var selObj = doc.selection;
 
-if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
-    var selPage = doc.selection[0].parentPage;
-    for (i = 0; i < doc.selection.length; i++) {
-        doc.selection[i].geometricBounds = pageSafeArea(selPage);
+if (selObj.length != 0 && selObj[0].parentPage != null) {
+    var selPage = selObj[0].parentPage;
+    for (i = 0; i < selObj.length; i++) {
+        selObj[i].geometricBounds = pageSafeArea(selPage);
     }
 } else {
     // alert("Please select an object not on pasteboard and try again.")

@@ -1,19 +1,20 @@
 /*
-    Fit to bleedbox v1.4.3
+    Fit to bleedbox v1.4.4
     © March 2020, Paul Chiorean
     This script resizes the selection to the spread bleedbox.
 */
 
 var doc = app.activeDocument;
+var selObj = doc.selection;
 
 // Save setting and set ruler origin to spread
 var ro = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 
-if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
-    var selSpread = doc.selection[0].parentPage.parent;
-    for (i = 0; i < doc.selection.length; i++) {
-        doc.selection[i].geometricBounds = spreadBleedSize(selSpread.index);
+if (selObj.length != 0 && selObj[0].parentPage != null) {
+    var selSpread = selObj[0].parentPage.parent;
+    for (i = 0; i < selObj.length; i++) {
+        selObj[i].geometricBounds = spreadBleedSize(selSpread.index);
     }
 } else {
     // alert("Please select an object not on pasteboard and try again.")
