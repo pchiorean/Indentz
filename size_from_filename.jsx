@@ -1,6 +1,6 @@
 /*
     Size from filename v1.3.0
-    © March 2020, Paul Chiorean
+    © April 2020, Paul Chiorean
     This script sets every page size and margins based on the filename.
     It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_safe area).
 */

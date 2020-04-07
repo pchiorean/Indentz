@@ -1,6 +1,6 @@
 ﻿/*
     Prepare4Print v1.1.1
-    © March 2020, Paul Chiorean
+    © April 2020, Paul Chiorean
     This script hides 'safe area' and moves 'dielines' to separate page(s).
 */
 

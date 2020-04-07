@@ -1,6 +1,6 @@
 ﻿/*
     Make defaults v1.4.8
-    © March 2020, Paul Chiorean
+    © April 2020, Paul Chiorean
     This script sets default settings, swatches & layers, and merges similar layers.
 */
 
