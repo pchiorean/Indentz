@@ -1,18 +1,18 @@
 /*
-    Size from selection v1.2.0
+    Size from selection v1.3.0
     © April 2020, Paul Chiorean
     This script sets the page size to the selection bounds.
 */
 
 var doc = app.activeDocument;
-var sel = doc.selection; // save selection
 // doc.adjustLayoutPreferences.enableAdjustLayout = false;
 // doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 // app.generalPreferences.objectsMoveWithPage = false;
 
+var sel = doc.selection; // save selection
 if (doc.selection.length != 0) {
     var selObj = doc.selection;
-    var selPage = selObj[0].parentPage; // ***TODO*** what if on pasteboard?
+    var selPage = selObj[0].parent.pages[0]; // 1st page of parent spread
     var flagUngroup = false;
 
     // If multiple selection, temporarily group it
