@@ -1,5 +1,5 @@
 /*
-    Size from selection v1.1.0
+    Size from selection v1.2.0
     © April 2020, Paul Chiorean
     This script sets the page size to the selection bounds.
 */
@@ -12,16 +12,25 @@ var sel = doc.selection; // save selection
 
 if (doc.selection.length != 0) {
     var selObj = doc.selection;
-    var selPage = selObj[0].parentPage;
+    var selPage = selObj[0].parentPage; // ***TODO*** what if on pasteboard?
+    var flagUngroup = false;
 
-    if (selObj.length > 1) { // if multiple selection, group it
+    // If multiple selection, temporarily group it
+    if (selObj.length > 1) {
         var selObjArray = [];
+        var selObjLockedArray = [];
         for (i = 0; i < selObj.length; i++) {
-            selObjArray.push(selObj[i])
+            // If locked, unlock and save index
+            if (selObj[i].locked) {
+                selObj[i].locked = false;
+                selObjLockedArray.push(i);
+            }
+            selObjArray.push(selObj[i]);
         }
-        selObj = selPage.groups.add(selObjArray)
+        selObj = selPage.groups.add(selObjArray);
+        flagUngroup = true;
     } else {
-        selObj = selObj[0]
+        selObj = selObj[0];
     }
 
     // Set margins to zero
@@ -33,9 +42,14 @@ if (doc.selection.length != 0) {
     var selObjBR = selObj.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
     selPage.reframe(CoordinateSpaces.SPREAD_COORDINATES, [selObjTL[0], selObjBR[0]]);
 
-    // Ungroup and restore selection
-    try { selObj.ungroup() } catch (e) {}
-    app.select(sel);
+    // Ungroup and restore locked state
+    if (flagUngroup) {
+        selObj.ungroup();
+        for (i = 0; i < selObjLockedArray.length; i++) {
+            sel[selObjLockedArray[i]].locked = true;
+        }
+    }
+    app.select(sel); // restore initial selection
 } else {
     // alert("Please select an object and try again.")
 }
