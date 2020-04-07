@@ -1,6 +1,6 @@
 /*
     Fit to page v1.2.2
-    © March 2020, Paul Chiorean
+    © April 2020, Paul Chiorean
     This script resizes the selection to the page size.
 */
 

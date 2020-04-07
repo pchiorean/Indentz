@@ -1,6 +1,6 @@
 /*
     Fit to spread margins v1.1.3
-    © March 2020, Paul Chiorean
+    © April 2020, Paul Chiorean
     This script resizes the selection to the page margins.
     If page is part of a spread, resize to the spread margins.
 */
