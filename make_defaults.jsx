@@ -125,12 +125,13 @@ if (artLayer.isValid) {
 for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
     switch (docLayer.name) {
+        case "Ebene 1":
+        case "Ebene 2":
+        case "Calque 1":
         case "Artwork":
         case "AW":
         case "Layout":
         case "layout":
-        case "Ebene 1":
-        case "Calque 1":
         case "Layer_lucru":
             artLayer.merge(docLayer);
             i--;
