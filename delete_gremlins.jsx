@@ -38,9 +38,7 @@ doc.selection = [];
 // Delete unused swatches
 for (var i = doc.unusedSwatches.length - 1; i >= 0; i--) {
     var name = doc.unusedSwatches[i].name;
-    if (name != "") {
-        doc.unusedSwatches[i].remove()
-    }
+    if (name != "") { doc.unusedSwatches[i].remove() };
 }
 
 // Normalize similar CMYK swatches
@@ -59,19 +57,14 @@ function normalizeCMYK( /*Document*/ doc, swa, a, r, o, t, k, i) {
         if (!t.isValid) continue;
         for (i = (k = o.colorValue).length; i--; k[i] = Math.round(k[i]));
         k = __("C=%1 M=%2 Y=%3 K=%4", k[0], k[1], k[2], k[3]);
-        (r[k] || (r[k] = [])).push({
-            id: t.id,
-            name: t.name
-        });
+        (r[k] || (r[k] = [])).push({ id: t.id, name: t.name });
     }
     for (k in r) {
         if (!r.hasOwnProperty(k)) continue;
         t = swa.itemByID((o = (a = r[k])[0]).id);
         for (i = a.length; --i; swa.itemByID(a[i].id).remove(t));
         if (k == o.name) continue; // no need to rename
-        try {
-            t.name = k
-        } catch (_) {} // prevent read-only errors
+        try { t.name = k } catch (_) {} // prevent read-only errors
     }
 }
 normalizeCMYK(app.properties.activeDocument);
@@ -79,21 +72,15 @@ normalizeCMYK(app.properties.activeDocument);
 // Delete empty spreads
 for (var i = 0; i < doc.spreads.length; i++) {
     if (doc.spreads[i].pageItems.length == 0) {
-        doc.spreads[i].remove()
+        doc.spreads[i].remove();
     }
 }
 
 // Delete unused layers
-try {
-    app.menuActions.item("$ID/Delete Unused Layers").invoke()
-} catch (e) {}
+try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (e) {};
 
 // Show 'Guides' layer
-try {
-    doc.layers.item("guides" | "Guides").visible = true
-} catch (e) {}
+try { doc.layers.item("guides" | "Guides").visible = true } catch (e) {};
 
 // Delete all guides
-if (doc.guides.length > 0) {
-    doc.guides.everyItem().remove()
-}
+if (doc.guides.length > 0) { doc.guides.everyItem().remove() };

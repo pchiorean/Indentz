@@ -1,5 +1,5 @@
 ﻿/*
-    Make defaults v1.4.7
+    Make defaults v1.4.8
     © March 2020, Paul Chiorean
     This script sets default settings, swatches & layers, and merges similar layers.
 */
@@ -62,7 +62,7 @@ try {
         model: ColorModel.PROCESS,
         space: ColorSpace.CMYK,
         colorValue: [60, 40, 40, 100]
-    })
+    });
 } catch (e) {}
 try {
     doc.colors.add({
@@ -70,7 +70,7 @@ try {
         model: ColorModel.SPOT,
         space: ColorSpace.CMYK,
         colorValue: [0, 100, 0, 0]
-    })
+    });
 } catch (e) {}
 try {
     doc.colors.add({
@@ -78,7 +78,7 @@ try {
         model: ColorModel.SPOT,
         space: ColorSpace.CMYK,
         colorValue: [100, 0, 0, 0]
-    })
+    });
 } catch (e) {}
 try {
     doc.colors.add({
@@ -86,7 +86,7 @@ try {
         model: ColorModel.PROCESS,
         space: ColorSpace.CMYK,
         colorValue: [0, 100, 0, 0]
-    })
+    });
 } catch (e) {}
 try {
     doc.colors.add({
@@ -94,13 +94,8 @@ try {
         model: ColorModel.PROCESS,
         space: ColorSpace.CMYK,
         colorValue: [0, 10, 70, 0]
-    })
+    });
 } catch (e) {}
-
-// Delete unused layers
-// try {
-//     app.menuActions.item("$ID/Delete Unused Layers").invoke();
-// } catch (e) {}
 
 // Make default layers (and merge with similar)
 var bgLayer = doc.layers.item(bgLayerName);
@@ -111,16 +106,16 @@ var guidesLayer = doc.layers.item(guidesLayerName);
 var safeLayer = doc.layers.item(safeLayerName);
 var dieLayer = doc.layers.item(dieLayerName);
 
-doc.activeLayer = doc.layers.item(0);
+doc.activeLayer = doc.layers.item(0); // select first layer
 
 // Artwork layer
 if (artLayer.isValid) {
-    artLayer.layerColor = UIColors.LIGHT_BLUE
+    artLayer.layerColor = UIColors.LIGHT_BLUE;
 } else {
     doc.layers.add({
         name: artLayerName,
         layerColor: UIColors.LIGHT_BLUE
-    }) //.move(LocationOptions.AT_BEGINNING)
+    });
 }
 for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
@@ -133,23 +128,20 @@ for (i = 0; i < doc.layers.length; i++) {
         case "Layout":
         case "layout":
         case "Layer_lucru":
-            artLayer.merge(docLayer);
-            i--;
-            break
+            artLayer.merge(docLayer); i--;
+            break;
     }
 }
-if (txtLayer.isValid) {
-    artLayer.move(LocationOptions.after, txtLayer)
-}
+if (txtLayer.isValid) { artLayer.move(LocationOptions.after, txtLayer) }
 
 // Type layer
 if (txtLayer.isValid) {
-    txtLayer.layerColor = UIColors.GREEN
+    txtLayer.layerColor = UIColors.GREEN;
 } else {
     doc.layers.add({
         name: txtLayerName,
         layerColor: UIColors.GREEN
-    }).move(LocationOptions.before, artLayer)
+    }).move(LocationOptions.before, artLayer);
 }
 for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
@@ -159,20 +151,19 @@ for (i = 0; i < doc.layers.length; i++) {
         case "Text":
         case "text":
         case "txt":
-            txtLayer.merge(docLayer);
-            i--;
-            break
+            txtLayer.merge(docLayer); i--;
+            break;
     }
 }
 
 // HW layer
 if (hwLayer.isValid) {
-    hwLayer.layerColor = UIColors.LIGHT_GRAY
+    hwLayer.layerColor = UIColors.LIGHT_GRAY;
 } else {
     doc.layers.add({
         name: hwLayerName,
         layerColor: UIColors.LIGHT_GRAY
-    }).move(LocationOptions.before, txtLayer)
+    }).move(LocationOptions.before, txtLayer);
 }
 for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
@@ -181,20 +172,19 @@ for (i = 0; i < doc.layers.length; i++) {
         case "WH":
         case "wh":
         case "hw":
-            hwLayer.merge(docLayer);
-            i--;
-            break
+            hwLayer.merge(docLayer); i--;
+            break;
     }
 }
 
 // Dielines layer
 if (dieLayer.isValid) {
-    dieLayer.layerColor = UIColors.RED
+    dieLayer.layerColor = UIColors.RED;
 } else {
     doc.layers.add({
         name: dieLayerName,
         layerColor: UIColors.RED
-    })
+    });
 }
 dieLayer.move(LocationOptions.AT_BEGINNING);
 for (i = 0; i < doc.layers.length; i++) {
@@ -204,20 +194,19 @@ for (i = 0; i < doc.layers.length; i++) {
         case "Die Cut":
         case "cut lines":
         case "Stanze":
-            dieLayer.merge(docLayer);
-            i--;
-            break
+            dieLayer.merge(docLayer); i--;
+            break;
     }
 }
 
 // Safe area layer
 if (safeLayer.isValid) {
-    safeLayer.layerColor = UIColors.YELLOW
+    safeLayer.layerColor = UIColors.YELLOW;
 } else {
     doc.layers.add({
         name: safeLayerName,
         layerColor: UIColors.YELLOW
-    })
+    });
 }
 safeLayer.move(LocationOptions.after, dieLayer);
 for (i = 0; i < doc.layers.length; i++) {
@@ -226,49 +215,46 @@ for (i = 0; i < doc.layers.length; i++) {
         case "Visible":
         case "vizibil":
         case "Vis. area":
-            safeLayer.merge(docLayer);
-            i--;
-            break
+            safeLayer.merge(docLayer); i--;
+            break;
     }
 }
 
 // Guides layer
 if (guidesLayer.isValid) {
     guidesLayer.layerColor = UIColors.MAGENTA;
-    guidesLayer.printable = false
+    guidesLayer.printable = false;
 } else {
     doc.layers.add({
         name: guidesLayerName,
         layerColor: UIColors.MAGENTA,
         printable: false
-    }).move(LocationOptions.after, safeLayer)
+    }).move(LocationOptions.after, safeLayer);
 }
 for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
     switch (docLayer.name) {
         case "Guides":
-            guidesLayer.merge(docLayer);
-            i--;
-            break
+            guidesLayer.merge(docLayer); i--;
+            break;
     }
 }
 
 // Background layer
 if (bgLayer.isValid) {
-    bgLayer.layerColor = UIColors.RED
+    bgLayer.layerColor = UIColors.RED;
 } else {
     doc.layers.add({
         name: bgLayerName,
         layerColor: UIColors.RED
-    }).move(LocationOptions.AT_END)
+    }).move(LocationOptions.AT_END);
 }
 for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
     switch (docLayer.name) {
         case "BG":
         case "HG":
-            bgLayer.merge(docLayer);
-            i--;
-            break
+            bgLayer.merge(docLayer);; i--;
+            break;
     }
 }

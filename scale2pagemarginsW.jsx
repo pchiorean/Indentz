@@ -1,5 +1,5 @@
 /*
-    Scale to page margins v1.4.0
+    Scale to page margins v1.4.1
     © April 2020, Paul Chiorean
     This script scales the selected objects to the page left/right margins.
 */
@@ -21,14 +21,12 @@ if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
     if (selObj.length > 1) { // if multiple selection, group it
         var selObjArray = [];
         for (i = 0; i < selObj.length; i++) {
-            if (!selObj[i].locked) {
-                selObjArray.push(selObj[i])
-            }
+            if (!selObj[i].locked) { selObjArray.push(selObj[i]) };
         }
         selObj = selPage.groups.add(selObjArray);
-        flagUngroup = true
+        flagUngroup = true;
     } else {
-        selObj = selObj[0]
+        selObj = selObj[0];
     }
 
     var W_pg = selPage.bounds[3] - selPage.bounds[1];

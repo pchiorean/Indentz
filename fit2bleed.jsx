@@ -1,5 +1,5 @@
 /*
-    Fit to bleedbox v1.4.2
+    Fit to bleedbox v1.4.3
     © March 2020, Paul Chiorean
     This script resizes the selection to the spread bleedbox.
 */
@@ -11,10 +11,9 @@ var ro = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 
 if (doc.selection.length != 0 && doc.selection[0].parentPage != null) {
-    var selPage = doc.selection[0].parentPage;
     var selSpread = doc.selection[0].parentPage.parent;
     for (i = 0; i < doc.selection.length; i++) {
-        doc.selection[i].geometricBounds = spreadBleedSize(selSpread.index)
+        doc.selection[i].geometricBounds = spreadBleedSize(selSpread.index);
     }
 } else {
     // alert("Please select an object not on pasteboard and try again.")
@@ -40,14 +39,14 @@ function spreadBleedSize(spread) {
         // Reverse left and right margins if left-hand page
         if (firstPage.side == PageSideOptions.LEFT_HAND) {
             bleedMargins.left = doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
-            bleedMargins.right = doc.documentPreferences.properties.documentBleedInsideOrLeftOffset
+            bleedMargins.right = doc.documentPreferences.properties.documentBleedInsideOrLeftOffset;
         }
     } else {
         // Spread is multiple pages
         var spreadSize = [firstPage.bounds[0], firstPage.bounds[1], lastPage.bounds[2], lastPage.bounds[3]];
         // Reverse left and right margins if left-hand page
         if (firstPage.side == PageSideOptions.LEFT_HAND) {
-            bleedMargins.left = doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
+            bleedMargins.left = doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
         }
     }
     if (bleedMargins.top + bleedMargins.left + bleedMargins.bottom + bleedMargins.right != 0) {
@@ -55,8 +54,8 @@ function spreadBleedSize(spread) {
         var m_x1 = spreadSize[1] - bleedMargins.left;
         var m_y2 = spreadSize[2] + bleedMargins.bottom;
         var m_x2 = spreadSize[3] + bleedMargins.right;
-        return [m_y1, m_x1, m_y2, m_x2]
+        return [m_y1, m_x1, m_y2, m_x2];
     } else {
-        return spreadSize
+        return spreadSize;
     }
 }

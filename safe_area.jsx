@@ -1,5 +1,5 @@
 /*
-    Safe area v1.5.0
+    Safe area v1.5.1
     © March 2020, Paul Chiorean
     This script sets page(s) size and margins based on the filename 
     and creates 'safe area' frames, on every page or spread, 
@@ -11,7 +11,8 @@ var scope = "page"; // "spread" or "page";
 
 // Sets page dimensions from filename
 try {
-    app.doScript(File(app.activeScript.path + "/size_from_filename.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions");
+    app.doScript(File(app.activeScript.path + "/size_from_filename.jsx"), 
+    ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions");
 } catch (e) {}
 
 var safeLayerName = "safe area";
@@ -30,12 +31,12 @@ if (safeLayer.isValid) {
         layerColor: UIColors.YELLOW,
         visible: true,
         locked: false
-    })
+    });
 }
 try {
-    safeLayer.move(LocationOptions.after, dieLayer)
+    safeLayer.move(LocationOptions.after, dieLayer);
 } catch (e) {
-    safeLayer.move(LocationOptions.AT_BEGINNING)
+    safeLayer.move(LocationOptions.AT_BEGINNING);
 }
 
 // Create 'Safe area' color
@@ -45,7 +46,7 @@ try {
         model: ColorModel.PROCESS,
         space: ColorSpace.CMYK,
         colorValue: [0, 100, 0, 0]
-    })
+    });
 } catch (e) {}
 
 switch (scope) {
@@ -63,7 +64,7 @@ switch (scope) {
                     strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
                     strokeType: "$ID/Canned Dashed 3x2",
                     overprintStroke: false
-                })
+                });
             }
         }
         break;
@@ -81,10 +82,10 @@ switch (scope) {
                     strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
                     strokeType: "$ID/Canned Dashed 3x2",
                     overprintStroke: false
-                })
+                });
             }
         }
-        break
+        break;
 }
 
 // Function to calculate safe area coordinates from page margins
@@ -94,16 +95,16 @@ function pageSafeArea(page) {
     // Reverse left and right margins if left-hand page
     if (page.side == PageSideOptions.LEFT_HAND) {
         pageMargins.left = page.marginPreferences.right;
-        pageMargins.right = page.marginPreferences.left
+        pageMargins.right = page.marginPreferences.left;
     }
     if (pageMargins.top + pageMargins.left + pageMargins.bottom + pageMargins.right != 0) {
         var m_y1 = page.bounds[0] + pageMargins.top;
         var m_x1 = page.bounds[1] + pageMargins.left;
         var m_y2 = page.bounds[2] - pageMargins.bottom;
         var m_x2 = page.bounds[3] - pageMargins.right;
-        return [m_y1, m_x1, m_y2, m_x2]
+        return [m_y1, m_x1, m_y2, m_x2];
     } else {
-        return false
+        return false;
     }
 }
 
@@ -124,11 +125,11 @@ function spreadSafeArea(spread) {
         // Reverse left and right margins if left-hand page
         if (firstPage.side == PageSideOptions.LEFT_HAND) {
             spreadMargins.left = firstPage.marginPreferences.right;
-            spreadMargins.right = firstPage.marginPreferences.left
+            spreadMargins.right = firstPage.marginPreferences.left;
         }
     } else {
         // Spread is multiple pages
-        var spreadSize = [firstPage.bounds[0], firstPage.bounds[1], lastPage.bounds[2], lastPage.bounds[3]]
+        var spreadSize = [firstPage.bounds[0], firstPage.bounds[1], lastPage.bounds[2], lastPage.bounds[3]];
         var spreadMargins = {
             top: firstPage.marginPreferences.top,
             left: firstPage.marginPreferences.left,
@@ -137,7 +138,7 @@ function spreadSafeArea(spread) {
         }
         // Reverse left and right margins if left-hand page
         if (firstPage.side == PageSideOptions.LEFT_HAND) {
-            spreadMargins.left = firstPage.marginPreferences.right
+            spreadMargins.left = firstPage.marginPreferences.right;
         }
     }
     if (spreadMargins.top + spreadMargins.left + spreadMargins.bottom + spreadMargins.right != 0) {
@@ -145,9 +146,9 @@ function spreadSafeArea(spread) {
         var m_x1 = spreadMargins.left;
         var m_y2 = spreadSize[2] - spreadMargins.bottom;
         var m_x2 = spreadSize[3] - spreadMargins.right;
-        return [m_y1, m_x1, m_y2, m_x2]
+        return [m_y1, m_x1, m_y2, m_x2];
     } else {
-        return false
+        return false;
     }
 }
 
@@ -159,11 +160,11 @@ function safeLayerItems(scope) {
             break;
         case "Spread":
             var scope = doc.spreads[scope.index];
-            break
+            break;
     }
     for (var i = 0; i < scope.pageItems.length; i++) {
         if (scope.pageItems.item(i).label == "safe area") {
-            return true
+            return true;
         }
     }
 }
