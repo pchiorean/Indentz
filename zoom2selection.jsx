@@ -1,5 +1,5 @@
 /*
-    Zoom to selection v1.3.0
+    Zoom to selection v1.3.1
     © April 2020, Paul Chiorean
     This script zooms to the selected objects or, if nothing is selected, to the current page.
 */
@@ -31,8 +31,8 @@ var H_win = (window.bounds[2] - window.bounds[0]) * 1.33;
 
 var zoom = H_win / H_obj;
 if (W_obj * zoom > W_win) { zoom = W_win / W_obj }
-zoom = zoom * 13.3;
+zoom = zoom * 10 * 1.5;
 
-window.zoom(ZoomOptions.FIT_PAGE);
 if (zoom > 4000) { zoom = 4000 };
+window.zoom(ZoomOptions.FIT_PAGE);
 window.zoomPercentage = zoom;
