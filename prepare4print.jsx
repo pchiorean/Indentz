@@ -1,5 +1,5 @@
 ﻿/*
-    Prepare4Print v1.1.1
+    Prepare for print v1.2.0
     © April 2020, Paul Chiorean
     This script hides 'safe area' and moves 'dielines' to separate page(s).
 */
@@ -14,35 +14,35 @@ try { dieLayer.visible = true } catch (e) {}; // show 'dielines' layer
 
 // Function to check if page has dielines
 function dieLayerItems(i) {
-    for (var j = 0; j < doc.pages[i].pageItems.length; j++) {
-        if (doc.pages[i].pageItems.item(j).itemLayer.name == dieLayer.name) { return true };
+    for (var j = 0; j < doc.spreads[i].pageItems.length; j++) {
+        if (doc.spreads[i].pageItems.item(j).itemLayer.name == dieLayer.name) { return true };
     }
 }
 
 if (dieLayer.isValid) {
-    for (var i = 0; i < doc.pages.length; i++) {
+    for (var i = 0; i < doc.spreads.length; i++) {
         if (dieLayerItems(i)) {
             // Page has dielines; duplicate it
-            doc.pages[i].duplicate(LocationOptions.AFTER, doc.pages[i]);
-            // Delete dielines from this page
-            for (var j = 0; j < doc.pages[i].pageItems.length; j++) {
-                var pageItem = doc.pages[i].pageItems.item(j);
+            doc.spreads[i].duplicate(LocationOptions.AFTER, doc.spreads[i]);
+            // Delete dielines from this spread
+            for (var j = 0; j < doc.spreads[i].pageItems.length; j++) {
+                var pageItem = doc.spreads[i].pageItems.item(j);
                 if (pageItem.itemLayer.name == dieLayer.name) {
                     if (pageItem.locked) { pageItem.locked = false };
                     pageItem.remove(); j--;
                 }
             }
             // Delete non-dielines from next page
-            for (var j = 0; j < doc.pages[i + 1].pageItems.length; j++) {
-                var pageItem = doc.pages[i + 1].pageItems.item(j);
+            for (var j = 0; j < doc.spreads[i + 1].pageItems.length; j++) {
+                var pageItem = doc.spreads[i + 1].pageItems.item(j);
                 if (pageItem.itemLayer.name !== dieLayer.name) {
                     if (pageItem.locked) { pageItem.locked = false };
                     pageItem.remove(); j--;
                 }
             }
-            // If empty, delete page
-            if (doc.pages[i].pageItems.length == 0) { doc.pages[i].remove() };
-            i++ // skip next page
+            // If empty, delete spread
+            if (doc.spreads[i].pageItems.length == 0) { doc.spreads[i].remove() };
+            i++ // skip next spread
         }
     }
 }
