@@ -1,12 +1,12 @@
 ﻿/*
-    Prepare for print v1.2.0
+    Prepare for print v1.3.0
     © April 2020, Paul Chiorean
     This script hides 'safe area' and moves 'dielines' to separate page(s).
 */
 
 var doc = app.activeDocument;
-var safeLayer = doc.layers.item("safe area");
-var dieLayer = doc.layers.item("dielines");
+var safeLayer = doc.layers.item("safe area" | "Visible" | "Vis. area" | "vizibil");
+var dieLayer = doc.layers.item("dielines" | "diecut" | "Die Cut" | "cut lines" | "Stanze");
 
 doc.layers.everyItem().locked = false; // unlock all layers
 try { safeLayer.visible = false } catch (e) {}; // hide 'safe area' layer
