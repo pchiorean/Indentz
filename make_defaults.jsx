@@ -1,5 +1,5 @@
 ﻿/*
-    Make defaults v1.4.8
+    Make defaults v1.4.9
     © April 2020, Paul Chiorean
     This script sets default settings, swatches & layers, and merges similar layers.
 */
@@ -52,7 +52,7 @@ doc.selection = [];
 
 // Sets page dimensions from filename
 try {
-    app.doScript(File(app.activeScript.path + "/size_from_filename.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions");
+    app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions");
 } catch (e) {}
 
 // Add default swatches

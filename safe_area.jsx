@@ -1,5 +1,5 @@
 /*
-    Safe area v1.5.1
+    Safe area v1.5.2
     © April 2020, Paul Chiorean
     This script sets page(s) size and margins based on the filename 
     and creates 'safe area' frames, on every page or spread, 
@@ -11,7 +11,7 @@ var scope = "page"; // "spread" or "page";
 
 // Sets page dimensions from filename
 try {
-    app.doScript(File(app.activeScript.path + "/size_from_filename.jsx"), 
+    app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), 
     ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions");
 } catch (e) {}
 
