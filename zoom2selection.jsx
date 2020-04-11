@@ -1,5 +1,5 @@
 /*
-    Zoom to selection v1.4.3
+    Zoom to selection v1.4.4
     © April 2020, Paul Chiorean
     This script zooms to the selected objects or, if nothing is selected, to the current page.
 */
@@ -9,9 +9,9 @@ var window = app.activeWindow;
 var selPage = window.activePage;
 app.scriptPreferences.measurementUnit = MeasurementUnits.PIXELS;
 
-var sel = app.selection;
-var selObj = [];
 // Sanitize selection
+var sel = doc.selection;
+var selObj = [];
 if (sel.length != 0) {
     for (var i = 0; i < sel.length; i++) {
         switch (sel[i].constructor.name) {
@@ -27,6 +27,8 @@ if (sel.length != 0) {
         }
     }
 }
+
+// Get target dimensions
 if (selObj.length != 0) {
         // Something is selected, get dimensions
         if (selObj[0].hasOwnProperty("parentTextFrames")) {
@@ -35,13 +37,13 @@ if (selObj.length != 0) {
             var selObj_x1 = selObj[0].parentTextFrames[0].visibleBounds[1];
             var selObj_y2 = selObj[0].parentTextFrames[0].visibleBounds[2];
             var selObj_x2 = selObj[0].parentTextFrames[0].visibleBounds[3];
-            app.select(selObj[0].parentTextFrames[0]); // Select frame
+            app.select(selObj[0].parentTextFrames[0]); // Select text frame
         } else {
+            // Iterate selection, get extremities
             var selObj_y1 = selObj[0].visibleBounds[0];
             var selObj_x1 = selObj[0].visibleBounds[1];
             var selObj_y2 = selObj[0].visibleBounds[2];
             var selObj_x2 = selObj[0].visibleBounds[3];
-            // Find selection extremities
             for (var i = 1; i < selObj.length; i++) {
                 selObj_y1 = Math.min(selObj[i].visibleBounds[0], selObj_y1);
                 selObj_x1 = Math.min(selObj[i].visibleBounds[1], selObj_x1);
