@@ -1,2 +1,0 @@
-# indesign-jsx
-InDesign scripts
