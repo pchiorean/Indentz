@@ -1,5 +1,5 @@
 /*
-    Fit to page margins v1.0.5
+    Fit to page margins v1.0.6
     © April 2020, Paul Chiorean
     This script resizes the selection to the page margins.
 */
@@ -20,12 +20,12 @@ if (selObj.length != 0 && selObj[0].parentPage != null) {
 function pageSafeArea(page) {
     var pageSize = page.bounds;
     var pageMargins = page.marginPreferences;
-    // Reverse left and right margins if left-hand page
-    if (page.side == PageSideOptions.LEFT_HAND) {
-        pageMargins.left = page.marginPreferences.right;
-        pageMargins.right = page.marginPreferences.left;
-    }
     if (pageMargins.top + pageMargins.left + pageMargins.bottom + pageMargins.right != 0) {
+        // Reverse left and right margins if left-hand page
+        if (page.side == PageSideOptions.LEFT_HAND) {
+            pageMargins.left = page.marginPreferences.right;
+            pageMargins.right = page.marginPreferences.left;
+        }
         var m_y1 = pageSize[0] + pageMargins.top;
         var m_x1 = pageSize[1] + pageMargins.left;
         var m_y2 = pageSize[2] - pageMargins.bottom;
