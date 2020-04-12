@@ -1,5 +1,5 @@
 /*
-    Zoom to selection v1.4.4
+    Zoom to selection v1.4.5
     © April 2020, Paul Chiorean
     This script zooms to the selected objects or, if nothing is selected, to the current page.
 */
@@ -7,7 +7,7 @@
 var doc = app.activeDocument;
 var window = app.activeWindow;
 var selPage = window.activePage;
-app.scriptPreferences.measurementUnit = MeasurementUnits.PIXELS;
+app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 // Sanitize selection
 var sel = doc.selection;
