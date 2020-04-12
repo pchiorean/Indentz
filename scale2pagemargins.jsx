@@ -1,5 +1,5 @@
 /*
-    Scale to page margins v1.4.2
+    Scale to page margins v1.4.3
     © April 2020, Paul Chiorean
     This script scales the selected objects to the page margins.
 */
@@ -9,8 +9,8 @@ var sel = doc.selection; // save selection
 
 if (sel.length != 0 && sel[0].parentPage != null) {
     // Remember layers for grouping/ungrouping
-    var uRL = app.generalPreferences.ungroupRemembersLayers;
-    var pRL = app.clipboardPreferences.pasteRemembersLayers;
+    var set_uRL = app.generalPreferences.ungroupRemembersLayers;
+    var set_pRL = app.clipboardPreferences.pasteRemembersLayers;
     app.generalPreferences.ungroupRemembersLayers = true;
     app.clipboardPreferences.pasteRemembersLayers = true;
 
@@ -52,8 +52,8 @@ if (sel.length != 0 && sel[0].parentPage != null) {
     app.select(sel);
 
     // Restore layer grouping settings
-    app.generalPreferences.ungroupRemembersLayers = uRL;
-    app.clipboardPreferences.pasteRemembersLayers = pRL;
+    app.generalPreferences.ungroupRemembersLayers = set_uRL;
+    app.clipboardPreferences.pasteRemembersLayers = set_pRL;
 } else {
     // alert("Please select an object not on pasteboard and try again.")
 }
