@@ -1,5 +1,5 @@
 ﻿/*
-    Delete gremlins v1.3.6
+    Delete gremlins v1.3.7
     © April 2020, Paul Chiorean
     This script does some househeeping.
 */
@@ -32,7 +32,7 @@ function normalizeCMYK( /*Document*/ doc, swa, a, r, o, t, k, i) {
     swa = doc.swatches;
     a = doc.colors.everyItem().properties;
     r = {};
-    // gather CMYK swatches => {CMYK_Key => {id, name}[]}
+    // Gather CMYK swatches => {CMYK_Key => {id, name}[]}
     while (o = a.shift()) {
         if (o.model != CM_PROCESS) continue;
         if (o.space != CS_CMYK) continue;
@@ -46,8 +46,8 @@ function normalizeCMYK( /*Document*/ doc, swa, a, r, o, t, k, i) {
         if (!r.hasOwnProperty(k)) continue;
         t = swa.itemByID((o = (a = r[k])[0]).id);
         for (i = a.length; --i; swa.itemByID(a[i].id).remove(t));
-        if (k == o.name) continue; // no need to rename
-        try { t.name = k } catch (_) {} // prevent read-only errors
+        if (k == o.name) continue; // No need to rename
+        try { t.name = k } catch (_) {} // Prevent read-only errors
     }
 }
 normalizeCMYK(app.properties.activeDocument);
@@ -66,4 +66,4 @@ try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (e) {};
 try { doc.layers.item("guides" | "Guides").visible = true } catch (e) {};
 
 // Delete all guides
-if (doc.guides.length > 0) { doc.guides.everyItem().remove() };
+// if (doc.guides.length > 0) { doc.guides.everyItem().remove() };
