@@ -1,15 +1,16 @@
 /*
-    Page size from selection v1.3.1
+    Page size from selection v1.3.2
     © April 2020, Paul Chiorean
     This script sets the page size to the selection bounds.
 */
 
 var doc = app.activeDocument;
-// doc.adjustLayoutPreferences.enableAdjustLayout = false;
-// doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 // app.generalPreferences.objectsMoveWithPage = false;
+// doc.adjustLayoutPreferences.enableAdjustLayout = false;
+var set_AAM = doc.adjustLayoutPreferences.enableAutoAdjustMargins; // Save AAM settings
+doc.adjustLayoutPreferences.enableAutoAdjustMargins = true; // Preserve original margins
 
-var sel = doc.selection; // save selection
+var sel = doc.selection; // Save selection
 if (sel.length != 0) {
     var selObj = sel;
     var selPage = selObj[0].parent.pages[0]; // 1st page of parent spread
@@ -33,11 +34,8 @@ if (sel.length != 0) {
         selObj = selObj[0];
     }
 
-    // Set margins to zero
-    selPage.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
-
     // Resize page
-    selPage.layoutRule = LayoutRuleOptions.OFF;
+    selPage.layoutRule = LayoutRuleOptions.OFF; // Don't scale page items
     var selObjTL = selObj.resolve(AnchorPoint.TOP_LEFT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
     var selObjBR = selObj.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
     selPage.reframe(CoordinateSpaces.SPREAD_COORDINATES, [selObjTL[0], selObjBR[0]]);
@@ -49,7 +47,8 @@ if (sel.length != 0) {
             sel[selObjLockedArray[i]].locked = true;
         }
     }
-    app.select(sel); // restore initial selection
+    doc.adjustLayoutPreferences.enableAutoAdjustMargins = set_AAM; // Restore AAM settings
+    app.select(sel); // Restore initial selection
 } else {
     // alert("Please select an object and try again.")
 }
