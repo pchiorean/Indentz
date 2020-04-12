@@ -1,5 +1,5 @@
 /*
-    Page size from filename v1.3.0
+    Page size from filename v1.3.1
     © April 2020, Paul Chiorean
     This script sets every page size and margins based on the filename.
     It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_safe area).
@@ -45,12 +45,7 @@ if (bleedArray != null) {
     doc.documentPreferences.documentBleedUniformSize = true;
     doc.documentPreferences.documentBleedTopOffset = bleedArray[1];
 }
-
-// Add 'safe area' frames
-try {
-    app.doScript(File(app.activeScript.path + "/safe_area.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Safe area");
-} catch (e) {}
-
+// END
 
 function resizePages(p, m) {
     var pageSize = sizeArray[p].split("x");
