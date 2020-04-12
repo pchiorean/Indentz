@@ -1,5 +1,5 @@
 ﻿/*
-    Make defaults v1.4.9
+    Make defaults v1.5.0
     © April 2020, Paul Chiorean
     This script sets default settings, swatches & layers, and merges similar layers.
 */
@@ -49,11 +49,6 @@ app.activeWindow.transformReferencePoint = AnchorPoint.CENTER_ANCHOR;
 doc.pageItemDefaults.fillColor = "None";
 doc.pageItemDefaults.strokeColor = "None";
 doc.selection = [];
-
-// Sets page dimensions from filename
-try {
-    app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions");
-} catch (e) {}
 
 // Add default swatches
 try {
@@ -258,3 +253,13 @@ for (i = 0; i < doc.layers.length; i++) {
             break;
     }
 }
+
+// Sets page dimensions from filename
+try {
+    app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions");
+} catch (e) {}
+
+// Add 'safe area' frames
+try {
+    app.doScript(File(app.activeScript.path + "/safe_area.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Safe area");
+} catch (e) {}
