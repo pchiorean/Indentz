@@ -1,7 +1,8 @@
 ﻿/*
-    Make defaults v1.5.0
+    Make defaults v1.6.0
     © April 2020, Paul Chiorean
-    This script sets default settings, swatches & layers, and merges similar layers.
+    This script sets default settings, creates swatches & layers, merges 
+    similar layers, sets page dimensions and creates 'safe area' frames.
 */
 
 var doc = app.activeDocument;
@@ -13,21 +14,18 @@ var txtLayerName = "type";
 var hwLayerName = "HW";
 var guidesLayerName = "guides";
 var safeLayerName = "safe area";
+var uvLayerName = "varnish";
 var dieLayerName = "dielines";
 
 // Swatch names
 var cutSwatchName = "Cut";
 var foldSwatchName = "Fold";
-var safeSwatchName = "Safe area";
 var uvSwatchName = "Varnish";
+var safeSwatchName = "Safe area";
 
 // Settings
 doc.zeroPoint = [0, 0];
-try {
-    doc.cmykProfile = "ISO Coated v2 (ECI)";
-} catch (e) {
-    doc.cmykProfile = "Coated FOGRA39 (ISO 12647-2:2004)";
-}
+try { doc.cmykProfile = "ISO Coated v2 (ECI)" } catch (e) { doc.cmykProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
 doc.rgbProfile = "sRGB IEC61966-2.1";
 doc.guidePreferences.guidesShown = true;
 doc.guidePreferences.guidesLocked = false;
@@ -51,66 +49,31 @@ doc.pageItemDefaults.strokeColor = "None";
 doc.selection = [];
 
 // Add default swatches
-try {
-    doc.colors.add({
-        name: "C=60 M=40 Y=40 K=100",
-        model: ColorModel.PROCESS,
-        space: ColorSpace.CMYK,
-        colorValue: [60, 40, 40, 100]
-    });
-} catch (e) {}
-try {
-    doc.colors.add({
-        name: cutSwatchName,
-        model: ColorModel.SPOT,
-        space: ColorSpace.CMYK,
-        colorValue: [0, 100, 0, 0]
-    });
-} catch (e) {}
-try {
-    doc.colors.add({
-        name: foldSwatchName,
-        model: ColorModel.SPOT,
-        space: ColorSpace.CMYK,
-        colorValue: [100, 0, 0, 0]
-    });
-} catch (e) {}
-try {
-    doc.colors.add({
-        name: safeSwatchName,
-        model: ColorModel.PROCESS,
-        space: ColorSpace.CMYK,
-        colorValue: [0, 100, 0, 0]
-    });
-} catch (e) {}
-try {
-    doc.colors.add({
-        name: uvwatchName,
-        model: ColorModel.PROCESS,
-        space: ColorSpace.CMYK,
-        colorValue: [0, 10, 70, 0]
-    });
-} catch (e) {}
+try { doc.colors.add({ name: "C=60 M=40 Y=40 K=100", model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [60, 40, 40, 100] }) } catch (e) {};
+try { doc.colors.add({ name: cutSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (e) {};
+try { doc.colors.add({ name: foldSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [100, 0, 0, 0] }) } catch (e) {};
+try { doc.colors.add({ name: uvSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 10, 70, 0] }) } catch (e) {};
+try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (e) {};
 
-// Make default layers (and merge with similar)
+// Default layers names
 var bgLayer = doc.layers.item(bgLayerName);
 var artLayer = doc.layers.item(artLayerName);
 var txtLayer = doc.layers.item(txtLayerName);
 var hwLayer = doc.layers.item(hwLayerName);
 var guidesLayer = doc.layers.item(guidesLayerName);
 var safeLayer = doc.layers.item(safeLayerName);
+var uvLayer = doc.layers.item(uvLayerName);
 var dieLayer = doc.layers.item(dieLayerName);
 
-doc.activeLayer = doc.layers.item(0); // select first layer
+doc.activeLayer = doc.layers.item(0); // Select first layer
+
+// Make default layers (and merge with similar)
 
 // Artwork layer
 if (artLayer.isValid) {
     artLayer.layerColor = UIColors.LIGHT_BLUE;
 } else {
-    doc.layers.add({
-        name: artLayerName,
-        layerColor: UIColors.LIGHT_BLUE
-    });
+    doc.layers.add({ name: artLayerName, layerColor: UIColors.LIGHT_BLUE });
 }
 for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
@@ -127,16 +90,14 @@ for (i = 0; i < doc.layers.length; i++) {
             break;
     }
 }
-if (txtLayer.isValid) { artLayer.move(LocationOptions.after, txtLayer) }
+if (txtLayer.isValid) { artLayer.move(LocationOptions.after, txtLayer) };
 
 // Type layer
 if (txtLayer.isValid) {
     txtLayer.layerColor = UIColors.GREEN;
 } else {
-    doc.layers.add({
-        name: txtLayerName,
-        layerColor: UIColors.GREEN
-    }).move(LocationOptions.before, artLayer);
+    doc.layers.add({ name: txtLayerName, layerColor: UIColors.GREEN });
+    txtLayer.move(LocationOptions.before, artLayer);
 }
 for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
@@ -155,10 +116,8 @@ for (i = 0; i < doc.layers.length; i++) {
 if (hwLayer.isValid) {
     hwLayer.layerColor = UIColors.LIGHT_GRAY;
 } else {
-    doc.layers.add({
-        name: hwLayerName,
-        layerColor: UIColors.LIGHT_GRAY
-    }).move(LocationOptions.before, txtLayer);
+    doc.layers.add({ name: hwLayerName, layerColor: UIColors.LIGHT_GRAY });
+    hwLayer.move(LocationOptions.before, txtLayer);
 }
 for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
@@ -176,10 +135,7 @@ for (i = 0; i < doc.layers.length; i++) {
 if (dieLayer.isValid) {
     dieLayer.layerColor = UIColors.RED;
 } else {
-    doc.layers.add({
-        name: dieLayerName,
-        layerColor: UIColors.RED
-    });
+    doc.layers.add({ name: dieLayerName, layerColor: UIColors.RED });
 }
 dieLayer.move(LocationOptions.AT_BEGINNING);
 for (i = 0; i < doc.layers.length; i++) {
@@ -198,10 +154,7 @@ for (i = 0; i < doc.layers.length; i++) {
 if (safeLayer.isValid) {
     safeLayer.layerColor = UIColors.YELLOW;
 } else {
-    doc.layers.add({
-        name: safeLayerName,
-        layerColor: UIColors.YELLOW
-    });
+    doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW });
 }
 safeLayer.move(LocationOptions.after, dieLayer);
 for (i = 0; i < doc.layers.length; i++) {
@@ -215,16 +168,28 @@ for (i = 0; i < doc.layers.length; i++) {
     }
 }
 
+// Varnish layer
+if (uvLayer.isValid) {
+    uvLayer.layerColor = UIColors.YELLOW;
+} else {
+    doc.layers.add({ name: uvLayerName, layerColor: UIColors.YELLOW });
+}
+uvLayer.move(LocationOptions.after, safeLayer);
+for (i = 0; i < doc.layers.length; i++) {
+    var docLayer = doc.layers.item(i);
+    switch (docLayer.name) {
+        case "UV":
+            uvLayer.merge(docLayer); i--;
+            break;
+    }
+}
+
 // Guides layer
 if (guidesLayer.isValid) {
-    guidesLayer.layerColor = UIColors.MAGENTA;
-    guidesLayer.printable = false;
+    guidesLayer.layerColor = UIColors.MAGENTA; guidesLayer.printable = false;
 } else {
-    doc.layers.add({
-        name: guidesLayerName,
-        layerColor: UIColors.MAGENTA,
-        printable: false
-    }).move(LocationOptions.after, safeLayer);
+    doc.layers.add({ name: guidesLayerName, layerColor: UIColors.MAGENTA, printable: false });
+    guidesLayer.move(LocationOptions.after, uvLayer);
 }
 for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
@@ -239,10 +204,8 @@ for (i = 0; i < doc.layers.length; i++) {
 if (bgLayer.isValid) {
     bgLayer.layerColor = UIColors.RED;
 } else {
-    doc.layers.add({
-        name: bgLayerName,
-        layerColor: UIColors.RED
-    }).move(LocationOptions.AT_END);
+    doc.layers.add({ name: bgLayerName, layerColor: UIColors.RED });
+    bgLayer.move(LocationOptions.AT_END);
 }
 for (i = 0; i < doc.layers.length; i++) {
     var docLayer = doc.layers.item(i);
@@ -255,11 +218,7 @@ for (i = 0; i < doc.layers.length; i++) {
 }
 
 // Sets page dimensions from filename
-try {
-    app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions");
-} catch (e) {}
+try { app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions") } catch (e) {};
 
 // Add 'safe area' frames
-try {
-    app.doScript(File(app.activeScript.path + "/safe_area.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Safe area");
-} catch (e) {}
+try { app.doScript(File(app.activeScript.path + "/safe_area.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Safe area") } catch (e) {};
