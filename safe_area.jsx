@@ -1,19 +1,12 @@
 /*
-    Safe area v1.5.2
+    Safe area v1.5.3
     © April 2020, Paul Chiorean
-    This script sets page(s) size and margins based on the filename 
-    and creates 'safe area' frames, on every page or spread, 
-    if doesn't already exist and if margins are defined.
+    This script creates a 'safe area' frame, on every page or spread, 
+    if it doesn't already exist and if margins are defined.
 */
 
 var doc = app.activeDocument;
 var scope = "page"; // "spread" or "page";
-
-// Sets page dimensions from filename
-try {
-    app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), 
-    ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions");
-} catch (e) {}
 
 var safeLayerName = "safe area";
 var dieLayerName = "dielines";
@@ -93,15 +86,16 @@ function pageSafeArea(page) {
     var page = doc.pages[page];
     var pageMargins = page.marginPreferences;
     // Reverse left and right margins if left-hand page
-    if (page.side == PageSideOptions.LEFT_HAND) {
-        pageMargins.left = page.marginPreferences.right;
-        pageMargins.right = page.marginPreferences.left;
-    }
     if (pageMargins.top + pageMargins.left + pageMargins.bottom + pageMargins.right != 0) {
+        if (page.side == PageSideOptions.LEFT_HAND) {
+            var m_x1 = page.bounds[1] + pageMargins.right;
+            var m_x2 = page.bounds[3] - pageMargins.left;
+        } else {
+            var m_x1 = page.bounds[1] + pageMargins.left;
+            var m_x2 = page.bounds[3] - pageMargins.right;
+        }
         var m_y1 = page.bounds[0] + pageMargins.top;
-        var m_x1 = page.bounds[1] + pageMargins.left;
         var m_y2 = page.bounds[2] - pageMargins.bottom;
-        var m_x2 = page.bounds[3] - pageMargins.right;
         return [m_y1, m_x1, m_y2, m_x2];
     } else {
         return false;
