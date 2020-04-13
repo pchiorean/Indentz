@@ -1,5 +1,5 @@
 ﻿/*
-    Delete gremlins v1.3.7
+    Delete gremlins v1.3.8
     © April 2020, Paul Chiorean
     This script does some househeeping.
 */
@@ -59,11 +59,6 @@ for (var i = 0; i < doc.spreads.length; i++) {
     }
 }
 
-// Delete unused layers
-try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (e) {};
-
-// Show 'Guides' layer
-try { doc.layers.item("guides" | "Guides").visible = true } catch (e) {};
-
-// Delete all guides
-// if (doc.guides.length > 0) { doc.guides.everyItem().remove() };
+try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (e) {}; // Delete unused layers
+try { doc.layers.item("guides" | "Guides").visible = true } catch (e) {}; // Show 'Guides' layer
+// try { doc.guides.everyItem().remove() } catch (e) {}; // Delete all guides
