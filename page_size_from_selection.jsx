@@ -1,5 +1,5 @@
 /*
-    Page size from selection v1.3.2
+    Page size from selection v1.4.0
     © April 2020, Paul Chiorean
     This script sets the page size to the selection bounds.
 */
@@ -11,7 +11,7 @@ var set_AAM = doc.adjustLayoutPreferences.enableAutoAdjustMargins; // Save AAM s
 doc.adjustLayoutPreferences.enableAutoAdjustMargins = true; // Preserve original margins
 
 var sel = doc.selection; // Save selection
-if (sel.length != 0) {
+if (sel.length > 0) {
     var selObj = sel;
     var selPage = selObj[0].parent.pages[0]; // 1st page of parent spread
     var flagUngroup = false;
@@ -36,9 +36,9 @@ if (sel.length != 0) {
 
     // Resize page
     selPage.layoutRule = LayoutRuleOptions.OFF; // Don't scale page items
-    var selObjTL = selObj.resolve(AnchorPoint.TOP_LEFT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
-    var selObjBR = selObj.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
-    selPage.reframe(CoordinateSpaces.SPREAD_COORDINATES, [selObjTL[0], selObjBR[0]]);
+    var selObjTL = selObj.resolve(AnchorPoint.TOP_LEFT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0];
+    var selObjBR = selObj.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0];
+    selPage.reframe(CoordinateSpaces.SPREAD_COORDINATES, [selObjTL, selObjBR]);
 
     // Ungroup and restore locked state
     if (flagUngroup) {
@@ -47,8 +47,15 @@ if (sel.length != 0) {
             sel[selObjLockedArray[i]].locked = true;
         }
     }
+
+// Also set document size
+if (doc.pages.length == 1) {
+    var pageSize = { width: (selObjBR[0] - selObjTL[0]), height: (selObjBR[1] - selObjTL[1]) };
+    doc.documentPreferences.pageWidth = pageSize.width;
+    doc.documentPreferences.pageHeight = pageSize.height;
+}
     doc.adjustLayoutPreferences.enableAutoAdjustMargins = set_AAM; // Restore AAM settings
     app.select(sel); // Restore initial selection
 } else {
-    // alert("Please select an object and try again.")
+    alert("Select an object and try again.")
 }
