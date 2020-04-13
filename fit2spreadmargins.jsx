@@ -1,5 +1,5 @@
 /*
-    Fit to spread margins v1.1.3
+    Fit to spread margins v1.1.4
     © April 2020, Paul Chiorean
     This script resizes the selection to the page margins.
     If page is part of a spread, resize to the spread margins.
@@ -8,27 +8,37 @@
 var doc = app.activeDocument;
 var selObj = doc.selection;
 
+if (selObj.length > 0) {
     // Save setting and set ruler origin to spread
     var ro = doc.viewPreferences.rulerOrigin;
     doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
-
-if (selObj.length != 0 && selObj[0].parentPage != null) {
-    var selSpread = selObj[0].parentPage.parent;
+    // Get selection's parent spread
+    var selSpread;
     for (i = 0; i < selObj.length; i++) {
-        selObj[i].geometricBounds = spreadSafeArea(selSpread.index);
+        if (selObj[i].parentPage != null) {
+            selSpread = selObj[i].parentPage.parent;
+            break;
+        }
+    }
+    if (selSpread != null) {
+        for (i = 0; i < selObj.length; i++) {
+            selObj[i].geometricBounds = spreadSafeArea(selSpread);
+        }
+        // Restore ruler origin setting
+        doc.viewPreferences.rulerOrigin = ro;
+    } else {
+        alert("Please select an object not on pasteboard and try again.")
     }
 } else {
-    // alert("Please select an object not on pasteboard and try again.")
+    alert("Please select an object and try again.")
 }
-
-// Restore ruler origin setting
-doc.viewPreferences.rulerOrigin = ro;
+// END
 
 
 function spreadSafeArea(spread) {
-    var spreadPages = doc.spreads[spread].pages; // spread pages
-    var firstPage = spreadPages.firstItem(); // first page of spread
-    var lastPage = spreadPages.lastItem(); // last page of spread
+    var spreadPages = spread.pages; // Spread pages
+    var firstPage = spreadPages.firstItem(); // First page of spread
+    var lastPage = spreadPages.lastItem(); // Last page of spread
     if (spreadPages.length == 1) {
         // Spread is single page
         var spreadSize = firstPage.bounds;

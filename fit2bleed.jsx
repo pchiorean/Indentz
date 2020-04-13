@@ -1,5 +1,5 @@
 /*
-    Fit to bleedbox v1.4.4
+    Fit to bleedbox v1.4.5
     © April 2020, Paul Chiorean
     This script resizes the selection to the spread bleedbox.
 */
@@ -7,27 +7,37 @@
 var doc = app.activeDocument;
 var selObj = doc.selection;
 
-// Save setting and set ruler origin to spread
-var ro = doc.viewPreferences.rulerOrigin;
-doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
-
-if (selObj.length != 0 && selObj[0].parentPage != null) {
-    var selSpread = selObj[0].parentPage.parent;
+if (selObj.length > 0) {
+    // Save setting and set ruler origin to spread
+    var ro = doc.viewPreferences.rulerOrigin;
+    doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
+    // Get selection's parent spread
+    var selSpread;
     for (i = 0; i < selObj.length; i++) {
-        selObj[i].geometricBounds = spreadBleedSize(selSpread.index);
+        if (selObj[i].parentPage != null) {
+            selSpread = selObj[i].parentPage.parent;
+            break;
+        }
+    }
+    if (selSpread != null) {
+        for (i = 0; i < selObj.length; i++) {
+            selObj[i].geometricBounds = spreadBleedSize(selSpread.index);
+        }
+        // Restore ruler origin setting
+        doc.viewPreferences.rulerOrigin = ro;
+    } else {
+        alert("Please select an object not on pasteboard and try again.")
     }
 } else {
-    // alert("Please select an object not on pasteboard and try again.")
+    alert("Please select an object and try again.")
 }
-
-// Restore ruler origin setting
-doc.viewPreferences.rulerOrigin = ro;
+// END
 
 
 function spreadBleedSize(spread) {
-    var spreadPages = doc.spreads[spread].pages; // spread pages
-    var firstPage = spreadPages.firstItem(); // first page of spread
-    var lastPage = spreadPages.lastItem(); // last page of spread
+    var spreadPages = doc.spreads[spread].pages; // Spread pages
+    var firstPage = spreadPages.firstItem(); // First page of spread
+    var lastPage = spreadPages.lastItem(); // Last page of spread
     var bleedMargins = {
         top: doc.documentPreferences.properties.documentBleedTopOffset,
         left: doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,

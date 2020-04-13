@@ -1,5 +1,5 @@
 /*
-    Fit to spread v1.1.2
+    Fit to spread v1.1.3
     © April 2020, Paul Chiorean
     This script resizes the selection to the spread size.
 */
@@ -7,21 +7,31 @@
 var doc = app.activeDocument;
 var selObj = doc.selection;
 
-// Save setting and set ruler origin to spread
-var ro = doc.viewPreferences.rulerOrigin;
-doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
-
-if (selObj.length != 0 && selObj[0].parentPage != null) {
-    var selSpread = selObj[0].parentPage.parent;
+if (selObj.length > 0) {
+    // Save setting and set ruler origin to spread
+    var ro = doc.viewPreferences.rulerOrigin;
+    doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
+    // Get selection's parent spread
+    var selSpread;
     for (i = 0; i < selObj.length; i++) {
-        selObj[i].geometricBounds = spreadSize(selSpread.index);
+        if (selObj[i].parentPage != null) {
+            selSpread = selObj[i].parentPage.parent;
+            break;
+        }
+    }
+    if (selSpread != null) {
+        for (i = 0; i < selObj.length; i++) {
+            selObj[i].geometricBounds = spreadSize(selSpread.index);
+        }
+        // Restore ruler origin setting
+        doc.viewPreferences.rulerOrigin = ro;
+    } else {
+        alert("Please select an object not on pasteboard and try again.")
     }
 } else {
-    // alert("Please select an object not on pasteboard and try again.")
+    alert("Please select an object and try again.")
 }
-
-// Restore ruler origin setting
-doc.viewPreferences.rulerOrigin = ro;
+// END
 
 
 function spreadSize(spread) {
