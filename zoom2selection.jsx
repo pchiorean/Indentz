@@ -44,8 +44,8 @@ if (selObj.length > 0 && selObj[0].constructor.name != "Guide") {
     // Nothing is selected, we'll zoom to spread //page
     // W_obj = selPage.bounds[3] - selPage.bounds[1];
     // H_obj = selPage.bounds[2] - selPage.bounds[0];
-    W_obj = selSpread.pages.lastItem().bounds[3] - selSpread.pages.firstItem().bounds[1];
-    H_obj = selSpread.pages.lastItem().bounds[2] - selSpread.pages.firstItem().bounds[0];
+    W_obj = selSpread.pages.lastItem().bounds[3] - selSpread.pages.firstItem().bounds[1] - 50;
+    H_obj = selSpread.pages.lastItem().bounds[2] - selSpread.pages.firstItem().bounds[0] + 25;
 }
 
 // Get window dimensions
