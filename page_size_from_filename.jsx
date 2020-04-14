@@ -47,6 +47,7 @@ if (bleedArray != null) {
 }
 // END
 
+
 function resizePages(p, m) {
     var pageSize = sizeArray[p].split("x");
     pageSize = {
