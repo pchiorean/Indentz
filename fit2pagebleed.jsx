@@ -1,5 +1,5 @@
 /*
-    Fit to page bleed v1.0.0
+    Fit to page bleed v1.0.1
     © April 2020, Paul Chiorean
     This script resizes the selection to the page size, including bleed.
 */
@@ -7,7 +7,7 @@
 var doc = app.activeDocument;
 var selObj = doc.selection;
 
-if (selObj.length > 0) {
+if (selObj.length > 0 && selObj[0].constructor.name != "Guide") {
     // Get selection's parent page
     var selPage;
     for (i = 0; i < selObj.length; i++) {
@@ -28,6 +28,7 @@ if (selObj.length > 0) {
     alert("Please select an object and try again.")
 }
 // END
+
 
 function pageBleedSize(page) {
     var pageSize = page.bounds;

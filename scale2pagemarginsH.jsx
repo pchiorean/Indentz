@@ -1,5 +1,5 @@
 /*
-    Scale to page margins (top/bottom) v1.4.4
+    Scale to page margins (top/bottom) v1.4.5
     © April 2020, Paul Chiorean
     This script scales the selected objects to the page top/bottom margins.
 */
@@ -7,7 +7,7 @@
 var doc = app.activeDocument;
 var sel = doc.selection; // Save selection
 
-if (sel.length > 0) {
+if (sel.length > 0 && sel[0].constructor.name != "Guide") {
     // Get selection's parent page
     var selPage;
     for (i = 0; i < sel.length; i++) {

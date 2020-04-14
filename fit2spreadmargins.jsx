@@ -1,5 +1,5 @@
 /*
-    Fit to spread margins v1.1.4
+    Fit to spread margins v1.1.5
     © April 2020, Paul Chiorean
     This script resizes the selection to the page margins.
     If page is part of a spread, resize to the spread margins.
@@ -8,7 +8,7 @@
 var doc = app.activeDocument;
 var selObj = doc.selection;
 
-if (selObj.length > 0) {
+if (selObj.length > 0 && selObj[0].constructor.name != "Guide") {
     // Save setting and set ruler origin to spread
     var ro = doc.viewPreferences.rulerOrigin;
     doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
