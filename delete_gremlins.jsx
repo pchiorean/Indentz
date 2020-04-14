@@ -1,5 +1,5 @@
 ﻿/*
-    Delete gremlins v1.3.8
+    Delete gremlins v1.3.9
     © April 2020, Paul Chiorean
     This script does some househeeping.
 */
@@ -37,7 +37,7 @@ function normalizeCMYK( /*Document*/ doc, swa, a, r, o, t, k, i) {
         if (o.model != CM_PROCESS) continue;
         if (o.space != CS_CMYK) continue;
         t = swa.itemByName(o.name);
-        if (!t.isValid) continue;
+        if (!t.isValid || t != "Safe area") continue;
         for (i = (k = o.colorValue).length; i--; k[i] = Math.round(k[i]));
         k = __("C=%1 M=%2 Y=%3 K=%4", k[0], k[1], k[2], k[3]);
         (r[k] || (r[k] = [])).push({ id: t.id, name: t.name });
