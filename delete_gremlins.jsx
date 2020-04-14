@@ -60,5 +60,5 @@ for (var i = 0; i < doc.spreads.length; i++) {
 }
 
 try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (e) {}; // Delete unused layers
-try { doc.layers.item("guides" | "Guides").visible = true } catch (e) {}; // Show 'Guides' layer
+// try { doc.layers.item("guides").visible = true } catch (e) {}; // Show 'guides' layer
 // try { doc.guides.everyItem().remove() } catch (e) {}; // Delete all guides
