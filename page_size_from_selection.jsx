@@ -1,5 +1,5 @@
 /*
-    Page size from selection v1.4.0
+    Page size from selection v1.4.1
     © April 2020, Paul Chiorean
     This script sets the page size to the selection bounds.
 */
@@ -11,7 +11,7 @@ var set_AAM = doc.adjustLayoutPreferences.enableAutoAdjustMargins; // Save AAM s
 doc.adjustLayoutPreferences.enableAutoAdjustMargins = true; // Preserve original margins
 
 var sel = doc.selection; // Save selection
-if (sel.length > 0) {
+if (sel.length > 0 && sel[0].constructor.name != "Guide") {
     var selObj = sel;
     var selPage = selObj[0].parent.pages[0]; // 1st page of parent spread
     var flagUngroup = false;
