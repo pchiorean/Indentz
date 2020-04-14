@@ -1,5 +1,5 @@
 /*
-    Zoom to selection v1.4.6
+    Zoom to selection v1.4.7
     © April 2020, Paul Chiorean
     This script zooms to the selected objects or, if nothing is selected, to the current page.
 */
@@ -7,6 +7,7 @@
 var doc = app.activeDocument;
 var window = app.activeWindow;
 var selPage = window.activePage;
+var selSpread = selPage.parent;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 var sel = doc.selection; // Save selection
@@ -40,9 +41,11 @@ if (selObj.length > 0 && selObj[0].constructor.name != "Guide") {
         W_obj = selObj_x2 - selObj_x1;
         H_obj = selObj_y2 - selObj_y1;
     } else {
-    // Nothing is selected, we'll zoom to page
-    W_obj = selPage.bounds[3] - selPage.bounds[1];
-    H_obj = selPage.bounds[2] - selPage.bounds[0];
+    // Nothing is selected, we'll zoom to spread //page
+    // W_obj = selPage.bounds[3] - selPage.bounds[1];
+    // H_obj = selPage.bounds[2] - selPage.bounds[0];
+    W_obj = selSpread.pages.lastItem().bounds[3] - selSpread.pages.firstItem().bounds[1];
+    H_obj = selSpread.pages.lastItem().bounds[2] - selSpread.pages.firstItem().bounds[0];
 }
 
 // Get window dimensions
@@ -55,7 +58,7 @@ zoom = Number(zoom * 10 * 4.4).toFixed(1); // Adjust to taste
 zoom = Math.max(5, zoom); zoom = Math.min(zoom, 4000); // Fit in 5-4000% range
 
 // Zoom to target
-window.zoom(ZoomOptions.FIT_PAGE);
+window.zoom(ZoomOptions.FIT_SPREAD); //FIT_PAGE
 try { window.zoomPercentage = zoom } catch (e) {
     // Avoid error 30481 'Data is out of range'
     app.menuActions.item("$ID/Fit Selection in Window").invoke();
