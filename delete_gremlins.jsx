@@ -1,5 +1,5 @@
 ﻿/*
-    Delete gremlins v1.4.1
+    Delete gremlins v1.4.2
     © April 2020, Paul Chiorean
     This script does some househeeping.
 */
@@ -53,15 +53,15 @@ function normalizeCMYK( /*Document*/ doc, swa, a, r, o, t, k, i) {
 }
 normalizeCMYK(app.properties.activeDocument);
 
+try { doc.layers.item("guides").visible = true } catch (e) { // Show 'guides' layer
+    try { doc.layers.item("Guides").visible = true } catch (e) {};
+};
+try { doc.guides.everyItem().remove() } catch (e) {}; // Delete all guides
+try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (e) {}; // Delete unused layers
+
 // Delete empty spreads
 for (var i = 0; i < doc.spreads.length; i++) {
     if (doc.spreads[i].pageItems.length == 0 && doc.spreads.length > 1) {
         doc.spreads[i].remove();
     }
 }
-
-// try { doc.guides.everyItem().remove() } catch (e) {}; // Delete all guides
-try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (e) {}; // Delete unused layers
-try { doc.layers.item("guides").visible = true } catch (e) { // Show 'guides' layer
-    try { doc.layers.item("Guides").visible = true } catch (e) {};
-};
