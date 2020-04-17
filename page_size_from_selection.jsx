@@ -1,5 +1,5 @@
 /*
-    Page size from selection v1.4.1
+    Page size from selection v1.4.2
     © April 2020, Paul Chiorean
     This script sets the page size to the selection bounds.
 */
@@ -12,11 +12,17 @@ doc.adjustLayoutPreferences.enableAutoAdjustMargins = true; // Preserve original
 
 var sel = doc.selection; // Save selection
 if (sel.length > 0 && sel[0].constructor.name != "Guide") {
+    // Get selection's parent page
     var selObj = sel;
     var selPage = selObj[0].parent.pages[0]; // 1st page of parent spread
-    var flagUngroup = false;
-
+    for (i = 0; i < selObj.length; i++) {
+        if (selObj[i].parentPage != null) {
+            selPage = selObj[i].parentPage;
+            break;
+        }
+    }
     // If multiple selection, temporarily group it
+    var flagUngroup = false;
     if (selObj.length > 1) {
         var selObjArray = [];
         var selObjLockedArray = [];
@@ -33,13 +39,11 @@ if (sel.length > 0 && sel[0].constructor.name != "Guide") {
     } else {
         selObj = selObj[0];
     }
-
     // Resize page
     selPage.layoutRule = LayoutRuleOptions.OFF; // Don't scale page items
     var selObjTL = selObj.resolve(AnchorPoint.TOP_LEFT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0];
     var selObjBR = selObj.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0];
     selPage.reframe(CoordinateSpaces.SPREAD_COORDINATES, [selObjTL, selObjBR]);
-
     // Ungroup and restore locked state
     if (flagUngroup) {
         selObj.ungroup();
@@ -47,7 +51,6 @@ if (sel.length > 0 && sel[0].constructor.name != "Guide") {
             sel[selObjLockedArray[i]].locked = true;
         }
     }
-
 // Also set document size
 if (doc.pages.length == 1) {
     var pageSize = { width: (selObjBR[0] - selObjTL[0]), height: (selObjBR[1] - selObjTL[1]) };
