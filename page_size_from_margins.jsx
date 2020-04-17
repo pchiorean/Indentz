@@ -1,5 +1,5 @@
 /*
-    Page size from page margins v1.0.3
+    Page size from page margins v1.0.4
     © April 2020, Paul Chiorean
     This script sets the page size to the page margins.
 */
@@ -18,6 +18,7 @@ doc.viewPreferences.rulerOrigin = RulerOrigin.PAGE_ORIGIN;
 
 for (var i = 0; i < doc.pages.length; i++) {
     var page = doc.pages[i];
+    var pageMargins = page.marginPreferences;
     if (pageMargins.top + pageMargins.left + pageMargins.bottom + pageMargins.right != 0) {
         // Reverse left and right margins if left-hand page
         if (page.side == PageSideOptions.LEFT_HAND) {
@@ -32,7 +33,7 @@ for (var i = 0; i < doc.pages.length; i++) {
         var pageTL = [m_x1 / 0.352777777777778, m_y1 / 0.352777777777778];
         var pageBR = [m_x2 / 0.352777777777778, m_y2 / 0.352777777777778];
         // Set margins to zero
-        selPage.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
+        page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
         // Resize page
         page.layoutRule = LayoutRuleOptions.OFF;
         page.reframe(CoordinateSpaces.PAGE_COORDINATES, [pageTL, pageBR]);
@@ -40,7 +41,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 }
 // Also set document size
 if (doc.pages.length == 1) {
-    var pageSize = { width: (m_x2 - m_x1), height: (m_y2 - m_y1) };
+    var pageSize = { width: (page.bounds[3] - page.bounds[1]), height: (page.bounds[2] -page.bounds[0]) };
     doc.documentPreferences.pageWidth = pageSize.width;
     doc.documentPreferences.pageHeight = pageSize.height;
 }
