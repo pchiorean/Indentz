@@ -1,8 +1,8 @@
 /*
-    Page size from filename v1.3.2
+    Page size from filename v1.4.0
     © April 2020, Paul Chiorean
     This script sets every page size and margins based on the filename.
-    It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_safe area).
+    It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 */
 
 var doc = app.activeDocument;
@@ -18,83 +18,67 @@ var docName = doc.name.substr(0, doc.name.lastIndexOf(".")); // get name w/o ext
 var sizeArray = docName.match(/[_-]\d{2,}([\.,]\d{1,2})?\s?([cm]m)?\s?x\s?\d{2,}([\.,]\d{1,2})?\s?([cm]m)?(?!x)/ig);
     // 1. [_-] -- '_' or '-' separator
     // 2. \d{2,}([\.,]\d{1,2})? -- 2 digits or more followed by optional 1 or 2 decimals
-    // 3. \s?([cm]m)? -- optional space followed by optional 'cm' or 'mm'
+    // 3. \s?([cm]m)? -- optional space followed by optional mm/cm
     // 4. \s?x\s? -- 'x' separator between optional spaces
     // 5. identical to 2.
     // 6. identical to 3.
     // 7. (?!x) -- negative lookhead 'x' separator (to avoid _000x00x00)
 
 if (sizeArray != null) { // at least one pair of dimensions
+    // Sanitize dimensions array
     for (i = 0; i < sizeArray.length; i++) {
         sizeArray[i] = sizeArray[i].replace(/[_-]/g, ""); // clean up underscores
         sizeArray[i] = sizeArray[i].replace(/\s/g, ""); // clean up whitespace
         sizeArray[i] = sizeArray[i].replace(/[cm]m/g, ""); // clean up mm/cm
         sizeArray[i] = sizeArray[i].replace(/,/g, "."); // replace commas
     }
-    switch (sizeArray.length) {
-        case 1: // one pair: page size
-            var p = 0;
-            break;
-        case 2: // 2 pairs: page size & safe area; page size is larger
-            var dimA = sizeArray[0].split("x");
-            var dimB = sizeArray[1].split("x");
-            if ((dimA[0] >= dimB[0]) && (dimA[1] >= dimB[1])) {
-                var p = 0; var m = 1;
-            } else {
-                var p = 1; var m = 0;
-            }
-    }
-    resizePages(p, m);
-}
-
-// Check for bleed
-// Get '_00 [mm]' after '0 [mm]'
-var bleedArray = /\d\s?(?:[cm]m)?[_+](\d{1,2})\s?(?:[cm]m)/i.exec(docName);
-    // \d\s?(?:[cm]m)? -- 1 digit followed by optional space and optional 'cm' or 'mm'
-    // [_+] -- '_' or '+' separator
-    // (\d{1,2}) -- 1 or 2 digits (capturing group #1)
-    // \s?(?:[cm]m) -- optional space followed by mandatory 'cm' or 'mm'
-if (bleedArray != null) {
-    doc.documentPreferences.documentBleedUniformSize = true;
-    doc.documentPreferences.documentBleedTopOffset = bleedArray[1];
-}
-// END
-
-
-function resizePages(p, m) {
-    var pageSize = sizeArray[p].split("x");
+    // Check number of pairs and set page size and, if defined, page margins
+    var pageSize, marginSize, pageMargins;
+    var dimA = sizeArray[0].split("x");
     pageSize = {
-        width: Number(pageSize[0]),
-        height: Number(pageSize[1])
+        width: Number(dimA[0]),
+        height: Number(dimA[1])
     }
-    var pageSizePT = { // page size in points
-        width: pageSize.width / 0.352777777777778,
-        height: pageSize.height / 0.352777777777778
+    if (sizeArray.length == 2) { // 2 pairs: page size & page margins; page size must be larger
+        var dimB = sizeArray[1].split("x");
+        pageSize = {
+            width: Math.max(Number(dimA[0]), Number(dimB[0])),
+            height: Math.max(Number(dimA[1]), Number(dimB[1]))
+        }
+        marginSize = {
+            width: Math.min(Number(dimA[0]), Number(dimB[0])),
+            height: Math.min(Number(dimA[1]), Number(dimB[1]))
+        }
+        pageMargins = {
+            top: (pageSize.height - marginSize.height) / 2,
+            left: (pageSize.width - marginSize.width) / 2,
+            bottom: (pageSize.height - marginSize.height) / 2,
+            right: (pageSize.width - marginSize.width) / 2
+        }
     }
-
-    // Resize pages
     for (i = 0; i < doc.pages.length; i++) {
+        // Resize page
         doc.pages[i].layoutRule = LayoutRuleOptions.OFF;
         doc.pages[i].resize(CoordinateSpaces.INNER_COORDINATES,
             AnchorPoint.CENTER_ANCHOR,
             ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
-            [pageSizePT.width, pageSizePT.height]);
+            [pageSize.width / 0.352777777777778, pageSize.height / 0.352777777777778]);
+        // Set margins
+        if (pageMargins != null) {
+            doc.pages[i].marginPreferences.properties = pageMargins;
+        }
     }
     // Also set document size
     doc.documentPreferences.pageWidth = pageSize.width;
     doc.documentPreferences.pageHeight = pageSize.height;
-
-    // Set margins
-    if (m != null) {
-        var pageMargins = sizeArray[m].split("x");
-        pageMargins = {
-            top: (pageSize.height - pageMargins[1]) / 2,
-            left: (pageSize.width - pageMargins[0]) / 2,
-            bottom: (pageSize.height - pageMargins[1]) / 2,
-            right: (pageSize.width - pageMargins[0]) / 2
-        }
-        for (i = 0; i < doc.pages.length; i++) {
-            doc.pages[i].marginPreferences.properties = pageMargins;
-        }
+    // Check for bleed: try to match '_00 [mm]' after '0 [mm]'
+    var bleedSize = /\d\s?(?:[cm]m)?[_+](\d{1,2})\s?(?:[cm]m)/i.exec(docName);
+        // \d\s?(?:[cm]m)? -- 1 digit followed by optional space and optional mm/cm
+        // [_+] -- '_' or '+' separator
+        // (\d{1,2}) -- 1 or 2 digits (capturing group #1)
+        // \s?(?:[cm]m) -- optional space followed by mandatory mm/cm
+    if (bleedSize != null) {
+        doc.documentPreferences.documentBleedUniformSize = true;
+        doc.documentPreferences.documentBleedTopOffset = bleedSize[1];
     }
 }
