@@ -1,5 +1,5 @@
 /*
-    Fit to bleedbox v1.4.6
+    Fit to spread bleedbox v1.4.6
     © April 2020, Paul Chiorean
     This script resizes the selection to the spread bleedbox.
 */
