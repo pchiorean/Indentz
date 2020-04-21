@@ -1,8 +1,8 @@
 ﻿/*
-    Make defaults v1.7.0
-    © April 2020, Paul Chiorean
-    This script sets default settings, creates swatches & layers, merges 
-    similar layers, sets page dimensions and creates 'safe area' frames.
+	Make defaults v1.7.1
+	© April 2020, Paul Chiorean
+	This script sets default settings, creates swatches & layers, merges 
+	similar layers, sets page dimensions and creates 'safe area' frames.
 */
 
 var doc = app.activeDocument;
@@ -69,172 +69,176 @@ var safeLayer = doc.layers.item(safeLayerName);
 // Make default layers (and merge with similar)
 
 for (i = 0; i < doc.layers.length; i++) {
-    doc.layers.item(i).layerColor = [215, 215, 215];
+	doc.layers.item(i).layerColor = [215, 215, 215];
 }
 
 // Artwork layer
 doc.activeLayer = doc.layers.item(0); // Select first layer
 for (i = 0; i < doc.layers.length; i++) {
-    var docLayer = doc.layers.item(i);
-    switch (docLayer.name) {
-        case "Ebene 1":
-        case "Calque 1":
-        case "Artwork":
-        case "AW":
-        case "Layout":
-        case "layout":
-        case "Layer_lucru":
-            try { doc.layers.add({ name: artLayerName }) } catch (e) {};
-            artLayer.merge(docLayer); i--;
-    }
+	var docLayer = doc.layers.item(i);
+	switch (docLayer.name) {
+		case "Ebene 1":
+		case "Calque 1":
+		case "Artwork":
+		case "AW":
+		case "Layout":
+		case "layout":
+		case "Layer_lucru":
+			try { doc.layers.add({ name: artLayerName }) } catch (e) {};
+			artLayer.merge(docLayer); i--;
+	}
 }
 if (artLayer.isValid) {
-    artLayer.layerColor = UIColors.LIGHT_BLUE;
+	artLayer.layerColor = UIColors.LIGHT_BLUE;
 } else {
-    doc.layers.add({ name: artLayerName, layerColor: UIColors.LIGHT_BLUE });
-    // try { artLayer.move(LocationOptions.after, txtLayer) } catch (e) {};
-    artLayer.visible = false;
+	doc.layers.add({ name: artLayerName, layerColor: UIColors.LIGHT_BLUE });
+	// try { artLayer.move(LocationOptions.after, txtLayer) } catch (e) {};
+	artLayer.visible = false;
 }
 
 // Type layer
 doc.activeLayer = doc.layers.item(0);
 for (i = 0; i < doc.layers.length; i++) {
-    var docLayer = doc.layers.item(i);
-    switch (docLayer.name) {
-        case "Type":
-        case "TEXT":
-        case "TEXTES":
-        case "Text":
-        case "text":
-        case "txt":
-            try { doc.layers.add({ name: txtLayerName }) } catch (e) {};
-            txtLayer.merge(docLayer); i--;
-    }
+	var docLayer = doc.layers.item(i);
+	switch (docLayer.name) {
+		case "Type":
+		case "TEXT":
+		case "TEXTES":
+		case "Text":
+		case "text":
+		case "txt":
+			try { doc.layers.add({ name: txtLayerName }) } catch (e) {};
+			txtLayer.merge(docLayer); i--;
+	}
 }
 if (txtLayer.isValid) {
-    txtLayer.layerColor = UIColors.GREEN;
+	txtLayer.layerColor = UIColors.GREEN;
 } else {
-    doc.layers.add({ name: txtLayerName, layerColor: UIColors.GREEN });
-    // txtLayer.move(LocationOptions.before, artLayer);
-    txtLayer.visible = false;
+	doc.layers.add({ name: txtLayerName, layerColor: UIColors.GREEN });
+	// txtLayer.move(LocationOptions.before, artLayer);
+	txtLayer.visible = false;
 }
 
 // HW layer
 doc.activeLayer = doc.layers.item(0);
 for (i = 0; i < doc.layers.length; i++) {
-    var docLayer = doc.layers.item(i);
-    switch (docLayer.name) {
-        case "WHW":
-        case "WH":
-        case "wh":
-        case "hw":
-            try { doc.layers.add({ name: hwLayerName }) } catch (e) {};
-            hwLayer.merge(docLayer); i--;
-    }
+	var docLayer = doc.layers.item(i);
+	switch (docLayer.name) {
+		case "WHW":
+		case "WH":
+		case "wh":
+		case "hw":
+			try { doc.layers.add({ name: hwLayerName }) } catch (e) {};
+			hwLayer.merge(docLayer); i--;
+	}
 }
 if (hwLayer.isValid) {
-    hwLayer.layerColor = UIColors.LIGHT_GRAY;
+	hwLayer.layerColor = UIColors.LIGHT_GRAY;
 } else {
-    doc.layers.add({ name: hwLayerName, layerColor: UIColors.LIGHT_GRAY });
-    hwLayer.visible = false;
+	doc.layers.add({ name: hwLayerName, layerColor: UIColors.LIGHT_GRAY });
+	hwLayer.visible = false;
 }
 hwLayer.move(LocationOptions.before, txtLayer);
 
 // Safe area layer
 doc.activeLayer = doc.layers.item(0);
 for (i = 0; i < doc.layers.length; i++) {
-    var docLayer = doc.layers.item(i);
-    switch (docLayer.name) {
-        case "Visible":
-        case "visible":
-        case "Vizibil":
-        case "vizibil":
-        case "Vis. area":
-            try { doc.layers.add({ name: safeLayerName }) } catch (e) {};
-            safeLayer.merge(docLayer); i--;
-    }
+	var docLayer = doc.layers.item(i);
+	switch (docLayer.name) {
+		case "Visible":
+		case "visible":
+		case "Vizibil":
+		case "vizibil":
+		case "Vis. area":
+			try { doc.layers.add({ name: safeLayerName }) } catch (e) {};
+			safeLayer.merge(docLayer); i--;
+	}
 }
 if (safeLayer.isValid) {
-    safeLayer.layerColor = UIColors.YELLOW;
+	safeLayer.layerColor = UIColors.YELLOW;
 } else {
-    doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW });
+	doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW });
+	safeLayer.visible = false;
 }
 safeLayer.move(LocationOptions.AT_BEGINNING);
 
 // Dielines layer
 for (i = 0; i < doc.layers.length; i++) {
-    var docLayer = doc.layers.item(i);
-    switch (docLayer.name) {
-        case "diecut":
-        case "die cut":
-        case "Die Cut":
-        case "cut lines":
-        case "Stanze":
-            try { doc.layers.add({ name: dieLayerName }) } catch (e) {};
-            dieLayer.merge(docLayer); i--;
-    }
+	var docLayer = doc.layers.item(i);
+	switch (docLayer.name) {
+		case "diecut":
+		case "die cut":
+		case "Die Cut":
+		case "cut lines":
+		case "Stanze":
+			try { doc.layers.add({ name: dieLayerName }) } catch (e) {};
+			dieLayer.merge(docLayer); i--;
+	}
 }
 if (dieLayer.isValid) {
-    dieLayer.layerColor = UIColors.RED;
+	dieLayer.layerColor = UIColors.RED;
 } else {
-    doc.layers.add({ name: dieLayerName, layerColor: UIColors.RED });
-    dieLayer.visible = false;
+	doc.layers.add({ name: dieLayerName, layerColor: UIColors.RED });
+	dieLayer.visible = false;
 }
 dieLayer.move(LocationOptions.after, safeLayer);
 
 // Varnish layer
 for (i = 0; i < doc.layers.length; i++) {
-    var docLayer = doc.layers.item(i);
-    switch (docLayer.name) {
-        case "UV":
-        case "Varnish":
-            try { doc.layers.add({ name: uvLayerName }) } catch (e) {};
-            uvLayer.merge(docLayer); i--;
-    }
+	var docLayer = doc.layers.item(i);
+	switch (docLayer.name) {
+		case "UV":
+		case "Varnish":
+			try { doc.layers.add({ name: uvLayerName }) } catch (e) {};
+			uvLayer.merge(docLayer); i--;
+	}
 }
 if (uvLayer.isValid) {
-    uvLayer.layerColor = UIColors.YELLOW;
+	uvLayer.layerColor = UIColors.YELLOW;
 } else {
-    doc.layers.add({ name: uvLayerName, layerColor: UIColors.YELLOW });
-    uvLayer.visible = false;
+	doc.layers.add({ name: uvLayerName, layerColor: UIColors.YELLOW });
+	uvLayer.visible = false;
 }
 uvLayer.move(LocationOptions.after, dieLayer);
 
 // Guides layer
 for (i = 0; i < doc.layers.length; i++) {
-    var docLayer = doc.layers.item(i);
-    switch (docLayer.name) {
-        case "Guides":
-            try { doc.layers.add({ name: guidesLayerName }) } catch (e) {};
-            guidesLayer.merge(docLayer); i--;
-    }
+	var docLayer = doc.layers.item(i);
+	switch (docLayer.name) {
+		case "Guides":
+			try { doc.layers.add({ name: guidesLayerName }) } catch (e) {};
+			guidesLayer.merge(docLayer); i--;
+	}
 }
 if (guidesLayer.isValid) {
-    guidesLayer.layerColor = UIColors.MAGENTA; guidesLayer.printable = false;
+	guidesLayer.layerColor = UIColors.MAGENTA; guidesLayer.printable = false;
 } else {
-    doc.layers.add({ name: guidesLayerName, layerColor: UIColors.MAGENTA, printable: false });
-    guidesLayer.visible = false;
+	doc.layers.add({ name: guidesLayerName, layerColor: UIColors.MAGENTA, printable: false });
+	guidesLayer.visible = false;
 }
 guidesLayer.move(LocationOptions.after, uvLayer);
 
 // Background layer
 for (i = 0; i < doc.layers.length; i++) {
-    var docLayer = doc.layers.item(i);
-    switch (docLayer.name) {
-        case "BACKGROUND":
-        case "BG":
-        case "HG":
-            try { doc.layers.add({ name: bgLayerName }) } catch (e) {};
-            bgLayer.merge(docLayer); i--;
-    }
+	var docLayer = doc.layers.item(i);
+	switch (docLayer.name) {
+		case "BACKGROUND":
+		case "BG":
+		case "HG":
+			try { doc.layers.add({ name: bgLayerName }) } catch (e) {};
+			bgLayer.merge(docLayer); i--;
+	}
 }
 if (bgLayer.isValid) {
-    bgLayer.layerColor = UIColors.RED;
+	bgLayer.layerColor = UIColors.RED;
 } else {
-    doc.layers.add({ name: bgLayerName, layerColor: UIColors.RED });
-    bgLayer.visible = false;
+	doc.layers.add({ name: bgLayerName, layerColor: UIColors.RED });
+	bgLayer.visible = false;
 }
 bgLayer.move(LocationOptions.AT_END);
 
 // Sets page dimensions from filename
-try { app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions") } catch (e) {};
+try {
+	app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), 
+	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions")
+} catch (e) {};
