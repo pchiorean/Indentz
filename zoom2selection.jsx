@@ -73,5 +73,5 @@ if (selObj.length > 0 && selObj[0].constructor.name != "Guide") {
 	} else {
 	// Nothing is selected, we'll zoom to spread
 	window.zoom(ZoomOptions.FIT_SPREAD);
-	window.zoomPercentage -= 2.5;
+	window.zoomPercentage *= 0.9;
 }
