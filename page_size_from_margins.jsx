@@ -1,5 +1,5 @@
 /*
-	Page size from page margins v1.5.0
+	Page size from page margins v1.1.0
 	© April 2020, Paul Chiorean
 	This script sets the page size to the page margins.
 */
