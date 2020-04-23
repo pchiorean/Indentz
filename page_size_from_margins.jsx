@@ -1,5 +1,5 @@
 /*
-	Page size from page margins v1.1.0
+	Page size from page margins v1.1.1
 	© April 2020, Paul Chiorean
 	This script sets the page size to the page margins.
 */
@@ -28,7 +28,9 @@ for (var i = 0; i < doc.pages.length; i++) {
 		var m_y1 = page.bounds[0] + pageMargins.top;
 		var m_y2 = page.bounds[2] - pageMargins.bottom;
 		var pageSize = { width: (m_x2 - m_x1), height: (m_y2 - m_y1) };
-		page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }; // Set margins to zero
+		// Set margins to zero
+		page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }; // Page margins
+		doc.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }; // Document margins
 		// Resize page
 		page.layoutRule = LayoutRuleOptions.OFF;
 		page.resize(CoordinateSpaces.INNER_COORDINATES,
