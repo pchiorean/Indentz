@@ -1,5 +1,5 @@
 ﻿/*
-	Make defaults v1.7.1
+	Make defaults v1.7.2
 	© April 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges 
 	similar layers, sets page dimensions and creates 'safe area' frames.
@@ -53,7 +53,7 @@ doc.selection = [];
 try { doc.colors.add({ name: "C=60 M=40 Y=40 K=100", model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [60, 40, 40, 100] }) } catch (e) {};
 try { doc.colors.add({ name: cutSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (e) {};
 try { doc.colors.add({ name: foldSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [100, 0, 0, 0] }) } catch (e) {};
-try { doc.colors.add({ name: uvSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 10, 70, 0] }) } catch (e) {};
+try { doc.colors.add({ name: uvSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 10, 70, 0] }) } catch (e) {};
 try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (e) {};
 
 // Default layers names
