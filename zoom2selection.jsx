@@ -15,7 +15,6 @@ var selObj = sel;
 var selObj_y1, selObj_x1, selObj_y2, selObj_x2;
 var W_win, H_win, W_obj, H_obj, zoom;
 
-// Get target dimensions
 if (selObj.length > 0 && selObj[0].constructor.name != "Guide") {
 		// Something is selected, get dimensions
 		if (selObj[0].hasOwnProperty("parentTextFrames")) {
