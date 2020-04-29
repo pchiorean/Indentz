@@ -1,5 +1,5 @@
 ﻿/*
-	Make defaults v1.7.3
+	Make defaults v1.8.1
 	© April 2020, Paul Chiorean
 	This script sets default settings, replaces some fonts, creates swatches & layers, 
 	merges similar layers, and sets page dimensions.
@@ -25,11 +25,20 @@ const safeSwatchName = "Safe area";
 
 // Font list for replacement (from: Name\tStyle, to: Name\tStyle)
 const fontList = [
+	["Akzidenz Grotesk\tBold", "AkzidenzGrotesk\tBold"],
+	["Arial\tBold", "Helvetica Neue\tBold"],
+	["FoundryGridnik\tRegular", "Foundry Gridnik\tRegular"],
+	["FoundryGridnik\tBold", "Foundry Gridnik\tBold"],
+	["FoundryGridnik\tMedium", "Foundry Gridnik\tMedium"],
 	["Gotham Light\tRegular", "Gotham\tLight"],
 	["Gotham Book\tRegular", "Gotham\tBook"],
 	["Gotham Medium\tRegular", "Gotham\tMedium"],
 	["Gotham Bold\tRegular", "Gotham\tBold"],
-	["Gotham Black\tRegular", "Gotham\Black"]
+	["Gotham Black\tRegular", "Gotham\tBlack"],
+	["Helvetica Neue LT Std\t65 Medium", "Helvetica Neue\tMedium"],
+	["Helvetica Neue LT Std\t75 Bold", "Helvetica Neue\tBold"],
+	["Trade Gothic LT Std\tBold Condensed No. 20", "Trade Gothic for LS\tBold Condensed No. 20"],
+	["Trade Gothic LT Std\tCondensed No. 18", "Trade Gothic for LS\tCondensed No. 18"]
 ];
 
 // Set settings
