@@ -1,29 +1,38 @@
 ﻿/*
-	Make defaults v1.7.2
+	Make defaults v1.7.3
 	© April 2020, Paul Chiorean
-	This script sets default settings, creates swatches & layers, merges 
-	similar layers, sets page dimensions and creates 'safe area' frames.
+	This script sets default settings, replaces some fonts, creates swatches & layers, 
+	merges similar layers, and sets page dimensions.
 */
 
 var doc = app.activeDocument;
 
 // Layer names
-var bgLayerName = "bg";
-var artLayerName = "artwork";
-var txtLayerName = "type";
-var hwLayerName = "HW";
-var guidesLayerName = "guides";
-var uvLayerName = "varnish";
-var dieLayerName = "dielines";
-var safeLayerName = "safe area";
+const bgLayerName = "bg";
+const artLayerName = "artwork";
+const txtLayerName = "type";
+const hwLayerName = "HW";
+const guidesLayerName = "guides";
+const uvLayerName = "varnish";
+const dieLayerName = "dielines";
+const safeLayerName = "safe area";
 
 // Swatch names
-var cutSwatchName = "Cut";
-var foldSwatchName = "Fold";
-var uvSwatchName = "Varnish";
-var safeSwatchName = "Safe area";
+const cutSwatchName = "Cut";
+const foldSwatchName = "Fold";
+const uvSwatchName = "Varnish";
+const safeSwatchName = "Safe area";
 
-// Settings
+// Font list for replacement (from: Name\tStyle, to: Name\tStyle)
+const fontList = [
+	["Gotham Light\tRegular", "Gotham\tLight"],
+	["Gotham Book\tRegular", "Gotham\tBook"],
+	["Gotham Medium\tRegular", "Gotham\tMedium"],
+	["Gotham Bold\tRegular", "Gotham\tBold"],
+	["Gotham Black\tRegular", "Gotham\Black"]
+];
+
+// Set settings
 doc.zeroPoint = [0, 0];
 try { doc.cmykProfile = "ISO Coated v2 (ECI)" } catch (e) { doc.cmykProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
 doc.rgbProfile = "sRGB IEC61966-2.1";
@@ -49,6 +58,16 @@ doc.pageItemDefaults.fillColor = "None";
 doc.pageItemDefaults.strokeColor = "None";
 doc.selection = [];
 
+// Replace fonts
+app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
+for (var i = 0; i < fontList.length; i++) {
+	var changed;
+	app.findTextPreferences.appliedFont = fontList[i][0];
+	app.changeTextPreferences.appliedFont = fontList[i][1];
+	changed = doc.changeText();
+	app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
+}
+
 // Add default swatches
 try { doc.colors.add({ name: "C=60 M=40 Y=40 K=100", model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [60, 40, 40, 100] }) } catch (e) {};
 try { doc.colors.add({ name: cutSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (e) {};
@@ -56,7 +75,7 @@ try { doc.colors.add({ name: foldSwatchName, model: ColorModel.SPOT, space: Colo
 try { doc.colors.add({ name: uvSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 10, 70, 0] }) } catch (e) {};
 try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (e) {};
 
-// Default layers names
+// Make default layers (and merge with similar)
 var bgLayer = doc.layers.item(bgLayerName);
 var artLayer = doc.layers.item(artLayerName);
 var txtLayer = doc.layers.item(txtLayerName);
@@ -65,13 +84,10 @@ var guidesLayer = doc.layers.item(guidesLayerName);
 var uvLayer = doc.layers.item(uvLayerName);
 var dieLayer = doc.layers.item(dieLayerName);
 var safeLayer = doc.layers.item(safeLayerName);
-
-// Make default layers (and merge with similar)
-
+// Mark existing layers grey
 for (i = 0; i < doc.layers.length; i++) {
 	doc.layers.item(i).layerColor = [215, 215, 215];
 }
-
 // Artwork layer
 doc.activeLayer = doc.layers.item(0); // Select first layer
 for (i = 0; i < doc.layers.length; i++) {
@@ -95,7 +111,6 @@ if (artLayer.isValid) {
 	// try { artLayer.move(LocationOptions.after, txtLayer) } catch (e) {};
 	artLayer.visible = false;
 }
-
 // Type layer
 doc.activeLayer = doc.layers.item(0);
 for (i = 0; i < doc.layers.length; i++) {
@@ -118,7 +133,6 @@ if (txtLayer.isValid) {
 	// txtLayer.move(LocationOptions.before, artLayer);
 	txtLayer.visible = false;
 }
-
 // HW layer
 doc.activeLayer = doc.layers.item(0);
 for (i = 0; i < doc.layers.length; i++) {
@@ -139,7 +153,6 @@ if (hwLayer.isValid) {
 	hwLayer.visible = false;
 }
 hwLayer.move(LocationOptions.before, txtLayer);
-
 // Safe area layer
 doc.activeLayer = doc.layers.item(0);
 for (i = 0; i < doc.layers.length; i++) {
@@ -161,7 +174,6 @@ if (safeLayer.isValid) {
 	safeLayer.visible = false;
 }
 safeLayer.move(LocationOptions.AT_BEGINNING);
-
 // Dielines layer
 for (i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
@@ -182,7 +194,6 @@ if (dieLayer.isValid) {
 	dieLayer.visible = false;
 }
 dieLayer.move(LocationOptions.after, safeLayer);
-
 // Varnish layer
 for (i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
@@ -200,7 +211,6 @@ if (uvLayer.isValid) {
 	uvLayer.visible = false;
 }
 uvLayer.move(LocationOptions.after, dieLayer);
-
 // Guides layer
 for (i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
@@ -217,7 +227,6 @@ if (guidesLayer.isValid) {
 	guidesLayer.visible = false;
 }
 guidesLayer.move(LocationOptions.after, uvLayer);
-
 // Background layer
 for (i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
