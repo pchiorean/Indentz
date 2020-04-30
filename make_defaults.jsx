@@ -1,8 +1,8 @@
 ﻿/*
-	Make defaults v1.8.1
+	Make defaults v1.9.0
 	© April 2020, Paul Chiorean
-	This script sets default settings, replaces some fonts, creates swatches & layers, 
-	merges similar layers, and sets page dimensions.
+	This script sets default settings, creates swatches & layers, merges similar layers, 
+	replaces some unwanted fonts and sets page dimensions.
 */
 
 var doc = app.activeDocument;
@@ -23,25 +23,7 @@ const foldSwatchName = "Fold";
 const uvSwatchName = "Varnish";
 const safeSwatchName = "Safe area";
 
-// Font list for replacement (from: Name\tStyle, to: Name\tStyle)
-const fontList = [
-	["Akzidenz Grotesk\tBold", "AkzidenzGrotesk\tBold"],
-	["Arial\tBold", "Helvetica Neue\tBold"],
-	["FoundryGridnik\tRegular", "Foundry Gridnik\tRegular"],
-	["FoundryGridnik\tBold", "Foundry Gridnik\tBold"],
-	["FoundryGridnik\tMedium", "Foundry Gridnik\tMedium"],
-	["Gotham Light\tRegular", "Gotham\tLight"],
-	["Gotham Book\tRegular", "Gotham\tBook"],
-	["Gotham Medium\tRegular", "Gotham\tMedium"],
-	["Gotham Bold\tRegular", "Gotham\tBold"],
-	["Gotham Black\tRegular", "Gotham\tBlack"],
-	["Helvetica Neue LT Std\t65 Medium", "Helvetica Neue\tMedium"],
-	["Helvetica Neue LT Std\t75 Bold", "Helvetica Neue\tBold"],
-	["Trade Gothic LT Std\tBold Condensed No. 20", "Trade Gothic for LS\tBold Condensed No. 20"],
-	["Trade Gothic LT Std\tCondensed No. 18", "Trade Gothic for LS\tCondensed No. 18"]
-];
-
-// Set settings
+// Step 1. Default settings
 doc.zeroPoint = [0, 0];
 try { doc.cmykProfile = "ISO Coated v2 (ECI)" } catch (e) { doc.cmykProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
 doc.rgbProfile = "sRGB IEC61966-2.1";
@@ -50,41 +32,39 @@ doc.guidePreferences.guidesLocked = false;
 doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;
 doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
 doc.viewPreferences.showFrameEdges = true;
+doc.viewPreferences.showRulers = true;
+doc.pasteboardPreferences.pasteboardMargins = ["150mm", "25mm"];
+doc.pasteboardPreferences.previewBackgroundColor = UIColors.LIGHT_GRAY;
 doc.viewPreferences.cursorKeyIncrement = "0.2mm";
 doc.textPreferences.leadingKeyIncrement = "0.5pt";
 doc.textPreferences.kerningKeyIncrement = 5;
 doc.textPreferences.baselineShiftKeyIncrement = "0.1pt";
-doc.pasteboardPreferences.pasteboardMargins = ["150mm", "25mm"];
-doc.pasteboardPreferences.previewBackgroundColor = UIColors.LIGHT_GRAY;
+doc.textPreferences.typographersQuotes = true;
+doc.textPreferences.useParagraphLeading = true;
 doc.documentPreferences.intent = DocumentIntentOptions.PRINT_INTENT;
 doc.transparencyPreferences.blendingSpace = BlendingSpace.CMYK;
 app.transformPreferences.adjustStrokeWeightWhenScaling = true;
 app.transformPreferences.adjustEffectsWhenScaling = true;
+app.generalPreferences.includePreview = true;
+app.generalPreferences.preventSelectingLockedItems = true;
 app.generalPreferences.ungroupRemembersLayers = true;
 app.clipboardPreferences.pasteRemembersLayers = true;
+app.displayPerformancePreferences.persistLocalSettings = true;
 app.activeWindow.transformReferencePoint = AnchorPoint.CENTER_ANCHOR;
+app.activeWindow.screenMode = ScreenModeOptions.PREVIEW_OFF;
+app.preflightOptions.preflightOff = true;
 doc.pageItemDefaults.fillColor = "None";
 doc.pageItemDefaults.strokeColor = "None";
 doc.selection = [];
 
-// Replace fonts
-app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
-for (var i = 0; i < fontList.length; i++) {
-	var changed;
-	app.findTextPreferences.appliedFont = fontList[i][0];
-	app.changeTextPreferences.appliedFont = fontList[i][1];
-	changed = doc.changeText();
-	app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
-}
-
-// Add default swatches
+// Step 2. Add default swatches
 try { doc.colors.add({ name: "C=60 M=40 Y=40 K=100", model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [60, 40, 40, 100] }) } catch (e) {};
 try { doc.colors.add({ name: cutSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (e) {};
 try { doc.colors.add({ name: foldSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [100, 0, 0, 0] }) } catch (e) {};
 try { doc.colors.add({ name: uvSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 10, 70, 0] }) } catch (e) {};
 try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (e) {};
 
-// Make default layers (and merge with similar)
+// Step 3. Make default layers (and merge with similar)
 var bgLayer = doc.layers.item(bgLayerName);
 var artLayer = doc.layers.item(artLayerName);
 var txtLayer = doc.layers.item(txtLayerName);
@@ -255,8 +235,14 @@ if (bgLayer.isValid) {
 }
 bgLayer.move(LocationOptions.AT_END);
 
-// Sets page dimensions from filename
+// Step 4. Sets page dimensions from filename
 try {
 	app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), 
-	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Page dimensions")
+	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Set page dimensions")
+} catch (e) {};
+
+// Step 5. Replace fonts
+try {
+	app.doScript(File(app.activeScript.path + "/fonts_replace.jsx"), 
+	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Replace fonts")
 } catch (e) {};
