@@ -1,6 +1,6 @@
 ﻿/*
 	Replace fonts 1.0.0
-	© April 2020, Paul Chiorean
+	© May 2020, Paul Chiorean
 	This script replaces missing or unwanted fonts with their equivalents.
 */
 
@@ -19,7 +19,7 @@ const fontList = [
 	["Helvetica Neue LT Std\t65 Medium", "Helvetica Neue\tMedium"],
 	["Helvetica Neue LT Std\t75 Bold", "Helvetica Neue\tBold"],
 	["Trade Gothic LT Std\tBold Condensed No. 20", "Trade Gothic for LS\tBold Condensed No. 20"],
-	["Trade Gothic LT Std\tCondensed No. 18", "Trade Gothic for LS\tCondensed No. 18"]
+	["Trade Gothic LT Std\tCondensed No. 18", "Trade Gothic for LS\tCondensed No. 18"],
 ];
 
 app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;

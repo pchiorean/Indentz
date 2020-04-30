@@ -1,6 +1,6 @@
 ﻿/*
-	Delete gremlins v1.4.3
-	© April 2020, Paul Chiorean
+	Delete gremlins v1.4.4
+	© May 2020, Paul Chiorean
 	This script does some househeeping.
 */
 
@@ -23,9 +23,9 @@ doc.pageItemDefaults.strokeColor = "None";
 doc.selection = [];
 
 // Step 2. Delete unused swatches
-for (var i = doc.unusedSwatches.length - 1; i >= 0; i--) {
+for (var i = 0; i < doc.unusedSwatches.length; i++) {
 	var name = doc.unusedSwatches[i].name;
-	if (name != "") { doc.unusedSwatches[i].remove() };
+	if (name != "") doc.unusedSwatches[i].remove();
 }
 
 // Step 3. Normalize similar CMYK swatches
@@ -58,19 +58,17 @@ function normalizeCMYK( /*Document*/ doc, swa, a, r, o, t, k, i) {
 normalizeCMYK(app.properties.activeDocument);
 
 // Step 4. Show 'guides' layer
-try { doc.layers.item("guides").visible = true } catch (e) {
-	try { doc.layers.item("Guides").visible = true } catch (e) {};
+try { doc.layers.item("guides").visible = true } catch (_) {
+	try { doc.layers.item("Guides").visible = true } catch (_) {};
 };
 
 // Step 5. Delete all guides
-try { doc.guides.everyItem().remove() } catch (e) {};
+try { doc.guides.everyItem().remove() } catch (_) {};
 
 // Step 6. Delete unused layers
-try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (e) {};
+try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (_) {};
 
 // Step 7. Delete empty spreads
 for (var i = 0; i < doc.spreads.length; i++) {
-	if (doc.spreads[i].pageItems.length == 0 && doc.spreads.length > 1) {
-		doc.spreads[i].remove();
-	}
+	if (doc.spreads[i].pageItems.length == 0 && doc.spreads.length > 1) doc.spreads[i].remove();
 }

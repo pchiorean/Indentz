@@ -1,6 +1,6 @@
 /*
-	Page size from selection v1.4.4
-	© April 2020, Paul Chiorean
+	Page size from selection v1.4.5
+	© May 2020, Paul Chiorean
 	This script sets the page size to the selection bounds.
 */
 
@@ -15,26 +15,18 @@ if (sel.length > 0 && sel[0].constructor.name != "Guide") {
 	var selObj = sel;
 	var selPage = selObj[0].parent.pages[0]; // 1st page of parent spread, as backup
 	for (i = 0; i < selObj.length; i++) {
-		if (selObj[i].parentPage != null) {
-			selPage = selObj[i].parentPage;
-			break;
-		}
+		if (selObj[i].parentPage != null) { selPage = selObj[i].parentPage; break };
 	}
 	// If multiple selection, temporarily group it
 	var flagUngroup = false;
 	if (selObj.length > 1) {
-		var selObjArray = [];
-		var selObjLockedArray = [];
+		var selObjArray = [], selObjLockedArray = [];
 		for (i = 0; i < selObj.length; i++) {
 			// If locked, unlock and save index
-			if (selObj[i].locked) {
-				selObj[i].locked = false;
-				selObjLockedArray.push(i);
-			}
+			if (selObj[i].locked) { selObj[i].locked = false; selObjLockedArray.push(i) };
 			selObjArray.push(selObj[i]);
 		}
-		selObj = selPage.groups.add(selObjArray);
-		flagUngroup = true;
+		selObj = selPage.groups.add(selObjArray); flagUngroup = true;
 	} else {
 		selObj = selObj[0];
 	}
@@ -50,20 +42,19 @@ if (sel.length > 0 && sel[0].constructor.name != "Guide") {
 	// Ungroup and restore locked state
 	if (flagUngroup) {
 		selObj.ungroup();
-		for (i = 0; i < selObjLockedArray.length; i++) {
-			sel[selObjLockedArray[i]].locked = true;
-		};
+		for (i = 0; i < selObjLockedArray.length; i++) sel[selObjLockedArray[i]].locked = true;
 	}
 	// Also set document size
 	if (doc.pages.length == 1) {
 		try {
 			doc.documentPreferences.pageWidth = pageSize.width;
 			doc.documentPreferences.pageHeight = pageSize.height;
-		} catch (e) {
+		} catch (_) {
 			// Set master pages margins to zero
-			var masterSpreads = doc.masterSpreads;
+			var masterSpreads, masterPages;
+			masterSpreads = doc.masterSpreads;
 			for (s = 0; s < masterSpreads.length; s++) {
-				var masterPages = masterSpreads[s].pages;
+				masterPages = masterSpreads[s].pages;
 				for (i = 0; i < masterPages.length; i++) {
 					masterPages[i].marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
 				}
@@ -73,6 +64,4 @@ if (sel.length > 0 && sel[0].constructor.name != "Guide") {
 		}
 	}
 	app.select(sel); // Restore initial selection
-} else {
-	alert("Select an object and try again.")
-}
+} else alert("Select an object and try again.");

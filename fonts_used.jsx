@@ -1,6 +1,6 @@
 /*
 	Used fonts 1.0.0
-	© April 2020, Paul Chiorean
+	© May 2020, Paul Chiorean
 	This script makes a list of the fonts used in the current document.
 */
 
