@@ -1,7 +1,7 @@
 /*
 	Used fonts 1.0.0
 	© April 2020, Paul Chiorean
-	This script replaces missing or unwanted fonts with their equivalents.
+	This script makes a list of the fonts used in the current document.
 */
 
 var usedFonts = app.activeDocument.fonts;
