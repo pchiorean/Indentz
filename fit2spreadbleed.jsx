@@ -1,5 +1,5 @@
 /*
-	Fit to spread bleedbox v1.4.8
+	Fit to spread bleedbox v1.4.9
 	© May 2020, Paul Chiorean
 	This script resizes the selection to the spread bleedbox.
 */
@@ -12,25 +12,23 @@ if (selObj.length > 0 && selObj[0].constructor.name != "Guide") {
 	var ro = doc.viewPreferences.rulerOrigin;
 	doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 	// Get selection's parent spread
-	var selSpread;
+	var selSp;
 	for (i = 0; i < selObj.length; i++) {
-		if (selObj[i].parentPage != null) { selSpread = selObj[i].parentPage.parent; break };
+		if (selObj[i].parentPage != null) { selSp = selObj[i].parentPage.parent; break };
 	}
-	if (selSpread != null) {
-		for (i = 0; i < selObj.length; i++) selObj[i].geometricBounds = spreadBleedSize(selSpread);
-		// Restore ruler origin setting
-		doc.viewPreferences.rulerOrigin = ro;
+	if (selSp != null) {
+		for (i = 0; i < selObj.length; i++) selObj[i].geometricBounds = bounds(selSp);
+		doc.viewPreferences.rulerOrigin = ro; // Restore ruler origin setting
 	} else alert("Please select an object not on pasteboard and try again.");
 } else alert("Please select an object and try again.");
-// END
 
 
-function spreadBleedSize(spread) {
-	var firstPage = spread.pages.firstItem(); // First page of spread
-	var lastPage = spread.pages.lastItem(); // Last page of spread
-	var spreadSize, bleedMargins, m_y1, m_x1, m_y2, m_x2;
-	spreadSize = firstPage.bounds;
-	bleedMargins = {
+function bounds(spread) { // Return spread bleed bounds
+	var fPg = spread.pages.firstItem();
+	var lPg = spread.pages.lastItem();
+	var sizeSp, bleed, m_y1, m_x1, m_y2, m_x2;
+	sizeSp = fPg.bounds;
+	bleed = {
 		top: doc.documentPreferences.properties.documentBleedTopOffset,
 		left: doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
 		bottom: doc.documentPreferences.properties.documentBleedBottomOffset,
@@ -38,24 +36,22 @@ function spreadBleedSize(spread) {
 	}
 	if (spread.pages.length == 1) { // Spread is single page
 		// Reverse left and right margins if left-hand page
-		if (firstPage.side == PageSideOptions.LEFT_HAND) {
-			bleedMargins.left = doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
-			bleedMargins.right = doc.documentPreferences.properties.documentBleedInsideOrLeftOffset;
+		if (fPg.side == PageSideOptions.LEFT_HAND) {
+			bleed.left = doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
+			bleed.right = doc.documentPreferences.properties.documentBleedInsideOrLeftOffset;
 		}
 	} else { // Spread is multiple pages
-		spreadSize = [firstPage.bounds[0], firstPage.bounds[1], lastPage.bounds[2], lastPage.bounds[3]];
+		sizeSp = [fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3]];
 		// Reverse left and right margins if left-hand page
-		if (firstPage.side == PageSideOptions.LEFT_HAND) {
-			bleedMargins.left = doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
+		if (fPg.side == PageSideOptions.LEFT_HAND) {
+			bleed.left = doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
 		}
 	}
-	if (bleedMargins.top + bleedMargins.left + bleedMargins.bottom + bleedMargins.right != 0) {
-		m_y1 = spreadSize[0] - bleedMargins.top;
-		m_x1 = spreadSize[1] - bleedMargins.left;
-		m_y2 = spreadSize[2] + bleedMargins.bottom;
-		m_x2 = spreadSize[3] + bleedMargins.right;
+	if (bleed.top + bleed.left + bleed.bottom + bleed.right != 0) {
+		m_y1 = sizeSp[0] - bleed.top;
+		m_x1 = sizeSp[1] - bleed.left;
+		m_y2 = sizeSp[2] + bleed.bottom;
+		m_x2 = sizeSp[3] + bleed.right;
 		return [m_y1, m_x1, m_y2, m_x2];
-	} else {
-		return spreadSize;
-	}
+	} else return sizeSp;
 }

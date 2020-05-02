@@ -1,13 +1,13 @@
 /*
-	Zoom to selection v1.6.1
+	Zoom to selection v1.6.2
 	© May 2020, Paul Chiorean
 	This script zooms to the selected objects or, if nothing is selected, to the current spread.
 */
 
 var doc = app.activeDocument;
 var window = app.activeWindow;
-var selPage = window.activePage;
-var selSpread = selPage.parent;
+var selPg = window.activePage;
+var selSp = selPg.parent;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 var sel = doc.selection; // Save selection
@@ -65,10 +65,10 @@ if (selObj.length > 0 && selObj[0].constructor.name != "Guide") {
 	zoom = Math.max(5, zoom), Math.min(zoom, 4000); // Fit in 5-4000% range
 	// Zoom to target
 	window.zoom(ZoomOptions.FIT_SPREAD);
-	try { window.zoomPercentage = zoom } catch (e) {
+	try { window.zoomPercentage = zoom } catch (_) {
 		// Avoid error 30481 'Data is out of range'
-		try { app.menuActions.item("$ID/Fit Selection in Window").invoke() } catch (e) {};
-	try { app.select(sel) } catch (e) {}; // Restore initial selection
+		try { app.menuActions.item("$ID/Fit Selection in Window").invoke() } catch (_) {};
+	try { app.select(sel) } catch (_) {}; // Restore initial selection
 }
 	} else { // Nothing is selected, we'll zoom to spread
 	window.zoom(ZoomOptions.FIT_SPREAD);

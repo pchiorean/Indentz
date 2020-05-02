@@ -1,5 +1,5 @@
 /*
-	Page size from page margins v1.2.1
+	Page size from page margins v1.2.2
 	© May 2020, Paul Chiorean
 	This script sets the page size to the page margins.
 */
@@ -11,17 +11,17 @@ doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 
 for (var i = 0; i < doc.pages.length; i++) {
 	var page = doc.pages[i];
-	var pageMargins = page.marginPreferences;
+	var mgPg = page.marginPreferences;
 	var m_y1, m_x1, m_y2, m_x2;
-	if (pageMargins.top + pageMargins.left + pageMargins.bottom + pageMargins.right != 0) {
-		m_y1 = page.bounds[0] + pageMargins.top;
-		m_x1 = page.bounds[1] + pageMargins.left;
-		m_y2 = page.bounds[2] - pageMargins.bottom;
-		m_x2 = page.bounds[3] - pageMargins.right;
+	if (mgPg.top + mgPg.left + mgPg.bottom + mgPg.right != 0) {
+		m_y1 = page.bounds[0] + mgPg.top;
+		m_x1 = page.bounds[1] + mgPg.left;
+		m_y2 = page.bounds[2] - mgPg.bottom;
+		m_x2 = page.bounds[3] - mgPg.right;
 		// Reverse left and right margins if left-hand page
 		if (page.side == PageSideOptions.LEFT_HAND) {
-			m_x1 = page.bounds[1] + pageMargins.right;
-			m_x2 = page.bounds[3] - pageMargins.left;
+			m_x1 = page.bounds[1] + mgPg.right;
+			m_x2 = page.bounds[3] - mgPg.left;
 		}
 		// Make temp rectangle
 		var mg = page.rectangles.add({
@@ -42,21 +42,20 @@ for (var i = 0; i < doc.pages.length; i++) {
 }
 // Also set document size
 if (doc.pages.length == 1) {
-	var pageSize = { width: (page.bounds[3] - page.bounds[1]), height: (page.bounds[2] - page.bounds[0]) };
+	var sizePg = { width: (page.bounds[3] - page.bounds[1]), height: (page.bounds[2] - page.bounds[0]) };
 	try {
-		doc.documentPreferences.pageWidth = pageSize.width;
-		doc.documentPreferences.pageHeight = pageSize.height;
+		doc.documentPreferences.pageWidth = sizePg.width;
+		doc.documentPreferences.pageHeight = sizePg.height;
 	} catch (_) {
 		// Set master pages margins to zero
-		var masterSpreads, masterPages;
-		masterSpreads = doc.masterSpreads;
-		for (s = 0; s < masterSpreads.length; s++) {
-			masterPages = masterSpreads[s].pages;
-			for (i = 0; i < masterPages.length; i++) {
-				masterPages[i].marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
+		var masterPg;
+		for (s = 0; s < doc.masterSpreads.length; s++) {
+			masterPg = doc.masterSpreads[s].pages;
+			for (i = 0; i < masterPg.length; i++) {
+				masterPg[i].marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
 			}
 		}
-		doc.documentPreferences.pageWidth = pageSize.width;
-		doc.documentPreferences.pageHeight = pageSize.height;
+		doc.documentPreferences.pageWidth = sizePg.width;
+		doc.documentPreferences.pageHeight = sizePg.height;
 	}
 }

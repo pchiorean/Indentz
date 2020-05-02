@@ -1,5 +1,5 @@
 /*
-	Fit to spread v1.1.6
+	Fit to spread v1.1.7
 	© May 2020, Paul Chiorean
 	This script resizes the selection to the spread size.
 */
@@ -12,26 +12,25 @@ if (selObj.length > 0 && selObj[0].constructor.name != "Guide") {
 	var ro = doc.viewPreferences.rulerOrigin;
 	doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 	// Get selection's parent spread
-	var selSpread;
+	var selSp;
 	for (i = 0; i < selObj.length; i++) {
-		if (selObj[i].parentPage != null) { selSpread = selObj[i].parentPage.parent; break };
+		if (selObj[i].parentPage != null) { selSp = selObj[i].parentPage.parent; break };
 	}
-	if (selSpread != null) {
-		for (i = 0; i < selObj.length; i++) selObj[i].geometricBounds = spreadSize(selSpread);
+	if (selSp != null) {
+		for (i = 0; i < selObj.length; i++) selObj[i].geometricBounds = bounds(selSp);
 		doc.viewPreferences.rulerOrigin = ro; // Restore ruler origin setting
 	} else alert("Please select an object not on pasteboard and try again.");
 } else alert("Please select an object and try again.");
-// END
 
 
-function spreadSize(spread) {
-	var firstPage = spread.pages.firstItem();
-	var lastPage = spread.pages.lastItem();
-	var spreadSize;
+function bounds(spread) { // Return spread bounds
+	var fPg = spread.pages.firstItem();
+	var lPg = spread.pages.lastItem();
+	var sizeSp;
 	if (spread.pages.length == 1) { // Spread is single page
-		spreadSize = firstPage.bounds;
+		sizeSp = fPg.bounds;
 	} else { // Spread is multiple pages
-		spreadSize = [firstPage.bounds[0], firstPage.bounds[1], lastPage.bounds[2], lastPage.bounds[3]];
+		sizeSp = [fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3]];
 	}
-	return spreadSize;
+	return sizeSp;
 }

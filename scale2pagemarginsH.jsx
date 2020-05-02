@@ -1,5 +1,5 @@
 /*
-	Scale to page margins (top/bottom) v1.4.6
+	Scale to page margins (top/bottom) v1.4.7
 	© May 2020, Paul Chiorean
 	This script scales the selected objects to the page top/bottom margins.
 */
@@ -9,11 +9,11 @@ var sel = doc.selection; // Save selection
 
 if (sel.length > 0 && sel[0].constructor.name != "Guide") {
 	// Get selection's parent page
-	var selPage;
+	var selPg;
 	for (i = 0; i < sel.length; i++) {
-		if (sel[i].parentPage != null) { selPage = doc.pages[sel[i].parentPage.documentOffset]; break };
+		if (sel[i].parentPage != null) { selPg = doc.pages[sel[i].parentPage.documentOffset]; break };
 	}
-	if (selPage != null) {
+	if (selPg != null) {
 		// Remember layers for grouping/ungrouping
 		var set_uRL = app.generalPreferences.ungroupRemembersLayers;
 		var set_pRL = app.clipboardPreferences.pasteRemembersLayers;
@@ -27,12 +27,12 @@ if (sel.length > 0 && sel[0].constructor.name != "Guide") {
 			for (i = 0; i < selObj.length; i++) {
 				if (!selObj[i].locked) { selObjArray.push(selObj[i]) };
 			}
-			selObj = selPage.groups.add(selObjArray); flagUngroup = true;
+			selObj = selPg.groups.add(selObjArray); flagUngroup = true;
 		} else selObj = selObj[0];
-		var W_pg = selPage.bounds[3] - selPage.bounds[1];
-		var H_pg = selPage.bounds[2] - selPage.bounds[0];
-		var W_mg = W_pg - (selPage.marginPreferences.left + selPage.marginPreferences.right);
-		var H_mg = H_pg - (selPage.marginPreferences.top + selPage.marginPreferences.bottom);
+		var W_pg = selPg.bounds[3] - selPg.bounds[1];
+		var H_pg = selPg.bounds[2] - selPg.bounds[0];
+		var W_mg = W_pg - (selPg.marginPreferences.left + selPg.marginPreferences.right);
+		var H_mg = H_pg - (selPg.marginPreferences.top + selPg.marginPreferences.bottom);
 		var W_obj = selObj.visibleBounds[3] - selObj.visibleBounds[1];
 		var H_obj = selObj.visibleBounds[2] - selObj.visibleBounds[0];
 		// Compute scale factor

@@ -1,5 +1,5 @@
 /*
-	Page size from filename v1.4.1
+	Page size from filename v1.4.2
 	© May 2020, Paul Chiorean
 	This script sets every page size and margins based on the filename.
 	It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -34,27 +34,27 @@ if (sizeArray != null) { // At least one pair of dimensions
 	}
 
 	// Check number of pairs and set page size and, if defined, page margins
-	var page, pageSize, marginSize, pageMargins;
+	var page, sizePg, sizeMg, mgPg;
 	var dimA = sizeArray[0].split("x"); // First pair
-	pageSize = {
+	sizePg = {
 		width: Number(dimA[0]),
 		height: Number(dimA[1])
 	}
 	if (sizeArray.length == 2) { // If 2 pairs (page size & page margins), page size must be larger
 		var dimB = sizeArray[1].split("x");
-		pageSize = { // Choose the largest
+		sizePg = { // Choose the largest
 			width: Math.max(Number(dimA[0]), Number(dimB[0])),
 			height: Math.max(Number(dimA[1]), Number(dimB[1]))
 		}
-		marginSize = { // Choose the smallest
+		sizeMg = { // Choose the smallest
 			width: Math.min(Number(dimA[0]), Number(dimB[0])),
 			height: Math.min(Number(dimA[1]), Number(dimB[1]))
 		}
-		pageMargins = {
-			top: (pageSize.height - marginSize.height) / 2,
-			left: (pageSize.width - marginSize.width) / 2,
-			bottom: (pageSize.height - marginSize.height) / 2,
-			right: (pageSize.width - marginSize.width) / 2
+		mgPg = {
+			top: (sizePg.height - sizeMg.height) / 2,
+			left: (sizePg.width - sizeMg.width) / 2,
+			bottom: (sizePg.height - sizeMg.height) / 2,
+			right: (sizePg.width - sizeMg.width) / 2
 		}
 	}
 
@@ -66,22 +66,22 @@ if (sizeArray != null) { // At least one pair of dimensions
 		page.resize(CoordinateSpaces.INNER_COORDINATES,
 			AnchorPoint.CENTER_ANCHOR,
 			ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
-			[pageSize.width / 0.352777777777778, pageSize.height / 0.352777777777778]);
-		if (pageMargins != null) page.marginPreferences.properties = pageMargins; // Set margins
+			[sizePg.width / 0.352777777777778, sizePg.height / 0.352777777777778]);
+		if (mgPg != null) page.marginPreferences.properties = mgPg; // Set margins
 	}
 
 	// Also set document size
-	doc.documentPreferences.pageWidth = pageSize.width;
-	doc.documentPreferences.pageHeight = pageSize.height;
+	doc.documentPreferences.pageWidth = sizePg.width;
+	doc.documentPreferences.pageHeight = sizePg.height;
 
 	// Check for bleed: try to match '_00 [mm]' after '0 [mm]'
-	var bleedSize = /\d\s?(?:[cm]m)?[_+](\d{1,2})\s?(?:[cm]m)/i.exec(docName);
+	var bleed = /\d\s?(?:[cm]m)?[_+](\d{1,2})\s?(?:[cm]m)/i.exec(docName);
 		// \d\s?(?:[cm]m)? -- 1 digit followed by optional space and optional mm/cm
 		// [_+] -- '_' or '+' separator
 		// (\d{1,2}) -- 1 or 2 digits (capturing group #1)
 		// \s?(?:[cm]m) -- optional space followed by mandatory mm/cm
-	if (bleedSize != null) {
+	if (bleed != null) {
 		doc.documentPreferences.documentBleedUniformSize = true;
-		doc.documentPreferences.documentBleedTopOffset = bleedSize[1];
+		doc.documentPreferences.documentBleedTopOffset = bleed[1];
 	}
 }
