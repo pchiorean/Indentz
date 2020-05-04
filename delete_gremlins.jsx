@@ -1,5 +1,5 @@
 ﻿/*
-	Delete gremlins v1.4.5
+	Delete gremlins v1.4.6
 	© May 2020, Paul Chiorean
 	This script does some househeeping.
 */
@@ -23,9 +23,9 @@ doc.pageItemDefaults.strokeColor = "None";
 doc.selection = [];
 
 // Step 2. Delete unused swatches
-for (var i = 0; i < doc.unusedSwatches.length; i++) {
+for (var i = doc.unusedSwatches.length - 1; i >= 0; i--) {
 	var name = doc.unusedSwatches[i].name;
-	if (name != "") doc.unusedSwatches[i].remove();
+	if (name != "") { doc.unusedSwatches[i].remove() };
 }
 
 // Step 3. Normalize similar CMYK swatches
