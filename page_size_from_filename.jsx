@@ -1,5 +1,5 @@
 /*
-	Page size from filename v1.4.2
+	Page size from filename v1.4.3
 	© May 2020, Paul Chiorean
 	This script sets every page size and margins based on the filename.
 	It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -61,7 +61,7 @@ if (sizeArray != null) { // At least one pair of dimensions
 	// Resize pages
 	for (i = 0; i < doc.pages.length; i++) {
 		page = doc.pages[i];
-		page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }; // Set margins to zero
+		// page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }; // Set margins to zero
 		page.layoutRule = LayoutRuleOptions.OFF;
 		page.resize(CoordinateSpaces.INNER_COORDINATES,
 			AnchorPoint.CENTER_ANCHOR,
