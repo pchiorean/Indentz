@@ -1,5 +1,5 @@
 /*
-	Safe area v1.5.6
+	Safe area v1.6.0
 	© May 2020, Paul Chiorean
 	This script creates a 'safe area' frame, on every page (or spread)
 	for which margins are defined, if it doesn't already exist.
@@ -9,11 +9,13 @@ var doc = app.activeDocument;
 
 // Defaults
 var scope = doc.pages; // doc.pages or doc.spreads
-const safeLayerName = "safe area";
-const dieLayerName = "dielines";
+
+var safeLayerName = ["visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area", "safe area"];
+var dieLayerName = ["diecut", "die cut", "Die Cut", "cut lines", "Stanze", "dielines"];
+var safeLayer = findLayer(safeLayerName);
+var dieLayer = findLayer(dieLayerName);
 const safeSwatchName = "Safe area";
 const saFrameP = {
-	itemLayer: safeLayerName,
 	label: "safe area",
 	contentType: ContentType.UNASSIGNED,
 	fillColor: "None",
@@ -24,14 +26,18 @@ const saFrameP = {
 	overprintStroke: false
 }
 
-// Create 'safe area' layer and move it below 'dielines' layer, or 1st
-var safeLayer = doc.layers.item(safeLayerName);
-var dieLayer = doc.layers.item(dieLayerName);
-if (safeLayer.isValid) { safeLayer.layerColor = UIColors.YELLOW, safeLayer.visible = true
-} else doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW,
+// Create 'safe area' layer
+if (safeLayer.isValid) {
+	safeLayer.layerColor = UIColors.YELLOW;
+	safeLayer.visible = true; safeLayer.locked = false;
+	try { safeLayer.move(LocationOptions.after, dieLayer) // move it below 'dielines' layer
+	} catch (_) {};
+} else {
+	doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW,
 	visible: true, locked: false });
-try { safeLayer.move(LocationOptions.after, dieLayer)
-} catch (_) { safeLayer.move(LocationOptions.AT_BEGINNING) };
+	try { safeLayer.move(LocationOptions.after, dieLayer) // move it below 'dielines' layer, or 1st
+	} catch (_) { safeLayer.move(LocationOptions.AT_BEGINNING) };
+}
 // Create 'Safe area' color
 try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS,
 	space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] })
@@ -45,10 +51,12 @@ for (var i = 0; i < scope.length; i++) {
 	if (safeLayerItems(scope[i]) == true) continue; // Frame already exists
 	saFrame = scope[i].rectangles.add(saFrameP);
 	saFrame.geometricBounds = saBounds;
+	saFrame.itemLayer = safeLayer.name;
 }
+try { safeLayer.locked = true } catch (_) {};
 
-// Function to calculate safe area coordinates
-function safeArea(scope) {
+
+function safeArea(scope) { // Return safe area bounds
 	switch (scope.constructor.name) {
 		case "Page":
 			var mgPg = scope.marginPreferences;
@@ -103,8 +111,14 @@ function safeArea(scope) {
 	}
 }
 
-// Function to check for items labeled 'safe area'
-function safeLayerItems(scope) {
+function findLayer(names) { // Find first layer from a list of names
+	for (var i = 0; i < names.length; i++) {
+		var layer = doc.layers.item(names[i]);
+		if (layer.isValid) return layer;
+	}
+}
+
+function safeLayerItems(scope) { // Check for items labeled 'safe area'
 	for (var i = 0; i < scope.pageItems.length; i++) {
 		if (scope.pageItems.item(i).label == "safe area") { return true } else continue;
 	}
