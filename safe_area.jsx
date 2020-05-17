@@ -9,11 +9,8 @@ var doc = app.activeDocument;
 
 // Defaults
 var scope = doc.pages; // doc.pages or doc.spreads
-
-var safeLayerName = ["visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area", "safe area"];
-var dieLayerName = ["diecut", "die cut", "Die Cut", "cut lines", "Stanze", "dielines"];
-var safeLayer = findLayer(safeLayerName);
-var dieLayer = findLayer(dieLayerName);
+var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
+var dieLayerName = ["dielines", "diecut", "die cut", "Die Cut", "cut lines", "Stanze"];
 const safeSwatchName = "Safe area";
 const saFrameP = {
 	label: "safe area",
@@ -27,16 +24,20 @@ const saFrameP = {
 }
 
 // Create 'safe area' layer
-if (safeLayer.isValid) {
+var safeLayer, dieLayer;
+if (safeLayer = findLayer(safeLayerName)) {
 	safeLayer.layerColor = UIColors.YELLOW;
 	safeLayer.visible = true; safeLayer.locked = false;
-	try { safeLayer.move(LocationOptions.after, dieLayer) // move it below 'dielines' layer
-	} catch (_) {};
+	if (dieLayer = findLayer(dieLayerName)) { // move it above 'dielines' layer
+		safeLayer.move(LocationOptions.before, dieLayer);
+	}
 } else {
-	doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW,
+	safeLayerName = safeLayerName[0];
+	safeLayer = doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW,
 	visible: true, locked: false });
-	try { safeLayer.move(LocationOptions.after, dieLayer) // move it below 'dielines' layer, or 1st
-	} catch (_) { safeLayer.move(LocationOptions.AT_BEGINNING) };
+	if (dieLayer = findLayer(dieLayerName)) { // move it below 'dielines' layer, or 1st
+		safeLayer.move(LocationOptions.before, dieLayer);
+	} else safeLayer.move(LocationOptions.AT_BEGINNING);
 }
 // Create 'Safe area' color
 try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS,
