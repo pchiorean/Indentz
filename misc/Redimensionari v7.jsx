@@ -1,18 +1,19 @@
 /*
-	Redimensionari v7.4j
-	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
-	May 2020, Paul Chiorean
+    Redimensionari v7.5j
+    A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
+    May 2020, Paul Chiorean
 
-	v7.1j – cleanup
-	v7.2j – fix progress bar
-	v7.3j – change 'Vizibil' to 'safe area'; no guides
-	v7.4j – 3 decimals for aspect ratio
+    v7.1j – cleanup
+    v7.2j – fix progress bar
+    v7.3j – change 'Vizibil' to 'safe area'; no guides
+    v7.4j – 3 decimals for aspect ratio
+    v7.5j – update 'ratio' layer
 */
 
 var doc = app.documents[0];
 var pgLength = doc.pages.length;
 
-app.layoutWindows[0].transformReferencePoint = AnchorPoint.CENTER_ANCHOR;
+app.activeWindow.transformReferencePoint = AnchorPoint.CENTER_ANCHOR;
 app.generalPreferences.pageNumbering = PageNumberingOptions.absolute;
 app.scriptPreferences.enableRedraw = false;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
@@ -24,15 +25,14 @@ doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.millimeters;
 doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.millimeters;
 
 //**************** TEST LAYERE VIZIBIL ID SI HW START *********************************************/
-try {
-    doc.layers.add({ name: "safe area", layerColor: UIColors.RED }).move(LocationOptions.AT_BEGINNING);
-    doc.layers.add({ name: "id", layerColor: UIColors.RED }).move(LocationOptions.AT_BEGINNING);
-} catch (e) {}
+try { doc.layers.add({ name: "safe area", layerColor: UIColors.RED }).move(LocationOptions.AT_BEGINNING) } catch (e) {};
+try { doc.layers.add({ name: "ratio", layerColor: UIColors.CYAN }).move(LocationOptions.AT_BEGINNING) } catch (e) {};
+try { doc.layers.add({ name: "id", layerColor: UIColors.CYAN }).move(LocationOptions.AT_BEGINNING) } catch (e) {};
 
 try {
     doc.layers.itemByName("HW").move(LocationOptions.AFTER, doc.layers.itemByName("safe area"));
 } catch (e) {
-    alert("HW layer NU exista!" + "\n" + "Document will close");
+    alert("Nu există HW layer!" + "\r" + "Document will now close.");
     doc.close(SaveOptions.no); exit();
 }
 //**************** TEST LAYERE VIZIBIL ID SI HW END ***********************************************/
@@ -45,29 +45,29 @@ var myFileName_length = myFileName.length;
 var myFileName0 = myFileName.substr(0, myFileName.lastIndexOf("."));
 
 //**************** ORDONEAZA PAGINI DUPA RATIE START **********************************************/
-var myRatiaUnu = new Array;
-citestepaginile(myRatiaUnu);
+var ratia = new Array;
+read_master_ratios(ratia);
 doc.save();
 
-function citestepaginile(myRatiaUnu) {
-    for (i = 0; i < doc.pages.length; i++) {
+function read_master_ratios(r) {
+    for (var i = 0; i < doc.pages.length; i++) {
         myPage = doc.pages.item(i);
         var b = myPage.bounds;
         var W_ = b[3] - b[1];
         var H_ = b[2] - b[0];
-        var ratia_zecimale = W_ / H_;
-        var ratia = ratia_zecimale.toFixed(3);
-        myRatiaUnu.push(ratia);
+        var r_zecimale = W_ / H_;
+        var r = r_zecimale.toFixed(3);
+        ratia.push(r);
     }
-    comparaRatia_simuta(myRatiaUnu);
+    sort_master_ratios(ratia);
 }
 
-function comparaRatia_simuta(myRatiaUnu) {
-    for (var myCounter = 0; myCounter < (myRatiaUnu.length - 1); myCounter++) {
-        if (myRatiaUnu[myCounter] > myRatiaUnu[(myCounter + 1)]) {
-            doc.spreads.item(myCounter).move(LocationOptions.AFTER, doc.spreads.item(myCounter + 1));
-            myRatiaUnu = [];
-            citestepaginile(myRatiaUnu);
+function sort_master_ratios(r) {
+    for (var i = 0; i < (r.length - 1); i++) {
+        if (r[i] > r[(i + 1)]) {
+            doc.spreads.item(i).move(LocationOptions.AFTER, doc.spreads.item(i + 1));
+            r = [];
+            read_master_ratios(r);
         }
     }
 }
@@ -75,26 +75,26 @@ function comparaRatia_simuta(myRatiaUnu) {
 
 var definitionsFile = File(myFilePath + "/" + myFileName0 + ".txt");
 definitionsFile.open("r");
-var countLines_l = 0;
+var lines_l = 0;
 while (!definitionsFile.eof) {
-    var numarLinii = countLines_l++;
+    var numarLinii = lines_l++;
     var readLine_l = definitionsFile.readln().split("\t"); // umplutura ca altfel da eroare
 }
 
 //**************** RATIA MASTER START *************************************************************/
 var myPageNames = new Array;
-for (myCounter = 0; myCounter < doc.pages.length; myCounter++) {
-    myPageNames.push(doc.pages.item(myCounter).name);
+for (var i = 0; i < doc.pages.length; i++) {
+    myPageNames.push(doc.pages.item(i).name);
 }
-var myRatia = new Array;
-for (myCounter = 0; myCounter < doc.pages.length; myCounter++) {
-    myPage = doc.pages.item(myCounter);
+var ratia = new Array;
+for (var i = 0; i < doc.pages.length; i++) {
+    myPage = doc.pages.item(i);
     var b = myPage.bounds;
     var W_ = b[3] - b[1];
     var H_ = b[2] - b[0];
-    var ratia_zecimale = W_ / H_;
-    var ratia = ratia_zecimale.toFixed(3);
-    myRatia.push(ratia);
+    var r_zecimale = W_ / H_;
+    var r = r_zecimale.toFixed(3);
+    ratia.push(r);
 }
 //**************** RATIA MASTER END ***************************************************************/
 
@@ -103,7 +103,7 @@ var progressWin = CreateProgressBar();
 progressWin.show();
 progressWin.update(); // poate merge pe Windows
 progressWin.pb.minvalue = 1;
-progressWin.pb.maxvalue = countLines_l - 1;
+progressWin.pb.maxvalue = lines_l - 1;
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 CreateProgressBar();
 
@@ -119,18 +119,18 @@ function CreateProgressBar() {
 
 definitionsFile.close("r");
 definitionsFile.open("r");
-var countLines = -1;
+var lines = -1;
 while (!definitionsFile.eof) {
-    countLines++;
+    lines++;
 
     //************ CITESTE DOC TEXT START *********************************************************/
     var readLine = definitionsFile.readln().split("\t");
-    if (countLines != 0) {
+    if (lines != 0) {
         // ======= PROGRESS BAR START
         var finalFileName = readLine[7];
         var idNumar = readLine[0];
-        progressWin.pb.value = (countLines + 1);
-        progressWin.st.text = "Processing file - " + finalFileName + " (" + countLines + " / " + (countLines_l - 1) + ")";
+        progressWin.pb.value = (lines + 1);
+        progressWin.st.text = "Processing file - " + finalFileName + " (" + lines + " / " + (lines_l - 1) + ")";
         progressWin.update();
         //======== PROGRESS BAR END
 
@@ -168,34 +168,33 @@ while (!definitionsFile.eof) {
         //======== CITESTE W SI H END
 
         //******** CAUTA RATIA START **************************************************************/
-        var ratia_final_zecimale = visible_W / visible_H;
-        var ratia_final = ratia_final_zecimale.toFixed(3);
+        var ratia_final = (visible_W / visible_H).toFixed(3);
 
-        for (var myCounter = 0; myCounter < myRatia.length; myCounter++) {
-            var val_jumatea_intervalului = (myRatia[myCounter + 1] - myRatia[myCounter]) / 2;
-            var text_myRatia = myRatia[myCounter];
-            var myRatia_myCounter = parseFloat(text_myRatia);
-            var jumate_interval = val_jumatea_intervalului + myRatia_myCounter;
-            if (ratia_final > myRatia[myCounter]) {
+        for (var i = 0; i < ratia.length; i++) {
+            var val_jumatea_intervalului = (ratia[i + 1] - ratia[i]) / 2;
+            var text_ratia = ratia[i];
+            var ratia_i = parseFloat(text_ratia);
+            var jumate_interval = val_jumatea_intervalului + ratia_i;
+            if (ratia_final > ratia[i]) {
                 // ratia noastra cautata e mai mare sau egala cu capatul de jos al intervalului;
                 // in continuare verificam daca suntem pe ultimul element din array (daca intervalul are si un capat superior sau nu)
-                if (myCounter == myRatia.length - 1) {
+                if (i == ratia.length - 1) {
                     // caz de exceptie, suntem pe ultimul interval (am ajuns la capatul array-ului);
                     // limita superioara a intervalului este infinit, nu mai avem ce verifica, am gasit intervalul
-                    var pagDeExtras = myCounter;
+                    var pagDeExtras = i;
                     break; // ne-am gasit intervalul, iesi din "for"
-                } else if (ratia_final <= myRatia[myCounter + 1]) {
+                } else if (ratia_final <= ratia[i + 1]) {
                     // cazul normal, suntem intre 2 intervale, si ratia noastra e strict mai mica decat limita superioara
                     // comparam daca e mai aproape de primul element sau mai aproape de ultimul element din interval
                     if (ratia_final <= jumate_interval) {
-                        var pagDeExtras = myCounter;
+                        var pagDeExtras = i;
                         break;
                     } else if (ratia_final > jumate_interval) {
-                        var pagDeExtras = myCounter + 1;
+                        var pagDeExtras = i + 1;
                         break;
                     }
                 }
-            } else if (ratia_final <= myRatia[0]) {
+            } else if (ratia_final <= ratia[0]) {
                 var pagDeExtras = 0;
                 break;
             }
@@ -204,18 +203,14 @@ while (!definitionsFile.eof) {
 
         //******** EXTRACT PAGE START *************************************************************/
         var myPageNames = new Array;
-        for (myCounter = 0; myCounter < doc.pages.length; myCounter++) {
-            myPageNames.push(doc.pages.item(myCounter).name);
+        for (var i = 0; i < doc.pages.length; i++) {
+            myPageNames.push(doc.pages.item(i).name);
         }
         for (var i = pgLength - 1; i >= 0; i--) {
-            if (i > pagDeExtras) {
-                doc.pages[i].remove();
-            }
-            if (i < pagDeExtras) {
-                doc.pages[i].remove();
-            }
+            if (i > pagDeExtras) doc.pages[i].remove();
+            if (i < pagDeExtras) doc.pages[i].remove();
         }
-        var numarRatieRotunjit_u = Number(myRatia[pagDeExtras]);
+        var numarRatieRotunjit_u = Number(ratia[pagDeExtras]);
         var numarRatieRotunjit = numarRatieRotunjit_u.toFixed(3);
         var numeRatieFolder1 = numarRatieRotunjit.toString();
         var numeRatieFolder = numeRatieFolder1.replace(/\./g, "_");
@@ -227,35 +222,23 @@ while (!definitionsFile.eof) {
         var f = new Folder(myFilePath + "/" + ("_ratia_" + (numeRatieFolder)));
         f.create();
 
-        // var finalFileName = finalFileName.replace(/\./g, "_");
-        // var finalFileName = finalFileName.replace(/\,/g, "_");
-        // var finalFileName = finalFileName.replace(/\:/g, "_");
-        // var finalFileName = finalFileName.replace(/\;/g, "_");
-        // var finalFileName = finalFileName.replace(/`/g, "_");
-        // var finalFileName = finalFileName.replace(/\!/g, "_");
-        // var finalFileName = finalFileName.replace(/\?/g, "_");
-        // var finalFileName = finalFileName.replace(/\>/g, "_");
-        // var finalFileName = finalFileName.replace(/\</g, "_");
-        // var finalFileName = finalFileName.replace(/\//g, "_");
-        // var finalFileName = finalFileName.replace(/\[/g, "_");
-        // var finalFileName = finalFileName.replace(/\\/g, "_");
-        // var finalFileName = finalFileName.replace(/\|/g, "_");
-        // var finalFileName = finalFileName.replace(/\]/g, "_");
-        // var finalFileName = finalFileName.replace(/\{/g, "_");
-        // var finalFileName = finalFileName.replace(/\}/g, "_");
-        // var finalFileName = finalFileName.replace(/\*/g, "_");
-        // var finalFileName = finalFileName.replace(/\^/g, "_");
-        // var finalFileName = finalFileName.replace(/\$/g, "_");
-        // var finalFileName = finalFileName.replace(/\&/g, "_");
-        // var finalFileName = finalFileName.replace(/\"/g, "_");
-        // var finalFileName = finalFileName.replace(/\'/g, "_");
+        // var finalFileName = finalFileName.replace(/\,/g, ".");
 
         //******** OPERATII PE PAGINA START *******************************************************/
-        scaleDocument(visible_W, visible_H, total_W, total_H);
-        resizeDocument(total_W, total_H);
-        idsimargineDocument(visible_W, visible_H, total_W, total_H, idNumar);
-        aliniereHwDocument(visible_W, visible_H, total_W, total_H);
+        scale_document(visible_W, visible_H, total_W, total_H);
+        resize_document(total_W, total_H);
+        id_and_info(visible_W, visible_H, total_W, total_H, idNumar);
+        hw_and_align(visible_W, visible_H, total_W, total_H);
         //******** OPERATII PE PAGINA END *********************************************************/
+
+        doc.layers.itemByName("id").visible = true;
+        doc.layers.itemByName("id").locked = true;
+        doc.layers.itemByName("safe area").visible = true;
+        doc.layers.itemByName("safe area").locked = true;
+        doc.layers.itemByName("ratio").visible = false;
+        doc.layers.itemByName("ratio").locked = true;
+        doc.layers.itemByName("HW").visible = true;
+        doc.layers.itemByName("HW").locked = true;
 
         var savedocname = finalFileName + ".indd";
         var savedoc = doc.save(File(myFilePath + "/" + ("_ratia_" + (numeRatieFolder)) + "/" + savedocname));
@@ -267,14 +250,13 @@ while (!definitionsFile.eof) {
     }
     //************ CITESTE DOC TEXT END ***********************************************************/
 }
-
 progressWin.close();
 doc.close();
-alert("job done.");
+// alert("job done.");
 
 
 //**************** FUNCTII START ******************************************************************/
-function scaleDocument(visible_W, visible_H, total_W, total_H) {
+function scale_document(visible_W, visible_H, total_W, total_H) {
     myPage = doc.pages.item(0);
     doc.zeroPoint = [0, 0];
     doc.viewPreferences.rulerOrigin = RulerOrigin.PAGE_ORIGIN;
@@ -287,7 +269,7 @@ function scaleDocument(visible_W, visible_H, total_W, total_H) {
         [visible_W, visible_H]);
 }
 
-function resizeDocument(total_W, total_H) {
+function resize_document(total_W, total_H) {
     pages = doc.pages;
     pages[0].marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
     pages[0].layoutRule = LayoutRuleOptions.OFF;
@@ -297,18 +279,16 @@ function resizeDocument(total_W, total_H) {
         [total_W, total_H]);
 }
 
-function idsimargineDocument(visible_W, visible_H, total_W, total_H, idNumar) {
-    try { doc.activeLayer = doc.layers.itemByName("id") } catch (e) {};
+function id_and_info(visible_W, visible_H, total_W, total_H, idNumar) {
+    doc.activeLayer = doc.layers.itemByName("id");
     myPage = doc.pages.item(0);
-    var textFrame = myPage.textFrames.add(); // ID-ul
-    var textFrame_info = myPage.textFrames.add();
+    var textFrame = myPage.textFrames.add();
     var y1, x1, y2, x2;
     y1 = Number((total_H - visible_H) / 2) + Number(visible_H);
     x1 = Number((total_W - visible_W) / 2);
     y2 = Number((total_H - visible_H) / 2) + Number(visible_H) + 11;
     x2 = Number((total_W - visible_W) / 2) + 56;
     textFrame.geometricBounds = [y1, x1, y2, x2];
-
     if (idNumar == "") { textFrame.contents = " " } else { textFrame.contents = "ID " + idNumar };
     var myText_id = textFrame.parentStory.paragraphs.item(0);
     try { myText_id.appliedFont = app.fonts.item("Helvetica Neue") } catch (e) {}
@@ -316,20 +296,31 @@ function idsimargineDocument(visible_W, visible_H, total_W, total_H, idNumar) {
     textFrame.label = "ID";
     textFrame.fit(FitOptions.FRAME_TO_CONTENT);
     textFrame.textFramePreferences.properties = {
+        verticalJustification: VerticalJustification.BOTTOM_ALIGN,
         autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
         firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
         useNoLineBreaksForAutoSizing: true
     }
-    textFrame.textFramePreferences.verticalJustification = VerticalJustification.BOTTOM_ALIGN;
     textFrame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
     textFrame.move([x1 + 5.67, y1 - 9.239]);
 
-    textFrame_info.contents = "W vizibil = " + visible_W_mm + "\n" + "H vizibil = " + visible_H_mm + "\n" + "W total = " + total_W_mm + "\n" + "H total = " + total_H_mm + "\n";
-    textFrame_info.label = "Info";
-    var myText = textFrame_info.parentStory.paragraphs.item(0);
+    doc.activeLayer = doc.layers.itemByName("ratio");
+    var textFrame_info = myPage.textFrames.add();
+    textFrame_info.contents = "Total W = " + total_W_mm + "\rTotal H = " + total_H_mm + 
+		"\r\rVizibil W = " + visible_W_mm + "\rVizibil H = " + visible_H_mm +
+		"\r\rRaport = " + ratia_final;
+    var myText = textFrame_info.parentStory.paragraphs.everyItem();
     try { myText.appliedFont = app.fonts.item("Helvetica Neue") } catch (e) {};
-    myText.fontStyle = "Regular"; myText.pointSize = 20;
+    try { myText.fontStyle = "Regular"; myText.pointSize = 12 } catch (e) {};
+    textFrame_info.label = "ratio";
     textFrame_info.fit(FitOptions.FRAME_TO_CONTENT);
+    textFrame_info.textFramePreferences.properties = {
+        verticalJustification: VerticalJustification.TOP_ALIGN,
+        firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
+        autoSizingReferencePoint: AutoSizingReferenceEnum.TOP_LEFT_POINT,
+        autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
+        useNoLineBreaksForAutoSizing: true
+    }
     textFrame_info.move([total_W + 20, 0]);
 
     var m_top = (total_H - visible_H) / 2;
@@ -359,7 +350,7 @@ function idsimargineDocument(visible_W, visible_H, total_W, total_H, idNumar) {
     });
 }
 
-function aliniereHwDocument(visible_W, visible_H, total_W, total_H) {
+function hw_and_align(visible_W, visible_H, total_W, total_H) {
     try {
         doc.activeLayer = doc.layers.itemByName("HW");
         myPage = doc.pages.item(0);
@@ -583,13 +574,4 @@ function aliniereHwDocument(visible_W, visible_H, total_W, total_H) {
     //     guides.add(undefined, { orientation: HorizontalOrVertical.horizontal, location: m_top });
     //     guides.add(undefined, { orientation: HorizontalOrVertical.horizontal, location: (H_ - m_bottom) });
     // }
-
-    //************ LOCK LAYERS START **************************************************************/
-    try {
-        app.documents.item(0).layers.itemByName("id").locked = true;
-        app.documents.item(0).layers.itemByName("safe area").locked = true;
-        app.documents.item(0).layers.itemByName("safe area").visible = true;
-        app.documents.item(0).layers.itemByName("HW").locked = true;
-    } catch (e) {}
-    //************ LOCK LAYERS START **************************************************************/
 }
