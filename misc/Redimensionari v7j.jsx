@@ -13,7 +13,6 @@
 */
 
 var doc = app.documents[0];
-var pgLength = doc.pages.length;
 
 app.activeWindow.transformReferencePoint = AnchorPoint.CENTER_ANCHOR;
 app.generalPreferences.pageNumbering = PageNumberingOptions.absolute;
@@ -31,43 +30,30 @@ try { doc.layers.add({ name: "ratio", layerColor: UIColors.CYAN }).move(Location
 try { doc.layers.add({ name: "id", layerColor: UIColors.CYAN }).move(LocationOptions.AT_BEGINNING) } catch (e) {};
 
 // 1. Sort master by ratios
-var ratia = [];
-sort_master(ratia);
+sort_master_pages();
 doc.save();
 
-function sort_master(r) {
+function sort_master_pages() {
+	var ratia = [];
 	for (var i = 0; i < doc.pages.length; i++) {
-		myPage = doc.pages.item(i);
-		var b = myPage.bounds;
-		var W_ = b[3] - b[1];
-		var H_ = b[2] - b[0];
-		var r_zecimale = W_ / H_;
-		var r = r_zecimale.toFixed(3);
+		var selPage = doc.pages.item(i);
+		var pgW = selPage.bounds[3] - selPage.bounds[1];
+		var pgH = selPage.bounds[2] - selPage.bounds[0];
+		var r = (pgW / pgH).toFixed(3);
 		ratia.push(r);
 	}
-	sort_spreads_by_ratio(ratia);
-}
-
-function sort_spreads_by_ratio(r) {
-	for (var i = 0; i < (r.length - 1); i++) {
-		if (r[i] > r[(i + 1)]) {
+	for (var i = 0; i < (ratia.length - 1); i++) {
+		if (ratia[i] > ratia[(i + 1)]) {
 			doc.spreads.item(i).move(LocationOptions.AFTER, doc.spreads.item(i + 1));
-			r = [];
-			sort_master(r);
+			sort_master_pages();
 		}
 	}
 }
 
 // 2. Parse info file
-var myFilePath = doc.filePath;
-var myFileName_full = doc.fullName + "";
-var myFileName = doc.name + "";
-var myFileName_full_length = myFileName_full.length;
-var myFileName_length = myFileName.length;
-
-var myFileName0 = myFileName.substr(0, myFileName.lastIndexOf("."));
-
-var definitionsFile = File(myFilePath + "/" + myFileName0 + ".txt");
+var docPath = doc.filePath;
+var docName = doc.name.substr(0, doc.name.lastIndexOf("."));
+var definitionsFile = File(docPath + "/" + docName + ".txt");
 definitionsFile.open("r");
 var lines_l = 0;
 while (!definitionsFile.eof) {
@@ -77,12 +63,10 @@ while (!definitionsFile.eof) {
 
 var ratia = [];
 for (var i = 0; i < doc.pages.length; i++) {
-	myPage = doc.pages.item(i);
-	var b = myPage.bounds;
-	var W_ = b[3] - b[1];
-	var H_ = b[2] - b[0];
-	var r_zecimale = W_ / H_;
-	var r = r_zecimale.toFixed(3);
+	var selPage = doc.pages.item(i);
+	var pgW = selPage.bounds[3] - selPage.bounds[1];
+	var pgH = selPage.bounds[2] - selPage.bounds[0];
+	var r = (pgW / pgH).toFixed(3);
 	ratia.push(r);
 }
 
@@ -169,7 +153,7 @@ while (!definitionsFile.eof) {
 			}
 		}
 
-		for (var i = pgLength - 1; i >= 0; i--) {
+		for (var i = doc.pages.length - 1; i >= 0; i--) {
 			if (i > pagDeExtras) doc.pages[i].remove();
 			if (i < pagDeExtras) doc.pages[i].remove();
 		}
@@ -177,12 +161,9 @@ while (!definitionsFile.eof) {
 		var numarRatieRotunjit = numarRatieRotunjit_u.toFixed(3);
 		var numeRatieFolder1 = numarRatieRotunjit.toString();
 		var numeRatieFolder = numeRatieFolder1.replace(/\./g, "_");
-		var myFilePath = doc.filePath;
-		var myFileName_full = doc.fullName + "";
-		var myFileName = doc.name + "";
-		var myFileName_full_length = myFileName_full.length;
-		var myFileName_length = myFileName.length;
-		var f = new Folder(myFilePath + "/" + ("_ratia_" + (numeRatieFolder)));
+		var docPath = doc.filePath;
+		var docName = doc.name;
+		var f = new Folder(docPath + "/" + ("_ratia_" + (numeRatieFolder)));
 		f.create();
 
 		scale_document(visible_W, visible_H, total_W, total_H);
@@ -200,10 +181,10 @@ while (!definitionsFile.eof) {
 		doc.layers.itemByName("HW").locked = true;
 
 		var savedocname = finalFileName + ".indd";
-		var savedoc = doc.save(File(myFilePath + "/" + ("_ratia_" + (numeRatieFolder)) + "/" + savedocname));
+		var savedoc = doc.save(File(docPath + "/" + ("_ratia_" + (numeRatieFolder)) + "/" + savedocname));
 		savedoc.close(SaveOptions.no);
 
-		app.open(File(myFilePath + "/" + myFileName), false);
+		app.open(File(docPath + "/" + docName), false);
 	}
 }
 progressWin.close();
@@ -211,7 +192,7 @@ doc.close();
 
 
 function scale_document(visible_W, visible_H, total_W, total_H) {
-	myPage = doc.pages.item(0);
+	var selPage = doc.pages.item(0);
 	doc.zeroPoint = [0, 0];
 	doc.viewPreferences.rulerOrigin = RulerOrigin.PAGE_ORIGIN;
 	pages = doc.pages;
@@ -235,8 +216,8 @@ function resize_document(total_W, total_H) {
 
 function id_and_info(visible_W, visible_H, total_W, total_H, idNumar) {
 	doc.activeLayer = doc.layers.itemByName("id");
-	myPage = doc.pages.item(0);
-	var textFrame = myPage.textFrames.add();
+	var selPage = doc.pages.item(0);
+	var textFrame = selPage.textFrames.add();
 	var y1, x1, y2, x2;
 	y1 = Number((total_H - visible_H) / 2) + Number(visible_H);
 	x1 = Number((total_W - visible_W) / 2);
@@ -259,7 +240,7 @@ function id_and_info(visible_W, visible_H, total_W, total_H, idNumar) {
 	textFrame.move([x1 + 5.67, y1 - 9.239]);
 
 	doc.activeLayer = doc.layers.itemByName("ratio");
-	var textFrame_info = myPage.textFrames.add();
+	var textFrame_info = selPage.textFrames.add();
 	textFrame_info.contents = "Total W = " + total_W_mm + "\rTotal H = " + total_H_mm + 
 		"\r\rVizibil W = " + visible_W_mm + "\rVizibil H = " + visible_H_mm +
 		"\r\rRaport = " + ratia_final;
@@ -283,15 +264,15 @@ function id_and_info(visible_W, visible_H, total_W, total_H, idNumar) {
 	var m_bottom = m_top;
 	m_topq = m_top * 0.352777777777778;
 	m_leftq = m_left * 0.352777777777778;
-	myPage = doc.pages.item(0);
-	myPage.marginPreferences.properties = { top: m_top, left: m_left, right: m_right, bottom: m_bottom };
+	var selPage = doc.pages.item(0);
+	selPage.marginPreferences.properties = { top: m_top, left: m_left, right: m_right, bottom: m_bottom };
 
 	doc.activeLayer = doc.layers.itemByName("safe area");
 	var safeSwatchName = "Safe area";
 	try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS,
 		space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] })
 	} catch (_) {};
-	var myItem_vizibil = myPage.rectangles.add({
+	var myItem_vizibil = selPage.rectangles.add({
 		geometricBounds: [m_top, m_left, m_top + visible_H, m_left + visible_W],
 		label: "safe area",
 		contentType: ContentType.UNASSIGNED,
@@ -374,10 +355,9 @@ function align_elements(visible_W, visible_H, total_W, total_H) {
 		if (myFrames[i].label == "alignVerticalCentersMinusHW") {
 			count++;
 			doc.align(myFrames[i], AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
-			var myPage = doc.pages.item(0);
-			var b = myPage.bounds;
-			var W_ = b[3] - b[1];
-			var H_ = b[2] - b[0];
+			var selPage = doc.pages.item(0);
+			var pgW = selPage.bounds[3] - selPage.bounds[1];
+			var pgH = selPage.bounds[2] - selPage.bounds[0];
 
 			var myBoundsFrame = myFrames[i].geometricBounds; // HW dreptunghi alb
 			var myYF = myBoundsFrame[0];
@@ -386,7 +366,7 @@ function align_elements(visible_W, visible_H, total_W, total_H) {
 			var myWF = myBoundsFrame[3];
 			var W_hF = myWF - myXF;
 			var H_hF = myHF - myYF;
-			var moveFrame = (H_ - (H_ * 0.1)) / 2 - (H_hF / 2);
+			var moveFrame = (pgH - (pgH * 0.1)) / 2 - (H_hF / 2);
 			myFrames[i].move([myXF, moveFrame]);
 			if (count == 4) break;
 		}
@@ -396,16 +376,15 @@ function align_elements(visible_W, visible_H, total_W, total_H) {
 	for (var i = 0; i < myFrames.length; i++) {
 		if (myFrames[i].label == "expandToVizibil") {
 			count++;
-			var myPage = doc.pages.item(0);
-			var m_top = myPage.marginPreferences.properties.top;
-			var m_left = myPage.marginPreferences.properties.left;
-			var m_right = myPage.marginPreferences.properties.right;
-			var m_bottom = myPage.marginPreferences.properties.bottom;
+			var selPage = doc.pages.item(0);
+			var m_top = selPage.marginPreferences.properties.top;
+			var m_left = selPage.marginPreferences.properties.left;
+			var m_right = selPage.marginPreferences.properties.right;
+			var m_bottom = selPage.marginPreferences.properties.bottom;
 
-			var b = myPage.bounds;
-			var W_ = b[3] - b[1];
-			var H_ = b[2] - b[0];
-			myFrames[i].geometricBounds = [m_top, m_left, H_ - m_bottom, W_ - m_right];
+			var pgW = selPage.bounds[3] - selPage.bounds[1];
+			var pgH = selPage.bounds[2] - selPage.bounds[0];
+			myFrames[i].geometricBounds = [m_top, m_left, pgH - m_bottom, pgW - m_right];
 			if (count == 4) break;
 		}
 	}
@@ -413,12 +392,11 @@ function align_elements(visible_W, visible_H, total_W, total_H) {
 	var count = 0;
 	for (var i = 0; i < myFrames.length; i++) {
 		if (myFrames[i].label == "expandToBleed") {
-			var myPage = doc.pages.item(0);
+			var selPage = doc.pages.item(0);
 			count++;
-			var b = myPage.bounds;
-			var W_ = b[3] - b[1];
-			var H_ = b[2] - b[0];
-			myFrames[i].geometricBounds = [-14.174, -14.174, H_ + 14.174, W_ + 14.174];
+			var pgW = selPage.bounds[3] - selPage.bounds[1];
+			var pgH = selPage.bounds[2] - selPage.bounds[0];
+			myFrames[i].geometricBounds = [-14.174, -14.174, pgH + 14.174, pgW + 14.174];
 			if (count == 4) break;
 		}
 	}

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+    <html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Redimensionări v7j</title>
+        
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+        
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
+        <style>
+            body {
+                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 'Ubuntu', 'Droid Sans', sans-serif;
+                font-size: 14px;
+                line-height: 1.6;
+            }
+        </style>
+        
+        
+    </head>
+    <body class="vscode-light">
+        <h1 id="redimension%c4%83ri-v7j">Redimensionări v7j</h1>
+<p>Trebuie să existe un fișier InDesign (denumit în continuare <em>master</em>) în care fiecare pagină reprezintă un vizual cu un anumit raport (rație). Dacă nu există, vor fi create layerele <strong>id</strong>, <strong>ratio</strong> și <strong>safe area</strong> deasupra layerelor care compun vizualul.</p>
+<p>În același folder trebuie să existe un fișier text cu același nume, exportat din Excel cu opțiunea <em>tab delimited</em>, cu coloanele următoare: <strong>ID</strong>, <strong>Vizibil W</strong>, <strong>Vizibil H</strong>, <strong>Total W</strong>, <strong>Total H</strong>, <strong>Raport</strong>, <strong>Vizual</strong>, <strong>Denumire</strong> (scriptul ia în considerare doar coloanele 1–5 și 8). Nu contează denumirile, ci să existe cele opt coloane cu aceste informații:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">ID</th>
+<th style="text-align:right">Vizibil W</th>
+<th style="text-align:right">Vizibil H</th>
+<th style="text-align:right">Total W</th>
+<th style="text-align:right">Total H</th>
+<th style="text-align:right">Raport</th>
+<th style="text-align:center">Vizual</th>
+<th style="text-align:left">Denumire</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:right">200</td>
+<td style="text-align:right">600</td>
+<td style="text-align:right">230</td>
+<td style="text-align:right">620</td>
+<td style="text-align:right">0.333</td>
+<td style="text-align:center">L1</td>
+<td style="text-align:left">01_Denumire_L1_230x620_200x600</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:right">206</td>
+<td style="text-align:right">421</td>
+<td style="text-align:right">230</td>
+<td style="text-align:right">440</td>
+<td style="text-align:right">0.489</td>
+<td style="text-align:center">L1</td>
+<td style="text-align:left">02_Denumire_L1_230x440_421x230</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:right">205</td>
+<td style="text-align:right">297</td>
+<td style="text-align:right">230</td>
+<td style="text-align:right">320</td>
+<td style="text-align:right">0.690</td>
+<td style="text-align:center">L2</td>
+<td style="text-align:left">03_Denumire_L2_230x320_297x230</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:right">310</td>
+<td style="text-align:right">300</td>
+<td style="text-align:right">320</td>
+<td style="text-align:right">305</td>
+<td style="text-align:right">1.033</td>
+<td style="text-align:center">L1</td>
+<td style="text-align:left">04_Denumire_L1_320x305_300x320</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:right">420</td>
+<td style="text-align:right">210</td>
+<td style="text-align:right">440</td>
+<td style="text-align:right">230</td>
+<td style="text-align:right">2.000</td>
+<td style="text-align:center">L1</td>
+<td style="text-align:left">06_Denumire_L1_440x230_420x210</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:right">598</td>
+<td style="text-align:right">210</td>
+<td style="text-align:right">620</td>
+<td style="text-align:right">220</td>
+<td style="text-align:right">2.848</td>
+<td style="text-align:center">L2</td>
+<td style="text-align:left">07_Denumire_L2_620x220_598x210</td>
+</tr>
+<tr>
+<td style="text-align:center">8</td>
+<td style="text-align:right">985</td>
+<td style="text-align:right">210</td>
+<td style="text-align:right">1200</td>
+<td style="text-align:right">225</td>
+<td style="text-align:right">4.690</td>
+<td style="text-align:center">L2</td>
+<td style="text-align:left">08_Denumire_L2_1200x225_985x210</td>
+</tr>
+<tr>
+<td style="text-align:center">9</td>
+<td style="text-align:right">985</td>
+<td style="text-align:right">105</td>
+<td style="text-align:right">1200</td>
+<td style="text-align:right">125</td>
+<td style="text-align:right">9.381</td>
+<td style="text-align:center">L2</td>
+<td style="text-align:left">09_Denumire_L2_1200x125_985x105</td>
+</tr>
+<tr>
+<td style="text-align:center"></td>
+<td style="text-align:right">292</td>
+<td style="text-align:right">210</td>
+<td style="text-align:right">320</td>
+<td style="text-align:right">230</td>
+<td style="text-align:right">1.390</td>
+<td style="text-align:center">L1</td>
+<td style="text-align:left">Denumire_L1_320x230_292x210</td>
+</tr>
+</tbody>
+</table>
+<p>La rulare scriptul poziționează ID-ul în partea din stânga jos a fiecărei pagini. Dacă nu se dorește ID se lasă celula goală.</p>
+<p>Vor fi create, în folderul unde este fișierul master, mai multe subfoldere cu denumirea corespunzătoare rației – câte pagini are masterul, atâtea foldere – care vor conține fișierele declinate și denumite pe baza informațiilor din tabel. E recomandat să se creeze cât mai multe pagini în fișierul master, pentru a acoperi toate rațiile de care este nevoie.</p>
+<p>Atenție! Când se rulează scriptul nu trebuie să existe alte fișiere deschise în afară de fișierul master.</p>
+<h2 id="aliniere-automat%c4%83">Aliniere automată</h2>
+<p>Anumite elemente pot fi poziționate automat prin etichetarea lor prealabilă din <strong>Windows &gt; Utilities &gt; Script label</strong>. Sunt posibile următoarele etichete:</p>
+<ul>
+<li><strong>alignRightLaVizibil</strong></li>
+<li><strong>alignLeftLaVizibil</strong></li>
+<li><strong>alignUpLaVizibil</strong></li>
+<li><strong>alignDownLaVizibil</strong></li>
+<li><strong>alignRightLaPagina</strong></li>
+<li><strong>alignLeftLaPagina</strong></li>
+<li><strong>alignHorizontalCenter</strong></li>
+<li><strong>alignVerticalCentersMinusHW</strong></li>
+<li><strong>expandToVizibil</strong></li>
+<li><strong>expandToBleed</strong> (forțat la 5 mm, indiferent de bleed-ul paginii)</li>
+</ul>
+<!-- ## Ce face scriptul
+
+1. Calculează rația din master pentru fiecare pagină. Dacă e cazul, sortează paginile în funcție de rație.
+
+2. Citește din fișierul text informațiile: id, dimensiuni vizibil/total, denumire. Dacă dimensiunile sunt greșite, adică vizibilul este trecut la total sau invers, scriptul verifică ariile și alege corect totalul și vizibilul.
+
+3. Creează foldere după rațiile paginilor din master – pentru fiecare pagină va fi un folder corespunzător.
+
+4. Alege pagina din master cu rația cea mai apropiată de rația documentului final și creează un document cu pagina aleasă.
+
+5. Scalează conținutul paginii la vizibil.
+
+6. Extinde pagina la dimensiunile totale (fără scalare).
+
+7. Salvează documentul final cu denumirea corespunzătoare.
+ -->
+    </body>
+    </html>
