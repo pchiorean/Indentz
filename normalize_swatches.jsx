@@ -1,15 +1,10 @@
 var doc = app.activeDocument;
+var swa, a, r, o, t, k, i;
 
-// Delete unused swatches
-for (var i = doc.unusedSwatches.length - 1; i >= 0; i--) {
-	var name = doc.unusedSwatches[i].name;
-	if (name != "") { doc.unusedSwatches[i].remove() };
-}
 // Normalize similar CMYK swatches
 const __ = $.global.localize;
 const CM_PROCESS = +ColorModel.PROCESS;
 const CS_CMYK = +ColorSpace.CMYK;
-var swa, a, r, o, t, k, i;
 swa = doc.swatches;
 a = doc.colors.everyItem().properties;
 r = {};
@@ -30,3 +25,6 @@ for (k in r) {
 	if (k == o.name) continue; // No need to rename
 	try { t.name = k } catch (_) {} // Prevent read-only errors
 }
+
+// Delete unused swatches
+for (i = (swa = doc.unusedSwatches).length; i--; (swa[i].name != "") && swa[i].remove());
