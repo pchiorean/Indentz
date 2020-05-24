@@ -2,7 +2,7 @@
     <html>
     <head>
         <meta charset="UTF-8">
-        <title>Redimensionări v7j</title>
+        <title>Batch resize v7.10j</title>
         
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
@@ -21,7 +21,7 @@
         
     </head>
     <body class="vscode-light">
-        <h1 id="redimension%c4%83ri-v7j">Redimensionări v7j</h1>
+        <h1 id="batch-resize-v710j">Batch resize v7.10j</h1>
 <p>Trebuie să existe un fișier InDesign (denumit în continuare <em>master</em>) în care fiecare pagină reprezintă un vizual cu un anumit raport (rație). Dacă nu există, vor fi create layerele <strong>id</strong>, <strong>ratio</strong> și <strong>safe area</strong> deasupra layerelor care compun vizualul.</p>
 <p>În același folder trebuie să existe un fișier text cu același nume, exportat din Excel cu opțiunea <em>tab delimited</em>, cu coloanele următoare: <strong>ID</strong>, <strong>Vizibil W</strong>, <strong>Vizibil H</strong>, <strong>Total W</strong>, <strong>Total H</strong>, <strong>Raport</strong>, <strong>Vizual</strong>, <strong>Denumire</strong> (scriptul ia în considerare doar coloanele 1–5 și 8). Nu contează denumirile, ci să existe cele opt coloane cu aceste informații:</p>
 <table>
@@ -136,32 +136,12 @@
 <h2 id="aliniere-automat%c4%83">Aliniere automată</h2>
 <p>Anumite elemente pot fi poziționate automat prin etichetarea lor prealabilă din <strong>Windows &gt; Utilities &gt; Script label</strong>. Sunt posibile următoarele etichete:</p>
 <ul>
-<li><strong>alignRightLaVizibil</strong></li>
-<li><strong>alignLeftLaVizibil</strong></li>
-<li><strong>alignUpLaVizibil</strong></li>
-<li><strong>alignDownLaVizibil</strong></li>
-<li><strong>alignRightLaPagina</strong></li>
-<li><strong>alignLeftLaPagina</strong></li>
-<li><strong>alignHorizontalCenter</strong></li>
-<li><strong>alignVerticalCentersMinusHW</strong></li>
-<li><strong>expandToVizibil</strong></li>
-<li><strong>expandToBleed</strong> (forțat la 5 mm, indiferent de bleed-ul paginii)</li>
+<li><strong>alignL, alignR, alignT, alignB</strong> – align to left, right, top, bottom</li>
+<li><strong>alignTL, alignTR, alignBL, alignBR</strong> – align to top-left, top-right, bottom-left, bottom-right</li>
+<li><strong>alignC, alignCh, alignCv</strong> – align to center, center-horizontal, center-vertical</li>
+<li><strong>expand</strong> – expand to bleed, loose fit</li>
+<li><strong>bleed</strong> – expand to bleed, forced fit</li>
 </ul>
-<!-- ## Ce face scriptul
 
-1. Calculează rația din master pentru fiecare pagină. Dacă e cazul, sortează paginile în funcție de rație.
-
-2. Citește din fișierul text informațiile: id, dimensiuni vizibil/total, denumire. Dacă dimensiunile sunt greșite, adică vizibilul este trecut la total sau invers, scriptul verifică ariile și alege corect totalul și vizibilul.
-
-3. Creează foldere după rațiile paginilor din master – pentru fiecare pagină va fi un folder corespunzător.
-
-4. Alege pagina din master cu rația cea mai apropiată de rația documentului final și creează un document cu pagina aleasă.
-
-5. Scalează conținutul paginii la vizibil.
-
-6. Extinde pagina la dimensiunile totale (fără scalare).
-
-7. Salvează documentul final cu denumirea corespunzătoare.
- -->
     </body>
     </html>

@@ -1,6 +1,6 @@
-# Redimensionări v7j
+# Batch resize v7.10j
 
-Trebuie să existe un fișier InDesign (denumit în continuare *master*) în care fiecare pagină reprezintă un vizual cu un anumit raport (rație). Dacă nu există, vor fi create layerele **id**, **ratio** și **safe area** deasupra layerelor care compun vizualul.
+Trebuie să existe un fișier InDesign (denumit în continuare *master*) în care fiecare pagină reprezintă un vizual cu un anumit raport (rație). Dacă nu există, vor fi create layerele **id**, **info** și **safe area** deasupra layerelor care compun vizualul.
 
 În același folder trebuie să existe un fișier text cu același nume, exportat din Excel cu opțiunea *tab delimited*, cu coloanele următoare: **ID**, **Vizibil W**, **Vizibil H**, **Total W**, **Total H**, **Raport**, **Vizual**, **Denumire** (scriptul ia în considerare doar coloanele 1–5 și 8). Nu contează denumirile, ci să existe cele opt coloane cu aceste informații:
 
@@ -26,30 +26,8 @@ Atenție! Când se rulează scriptul nu trebuie să existe alte fișiere deschis
 
 Anumite elemente pot fi poziționate automat prin etichetarea lor prealabilă din **Windows > Utilities > Script label**. Sunt posibile următoarele etichete:
 
-* **alignRightLaVizibil**
-* **alignLeftLaVizibil**
-* **alignUpLaVizibil**
-* **alignDownLaVizibil**
-* **alignRightLaPagina**
-* **alignLeftLaPagina**
-* **alignHorizontalCenter**
-* **alignVerticalCentersMinusHW**
-* **expandToVizibil**
-* **expandToBleed** (forțat la 5 mm, indiferent de bleed-ul paginii)
-
-<!-- ## Ce face scriptul
-
-1. Calculează rația din master pentru fiecare pagină. Dacă e cazul, sortează paginile în funcție de rație.
-
-2. Citește din fișierul text informațiile: id, dimensiuni vizibil/total, denumire. Dacă dimensiunile sunt greșite, adică vizibilul este trecut la total sau invers, scriptul verifică ariile și alege corect totalul și vizibilul.
-
-3. Creează foldere după rațiile paginilor din master – pentru fiecare pagină va fi un folder corespunzător.
-
-4. Alege pagina din master cu rația cea mai apropiată de rația documentului final și creează un document cu pagina aleasă.
-
-5. Scalează conținutul paginii la vizibil.
-
-6. Extinde pagina la dimensiunile totale (fără scalare).
-
-7. Salvează documentul final cu denumirea corespunzătoare.
- -->
+* **alignL, alignR, alignT, alignB** – align to left, right, top, bottom
+* **alignTL, alignTR, alignBL, alignBR** – align to top-left, top-right, bottom-left, bottom-right
+* **alignC, alignCh, alignCv** – align to center, center-horizontal, center-vertical
+* **expand** – expand to bleed, loose fit
+* **bleed** – expand to bleed, forced fit
