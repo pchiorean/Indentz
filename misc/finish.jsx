@@ -1,14 +1,16 @@
 var doc = app.activeDocument;
 var page = app.activeWindow.activePage;
-var bleed = bounds(page);
+var bleed = bleedBounds(page);
 var item, items = doc.allPageItems;
 
 while (item = items.shift()) {
 	item.redefineScaling();
 	switch (item.label) {
-		case "bg": item.geometricBounds = bleed; break;
+		case "bleed":
+		case "bg":
+			item.geometricBounds = bleed; break;
+		case "expand":
 		case "aw":
-		case "red":
 			item.fit(FitOptions.FRAME_TO_CONTENT);
 			item.geometricBounds = [
 				Math.max(item.visibleBounds[0], bleed[0]),
@@ -23,13 +25,14 @@ while (item = items.shift()) {
 try { doc.swatches.itemByName("Safe area").colorValue = [100, 0, 0, 0] } catch (_) {};
 
 doc.layers.itemByName("id").visible = false;
-doc.layers.itemByName("ratio").visible = false;
-doc.layers.itemByName("ratio").locked = true;
-doc.layers.itemByName("safe area").visible = true;
-doc.layers.itemByName("HW").visible = false;
+try { doc.layers.itemByName("info").properties = { visible: false, locked: true } } catch (_) {};
+try { doc.layers.itemByName("ratio").properties = { visible: false, locked: true } } catch (_) {};
+try { doc.layers.itemByName("safe area").visible = true } catch (_) {};
+try { doc.layers.itemByName("vizibil").visible = true } catch (_) {};
+try { doc.layers.itemByName("HW").visible = false } catch (_) {};
 
 
-function bounds(page) {
+function bleedBounds(page) {
 	var bleed = {
 		top: doc.documentPreferences.properties.documentBleedTopOffset,
 		left: doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
