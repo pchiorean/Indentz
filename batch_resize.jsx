@@ -1,5 +1,5 @@
 /*
-	Batch resize v7.10j
+	Batch resize v7.11j
 	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
 	May 2020, Paul Chiorean
 
@@ -7,12 +7,13 @@
 	v7.2j – fix progress bar
 	v7.3j – change 'vizibil' to 'safe area'; no guides
 	v7.4j – 3 decimals aspect ratio
-	v7.5j – 'ratio' layer
-	v7.6j – remove 'HW' layer dependence
+	v7.5j – 'info' layer
+	v7.6j – remove 'HW' section
 	v7.7j – join page geometry functions
 	v7.8j – split 'safe area' to new function
 	v7.9j – rewrite alignment function
 	v7.10j – alternative layer names
+	v7.11j – redefine scaling to 100%
 */
 
 var doc = app.documents[0];
@@ -27,7 +28,7 @@ app.scriptPreferences.enableRedraw = false;
 
 // Make technical layers
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
-var infoLayerName = ["info", "ratio"];
+var infoLayerName = ["info", "ratio", "raport"];
 var idLayerName = ["id", "ID"];
 const safeSwatchName = "Safe area";
 const safeLayerFrameP = {
@@ -42,24 +43,17 @@ const safeLayerFrameP = {
 }
 
 var safeLayer, infoLayer, idLayer;
-if (!(safeLayer = findLayer(safeLayerName))) safeLayer = doc.layers.add({ name: safeLayerName[0] });
-safeLayer.properties = { layerColor: UIColors.YELLOW, visible: true, locked: false };
-safeLayer.move(LocationOptions.AT_BEGINNING);
-if (!(infoLayer = findLayer(infoLayerName))) infoLayer = doc.layers.add({ name: infoLayerName[0] });
-infoLayer.properties = { layerColor: UIColors.CYAN, visible: true, locked: false };
-infoLayer.move(LocationOptions.AT_BEGINNING);
-if (!(idLayer = findLayer(idLayerName))) idLayer = doc.layers.add({ name: idLayerName[0] });
-idLayer.properties = { layerColor: UIColors.CYAN, visible: true, locked: false };
-idLayer.move(LocationOptions.AT_BEGINNING);
-// Create 'Safe area' color
-try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS,
-	space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] })
-} catch (_) {};
+doc.activeLayer = doc.layers.item(0);
+if (!(safeLayer = findLayer(safeLayerName))) safeLayer = doc.layers.add({ name: safeLayerName[0], layerColor: UIColors.YELLOW });
+if (!(infoLayer = findLayer(infoLayerName))) infoLayer = doc.layers.add({ name: infoLayerName[0], layerColor: UIColors.CYAN });
+if (!(idLayer = findLayer(idLayerName))) idLayer = doc.layers.add({ name: idLayerName[0], layerColor: UIColors.CYAN });
+infoLayer.move(LocationOptions.before, safeLayer); idLayer.move(LocationOptions.before, infoLayer);
+safeLayer.properties = infoLayer.properties = idLayer.properties = { visible: true, locked: false };
+try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
 
 function findLayer(names) { // Find first layer from a list of names
 	for (var i = 0; i < names.length; i++) {
-		var layer = doc.layers.item(names[i]);
-		if (layer.isValid) return layer;
+		var layer = doc.layers.item(names[i]); if (layer.isValid) return layer;
 	}
 }
 
@@ -95,7 +89,7 @@ var progressBar = pb();
 progressBar.show();
 
 function pb() {
-	var w = new Window("window");
+	var w = new Window("window", masterPath + "/" + masterName);
 	w.pb = w.add("progressbar", [12, 12, 800, 24], 0, undefined);
 	w.st = w.add("statictext"); w.st.bounds = [0, 0, 780, 20]; w.st.alignment = "left";
 	return w;
@@ -147,11 +141,11 @@ while (!infoFile.eof) {
 	targetSetGeometry();
 	targetSafeArea();
 	targetInfoBox();
-	// targetAlignElements();
+	targetAlignElements();
 	// Set layer attributes
-	safeLayer.visible = true; safeLayer.locked = true;
-	infoLayer.visible = false; infoLayer.locked = true;
-	idLayer.visible = true; idLayer.locked = true;
+	safeLayer.properties = { visible: true, locked: true };
+	infoLayer.properties = { visible: false, locked: true };
+	idLayer.properties = { visible: true, locked: true };
 	// Save target page as new file
 	doc.save(File(targetFolder + "/" + infoFN + ".indd")).close(SaveOptions.no);
 	// Reopen master document
@@ -166,8 +160,8 @@ doc.close();
 
 
 function targetSetGeometry() {
-	doc.zeroPoint = [0, 0];
-	doc.viewPreferences.rulerOrigin = RulerOrigin.PAGE_ORIGIN;
+	// doc.zeroPoint = [0, 0];
+	// doc.viewPreferences.rulerOrigin = RulerOrigin.PAGE_ORIGIN;
 	doc.pages[0].marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
 	doc.pages[0].layoutRule = LayoutRuleOptions.SCALE;
 	doc.pages[0].resize(CoordinateSpaces.SPREAD_COORDINATES,
@@ -179,6 +173,9 @@ function targetSetGeometry() {
 		AnchorPoint.CENTER_ANCHOR,
 		ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
 		[infoT_W, infoT_H]);
+	// Redefine scaling to 100%
+	var item, items = doc.allPageItems;
+	while (item = items.shift()) item.redefineScaling();
 }
 
 function targetSafeArea() {
@@ -192,8 +189,7 @@ function targetSafeArea() {
 	var mgBounds = [mgPg.top, mgPg.left, infoS_H + mgPg.top, infoS_W + mgPg.left];
 	doc.pages[0].marginPreferences.properties = mgPg;
 	var safeLayerFrame = doc.pages[0].rectangles.add(safeLayerFrameP);
-	safeLayerFrame.geometricBounds = mgBounds;
-	safeLayerFrame.itemLayer = safeLayer.name;
+	safeLayerFrame.properties = { itemLayer: safeLayer.name, geometricBounds: mgBounds };
 }
 
 function targetInfoBox() {
