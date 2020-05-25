@@ -62,45 +62,22 @@ var ratio = [];
 sortMasterPages();
 doc.save();
 
-function sortMasterPages() {
-	for (var i = 0; i < doc.pages.length; i++) {
-		var pgW = doc.pages[i].bounds[3] - doc.pages[i].bounds[1];
-		var pgH = doc.pages[i].bounds[2] - doc.pages[i].bounds[0];
-		var r = (pgW / pgH).toFixed(3);
-		ratio.push(r);
-	}
-	for (var i = 0; i < (ratio.length - 1); i++) {
-		if (ratio[i] > ratio[(i + 1)]) {
-			doc.spreads.item(i).move(LocationOptions.AFTER, doc.spreads.item(i + 1));
-			sortMasterPages();
-		}
-	}
-}
-
 // Create progress bar
 var masterPath = doc.filePath;
 var masterName = doc.name.substr(0, doc.name.lastIndexOf("."));
-var infoFile = File(masterPath + "/" + masterName + ".txt");
-infoFile.open("r");
-var lines = 0, infoLine;
-while (!infoFile.eof) { infoLine = infoFile.readln().split("\t"); lines++ };
-infoFile.close();
 var progressBar = pb();
 progressBar.show();
 
-function pb() {
-	var w = new Window("window", masterPath + "/" + masterName);
-	w.pb = w.add("progressbar", [12, 12, 800, 24], 0, undefined);
-	w.st = w.add("statictext"); w.st.bounds = [0, 0, 780, 20]; w.st.alignment = "left";
-	return w;
-}
-
 // Parse info file
-var infoLine, infoID, infoFN, infoS_W, infoS_H, infoT_W, infoT_H, info1_W, info1_H, info2_W, info2_H,
-	avgR, targetRatio, targetPage, targetFolderName, targetFolder;
+var line, lines, infoFile, infoLine, infoID, infoFN, infoS_W, infoS_H, infoT_W, infoT_H, info1_W,
+	info1_H, info2_W, info2_H, avgR, targetRatio, targetPage, targetFolderName, targetFolder;
+infoFile = File(masterPath + "/" + masterName + ".txt");
+// Get number of lines
+infoFile.open("r"); lines = 0; while (!infoFile.eof) { infoLine = infoFile.readln().split("\t"); lines++ }; infoFile.close();
+// Main loop
 infoFile.open("r");
 infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
-var line = 1;
+line = 1;
 while (!infoFile.eof) {
 	infoLine = infoFile.readln().split("\t");
 	infoID = infoLine[0];
@@ -109,7 +86,6 @@ while (!infoFile.eof) {
 	progressBar.pb.value = line; progressBar.pb.maxvalue = lines - 1;
 	progressBar.st.text = "Processing file " + infoFN + " (" + line + " / " + (lines - 1) + ")";
 	progressBar.update();
-	line++;
 	// Select visible/total
 	info1_W = infoLine[1].replace(/\,/g, "."); info1_H = infoLine[2].replace(/\,/g, ".");
 	info2_W = infoLine[3].replace(/\,/g, "."); info2_H = infoLine[4].replace(/\,/g, ".");
@@ -129,11 +105,12 @@ while (!infoFile.eof) {
 			}
 		} else if (targetRatio <= ratio[0]) { targetPage = 0; break };
 	}
+
 	// Remove all other pages
 	for (var i = doc.pages.length - 1; i >= 0; i--) {
 		if ((i > targetPage) || (i < targetPage)) doc.pages[i].remove();
 	}
-	// Create output folders
+	// Create output folder
 	targetFolderName = String(ratio[targetPage]).replace(/\./g, "_");
 	targetFolder = new Folder(masterPath + "/" + ("ratio_" + (targetFolderName)));
 	targetFolder.create();
@@ -153,6 +130,7 @@ while (!infoFile.eof) {
 	safeLayer = findLayer(safeLayerName);
 	infoLayer = findLayer(infoLayerName);
 	idLayer = findLayer(idLayerName);
+	line++;
 }
 progressBar.close();
 infoFile.close();
@@ -213,7 +191,7 @@ function targetInfoBox() {
 	// Dimensions frame
 	infoFrame = doc.pages[0].textFrames.add(infoLayer);
 	infoFrame.label = "ratio";
-	infoFrame.contents = 
+	infoFrame.contents =
 		"Total W = " + (infoT_W *0.352777777777778) +
 		"\rTotal H = " + (infoT_H *0.352777777777778) +
 		"\r\rSafe area W = " + (infoS_W *0.352777777777778) +
@@ -259,6 +237,28 @@ function targetAlignElements() {
 			];
 		}
 	}
+}
+
+function sortMasterPages() {
+	for (var i = 0; i < doc.pages.length; i++) {
+		var pgW = doc.pages[i].bounds[3] - doc.pages[i].bounds[1];
+		var pgH = doc.pages[i].bounds[2] - doc.pages[i].bounds[0];
+		var r = (pgW / pgH).toFixed(3);
+		ratio.push(r);
+	}
+	for (var i = 0; i < (ratio.length - 1); i++) {
+		if (ratio[i] > ratio[(i + 1)]) {
+			doc.spreads.item(i).move(LocationOptions.AFTER, doc.spreads.item(i + 1));
+			sortMasterPages();
+		}
+	}
+}
+
+function pb() {
+	var w = new Window("window", masterPath + "/" + masterName);
+	w.pb = w.add("progressbar", [12, 12, 800, 24], 0, undefined);
+	w.st = w.add("statictext"); w.st.bounds = [0, 0, 780, 20]; w.st.alignment = "left";
+	return w;
 }
 
 function bleedBounds(page) {
