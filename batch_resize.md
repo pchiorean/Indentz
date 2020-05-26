@@ -2,9 +2,9 @@
 
 ## Pregătire
 
-Trebuie să avem deschis în InDesign un fișier, denumit în continuare *master*, în care fiecare pagină reprezintă un vizual cu un anumit raport (rație).
+Trebuie să avem un fișier, denumit în continuare *master*, în care fiecare pagină reprezintă un vizual cu un anumit raport (rație). Nu contează ordinea, paginile vor fi sortate automat în funcție de rații.
 
-În același folder cu masterul trebuie să existe un fișier text cu același nume, exportat din Excel cu opțiunea *tab delimited*, cu coloanele următoare: **ID**, **Vizibil W**, **Vizibil H**, **Total W**, **Total H**, **Raport**, **Vizual**, **Denumire** (numele nu e important, dar ordinea este). Coloanele **Raport** și **Vizual** nu sunt de fapt folosite, dar trebuie să existe. Atenție: fișierele vor fi denumite *exact* ca în coloana **Denumire**, deci nu folosiți caractere ilegale. Exemplu:
+În același folder cu masterul trebuie să existe un fișier text cu același nume, exportat din Excel cu opțiunea *tab delimited*, conținând 8 coloane: **ID**, **Vizibil W**, **Vizibil H**, **Total W**, **Total H**, **Raport**, **Vizual**, **Denumire** (numele nu e important, dar ordinea este). Coloanele **Raport** și **Vizual** nu sunt de fapt folosite, dar trebuie să existe. Atenție: fișierele vor fi denumite *exact* ca în coloana **Denumire**, deci nu folosiți caractere ilegale. Exemplu:
 
 ID|Vizibil W|Vizibil H|Total W|Total H|Raport|Vizual|Denumire
 :---:|---:|---:|---:|---:|---:|:---:|:---
@@ -18,16 +18,14 @@ ID|Vizibil W|Vizibil H|Total W|Total H|Raport|Vizual|Denumire
 9|985|105|1200|125|9.381|L2|09_Denumire_L2_1200x125_985x105
 ||292|210|320|230|1.390|L1|10_Denumire_L1_320x230_292x210
 
-E recomandat să se creeze cât mai multe pagini în master, pentru a acoperi toate rațiile de care este nevoie. E mai util să se folosească rațiile reale din tabel, în loc de rații generice gen 0.5, 1, 1.5, 2 ... 4.5 ș.a.m.d. Scriptul ține cont de trei zecimale, pentru cazul în care avem  multe fișiere cu rații foarte apropiate, care cer ulterior multe ajustări manuale minore (de genul 25 de fișiere cu rația 0.331, 50 de fișiere cu rația 0.333 și 30 de fișiere cu rația 0.335).
+E recomandat să se creeze cât mai multe pagini în master, pentru a acoperi toate rațiile de care este nevoie. E mai util să se folosească rațiile reale din tabel, în loc de rații generice gen 0.5, 1, 1.5, 2 ... 4.5 ș.a.m.d. Scriptul ține cont de trei zecimale, pentru cazul în care avem multe fișiere cu rații foarte apropiate, care cer ulterior multe ajustări manuale minore (de genul 25 de fișiere cu rația 0.331, 50 de fișiere cu rația 0.333 și 30 de fișiere cu rația 0.335).
 
-Deasupra layerelor care compun vizualul vor fi create, dacă nu există, layerele **id**, **info** și **safe area**, care vor conține: 
+Deasupra layerelor care compun vizualul vor fi create, dacă nu există, layerele **id**, **info** și **safe area**, care la execuție vor fi populate cu:
 * ID-ul, care va fi poziționat în partea din stânga-jos a ariei vizibile. Dacă nu se dorește ID se lasă celula goală (ex. rândul 10);
-* un text cu dimensiunile paginii (total/vizibil/rație), poziționat dreapta-sus, pe pasteboard;
+* info box, un text cu geometria paginii (total/vizibil/rație), poziționat dreapta-sus, pe pasteboard;
 * un chenar care delimitează aria vizibilă. Culoarea lui este un swatch, **Safe area**, care va fi creat dacă nu există.
 
-Dacă există deja layere cu numele **raport** (sau **ratio**) și **vizibil** vor fi folosite acestea în loc de **info** și **safe area**.
-
-<!-- WIP Auto layout – col. 7! -->
+Dacă există deja un layer cu numele **vizibil** va fi folosit acesta în loc de **safe area**.
 
 Anumite elemente pot fi poziționate automat prin etichetarea lor prealabilă din **Windows > Utilities > Script label**. Sunt posibile următoarele etichete:
 
@@ -39,6 +37,6 @@ Anumite elemente pot fi poziționate automat prin etichetarea lor prealabilă di
 
 ## Execuție
 
-Paginile vor fi sortate automat în funcție de rații, apoi vor fi create, în același folder cu masterul, fișierele declinate pe baza informațiilor din col. 1–5 și denumite cf. col. 8, grupate în subfoldere corespunzător rației folosite.
+Când se execută scriptul nu trebuie să existe alte fișiere deschise în afară de master.
 
-Atenție! Când se rulează scriptul nu trebuie să existe alte fișiere deschise în afară de fișierul master.
+Pentru fiecare rând din tabel scriptul va alege din master pagina cu rația cea mai apropiată, o va scala la **Vizibil W** × **Vizibil H**, apoi o va extinde la **Total W** × **Total H**. Va completa ID-ul, info box-ul, chenarul pentru aria vizibilă și va alinia elementele etichetate, dacă e cazul. Apoi va salva fișierul cu numele din **Denumire** într-un subfolder cu numele rației folosite.
