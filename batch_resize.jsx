@@ -1,5 +1,5 @@
 /*
-	Batch resize v7.11j
+	Batch resize v7.12j
 	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
 	May 2020, Paul Chiorean
 
@@ -14,10 +14,13 @@
 	v7.9j – rewrite alignment function
 	v7.10j – alternative layer names
 	v7.11j – redefine scaling to 100%
+	v7.12j – duplicate master instead of open/reopen
 */
 
-var doc = app.documents[0];
-if (!doc.isValid) exit();
+var doc = app.documents[0]; if (!doc.isValid) exit();
+var masterPath = doc.filePath;
+var masterName = doc.name.substr(0, doc.name.lastIndexOf("."));
+var masterFile = File(masterPath + "/" + masterName + ".indd");
 
 // Set defaults
 doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.millimeters;
@@ -27,6 +30,7 @@ app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERAC
 app.scriptPreferences.enableRedraw = false;
 
 // Make technical layers
+var safeLayer, infoLayer, idLayer;
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
 var infoLayerName = ["info", "ratio", "raport"];
 var idLayerName = ["id", "ID"];
@@ -41,52 +45,31 @@ const safeLayerFrameP = {
 	strokeType: "$ID/Canned Dashed 3x2",
 	overprintStroke: false
 }
-
-var safeLayer, infoLayer, idLayer;
 doc.activeLayer = doc.layers.item(0);
-if (!(safeLayer = findLayer(safeLayerName))) safeLayer = doc.layers.add({ name: safeLayerName[0], layerColor: UIColors.YELLOW });
-if (!(infoLayer = findLayer(infoLayerName))) infoLayer = doc.layers.add({ name: infoLayerName[0], layerColor: UIColors.CYAN });
-if (!(idLayer = findLayer(idLayerName))) idLayer = doc.layers.add({ name: idLayerName[0], layerColor: UIColors.CYAN });
+if (!(safeLayer = findLayer(doc, safeLayerName))) safeLayer = doc.layers.add({ name: safeLayerName[0], layerColor: UIColors.YELLOW });
+if (!(infoLayer = findLayer(doc, infoLayerName))) infoLayer = doc.layers.add({ name: infoLayerName[0], layerColor: UIColors.CYAN });
+if (!(idLayer = findLayer(doc, idLayerName))) idLayer = doc.layers.add({ name: idLayerName[0], layerColor: UIColors.CYAN });
 infoLayer.move(LocationOptions.before, safeLayer); idLayer.move(LocationOptions.before, infoLayer);
 safeLayer.properties = infoLayer.properties = idLayer.properties = { visible: true, locked: false };
 try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
 
-function findLayer(names) { // Find first layer from a list of names
-	for (var i = 0; i < names.length; i++) {
-		var layer = doc.layers.item(names[i]); if (layer.isValid) return layer;
-	}
-}
-
 // Sort master pages by ratios
 var ratio = [];
-sortMasterPages();
-doc.save();
+sortPagesByRatio(doc);
+doc.save(masterFile);
 
-// Create progress bar
-var masterPath = doc.filePath;
-var masterName = doc.name.substr(0, doc.name.lastIndexOf("."));
-var progressBar = pb();
-progressBar.show();
-
-// Parse info file
-var line, lines, infoFile, infoLine, infoID, infoFN, infoS_W, infoS_H, infoT_W, infoT_H, info1_W,
-	info1_H, info2_W, info2_H, avgR, targetRatio, targetPage, targetFolderName, targetFolder;
-infoFile = File(masterPath + "/" + masterName + ".txt");
-// Get number of lines
-infoFile.open("r"); lines = 0; while (!infoFile.eof) { infoLine = infoFile.readln().split("\t"); lines++ }; infoFile.close();
-// Main loop
+// Start batch processing
+var infoFile = File(masterPath + "/" + masterName + ".txt");
+var progressBar = createProgressBar(countLines(infoFile) - 1); // Create progress bar
 infoFile.open("r");
-infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
-line = 1;
+var infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
+var line = 1;
 while (!infoFile.eof) {
 	infoLine = infoFile.readln().split("\t");
-	infoID = infoLine[0];
-	infoFN = infoLine[7];
-	// Update progress bar
-	progressBar.pb.value = line; progressBar.pb.maxvalue = lines - 1;
-	progressBar.st.text = "Processing file " + infoFN + " (" + line + " / " + (lines - 1) + ")";
-	progressBar.update();
-	// Select visible/total
+	var infoID = infoLine[0];
+	var infoFN = infoLine[7];
+	var info1_W, info1_H, info2_W, info2_H, infoS_W, infoS_H, infoT_W, infoT_H;
+	// Read and select visible/total
 	info1_W = infoLine[1].replace(/\,/g, "."); info1_H = infoLine[2].replace(/\,/g, ".");
 	info2_W = infoLine[3].replace(/\,/g, "."); info2_H = infoLine[4].replace(/\,/g, ".");
 	infoS_W = Math.min(Number(info1_W), Number(info2_W)) / 0.352777777777778;
@@ -94,9 +77,10 @@ while (!infoFile.eof) {
 	infoT_W = Math.max(Number(info1_W), Number(info2_W)) / 0.352777777777778;
 	infoT_H = Math.max(Number(info1_H), Number(info2_H)) / 0.352777777777778;
 	// Compare ratios and select closest
-	targetRatio = (infoS_W / infoS_H).toFixed(3);
+	var targetPage;
+	var targetRatio = (infoS_W / infoS_H).toFixed(3);
 	for (var i = 0; i < ratio.length; i++) {
-		avgR = ((ratio[i + 1] - ratio[i]) / 2) + parseFloat(ratio[i]);
+		var avgR = ((ratio[i + 1] - ratio[i]) / 2) + parseFloat(ratio[i]);
 		if (targetRatio > ratio[i]) {
 			if (i == ratio.length - 1) { targetPage = i; break }
 			else if (targetRatio <= ratio[i + 1]) {
@@ -105,31 +89,16 @@ while (!infoFile.eof) {
 			}
 		} else if (targetRatio <= ratio[0]) { targetPage = 0; break };
 	}
-
-	// Remove all other pages
-	for (var i = doc.pages.length - 1; i >= 0; i--) {
-		if ((i > targetPage) || (i < targetPage)) doc.pages[i].remove();
-	}
-	// Create output folder
-	targetFolderName = String(ratio[targetPage]).replace(/\./g, "_");
-	targetFolder = new Folder(masterPath + "/" + ("ratio_" + (targetFolderName)));
+	// Duplicate master and process target
+	var targetFolderName = String(ratio[targetPage]).replace(/\./g, "_");
+	var targetFolder = Folder(masterPath + "/" + ("ratio_" + (targetFolderName)));
 	targetFolder.create();
-	// Process target page
-	targetSetGeometry();
-	targetSafeArea();
-	targetInfoBox();
-	targetAlignElements();
-	// Set layer attributes
-	safeLayer.properties = { visible: true, locked: true };
-	infoLayer.properties = { visible: false, locked: true };
-	idLayer.properties = { visible: true, locked: true };
-	// Save target page as new file
-	doc.save(File(targetFolder + "/" + infoFN + ".indd")).close(SaveOptions.no);
-	// Reopen master document
-	app.open(File(masterPath + "/" + masterName + ".indd"), false);
-	safeLayer = findLayer(safeLayerName);
-	infoLayer = findLayer(infoLayerName);
-	idLayer = findLayer(idLayerName);
+	var targetFN = File(targetFolder + "/" + infoFN + ".indd");
+	doc.saveACopy(targetFN);
+	var target = app.open(targetFN, false);
+	updateProgressBar(line);
+	processTarget(target);
+	// Loop
 	line++;
 }
 progressBar.close();
@@ -137,43 +106,89 @@ infoFile.close();
 doc.close();
 
 
-function targetSetGeometry() {
-	// doc.zeroPoint = [0, 0];
-	// doc.viewPreferences.rulerOrigin = RulerOrigin.PAGE_ORIGIN;
-	doc.pages[0].marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
-	doc.pages[0].layoutRule = LayoutRuleOptions.SCALE;
-	doc.pages[0].resize(CoordinateSpaces.SPREAD_COORDINATES,
+function processTarget(target) {
+	safeLayer = findLayer(target, safeLayerName);
+	infoLayer = findLayer(target, infoLayerName);
+	idLayer = findLayer(target, idLayerName);
+	// Remove unneeded pages
+	for (var i = target.pages.length - 1; i >= 0; i--) {
+		if ((i > targetPage) || (i < targetPage)) target.pages[i].remove();
+	}
+	// Process target page
+	targetSetGeometry(target);
+	targetAlignElements(target);
+	targetSafeArea(target);
+	targetInfoBox(target);
+	// Set layer attributes
+	infoLayer.properties = { visible: false, locked: true };
+	safeLayer.properties = { visible: true, locked: true };
+	// if (safeLayer.isValid) safeLayer.properties = { visible: true, locked: true };
+	idLayer.properties = { visible: true, locked: true };
+	// Save and close
+	target.save(targetFN).close();
+}
+
+function targetSetGeometry(target) {
+	target.pages[0].marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
+	target.pages[0].layoutRule = LayoutRuleOptions.SCALE;
+	target.pages[0].resize(CoordinateSpaces.SPREAD_COORDINATES,
 		AnchorPoint.CENTER_ANCHOR,
 		ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
 		[infoS_W, infoS_H]);
-	doc.pages[0].layoutRule = LayoutRuleOptions.OFF;
-	doc.pages[0].resize(CoordinateSpaces.SPREAD_COORDINATES,
+	target.pages[0].layoutRule = LayoutRuleOptions.OFF;
+	target.pages[0].resize(CoordinateSpaces.SPREAD_COORDINATES,
 		AnchorPoint.CENTER_ANCHOR,
 		ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
 		[infoT_W, infoT_H]);
 	// Redefine scaling to 100%
-	var item, items = doc.allPageItems;
+	var item, items = target.allPageItems;
 	while (item = items.shift()) item.redefineScaling();
 }
 
-function targetSafeArea() {
-	var mgPg = {
-		top: (infoT_H - infoS_H) / 2,
-		left: (infoT_W - infoS_W) / 2,
-		bottom: (infoT_H - infoS_H) / 2,
-		right: (infoT_W - infoS_W) / 2
-	};
+function targetAlignElements(target) {
+	var obj = target.rectangles;
+	var bleed = bleedBounds(target.pages[0]);
+	for (var i = 0; i < obj.length; i++) {
+		var oLabel = obj[i].label;
+		if (oLabel == "alignL" || oLabel == "alignTL" || oLabel == "alignBL") target.align(obj[i], AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		if (oLabel == "alignR" || oLabel == "alignTR" || oLabel == "alignBR") target.align(obj[i], AlignOptions.RIGHT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		if (oLabel == "alignT" || oLabel == "alignTL" || oLabel == "alignTR") target.align(obj[i], AlignOptions.TOP_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		if (oLabel == "alignB" || oLabel == "alignBL" || oLabel == "alignBR") target.align(obj[i], AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		if (oLabel == "alignCh") target.align(obj[i], AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
+		if (oLabel == "alignCv") target.align(obj[i], AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
+		if (oLabel == "alignC") {
+			target.align(obj[i], AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
+			target.align(obj[i], AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
+		}
+		if (oLabel == "bleed") obj[i].geometricBounds = bleed;
+		if (oLabel == "expand") {
+			obj[i].fit(FitOptions.FRAME_TO_CONTENT);
+			obj[i].geometricBounds = [
+				Math.max(obj[i].visibleBounds[0], bleed[0]),
+				Math.max(obj[i].visibleBounds[1], bleed[1]),
+				Math.min(obj[i].visibleBounds[2], bleed[2]),
+				Math.min(obj[i].visibleBounds[3], bleed[3])
+			];
+		}
+	}
+}
+
+function targetSafeArea(target) {
+	var mgPg, mgBounds, safeLayerFrame;
+	mgPg = { top: (infoT_H - infoS_H) / 2, left: (infoT_W - infoS_W) / 2,
+		bottom: (infoT_H - infoS_H) / 2, right: (infoT_W - infoS_W) / 2 };
 	if (mgPg.top + mgPg.left + mgPg.bottom + mgPg.right == 0) return;
-	var mgBounds = [mgPg.top, mgPg.left, infoS_H + mgPg.top, infoS_W + mgPg.left];
-	doc.pages[0].marginPreferences.properties = mgPg;
-	var safeLayerFrame = doc.pages[0].rectangles.add(safeLayerFrameP);
+	mgBounds = [mgPg.top, mgPg.left, infoS_H + mgPg.top, infoS_W + mgPg.left];
+	target.pages[0].marginPreferences.properties = mgPg;
+	safeLayerFrame = target.pages[0].rectangles.add(safeLayerFrameP);
 	safeLayerFrame.properties = { itemLayer: safeLayer.name, geometricBounds: mgBounds };
 }
 
-function targetInfoBox() {
+function targetInfoBox(target) {
 	var infoFrame, infoText;
 	// ID frame
-	infoFrame = doc.pages[0].textFrames.add(idLayer);
+	infoFrame = target.pages[0].textFrames.add();
+	infoFrame.itemLayer = idLayer.name;
 	infoFrame.label = "ID";
 	if (infoID == "") { infoFrame.contents = " " } else { infoFrame.contents = "ID " + infoID };
 	infoText = infoFrame.parentStory.paragraphs.everyItem();
@@ -189,14 +204,15 @@ function targetInfoBox() {
 	infoFrame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
 	infoFrame.move([((infoT_W - infoS_W) / 2) + 5.67, ((infoT_H - infoS_H) / 2) + infoS_H - 9.239]);
 	// Dimensions frame
-	infoFrame = doc.pages[0].textFrames.add(infoLayer);
-	infoFrame.label = "ratio";
+	infoFrame = target.pages[0].textFrames.add();
+	infoFrame.itemLayer = infoLayer.name;
+	infoFrame.label = "info";
 	infoFrame.contents =
 		"Total W = " + (infoT_W *0.352777777777778) +
 		"\rTotal H = " + (infoT_H *0.352777777777778) +
 		"\r\rSafe area W = " + (infoS_W *0.352777777777778) +
 		"\rSafe area H = " + (infoS_H *0.352777777777778) +
-		"\r\rRaport = " + targetRatio;
+		"\r\rRaport = " + (infoS_W / infoS_H).toFixed(3);
 	infoText = infoFrame.parentStory.paragraphs.everyItem();
 	try { infoText.appliedFont = app.fonts.item("Helvetica Neue") } catch (_) {};
 	try { infoText.fontStyle = "Regular"; infoText.pointSize = 12 } catch (_) {};
@@ -211,57 +227,54 @@ function targetInfoBox() {
 	infoFrame.move([infoT_W + 20, 0]);
 }
 
-function targetAlignElements() {
-	var obj = doc.rectangles;
-	var bleed = bleedBounds(doc.pages[0]);
-	for (var i = 0; i < obj.length; i++) {
-		var oLabel = obj[i].label;
-		if (oLabel == "alignL" || oLabel == "alignTL" || oLabel == "alignBL") doc.align(obj[i], AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		if (oLabel == "alignR" || oLabel == "alignTR" || oLabel == "alignBR") doc.align(obj[i], AlignOptions.RIGHT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		if (oLabel == "alignT" || oLabel == "alignTL" || oLabel == "alignTR") doc.align(obj[i], AlignOptions.TOP_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		if (oLabel == "alignB" || oLabel == "alignBL" || oLabel == "alignBR") doc.align(obj[i], AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		if (oLabel == "alignCh") doc.align(obj[i], AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
-		if (oLabel == "alignCv") doc.align(obj[i], AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
-		if (oLabel == "alignC") {
-			doc.align(obj[i], AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
-			doc.align(obj[i], AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
-		}
-		if (oLabel == "bleed") obj[i].geometricBounds = bleed;
-		if (oLabel == "expand") {
-			obj[i].fit(FitOptions.FRAME_TO_CONTENT);
-			obj[i].geometricBounds = [
-				Math.max(obj[i].visibleBounds[0], bleed[0]),
-				Math.max(obj[i].visibleBounds[1], bleed[1]),
-				Math.min(obj[i].visibleBounds[2], bleed[2]),
-				Math.min(obj[i].visibleBounds[3], bleed[3])
-			];
-		}
+function findLayer(doc, names) {
+	var layer;
+	for (var i = 0; i < names.length; i++) {
+		layer = doc.layers.item(names[i]); if (layer.isValid) return layer;
 	}
 }
 
-function sortMasterPages() {
+function sortPagesByRatio(doc) {
+	var pgW, pgH, r;
 	for (var i = 0; i < doc.pages.length; i++) {
-		var pgW = doc.pages[i].bounds[3] - doc.pages[i].bounds[1];
-		var pgH = doc.pages[i].bounds[2] - doc.pages[i].bounds[0];
-		var r = (pgW / pgH).toFixed(3);
+		pgW = doc.pages[i].bounds[3] - doc.pages[i].bounds[1];
+		pgH = doc.pages[i].bounds[2] - doc.pages[i].bounds[0];
+		r = (pgW / pgH).toFixed(3);
 		ratio.push(r);
 	}
 	for (var i = 0; i < (ratio.length - 1); i++) {
 		if (ratio[i] > ratio[(i + 1)]) {
 			doc.spreads.item(i).move(LocationOptions.AFTER, doc.spreads.item(i + 1));
-			sortMasterPages();
+			sortPagesByRatio();
 		}
 	}
 }
 
-function pb() {
+function countLines(file) {
+	var i = 0;
+	file.open("r");
+	while (!file.eof) { file.readln().split("\t"); i++ };
+	file.close();
+	return i;
+}
+
+function createProgressBar(max) {
 	var w = new Window("window", masterPath + "/" + masterName);
 	w.pb = w.add("progressbar", [12, 12, 800, 24], 0, undefined);
+	w.pb.maxvalue = max;
 	w.st = w.add("statictext"); w.st.bounds = [0, 0, 780, 20]; w.st.alignment = "left";
 	return w;
 }
 
+function updateProgressBar(val) {
+	progressBar.pb.value = val;
+	progressBar.st.text = "Processing file " + infoFN + " (" + val + " / " + progressBar.pb.maxvalue + ")";
+	progressBar.show()
+	progressBar.update();
+}
+
 function bleedBounds(page) {
+	var doc = page.parent.parent;
 	var bleed = {
 		top: doc.documentPreferences.properties.documentBleedTopOffset,
 		left: doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
