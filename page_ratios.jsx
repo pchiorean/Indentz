@@ -5,20 +5,20 @@
 
 var doc = app.activeDocument;
 var idLayerName = "id", idLayer = doc.layers.item(idLayerName);
-var ratioLayerName = "ratio", ratioLayer = doc.layers.item(ratioLayerName);
+var infoLayerName = "info", infoLayer = doc.layers.item(infoLayerName);
 var i, j, selPg, sizeMg, ratio, infoFrame;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
-if (!ratioLayer.isValid) doc.layers.add({ name: ratioLayerName });
-ratioLayer.properties = { layerColor: UIColors.CYAN, visible: true, locked: false, printable: false };
-if (idLayer.isValid) ratioLayer.move(LocationOptions.after, idLayer);
-else ratioLayer.move(LocationOptions.AT_BEGINNING);
+if (!infoLayer.isValid) doc.layers.add({ name: infoLayerName });
+infoLayer.properties = { layerColor: UIColors.CYAN, visible: true, locked: false, printable: false };
+if (idLayer.isValid) infoLayer.move(LocationOptions.after, idLayer);
+else infoLayer.move(LocationOptions.AT_BEGINNING);
 
 for (i = 0; i < doc.pages.length; i++) {
-	selPg = doc.pages.item(i); sizeMg = bounds(selPg);
+	selPg = doc.pages.item(i); sizeMg = mgBounds(selPg);
 	ratio = ((sizeMg[3] - sizeMg[1]) / (sizeMg[2] - sizeMg[0])).toFixed(3);
 	for (j = 0; j < selPg.pageItems.length; j++) if (selPg.pageItems.item(j).label == "ratio") selPg.pageItems.item(j).remove();
-	infoFrame = selPg.textFrames.add({ itemLayer: ratioLayer.name, contents: ratio, label: "ratio", fillColor: "Black" });
+	infoFrame = selPg.textFrames.add({ itemLayer: infoLayer.name, contents: ratio, label: "ratio", fillColor: "Black" });
 	infoFrame.paragraphs.everyItem().properties = { appliedFont: app.fonts.item("Verdana"), fontStyle: "Bold", pointSize: 32, fillColor: "Paper" };
 	infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
 	infoFrame.textFramePreferences.properties = {
@@ -32,10 +32,10 @@ for (i = 0; i < doc.pages.length; i++) {
 	doc.align(infoFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
 	doc.align(infoFrame, AlignOptions.TOP_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
 }
-ratioLayer.locked = true;
+infoLayer.locked = true;
 
 
-function bounds(page) { // Return page margins bounds
+function mgBounds(page) { // Return page margins bounds
 	var sizePg = page.bounds;
 	var mgPg = page.marginPreferences;
 	var m_y1, m_x1, m_y2, m_x2;
