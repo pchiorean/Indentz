@@ -14,7 +14,7 @@
 	v7.9j – rewrite alignment function
 	v7.10j – alternative layer names
 	v7.11j – redefine scaling to 100%
-	v7.12j – duplicate master instead of open/reopen
+	v7.12j – duplicate master instead of reopen
 */
 
 var doc = app.documents[0]; if (!doc.isValid) exit();
@@ -30,7 +30,7 @@ app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERAC
 app.scriptPreferences.enableRedraw = false;
 
 // Make technical layers
-var safeLayer, infoLayer, idLayer;
+var safeLayer, infoLayer, idLayer, safeSwatch;
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
 var infoLayerName = ["info", "ratio", "raport"];
 var idLayerName = ["id", "ID"];
@@ -46,26 +46,35 @@ const safeLayerFrameP = {
 	overprintStroke: false
 }
 doc.activeLayer = doc.layers.item(0);
-if (!(safeLayer = findLayer(doc, safeLayerName))) safeLayer = doc.layers.add({ name: safeLayerName[0], layerColor: UIColors.YELLOW });
-if (!(infoLayer = findLayer(doc, infoLayerName))) infoLayer = doc.layers.add({ name: infoLayerName[0], layerColor: UIColors.CYAN });
-if (!(idLayer = findLayer(doc, idLayerName))) idLayer = doc.layers.add({ name: idLayerName[0], layerColor: UIColors.CYAN });
-infoLayer.move(LocationOptions.before, safeLayer); idLayer.move(LocationOptions.before, infoLayer);
-safeLayer.properties = infoLayer.properties = idLayer.properties = { visible: true, locked: false };
-try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
+if (!(safeLayer = findLayer(doc, safeLayerName))) {
+	safeLayer = doc.layers.add({ name: safeLayerName[0], layerColor: UIColors.YELLOW });
+}
+if (!(infoLayer = findLayer(doc, infoLayerName))) {
+	infoLayer = doc.layers.add({ name: infoLayerName[0], layerColor: UIColors.CYAN });
+}
+infoLayer.move(LocationOptions.BEFORE, safeLayer);
+if (!(idLayer = findLayer(doc, idLayerName))) {
+	idLayer = doc.layers.add({ name: idLayerName[0], layerColor: UIColors.CYAN });
+}
+idLayer.move(LocationOptions.BEFORE, infoLayer);
+safeSwatch = doc.swatches.itemByName(safeSwatchName);
+if (!safeSwatch.isValid) {
+	doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, 
+	space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
+};
 
-// Sort master pages by ratios
-var ratio = [];
-sortPagesByRatio(doc);
-doc.save(masterFile);
+// Sort master pages and get sorted ratio array
+var ratio = sortPagesByRatio();
+if(doc.modified == true) doc.save(masterFile);
 
 // Start batch processing
 var infoFile = File(masterPath + "/" + masterName + ".txt");
 var progressBar = createProgressBar(countLines(infoFile) - 1); // Create progress bar
 infoFile.open("r");
+var counter = 0;
 var infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
-var line = 1;
 while (!infoFile.eof) {
-	infoLine = infoFile.readln().split("\t");
+	infoLine = infoFile.readln().split("\t"); counter++;
 	var infoID = infoLine[0];
 	var infoFN = infoLine[7];
 	var info1_W, info1_H, info2_W, info2_H, infoS_W, infoS_H, infoT_W, infoT_H;
@@ -76,30 +85,15 @@ while (!infoFile.eof) {
 	infoS_H = Math.min(Number(info1_H), Number(info2_H)) / 0.352777777777778;
 	infoT_W = Math.max(Number(info1_W), Number(info2_W)) / 0.352777777777778;
 	infoT_H = Math.max(Number(info1_H), Number(info2_H)) / 0.352777777777778;
-	// Compare ratios and select closest
-	var targetPage;
-	var targetRatio = (infoS_W / infoS_H).toFixed(3);
-	for (var i = 0; i < ratio.length; i++) {
-		var avgR = ((ratio[i + 1] - ratio[i]) / 2) + parseFloat(ratio[i]);
-		if (targetRatio > ratio[i]) {
-			if (i == ratio.length - 1) { targetPage = i; break }
-			else if (targetRatio <= ratio[i + 1]) {
-				if (targetRatio <= avgR) { targetPage = i; break }
-				else if (targetRatio > avgR) { targetPage = i + 1; break };
-			}
-		} else if (targetRatio <= ratio[0]) { targetPage = 0; break };
-	}
 	// Duplicate master and process target
+	var targetPage = getTargetPage();
 	var targetFolderName = String(ratio[targetPage]).replace(/\./g, "_");
 	var targetFolder = Folder(masterPath + "/" + ("ratio_" + (targetFolderName)));
 	targetFolder.create();
 	var targetFN = File(targetFolder + "/" + infoFN + ".indd");
 	doc.saveACopy(targetFN);
 	var target = app.open(targetFN, false);
-	updateProgressBar(line);
 	processTarget(target);
-	// Loop
-	line++;
 }
 progressBar.close();
 infoFile.close();
@@ -107,22 +101,22 @@ doc.close();
 
 
 function processTarget(target) {
-	safeLayer = findLayer(target, safeLayerName);
-	infoLayer = findLayer(target, infoLayerName);
-	idLayer = findLayer(target, idLayerName);
-	// Remove unneeded pages
+	updateProgressBar(counter);
+	// Delete unneeded pages
 	for (var i = target.pages.length - 1; i >= 0; i--) {
 		if ((i > targetPage) || (i < targetPage)) target.pages[i].remove();
 	}
-	// Process target page
+	// Process page
+	safeLayer = findLayer(target, safeLayerName);
+	infoLayer = findLayer(target, infoLayerName);
+	idLayer = findLayer(target, idLayerName);
+	safeLayer.properties = infoLayer.properties = idLayer.properties = { locked: false };
 	targetSetGeometry(target);
 	targetAlignElements(target);
 	targetSafeArea(target);
 	targetInfoBox(target);
-	// Set layer attributes
 	infoLayer.properties = { visible: false, locked: true };
 	safeLayer.properties = { visible: true, locked: true };
-	// if (safeLayer.isValid) safeLayer.properties = { visible: true, locked: true };
 	idLayer.properties = { visible: true, locked: true };
 	// Save and close
 	target.save(targetFN).close();
@@ -150,12 +144,24 @@ function targetAlignElements(target) {
 	var bleed = bleedBounds(target.pages[0]);
 	for (var i = 0; i < obj.length; i++) {
 		var oLabel = obj[i].label;
-		if (oLabel == "alignL" || oLabel == "alignTL" || oLabel == "alignBL") target.align(obj[i], AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		if (oLabel == "alignR" || oLabel == "alignTR" || oLabel == "alignBR") target.align(obj[i], AlignOptions.RIGHT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		if (oLabel == "alignT" || oLabel == "alignTL" || oLabel == "alignTR") target.align(obj[i], AlignOptions.TOP_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		if (oLabel == "alignB" || oLabel == "alignBL" || oLabel == "alignBR") target.align(obj[i], AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		if (oLabel == "alignCh") target.align(obj[i], AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
-		if (oLabel == "alignCv") target.align(obj[i], AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
+		if (oLabel == "alignL" || oLabel == "alignTL" || oLabel == "alignBL") {
+			target.align(obj[i], AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		}
+		if (oLabel == "alignR" || oLabel == "alignTR" || oLabel == "alignBR") {
+			target.align(obj[i], AlignOptions.RIGHT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		}
+		if (oLabel == "alignT" || oLabel == "alignTL" || oLabel == "alignTR") {
+			target.align(obj[i], AlignOptions.TOP_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		}
+		if (oLabel == "alignB" || oLabel == "alignBL" || oLabel == "alignBR") {
+			target.align(obj[i], AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		}
+		if (oLabel == "alignCh") {
+			target.align(obj[i], AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
+		}
+		if (oLabel == "alignCv") {
+			target.align(obj[i], AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
+		}
 		if (oLabel == "alignC") {
 			target.align(obj[i], AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
 			target.align(obj[i], AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
@@ -234,22 +240,6 @@ function findLayer(doc, names) {
 	}
 }
 
-function sortPagesByRatio(doc) {
-	var pgW, pgH, r;
-	for (var i = 0; i < doc.pages.length; i++) {
-		pgW = doc.pages[i].bounds[3] - doc.pages[i].bounds[1];
-		pgH = doc.pages[i].bounds[2] - doc.pages[i].bounds[0];
-		r = (pgW / pgH).toFixed(3);
-		ratio.push(r);
-	}
-	for (var i = 0; i < (ratio.length - 1); i++) {
-		if (ratio[i] > ratio[(i + 1)]) {
-			doc.spreads.item(i).move(LocationOptions.AFTER, doc.spreads.item(i + 1));
-			sortPagesByRatio();
-		}
-	}
-}
-
 function countLines(file) {
 	var i = 0;
 	file.open("r");
@@ -273,6 +263,37 @@ function updateProgressBar(val) {
 	progressBar.update();
 }
 
+function sortPagesByRatio() {
+	var pgW, pgH, r = [];
+	for (var i = 0; i < doc.pages.length; i++) {
+		pgW = doc.pages[i].bounds[3] - doc.pages[i].bounds[1];
+		pgH = doc.pages[i].bounds[2] - doc.pages[i].bounds[0];
+		r.push((pgW / pgH).toFixed(3));
+	}
+	for (var i = 0; i < (r.length - 1); i++) {
+		if (r[i] > r[(i + 1)]) {
+			doc.spreads.item(i).move(LocationOptions.AFTER, doc.spreads.item(i + 1));
+			sortPagesByRatio();
+		}
+	}
+	return r;
+}
+
+function getTargetPage() { // Compare ratios and select closest
+	var t;
+	var targetRatio = (infoS_W / infoS_H).toFixed(3);
+	for (var i = 0; i < ratio.length; i++) {
+		var avgR = ((ratio[i + 1] - ratio[i]) / 2) + parseFloat(ratio[i]);
+		if (targetRatio > ratio[i]) {
+			if (i == ratio.length - 1) { t = i; break }
+			else if (targetRatio <= ratio[i + 1]) {
+				if (targetRatio <= avgR) { t = i; break }
+				else if (targetRatio > avgR) { t = i + 1; break };
+			}
+		} else if (targetRatio <= ratio[0]) { t = 0; break };
+	}
+	return t;
+}
 function bleedBounds(page) {
 	var doc = page.parent.parent;
 	var bleed = {
