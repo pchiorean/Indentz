@@ -1,5 +1,5 @@
 /*
-	Batch resize v7.12j
+	Batch resize v7.13j
 	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
 	May 2020, Paul Chiorean
 
@@ -15,6 +15,7 @@
 	v7.10j – alternative layer names
 	v7.11j – redefine scaling to 100%
 	v7.12j – duplicate master instead of reopen
+	v7.13j – some checks on info file
 */
 
 var doc = app.documents[0]; if (!doc.isValid) exit();
@@ -22,7 +23,7 @@ var masterPath = doc.filePath;
 var masterName = doc.name.substr(0, doc.name.lastIndexOf("."));
 var masterFile = File(masterPath + "/" + masterName + ".indd");
 
-// Set defaults
+// Set some flags
 doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.millimeters;
 doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.millimeters;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
@@ -34,8 +35,8 @@ var safeLayer, infoLayer, idLayer, safeSwatch;
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
 var infoLayerName = ["info", "ratio", "raport"];
 var idLayerName = ["id", "ID"];
-const safeSwatchName = "Safe area";
-const safeLayerFrameP = {
+var safeSwatchName = "Safe area";
+var safeLayerFrameP = {
 	label: "safe area",
 	contentType: ContentType.UNASSIGNED,
 	fillColor: "None",
@@ -63,18 +64,21 @@ if (!safeSwatch.isValid) {
 	space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
 };
 
-// Sort master pages and get sorted ratio array
+// Sort master pages by ratio; get ratio array
 var ratio = sortPagesByRatio();
 if(doc.modified == true) doc.save(masterFile);
 
 // Start batch processing
 var infoFile = File(masterPath + "/" + masterName + ".txt");
-var progressBar = createProgressBar(countLines(infoFile) - 1); // Create progress bar
+var progressBar = createProgressBar(countLines(infoFile)); // Create progress bar
 infoFile.open("r");
-var counter = 0;
 var infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
+var counter = 0;
 while (!infoFile.eof) {
 	infoLine = infoFile.readln().split("\t"); counter++;
+	if (!infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4] || 
+		!infoLine[5] || !infoLine[6] || !infoLine[7]) {
+		alert ("Bad data in record " + counter + "."); exit() };
 	var infoID = infoLine[0];
 	var infoFN = infoLine[7];
 	var info1_W, info1_H, info2_W, info2_H, infoS_W, infoS_H, infoT_W, infoT_H;
@@ -93,14 +97,6 @@ while (!infoFile.eof) {
 	var targetFN = File(targetFolder + "/" + infoFN + ".indd");
 	doc.saveACopy(targetFN);
 	var target = app.open(targetFN, false);
-	processTarget(target);
-}
-progressBar.close();
-infoFile.close();
-doc.close();
-
-
-function processTarget(target) {
 	updateProgressBar(counter);
 	// Delete unneeded pages
 	for (var i = target.pages.length - 1; i >= 0; i--) {
@@ -121,14 +117,20 @@ function processTarget(target) {
 	// Save and close
 	target.save(targetFN).close();
 }
+progressBar.close();
+infoFile.close();
+doc.close();
 
-function targetSetGeometry(target) {
+
+function targetSetGeometry(target) { // Resize visual and set page dimensions
 	target.pages[0].marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
+	// Scale visual to safe area
 	target.pages[0].layoutRule = LayoutRuleOptions.SCALE;
 	target.pages[0].resize(CoordinateSpaces.SPREAD_COORDINATES,
 		AnchorPoint.CENTER_ANCHOR,
 		ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
 		[infoS_W, infoS_H]);
+	// Extend page to total area
 	target.pages[0].layoutRule = LayoutRuleOptions.OFF;
 	target.pages[0].resize(CoordinateSpaces.SPREAD_COORDINATES,
 		AnchorPoint.CENTER_ANCHOR,
@@ -139,7 +141,7 @@ function targetSetGeometry(target) {
 	while (item = items.shift()) item.redefineScaling();
 }
 
-function targetAlignElements(target) {
+function targetAlignElements(target) { // Align elements based on their labels
 	var obj = target.rectangles;
 	var bleed = bleedBounds(target.pages[0]);
 	for (var i = 0; i < obj.length; i++) {
@@ -179,7 +181,7 @@ function targetAlignElements(target) {
 	}
 }
 
-function targetSafeArea(target) {
+function targetSafeArea(target) { // Draw a 'safe area' frame
 	var mgPg, mgBounds, safeLayerFrame;
 	mgPg = { top: (infoT_H - infoS_H) / 2, left: (infoT_W - infoS_W) / 2,
 		bottom: (infoT_H - infoS_H) / 2, right: (infoT_W - infoS_W) / 2 };
@@ -190,9 +192,9 @@ function targetSafeArea(target) {
 	safeLayerFrame.properties = { itemLayer: safeLayer.name, geometricBounds: mgBounds };
 }
 
-function targetInfoBox(target) {
+function targetInfoBox(target) { // Draw info boxes
 	var infoFrame, infoText;
-	// ID frame
+	// ID box
 	infoFrame = target.pages[0].textFrames.add();
 	infoFrame.itemLayer = idLayer.name;
 	infoFrame.label = "ID";
@@ -209,7 +211,7 @@ function targetInfoBox(target) {
 	}
 	infoFrame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
 	infoFrame.move([((infoT_W - infoS_W) / 2) + 5.67, ((infoT_H - infoS_H) / 2) + infoS_H - 9.239]);
-	// Dimensions frame
+	// Dimensions box
 	infoFrame = target.pages[0].textFrames.add();
 	infoFrame.itemLayer = infoLayer.name;
 	infoFrame.label = "info";
@@ -221,7 +223,7 @@ function targetInfoBox(target) {
 		"\r\rRaport = " + (infoS_W / infoS_H).toFixed(3);
 	infoText = infoFrame.parentStory.paragraphs.everyItem();
 	try { infoText.appliedFont = app.fonts.item("Helvetica Neue") } catch (_) {};
-	try { infoText.fontStyle = "Regular"; infoText.pointSize = 12 } catch (_) {};
+	try { infoText.fontStyle = "Light"; infoText.pointSize = 12 } catch (_) {};
 	infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
 	infoFrame.textFramePreferences.properties = {
 		verticalJustification: VerticalJustification.TOP_ALIGN,
@@ -233,19 +235,18 @@ function targetInfoBox(target) {
 	infoFrame.move([infoT_W + 20, 0]);
 }
 
-function findLayer(doc, names) {
+function findLayer(doc, names) { // Find first layer from a list of names
 	var layer;
 	for (var i = 0; i < names.length; i++) {
 		layer = doc.layers.item(names[i]); if (layer.isValid) return layer;
 	}
 }
 
-function countLines(file) {
-	var i = 0;
-	file.open("r");
-	while (!file.eof) { file.readln().split("\t"); i++ };
-	file.close();
-	return i;
+function countLines(file) { // Return number of lines (w/o header)
+	if (!file.open("r")) { alert("File not found."); exit() };
+	var i = 0; while (!file.eof) { file.readln().split("\t"); i++ }; file.close();
+	if (i <= 1) { alert ("Not enough records found."); exit() };
+	return i - 1;
 }
 
 function createProgressBar(max) {
@@ -259,11 +260,10 @@ function createProgressBar(max) {
 function updateProgressBar(val) {
 	progressBar.pb.value = val;
 	progressBar.st.text = "Processing file " + infoFN + " (" + val + " / " + progressBar.pb.maxvalue + ")";
-	progressBar.show()
-	progressBar.update();
+	progressBar.show(); progressBar.update();
 }
 
-function sortPagesByRatio() {
+function sortPagesByRatio() { // Sort master pages by ratio; return ratio array
 	var pgW, pgH, r = [];
 	for (var i = 0; i < doc.pages.length; i++) {
 		pgW = doc.pages[i].bounds[3] - doc.pages[i].bounds[1];
@@ -279,7 +279,7 @@ function sortPagesByRatio() {
 	return r;
 }
 
-function getTargetPage() { // Compare ratios and select closest
+function getTargetPage() { // Compare ratios and select closest; return target page
 	var t;
 	var targetRatio = (infoS_W / infoS_H).toFixed(3);
 	for (var i = 0; i < ratio.length; i++) {
@@ -294,7 +294,8 @@ function getTargetPage() { // Compare ratios and select closest
 	}
 	return t;
 }
-function bleedBounds(page) {
+
+function bleedBounds(page) { // Return page bleed bounds
 	var doc = page.parent.parent;
 	var bleed = {
 		top: doc.documentPreferences.properties.documentBleedTopOffset,
