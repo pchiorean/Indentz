@@ -1,5 +1,5 @@
 /*
-	Batch resize v7.13j
+	Batch resize v7.14j
 	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
 	May 2020, Paul Chiorean
 
@@ -16,6 +16,7 @@
 	v7.11j – redefine scaling to 100%
 	v7.12j – duplicate master instead of reopen
 	v7.13j – some checks on info file
+	v7.14j – add execution timer
 */
 
 var doc = app.documents[0]; if (!doc.isValid) exit();
@@ -29,6 +30,13 @@ doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.millimeters;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 app.scriptPreferences.enableRedraw = false;
+
+// Start timer
+var timeDiff = {
+	setStartTime: function (){ d = new Date(); time = d.getTime() },
+	getDiff: function (){ d = new Date(); t = d.getTime() - time; time = d.getTime(); return t }
+}
+timeDiff.setStartTime();
 
 // Make technical layers
 var safeLayer, infoLayer, idLayer, safeSwatch;
@@ -120,6 +128,7 @@ while (!infoFile.eof) {
 progressBar.close();
 infoFile.close();
 doc.close();
+alert("Elapsed time: " + (timeDiff.getDiff() / 1000).toFixed(1) + " seconds.");
 
 
 function targetSetGeometry(target) { // Resize visual and set page dimensions
