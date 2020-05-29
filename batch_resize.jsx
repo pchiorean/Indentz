@@ -1,5 +1,5 @@
 /*
-	Batch resize v7.14j
+	Batch resize v7.15j
 	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
 	May 2020, Paul Chiorean
 
@@ -17,12 +17,13 @@
 	v7.12j – duplicate master instead of reopen
 	v7.13j – some checks on info file
 	v7.14j – add execution timer
+	v7.15j – parse info file before batch processing
 */
 
 var doc = app.documents[0]; if (!doc.isValid) exit();
 var masterPath = doc.filePath;
-var masterName = doc.name.substr(0, doc.name.lastIndexOf("."));
-var masterFile = File(masterPath + "/" + masterName + ".indd");
+var masterFN = masterPath + "/" + doc.name.substr(0, doc.name.lastIndexOf("."));
+var masterFile = File(masterFN + ".indd");
 
 // Set some flags
 doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.millimeters;
@@ -37,6 +38,30 @@ var timeDiff = {
 	getDiff: function (){ d = new Date(); t = d.getTime() - time; time = d.getTime(); return t }
 }
 timeDiff.setStartTime();
+
+// Check and parse info file
+var infoFile = File(masterFN + ".txt");
+if (!infoFile.open("r")) { alert("File not found."); exit() };
+var infoID = [], infoSw = [], infoSh = [], infoTw = [], infoTh = [], infoVL = [], infoFN = [];
+var info1w, info1h, info2w, info2h;
+var infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
+var line = 0;
+while (!infoFile.eof) {
+	infoLine = infoFile.readln().split("\t"); line++;
+	// if (!infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4] || !infoLine[5] || !infoLine[6] || !infoLine[7]) { alert ("Bad data in record " + i + "."); exit() };
+	infoID[line] = infoLine[0]; // ID
+	// Safe area/total area
+	info1w = infoLine[1].replace(/\,/g, "."); info1h = infoLine[2].replace(/\,/g, ".");
+	info2w = infoLine[3].replace(/\,/g, "."); info2h = infoLine[4].replace(/\,/g, ".");
+	infoSw[line] = Math.min(Number(info1w), Number(info2w)) / 0.352777777777778;
+	infoSh[line] = Math.min(Number(info1h), Number(info2h)) / 0.352777777777778;
+	infoTw[line] = Math.max(Number(info1w), Number(info2w)) / 0.352777777777778;
+	infoTh[line] = Math.max(Number(info1h), Number(info2h)) / 0.352777777777778;
+	// infoVL[line] = infoLine[6]; // Layout
+	infoFN[line] = infoLine[7]; // Filename
+};
+infoFile.close();
+var infoLines = line; if (infoLines <= 1) { alert ("Not enough records found."); exit() };
 
 // Make technical layers
 var safeLayer, infoLayer, idLayer, safeSwatch;
@@ -73,39 +98,21 @@ if (!safeSwatch.isValid) {
 };
 
 // Sort master pages by ratio; get ratio array
-var ratio = sortPagesByRatio();
+var ratios = sortPagesByRatio();
 if(doc.modified == true) doc.save(masterFile);
 
 // Start batch processing
-var infoFile = File(masterPath + "/" + masterName + ".txt");
-var progressBar = createProgressBar(countLines(infoFile)); // Create progress bar
-infoFile.open("r");
-var infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
-var counter = 0;
-while (!infoFile.eof) {
-	infoLine = infoFile.readln().split("\t"); counter++;
-	if (!infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4] || 
-		!infoLine[5] || !infoLine[6] || !infoLine[7]) {
-		alert ("Bad data in record " + counter + "."); exit() };
-	var infoID = infoLine[0];
-	var infoFN = infoLine[7];
-	var info1_W, info1_H, info2_W, info2_H, infoS_W, infoS_H, infoT_W, infoT_H;
-	// Read and select visible/total
-	info1_W = infoLine[1].replace(/\,/g, "."); info1_H = infoLine[2].replace(/\,/g, ".");
-	info2_W = infoLine[3].replace(/\,/g, "."); info2_H = infoLine[4].replace(/\,/g, ".");
-	infoS_W = Math.min(Number(info1_W), Number(info2_W)) / 0.352777777777778;
-	infoS_H = Math.min(Number(info1_H), Number(info2_H)) / 0.352777777777778;
-	infoT_W = Math.max(Number(info1_W), Number(info2_W)) / 0.352777777777778;
-	infoT_H = Math.max(Number(info1_H), Number(info2_H)) / 0.352777777777778;
+var progressBar = createProgressBar(infoLines); // Create progress bar
+for (line = 1; line <= infoLines; line++) {
 	// Duplicate master and process target
-	var targetPage = getTargetPage();
-	var targetFolderName = String(ratio[targetPage]).replace(/\./g, "_");
+	var targetPage = getTargetPage(line);
+	var targetFolderName = String(ratios[targetPage]).replace(/\./g, "_");
 	var targetFolder = Folder(masterPath + "/" + ("ratio_" + (targetFolderName)));
 	targetFolder.create();
-	var targetFN = File(targetFolder + "/" + infoFN + ".indd");
+	var targetFN = File(targetFolder + "/" + infoFN[line] + ".indd");
 	doc.saveACopy(targetFN);
 	var target = app.open(targetFN, false);
-	updateProgressBar(counter);
+	updateProgressBar(line);
 	// Delete unneeded pages
 	for (var i = target.pages.length - 1; i >= 0; i--) {
 		if ((i > targetPage) || (i < targetPage)) target.pages[i].remove();
@@ -115,10 +122,11 @@ while (!infoFile.eof) {
 	infoLayer = findLayer(target, infoLayerName);
 	idLayer = findLayer(target, idLayerName);
 	safeLayer.properties = infoLayer.properties = idLayer.properties = { locked: false };
-	targetSetGeometry(target);
-	targetAlignElements(target);
-	targetSafeArea(target);
-	targetInfoBox(target);
+	targetSetGeometry();
+	targetSetLayout();
+	targetAlignElements();
+	targetSafeArea();
+	targetInfoBox();
 	infoLayer.properties = { visible: false, locked: true };
 	safeLayer.properties = { visible: true, locked: true };
 	idLayer.properties = { visible: true, locked: true };
@@ -131,26 +139,33 @@ doc.close();
 alert("Elapsed time: " + (timeDiff.getDiff() / 1000).toFixed(1) + " seconds.");
 
 
-function targetSetGeometry(target) { // Resize visual and set page dimensions
+function targetSetGeometry() { // Resize visual and set page dimensions
 	target.pages[0].marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
 	// Scale visual to safe area
 	target.pages[0].layoutRule = LayoutRuleOptions.SCALE;
 	target.pages[0].resize(CoordinateSpaces.SPREAD_COORDINATES,
 		AnchorPoint.CENTER_ANCHOR,
 		ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
-		[infoS_W, infoS_H]);
+		[infoSw[line], infoSh[line]]);
 	// Extend page to total area
 	target.pages[0].layoutRule = LayoutRuleOptions.OFF;
 	target.pages[0].resize(CoordinateSpaces.SPREAD_COORDINATES,
 		AnchorPoint.CENTER_ANCHOR,
 		ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
-		[infoT_W, infoT_H]);
+		[infoTw[line], infoTh[line]]);
 	// Redefine scaling to 100%
 	var item, items = target.allPageItems;
 	while (item = items.shift()) item.redefineScaling();
 }
 
-function targetAlignElements(target) { // Align elements based on their labels
+function targetSetLayout() { // Set layout
+	for (i = 0; i < target.layers.length; i++) {
+		var l = target.layers.item(i);
+		// if (l.name == infoLine[6]) { l.visible = true } else { l.visible = false };
+	}
+}
+
+function targetAlignElements() { // Align elements based on their labels
 	var obj = target.rectangles;
 	var bleed = bleedBounds(target.pages[0]);
 	for (var i = 0; i < obj.length; i++) {
@@ -190,24 +205,24 @@ function targetAlignElements(target) { // Align elements based on their labels
 	}
 }
 
-function targetSafeArea(target) { // Draw a 'safe area' frame
+function targetSafeArea() { // Draw a 'safe area' frame
 	var mgPg, mgBounds, safeLayerFrame;
-	mgPg = { top: (infoT_H - infoS_H) / 2, left: (infoT_W - infoS_W) / 2,
-		bottom: (infoT_H - infoS_H) / 2, right: (infoT_W - infoS_W) / 2 };
+	mgPg = { top: (infoTh[line] - infoSh[line]) / 2, left: (infoTw[line] - infoSw[line]) / 2,
+		bottom: (infoTh[line] - infoSh[line]) / 2, right: (infoTw[line] - infoSw[line]) / 2 };
 	if (mgPg.top + mgPg.left + mgPg.bottom + mgPg.right == 0) return;
-	mgBounds = [mgPg.top, mgPg.left, infoS_H + mgPg.top, infoS_W + mgPg.left];
+	mgBounds = [mgPg.top, mgPg.left, infoSh[line] + mgPg.top, infoSw[line] + mgPg.left];
 	target.pages[0].marginPreferences.properties = mgPg;
 	safeLayerFrame = target.pages[0].rectangles.add(safeLayerFrameP);
 	safeLayerFrame.properties = { itemLayer: safeLayer.name, geometricBounds: mgBounds };
 }
 
-function targetInfoBox(target) { // Draw info boxes
+function targetInfoBox() { // Draw info boxes
 	var infoFrame, infoText;
 	// ID box
 	infoFrame = target.pages[0].textFrames.add();
 	infoFrame.itemLayer = idLayer.name;
 	infoFrame.label = "ID";
-	if (infoID == "") { infoFrame.contents = " " } else { infoFrame.contents = "ID " + infoID };
+	if (infoID[line] == "") { infoFrame.contents = " " } else { infoFrame.contents = "ID " + infoID[line] };
 	infoText = infoFrame.parentStory.paragraphs.everyItem();
 	try { infoText.appliedFont = app.fonts.item("Helvetica Neue") } catch (_) {}
 	try { infoText.fontStyle = "Light"; infoText.pointSize = 5 } catch (_) {};
@@ -219,17 +234,17 @@ function targetInfoBox(target) { // Draw info boxes
 		useNoLineBreaksForAutoSizing: true
 	}
 	infoFrame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
-	infoFrame.move([((infoT_W - infoS_W) / 2) + 5.67, ((infoT_H - infoS_H) / 2) + infoS_H - 9.239]);
+	infoFrame.move([((infoTw[line] - infoSw[line]) / 2) + 5.67, ((infoTh[line] - infoSh[line]) / 2) + infoSh[line] - 9.239]);
 	// Dimensions box
 	infoFrame = target.pages[0].textFrames.add();
 	infoFrame.itemLayer = infoLayer.name;
 	infoFrame.label = "info";
 	infoFrame.contents =
-		"Total W = " + (infoT_W *0.352777777777778) +
-		"\rTotal H = " + (infoT_H *0.352777777777778) +
-		"\r\rSafe area W = " + (infoS_W *0.352777777777778) +
-		"\rSafe area H = " + (infoS_H *0.352777777777778) +
-		"\r\rRaport = " + (infoS_W / infoS_H).toFixed(3);
+		"Total W = " + (infoTw[line] *0.352777777777778) +
+		"\rTotal H = " + (infoTh[line] *0.352777777777778) +
+		"\r\rSafe area W = " + (infoSw[line] *0.352777777777778) +
+		"\rSafe area H = " + (infoSh[line] *0.352777777777778) +
+		"\r\rRaport = " + (infoSw[line] / infoSh[line]).toFixed(3);
 	infoText = infoFrame.parentStory.paragraphs.everyItem();
 	try { infoText.appliedFont = app.fonts.item("Helvetica Neue") } catch (_) {};
 	try { infoText.fontStyle = "Light"; infoText.pointSize = 12 } catch (_) {};
@@ -241,7 +256,7 @@ function targetInfoBox(target) { // Draw info boxes
 		autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
 		useNoLineBreaksForAutoSizing: true
 	}
-	infoFrame.move([infoT_W + 20, 0]);
+	infoFrame.move([infoTw[line] + 20, 0]);
 }
 
 function findLayer(doc, names) { // Find first layer from a list of names
@@ -249,27 +264,6 @@ function findLayer(doc, names) { // Find first layer from a list of names
 	for (var i = 0; i < names.length; i++) {
 		layer = doc.layers.item(names[i]); if (layer.isValid) return layer;
 	}
-}
-
-function countLines(file) { // Return number of lines (w/o header)
-	if (!file.open("r")) { alert("File not found."); exit() };
-	var i = 0; while (!file.eof) { file.readln().split("\t"); i++ }; file.close();
-	if (i <= 1) { alert ("Not enough records found."); exit() };
-	return i - 1;
-}
-
-function createProgressBar(max) {
-	var w = new Window("window", masterPath + "/" + masterName);
-	w.pb = w.add("progressbar", [12, 12, 800, 24], 0, undefined);
-	w.pb.maxvalue = max;
-	w.st = w.add("statictext"); w.st.bounds = [0, 0, 780, 20]; w.st.alignment = "left";
-	return w;
-}
-
-function updateProgressBar(val) {
-	progressBar.pb.value = val;
-	progressBar.st.text = "Processing file " + infoFN + " (" + val + " / " + progressBar.pb.maxvalue + ")";
-	progressBar.show(); progressBar.update();
 }
 
 function sortPagesByRatio() { // Sort master pages by ratio; return ratio array
@@ -288,18 +282,32 @@ function sortPagesByRatio() { // Sort master pages by ratio; return ratio array
 	return r;
 }
 
-function getTargetPage() { // Compare ratios and select closest; return target page
+function createProgressBar(max) {
+	var w = new Window("window", masterFN);
+	w.pb = w.add("progressbar", [12, 12, 800, 24], 0, undefined);
+	w.pb.maxvalue = max;
+	w.st = w.add("statictext"); w.st.bounds = [0, 0, 780, 20]; w.st.alignment = "left";
+	return w;
+}
+
+function updateProgressBar(val) {
+	progressBar.pb.value = val;
+	progressBar.st.text = "Processing file " + infoFN[val] + " (" + val + " / " + progressBar.pb.maxvalue + ")";
+	progressBar.show(); progressBar.update();
+}
+
+function getTargetPage(line) { // Compare ratios and select closest; return target page
 	var t;
-	var targetRatio = (infoS_W / infoS_H).toFixed(3);
-	for (var i = 0; i < ratio.length; i++) {
-		var avgR = ((ratio[i + 1] - ratio[i]) / 2) + parseFloat(ratio[i]);
-		if (targetRatio > ratio[i]) {
-			if (i == ratio.length - 1) { t = i; break }
-			else if (targetRatio <= ratio[i + 1]) {
+	var targetRatio = (infoSw[line] / infoSh[line]).toFixed(3);
+	for (var i = 0; i < ratios.length; i++) {
+		var avgR = ((ratios[i + 1] - ratios[i]) / 2) + parseFloat(ratios[i]);
+		if (targetRatio > ratios[i]) {
+			if (i == ratios.length - 1) { t = i; break }
+			else if (targetRatio <= ratios[i + 1]) {
 				if (targetRatio <= avgR) { t = i; break }
 				else if (targetRatio > avgR) { t = i + 1; break };
 			}
-		} else if (targetRatio <= ratio[0]) { t = 0; break };
+		} else if (targetRatio <= ratios[0]) { t = 0; break };
 	}
 	return t;
 }
