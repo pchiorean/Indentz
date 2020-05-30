@@ -21,8 +21,10 @@
 	v7.16j – activate layout layers based on col. 7
 */
 
+if (app.documents.length == 0) exit();
+var doc = app.activeDocument;
+
 // Step 0. Initialisation
-var doc = app.activeDocument; if (!doc.isValid) exit();
 var masterPath = doc.filePath;
 var masterFN = masterPath + "/" + doc.name.substr(0, doc.name.lastIndexOf("."));
 var masterFile = File(masterFN + ".indd");
@@ -66,41 +68,37 @@ var layouts = unique(infoVL); // Get unique layouts array
 
 // Step 2. Master file
 // Make technical layers
-var safeLayer, infoLayer, idLayer, safeSwatch;
-var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
-var infoLayerName = ["info", "ratio", "raport"];
-var idLayerName = ["id", "ID"];
+var safeLayerName = findLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"]);
+var infoLayerName = findLayer(["info", "ratio"]);
+var idLayerName = "id";
 var safeSwatchName = "Safe area";
 var safeLayerFrameP = {
 	label: "safe area",
 	contentType: ContentType.UNASSIGNED,
 	fillColor: "None",
 	strokeColor: safeSwatchName,
-	strokeWeight: "0.5pt",
+	strokeWeight: "0.75pt",
 	strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 	strokeType: "$ID/Canned Dashed 3x2",
 	overprintStroke: false
 }
 doc.activeLayer = doc.layers.item(0);
-if (!(safeLayer = findLayer(doc, safeLayerName))) {
-	safeLayer = doc.layers.add({ name: safeLayerName[0], layerColor: UIColors.YELLOW });
-}
-if (!(infoLayer = findLayer(doc, infoLayerName))) {
-	infoLayer = doc.layers.add({ name: infoLayerName[0], layerColor: UIColors.CYAN });
-}
+var safeLayer = doc.layers.item(safeLayerName);
+var infoLayer = doc.layers.item(infoLayerName);
+var idLayer = doc.layers.item(idLayerName);
+if (!safeLayer.isValid) doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW });
+if (!infoLayer.isValid) doc.layers.add({ name: infoLayerName, layerColor: UIColors.CYAN });
 infoLayer.move(LocationOptions.BEFORE, safeLayer);
-if (!(idLayer = findLayer(doc, idLayerName))) {
-	idLayer = doc.layers.add({ name: idLayerName[0], layerColor: UIColors.CYAN });
-}
+if (!idLayer.isValid) doc.layers.add({ name: idLayerName, layerColor: UIColors.CYAN });
 idLayer.move(LocationOptions.BEFORE, infoLayer);
-safeSwatch = doc.swatches.itemByName(safeSwatchName);
+var safeSwatch = doc.swatches.itemByName(safeSwatchName);
 if (!safeSwatch.isValid) {
 	doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, 
 	space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
 };
 // Sort master pages by ratio; get ratio array
 var ratios = sortPagesByRatio();
-if(doc.modified == true) doc.save(masterFile);
+if(doc.modified == true) doc.save(masterFile); 
 doc.close();
 var doc = app.open(masterFile, false);
 
@@ -120,9 +118,9 @@ for (line = 1; line <= infoLines; line++) {
 		if ((i > targetPage) || (i < targetPage)) target.pages[i].remove();
 	}
 	// Process page
-	safeLayer = findLayer(target, safeLayerName);
-	infoLayer = findLayer(target, infoLayerName);
-	idLayer = findLayer(target, idLayerName);
+	safeLayer = target.layers.item(safeLayerName);
+	infoLayer = target.layers.item(infoLayerName);
+	idLayer = target.layers.item(idLayerName);
 	safeLayer.properties = infoLayer.properties = idLayer.properties = { locked: false };
 	targetSetGeometry();
 	if (layouts != "") targetSetLayout();
@@ -215,14 +213,14 @@ function targetSafeArea() { // Draw a 'safe area' frame
 	mgBounds = [mgPg.top, mgPg.left, infoSh[line] + mgPg.top, infoSw[line] + mgPg.left];
 	target.pages[0].marginPreferences.properties = mgPg;
 	safeLayerFrame = target.pages[0].rectangles.add(safeLayerFrameP);
-	safeLayerFrame.properties = { itemLayer: safeLayer.name, geometricBounds: mgBounds };
+	safeLayerFrame.properties = { itemLayer: safeLayerName, geometricBounds: mgBounds };
 }
 
 function targetInfoBox() { // Draw info boxes
 	var infoFrame, infoText;
 	// ID box
 	infoFrame = target.pages[0].textFrames.add();
-	infoFrame.itemLayer = idLayer.name;
+	infoFrame.itemLayer = idLayerName;
 	infoFrame.label = "ID";
 	if (infoID[line] == "") { infoFrame.contents = " " } else { infoFrame.contents = "ID " + infoID[line] };
 	infoText = infoFrame.parentStory.paragraphs.everyItem();
@@ -239,7 +237,7 @@ function targetInfoBox() { // Draw info boxes
 	infoFrame.move([((infoTw[line] - infoSw[line]) / 2) + 5.67, ((infoTh[line] - infoSh[line]) / 2) + infoSh[line] - 9.239]);
 	// Dimensions box
 	infoFrame = target.pages[0].textFrames.add();
-	infoFrame.itemLayer = infoLayer.name;
+	infoFrame.itemLayer = infoLayerName;
 	infoFrame.label = "info";
 	infoFrame.contents =
 		"Total W = " + (infoTw[line] *0.352777777777778) +
@@ -270,11 +268,11 @@ function unique(array) { // Return array w/o duplicates
 	return u;
 }
 
-function findLayer(doc, names) { // Find first layer from a list of names
-	var layer;
+function findLayer(names) { // Find first layer from a list of names
 	for (var i = 0; i < names.length; i++) {
-		layer = doc.layers.item(names[i]); if (layer.isValid) return layer;
+		var layer = doc.layers.item(names[i]); if (layer.isValid) return names[i];
 	}
+	return names[0]; // Nothing found, return first name
 }
 
 function sortPagesByRatio() { // Sort master pages by ratio; return ratio array
