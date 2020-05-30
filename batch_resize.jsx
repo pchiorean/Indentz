@@ -1,5 +1,5 @@
 /*
-	Batch resize v7.15j
+	Batch resize v7.16j
 	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
 	May 2020, Paul Chiorean
 
@@ -18,6 +18,7 @@
 	v7.13j – some checks on info file
 	v7.14j – add execution timer
 	v7.15j – parse info file before batch processing
+	v7.16j – activate layout layers based on col. 7
 */
 
 var doc = app.documents[0]; if (!doc.isValid) exit();
@@ -39,6 +40,7 @@ var timeDiff = {
 }
 timeDiff.setStartTime();
 
+// Step 1. Info file
 // Check and parse info file
 var infoFile = File(masterFN + ".txt");
 if (!infoFile.open("r")) { alert("File not found."); exit() };
@@ -48,7 +50,7 @@ var infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
 var line = 0;
 while (!infoFile.eof) {
 	infoLine = infoFile.readln().split("\t"); line++;
-	// if (!infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4] || !infoLine[5] || !infoLine[6] || !infoLine[7]) { alert ("Bad data in record " + i + "."); exit() };
+	if (!infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4] || !infoLine[5] || !infoLine[7]) { alert ("Bad data in record " + line + "."); exit() };
 	infoID[line] = infoLine[0]; // ID
 	// Safe area/total area
 	info1w = infoLine[1].replace(/\,/g, "."); info1h = infoLine[2].replace(/\,/g, ".");
@@ -57,12 +59,14 @@ while (!infoFile.eof) {
 	infoSh[line] = Math.min(Number(info1h), Number(info2h)) / 0.352777777777778;
 	infoTw[line] = Math.max(Number(info1w), Number(info2w)) / 0.352777777777778;
 	infoTh[line] = Math.max(Number(info1h), Number(info2h)) / 0.352777777777778;
-	// infoVL[line] = infoLine[6]; // Layout
+	infoVL[line] = infoLine[6]; // Layout
 	infoFN[line] = infoLine[7]; // Filename
 };
 infoFile.close();
 var infoLines = line; if (infoLines <= 1) { alert ("Not enough records found."); exit() };
+var layouts = unique(infoVL); // Get sorted layouts array
 
+// Step 2. Master file
 // Make technical layers
 var safeLayer, infoLayer, idLayer, safeSwatch;
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
@@ -96,11 +100,11 @@ if (!safeSwatch.isValid) {
 	doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, 
 	space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
 };
-
 // Sort master pages by ratio; get ratio array
 var ratios = sortPagesByRatio();
 if(doc.modified == true) doc.save(masterFile);
 
+// Step 3. Target file
 // Start batch processing
 var progressBar = createProgressBar(infoLines); // Create progress bar
 for (line = 1; line <= infoLines; line++) {
@@ -135,10 +139,11 @@ for (line = 1; line <= infoLines; line++) {
 }
 progressBar.close();
 infoFile.close();
-doc.close();
+doc.close(SaveOptions.NO);
 alert("Elapsed time: " + (timeDiff.getDiff() / 1000).toFixed(1) + " seconds.");
 
 
+// Functions
 function targetSetGeometry() { // Resize visual and set page dimensions
 	target.pages[0].marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
 	// Scale visual to safe area
@@ -158,11 +163,10 @@ function targetSetGeometry() { // Resize visual and set page dimensions
 	while (item = items.shift()) item.redefineScaling();
 }
 
-function targetSetLayout() { // Set layout
-	for (i = 0; i < target.layers.length; i++) {
-		var l = target.layers.item(i);
-		// if (l.name == infoLine[6]) { l.visible = true } else { l.visible = false };
-	}
+function targetSetLayout() { // Set layout variant
+	if (infoVL[line] == "") return;
+	for (var i = 0; i < layouts.length; i++) try { target.layers.item(layouts[i]).visible = false } catch (_) {};
+	try { target.layers.item(infoVL[line]).visible = true } catch (_) {};
 }
 
 function targetAlignElements() { // Align elements based on their labels
@@ -224,7 +228,7 @@ function targetInfoBox() { // Draw info boxes
 	infoFrame.label = "ID";
 	if (infoID[line] == "") { infoFrame.contents = " " } else { infoFrame.contents = "ID " + infoID[line] };
 	infoText = infoFrame.parentStory.paragraphs.everyItem();
-	try { infoText.appliedFont = app.fonts.item("Helvetica Neue") } catch (_) {}
+	try { infoText.appliedFont = app.fonts.item("Helvetica Neue") } catch (_) {};
 	try { infoText.fontStyle = "Light"; infoText.pointSize = 5 } catch (_) {};
 	infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
 	infoFrame.textFramePreferences.properties = {
@@ -257,6 +261,15 @@ function targetInfoBox() { // Draw info boxes
 		useNoLineBreaksForAutoSizing: true
 	}
 	infoFrame.move([infoTw[line] + 20, 0]);
+}
+
+function unique(array) { // Return array w/o duplicates
+	var m = {}, u = [];
+	for (var i = 1; i < array.length; i++) {
+		var v = array[i];
+		if (!m[v] && v != "") { u.push(v); m[v] = true };
+	}
+	return u;
 }
 
 function findLayer(doc, names) { // Find first layer from a list of names
