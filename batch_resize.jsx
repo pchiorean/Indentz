@@ -21,18 +21,17 @@
 	v7.16j – activate layout layers based on col. 7
 */
 
-var doc = app.documents[0]; if (!doc.isValid) exit();
+// Step 0. Initialisation
+var doc = app.activeDocument; if (!doc.isValid) exit();
 var masterPath = doc.filePath;
 var masterFN = masterPath + "/" + doc.name.substr(0, doc.name.lastIndexOf("."));
 var masterFile = File(masterFN + ".indd");
-
 // Set some flags
 doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.millimeters;
 doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.millimeters;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 app.scriptPreferences.enableRedraw = false;
-
 // Start timer
 var timeDiff = {
 	setStartTime: function (){ d = new Date(); time = d.getTime() },
@@ -40,8 +39,7 @@ var timeDiff = {
 }
 timeDiff.setStartTime();
 
-// Step 1. Info file
-// Check and parse info file
+// Step 1. Check and parse info file
 var infoFile = File(masterFN + ".txt");
 if (!infoFile.open("r")) { alert("File not found."); exit() };
 var infoID = [], infoSw = [], infoSh = [], infoTw = [], infoTh = [], infoVL = [], infoFN = [];
@@ -64,7 +62,7 @@ while (!infoFile.eof) {
 };
 infoFile.close();
 var infoLines = line; if (infoLines <= 1) { alert ("Not enough records found."); exit() };
-var layouts = unique(infoVL); // Get sorted layouts array
+var layouts = unique(infoVL); // Get unique layouts array
 
 // Step 2. Master file
 // Make technical layers
@@ -103,19 +101,19 @@ if (!safeSwatch.isValid) {
 // Sort master pages by ratio; get ratio array
 var ratios = sortPagesByRatio();
 if(doc.modified == true) doc.save(masterFile);
+doc.close();
+var doc = app.open(masterFile, false);
 
-// Step 3. Target file
-// Start batch processing
-var progressBar = createProgressBar(infoLines); // Create progress bar
+// Step 3. Batch processing
+var progressBar = createProgressBar(infoLines);
 for (line = 1; line <= infoLines; line++) {
-	// Duplicate master and process target
+	// Select target page and save a copy
 	var targetPage = getTargetPage(line);
-	var targetFolderName = String(ratios[targetPage]).replace(/\./g, "_");
-	var targetFolder = Folder(masterPath + "/" + ("ratio_" + (targetFolderName)));
+	var targetFolder = Folder(masterPath + "/" + ("ratio_" + (String(ratios[targetPage]).replace(/\./g, "_"))));
 	targetFolder.create();
-	var targetFN = File(targetFolder + "/" + infoFN[line] + ".indd");
-	doc.saveACopy(targetFN);
-	var target = app.open(targetFN, false);
+	var targetFile = File(targetFolder + "/" + infoFN[line] + ".indd");
+	doc.saveACopy(targetFile);
+	var target = app.open(targetFile, false);
 	updateProgressBar(line);
 	// Delete unneeded pages
 	for (var i = target.pages.length - 1; i >= 0; i--) {
@@ -127,7 +125,7 @@ for (line = 1; line <= infoLines; line++) {
 	idLayer = findLayer(target, idLayerName);
 	safeLayer.properties = infoLayer.properties = idLayer.properties = { locked: false };
 	targetSetGeometry();
-	targetSetLayout();
+	if (layouts != "") targetSetLayout();
 	targetAlignElements();
 	targetSafeArea();
 	targetInfoBox();
@@ -135,7 +133,7 @@ for (line = 1; line <= infoLines; line++) {
 	safeLayer.properties = { visible: true, locked: true };
 	idLayer.properties = { visible: true, locked: true };
 	// Save and close
-	target.save(targetFN).close();
+	target.save(targetFile).close();
 }
 progressBar.close();
 infoFile.close();
@@ -305,7 +303,7 @@ function createProgressBar(max) {
 
 function updateProgressBar(val) {
 	progressBar.pb.value = val;
-	progressBar.st.text = "Processing file " + infoFN[val] + " (" + val + " / " + progressBar.pb.maxvalue + ")";
+	progressBar.st.text = "Processing file " + infoFN[val] + " (" + val + "/" + progressBar.pb.maxvalue + ")";
 	progressBar.show(); progressBar.update();
 }
 
