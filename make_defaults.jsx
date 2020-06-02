@@ -1,6 +1,6 @@
 ﻿/*
-	Make defaults v1.9.1
-	© May 2020, Paul Chiorean
+	Make defaults v1.10.0
+	© June 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges similar layers, 
 	replaces some unwanted fonts and sets page dimensions.
 */
@@ -74,10 +74,10 @@ var uvLayer = doc.layers.item(uvLayerName);
 var dieLayer = doc.layers.item(dieLayerName);
 var safeLayer = doc.layers.item(safeLayerName);
 // Mark existing layers grey
-for (i = 0; i < doc.layers.length; i++) { doc.layers.item(i).layerColor = [215, 215, 215] };
+for (var i = 0; i < doc.layers.length; i++) doc.layers.item(i).layerColor = [215, 215, 215];
 // Artwork layer
 doc.activeLayer = doc.layers.item(0); // Select first layer
-for (i = 0; i < doc.layers.length; i++) {
+for (var i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
 	switch (docLayer.name) {
 		case "Ebene 1":
@@ -99,7 +99,7 @@ if (artLayer.isValid) { artLayer.layerColor = UIColors.LIGHT_BLUE;
 }
 // Type layer
 doc.activeLayer = doc.layers.item(0);
-for (i = 0; i < doc.layers.length; i++) {
+for (var i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
 	switch (docLayer.name) {
 		case "Type":
@@ -120,7 +120,7 @@ if (txtLayer.isValid) { txtLayer.layerColor = UIColors.GREEN;
 }
 // HW layer
 doc.activeLayer = doc.layers.item(0);
-for (i = 0; i < doc.layers.length; i++) {
+for (var i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
 	switch (docLayer.name) {
 		case "WHW":
@@ -137,9 +137,19 @@ if (hwLayer.isValid) { hwLayer.layerColor = UIColors.LIGHT_GRAY;
 	hwLayer.visible = false;
 }
 hwLayer.move(LocationOptions.before, txtLayer);
+// Add a 10% HW guide
+for (var i = 0; i < doc.pages.length; i++) {
+	var szPg = doc.pages[i].bounds;
+	var mgPg = doc.pages[i].marginPreferences;
+	doc.pages[i].guides.add(undefined, {
+		itemLayer: hwLayer,
+		orientation: HorizontalOrVertical.horizontal,
+		location: ((szPg[2] - mgPg.top - mgPg.bottom) * 0.9 + mgPg.top)
+	});
+}
 // Safe area layer
 doc.activeLayer = doc.layers.item(0);
-for (i = 0; i < doc.layers.length; i++) {
+for (var i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
 	switch (docLayer.name) {
 		case "Visible":
@@ -158,7 +168,7 @@ if (safeLayer.isValid) { safeLayer.layerColor = UIColors.YELLOW;
 }
 safeLayer.move(LocationOptions.AT_BEGINNING);
 // Dielines layer
-for (i = 0; i < doc.layers.length; i++) {
+for (var i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
 	switch (docLayer.name) {
 		case "diecut":
@@ -177,7 +187,7 @@ if (dieLayer.isValid) { dieLayer.layerColor = UIColors.RED;
 }
 dieLayer.move(LocationOptions.after, safeLayer);
 // Varnish layer
-for (i = 0; i < doc.layers.length; i++) {
+for (var i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
 	switch (docLayer.name) {
 		case "UV":
@@ -193,7 +203,7 @@ if (uvLayer.isValid) { uvLayer.layerColor = UIColors.YELLOW;
 }
 uvLayer.move(LocationOptions.after, dieLayer);
 // Guides layer
-for (i = 0; i < doc.layers.length; i++) {
+for (var i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
 	switch (docLayer.name) {
 		case "Guides":
@@ -208,7 +218,7 @@ if (guidesLayer.isValid) { guidesLayer.layerColor = UIColors.MAGENTA; guidesLaye
 }
 guidesLayer.move(LocationOptions.after, uvLayer);
 // Background layer
-for (i = 0; i < doc.layers.length; i++) {
+for (var i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
 	switch (docLayer.name) {
 		case "BACKGROUND":
