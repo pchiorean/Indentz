@@ -1,4 +1,4 @@
-# Batch resize v7.16j
+# Batch resize v7.17j
 
 ## Pregătire
 
@@ -22,7 +22,9 @@ ID|Vizibil W|Vizibil H|Total W|Total H|Raport|Vizual|Denumire
 **8**|985|105|1200|125|9.381|L3|**09_Denumire_Layout3_1200x125_985x105**
 **9**|292|210|320|230|1.390|L1|**10_Denumire_Layout1_320x230_292x210**
 
-E recomandat să se creeze cât mai multe pagini în master, pentru a acoperi toate rațiile de care este nevoie. E mai util să se folosească rațiile reale din tabel, în loc de rații generice gen 0.5, 1, 1.5, 2 ... 4.5 ș.a.m.d. Scriptul lucrează cu trei zecimale, pentru cazuri în care avem multe fișiere cu rații foarte apropiate, care cer ulterior multe ajustări manuale minore (de genul 25 de fișiere cu rația 0.331, 50 de fișiere cu rația 0.333 și 30 de fișiere cu rația 0.335).
+E recomandat să se creeze cât mai multe pagini în master, pentru a acoperi toate rațiile de care este nevoie. E mai util să se folosească rațiile reale din tabel, în loc de rații generice gen 0.5, 1, 1.5, 2 ... 4.5 ș.a.m.d. Scriptul lucrează cu trei zecimale, pentru cazuri în care avem multe fișiere cu rații foarte apropiate, care cer ulterior multe ajustări manuale minore (de genul 25 de fișiere cu rația 0.331, 50 de fișiere cu rația 0.333 și 30 de fișiere cu rația 0.335). TL;DR: Un master cu 20+ de pagini e ok. Oricum trebuie declinate manual formatele mai ciudate... Mai bine în master, pentru că ar putea fi, eventual, refolosite. :)
+
+### Layere tehnice
 
 Deasupra layerelor care compun vizualul vor fi create, dacă nu există, layerele **id**, **info** și **safe area**, care la execuție vor fi populate cu:
 * ID-ul, care va fi poziționat în partea din stânga-jos a ariei vizibile; dacă nu se dorește ID se lasă celula goală (ex. în rândul 5);

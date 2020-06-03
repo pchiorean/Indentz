@@ -2,7 +2,7 @@
     <html>
     <head>
         <meta charset="UTF-8">
-        <title>Batch resize v7.16j</title>
+        <title>Batch resize v7.17j</title>
         <style>
 </style>
         
@@ -24,7 +24,7 @@
         
     </head>
     <body class="vscode-light">
-        <h1 id="batch-resize-v716j">Batch resize v7.16j</h1>
+        <h1 id="batch-resize-v717j">Batch resize v7.17j</h1>
 <h2 id="pregătire">Pregătire</h2>
 <p>Trebuie să avem un fișier, denumit în continuare <em>master</em>, în care fiecare pagină reprezintă un vizual cu un anumit raport (rație). Nu contează ordinea, paginile vor fi sortate automat în funcție de rații.</p>
 <p>În același folder cu masterul trebuie să existe un fișier text cu același nume, exportat din Excel cu opțiunea <em>tab delimited</em>, conținând 8 coloane: <strong>ID</strong>, <strong>Vizibil W</strong>, <strong>Vizibil H</strong>, <strong>Total W</strong>, <strong>Total H</strong>, <strong>Raport</strong>, <strong>Vizual</strong>, <strong>Denumire</strong> (numele nu e important, dar ordinea este). Coloana <strong>Raport</strong> nu e folosită, dar trebuie să existe.</p>
@@ -136,7 +136,8 @@
 </tr>
 </tbody>
 </table>
-<p>E recomandat să se creeze cât mai multe pagini în master, pentru a acoperi toate rațiile de care este nevoie. E mai util să se folosească rațiile reale din tabel, în loc de rații generice gen 0.5, 1, 1.5, 2 ... 4.5 ș.a.m.d. Scriptul lucrează cu trei zecimale, pentru cazuri în care avem multe fișiere cu rații foarte apropiate, care cer ulterior multe ajustări manuale minore (de genul 25 de fișiere cu rația 0.331, 50 de fișiere cu rația 0.333 și 30 de fișiere cu rația 0.335).</p>
+<p>E recomandat să se creeze cât mai multe pagini în master, pentru a acoperi toate rațiile de care este nevoie. E mai util să se folosească rațiile reale din tabel, în loc de rații generice gen 0.5, 1, 1.5, 2 ... 4.5 ș.a.m.d. Scriptul lucrează cu trei zecimale, pentru cazuri în care avem multe fișiere cu rații foarte apropiate, care cer ulterior multe ajustări manuale minore (de genul 25 de fișiere cu rația 0.331, 50 de fișiere cu rația 0.333 și 30 de fișiere cu rația 0.335). TL;DR: Un master cu 20+ de pagini e ok. Oricum trebuie declinate manual formatele mai ciudate... Mai bine în master, pentru că ar putea fi, eventual, refolosite. :)</p>
+<h3 id="layere-tehnice">Layere tehnice</h3>
 <p>Deasupra layerelor care compun vizualul vor fi create, dacă nu există, layerele <strong>id</strong>, <strong>info</strong> și <strong>safe area</strong>, care la execuție vor fi populate cu:</p>
 <ul>
 <li>ID-ul, care va fi poziționat în partea din stânga-jos a ariei vizibile; dacă nu se dorește ID se lasă celula goală (ex. în rândul 5);</li>
