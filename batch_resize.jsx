@@ -1,5 +1,5 @@
 /*
-	Batch resize v7.16j
+	Batch resize v7.17j
 	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
 	May 2020, Paul Chiorean
 
@@ -19,6 +19,7 @@
 	v7.14j – add execution timer
 	v7.15j – parse info file before batch processing
 	v7.16j – activate layout layers based on col. 7
+	v7.17j – join progress bar functions
 */
 
 if (app.documents.length == 0) exit();
@@ -103,34 +104,39 @@ doc.close();
 var doc = app.open(masterFile, false);
 
 // Step 3. Batch processing
-var progressBar = createProgressBar(infoLines);
+var progressBar = new ProgressBar(); // Init progress bar
+progressBar.reset(infoLines);
 for (line = 1; line <= infoLines; line++) {
-	// Select target page and save a copy
+	// Select target page
 	var targetPage = getTargetPage(line);
+	// Create folder and save a copy
 	var targetFolder = Folder(masterPath + "/" + ("ratio_" + (String(ratios[targetPage]).replace(/\./g, "_"))));
 	targetFolder.create();
 	var targetFile = File(targetFolder + "/" + infoFN[line] + ".indd");
 	doc.saveACopy(targetFile);
+	// Open saved copy
 	var target = app.open(targetFile, false);
-	updateProgressBar(line);
+	progressBar.update(line); // Update progress bar
 	// Delete unneeded pages
 	for (var i = target.pages.length - 1; i >= 0; i--) {
 		if ((i > targetPage) || (i < targetPage)) target.pages[i].remove();
 	}
-	// Process page
+	// Unlock technical layers
 	safeLayer = target.layers.item(safeLayerName);
 	infoLayer = target.layers.item(infoLayerName);
 	idLayer = target.layers.item(idLayerName);
 	safeLayer.properties = infoLayer.properties = idLayer.properties = { locked: false };
+	// Process page
 	targetSetGeometry();
 	if (layouts != "") targetSetLayout();
 	targetAlignElements();
 	targetSafeArea();
 	targetInfoBox();
+	// Lock technical layers
 	infoLayer.properties = { visible: false, locked: true };
 	safeLayer.properties = { visible: true, locked: true };
 	idLayer.properties = { visible: true, locked: true };
-	// Save and close
+	// Save and close copy
 	target.save(targetFile).close();
 }
 progressBar.close();
@@ -291,18 +297,23 @@ function sortPagesByRatio() { // Sort master pages by ratio; return ratio array
 	return r;
 }
 
-function createProgressBar(max) {
-	var w = new Window("window", masterFN);
-	w.pb = w.add("progressbar", [12, 12, 800, 24], 0, undefined);
-	w.pb.maxvalue = max;
-	w.st = w.add("statictext"); w.st.bounds = [0, 0, 780, 20]; w.st.alignment = "left";
-	return w;
-}
-
-function updateProgressBar(val) {
-	progressBar.pb.value = val;
-	progressBar.st.text = "Processing file " + infoFN[val] + " (" + val + "/" + progressBar.pb.maxvalue + ")";
-	progressBar.show(); progressBar.update();
+function ProgressBar() {
+	var w = new Window("palette", masterFN);
+	var pb = w.add("progressbar", [12, 12, 800, 24], 0, undefined);
+	var st = w.add("statictext", [0, 0, 780, 20], undefined, { truncate: "middle" });
+	this.reset = function(max) {
+		pb.value = 0;
+		pb.maxvalue = max || 0;
+		pb.visible = !!max;
+		w.show();
+	}
+	this.update = function(val) {
+		pb.value = val;
+		st.text = "Processing file " + infoFN[val] + " (" + val + " of " + pb.maxvalue + ")";
+		w.show(); w.update();
+	}
+	this.hide = function() { w.hide() };
+	this.close = function() { w.close() };
 }
 
 function getTargetPage(line) { // Compare ratios and select closest; return target page
