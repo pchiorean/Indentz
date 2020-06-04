@@ -1,7 +1,7 @@
 /*
-	Batch resize v7.17j
+	Batch resize v7.18j
 	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
-	May 2020, Paul Chiorean
+	June 2020, Paul Chiorean
 
 	v7.1j – cleanup
 	v7.2j – fix progress bar
@@ -20,6 +20,7 @@
 	v7.15j – parse info file before batch processing
 	v7.16j – activate layout layers based on col. 7
 	v7.17j – join progress bar functions
+	v7.18j – if possible, put ID outside safe area
 */
 
 if (app.documents.length == 0) exit();
@@ -131,6 +132,7 @@ for (line = 1; line <= infoLines; line++) {
 	if (layouts != "") targetSetLayout();
 	targetAlignElements();
 	targetSafeArea();
+	targetIDBox();
 	targetInfoBox();
 	// Lock technical layers
 	infoLayer.properties = { visible: false, locked: true };
@@ -222,9 +224,8 @@ function targetSafeArea() { // Draw a 'safe area' frame
 	safeLayerFrame.properties = { itemLayer: safeLayerName, geometricBounds: mgBounds };
 }
 
-function targetInfoBox() { // Draw info boxes
+function targetIDBox() { // Draw ID box
 	var infoFrame, infoText;
-	// ID box
 	infoFrame = target.pages[0].textFrames.add();
 	infoFrame.itemLayer = idLayerName;
 	infoFrame.label = "ID";
@@ -237,11 +238,25 @@ function targetInfoBox() { // Draw info boxes
 		verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 		autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
 		firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
-		useNoLineBreaksForAutoSizing: true
+		useNoLineBreaksForAutoSizing: true,
+		insetSpacing: [0, 5.669, 5.669, 0]
 	}
 	infoFrame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
-	infoFrame.move([((infoTw[line] - infoSw[line]) / 2) + 5.67, ((infoTh[line] - infoSh[line]) / 2) + infoSh[line] - 9.239]);
-	// Dimensions box
+	// Check and, if possible, put ID outside safe area
+	var szIf = {
+		width: infoFrame.geometricBounds[3] - infoFrame.geometricBounds[1],
+		height: infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0]
+	}
+	var szMg = { width: (infoTw[line] - infoSw[line]) / 2, height: (infoTh[line] - infoSh[line]) / 2 };
+	if ((szMg.width > szIf.width) && (szMg.height > szIf.height)) {
+		infoFrame.move([ 0, infoTh[line] - szIf.height ]);
+	} else {
+		infoFrame.move([ szMg.width, szMg.height + infoSh[line] - szIf.height ]);
+	}
+}
+
+function targetInfoBox() { // Draw info box
+	var infoFrame, infoText;
 	infoFrame = target.pages[0].textFrames.add();
 	infoFrame.itemLayer = infoLayerName;
 	infoFrame.label = "info";
