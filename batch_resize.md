@@ -1,12 +1,12 @@
-# Batch resize v7.17j
+# Batch resize v7.18j
 
 ## Pregătire
 
-Trebuie să avem un fișier, denumit în continuare *master*, în care fiecare pagină reprezintă un vizual cu un anumit raport (rație). Nu contează ordinea, paginile vor fi sortate automat în funcție de rații.
+Trebuie să avem un fișier, denumit în continuare *master*, în care fiecare pagină reprezintă un vizual cu un anumit raport (rație). Nu contează dacă sunt în ordine, paginile vor fi sortate automat în funcție de rații.
 
 În același folder cu masterul trebuie să existe un fișier text cu același nume, exportat din Excel cu opțiunea *tab delimited*, conținând 8 coloane: **ID**, **Vizibil W**, **Vizibil H**, **Total W**, **Total H**, **Raport**, **Vizual**, **Denumire** (numele nu e important, dar ordinea este). Coloana **Raport** nu e folosită, dar trebuie să existe. 
 
-Opțional, în coloana **Vizual** se poate trece numele unui layer care va fi activat doar pentru acel fișier, celelalte layere care apar în coloană fiind ascunse. De exemplu, în fișierul "04_Denumire_Layout1_320x305_300x320" va fi vizibil layerul L1 și vor fi ascunse layerele L2 și L3. Restul layerelor rămân neatinse.
+Opțional, în coloana **Vizual** se poate trece numele unui layer care va fi făcut vizibil, celelalte layere care apar în coloană fiind ascunse. De exemplu, în fișierul "04_Denumire_Layout1_320x305_300x320" va fi vizibil layerul L1 și vor fi ascunse layerele L2 și L3. Restul layerelor rămân neatinse.
 
 Fișierele vor fi denumite exact ca în coloana **Denumire**, deci atenție la caractere ilegale în nume de fișiere:
 
