@@ -129,7 +129,7 @@ for (line = 1; line <= infoLines; line++) {
 	safeLayer.properties = infoLayer.properties = idLayer.properties = { locked: false };
 	// Process page
 	targetSetGeometry();
-	if (layouts != "") targetSetLayout();
+	targetSetLayout();
 	targetAlignElements();
 	targetSafeArea();
 	targetIDBox();
@@ -168,7 +168,7 @@ function targetSetGeometry() { // Resize visual and set page dimensions
 }
 
 function targetSetLayout() { // Set layout variant
-	if (infoVL[line] == "") return;
+	if (layouts == "" && infoVL[line] == "") return;
 	for (var i = 0; i < layouts.length; i++) try { target.layers.item(layouts[i]).visible = false } catch (_) {};
 	try { target.layers.item(infoVL[line]).visible = true } catch (_) {};
 }
@@ -248,7 +248,7 @@ function targetIDBox() { // Draw ID box
 		height: infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0]
 	}
 	var szMg = { width: (infoTw[line] - infoSw[line]) / 2, height: (infoTh[line] - infoSh[line]) / 2 };
-	if ((szMg.width > szIf.width) && (szMg.height > szIf.height)) {
+	if (szMg.height >= szIf.height) {
 		infoFrame.move([ 0, infoTh[line] - szIf.height ]);
 	} else {
 		infoFrame.move([ szMg.width, szMg.height + infoSh[line] - szIf.height ]);
