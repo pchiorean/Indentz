@@ -111,7 +111,7 @@ for (line = 1; line <= infoLines; line++) {
 	// Select target page
 	var targetPage = getTargetPage(line);
 	// Create folder and save a copy
-	var targetFolder = Folder(masterPath + "/" + ("ratio_" + (String(ratios[targetPage]).replace(/\./g, "_"))));
+	var targetFolder = Folder(masterPath + "/" + ("_ratia_" + (String(ratios[targetPage]).replace(/\./g, "_"))));
 	targetFolder.create();
 	var targetFile = File(targetFolder + "/" + infoFN[line] + ".indd");
 	doc.saveACopy(targetFile);
