@@ -51,7 +51,9 @@ var infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
 var line = 0;
 while (!infoFile.eof) {
 	infoLine = infoFile.readln().split("\t"); line++;
-	if (!infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4] || !infoLine[5] || !infoLine[7]) { alert ("Bad data in record " + line + "."); exit() };
+	if (!infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4] || !infoLine[5] || !infoLine[7]) {
+		alert ("Bad data in record " + line + "."); exit()
+	}
 	infoID[line] = infoLine[0]; // ID
 	// Safe area/total area
 	var info1 = { width: infoLine[1].replace(/\,/g, "."), height: infoLine[2].replace(/\,/g, ".") };
@@ -66,7 +68,7 @@ while (!infoFile.eof) {
 	}
 	infoVL[line] = infoLine[6]; // Layout
 	infoFN[line] = infoLine[7]; // Filename
-};
+}
 infoFile.close();
 var infoLines = line; if (infoLines <= 1) { alert ("Not enough records found."); exit() };
 var layouts = unique(infoVL); // Get unique layouts array
@@ -100,7 +102,7 @@ var safeSwatch = doc.swatches.itemByName(safeSwatchName);
 if (!safeSwatch.isValid) {
 	doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, 
 	space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
-};
+}
 // Sort master pages by ratio; get ratio array
 var ratios = sortPagesByRatio();
 if(doc.modified == true) doc.save(masterFile); 
@@ -108,11 +110,11 @@ doc.close();
 var doc = app.open(masterFile, false);
 
 // Step 3. Batch processing
-var progressBar = new ProgressBar(); // Init progress bar
+var progressBar = new ProgressBar();
 progressBar.reset(infoLines);
 for (line = 1; line <= infoLines; line++) {
 	// Select target page
-	var targetPage = getTargetPage(line);
+	var targetPage = getTargetPage();
 	// Create folder and save a copy
 	var targetFolder = Folder(masterPath + "/" + ("_ratia_" + (String(ratios[targetPage]).replace(/\./g, "_"))));
 	targetFolder.create();
@@ -120,7 +122,7 @@ for (line = 1; line <= infoLines; line++) {
 	doc.saveACopy(targetFile);
 	// Open saved copy
 	var target = app.open(targetFile, false);
-	progressBar.update(line); // Update progress bar
+	progressBar.update(line);
 	// Delete unneeded pages
 	for (var i = target.pages.length - 1; i >= 0; i--) {
 		if ((i > targetPage) || (i < targetPage)) target.pages[i].remove();
@@ -235,7 +237,7 @@ function targetIDBox() { // Draw ID box
 	if (infoID[line] == "") { infoFrame.contents = " " } else { infoFrame.contents = "ID " + infoID[line] };
 	infoText = infoFrame.parentStory.paragraphs.everyItem();
 	try { infoText.appliedFont = app.fonts.item("Helvetica Neue") } catch (_) {};
-	try { infoText.fontStyle = "Light"; infoText.pointSize = 5 } catch (_) {};
+	try { infoText.fontStyle = "Light" } catch (_) {}; infoText.pointSize = 5;
 	infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
 	infoFrame.textFramePreferences.properties = {
 		verticalJustification: VerticalJustification.BOTTOM_ALIGN,
@@ -250,7 +252,10 @@ function targetIDBox() { // Draw ID box
 		width: infoFrame.geometricBounds[3] - infoFrame.geometricBounds[1],
 		height: infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0]
 	}
-	var szMg = { width: (infoT[line].width - infoS[line].width) / 2, height: (infoT[line].height - infoS[line].height) / 2 };
+	var szMg = {
+		width: (infoT[line].width - infoS[line].width) / 2,
+		height: (infoT[line].height - infoS[line].height) / 2
+	}
 	if ((szMg.height >= szIf.height) || (szMg.width >= szIf.width)) {
 		infoFrame.move([ 0, infoT[line].height - szIf.height ]);
 	} else {
@@ -271,7 +276,7 @@ function targetInfoBox() { // Draw info box
 		"\r\rRaport = " + (infoS[line].width / infoS[line].height).toFixed(3);
 	infoText = infoFrame.parentStory.paragraphs.everyItem();
 	try { infoText.appliedFont = app.fonts.item("Helvetica Neue") } catch (_) {};
-	try { infoText.fontStyle = "Light"; infoText.pointSize = 12 } catch (_) {};
+	try { infoText.fontStyle = "Light" } catch (_) {}; infoText.pointSize = 12;
 	infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
 	infoFrame.textFramePreferences.properties = {
 		verticalJustification: VerticalJustification.TOP_ALIGN,
@@ -334,7 +339,7 @@ function ProgressBar() {
 	this.close = function() { w.close() };
 }
 
-function getTargetPage(line) { // Compare ratios and select closest; return target page
+function getTargetPage() { // Compare ratios and select closest; return target page
 	var t;
 	var targetRatio = (infoS[line].width / infoS[line].height).toFixed(3);
 	for (var i = 0; i < ratios.length; i++) {
@@ -350,17 +355,17 @@ function getTargetPage(line) { // Compare ratios and select closest; return targ
 	return t;
 }
 
-function bleedBounds(page) { // Return page bleed bounds
-	var doc = page.parent.parent;
+function bleedBounds() { // Return page bleed bounds
+	var page = target.pages[0];
 	var bleed = {
-		top: doc.documentPreferences.properties.documentBleedTopOffset,
-		left: doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
-		bottom: doc.documentPreferences.properties.documentBleedBottomOffset,
-		right: doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
+		top: target.documentPreferences.properties.documentBleedTopOffset,
+		left: target.documentPreferences.properties.documentBleedInsideOrLeftOffset,
+		bottom: target.documentPreferences.properties.documentBleedBottomOffset,
+		right: target.documentPreferences.properties.documentBleedOutsideOrRightOffset
 	}
 	if (page.side == PageSideOptions.LEFT_HAND) {
-		bleed.left = doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
-		bleed.right = doc.documentPreferences.properties.documentBleedInsideOrLeftOffset;
+		bleed.left = target.documentPreferences.properties.documentBleedOutsideOrRightOffset;
+		bleed.right = target.documentPreferences.properties.documentBleedInsideOrLeftOffset;
 	}
 	var m_x1 = page.bounds[1] - bleed.left;
 	var m_y1 = page.bounds[0] - bleed.top;
