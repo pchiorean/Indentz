@@ -46,8 +46,7 @@ timeDiff.setStartTime();
 // Step 1. Check and parse info file
 var infoFile = File(masterFN + ".txt");
 if (!infoFile.open("r")) { alert("File not found."); exit() };
-var infoID = [], infoSw = [], infoSh = [], infoTw = [], infoTh = [], infoVL = [], infoFN = [];
-var info1w, info1h, info2w, info2h;
+var infoID = [], infoS = [], infoT = [], infoVL = [], infoFN = [];
 var infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
 var line = 0;
 while (!infoFile.eof) {
@@ -55,12 +54,16 @@ while (!infoFile.eof) {
 	if (!infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4] || !infoLine[5] || !infoLine[7]) { alert ("Bad data in record " + line + "."); exit() };
 	infoID[line] = infoLine[0]; // ID
 	// Safe area/total area
-	info1w = infoLine[1].replace(/\,/g, "."); info1h = infoLine[2].replace(/\,/g, ".");
-	info2w = infoLine[3].replace(/\,/g, "."); info2h = infoLine[4].replace(/\,/g, ".");
-	infoSw[line] = Math.min(Number(info1w), Number(info2w)) / 0.352777777777778;
-	infoSh[line] = Math.min(Number(info1h), Number(info2h)) / 0.352777777777778;
-	infoTw[line] = Math.max(Number(info1w), Number(info2w)) / 0.352777777777778;
-	infoTh[line] = Math.max(Number(info1h), Number(info2h)) / 0.352777777777778;
+	var info1 = { width: infoLine[1].replace(/\,/g, "."), height: infoLine[2].replace(/\,/g, ".") };
+	var info2 = { width: infoLine[3].replace(/\,/g, "."), height: infoLine[4].replace(/\,/g, ".") };
+	infoS[line] = { // Safe area
+		width: Math.min(Number(info1.width), Number(info2.width)) / 0.352777777777778,
+		height: Math.min(Number(info1.height), Number(info2.height)) / 0.352777777777778
+	}
+	infoT[line] = { // Total size
+		width: Math.max(Number(info1.width), Number(info2.width)) / 0.352777777777778,
+		height: Math.max(Number(info1.height), Number(info2.height)) / 0.352777777777778
+	}
 	infoVL[line] = infoLine[6]; // Layout
 	infoFN[line] = infoLine[7]; // Filename
 };
@@ -155,13 +158,13 @@ function targetSetGeometry() { // Resize visual and set page dimensions
 	target.pages[0].resize(CoordinateSpaces.SPREAD_COORDINATES,
 		AnchorPoint.CENTER_ANCHOR,
 		ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
-		[infoSw[line], infoSh[line]]);
+		[infoS[line].width, infoS[line].height]);
 	// Extend page to total area
 	target.pages[0].layoutRule = LayoutRuleOptions.OFF;
 	target.pages[0].resize(CoordinateSpaces.SPREAD_COORDINATES,
 		AnchorPoint.CENTER_ANCHOR,
 		ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
-		[infoTw[line], infoTh[line]]);
+		[infoT[line].width, infoT[line].height]);
 	// Redefine scaling to 100%
 	var item, items = target.allPageItems;
 	while (item = items.shift()) item.redefineScaling();
@@ -215,10 +218,10 @@ function targetAlignElements() { // Align elements based on their labels
 
 function targetSafeArea() { // Draw a 'safe area' frame
 	var mgPg, mgBounds, safeLayerFrame;
-	mgPg = { top: (infoTh[line] - infoSh[line]) / 2, left: (infoTw[line] - infoSw[line]) / 2,
-		bottom: (infoTh[line] - infoSh[line]) / 2, right: (infoTw[line] - infoSw[line]) / 2 };
+	mgPg = { top: (infoT[line].height - infoS[line].height) / 2, left: (infoT[line].width - infoS[line].width) / 2,
+		bottom: (infoT[line].height - infoS[line].height) / 2, right: (infoT[line].width - infoS[line].width) / 2 };
 	if (mgPg.top + mgPg.left + mgPg.bottom + mgPg.right == 0) return;
-	mgBounds = [mgPg.top, mgPg.left, infoSh[line] + mgPg.top, infoSw[line] + mgPg.left];
+	mgBounds = [mgPg.top, mgPg.left, infoS[line].height + mgPg.top, infoS[line].width + mgPg.left];
 	target.pages[0].marginPreferences.properties = mgPg;
 	safeLayerFrame = target.pages[0].rectangles.add(safeLayerFrameP);
 	safeLayerFrame.properties = { itemLayer: safeLayerName, geometricBounds: mgBounds };
@@ -247,11 +250,11 @@ function targetIDBox() { // Draw ID box
 		width: infoFrame.geometricBounds[3] - infoFrame.geometricBounds[1],
 		height: infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0]
 	}
-	var szMg = { width: (infoTw[line] - infoSw[line]) / 2, height: (infoTh[line] - infoSh[line]) / 2 };
+	var szMg = { width: (infoT[line].width - infoS[line].width) / 2, height: (infoT[line].height - infoS[line].height) / 2 };
 	if ((szMg.height >= szIf.height) || (szMg.width >= szIf.width)) {
-		infoFrame.move([ 0, infoTh[line] - szIf.height ]);
+		infoFrame.move([ 0, infoT[line].height - szIf.height ]);
 	} else {
-		infoFrame.move([ szMg.width, szMg.height + infoSh[line] - szIf.height ]);
+		infoFrame.move([ szMg.width, szMg.height + infoS[line].height - szIf.height ]);
 	}
 }
 
@@ -261,11 +264,11 @@ function targetInfoBox() { // Draw info box
 	infoFrame.itemLayer = infoLayerName;
 	infoFrame.label = "info";
 	infoFrame.contents =
-		"Total W = " + (infoTw[line] *0.352777777777778) +
-		"\rTotal H = " + (infoTh[line] *0.352777777777778) +
-		"\r\rSafe area W = " + (infoSw[line] *0.352777777777778) +
-		"\rSafe area H = " + (infoSh[line] *0.352777777777778) +
-		"\r\rRaport = " + (infoSw[line] / infoSh[line]).toFixed(3);
+		"Total W = " + (infoT[line].width *0.352777777777778) +
+		"\rTotal H = " + (infoT[line].height *0.352777777777778) +
+		"\r\rSafe area W = " + (infoS[line].width *0.352777777777778) +
+		"\rSafe area H = " + (infoS[line].height *0.352777777777778) +
+		"\r\rRaport = " + (infoS[line].width / infoS[line].height).toFixed(3);
 	infoText = infoFrame.parentStory.paragraphs.everyItem();
 	try { infoText.appliedFont = app.fonts.item("Helvetica Neue") } catch (_) {};
 	try { infoText.fontStyle = "Light"; infoText.pointSize = 12 } catch (_) {};
@@ -277,7 +280,7 @@ function targetInfoBox() { // Draw info box
 		autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
 		useNoLineBreaksForAutoSizing: true
 	}
-	infoFrame.move([infoTw[line] + 20, 0]);
+	infoFrame.move([infoT[line].width + 20, 0]);
 }
 
 function unique(array) { // Return array w/o duplicates
@@ -333,7 +336,7 @@ function ProgressBar() {
 
 function getTargetPage(line) { // Compare ratios and select closest; return target page
 	var t;
-	var targetRatio = (infoSw[line] / infoSh[line]).toFixed(3);
+	var targetRatio = (infoS[line].width / infoS[line].height).toFixed(3);
 	for (var i = 0; i < ratios.length; i++) {
 		var avgR = ((ratios[i + 1] - ratios[i]) / 2) + parseFloat(ratios[i]);
 		if (targetRatio > ratios[i]) {
