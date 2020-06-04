@@ -248,7 +248,7 @@ function targetIDBox() { // Draw ID box
 		height: infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0]
 	}
 	var szMg = { width: (infoTw[line] - infoSw[line]) / 2, height: (infoTh[line] - infoSh[line]) / 2 };
-	if (szMg.height >= szIf.height) {
+	if ((szMg.height >= szIf.height) || (szMg.width >= szIf.width)) {
 		infoFrame.move([ 0, infoTh[line] - szIf.height ]);
 	} else {
 		infoFrame.move([ szMg.width, szMg.height + infoSh[line] - szIf.height ]);
