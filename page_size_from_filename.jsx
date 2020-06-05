@@ -1,6 +1,6 @@
 /*
-	Page size from filename v1.4.3
-	© May 2020, Paul Chiorean
+	Page size from filename v1.4.4
+	© June 2020, Paul Chiorean
 	This script sets every page size and margins based on the filename.
 	It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 */
@@ -15,7 +15,7 @@ app.generalPreferences.objectsMoveWithPage = false;
 
 var docName = doc.name.substr(0, doc.name.lastIndexOf(".")); // Get name w/o extension
 // Get '_00[.0] [mm] x 00[.0] [mm]' pairs with optional decimals, whitespace & mm/cm
-var sizeArray = docName.match(/[_-]\d{2,}([\.,]\d{1,2})?\s?([cm]m)?\s?x\s?\d{2,}([\.,]\d{1,2})?\s?([cm]m)?(?!x)/ig);
+var szArr = docName.match(/[_-]\d{2,}([\.,]\d{1,2})?\s?([cm]m)?\s?x\s?\d{2,}([\.,]\d{1,2})?\s?([cm]m)?(?!x)/ig);
 	// 1. [_-] -- '_' or '-' separator
 	// 2. \d{2,}([\.,]\d{1,2})? -- 2 digits or more followed by optional 1 or 2 decimals
 	// 3. \s?([cm]m)? -- optional space followed by optional mm/cm
@@ -24,37 +24,34 @@ var sizeArray = docName.match(/[_-]\d{2,}([\.,]\d{1,2})?\s?([cm]m)?\s?x\s?\d{2,}
 	// 6. identical to 3.
 	// 7. (?!x) -- negative lookhead 'x' separator (to avoid _000x00x00)
 
-if (sizeArray != null) { // At least one pair of dimensions
+if (szArr != null) { // At least one pair of dimensions
 	// Sanitize dimensions array
-	for (i = 0; i < sizeArray.length; i++) {
-		sizeArray[i] = sizeArray[i].replace(/[_-]/g, ""); // Clean up underscores
-		sizeArray[i] = sizeArray[i].replace(/\s/g, ""); // Clean up whitespace
-		sizeArray[i] = sizeArray[i].replace(/[cm]m/g, ""); // Clean up mm/cm
-		sizeArray[i] = sizeArray[i].replace(/,/g, "."); // Replace commas
+	for (i = 0; i < szArr.length; i++) {
+		szArr[i] = szArr[i].replace(/[_-]/g, ""); // Clean up underscores
+		szArr[i] = szArr[i].replace(/\s/g, ""); // Clean up whitespace
+		szArr[i] = szArr[i].replace(/[cm]m/g, ""); // Clean up mm/cm
+		szArr[i] = szArr[i].replace(/,/g, "."); // Replace commas
 	}
 
 	// Check number of pairs and set page size and, if defined, page margins
-	var page, sizePg, sizeMg, mgPg;
-	var dimA = sizeArray[0].split("x"); // First pair
-	sizePg = {
-		width: Number(dimA[0]),
-		height: Number(dimA[1])
-	}
-	if (sizeArray.length == 2) { // If 2 pairs (page size & page margins), page size must be larger
-		var dimB = sizeArray[1].split("x");
-		sizePg = { // Choose the largest
+	var page, szPg, szMg, mgPg;
+	var dimA = szArr[0].split("x"); // First pair
+	szPg = { width: Number(dimA[0]), height: Number(dimA[1]) };
+	if (szArr.length == 2) { // If 2 pairs (page size & page margins), page size must be larger
+		var dimB = szArr[1].split("x");
+		szPg = { // Choose the largest
 			width: Math.max(Number(dimA[0]), Number(dimB[0])),
 			height: Math.max(Number(dimA[1]), Number(dimB[1]))
 		}
-		sizeMg = { // Choose the smallest
+		szMg = { // Choose the smallest
 			width: Math.min(Number(dimA[0]), Number(dimB[0])),
 			height: Math.min(Number(dimA[1]), Number(dimB[1]))
 		}
 		mgPg = {
-			top: (sizePg.height - sizeMg.height) / 2,
-			left: (sizePg.width - sizeMg.width) / 2,
-			bottom: (sizePg.height - sizeMg.height) / 2,
-			right: (sizePg.width - sizeMg.width) / 2
+			top: (szPg.height - szMg.height) / 2,
+			left: (szPg.width - szMg.width) / 2,
+			bottom: (szPg.height - szMg.height) / 2,
+			right: (szPg.width - szMg.width) / 2
 		}
 	}
 
@@ -66,13 +63,13 @@ if (sizeArray != null) { // At least one pair of dimensions
 		page.resize(CoordinateSpaces.INNER_COORDINATES,
 			AnchorPoint.CENTER_ANCHOR,
 			ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
-			[sizePg.width / 0.352777777777778, sizePg.height / 0.352777777777778]);
+			[szPg.width / 0.352777777777778, szPg.height / 0.352777777777778]);
 		if (mgPg != null) page.marginPreferences.properties = mgPg; // Set margins
 	}
 
 	// Also set document size
-	doc.documentPreferences.pageWidth = sizePg.width;
-	doc.documentPreferences.pageHeight = sizePg.height;
+	doc.documentPreferences.pageWidth = szPg.width;
+	doc.documentPreferences.pageHeight = szPg.height;
 
 	// Check for bleed: try to match '_00 [mm]' after '0 [mm]'
 	var bleed = /\d\s?(?:[cm]m)?[_+](\d{1,2})\s?(?:[cm]m)/i.exec(docName);
