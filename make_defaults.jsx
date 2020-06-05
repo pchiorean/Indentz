@@ -1,5 +1,5 @@
 ﻿/*
-	Make defaults v1.10.1
+	Make defaults v1.11.0
 	© June 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges similar layers, 
 	replaces some unwanted fonts and sets page dimensions.
@@ -140,11 +140,12 @@ hwLayer.move(LocationOptions.before, txtLayer);
 // Add a 10% HW guide
 for (var i = 0; i < doc.pages.length; i++) {
 	var szPg = doc.pages[i].bounds;
-	var mgPg = doc.pages[i].marginPreferences;
+	// var mgPg = doc.pages[i].marginPreferences;
 	doc.pages[i].guides.add(undefined, {
-		itemLayer: hwLayer,
+		itemLayer: hwLayer, label: "HW",
 		orientation: HorizontalOrVertical.horizontal,
-		location: ((szPg[2] - mgPg.top - mgPg.bottom) * 0.9 + mgPg.top)
+		// location: ((szPg[2] - mgPg.top - mgPg.bottom) * 0.9 + mgPg.top) // margin
+		location: szPg[2] * 0.9 // page
 	});
 }
 // Safe area layer
@@ -239,11 +240,11 @@ bgLayer.move(LocationOptions.AT_END);
 // Step 4. Sets page dimensions from filename
 try {
 	app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), 
-	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Set page dimensions")
+	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Set page dimensions");
 } catch (_) {};
 
 // Step 5. Replace fonts
 try {
 	app.doScript(File(app.activeScript.path + "/fonts_replace.jsx"), 
-	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Replace fonts")
+	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Replace fonts");
 } catch (_) {};
