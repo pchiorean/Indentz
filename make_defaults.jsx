@@ -1,5 +1,5 @@
 ﻿/*
-	Make defaults v1.11.0
+	Make defaults v1.11.1
 	© June 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges similar layers, 
 	replaces some unwanted fonts and sets page dimensions.
@@ -140,13 +140,18 @@ hwLayer.move(LocationOptions.before, txtLayer);
 // Add a 10% HW guide
 for (var i = 0; i < doc.pages.length; i++) {
 	var szPg = doc.pages[i].bounds;
-	// var mgPg = doc.pages[i].marginPreferences;
-	doc.pages[i].guides.add(undefined, {
-		itemLayer: hwLayer, label: "HW",
-		orientation: HorizontalOrVertical.horizontal,
-		// location: ((szPg[2] - mgPg.top - mgPg.bottom) * 0.9 + mgPg.top) // margin
-		location: szPg[2] * 0.9 // page
-	});
+	if (doc.pages[i].guides.length > 0) {
+		for (var j = 0; j < doc.pages[i].guides.length; j++) {
+			var guide = doc.pages[i].guides[j];
+			if (guide.label == "HW") { guide.move([0, (szPg[2] * 0.9 - szPg[2] / 2)]); continue };
+		}
+	} else {
+		doc.pages[i].guides.add(undefined, {
+			itemLayer: hwLayer, label: "HW",
+			orientation: HorizontalOrVertical.horizontal,
+			location: szPg[2] * 0.9
+		});
+	}
 }
 // Safe area layer
 doc.activeLayer = doc.layers.item(0);
