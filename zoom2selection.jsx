@@ -1,6 +1,6 @@
 /*
-	Zoom to selection v1.6.2
-	© May 2020, Paul Chiorean
+	Zoom to selection v1.7.0
+	© June 2020, Paul Chiorean
 	This script zooms to the selected objects or, if nothing is selected, to the current spread.
 */
 
@@ -11,56 +11,40 @@ var selSp = selPg.parent;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 var sel = doc.selection; // Save selection
-var selObj = sel;
-var selObj_y1, selObj_x1, selObj_y2, selObj_x2;
-var W_win, H_win, W_obj, H_obj, zoom;
+var selObj = sel, obj, objBounds, win, zoom;
 
 if (selObj.length > 0 && selObj[0].constructor.name != "Guide") {
-	// Something is selected, get dimensions
-	if (selObj[0].hasOwnProperty("parentTextFrames")) {
-		// We are inside a text frame, get frame bounds
-		selObj_y1 = selObj[0].parentTextFrames[0].visibleBounds[0];
-		selObj_x1 = selObj[0].parentTextFrames[0].visibleBounds[1];
-		selObj_y2 = selObj[0].parentTextFrames[0].visibleBounds[2];
-		selObj_x2 = selObj[0].parentTextFrames[0].visibleBounds[3];
-		app.select(selObj[0].parentTextFrames[0]); // Select text frame
-	} else if (selObj[0].constructor.name == "Table") {
-		// We are inside a table, get parent text frame bounds
-		selObj_y1 = selObj[0].parent.visibleBounds[0];
-		selObj_x1 = selObj[0].parent.visibleBounds[1];
-		selObj_y2 = selObj[0].parent.visibleBounds[2];
-		selObj_x2 = selObj[0].parent.visibleBounds[3];
-		app.select(selObj[0].parent); // Select parent text frame
-	} else if (selObj[0].constructor.name == "Cell") {
-		// We are inside a table cell, get parent text frame bounds
-		selObj_y1 = selObj[0].parent.parent.visibleBounds[0];
-		selObj_x1 = selObj[0].parent.parent.visibleBounds[1];
-		selObj_y2 = selObj[0].parent.parent.visibleBounds[2];
-		selObj_x2 = selObj[0].parent.parent.visibleBounds[3];
-		app.select(selObj[0].parent.parent); // Select parent text frame
+	if (selObj[0].hasOwnProperty("parentTextFrames")) { // We are inside a text frame
+		obj = selObj[0].parentTextFrames[0];
+		objBounds = obj.visibleBounds; app.select(obj);
+	} else if (selObj[0].constructor.name == "Table") { // We are inside a table
+		obj = selObj[0].parent;
+		objBounds = obj.visibleBounds; app.select(obj);
+	} else if (selObj[0].constructor.name == "Cell") { // We are inside a table cell
+		obj = selObj[0].parent.parent;
+		if (obj.constructor.name == "Cell") obj = obj.parent.parent; // Cell in cell
+		objBounds = obj.visibleBounds; app.select(obj);
 	} else {
-		// Iterate selection, get extremities
-		selObj_y1 = selObj[0].visibleBounds[0];
-		selObj_x1 = selObj[0].visibleBounds[1];
-		selObj_y2 = selObj[0].visibleBounds[2];
-		selObj_x2 = selObj[0].visibleBounds[3];
-		for (var i = 1; i < selObj.length; i++) {
+		obj = selObj[0]; objBounds = obj.visibleBounds;
+		for (var i = 1; i < selObj.length; i++) { // Iterate selection, get extremities
 			// Top-left corner
-			selObj_y1 = Math.min(selObj[i].visibleBounds[0], selObj_y1);
-			selObj_x1 = Math.min(selObj[i].visibleBounds[1], selObj_x1);
+			objBounds[0] = Math.min(selObj[i].visibleBounds[0], objBounds[0]);
+			objBounds[1] = Math.min(selObj[i].visibleBounds[1], objBounds[1]);
 			// Bottom-right corner
-			selObj_y2 = Math.max(selObj[i].visibleBounds[2], selObj_y2);
-			selObj_x2 = Math.max(selObj[i].visibleBounds[3], selObj_x2);
+			objBounds[2] = Math.max(selObj[i].visibleBounds[2], objBounds[2]);
+			objBounds[3] = Math.max(selObj[i].visibleBounds[3], objBounds[3]);
 		}
 	}
-	// Get selection size
-	W_obj = selObj_x2 - selObj_x1;
-	H_obj = selObj_y2 - selObj_y1;
-	// Get window size
-	W_win = window.bounds[3] - window.bounds[1];
-	H_win = (window.bounds[2] - window.bounds[0]) * 1.33;
+	obj = { // Get selection size
+		width: objBounds[3] - objBounds[1],
+		height: objBounds[2] - objBounds[0]
+	}
+	win = { // Get window size
+		width: window.bounds[3] - window.bounds[1],
+		height: (window.bounds[2] - window.bounds[0]) * 1.33
+	}
 	// Compute zoom percentage
-	zoom = Math.min(W_win / W_obj, H_win / H_obj);
+	zoom = Math.min(win.width / obj.width, win.height / obj.height);
 	zoom = Number(zoom * 10 * 4.2).toFixed(1); // Adjust to taste
 	zoom = Math.max(5, zoom), Math.min(zoom, 4000); // Fit in 5-4000% range
 	// Zoom to target
