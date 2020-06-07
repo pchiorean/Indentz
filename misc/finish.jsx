@@ -56,6 +56,6 @@ Relink("LS_RING_RED_770_CHF 3D.ai", "LS_RING_RED_790_CHF 3D.ai");
 function Relink(oldLink, newLink) {
 	for (var i = 0; i < doc.links.length; i++) {
 		var link = doc.links[i];
-		if (link.name == oldLink) link.relink(File(doc.filePath + "/Links/Price Tags/" + newLink));
+		if (link.name == oldLink) link.relink(File(doc.filePath + "/Links/Price Tag/" + newLink));
 	}
 }
