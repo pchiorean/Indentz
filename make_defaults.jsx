@@ -1,12 +1,14 @@
 ﻿/*
-	Make defaults v1.11.1
+	Make defaults v1.11.2
 	© June 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges similar layers, 
 	replaces some unwanted fonts and sets page dimensions.
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
+// Step 0. Initialisation
 // Layer names
 const bgLayerName = "bg";
 const artLayerName = "artwork";
@@ -16,14 +18,12 @@ const guidesLayerName = "guides";
 const uvLayerName = "varnish";
 const dieLayerName = "dielines";
 const safeLayerName = "safe area";
-
 // Swatch names
 const cutSwatchName = "Cut";
 const foldSwatchName = "Fold";
 const uvSwatchName = "Varnish";
 const safeSwatchName = "Safe area";
-
-// Step 1. Default settings
+// Default settings
 doc.zeroPoint = [0, 0];
 try { doc.cmykProfile = "ISO Coated v2 (ECI)" } catch (_) { doc.cmykProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
 doc.rgbProfile = "sRGB IEC61966-2.1";
@@ -57,14 +57,14 @@ doc.pageItemDefaults.fillColor = "None";
 doc.pageItemDefaults.strokeColor = "None";
 doc.selection = [];
 
-// Step 2. Add default swatches
+// Step 1. Add default swatches
 try { doc.colors.add({ name: "C=60 M=40 Y=40 K=100", model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [60, 40, 40, 100] }) } catch (_) {};
 try { doc.colors.add({ name: cutSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
 try { doc.colors.add({ name: foldSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [100, 0, 0, 0] }) } catch (_) {};
 try { doc.colors.add({ name: uvSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 10, 70, 0] }) } catch (_) {};
 try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
 
-// Step 3. Make default layers (and merge with similar)
+// Step 2. Make default layers (and merge with similar)
 var bgLayer = doc.layers.item(bgLayerName);
 var artLayer = doc.layers.item(artLayerName);
 var txtLayer = doc.layers.item(txtLayerName);
@@ -73,7 +73,7 @@ var guidesLayer = doc.layers.item(guidesLayerName);
 var uvLayer = doc.layers.item(uvLayerName);
 var dieLayer = doc.layers.item(dieLayerName);
 var safeLayer = doc.layers.item(safeLayerName);
-// Mark existing layers grey
+// Mark existing layers light grey
 for (var i = 0; i < doc.layers.length; i++) doc.layers.item(i).layerColor = [215, 215, 215];
 // Artwork layer
 doc.activeLayer = doc.layers.item(0); // Select first layer
@@ -242,14 +242,14 @@ if (bgLayer.isValid) { bgLayer.layerColor = UIColors.RED;
 }
 bgLayer.move(LocationOptions.AT_END);
 
+// Step 3. Replace fonts
+try {
+	app.doScript(File(app.activeScript.path + "/fonts_replace.jsx"), 
+	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Replace fonts");
+} catch (_) {};
+
 // Step 4. Sets page dimensions from filename
 try {
 	app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), 
 	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Set page dimensions");
-} catch (_) {};
-
-// Step 5. Replace fonts
-try {
-	app.doScript(File(app.activeScript.path + "/fonts_replace.jsx"), 
-	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Replace fonts");
 } catch (_) {};
