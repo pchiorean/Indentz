@@ -1,9 +1,10 @@
 /*
-	Page size from page margins v1.2.2
-	© May 2020, Paul Chiorean
+	Page size from page margins v1.2.3
+	© June 2020, Paul Chiorean
 	This script sets the page size to the page margins.
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 app.generalPreferences.objectsMoveWithPage = false;
 doc.adjustLayoutPreferences.enableAdjustLayout = false;

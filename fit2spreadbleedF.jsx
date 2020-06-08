@@ -1,9 +1,10 @@
 /*
-	Fit to spread bleedbox, forced v1.4.10
-	© May 2020, Paul Chiorean
+	Fit to spread bleedbox, forced v1.4.11
+	© June 2020, Paul Chiorean
 	This script resizes the selection to the spread bleedbox.
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var selObj = doc.selection;
 var selSp, sizeSpB;

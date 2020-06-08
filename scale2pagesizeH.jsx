@@ -1,9 +1,10 @@
 /*
-	Scale to page (top/bottom) v1.0.4
-	© May 2020, Paul Chiorean
+	Scale to page (top/bottom) v1.0.5
+	© June 2020, Paul Chiorean
 	This script scales the selected objects to the page top/bottom dimensions.
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var sel = doc.selection; // Save selection
 

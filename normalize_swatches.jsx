@@ -1,3 +1,4 @@
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var swa, a, r, o, t, k, i;
 

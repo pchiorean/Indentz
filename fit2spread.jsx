@@ -1,9 +1,10 @@
 /*
-	Fit to spread v1.1.8
-	© May 2020, Paul Chiorean
+	Fit to spread v1.1.9
+	© June 2020, Paul Chiorean
 	This script resizes the selection to the spread size.
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var selObj = doc.selection;
 var selObj_y1, selObj_x1, selObj_y2, selObj_x2;

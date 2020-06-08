@@ -1,9 +1,10 @@
 /*
-	Fit frame to text, right v1.2.0
+	Fit frame to text, right v1.2.1
 	© June 2020, Paul Chiorean
 	This script auto-sizes the text frame to the content.
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var selObj = doc.selection;
 

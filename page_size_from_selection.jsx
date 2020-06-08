@@ -1,9 +1,10 @@
 /*
-	Page size from selection v1.4.6
-	© May 2020, Paul Chiorean
+	Page size from selection v1.4.7
+	© June 2020, Paul Chiorean
 	This script sets the page size to the selection bounds.
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 app.generalPreferences.objectsMoveWithPage = false;
 doc.adjustLayoutPreferences.enableAdjustLayout = false;

@@ -1,4 +1,4 @@
-// if (app.documents.length == 0) exit();
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 // var page = app.activeWindow.activePage;
 // var bleed = bleedBounds(page);

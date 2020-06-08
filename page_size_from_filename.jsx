@@ -1,10 +1,11 @@
 /*
-	Page size from filename v1.4.4
+	Page size from filename v1.4.5
 	© June 2020, Paul Chiorean
 	This script sets every page size and margins based on the filename.
 	It looks for pairs of values like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;

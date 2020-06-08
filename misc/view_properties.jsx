@@ -4,6 +4,8 @@ EigenschaftenAnzeigen.jsx by Gregor Fellenz (grefel).
 The script shows all properties and methods of a selected object.
 */
 
+if (app.documents.length == 0) exit();
+
 var uIL = app.scriptPreferences.userInteractionLevel;
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALL;
 

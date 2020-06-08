@@ -1,8 +1,9 @@
 /*
-	Page ratios v1.1.1
-	© May 2020, Paul Chiorean
+	Page ratios v1.1.2
+	© June 2020, Paul Chiorean
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var idLayerName = "id", idLayer = doc.layers.item(idLayerName);
 var infoLayerName = "info", infoLayer = doc.layers.item(infoLayerName);

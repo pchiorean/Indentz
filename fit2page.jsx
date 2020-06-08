@@ -1,9 +1,10 @@
 /*
-	Fit to page v1.2.7
-	© May 2020, Paul Chiorean
+	Fit to page v1.2.8
+	© June 2020, Paul Chiorean
 	This script resizes the selection to the page size.
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var selObj = doc.selection;
 var selObj_y1, selObj_x1, selObj_y2, selObj_x2;

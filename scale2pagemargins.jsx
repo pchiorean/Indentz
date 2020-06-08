@@ -1,9 +1,10 @@
 /*
-	Scale to page margins v1.4.7
-	© May 2020, Paul Chiorean
+	Scale to page margins v1.4.8
+	© June 2020, Paul Chiorean
 	This script scales the selected objects to the page margins.
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var sel = doc.selection; // Save selection
 

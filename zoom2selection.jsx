@@ -1,9 +1,10 @@
 /*
-	Zoom to selection v1.7.0
+	Zoom to selection v1.7.1
 	© June 2020, Paul Chiorean
 	This script zooms to the selected objects or, if nothing is selected, to the current spread.
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var window = app.activeWindow;
 var selPg = window.activePage;

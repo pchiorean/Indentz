@@ -1,9 +1,10 @@
 ﻿/*
-	Prepare for print v1.4.2
-	© May 2020, Paul Chiorean
+	Prepare for print v1.4.3
+	© June 2020, Paul Chiorean
 	This script hides 'safe area' layer and moves dielines to separate spread(s).
 */
 
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
