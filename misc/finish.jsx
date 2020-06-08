@@ -23,16 +23,18 @@ var doc = app.activeDocument;
 // 	}
 // }
 
+Relink("LS_RING_RED_770_CHF 3D.ai", "LS_RING_RED_790_CHF 3D.ai");
+
 // try { doc.swatches.itemByName("Safe area").colorValue = [100, 0, 0, 0] } catch (_) {};
 
 // doc.layers.itemByName("id").visible = false;
 // try { doc.layers.itemByName("info").properties = { visible: false, locked: true } } catch (_) {};
+try { doc.layers.itemByName("guides").visible = false } catch (_) {};
 // try { doc.layers.itemByName("ratio").properties = { visible: false, locked: true } } catch (_) {};
 // try { doc.layers.itemByName("safe area").visible = true } catch (_) {};
 // try { doc.layers.itemByName("vizibil").visible = true } catch (_) {};
-// try { doc.layers.itemByName("HW").visible = false } catch (_) {};
-
-Relink("LS_RING_RED_770_CHF 3D.ai", "LS_RING_RED_790_CHF 3D.ai");
+try { doc.layers.itemByName("HW").properties = { visible: true, locked: true } } catch (_) {};
+try { doc.layers.itemByName("bg").properties = { visible: true, locked: true } } catch (_) {};
 
 
 // function BleedBounds(page) {
