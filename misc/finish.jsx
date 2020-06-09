@@ -23,18 +23,28 @@ var doc = app.activeDocument;
 // 	}
 // }
 
-// try { 
-Relink("LS_RING_RED_770_CHF 3D.ai", "LS_RING_RED_790_CHF 3D.ai") // 7.70 CHF => 7.90 CHF
-TextRegColor(); // Registration text => 100/100/100/100
+// Links
+TextRegColor();
+Relink("LS_RING_RED_770_CHF 3D.ai", "Price Tag/LS_RING_RED_790_CHF 3D.ai"); // 7.70 CHF => 7.90 CHF
+Relink("LS_RING_AMBER_770_CHF 3D.ai", "Price Tag/LS_RING_AMBER_790_CHF 3D.ai"); // 7.70 CHF => 7.90 CHF
+Relink("6150241_LS BC_FU_MAR_APR _2020_Original Image_982x737mm_v2_CMYK.tif", 
+	"6150241_LS BC_FU_MAR_APR_2020_Original Image_982x737mm_v2_CMYK.tif");
+Relink("6150241_LS BC_FU_MAR_APR _2020_Sky&Amber Image_982x737mm_v4_CMYK.tif", 
+	"6150241_LS BC_FU_MAR_APR_2020_Sky&Amber Image_982x737mm_v4_CMYK.tif");
 
+// Swatches
+var i, swa; for (i = (swa = doc.unusedSwatches).length; i--; 
+	(swa[i].name != "" && swa[i].name != "C=60 M=40 Y=40 K=100") && swa[i].remove());
+try { doc.swatches.itemByName("SPOT LIGHT BLUE").remove() } catch (_) {};
 // try { doc.swatches.itemByName("Safe area").colorValue = [100, 0, 0, 0] } catch (_) {};
 
-// doc.layers.itemByName("id").visible = false;
-// try { doc.layers.itemByName("info").properties = { visible: false, locked: true } } catch (_) {};
+// Layers
+try { doc.layers.itemByName("visible area").name = "safe area" } catch (_) {};
+try { doc.layers.itemByName("die cut").name = "dielines" } catch (_) {};
+try { doc.layers.itemByName("diecut").name = "dielines" } catch (_) {};
+try { doc.layers.itemByName("id").visible = true } catch (_) {};
 try { doc.layers.itemByName("guides").visible = false } catch (_) {};
-// try { doc.layers.itemByName("ratio").properties = { visible: false, locked: true } } catch (_) {};
 try { doc.layers.itemByName("safe area").visible = true } catch (_) {};
-// try { doc.layers.itemByName("vizibil").visible = true } catch (_) {};
 try { doc.layers.itemByName("HW").properties = { visible: true, locked: true } } catch (_) {};
 try { doc.layers.itemByName("bg").properties = { visible: true, locked: true } } catch (_) {};
 
@@ -60,15 +70,16 @@ try { doc.layers.itemByName("bg").properties = { visible: true, locked: true } }
 function Relink(oldLink, newLink) {
 	for (var i = 0; i < doc.links.length; i++) {
 		var link = doc.links[i];
-		if (link.name == oldLink) link.relink(File(File(link.filePath).path + "/" + newLink));
+		if (link.name == oldLink) link.relink(File(doc.filePath + "/Links/" + newLink));
+		// if (link.name == oldLink) link.relink(File(File(link.filePath).path + "/" + newLink));
 	}
 }
 
-function TextRegColor(){
-	try { doc.colors.add({ 
-		name: "Reg. black", 
-		model: ColorModel.PROCESS, 
-		space: ColorSpace.CMYK, 
+function TextRegColor(){ // Registration text => 100/100/100/100
+	try { doc.colors.add({
+		name: "Reg. black",
+		model: ColorModel.PROCESS,
+		space: ColorSpace.CMYK,
 		colorValue: [100, 100, 100, 100] });
 	} catch (_) {};
 	app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
