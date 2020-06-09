@@ -23,7 +23,9 @@ var doc = app.activeDocument;
 // 	}
 // }
 
-Relink("LS_RING_RED_770_CHF 3D.ai", "LS_RING_RED_790_CHF 3D.ai");
+// try { 
+Relink("LS_RING_RED_770_CHF 3D.ai", "LS_RING_RED_790_CHF 3D.ai") // 7.70 CHF => 7.90 CHF
+TextRegColor(); // Registration text => 100/100/100/100
 
 // try { doc.swatches.itemByName("Safe area").colorValue = [100, 0, 0, 0] } catch (_) {};
 
@@ -31,7 +33,7 @@ Relink("LS_RING_RED_770_CHF 3D.ai", "LS_RING_RED_790_CHF 3D.ai");
 // try { doc.layers.itemByName("info").properties = { visible: false, locked: true } } catch (_) {};
 try { doc.layers.itemByName("guides").visible = false } catch (_) {};
 // try { doc.layers.itemByName("ratio").properties = { visible: false, locked: true } } catch (_) {};
-// try { doc.layers.itemByName("safe area").visible = true } catch (_) {};
+try { doc.layers.itemByName("safe area").visible = true } catch (_) {};
 // try { doc.layers.itemByName("vizibil").visible = true } catch (_) {};
 try { doc.layers.itemByName("HW").properties = { visible: true, locked: true } } catch (_) {};
 try { doc.layers.itemByName("bg").properties = { visible: true, locked: true } } catch (_) {};
@@ -58,6 +60,24 @@ try { doc.layers.itemByName("bg").properties = { visible: true, locked: true } }
 function Relink(oldLink, newLink) {
 	for (var i = 0; i < doc.links.length; i++) {
 		var link = doc.links[i];
-		if (link.name == oldLink) link.relink(File(doc.filePath + "/Links/Price Tag/" + newLink));
+		if (link.name == oldLink) link.relink(File(File(link.filePath).path + "/" + newLink));
 	}
+}
+
+function TextRegColor(){
+	try { doc.colors.add({ 
+		name: "Reg. black", 
+		model: ColorModel.PROCESS, 
+		space: ColorSpace.CMYK, 
+		colorValue: [100, 100, 100, 100] });
+	} catch (_) {};
+	app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
+	app.findChangeTextOptions.includeHiddenLayers =
+	app.findChangeTextOptions.includeLockedLayersForFind =
+	app.findChangeTextOptions.includeLockedStoriesForFind =
+	app.findChangeTextOptions.includeMasterPages = true;
+	app.findTextPreferences.fillColor = "Registration";
+	app.changeTextPreferences.fillColor = "Reg. black";
+	doc.changeText();
+	app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
 }
