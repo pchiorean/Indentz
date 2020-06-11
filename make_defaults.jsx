@@ -1,5 +1,5 @@
 ﻿/*
-	Make defaults v1.12.0
+	Make defaults v1.12.1
 	© June 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges similar layers, 
 	replaces some unwanted fonts and sets page dimensions.
@@ -76,10 +76,8 @@ var uvLayer = doc.layers.item(uvLayerName);
 var dieLayer = doc.layers.item(dieLayerName);
 var safeLayer = doc.layers.item(safeLayerName);
 // Unlock and mark existing layers light grey
-for (var i = 0; i < doc.layers.length; i++) {
-	doc.layers.item(i).locked = false;
-	doc.layers.item(i).layerColor = [215, 215, 215];
-}
+doc.layers.everyItem().locked = false;
+doc.layers.everyItem().layerColor = [215, 215, 215];
 // Artwork layer
 doc.activeLayer = doc.layers.item(0); // Select first layer
 for (var i = 0; i < doc.layers.length; i++) {
@@ -172,9 +170,9 @@ for (var i = 0; i < doc.layers.length; i++) {
 if (infoLayer.isValid) { infoLayer.layerColor = UIColors.CYAN;
 } else {
 	doc.layers.add({ name: infoLayerName, layerColor: UIColors.CYAN });
-	// infoLayer.move(LocationOptions.before, hwLayer);
 	infoLayer.visible = false;
 }
+infoLayer.move(LocationOptions.before, hwLayer);
 // Safe area layer
 doc.activeLayer = doc.layers.item(0);
 for (var i = 0; i < doc.layers.length; i++) {
