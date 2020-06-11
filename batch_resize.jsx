@@ -71,12 +71,12 @@ while (!infoFile.eof) {
 }
 infoFile.close();
 var infoLines = line; if (infoLines <= 1) { alert ("Not enough records found."); exit() };
-var layouts = unique(infoVL); // Get unique layouts array
+var layouts = Unique(infoVL); // Get unique layouts array
 
 // Step 2. Master file
 // Make technical layers
-var safeLayerName = findLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"]);
-var infoLayerName = findLayer(["info", "ratio"]);
+var safeLayerName = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"]);
+var infoLayerName = FindLayer(["info", "ratio"]);
 var idLayerName = "id";
 var safeSwatchName = "Safe area";
 var safeLayerFrameP = {
@@ -104,7 +104,7 @@ if (!safeSwatch.isValid) {
 	space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
 }
 // Sort master pages by ratio; get ratio array
-var ratios = sortPagesByRatio();
+var ratios = SortPagesByRatio();
 if(doc.modified == true) doc.save(masterFile); 
 doc.close();
 var doc = app.open(masterFile, false);
@@ -114,7 +114,7 @@ var progressBar = new ProgressBar();
 progressBar.reset(infoLines);
 for (line = 1; line <= infoLines; line++) {
 	// Select target page
-	var targetPage = getTargetPage();
+	var targetPage = GetPage();
 	// Create folder and save a copy
 	var targetFolder = Folder(masterPath + "/" + ("_ratia_" + (String(ratios[targetPage]).replace(/\./g, "_"))));
 	targetFolder.create();
@@ -133,12 +133,12 @@ for (line = 1; line <= infoLines; line++) {
 	idLayer = target.layers.item(idLayerName);
 	safeLayer.properties = infoLayer.properties = idLayer.properties = { locked: false };
 	// Process page
-	targetSetGeometry();
-	targetSetLayout();
-	targetAlignElements();
-	targetSafeArea();
-	targetIDBox();
-	targetInfoBox();
+	SetGeometry();
+	SetLayout();
+	AlignElements();
+	SafeArea();
+	IDBox();
+	InfoBox();
 	// Lock technical layers
 	infoLayer.properties = { visible: false, locked: true };
 	safeLayer.properties = { visible: true, locked: true };
@@ -153,7 +153,7 @@ alert("Elapsed time: " + (timeDiff.getDiff() / 1000).toFixed(1) + " seconds.");
 
 
 // Functions
-function targetSetGeometry() { // Resize visual and set page dimensions
+function SetGeometry() { // Resize visual and set page dimensions
 	target.pages[0].marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
 	// Scale visual to safe area
 	target.pages[0].layoutRule = LayoutRuleOptions.SCALE;
@@ -172,15 +172,15 @@ function targetSetGeometry() { // Resize visual and set page dimensions
 	while (item = items.shift()) item.redefineScaling();
 }
 
-function targetSetLayout() { // Set layout variant
+function SetLayout() { // Set layout variant
 	if (layouts == "" && infoVL[line] == "") return;
 	for (var i = 0; i < layouts.length; i++) try { target.layers.item(layouts[i]).visible = false } catch (_) {};
 	try { target.layers.item(infoVL[line]).visible = true } catch (_) {};
 }
 
-function targetAlignElements() { // Align elements based on their labels
+function AlignElements() { // Align elements based on their labels
 	var obj = target.rectangles;
-	var bleed = bleedBounds(target.pages[0]);
+	var bleed = BleedBounds(target.pages[0]);
 	for (var i = 0; i < obj.length; i++) {
 		var oLabel = obj[i].label;
 		if (oLabel == "alignL" || oLabel == "alignTL" || oLabel == "alignBL") {
@@ -218,7 +218,7 @@ function targetAlignElements() { // Align elements based on their labels
 	}
 }
 
-function targetSafeArea() { // Draw a 'safe area' frame
+function SafeArea() { // Draw a 'safe area' frame
 	var mgPg, mgBounds, safeLayerFrame;
 	mgPg = { top: (infoT[line].height - infoS[line].height) / 2, left: (infoT[line].width - infoS[line].width) / 2,
 		bottom: (infoT[line].height - infoS[line].height) / 2, right: (infoT[line].width - infoS[line].width) / 2 };
@@ -229,7 +229,7 @@ function targetSafeArea() { // Draw a 'safe area' frame
 	safeLayerFrame.properties = { itemLayer: safeLayerName, geometricBounds: mgBounds };
 }
 
-function targetIDBox() { // Draw ID box
+function IDBox() { // Draw ID box
 	var infoFrame, infoText;
 	infoFrame = target.pages[0].textFrames.add();
 	infoFrame.itemLayer = idLayerName;
@@ -263,7 +263,7 @@ function targetIDBox() { // Draw ID box
 	}
 }
 
-function targetInfoBox() { // Draw info box
+function InfoBox() { // Draw info box
 	var infoFrame, infoText;
 	infoFrame = target.pages[0].textFrames.add();
 	infoFrame.itemLayer = infoLayerName;
@@ -288,7 +288,7 @@ function targetInfoBox() { // Draw info box
 	infoFrame.move([infoT[line].width + 20, 0]);
 }
 
-function unique(array) { // Return array w/o duplicates
+function Unique(array) { // Return array w/o duplicates
 	var m = {}, u = [];
 	for (var i = 1; i < array.length; i++) {
 		var v = array[i];
@@ -297,14 +297,14 @@ function unique(array) { // Return array w/o duplicates
 	return u;
 }
 
-function findLayer(names) { // Find first layer from a list of names
+function FindLayer(names) { // Find first layer from a list of names
 	for (var i = 0; i < names.length; i++) {
 		var layer = doc.layers.item(names[i]); if (layer.isValid) return names[i];
 	}
 	return names[0]; // Nothing found, return first name
 }
 
-function sortPagesByRatio() { // Sort master pages by ratio; return ratio array
+function SortPagesByRatio() { // Sort master pages by ratio; return ratio array
 	var pgW, pgH, r = [];
 	for (var i = 0; i < doc.pages.length; i++) {
 		pgW = doc.pages[i].bounds[3] - doc.pages[i].bounds[1];
@@ -314,7 +314,7 @@ function sortPagesByRatio() { // Sort master pages by ratio; return ratio array
 	for (var i = 0; i < (r.length - 1); i++) {
 		if (r[i] > r[(i + 1)]) {
 			doc.spreads.item(i).move(LocationOptions.AFTER, doc.spreads.item(i + 1));
-			sortPagesByRatio();
+			SortPagesByRatio();
 		}
 	}
 	return r;
@@ -339,7 +339,7 @@ function ProgressBar() {
 	this.close = function() { w.close() };
 }
 
-function getTargetPage() { // Compare ratios and select closest; return target page
+function GetPage() { // Compare ratios and select closest; return target page
 	var t;
 	var targetRatio = (infoS[line].width / infoS[line].height).toFixed(3);
 	for (var i = 0; i < ratios.length; i++) {
@@ -355,7 +355,7 @@ function getTargetPage() { // Compare ratios and select closest; return target p
 	return t;
 }
 
-function bleedBounds() { // Return page bleed bounds
+function BleedBounds() { // Return page bleed bounds
 	var page = target.pages[0];
 	var bleed = {
 		top: target.documentPreferences.properties.documentBleedTopOffset,
