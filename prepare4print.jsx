@@ -1,10 +1,12 @@
 ﻿/*
-	Prepare for print v1.4.3
+	Prepare for print v1.4.4
 	© June 2020, Paul Chiorean
 	This script hides 'safe area' layer and moves dielines to separate spread(s).
 */
 
 if (app.documents.length == 0) exit();
+app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+app.scriptPreferences.enableRedraw = false;
 var doc = app.activeDocument;
 
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
@@ -16,11 +18,14 @@ doc.layers.everyItem().locked = false; // Unlock all layers
 try { safeLayer.visible = false } catch (_) {}; // Hide 'safe area' layer
 try { dieLayer.visible = true } catch (_) {}; // Show 'dielines' layer
 
-if (dieLayer != null) {
+if (dieLayer != null) Prepare4Print();
+
+
+function Prepare4Print() { // Move dielines to separate spread(s)
 	var selSp, pageItem;
 	for (var i = 0; i < doc.spreads.length; i++) {
 		selSp = doc.spreads[i];
-		if (!dieLayerItems(selSp)) continue;
+		if (!LayerHasItems(selSp, dieLayer)) continue;
 		// Spread has dielines; duplicate it
 		selSp.duplicate(LocationOptions.AFTER, selSp);
 		// Pass 1: delete dielines from this spread
@@ -45,18 +50,22 @@ if (dieLayer != null) {
 	}
 }
 
-
-// Function to find first layer from a list of names
-function findLayer(names) {
+function findLayer(names) { // Find first layer from a list of names
 	for (var i = 0; i < names.length; i++) {
 		var layer = doc.layers.item(names[i]);
 		if (layer.isValid) return layer;
 	}
 }
 
-// Function to check if spread has dielines
-function dieLayerItems(spread) {
+function FindLayer(names) { // Find first layer from a list of names
+	for (var i = 0; i < names.length; i++) {
+		var layer = doc.layers.item(names[i]); if (layer.isValid) return names[i];
+	}
+	return names[0]; // Nothing found, return first name
+}
+
+function LayerHasItems(spread, layer) { // Check if 'layer' has items on 'spread'
 	for (var i = 0; i < spread.pageItems.length; i++) {
-		if (spread.pageItems.item(i).itemLayer.name == dieLayer.name) return true;
+		if (spread.pageItems.item(i).itemLayer.name == layer.name) return true;
 	}
 }
