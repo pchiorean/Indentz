@@ -1,5 +1,5 @@
 ﻿/*
-	Delete gremlins v1.6.0
+	Delete gremlins v1.6.1
 	© June 2020, Paul Chiorean
 	This script does some househeeping.
 */
@@ -37,19 +37,19 @@ hyperLinksPanel.visible = flag_HLP;
 // Step 3. Show 'guides' layer
 try { doc.layers.item("guides").visible = true } catch (_) {
 	try { doc.layers.item("Guides").visible = true } catch (_) {};
-};
+}
 
-// Step 4. Delete guides
+// Step 4. Delete unused layers
+try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (_) {};
+
+// Step 5. Delete empty spreads
+for (var i = 0; i < doc.spreads.length; i++) {
+	if (doc.spreads[i].pageItems.length == 0 && doc.spreads.length > 1) doc.spreads[i].remove();
+}
+
+// Step 6. Delete guides
 try {
 	var i, guide;
 	for (i = (guide = doc.guides.everyItem().getElements()).length; i--; 
 	(guide[i].label != "HW") && guide[i].remove());
 } catch (_) {};
-
-// Step 5. Delete unused layers
-try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (_) {};
-
-// Step 6. Delete empty spreads
-for (var i = 0; i < doc.spreads.length; i++) {
-	if (doc.spreads[i].pageItems.length == 0 && doc.spreads.length > 1) doc.spreads[i].remove();
-}
