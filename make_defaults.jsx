@@ -1,5 +1,5 @@
 ﻿/*
-	Make defaults v1.11.2
+	Make defaults v1.12.0
 	© June 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges similar layers, 
 	replaces some unwanted fonts and sets page dimensions.
@@ -10,14 +10,15 @@ var doc = app.activeDocument;
 
 // Step 0. Initialisation
 // Layer names
-const bgLayerName = "bg";
-const artLayerName = "artwork";
-const txtLayerName = "type";
-const hwLayerName = "HW";
-const guidesLayerName = "guides";
-const uvLayerName = "varnish";
-const dieLayerName = "dielines";
 const safeLayerName = "safe area";
+const dieLayerName = "dielines";
+const uvLayerName = "varnish";
+const guidesLayerName = "guides";
+const infoLayerName = "info";
+const hwLayerName = "HW";
+const txtLayerName = "type";
+const artLayerName = "artwork";
+const bgLayerName = "bg";
 // Swatch names
 const cutSwatchName = "Cut";
 const foldSwatchName = "Fold";
@@ -69,12 +70,16 @@ var bgLayer = doc.layers.item(bgLayerName);
 var artLayer = doc.layers.item(artLayerName);
 var txtLayer = doc.layers.item(txtLayerName);
 var hwLayer = doc.layers.item(hwLayerName);
+var infoLayer = doc.layers.item(infoLayerName);
 var guidesLayer = doc.layers.item(guidesLayerName);
 var uvLayer = doc.layers.item(uvLayerName);
 var dieLayer = doc.layers.item(dieLayerName);
 var safeLayer = doc.layers.item(safeLayerName);
-// Mark existing layers light grey
-for (var i = 0; i < doc.layers.length; i++) doc.layers.item(i).layerColor = [215, 215, 215];
+// Unlock and mark existing layers light grey
+for (var i = 0; i < doc.layers.length; i++) {
+	doc.layers.item(i).locked = false;
+	doc.layers.item(i).layerColor = [215, 215, 215];
+}
 // Artwork layer
 doc.activeLayer = doc.layers.item(0); // Select first layer
 for (var i = 0; i < doc.layers.length; i++) {
@@ -84,6 +89,7 @@ for (var i = 0; i < doc.layers.length; i++) {
 		case "Calque 1":
 		case "Artwork":
 		case "AW":
+		case "Layouts":
 		case "Layout":
 		case "layout":
 		case "Layer_lucru":
@@ -152,6 +158,22 @@ for (var i = 0; i < doc.pages.length; i++) {
 			location: szPg[2] * 0.9
 		});
 	}
+}
+// Info layer
+doc.activeLayer = doc.layers.item(0);
+for (var i = 0; i < doc.layers.length; i++) {
+	var docLayer = doc.layers.item(i);
+	switch (docLayer.name) {
+		case "ratio":
+			try { doc.layers.add({ name: infoLayerName }) } catch (_) {};
+			infoLayer.merge(docLayer); i--;
+	}
+}
+if (infoLayer.isValid) { infoLayer.layerColor = UIColors.CYAN;
+} else {
+	doc.layers.add({ name: infoLayerName, layerColor: UIColors.CYAN });
+	// infoLayer.move(LocationOptions.before, hwLayer);
+	infoLayer.visible = false;
 }
 // Safe area layer
 doc.activeLayer = doc.layers.item(0);
