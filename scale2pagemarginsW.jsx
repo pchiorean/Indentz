@@ -1,5 +1,5 @@
 /*
-	Scale to page margins (left/right) v1.4.8
+	Scale to page margins (left/right) v1.4.9
 	© June 2020, Paul Chiorean
 	This script scales the selected objects to the page left/right margins.
 */
@@ -26,7 +26,7 @@ if (sel.length > 0 && sel[0].constructor.name != "Guide") {
 		if (selObj.length > 1) { // If multiple selection, temporarily group it
 			var selObjArray = [];
 			for (i = 0; i < selObj.length; i++) {
-				if (!selObj[i].locked) { selObjArray.push(selObj[i]) };
+				if (!selObj[i].locked) selObjArray.push(selObj[i]);
 			}
 			selObj = selPg.groups.add(selObjArray); flagUngroup = true;
 		} else selObj = selObj[0];
@@ -47,7 +47,7 @@ if (sel.length > 0 && sel[0].constructor.name != "Guide") {
 		doc.align(selObj, DistributeOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
 		doc.align(selObj, DistributeOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
 		// Ungroup and restore selection
-		if (flagUngroup) { selObj.ungroup() };
+		if (flagUngroup) selObj.ungroup();
 		app.select(sel);
 		// Restore layer grouping settings
 		app.generalPreferences.ungroupRemembersLayers = set_uRL;
