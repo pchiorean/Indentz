@@ -1,5 +1,5 @@
 ﻿/*
-	Make defaults v1.12.1
+	Make defaults v1.12.2
 	© June 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges similar layers, 
 	replaces some unwanted fonts and sets page dimensions.
@@ -143,17 +143,24 @@ if (hwLayer.isValid) { hwLayer.layerColor = UIColors.LIGHT_GRAY;
 hwLayer.move(LocationOptions.before, txtLayer);
 // Add a 10% HW guide
 for (var i = 0; i < doc.pages.length; i++) {
-	var szPg = doc.pages[i].bounds;
+	var szPg = doc.pages[i].bounds[2];
+	var szMg = szPg - (doc.pages[i].marginPreferences.top + doc.pages[i].marginPreferences.bottom);
 	if (doc.pages[i].guides.length > 0) {
 		for (var j = 0; j < doc.pages[i].guides.length; j++) {
 			var guide = doc.pages[i].guides[j];
-			if (guide.label == "HW") { guide.move([0, (szPg[2] * 0.9 - szPg[2] / 2)]); continue };
+			// if (guide.label == "HW") { guide.move([0, (szPg * 0.9 - szPg / 2)]); continue };
+			if (guide.label == "HW") { guide.remove(); continue };
 		}
 	} else {
 		doc.pages[i].guides.add(undefined, {
 			itemLayer: hwLayer, label: "HW",
 			orientation: HorizontalOrVertical.horizontal,
-			location: szPg[2] * 0.9
+			location: szPg * 0.9
+		});
+		doc.pages[i].guides.add(undefined, {
+			itemLayer: hwLayer, label: "HW",
+			orientation: HorizontalOrVertical.horizontal,
+			location: doc.pages[i].marginPreferences.top + szMg * 0.9
 		});
 	}
 }
