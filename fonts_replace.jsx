@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 1.0.1
+	Replace fonts 1.0.2
 	© June 2020, Paul Chiorean
 	This script replaces missing or unwanted fonts with their equivalents.
 */
@@ -26,6 +26,10 @@ const fontList = [
 
 app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
 for (var i = 0; i < fontList.length; i++) {
+	app.findChangeTextOptions.includeHiddenLayers =
+	app.findChangeTextOptions.includeLockedLayersForFind =
+	app.findChangeTextOptions.includeLockedStoriesForFind =
+	app.findChangeTextOptions.includeMasterPages = true;
 	app.findTextPreferences.appliedFont = fontList[i][0];
 	app.changeTextPreferences.appliedFont = fontList[i][1];
 	app.activeDocument.changeText();
