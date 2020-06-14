@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for print v1.4.4
+	Prepare for print v1.4.5
 	© June 2020, Paul Chiorean
 	This script hides 'safe area' layer and moves dielines to separate spread(s).
 */
@@ -11,8 +11,8 @@ var doc = app.activeDocument;
 
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
 var dieLayerName = ["dielines", "diecut", "die cut", "Die Cut", "cut lines", "Stanze"];
-var safeLayer = findLayer(safeLayerName);
-var dieLayer = findLayer(dieLayerName);
+var safeLayer = FindLayer(safeLayerName);
+var dieLayer = FindLayer(dieLayerName);
 
 doc.layers.everyItem().locked = false; // Unlock all layers
 try { safeLayer.visible = false } catch (_) {}; // Hide 'safe area' layer
@@ -50,18 +50,11 @@ function Prepare4Print() { // Move dielines to separate spread(s)
 	}
 }
 
-function findLayer(names) { // Find first layer from a list of names
+function FindLayer(names) { // Find first layer from a list of names
 	for (var i = 0; i < names.length; i++) {
 		var layer = doc.layers.item(names[i]);
 		if (layer.isValid) return layer;
 	}
-}
-
-function FindLayer(names) { // Find first layer from a list of names
-	for (var i = 0; i < names.length; i++) {
-		var layer = doc.layers.item(names[i]); if (layer.isValid) return names[i];
-	}
-	return names[0]; // Nothing found, return first name
 }
 
 function LayerHasItems(spread, layer) { // Check if 'layer' has items on 'spread'
