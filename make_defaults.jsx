@@ -1,5 +1,5 @@
 ﻿/*
-	Make defaults v1.12.3
+	Make defaults v1.12.4
 	© June 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges similar layers, 
 	replaces some unwanted fonts and sets page dimensions.
@@ -141,29 +141,6 @@ if (hwLayer.isValid) { hwLayer.layerColor = UIColors.LIGHT_GRAY;
 	hwLayer.visible = false;
 }
 hwLayer.move(LocationOptions.before, txtLayer);
-// Add a 10% HW guide
-for (var i = 0; i < doc.pages.length; i++) {
-	var szPg = doc.pages[i].bounds[2];
-	var szMg = szPg - (doc.pages[i].marginPreferences.top + doc.pages[i].marginPreferences.bottom);
-	if (doc.pages[i].guides.length > 0) {
-		for (var j = 0; j < doc.pages[i].guides.length; j++) {
-			var guide = doc.pages[i].guides[j];
-			// if (guide.label == "HW") { guide.move([0, (szPg * 0.9 - szPg / 2)]); continue };
-			if (guide.label == "HW") { guide.remove(); continue };
-		}
-	} else {
-		doc.pages[i].guides.add(undefined, {
-			itemLayer: hwLayer, label: "HW",
-			orientation: HorizontalOrVertical.horizontal,
-			location: szPg * 0.9
-		});
-		doc.pages[i].guides.add(undefined, {
-			itemLayer: hwLayer, label: "HW",
-			orientation: HorizontalOrVertical.horizontal,
-			location: doc.pages[i].marginPreferences.top + szMg * 0.9
-		});
-	}
-}
 // Info layer
 doc.activeLayer = doc.layers.item(0);
 for (var i = 0; i < doc.layers.length; i++) {
@@ -271,13 +248,38 @@ if (bgLayer.isValid) { bgLayer.layerColor = UIColors.RED;
 }
 bgLayer.move(LocationOptions.AT_END);
 
-// Step 3. Replace fonts
+// Step 3. Add a 10% HW guide
+for (var i = 0; i < doc.pages.length; i++) {
+	var szPg = doc.pages[i].bounds[2];
+	var szMg = szPg - (doc.pages[i].marginPreferences.top + doc.pages[i].marginPreferences.bottom);
+	if (doc.pages[i].guides.length > 0) {
+		for (var j = 0; j < doc.pages[i].guides.length; j++) {
+			var guide = doc.pages[i].guides[j];
+			// if (guide.label == "HW") { guide.move([0, (szPg * 0.9 - szPg / 2)]); continue };
+			if (guide.label == "HW") { guide.remove(); continue };
+		}
+	} else {
+		doc.pages[i].guides.add(undefined, {
+			itemLayer: hwLayer, label: "HW",
+			orientation: HorizontalOrVertical.horizontal,
+			location: szPg * 0.9
+		});
+		if (szMg != szPg)
+		doc.pages[i].guides.add(undefined, {
+			itemLayer: hwLayer, label: "HW",
+			orientation: HorizontalOrVertical.horizontal,
+			location: doc.pages[i].marginPreferences.top + szMg * 0.9
+		});
+	}
+}
+
+// Step 4. Replace fonts
 try {
 	app.doScript(File(app.activeScript.path + "/fonts_replace.jsx"), 
 	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Replace fonts");
 } catch (_) {};
 
-// Step 4. Sets page dimensions from filename
+// Step 5. Sets page dimensions from filename
 try {
 	app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), 
 	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Set page dimensions");
