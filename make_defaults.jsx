@@ -1,5 +1,5 @@
 ﻿/*
-	Make defaults v1.12.4
+	Make defaults v1.12.5
 	© June 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges similar layers, 
 	replaces some unwanted fonts and sets page dimensions.
@@ -252,25 +252,20 @@ bgLayer.move(LocationOptions.AT_END);
 for (var i = 0; i < doc.pages.length; i++) {
 	var szPg = doc.pages[i].bounds[2];
 	var szMg = szPg - (doc.pages[i].marginPreferences.top + doc.pages[i].marginPreferences.bottom);
-	if (doc.pages[i].guides.length > 0) {
-		for (var j = 0; j < doc.pages[i].guides.length; j++) {
-			var guide = doc.pages[i].guides[j];
-			// if (guide.label == "HW") { guide.move([0, (szPg * 0.9 - szPg / 2)]); continue };
-			if (guide.label == "HW") { guide.remove(); continue };
-		}
-	} else {
-		doc.pages[i].guides.add(undefined, {
-			itemLayer: hwLayer, label: "HW",
-			orientation: HorizontalOrVertical.horizontal,
-			location: szPg * 0.9
-		});
-		if (szMg != szPg)
-		doc.pages[i].guides.add(undefined, {
-			itemLayer: hwLayer, label: "HW",
-			orientation: HorizontalOrVertical.horizontal,
-			location: doc.pages[i].marginPreferences.top + szMg * 0.9
-		});
-	}
+	var j, guide;
+	for (j = (guide = doc.pages[i].guides.everyItem().getElements()).length; j--; 
+	(guide[j].label == "HW") && guide[j].remove());
+	doc.pages[i].guides.add(undefined, {
+		itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
+		orientation: HorizontalOrVertical.horizontal,
+		location: szPg * 0.9
+	});
+	if (szMg == szPg) continue;
+	doc.pages[i].guides.add(undefined, {
+		itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
+		orientation: HorizontalOrVertical.horizontal,
+		location: doc.pages[i].marginPreferences.top + szMg * 0.9
+	});
 }
 
 // Step 4. Replace fonts
