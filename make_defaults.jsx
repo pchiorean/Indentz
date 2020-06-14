@@ -25,6 +25,8 @@ const foldSwatchName = "Fold";
 const uvSwatchName = "Varnish";
 const safeSwatchName = "Safe area";
 // Default settings
+app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+app.scriptPreferences.enableRedraw = false;
 doc.zeroPoint = [0, 0];
 try { doc.cmykProfile = "ISO Coated v2 (ECI)" } catch (_) { doc.cmykProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
 doc.rgbProfile = "sRGB IEC61966-2.1";
@@ -248,7 +250,19 @@ if (bgLayer.isValid) { bgLayer.layerColor = UIColors.RED;
 }
 bgLayer.move(LocationOptions.AT_END);
 
-// Step 3. Add a 10% HW guide
+// Step 3. Replace fonts
+try {
+	app.doScript(File(app.activeScript.path + "/fonts_replace.jsx"), 
+	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Replace fonts");
+} catch (_) {};
+
+// Step 4. Sets page dimensions from filename
+try {
+	app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), 
+	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Set page dimensions");
+} catch (_) {};
+
+// Step 5. Add a 10% HW guide
 for (var i = 0; i < doc.pages.length; i++) {
 	var szPg = doc.pages[i].bounds[2];
 	var szMg = szPg - (doc.pages[i].marginPreferences.top + doc.pages[i].marginPreferences.bottom);
@@ -267,15 +281,3 @@ for (var i = 0; i < doc.pages.length; i++) {
 		location: doc.pages[i].marginPreferences.top + szMg * 0.9
 	});
 }
-
-// Step 4. Replace fonts
-try {
-	app.doScript(File(app.activeScript.path + "/fonts_replace.jsx"), 
-	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Replace fonts");
-} catch (_) {};
-
-// Step 5. Sets page dimensions from filename
-try {
-	app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), 
-	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Set page dimensions");
-} catch (_) {};
