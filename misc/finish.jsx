@@ -4,28 +4,29 @@ var page = app.activeWindow.activePage;
 
 // ExpandItems();
 
-TextRegColor();
+// TextRegColor();
 
-Relink("LS_RING_RED_770_CHF 3D.ai", "Price Tag/LS_RING_RED_790_CHF 3D.ai");
-Relink("LS_RING_AMBER_770_CHF 3D.ai", "Price Tag/LS_RING_AMBER_790_CHF 3D.ai");
-Relink("6150241_LS BC_FU_MAR_APR _2020_Original Image_982x737mm_v2_CMYK.tif",
-	"6150241_LS BC_FU_MAR_APR_2020_Original Image_982x737mm_v2_CMYK.tif");
-Relink("6150241_LS BC_FU_MAR_APR _2020_Sky&Amber Image_982x737mm_v4_CMYK.tif",
-	"6150241_LS BC_FU_MAR_APR_2020_Sky&Amber Image_982x737mm_v4_CMYK.tif");
+// Relink("LS_RING_RED_770_CHF 3D.ai", "Price Tag/LS_RING_RED_790_CHF 3D.ai");
+// Relink("LS_RING_AMBER_770_CHF 3D.ai", "Price Tag/LS_RING_AMBER_790_CHF 3D.ai");
+// Relink("6150241_LS BC_FU_MAR_APR _2020_Original Image_982x737mm_v2_CMYK.tif",
+// 	"6150241_LS BC_FU_MAR_APR_2020_Original Image_982x737mm_v2_CMYK.tif");
+// Relink("6150241_LS BC_FU_MAR_APR _2020_Sky&Amber Image_982x737mm_v4_CMYK.tif",
+// 	"6150241_LS BC_FU_MAR_APR_2020_Sky&Amber Image_982x737mm_v4_CMYK.tif");
+Relink("LS_Toniq_FRONT_final_v11.png", "LS_Toniq_FRONT_final_v11_sansTONIQ.png");
 
-var i, swa; for (i = (swa = doc.unusedSwatches).length; i--;
-	(swa[i].name != "" && swa[i].name != "C=60 M=40 Y=40 K=100") && swa[i].remove());
-try { doc.swatches.itemByName("SPOT LIGHT BLUE").remove() } catch (_) {};
+// var i, swa; for (i = (swa = doc.unusedSwatches).length; i--;
+// 	(swa[i].name != "" && swa[i].name != "C=60 M=40 Y=40 K=100") && swa[i].remove());
+// try { doc.swatches.itemByName("SPOT LIGHT BLUE").remove() } catch (_) {};
 // try { doc.swatches.itemByName("Safe area").colorValue = [100, 0, 0, 0] } catch (_) {};
 
-try { doc.layers.itemByName("visible area").name = "safe area" } catch (_) {};
-try { doc.layers.itemByName("die cut").name = "dielines" } catch (_) {};
-try { doc.layers.itemByName("diecut").name = "dielines" } catch (_) {};
-try { doc.layers.itemByName("id").visible = true } catch (_) {};
-try { doc.layers.itemByName("guides").visible = false } catch (_) {};
-try { doc.layers.itemByName("safe area").visible = true } catch (_) {};
-try { doc.layers.itemByName("HW").properties = { visible: true, locked: true } } catch (_) {};
-try { doc.layers.itemByName("bg").properties = { visible: true, locked: true } } catch (_) {};
+// try { doc.layers.itemByName("visible area").name = "safe area" } catch (_) {};
+// try { doc.layers.itemByName("die cut").name = "dielines" } catch (_) {};
+// try { doc.layers.itemByName("diecut").name = "dielines" } catch (_) {};
+// try { doc.layers.itemByName("id").visible = true } catch (_) {};
+// try { doc.layers.itemByName("guides").visible = false } catch (_) {};
+// try { doc.layers.itemByName("safe area").visible = true } catch (_) {};
+// try { doc.layers.itemByName("HW").properties = { visible: true, locked: true } } catch (_) {};
+// try { doc.layers.itemByName("bg").properties = { visible: true, locked: true } } catch (_) {};
 
 
 // function ExpandItems() {
@@ -69,23 +70,23 @@ try { doc.layers.itemByName("bg").properties = { visible: true, locked: true } }
 // 	return [m_y1, m_x1, m_y2, m_x2];
 // }
 
-function TextRegColor(){
-	try { doc.colors.add({
-		name: "Reg. black",
-		model: ColorModel.PROCESS,
-		space: ColorSpace.CMYK,
-		colorValue: [100, 100, 100, 100] });
-	} catch (_) {};
-	app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
-	app.findChangeTextOptions.includeHiddenLayers =
-	app.findChangeTextOptions.includeLockedLayersForFind =
-	app.findChangeTextOptions.includeLockedStoriesForFind =
-	app.findChangeTextOptions.includeMasterPages = true;
-	app.findTextPreferences.fillColor = "Registration";
-	app.changeTextPreferences.fillColor = "Reg. black";
-	doc.changeText();
-	app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
-}
+// function TextRegColor(){
+// 	try { doc.colors.add({
+// 		name: "Reg. black",
+// 		model: ColorModel.PROCESS,
+// 		space: ColorSpace.CMYK,
+// 		colorValue: [100, 100, 100, 100] });
+// 	} catch (_) {};
+// 	app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
+// 	app.findChangeTextOptions.includeHiddenLayers =
+// 	app.findChangeTextOptions.includeLockedLayersForFind =
+// 	app.findChangeTextOptions.includeLockedStoriesForFind =
+// 	app.findChangeTextOptions.includeMasterPages = true;
+// 	app.findTextPreferences.fillColor = "Registration";
+// 	app.changeTextPreferences.fillColor = "Reg. black";
+// 	doc.changeText();
+// 	app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
+// }
 
 function Relink(oldLink, newLink) {
 	for (var i = 0; i < doc.links.length; i++) {
