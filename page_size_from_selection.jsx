@@ -1,5 +1,5 @@
 /*
-	Page size from selection v1.4.7
+	Page size from selection v1.4.8
 	© June 2020, Paul Chiorean
 	This script sets the page size to the selection bounds.
 */
@@ -12,9 +12,11 @@ doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 
 var sel = doc.selection; // Save selection
 if (sel.length > 0 && sel[0].constructor.name != "Guide") {
-	// Get selection's parent page
 	var selObj = sel;
-	var selPg = selObj[0].parent.pages[0]; // 1st page of parent spread, as backup
+	// Get selection's parent page
+	var s = selObj[0].parent;
+	while (s.constructor.name != "Spread") s = s.parent;
+	var selPg = s.pages[0];
 	for (i = 0; i < selObj.length; i++) {
 		if (selObj[i].parentPage != null) { selPg = selObj[i].parentPage; break };
 	}
