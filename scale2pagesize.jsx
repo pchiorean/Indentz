@@ -1,5 +1,5 @@
 /*
-	Scale to page v1.0.5
+	Scale to page v1.0.6
 	© June 2020, Paul Chiorean
 	This script scales the selected objects to the page dimensions.
 */
@@ -35,7 +35,7 @@ if (sel.length > 0 && sel[0].constructor.name != "Guide") {
 		var W_obj = selObj.visibleBounds[3] - selObj.visibleBounds[1];
 		var H_obj = selObj.visibleBounds[2] - selObj.visibleBounds[0];
 		// Compute scale factor
-		var objSF = W_obj * objSF > W_pg ? W_pg / W_obj : H_pg / H_obj;
+		var objSF = Math.min(W_pg / W_obj, H_pg / H_obj);
 		var matrix = app.transformationMatrices.add({
 			horizontalScaleFactor: objSF,
 			verticalScaleFactor: objSF

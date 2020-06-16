@@ -1,5 +1,5 @@
 /*
-	Scale to page margins v1.4.9
+	Scale to page margins v1.4.10
 	© June 2020, Paul Chiorean
 	This script scales the selected objects to the page margins.
 */
@@ -37,7 +37,7 @@ if (sel.length > 0 && sel[0].constructor.name != "Guide") {
 		var W_obj = selObj.visibleBounds[3] - selObj.visibleBounds[1];
 		var H_obj = selObj.visibleBounds[2] - selObj.visibleBounds[0];
 		// Compute scale factor
-		var objSF = W_obj * objSF > W_mg ? W_mg / W_obj : H_mg / H_obj;
+		var objSF = Math.min(W_mg / W_obj, H_mg / H_obj);
 		var matrix = app.transformationMatrices.add({
 			horizontalScaleFactor: objSF,
 			verticalScaleFactor: objSF
