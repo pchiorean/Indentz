@@ -1,68 +1,67 @@
 /*
-	Fit to spread bleedbox v1.4.11
+	Fit to spread bleedbox v1.4.12
 	© June 2020, Paul Chiorean
 	This script resizes the selection to the spread bleedbox.
 */
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
-var selObj = doc.selection;
-var selObj_y1, selObj_x1, selObj_y2, selObj_x2;
-var selSp, sizeSpB;
 
-if (selObj.length > 0 && selObj[0].constructor.name != "Guide") {
-	// Save setting and set ruler origin to spread
-	var ro = doc.viewPreferences.rulerOrigin;
-	doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
-	// Get selection's parent spread
-	for (i = 0; i < selObj.length; i++) {
-		if (selObj[i].parentPage != null) { selSp = selObj[i].parentPage.parent; break };
-	}
-	// Resize selected object(s)
-	if (selSp != null) {
-		sizeSpB = bounds(selSp);
-		for (i = 0; i < selObj.length; i++) {
-			selObj[i].fit(FitOptions.FRAME_TO_CONTENT);
-			selObj_y1 = Math.max(selObj[i].visibleBounds[0], sizeSpB[0]);
-			selObj_x1 = Math.max(selObj[i].visibleBounds[1], sizeSpB[1]);
-			selObj_y2 = Math.min(selObj[i].visibleBounds[2], sizeSpB[2]);
-			selObj_x2 = Math.min(selObj[i].visibleBounds[3], sizeSpB[3]);
-			selObj[i].geometricBounds = [selObj_y1, selObj_x1, selObj_y2, selObj_x2];
-		}
-		doc.viewPreferences.rulerOrigin = ro; // Restore ruler origin setting
-	} else alert("Please select an object not on pasteboard and try again.");
-} else alert("Please select an object and try again.");
+var sel = doc.selection;
+if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
+	alert("Select an object and try again."); exit();
+}
+// Get selection's parent spread
+var selObj = doc.selection, spread;
+for (var i = 0; i < selObj.length; i++) {
+	if (selObj[i].parentPage != null) { spread = selObj[i].parentPage.parent; break };
+}
+if (spread == null) { alert("Select an object on page and try again."); exit() };
+// Save setting and set ruler origin to spread
+var ro = doc.viewPreferences.rulerOrigin;
+doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
+// Resize selected object(s)
+var size = bounds(spread);
+for (var i = 0; i < selObj.length; i++) {
+	selObj[i].fit(FitOptions.FRAME_TO_CONTENT); // TODO
+	selObj[i].geometricBounds = [
+		Math.max(selObj[i].visibleBounds[0], size[0]),
+		Math.max(selObj[i].visibleBounds[1], size[1]),
+		Math.min(selObj[i].visibleBounds[2], size[2]),
+		Math.min(selObj[i].visibleBounds[3], size[3])
+	];
+}
+// Restore ruler origin setting
+doc.viewPreferences.rulerOrigin = ro;
 
 
 function bounds(spread) { // Return spread bleed bounds
 	var fPg = spread.pages.firstItem();
 	var lPg = spread.pages.lastItem();
-	var sizeSp, bleed, m_y1, m_x1, m_y2, m_x2;
-	sizeSp = fPg.bounds;
-	bleed = {
+	var bleed = {
 		top: doc.documentPreferences.properties.documentBleedTopOffset,
 		left: doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
 		bottom: doc.documentPreferences.properties.documentBleedBottomOffset,
 		right: doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
 	}
 	if (spread.pages.length == 1) { // Spread is single page
+		var size = fPg.bounds;
 		// Reverse left and right margins if left-hand page
 		if (fPg.side == PageSideOptions.LEFT_HAND) {
 			bleed.left = doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
 			bleed.right = doc.documentPreferences.properties.documentBleedInsideOrLeftOffset;
 		}
 	} else { // Spread is multiple pages
-		sizeSp = [fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3]];
+		var size = [fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3]];
 		// Reverse left and right margins if left-hand page
 		if (fPg.side == PageSideOptions.LEFT_HAND) {
 			bleed.left = doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
 		}
 	}
-	if (bleed.top + bleed.left + bleed.bottom + bleed.right != 0) {
-		m_y1 = sizeSp[0] - bleed.top;
-		m_x1 = sizeSp[1] - bleed.left;
-		m_y2 = sizeSp[2] + bleed.bottom;
-		m_x2 = sizeSp[3] + bleed.right;
-		return [m_y1, m_x1, m_y2, m_x2];
-	} else return sizeSp;
+	return [
+		size[0] - bleed.top,
+		size[1] - bleed.left,
+		size[2] + bleed.bottom,
+		size[3] + bleed.right
+	];
 }
