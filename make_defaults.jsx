@@ -1,5 +1,5 @@
 ﻿/*
-	Make defaults v1.12.6
+	Make defaults v1.13.0
 	© June 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges similar layers, 
 	replaces some unwanted fonts and sets page dimensions.
@@ -134,6 +134,7 @@ for (var i = 0; i < doc.layers.length; i++) {
 		case "WH":
 		case "wh":
 		case "hw":
+		case "Hw Logo":
 			try { doc.layers.add({ name: hwLayerName }) } catch (_) {};
 			hwLayer.merge(docLayer); i--;
 	}
@@ -170,6 +171,9 @@ for (var i = 0; i < doc.layers.length; i++) {
 		case "Vizibil":
 		case "vizibil":
 		case "Vis. area":
+		case "vis. area":
+		case "visible area":
+		case "Visible area":
 			try { doc.layers.add({ name: safeLayerName }) } catch (_) {};
 			safeLayer.merge(docLayer); i--;
 	}
@@ -184,6 +188,7 @@ safeLayer.move(LocationOptions.AT_BEGINNING);
 for (var i = 0; i < doc.layers.length; i++) {
 	var docLayer = doc.layers.item(i);
 	switch (docLayer.name) {
+		case "Cut":
 		case "diecut":
 		case "die cut":
 		case "Die Cut":
@@ -262,23 +267,3 @@ try {
 	app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), 
 	ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Set page dimensions");
 } catch (_) {};
-
-// Step 5. Add a 10% HW guide
-for (var i = 0; i < doc.pages.length; i++) {
-	var szPg = doc.pages[i].bounds[2];
-	var szMg = szPg - (doc.pages[i].marginPreferences.top + doc.pages[i].marginPreferences.bottom);
-	var j, guide;
-	for (j = (guide = doc.pages[i].guides.everyItem().getElements()).length; j--; 
-	(guide[j].label == "HW") && guide[j].remove());
-	doc.pages[i].guides.add(undefined, {
-		itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
-		orientation: HorizontalOrVertical.horizontal,
-		location: szPg * 0.9
-	});
-	if (szMg == szPg) continue;
-	doc.pages[i].guides.add(undefined, {
-		itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
-		orientation: HorizontalOrVertical.horizontal,
-		location: doc.pages[i].marginPreferences.top + szMg * 0.9
-	});
-}
