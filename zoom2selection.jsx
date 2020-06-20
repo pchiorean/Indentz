@@ -19,13 +19,13 @@ if (sel.length == 0 || sel[0].constructor.name == "Guide") {
 }
 // Get selection dimensions
 var selObj = sel, obj = selObj[0];
-if (selObj[0].hasOwnProperty("parentTextFrames")) { // Inside a text frame
-	obj = selObj[0].parentTextFrames[0]; app.select(obj);
-} else if (selObj[0].constructor.name == "Table" || selObj[0].constructor.name == "Cell") {
-	obj = selObj[0].parent;
+if (obj.hasOwnProperty("parentTextFrames")) { // Inside a text frame
+	obj = obj.parentTextFrames[0]; app.select(obj);
+} else if (obj.constructor.name == "Table" || obj.constructor.name == "Cell") {
+	obj = obj.parent;
 	while (obj.constructor.name != "TextFrame") obj = obj.parent; app.select(obj);
 }
-var size = obj.visibleBounds;
+var size = selObj[0].visibleBounds;
 for (var i = 1; i < selObj.length; i++) { // Iterate selection, get extremities
 	size[0] = Math.min(selObj[i].visibleBounds[0], size[0]);
 	size[1] = Math.min(selObj[i].visibleBounds[1], size[1]);
