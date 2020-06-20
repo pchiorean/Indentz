@@ -1,5 +1,5 @@
 /*
-	Page size from selection v1.5.3
+	Page size from selection v1.6.0
 	© June 2020, Paul Chiorean
 	This script sets the page size to the selection bounds.
 */
@@ -21,25 +21,12 @@ for (var i = 0; i < selObj.length; i++) {
 	if (selObj[i].parentPage != null) { page = selObj[i].parentPage; break };
 }
 // Get selection dimensions
-var ungroup = false;
-if (selObj.length > 1) { // If multiple selection, temporarily group it
-	var objArr = [], lockedArr = [];
-	for (var i = 0; i < selObj.length; i++) { // If locked, unlock and save index
-		if (selObj[i].locked) { selObj[i].locked = false; lockedArr.push(i) };
-		objArr.push(selObj[i]);
-	}
-	selObj = page.groups.add(objArr); ungroup = true;
-} else selObj = selObj[0];
-var size = selObj.visibleBounds;
-for (var i = 1; i < selObj.getElements().length; i++) { // Iterate selection, get extremities
+var size = selObj[0].visibleBounds;
+for (var i = 1; i < selObj.length; i++) { // Iterate selection, get extremities
 	size[0] = Math.min(selObj[i].visibleBounds[0], size[0]);
 	size[1] = Math.min(selObj[i].visibleBounds[1], size[1]);
 	size[2] = Math.max(selObj[i].visibleBounds[2], size[2]);
 	size[3] = Math.max(selObj[i].visibleBounds[3], size[3]);
-}
-if (ungroup) { // Ungroup and restore locked state
-	try { selObj.ungroup(); ungroup = false } catch (_) {};
-	for (var i = 0; i < lockedArr.length; i++) sel[lockedArr[i]].locked = true;
 }
 var mg = page.rectangles.add({ // Make temp rectangle and resolve TL-BR
 	geometricBounds: size, contentType: ContentType.UNASSIGNED, fillColor: "None", strokeColor: "None"
@@ -52,7 +39,6 @@ page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }; //
 doc.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }; // Document margins
 page.layoutRule = LayoutRuleOptions.OFF; // Don't scale page items
 page.reframe(CoordinateSpaces.SPREAD_COORDINATES, [mg_TL, mg_BR]);
-if (ungroup) try { selObj.ungroup() } catch (_) {};
 // Also set document size
 var sizePg = { width: size[3] - size[1], height: size[2] - size[0] };
 if (doc.pages.length == 1) {

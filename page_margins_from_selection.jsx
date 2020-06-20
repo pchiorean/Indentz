@@ -1,5 +1,5 @@
 /*
-	Page margins from selection v1.0.2
+	Page margins from selection v1.1.0
 	© June 2020, Paul Chiorean
 	This script sets the page margins to the selection bounds.
 */
@@ -18,25 +18,12 @@ for (var i = 0; i < selObj.length; i++) {
 }
 if (page == null) { alert("Select an object on page and try again."); exit() };
 // Get selection dimensions
-var ungroup = false;
-if (selObj.length > 1) { // If multiple selection, temporarily group it
-	var objArr = [], lockedArr = [];
-	for (var i = 0; i < selObj.length; i++) { // If locked, unlock and save index
-		if (selObj[i].locked) { selObj[i].locked = false; lockedArr.push(i) };
-		objArr.push(selObj[i]);
-	}
-	selObj = page.groups.add(objArr); ungroup = true;
-} else selObj = selObj[0];
-var size = selObj.visibleBounds;
-for (var i = 1; i < selObj.getElements().length; i++) { // Iterate selection, get extremities
+var size = selObj[0].visibleBounds;
+for (var i = 1; i < selObj.length; i++) {
 	size[0] = Math.min(selObj[i].visibleBounds[0], size[0]);
 	size[1] = Math.min(selObj[i].visibleBounds[1], size[1]);
 	size[2] = Math.max(selObj[i].visibleBounds[2], size[2]);
 	size[3] = Math.max(selObj[i].visibleBounds[3], size[3]);
-}
-if (ungroup) { // Ungroup and restore locked state
-	selObj.ungroup();
-	for (var i = 0; i < lockedArr.length; i++) sel[lockedArr[i]].locked = true;
 }
 // Set page margins
 page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
