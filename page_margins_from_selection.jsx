@@ -1,5 +1,5 @@
 /*
-	Page margins from selection v1.0.1
+	Page margins from selection v1.0.2
 	© June 2020, Paul Chiorean
 	This script sets the page margins to the selection bounds.
 */
@@ -40,11 +40,14 @@ if (ungroup) { // Ungroup and restore locked state
 }
 // Set page margins
 page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
-page.marginPreferences.properties = {
-	top: size[0] - page.bounds[0],
-	left: size[1] - page.bounds[1],
-	bottom: page.bounds[2] - size[2],
-	right: page.bounds[3] - size[3],
-};
+page.marginPreferences.properties =
+	{ top: size[0] - page.bounds[0], bottom: page.bounds[2] - size[2] };
+if (page.side == PageSideOptions.LEFT_HAND) {
+	page.marginPreferences.properties =
+		{ left: page.bounds[3] - size[3], right: size[1] - page.bounds[1] }
+	} else {
+		page.marginPreferences.properties =
+			{ left: size[1] - page.bounds[1], right: page.bounds[3] - size[3] }
+}
 // Restore initial selection
 try { app.select(sel) } catch (_) {};
