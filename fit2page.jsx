@@ -1,5 +1,5 @@
 /*
-	Fit to page v1.2.9
+	Fit to page v1.2.10
 	© June 2020, Paul Chiorean
 	This script resizes the selection to the page size.
 */
@@ -19,11 +19,12 @@ for (var i = 0; i < selObj.length; i++) {
 if (page == null) { alert("Select an object on page and try again."); exit() };
 // Resize selected object(s)
 for (var i = 0; i < selObj.length; i++) {
-	selObj[i].fit(FitOptions.FRAME_TO_CONTENT); // TODO
-	selObj[i].geometricBounds = [
-		Math.max(selObj[i].visibleBounds[0], page.bounds[0]),
-		Math.max(selObj[i].visibleBounds[1], page.bounds[1]),
-		Math.min(selObj[i].visibleBounds[2], page.bounds[2]),
-		Math.min(selObj[i].visibleBounds[3], page.bounds[3])
+	var obj = selObj[i]; if (obj.parentPage != page) continue;
+	obj.fit(FitOptions.FRAME_TO_CONTENT); // TODO
+	obj.geometricBounds = [
+		Math.max(obj.visibleBounds[0], page.bounds[0]),
+		Math.max(obj.visibleBounds[1], page.bounds[1]),
+		Math.min(obj.visibleBounds[2], page.bounds[2]),
+		Math.min(obj.visibleBounds[3], page.bounds[3])
 	];
 }
