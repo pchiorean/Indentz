@@ -23,10 +23,10 @@ for (var i = 0; i < selObj.length; i++) {
 	var obj = selObj[i]; if (obj.parentPage != page) continue;
 	obj.fit(FitOptions.FRAME_TO_CONTENT); // TODO
 	obj.geometricBounds = [
-		Math.max(obj.visibleBounds[0], page.bounds[0]),
-		Math.max(obj.visibleBounds[1], page.bounds[1]),
-		Math.min(obj.visibleBounds[2], page.bounds[2]),
-		Math.min(obj.visibleBounds[3], page.bounds[3])
+		Math.max(obj.visibleBounds[0], size[0]),
+		Math.max(obj.visibleBounds[1], size[1]),
+		Math.min(obj.visibleBounds[2], size[2]),
+		Math.min(obj.visibleBounds[3], size[3])
 	];
 }
 
