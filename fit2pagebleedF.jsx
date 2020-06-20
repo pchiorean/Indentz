@@ -21,7 +21,7 @@ if (page == null) { alert("Select an object on page and try again."); exit() };
 var size = bounds(page);
 for (var i = 0; i < selObj.length; i++) {
 	if (selObj[i].parentPage != page) continue;
-	selObj[i].geometricBounds = size
+	selObj[i].geometricBounds = size;
 };
 
 
