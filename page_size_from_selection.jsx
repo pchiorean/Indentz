@@ -48,8 +48,8 @@ var mg_TL = mg.resolve(AnchorPoint.TOP_LEFT_ANCHOR, CoordinateSpaces.SPREAD_COOR
 var mg_BR = mg.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0];
 mg.remove(); // Remove temp rectangle
 // Resize page
-page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }; // Set page mgs to zero
-doc.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }; // Set doc mgs to zero
+page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }; // Page margins
+doc.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }; // Document margins
 page.layoutRule = LayoutRuleOptions.OFF; // Don't scale page items
 page.reframe(CoordinateSpaces.SPREAD_COORDINATES, [mg_TL, mg_BR]);
 if (ungroup) try { selObj.ungroup() } catch (_) {};

@@ -51,8 +51,8 @@ var infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
 var line = 0;
 while (!infoFile.eof) {
 	infoLine = infoFile.readln().split("\t"); line++;
-	if (!infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4] || !infoLine[5] || !infoLine[7]) {
-		alert ("Bad data in record " + line + "."); exit()
+	if (!infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4] || !infoLine[5] || !infoLine[7]) { // TODO
+		alert ("Bad data in record " + line + "."); exit();
 	}
 	infoID[line] = infoLine[0]; // ID
 	// Safe area/total area
@@ -105,13 +105,11 @@ if (!safeSwatch.isValid) {
 }
 // Sort master pages by ratio; get ratio array
 var ratios = SortPagesByRatio();
-if(doc.modified == true) doc.save(masterFile); 
-doc.close();
+if(doc.modified == true) doc.save(masterFile); doc.close();
 var doc = app.open(masterFile, false);
 
 // Step 3. Batch processing
-var progressBar = new ProgressBar();
-progressBar.reset(infoLines);
+var progressBar = new ProgressBar(); progressBar.reset(infoLines);
 for (line = 1; line <= infoLines; line++) {
 	// Select target page
 	var targetPage = GetPage();
@@ -122,7 +120,6 @@ for (line = 1; line <= infoLines; line++) {
 	doc.saveACopy(targetFile);
 	// Open saved copy
 	var target = app.open(targetFile, false);
-	progressBar.update(line);
 	// Delete unneeded pages
 	for (var i = target.pages.length - 1; i >= 0; i--) {
 		if ((i > targetPage) || (i < targetPage)) target.pages[i].remove();
@@ -145,6 +142,7 @@ for (line = 1; line <= infoLines; line++) {
 	idLayer.properties = { visible: true, locked: true };
 	// Save and close copy
 	target.save(targetFile).close();
+	progressBar.update(line);
 }
 progressBar.close();
 infoFile.close();
@@ -367,9 +365,10 @@ function BleedBounds() { // Return page bleed bounds
 		bleed.left = target.documentPreferences.properties.documentBleedOutsideOrRightOffset;
 		bleed.right = target.documentPreferences.properties.documentBleedInsideOrLeftOffset;
 	}
-	var m_x1 = page.bounds[1] - bleed.left;
-	var m_y1 = page.bounds[0] - bleed.top;
-	var m_x2 = page.bounds[3] + bleed.right;
-	var m_y2 = page.bounds[2] + bleed.bottom;
-	return [m_y1, m_x1, m_y2, m_x2];
+	return [
+		page.bounds[1] - bleed.left,
+		page.bounds[0] - bleed.top,
+		page.bounds[3] + bleed.right,
+		page.bounds[2] + bleed.bottom
+	];
 }
