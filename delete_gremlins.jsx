@@ -1,5 +1,5 @@
 ﻿/*
-	Delete gremlins v1.8.0
+	Delete gremlins v1.8.1
 	© June 2020, Paul Chiorean
 	This script does some househeeping.
 */
@@ -66,20 +66,21 @@ try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (_) {};
 
 // Step 5. Delete empty spreads
 for (var i = 0; i < doc.spreads.length; i++) {
-	if (doc.spreads[i].pageItems.length == 0 && doc.spreads.length > 1) doc.spreads[i].remove();
+	if (doc.spreads[i].pageItems.length == 0 && doc.spreads.length > 1) {
+		doc.spreads[i].remove(); i--;
+	}
 }
 
-// Step 6. Unlock all items
-// app.activeDocument.allPageItems.properties = { locked: false };
-try { app.menuActions.item("$ID/Unlock All on Spread").invoke() } catch (_) {}; // TODO
-
-// Step 7. Redefine scaling to 100%
+// Step 6. Unlock all items & redefine scaling to 100%
 for (var i = 0; i < doc.spreads.length; i++) {
 	var item, items = doc.spreads[i].allPageItems;
-	while (item = items.shift()) item.redefineScaling();
+	while (item = items.shift()) {
+		try { item.locked = false } catch (_) {};
+		item.redefineScaling();
+	}
 }
 
-// Step 8. Delete guides
+// Step 7. Delete guides
 try {
 	var i, guide;
 	for (i = (guide = doc.guides.everyItem().getElements()).length; i--; 
