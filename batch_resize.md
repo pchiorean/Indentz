@@ -27,7 +27,7 @@ E recomandat să se creeze cât mai multe pagini în master, pentru a acoperi to
 ### Layere tehnice
 
 Deasupra layerelor care compun vizualul vor fi create, dacă nu există, layerele **id**, **info** și **safe area**, care la execuție vor fi populate cu:
-* ID-ul, care va fi poziționat în partea din stânga-jos a ariei vizibile; dacă nu se dorește ID se lasă celula goală (ex. în rândul 5);
+* ID-ul, care va fi poziționat în partea din stânga-jos a paginii sau, dacă nu încape, a ariei vizibile; dacă nu se dorește ID se lasă celula goală (ex. în rândul 5);
 * info box, un text cu geometria paginii (total/vizibil/rație), poziționat dreapta-sus, pe pasteboard;
 * un chenar care marchează aria vizibilă; culoarea lui este un swatch, **Safe area**, care dacă nu există va fi creat cu valoarea 0/0/100/0.
 
