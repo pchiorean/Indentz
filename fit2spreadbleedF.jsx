@@ -1,5 +1,5 @@
 /*
-	Fit to spread bleedbox, forced v1.4.12
+	Fit to spread bleedbox, forced v1.4.13
 	© June 2020, Paul Chiorean
 	This script resizes the selection to the spread bleedbox.
 */
@@ -22,7 +22,11 @@ var ro = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 // Resize selected object(s)
 var size = bounds(spread);
-for (var i = 0; i < selObj.length; i++) selObj[i].geometricBounds = size;
+for (var i = 0; i < selObj.length; i++) {
+	var obj = selObj[i];
+	if (obj.constructor.name != "Rectangle") continue; // TODO
+	obj.geometricBounds = size;
+}
 // Restore ruler origin setting
 doc.viewPreferences.rulerOrigin = ro;
 

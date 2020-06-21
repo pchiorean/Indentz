@@ -1,5 +1,5 @@
 /*
-	Fit to page bleed v1.0.8
+	Fit to page bleed v1.0.9
 	© June 2020, Paul Chiorean
 	This script resizes the selection to the page size, including bleed.
 */
@@ -20,8 +20,10 @@ if (page == null) { alert("Select an object on page and try again."); exit() };
 // Resize selected object(s)
 var size = bounds(page);
 for (var i = 0; i < selObj.length; i++) {
-	var obj = selObj[i]; if (obj.parentPage != page) continue;
-	obj.fit(FitOptions.FRAME_TO_CONTENT); // TODO
+	var obj = selObj[i];
+	if (obj.parentPage != page) continue;
+	if (obj.constructor.name != "Rectangle") continue; // TODO
+	obj.fit(FitOptions.FRAME_TO_CONTENT);
 	obj.geometricBounds = [
 		Math.max(obj.visibleBounds[0], size[0]),
 		Math.max(obj.visibleBounds[1], size[1]),

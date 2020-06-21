@@ -1,5 +1,5 @@
 /*
-	Fit to spread margins v1.1.10
+	Fit to spread margins v1.1.11
 	© June 2020, Paul Chiorean
 	This script resizes the selection to the page margins.
 	If page is part of a spread, resize to the spread margins.
@@ -24,12 +24,14 @@ doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 // Resize selected object(s)
 var size = bounds(spread);
 for (var i = 0; i < selObj.length; i++) {
-	selObj[i].fit(FitOptions.FRAME_TO_CONTENT); // TODO
-	selObj[i].geometricBounds = [
-		Math.max(selObj[i].visibleBounds[0], size[0]),
-		Math.max(selObj[i].visibleBounds[1], size[1]),
-		Math.min(selObj[i].visibleBounds[2], size[2]),
-		Math.min(selObj[i].visibleBounds[3], size[3])
+	var obj = selObj[i];
+	if (obj.constructor.name != "Rectangle") continue; // TODO
+	obj.fit(FitOptions.FRAME_TO_CONTENT);
+	obj.geometricBounds = [
+		Math.max(obj.visibleBounds[0], size[0]),
+		Math.max(obj.visibleBounds[1], size[1]),
+		Math.min(obj.visibleBounds[2], size[2]),
+		Math.min(obj.visibleBounds[3], size[3])
 	];
 }
 // Restore ruler origin setting
