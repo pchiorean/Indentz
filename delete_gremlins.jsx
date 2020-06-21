@@ -1,5 +1,5 @@
 ﻿/*
-	Delete gremlins v1.8.1
+	Delete gremlins v1.8.2
 	© June 2020, Paul Chiorean
 	This script does some househeeping.
 */
@@ -45,8 +45,8 @@ doc.pageItemDefaults.strokeColor = "None";
 doc.selection = [];
 
 // Step 1. Delete unused swatches
-var i, swa;
-for (i = (swa = doc.unusedSwatches).length; i--; (swa[i].name != "") && swa[i].remove());
+var swa = doc.unusedSwatches;
+for (var i = 0; i < swa.length; i++) if (swa[i].name != "") swa[i].remove();
 
 // Step 2. Turn off 'AutoUpdateURLStatus' from 'Hyperlinks' panel
 var set_AUU = app.menuActions.itemByName("$ID/AutoUpdateURLStatus");
@@ -65,10 +65,9 @@ try { doc.layers.item("guides").visible = true } catch (_) {
 try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (_) {};
 
 // Step 5. Delete empty spreads
-for (var i = 0; i < doc.spreads.length; i++) {
-	if (doc.spreads[i].pageItems.length == 0 && doc.spreads.length > 1) {
-		doc.spreads[i].remove(); i--;
-	}
+var s = doc.spreads;
+for (var i = 0; i < s.length; i++) {
+	if (s[i].pageItems.length == 0 && s.length > 1) { s[i].remove(); i-- }
 }
 
 // Step 6. Unlock all items & redefine scaling to 100%
@@ -81,8 +80,5 @@ for (var i = 0; i < doc.spreads.length; i++) {
 }
 
 // Step 7. Delete guides
-try {
-	var i, guide;
-	for (i = (guide = doc.guides.everyItem().getElements()).length; i--; 
-	(guide[i].label != "HW") && guide[i].remove());
-} catch (_) {};
+var g = doc.guides.everyItem().getElements();
+for (var i = 0; i < g.length; i++)  if (g[i].label != "HW") g[i].remove();
