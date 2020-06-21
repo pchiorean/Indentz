@@ -1,3 +1,9 @@
+/*
+	Remove labels v1.0.1
+	© June 2020, Paul Chiorean
+	This script cleans up the auto alinment labels used by batch_resize.jsx.
+*/
+
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var item, items = doc.allPageItems;
