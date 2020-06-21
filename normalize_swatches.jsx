@@ -1,5 +1,5 @@
 /*
-	Normalize swatches v1.2.0
+	Normalize swatches v1.2.1
 	June 2020, Paul Chiorean
 	This script converts RGB process colors to CMYK, removes CMYK swatch duplicates 
 	and sets every name in "C= M= Y= K=" form, and deletes unused swatches.
@@ -16,11 +16,14 @@ NormalizeCMYK(doc); // Normalize similar CMYK swatches
 DeleteUnused(doc); // Delete unused swatches
 
 
-function RGB2CMYK(/*Document*/doc, col, i) {
-	col = doc.colors;
-	for (i = 0; i < col.length; i++) {
-		if (col[i].model == ColorModel.PROCESS && col[i].space == ColorSpace.RGB)
-			col[i].space = ColorSpace.CMYK;
+function RGB2CMYK(/*Document*/doc, c, i, j, k) {
+	for (i = 0; i < doc.colors.length; i++) {
+		c = doc.colors[i];
+		if (c.model == ColorModel.PROCESS && c.space == ColorSpace.RGB) {
+			c.space = ColorSpace.CMYK;
+			// Round CMYK values
+			for (j = (k = c.colorValue).length; j--; k[j] = Math.round(k[j])); c.colorValue = k;
+		}
 	}
 }
 
@@ -52,7 +55,5 @@ function NormalizeCMYK(/*Document*/doc, swa, a, r, o, t, k, i) {
 
 function DeleteUnused(/*Document*/doc, swa, i) {
 	swa = doc.unusedSwatches;
-	for (i = 0; i < swa.length; i++) {
-		if (swa[i].name != "") swa[i].remove();
-	}
+	for (i = 0; i < swa.length; i++) if (swa[i].name != "") swa[i].remove();
 }
