@@ -4,6 +4,9 @@
 	This script scales the selected objects to the page top/bottom dimensions.
 */
 
+if (app.documents.length == 0) exit();
+var doc = app.activeDocument;
+
 var sel = doc.selection;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit();
@@ -37,8 +40,8 @@ var objSF = pgH / objH;
 var matrix = app.transformationMatrices.add({ horizontalScaleFactor: objSF, verticalScaleFactor: objSF });
 // Scale selection
 selObj.transform(CoordinateSpaces.PASTEBOARD_COORDINATES, AnchorPoint.CENTER_ANCHOR, matrix);
-doc.align(selObj, DistributeOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
-doc.align(selObj, DistributeOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
+doc.align(selObj, DistributeOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.PAGE_BOUNDS);
+doc.align(selObj, DistributeOptions.VERTICAL_CENTERS, AlignDistributeBounds.PAGE_BOUNDS);
 // Ungroup and restore selection
 if (ungroup) selObj.ungroup();
 app.select(sel);
