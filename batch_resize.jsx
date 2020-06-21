@@ -45,7 +45,7 @@ timeDiff.setStartTime();
 
 // Step 1. Check and parse info file
 var infoFile = File(masterFN + ".txt");
-if (!infoFile.open("r")) { alert("File not found."); exit() };
+if (!infoFile.open("r")) { alert("File " + masterFN + ".txt not found."); exit() };
 var infoID = [], infoS = [], infoT = [], infoVL = [], infoFN = [];
 var infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
 var line = 0;
@@ -255,9 +255,9 @@ function IDBox() { // Draw ID box
 		height: (infoT[line].height - infoS[line].height) / 2
 	}
 	if ((szMg.height >= szIf.height) || (szMg.width >= szIf.width)) {
-		infoFrame.move([ 0, infoT[line].height - szIf.height ]);
+		infoFrame.move([0, infoT[line].height - szIf.height]);
 	} else {
-		infoFrame.move([ szMg.width, szMg.height + infoS[line].height - szIf.height ]);
+		infoFrame.move([szMg.width, szMg.height + infoS[line].height - szIf.height]);
 	}
 }
 
