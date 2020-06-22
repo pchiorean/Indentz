@@ -1,5 +1,5 @@
 /*
-	Scale to page margins (top/bottom) v1.4.10
+	Scale to page margins (top/bottom) v1.4.12
 	© June 2020, Paul Chiorean
 	This script scales the selected objects to the page top/bottom margins.
 */
@@ -7,7 +7,7 @@
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
-var sel = doc.selection;
+var sel = doc.selection, sel_BAK = sel;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit();
 }
@@ -23,31 +23,30 @@ var set_PRL = app.clipboardPreferences.pasteRemembersLayers;
 app.generalPreferences.ungroupRemembersLayers = true;
 app.clipboardPreferences.pasteRemembersLayers = true;
 // Get selection dimensions
-var selObj = sel;
 var ungroup = false;
-if (selObj.length > 1) { // If multiple selection, temporarily group it
+if (sel.length > 1) { // If multiple selection, temporarily group it
 	var selObjArray = [];
-	for (var i = 0; i < selObj.length; i++) if (!selObj[i].locked) selObjArray.push(selObj[i]);
-	selObj = page.groups.add(selObjArray); ungroup = true;
-} else selObj = selObj[0];
+	for (var i = 0; i < sel.length; i++) if (!sel[i].locked) selObjArray.push(sel[i]);
+	sel = page.groups.add(selObjArray); ungroup = true;
+} else sel = sel[0];
 var pgW = page.bounds[3] - page.bounds[1];
 var pgH = page.bounds[2] - page.bounds[0];
 var mgW = pgW - (page.marginPreferences.left + page.marginPreferences.right);
 var mgH = pgH - (page.marginPreferences.top + page.marginPreferences.bottom);
-var objW = selObj.visibleBounds[3] - selObj.visibleBounds[1];
-var objH = selObj.visibleBounds[2] - selObj.visibleBounds[0];
+var objW = sel.visibleBounds[3] - sel.visibleBounds[1];
+var objH = sel.visibleBounds[2] - sel.visibleBounds[0];
 // Compute scale factor
 var objSF = mgH / objH;
 var matrix = app.transformationMatrices.add({
 	horizontalScaleFactor: objSF, verticalScaleFactor: objSF
 });
 // Scale selection
-selObj.transform(CoordinateSpaces.PASTEBOARD_COORDINATES, AnchorPoint.CENTER_ANCHOR, matrix);
-doc.align(selObj, DistributeOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
-doc.align(selObj, DistributeOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
+sel.transform(CoordinateSpaces.PASTEBOARD_COORDINATES, AnchorPoint.CENTER_ANCHOR, matrix);
+doc.align(sel, DistributeOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
+doc.align(sel, DistributeOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
 // Ungroup and restore selection
-if (ungroup) selObj.ungroup();
-app.select(sel);
+if (ungroup) sel.ungroup();
+app.select(sel_BAK);
 // Restore layer grouping settings
 app.generalPreferences.ungroupRemembersLayers = set_URL;
 app.clipboardPreferences.pasteRemembersLayers = set_PRL;
