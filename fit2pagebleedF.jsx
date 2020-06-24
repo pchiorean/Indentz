@@ -1,5 +1,5 @@
 /*
-	Fit to page bleed, forced v1.1.0
+	Fit to page bleed, forced v1.1.1
 	© June 2020, Paul Chiorean
 	This script resizes the selection to the page size, including bleed.
 */
@@ -15,7 +15,6 @@ for (var i = 0; i < sel.length; i++) {
 	if (sel[i].constructor.name != "Rectangle") continue;
 	if (sel[i].parentPage == null) continue;
 	var size = bounds(sel[i].parentPage);
-	sel[i].fit(FitOptions.FRAME_TO_CONTENT);
 	sel[i].geometricBounds = size;
 }
 

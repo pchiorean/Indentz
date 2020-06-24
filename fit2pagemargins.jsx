@@ -1,5 +1,5 @@
 /*
-	Fit to page margins v1.2.0
+	Fit to page margins v1.3.0
 	© June 2020, Paul Chiorean
 	This script resizes the selection to the page margins.
 */
@@ -15,13 +15,13 @@ if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 for (var i = 0; i < sel.length; i++) {
 	if (sel[i].constructor.name != "Rectangle") continue;
 	if (sel[i].parentPage == null) continue;
-	var size = bounds(sel[i].parentPage);
-	sel[i].fit(FitOptions.FRAME_TO_CONTENT);
+	var szA = sel[i].visibleBounds;
+	var szB = bounds(sel[i].parentPage);
 	sel[i].geometricBounds = [
-		Math.max(sel[i].visibleBounds[0], size[0]),
-		Math.max(sel[i].visibleBounds[1], size[1]),
-		Math.min(sel[i].visibleBounds[2], size[2]),
-		Math.min(sel[i].visibleBounds[3], size[3])
+		szA[2] > szB[0] ? Math.max(szA[0], szB[0]) : szA[0],
+		szA[3] > szB[1] ? Math.max(szA[1], szB[1]) : szA[1],
+		szA[0] < szB[2] ? Math.min(szA[2], szB[2]) : szA[2],
+		szA[1] < szB[3] ? Math.min(szA[3], szB[3]) : szA[3]
 	];
 }
 

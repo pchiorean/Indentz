@@ -1,5 +1,5 @@
 /*
-	Fit to spread margins v1.1.11
+	Fit to spread margins v1.2.0
 	© June 2020, Paul Chiorean
 	This script resizes the selection to the page margins.
 	If page is part of a spread, resize to the spread margins.
@@ -12,26 +12,20 @@ var sel = doc.selection;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit();
 }
-// Get selection's parent spread
-var selObj = doc.selection, spread;
-for (var i = 0; i < selObj.length; i++) {
-	if (selObj[i].parentPage != null) { spread = selObj[i].parentPage.parent; break };
-}
-if (spread == null) { alert("Select an object on page and try again."); exit() };
 // Save setting and set ruler origin to spread
 var ro = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 // Resize selected object(s)
-var size = bounds(spread);
-for (var i = 0; i < selObj.length; i++) {
-	var obj = selObj[i];
-	if (obj.constructor.name != "Rectangle") continue; // TODO
-	obj.fit(FitOptions.FRAME_TO_CONTENT);
-	obj.geometricBounds = [
-		Math.max(obj.visibleBounds[0], size[0]),
-		Math.max(obj.visibleBounds[1], size[1]),
-		Math.min(obj.visibleBounds[2], size[2]),
-		Math.min(obj.visibleBounds[3], size[3])
+for (var i = 0; i < sel.length; i++) {
+	if (sel[i].constructor.name != "Rectangle") continue;
+	if (sel[i].parentPage == null) continue;
+	var szA = sel[i].visibleBounds;
+	var szB = bounds(sel[i].parentPage.parent);
+	sel[i].geometricBounds = [
+		szA[2] > szB[0] ? Math.max(szA[0], szB[0]) : szA[0],
+		szA[3] > szB[1] ? Math.max(szA[1], szB[1]) : szA[1],
+		szA[0] < szB[2] ? Math.min(szA[2], szB[2]) : szA[2],
+		szA[1] < szB[3] ? Math.min(szA[3], szB[3]) : szA[3]
 	];
 }
 // Restore ruler origin setting
