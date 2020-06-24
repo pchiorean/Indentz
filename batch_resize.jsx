@@ -1,5 +1,5 @@
 /*
-	Batch resize v7.18j
+	Batch resize v7.19j
 	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
 	June 2020, Paul Chiorean
 
@@ -21,6 +21,7 @@
 	v7.16j – activate layout layers based on col. 7
 	v7.17j – join progress bar functions
 	v7.18j – if possible, put ID outside safe area
+	v7.19j – optimize alignment to bleed
 */
 
 if (app.documents.length == 0) exit();
@@ -203,14 +204,15 @@ function AlignElements() { // Align elements based on their labels
 			target.align(obj[i], AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
 			target.align(obj[i], AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
 		}
-		if (oLabel == "bleed") obj[i].geometricBounds = bleed;
-		if (oLabel == "expand") {
-			obj[i].fit(FitOptions.FRAME_TO_CONTENT);
+		if (oLabel == "bleedF") obj[i].geometricBounds = bleed;
+		if (oLabel == "bleed") {
+			var szA = obj[i].visibleBounds;
+			var szB = bleed;
 			obj[i].geometricBounds = [
-				Math.max(obj[i].visibleBounds[0], bleed[0]),
-				Math.max(obj[i].visibleBounds[1], bleed[1]),
-				Math.min(obj[i].visibleBounds[2], bleed[2]),
-				Math.min(obj[i].visibleBounds[3], bleed[3])
+				szA[2] > szB[0] ? Math.max(szA[0], szB[0]) : szA[0],
+				szA[3] > szB[1] ? Math.max(szA[1], szB[1]) : szA[1],
+				szA[0] < szB[2] ? Math.min(szA[2], szB[2]) : szA[2],
+				szA[1] < szB[3] ? Math.min(szA[3], szB[3]) : szA[3]
 			];
 		}
 	}
