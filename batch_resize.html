@@ -2,29 +2,28 @@
     <html>
     <head>
         <meta charset="UTF-8">
-        <title>Batch resize v7.18j</title>
+        <title>Batch resize v7.19j</title>
         <style>
 </style>
         
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-        
-        <style>
-.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
-</style>
-        <style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+<style>
             body {
                 font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
                 font-size: 14px;
                 line-height: 1.6;
             }
         </style>
+        <style>
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+</style>
         
         
         
     </head>
     <body class="vscode-light">
-        <h1 id="batch-resize-v718j">Batch resize v7.18j</h1>
+        <h1 id="batch-resize-v719j">Batch resize v7.19j</h1>
 <h2 id="pregătire">Pregătire</h2>
 <p>Trebuie să avem un fișier, denumit în continuare <em>master</em>, în care fiecare pagină reprezintă un vizual cu un anumit raport (rație). Nu contează dacă sunt în ordine, paginile vor fi sortate automat în funcție de rații.</p>
 <p>În același folder cu masterul trebuie să existe un fișier text cu același nume, exportat din Excel cu opțiunea <em>tab delimited</em>, conținând 8 coloane: <strong>ID</strong>, <strong>Vizibil W</strong>, <strong>Vizibil H</strong>, <strong>Total W</strong>, <strong>Total H</strong>, <strong>Raport</strong>, <strong>Vizual</strong>, <strong>Denumire</strong> (numele nu e important, dar ordinea este). Coloana <strong>Raport</strong> nu e folosită, dar trebuie să existe.</p>
@@ -148,11 +147,11 @@
 <h3 id="alinieri-automate">Alinieri automate</h3>
 <p>Anumite elemente pot fi poziționate automat prin etichetarea lor prealabilă din <strong>Windows &gt; Utilities &gt; Script label</strong>. Sunt posibile următoarele etichete:</p>
 <ul>
-<li><strong>alignL, alignR, alignT, alignB</strong> – aliniat la stânga, dreapta, sus, jos</li>
+<li><strong>alignL, alignR, alignT, alignB</strong> – aliniat la vizibil la stânga, dreapta, sus, jos</li>
 <li><strong>alignTL, alignBL, alignTR, alignBR</strong> – aliniat stânga-sus, stânga-jos, dreapta-sus, dreapta-jos</li>
 <li><strong>alignC, alignCh, alignCv</strong> – aliniat la centru, centrat pe orizontală, centrat pe verticală</li>
-<li><strong>expand</strong> – fit-to-object, apoi restrâns la bleed</li>
-<li><strong>bleed</strong> – extins la bleed</li>
+<li><strong>fit</strong> – restrâns la bleed</li>
+<li><strong>bleed</strong> – dimensionat la bleed</li>
 </ul>
 <p>Dacă se dorește &quot;resetarea&quot; masterului se pot șterge toate etichetele cu ajutorul scriptului <strong>remove_labels.jsx</strong>.</p>
 <h2 id="execuție">Execuție</h2>

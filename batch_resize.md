@@ -1,4 +1,4 @@
-# Batch resize v7.18j
+# Batch resize v7.19j
 
 ## Pregătire
 
@@ -37,11 +37,11 @@ Dacă există deja un layer cu numele **vizibil** va fi folosit acesta în loc d
 
 Anumite elemente pot fi poziționate automat prin etichetarea lor prealabilă din **Windows > Utilities > Script label**. Sunt posibile următoarele etichete:
 
-* **alignL, alignR, alignT, alignB** – aliniat la stânga, dreapta, sus, jos
+* **alignL, alignR, alignT, alignB** – aliniat la vizibil la stânga, dreapta, sus, jos
 * **alignTL, alignBL, alignTR, alignBR** – aliniat stânga-sus, stânga-jos, dreapta-sus, dreapta-jos
 * **alignC, alignCh, alignCv** – aliniat la centru, centrat pe orizontală, centrat pe verticală
-* **expand** – fit-to-object, apoi restrâns la bleed
-* **bleed** – extins la bleed
+* **fit** – restrâns la bleed
+* **bleed** – dimensionat la bleed
 
 Dacă se dorește "resetarea" masterului se pot șterge toate etichetele cu ajutorul scriptului **remove_labels.jsx**.
 
