@@ -1,5 +1,5 @@
 ﻿/*
-	Make defaults v1.13.0
+	Make defaults v1.13.1
 	© June 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges similar layers, 
 	replaces some unwanted fonts and sets page dimensions.
@@ -245,6 +245,7 @@ for (var i = 0; i < doc.layers.length; i++) {
 		case "BACKGROUND":
 		case "BG":
 		case "HG":
+		case "Hintergrund":
 			try { doc.layers.add({ name: bgLayerName }) } catch (_) {};
 			bgLayer.merge(docLayer); i--;
 	}
