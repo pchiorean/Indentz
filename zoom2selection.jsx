@@ -1,5 +1,5 @@
 /*
-	Zoom to selection v1.8.0
+	Zoom to selection v1.8.1
 	© June 2020, Paul Chiorean
 	This script zooms to the selected objects or, if nothing is selected, to the current spread.
 */
@@ -25,14 +25,14 @@ if (obj.hasOwnProperty("parentTextFrames")) { // Inside a text frame
 	obj = obj.parent;
 	while (obj.constructor.name != "TextFrame") obj = obj.parent; app.select(obj);
 }
-var size = selObj[0].visibleBounds;
+var size = obj.visibleBounds;
 for (var i = 1; i < selObj.length; i++) { // Iterate selection, get extremities
 	size[0] = Math.min(selObj[i].visibleBounds[0], size[0]);
 	size[1] = Math.min(selObj[i].visibleBounds[1], size[1]);
 	size[2] = Math.max(selObj[i].visibleBounds[2], size[2]);
 	size[3] = Math.max(selObj[i].visibleBounds[3], size[3]);
 }
-obj = { width: size[3] - size[1], height: size[2] - size[0] }; // Get selection size
+var obj = { width: size[3] - size[1], height: size[2] - size[0] }; // Get selection size
 var win = { // Get window size
 	width: window.bounds[3] - window.bounds[1],
 	height: (window.bounds[2] - window.bounds[0]) * 1.33
