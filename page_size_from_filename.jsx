@@ -1,5 +1,5 @@
 /*
-	Page size from filename v1.4.6
+	Page size from filename v1.4.7
 	© June 2020, Paul Chiorean
 	This script sets every page size and margins based on the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -7,6 +7,9 @@
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
+
+if (doc.spreads.everyItem().pages.length > 1) exit(); // Skip multipage spreads
+
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;
 doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
@@ -15,22 +18,20 @@ doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 app.generalPreferences.objectsMoveWithPage = false;
 
 var docName = doc.name.substr(0, doc.name.lastIndexOf(".")); // Get name w/o extension
-// Get '_00[.0] [mm] x 00[.0] [mm]' pairs with optional decimals, whitespace & mm/cm
-var szArr = docName.match(/[_-]\d{2,}([\.,]\d{1,2})?\s?([cm]m)?\s?x\s?\d{2,}([\.,]\d{1,2})?\s?([cm]m)?(?!x)/ig);
-	// 1. [_-] -- '_' or '-' separator
-	// 2. \d{2,}([\.,]\d{1,2})? -- 2 digits or more followed by optional 1 or 2 decimals
-	// 3. \s?([cm]m)? -- optional space followed by optional mm/cm
-	// 4. \s?x\s? -- 'x' separator between optional spaces
-	// 5. identical to 2.
-	// 6. identical to 3.
-	// 7. (?!x) -- negative lookhead 'x' separator (to avoid _000x00x00)
+// Get '_000[.0] [mm] x 000[.0] [mm]' pairs
+var szArr = docName.match(/[_-]\s?\d+([.,]\d+)?\s?([cm]m)?\s?x\s?\d+([.,]\d+)?\s?([cm]m)?(?!x)(?!\d)/ig);
+	// 1. [_-] -- '_' or '-' separator between pairs
+	// 2. \d+([.,]\d+)?([cm]m)? -- group 1: digits, optional decimals, optional cm/mm
+	// 3. x -- 'x' separator between groups
+	// 4. \d+([.,]\d+)?(cm|mm)? -- group 2
+	// 5. (?!x)(?!\d) -- discard if more groups (to avoid 000x00x00 et al)
 if (szArr == null) exit();
 
 // Sanitize dimensions array
 for (i = 0; i < szArr.length; i++) {
 	szArr[i] = szArr[i].replace(/[_-]/g, ""); // Clean up underscores
 	szArr[i] = szArr[i].replace(/\s/g, ""); // Clean up whitespace
-	szArr[i] = szArr[i].replace(/[cm]m/g, ""); // Clean up mm/cm
+	szArr[i] = szArr[i].replace(/[cm]m/g, ""); // Clean up cm/mm
 	szArr[i] = szArr[i].replace(/,/g, "."); // Replace commas
 }
 // Check number of pairs and set page size and, if defined, page margins
@@ -70,10 +71,10 @@ doc.documentPreferences.pageWidth = szPg.width;
 doc.documentPreferences.pageHeight = szPg.height;
 // Check for bleed: try to match '_00 [mm]' after '0 [mm]'
 var bleed = /\d\s?(?:[cm]m)?[_+](\d{1,2})\s?(?:[cm]m)/i.exec(docName);
-	// \d\s?(?:[cm]m)? -- 1 digit followed by optional space and optional mm/cm
-	// [_+] -- '_' or '+' separator
-	// (\d{1,2}) -- 1 or 2 digits (capturing group #1)
-	// \s?(?:[cm]m) -- optional space followed by mandatory mm/cm
+	// 1. \d(?:[cm]m)? -- 1 digit followed by optional mm/cm (non-capturing group)
+	// 2. [_+] -- '_' or '+' separator
+	// 3. (\d{1,2}) -- 1 or 2 digits (capturing group #1)
+	// 4. (?:[cm]m) -- mandatory mm/cm (non-capturing group)
 if (bleed != null) {
 	doc.documentPreferences.documentBleedUniformSize = true;
 	doc.documentPreferences.documentBleedTopOffset = bleed[1];
