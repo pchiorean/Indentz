@@ -1,5 +1,5 @@
 /*
-	Fit to spread bleedbox, forced v1.5.0
+	Fit to spread bleedbox, forced v1.6.0
 	© June 2020, Paul Chiorean
 	This script resizes the selection to the spread bleedbox.
 */
@@ -16,16 +16,41 @@ var ro = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 // Resize selected object(s)
 for (var i = 0; i < sel.length; i++) {
-	if (sel[i].constructor.name != "Rectangle") continue;
-	if (sel[i].parentPage == null) continue;
-	var size = bounds(sel[i].parentPage.parent);
-	sel[i].geometricBounds = size;
+	var obj = sel[i], page;
+	if (page = obj.parentPage) Fit(obj);
 }
 // Restore ruler origin setting
 doc.viewPreferences.rulerOrigin = ro;
 
 
-function bounds(spread) { // Return spread bleed bounds
+function Fit(obj) {
+	// Get target size
+	var spread = page.parent;
+	var size = Bounds(spread);
+	// Clipping rectangle properties
+	var clipFrameP = {
+		label: "<clip group>", name: "<clip group>",
+		fillColor: "None", strokeColor: "None",
+		geometricBounds: size
+	}
+	// Case 1: Simple rectangles
+	if (obj.constructor.name == "Rectangle" &&
+		obj.strokeWeight == 0 &&
+		(obj.absoluteRotationAngle == 0 ||
+		Math.abs(obj.absoluteRotationAngle) == 90 ||
+		Math.abs(obj.absoluteRotationAngle) == 180)) {
+			obj.geometricBounds = size; return;
+	}
+	// Case 2: Groups
+	if (obj.constructor.name == "Group") {
+		var frame = spread.rectangles.add(clipFrameP); // Make clipping rectangle
+		frame.sendToBack(obj);
+		app.select(obj); app.cut();
+		app.select(frame); app.pasteInto();
+	}
+}
+
+function Bounds(spread) { // Return spread bleed bounds
 	var fPg = spread.pages.firstItem();
 	var lPg = spread.pages.lastItem();
 	var bleed = {
