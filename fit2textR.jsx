@@ -1,33 +1,40 @@
 /*
-	Fit frame to text, right v1.2.1
+	Fit frame to text, right v1.3.0
 	© June 2020, Paul Chiorean
 	This script auto-sizes the text frame to the content.
 */
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
-var selObj = doc.selection;
+if (doc.selection.length == 0) exit();
+var sel = doc.selection;
 
-if (selObj.length == 1 && selObj[0].constructor.name == "InsertionPoint") {
-	var sel = selObj[0].parentTextFrames[0];
+if (sel[0].hasOwnProperty("parentTextFrames")) var sel = sel[0].parentTextFrames;
+for (var i = 0; i < sel.length; i++) {
+	var obj = sel[i]; if (obj.constructor.name == "TextFrame") FitFrame2Text(obj);
+}
+
+
+function FitFrame2Text(sel) {
+	var centerBefore = sel.resolve(AnchorPoint.CENTER_ANCHOR,
+		CoordinateSpaces.SPREAD_COORDINATES);
+	var set_VJ = sel.textFramePreferences.verticalJustification;
 	sel.fit(FitOptions.FRAME_TO_CONTENT);
 	sel.textFramePreferences.properties = {
-		autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_CENTER_POINT,
+		autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_RIGHT_POINT,
 		firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 		useNoLineBreaksForAutoSizing: true
 	}
-	sel.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
-	sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.CENTER_POINT;
-} else if (selObj.length > 0 && selObj[0].constructor.name == "TextFrame") {
-	for (i = 0; i < selObj.length; i++) {
-		var sel = selObj[i];
-		sel.fit(FitOptions.FRAME_TO_CONTENT);
-		sel.textFramePreferences.properties = {
-			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_RIGHT_POINT,
-			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
-			useNoLineBreaksForAutoSizing: true
-		}
-		sel.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
-		sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.TOP_RIGHT_POINT;
+	sel.textFramePreferences.properties = {
+		autoSizingType: sel.lines.length == 1 ? AutoSizingTypeEnum.HEIGHT_AND_WIDTH : AutoSizingTypeEnum.HEIGHT_ONLY,
+		autoSizingReferencePoint: AutoSizingReferenceEnum.TOP_RIGHT_POINT,
+		verticalJustification: VerticalJustification.TOP_ALIGN
 	}
-} else alert("Select a text frame and try again.");
+	sel.paragraphs.everyItem().justification = Justification.RIGHT_ALIGN;
+	var centerAfter = sel.resolve(AnchorPoint.RIGHT_CENTER_ANCHOR,
+		CoordinateSpaces.SPREAD_COORDINATES);
+	if (set_VJ == VerticalJustification.CENTER_ALIGN)
+		sel.move(undefined, [0, centerBefore[0][1] - centerAfter[0][1]]);
+	if (set_VJ == VerticalJustification.BOTTOM_ALIGN)
+		sel.move(undefined, [0, (centerBefore[0][1] - centerAfter[0][1]) * 2 ]);
+}
