@@ -1,5 +1,5 @@
 /*
-	Remove labels v1.0.1
+	Remove labels v1.0.2
 	© June 2020, Paul Chiorean
 	This script cleans up the auto alinment labels used by batch_resize.jsx.
 */
@@ -17,8 +17,9 @@ while (item = items.shift()) {
 		case "alignCh":
 		case "alignCv":
 		case "alignC":
-		case "bleed":
+		case "fit":
 		case "expand":
+		case "bleed":
 			item.label = "";
 	}
 }
