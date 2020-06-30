@@ -204,8 +204,8 @@ function AlignElements() { // Align elements based on their labels
 			target.align(obj[i], AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
 			target.align(obj[i], AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
 		}
-		if (oLabel == "bleedF") obj[i].geometricBounds = bleed;
-		if (oLabel == "bleed") {
+		if (oLabel == "bleed") obj[i].geometricBounds = bleed;
+		if (oLabel == "fit") {
 			var szA = obj[i].visibleBounds;
 			var szB = bleed;
 			obj[i].geometricBounds = [
