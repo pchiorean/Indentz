@@ -1,5 +1,5 @@
 /*
-	Fit to page bleed v1.3.0
+	Fit to page bleed v1.3.1
 	© June 2020, Paul Chiorean
 	This script resizes the selection to the page size, including bleed.
 */
@@ -38,6 +38,7 @@ function Fit(obj) {
 	// Clipping rectangle properties
 	var clipFrameP = {
 		label: "<clip group>", name: "<clip group>",
+		itemLayer: obj.itemLayer,
 		fillColor: "None", strokeColor: "None",
 		geometricBounds: size
 	}
@@ -49,7 +50,14 @@ function Fit(obj) {
 		Math.abs(obj.absoluteRotationAngle) == 180)) {
 			obj.geometricBounds = size; return;
 	}
-	// Case 2: Orthogonal lines
+	// Case 2: Text frames
+	if (obj.constructor.name == "TextFrame" &&
+		(obj.absoluteRotationAngle == 0 ||
+		Math.abs(obj.absoluteRotationAngle) == 90 ||
+		Math.abs(obj.absoluteRotationAngle) == 180)) {
+			obj.geometricBounds = size; return;
+	}
+	// Case 3: Orthogonal lines
 	if (obj.constructor.name == "GraphicLine" && (szOg[0] == szOg[2]) || (szOg[1] == szOg[3])) {
 		// Make temp rectangle and resolve TL-BR
 		var frame = page.rectangles.add(clipFrameP);
@@ -69,8 +77,6 @@ function Fit(obj) {
 			return;
 		}
 	}
-	// Case 2: Text frames
-	if (obj.constructor.name == "TextFrame") return;
 	// Other cases: Containment
 	var frame = page.rectangles.add(clipFrameP); // Make clipping rectangle
 	frame.sendToBack(obj);

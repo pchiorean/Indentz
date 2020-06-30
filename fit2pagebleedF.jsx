@@ -1,5 +1,5 @@
 /*
-	Fit to page bleed, forced v1.2.0
+	Fit to page bleed, forced v1.2.1
 	© June 2020, Paul Chiorean
 	This script resizes the selection to the page size, including bleed.
 */
@@ -24,6 +24,7 @@ function Fit(obj) {
 	// Clipping rectangle properties
 	var clipFrameP = {
 		label: "<clip group>", name: "<clip group>",
+		itemLayer: obj.itemLayer,
 		fillColor: "None", strokeColor: "None",
 		geometricBounds: size
 	}
