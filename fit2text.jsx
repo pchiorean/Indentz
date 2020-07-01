@@ -1,5 +1,5 @@
 /*
-	Fit frame to text, center v1.3.0
+	Fit frame to text, center v1.4.0
 	© June 2020, Paul Chiorean
 	This script auto-sizes the text frame to the content.
 */
@@ -26,7 +26,10 @@ function FitFrame2Text(sel) {
 		useNoLineBreaksForAutoSizing: true
 	}
 	sel.textFramePreferences.properties = {
-		autoSizingType: sel.lines.length == 1 ? AutoSizingTypeEnum.HEIGHT_AND_WIDTH : AutoSizingTypeEnum.HEIGHT_ONLY,
+		autoSizingType: 
+			sel.textFramePreferences.autoSizingType == AutoSizingTypeEnum.HEIGHT_AND_WIDTH ?
+			AutoSizingTypeEnum.HEIGHT_ONLY :
+			AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
 		autoSizingReferencePoint: AutoSizingReferenceEnum.CENTER_POINT,
 		verticalJustification: VerticalJustification.CENTER_ALIGN
 	}
