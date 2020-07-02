@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 1.0.2
+	Normalize fonts 1.0.2
 	© June 2020, Paul Chiorean
 	This script replaces missing or unwanted fonts with their equivalents.
 */
