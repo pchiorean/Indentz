@@ -1,8 +1,8 @@
 /*
 	Normalize swatches v1.2.1
 	June 2020, Paul Chiorean
-	This script converts RGB process colors to CMYK, removes CMYK swatch duplicates 
-	and sets every name in "C= M= Y= K=" form, and deletes unused swatches.
+	This script converts RGB process colors to CMYK, removes CMYK swatch duplicates,
+	sets every name in "C= M= Y= K=" form and deletes unused swatches.
 	
 	NormalizeCMYK written by Marc Autret:
 	https://www.indiscripts.com/post/2018/06/indesign-scripting-forum-roundup-12
@@ -22,7 +22,9 @@ function RGB2CMYK(/*Document*/doc, c, i, j, k) {
 		if (c.model == ColorModel.PROCESS && c.space == ColorSpace.RGB) {
 			c.space = ColorSpace.CMYK;
 			// Round CMYK values
-			for (j = (k = c.colorValue).length; j--; k[j] = Math.round(k[j])); c.colorValue = k;
+			for (j = (k = c.colorValue).length; j--;
+			k[j] = Math.round(k[j]));
+			c.colorValue = k;
 		}
 	}
 }
