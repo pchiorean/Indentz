@@ -1,6 +1,6 @@
 ﻿/*
-	Make defaults v1.13.2
-	© June 2020, Paul Chiorean
+	Make defaults v1.13.3
+	© July 2020, Paul Chiorean
 	This script sets default settings, creates swatches & layers, merges similar layers, 
 	replaces some unwanted fonts and sets page dimensions.
 */
@@ -57,8 +57,8 @@ app.activeWindow.transformReferencePoint = AnchorPoint.CENTER_ANCHOR;
 app.activeWindow.screenMode = ScreenModeOptions.PREVIEW_TO_PAGE;
 app.activeWindow.screenMode = ScreenModeOptions.PREVIEW_OFF;
 app.preflightOptions.preflightOff = true;
-doc.pageItemDefaults.fillColor = "None";
-doc.pageItemDefaults.strokeColor = "None";
+doc.pageItemDefaults.transparencySettings.blendingSettings.blendMode = BlendMode.NORMAL;
+doc.pageItemDefaults.properties = { fillColor: "None", strokeColor: "None" };
 doc.selection = [];
 
 // Step 1. Add default swatches
