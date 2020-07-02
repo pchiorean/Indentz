@@ -1,6 +1,6 @@
 /*
-	Fit frame to text, right v1.4.0
-	© June 2020, Paul Chiorean
+	Fit frame to text, right v1.4.1
+	© July 2020, Paul Chiorean
 	This script auto-sizes the text frame to the content.
 */
 
@@ -25,11 +25,15 @@ function FitFrame2Text(sel) {
 		firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 		useNoLineBreaksForAutoSizing: true
 	}
+	var set_AST = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
+	if (sel.lines.length > 1) {
+		set_AST = sel.textFramePreferences.autoSizingType ==
+		AutoSizingTypeEnum.OFF ?
+		AutoSizingTypeEnum.HEIGHT_ONLY :
+		AutoSizingTypeEnum.HEIGHT_AND_WIDTH
+	};
 	sel.textFramePreferences.properties = {
-		autoSizingType: 
-			sel.textFramePreferences.autoSizingType == AutoSizingTypeEnum.HEIGHT_AND_WIDTH ?
-			AutoSizingTypeEnum.HEIGHT_ONLY :
-			AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
+		autoSizingType: set_AST,
 		autoSizingReferencePoint: AutoSizingReferenceEnum.TOP_RIGHT_POINT,
 		verticalJustification: VerticalJustification.TOP_ALIGN
 	}
