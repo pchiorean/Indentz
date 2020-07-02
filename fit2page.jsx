@@ -1,6 +1,6 @@
 /*
-	Fit to page v1.5.1
-	© June 2020, Paul Chiorean
+	Fit to page v1.6.0
+	© July 2020, Paul Chiorean
 	This script resizes the selection to the page size.
 */
 
@@ -19,6 +19,14 @@ for (var i = 0; i < sel.length; i++) {
 
 
 function Fit(obj) {
+	// Undo if already clipped
+	if ((obj.label == "<clip group>" || obj.name == "<clip group>") &&
+		obj.pageItems.length == 0 ) { obj.label = ""; obj.name = "" };
+	if (obj.label == "<clip group>" && obj.pageItems[0].isValid) {
+		var objD = obj.pageItems[0].duplicate();
+		objD.sendToBack(obj); obj.remove(); app.select(objD);
+		return;
+	}
 	// Get target size
 	var szOg = obj.geometricBounds;
 	var szOv = obj.visibleBounds;
