@@ -1,6 +1,6 @@
 /*
-	Page ratios v1.1.3
-	© June 2020, Paul Chiorean
+	Page ratios v1.1.4
+	© July 2020, Paul Chiorean
 	This script calculates the ratio and displays it in the upper left corner of each page.
 */
 
@@ -16,20 +16,20 @@ if (idLayer.isValid) infoLayer.move(LocationOptions.after, idLayer);
 else infoLayer.move(LocationOptions.AT_BEGINNING);
 
 for (var i = 0; i < doc.pages.length; i++) {
-	var page = doc.pages.item(i); var size = bounds(page);
+	var page = doc.pages.item(i); var size = Bounds(page);
 	var ratio = ((size[3] - size[1]) / (size[2] - size[0])).toFixed(3);
 	for (var j = 0; j < page.pageItems.length; j++) if (page.pageItems.item(j).label == "ratio") page.pageItems.item(j).remove();
 	var infoFrame = page.textFrames.add({ itemLayer: infoLayer.name, contents: ratio, label: "ratio", fillColor: "Black" });
 	infoFrame.paragraphs.everyItem().properties = {
-		appliedFont: app.fonts.item("Verdana"), fontStyle: "Bold", pointSize: 32, fillColor: "Paper" };
+		appliedFont: app.fonts.item("Verdana\tBold"), pointSize: 32, fillColor: "Paper" };
 	infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
 	infoFrame.textFramePreferences.properties = {
 		verticalJustification: VerticalJustification.CENTER_ALIGN,
 		firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
-		autoSizingReferencePoint: AutoSizingReferenceEnum.TOP_CENTER_POINT,
+		autoSizingReferencePoint: AutoSizingReferenceEnum.TOP_LEFT_POINT,
 		autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
 		useNoLineBreaksForAutoSizing: true,
-		insetSpacing: 4.25196850393701
+		insetSpacing: 4.25196850393701 // 1.5 mm
 	}
 	doc.align(infoFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
 	doc.align(infoFrame, AlignOptions.TOP_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
@@ -37,7 +37,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 infoLayer.locked = true;
 
 
-function bounds(page) { // Return page margins bounds
+function Bounds(page) { // Return page margins bounds
 var size = [
 	page.bounds[0] + page.marginPreferences.top,
 	page.bounds[1] + page.marginPreferences.left,
