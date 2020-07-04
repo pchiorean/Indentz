@@ -1,6 +1,6 @@
 /*
-	Safe area v1.6.1
-	© June 2020, Paul Chiorean
+	Safe area v1.6.2
+	© July 2020, Paul Chiorean
 	This script creates a 'safe area' frame, on every page (or spread)
 	for which margins are defined, if it doesn't already exist.
 */
@@ -26,17 +26,17 @@ const saFrameP = {
 
 // Create 'safe area' layer
 var safeLayer, dieLayer;
-if (safeLayer = findLayer(safeLayerName)) {
+if (safeLayer = FindLayer(safeLayerName)) {
 	safeLayer.layerColor = UIColors.YELLOW;
 	safeLayer.visible = true; safeLayer.locked = false;
-	if (dieLayer = findLayer(dieLayerName)) { // move it above 'dielines' layer
+	if (dieLayer = FindLayer(dieLayerName)) { // move it above 'dielines' layer
 		safeLayer.move(LocationOptions.before, dieLayer);
 	}
 } else {
 	safeLayerName = safeLayerName[0];
 	safeLayer = doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW,
 	visible: true, locked: false });
-	if (dieLayer = findLayer(dieLayerName)) { // move it below 'dielines' layer, or 1st
+	if (dieLayer = FindLayer(dieLayerName)) { // move it below 'dielines' layer, or 1st
 		safeLayer.move(LocationOptions.before, dieLayer);
 	} else safeLayer.move(LocationOptions.AT_BEGINNING);
 }
@@ -50,7 +50,7 @@ var saBounds, saFrame;
 for (var i = 0; i < scope.length; i++) {
 	saBounds = safeArea(scope[i]);
 	if (saBounds == false) continue; // No margins; skip
-	if (safeLayerItems(scope[i]) == true) continue; // Frame already exists
+	if (SafeLayerItems(scope[i])) continue; // Frame already exists
 	saFrame = scope[i].rectangles.add(saFrameP);
 	saFrame.geometricBounds = saBounds;
 	saFrame.itemLayer = safeLayer.name;
@@ -113,14 +113,14 @@ function safeArea(scope) { // Return safe area bounds
 	}
 }
 
-function findLayer(names) { // Find first layer from a list of names
+function FindLayer(names) { // Find first layer from a list of names
 	for (var i = 0; i < names.length; i++) {
 		var layer = doc.layers.item(names[i]);
 		if (layer.isValid) return layer;
 	}
 }
 
-function safeLayerItems(scope) { // Check for items labeled 'safe area'
+function SafeLayerItems(scope) { // Check for items labeled 'safe area'
 	for (var i = 0; i < scope.pageItems.length; i++) {
 		if (scope.pageItems.item(i).label == "safe area") { return true } else continue;
 	}
