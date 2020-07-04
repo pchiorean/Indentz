@@ -1,7 +1,7 @@
 /*
 	Show properties 1.2.0
 	© July 2020, Paul Chiorean
-	The script shows all properties and methods of a selected object.
+	This script shows all properties and methods of a selected object.
 */
 
 if (app.documents.length > 0 && app.selection.length > 0) {
