@@ -1,5 +1,5 @@
 /*
-	Batch resize v7.19j
+	Batch resize v7.20j
 	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
 	July 2020, Paul Chiorean
 
@@ -22,6 +22,7 @@
 	v7.17j – join progress bar functions
 	v7.18j – if possible, put ID outside safe area
 	v7.19j – optimize alignment to bleed
+	v7.20j – remove obsolete layouts
 */
 
 if (app.documents.length == 0) exit();
@@ -52,7 +53,7 @@ var infoLine = infoFile.readln().split("\t"); // Skip first line (the header)
 var line = 0;
 while (!infoFile.eof) {
 	infoLine = infoFile.readln().split("\t"); line++;
-	if (!infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4] || !infoLine[5] || !infoLine[7]) { // TODO
+	if (!infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4] || !infoLine[7]) { // TODO
 		alert ("Bad data in record " + line + "."); exit();
 	}
 	infoID[line] = infoLine[0]; // ID
@@ -173,8 +174,11 @@ function SetGeometry() { // Resize visual and set page dimensions
 
 function SetLayout() { // Set layout variant
 	if (layouts == "" && infoVL[line] == "") return;
-	for (var i = 0; i < layouts.length; i++) try { target.layers.item(layouts[i]).visible = false } catch (_) {};
-	try { target.layers.item(infoVL[line]).visible = true } catch (_) {};
+	for (var i = 0; i < layouts.length; i++) {
+		if (layouts[i] == infoVL[line]) {
+			target.layers.item(infoVL[line]).visible = true;
+		} else { target.layers.item(layouts[i]).remove() };
+	}
 }
 
 function AlignElements() { // Align elements based on their labels
@@ -242,7 +246,7 @@ function IDBox() { // Draw ID box
 	infoFrame = target.pages[0].textFrames.add();
 	infoFrame.itemLayer = idLayerName;
 	infoFrame.label = "ID";
-	if (infoID[line] == "") { infoFrame.contents = " " } else { infoFrame.contents = "ID " + infoID[line] };
+	if (infoID[line] == "" || infoID[line] == "noid") { infoFrame.contents = " " } else { infoFrame.contents = "ID " + infoID[line] }; // No ID
 	infoText = infoFrame.parentStory.paragraphs.everyItem();
 	try { infoText.appliedFont = app.fonts.item("Helvetica Neue") } catch (_) {};
 	try { infoText.fontStyle = "Light" } catch (_) {}; infoText.pointSize = 5;
