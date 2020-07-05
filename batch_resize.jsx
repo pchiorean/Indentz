@@ -1,7 +1,7 @@
 /*
 	Batch resize v7.19j
 	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
-	June 2020, Paul Chiorean
+	July 2020, Paul Chiorean
 
 	v7.1j – cleanup
 	v7.2j – fix progress bar
@@ -220,10 +220,18 @@ function AlignElements() { // Align elements based on their labels
 
 function SafeArea() { // Draw a 'safe area' frame
 	var mgPg, mgBounds, safeLayerFrame;
-	mgPg = { top: (infoT[line].height - infoS[line].height) / 2, left: (infoT[line].width - infoS[line].width) / 2,
-		bottom: (infoT[line].height - infoS[line].height) / 2, right: (infoT[line].width - infoS[line].width) / 2 };
+	mgPg = {
+		top: (infoT[line].height - infoS[line].height) / 2,
+		left: (infoT[line].width - infoS[line].width) / 2,
+		bottom: (infoT[line].height - infoS[line].height) / 2,
+		right: (infoT[line].width - infoS[line].width) / 2
+	};
 	if (mgPg.top + mgPg.left + mgPg.bottom + mgPg.right == 0) return;
-	mgBounds = [mgPg.top, mgPg.left, infoS[line].height + mgPg.top, infoS[line].width + mgPg.left];
+	mgBounds = [
+		mgPg.top, mgPg.left,
+		infoS[line].height + mgPg.top,
+		infoS[line].width + mgPg.left
+	];
 	target.pages[0].marginPreferences.properties = mgPg;
 	safeLayerFrame = target.pages[0].rectangles.add(safeLayerFrameP);
 	safeLayerFrame.properties = { itemLayer: safeLayerName, geometricBounds: mgBounds };
@@ -299,7 +307,8 @@ function Unique(array) { // Return array w/o duplicates
 
 function FindLayer(names) { // Find first layer from a list of names
 	for (var i = 0; i < names.length; i++) {
-		var layer = doc.layers.item(names[i]); if (layer.isValid) return names[i];
+		var layer = doc.layers.item(names[i]);
+		if (layer.isValid) return names[i];
 	}
 	return names[0]; // Nothing found, return first name
 }
