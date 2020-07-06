@@ -1,6 +1,6 @@
 /*
-	Remove labels v1.0.2
-	© June 2020, Paul Chiorean
+	Remove BR labels v1.0.2
+	© July 2020, Paul Chiorean
 	This script cleans up the auto alinment labels used by batch_resize.jsx.
 */
 
