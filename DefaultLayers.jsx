@@ -267,7 +267,7 @@ const safeSwatchName = "Safe area";
 // Step 3. Replace fonts
 (function() {
 	try {
-		app.doScript(File(app.activeScript.path + "/fonts_replace.jsx"), 
+		app.doScript(File(app.activeScript.path + "/CleanupFonts.jsx"), 
 		ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Replace fonts");
 	} catch (_) {};
 })();
@@ -275,7 +275,7 @@ const safeSwatchName = "Safe area";
 // Step 4. Sets page dimensions from filename
 (function() {
 	try {
-		app.doScript(File(app.activeScript.path + "/page_size_from_filename.jsx"), 
+		app.doScript(File(app.activeScript.path + "/geometry/PageSizeFromFilename.jsx"), 
 		ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Set page dimensions");
 	} catch (_) {};
 })();

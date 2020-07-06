@@ -21,7 +21,7 @@ ID|Vizibil W|Vizibil H|Total W|Total H|Raport|Vizual|Denumire
 
 **`ID`**: Textul va fi formatat cu "Helvetica Neue Light" 5 pt și va fi poziționat în partea din stânga-jos a paginii sau, dacă nu încape, a ariei vizibile. Dacă nu se dorește ID se lasă celula goală.
 
-**`Vizibil W/H`** și **`Total W/H`**: După cum e de bănuit, conțin dimensiunea vizibilă și totală. :) <!-- Scriptul le compară și, dacă sunt trecute invers în tabel (se întâmplă), le tratează corect. Numele fișierului însă va rămâne cel din **Denumire**. -->
+**`Vizibil W/H`** și **`Total W/H`**: După cum e de bănuit, conțin dimensiunea vizibilă și totală. :) <!-- Scriptul le compară și, dacă sunt trecute invers în tabel (se întâmplă), le tratează corect. Numele fișierului însă va rămâne cel din **`Denumire`**. -->
 
 **`Raport`**: Informația e preluată din Excel, dar aici nu e folosită.
 
@@ -51,7 +51,7 @@ Anumite elemente pot fi aliniate automat prin etichetarea lor prealabilă din **
 * `fit` – marginile care depășesc bleed-ul sunt restrânse la acesta;
 * `bleed` – toate marginile vor fi restrânse/extinse la bleed.
 
-Dacă se dorește "resetarea" masterului se pot șterge toate etichetele cu ajutorul scriptului **remove_labels.jsx**.
+Dacă se dorește "resetarea" masterului se pot șterge toate etichetele cu ajutorul scriptului **CleanupLabelsBR.jsx**.
 
 ## Execuție
 
