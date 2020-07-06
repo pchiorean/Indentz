@@ -1,7 +1,7 @@
 /*
 	Scale to page v1.0.7
 	© June 2020, Paul Chiorean
-	This script scales the selected objects to the page dimensions.
+	This script scales the selected objects to the page size.
 */
 
 if (app.documents.length == 0) exit();

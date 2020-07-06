@@ -1,7 +1,7 @@
 /*
 	Fit frame to text, center v1.4.1
 	© July 2020, Paul Chiorean
-	This script auto-sizes the text frame to the content.
+	This script auto-sizes the text frame to the content, center aligned.
 */
 
 if (app.documents.length == 0) exit();

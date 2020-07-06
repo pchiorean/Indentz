@@ -1,7 +1,7 @@
 /*
 	Fit to spread v1.5.0
 	© July 2020, Paul Chiorean
-	This script resizes the selection to the spread size.
+	This script resizes the selected objects to the spread size, if it exceeds it.
 */
 
 if (app.documents.length == 0) exit();

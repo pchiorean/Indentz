@@ -1,7 +1,7 @@
 /*
-	Fit to spread bleedbox, forced v1.7.0
+	Fit to spread bleed, forced v1.7.0
 	© July 2020, Paul Chiorean
-	This script resizes the selection to the spread bleedbox.
+	This script resizes the selected objects to the spread bleed size.
 */
 
 if (app.documents.length == 0) exit();

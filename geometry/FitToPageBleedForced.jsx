@@ -1,7 +1,7 @@
 /*
 	Fit to page bleed, forced v1.3.0
 	© July 2020, Paul Chiorean
-	This script resizes the selection to the page size, including bleed.
+	This script resizes the selected objects to the page bleed size.
 */
 
 if (app.documents.length == 0) exit();

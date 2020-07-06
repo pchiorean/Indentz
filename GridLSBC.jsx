@@ -1,7 +1,8 @@
 /*
 	LS BC grid 1.1.0
 	© July 2020, Paul Chiorean
-	This script sets the page margins to the LS BC grid system.
+	This script sets the page margins and puts in place some guides
+	for the LS BC grid system.
 */
 
 if (app.documents.length == 0) exit();
@@ -41,7 +42,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 			// Outer ring = 116% of logo
 			// Margin = 30% of logo
 			// Bottom margin = 2 x margin
-			if (szPg.width / szPg.height >= 3) { var k = 1.2 } else { var k = 1 }; // Xlandscape
+			if (szPg.width / szPg.height >= 3) { var k = 1.2 } else { var k = 1 }; // XL
 			var mg = Math.ceil(szPg.height * 0.9 * 0.14 * 0.3 * k);
 			var logo = mg * 3.333333333333333;
 			// Set margins

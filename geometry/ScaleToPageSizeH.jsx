@@ -1,7 +1,7 @@
 /*
 	Scale to page (top/bottom) v1.0.7
 	© June 2020, Paul Chiorean
-	This script scales the selected objects to the page top/bottom dimensions.
+	This script scales the selected objects to the page top/bottom size.
 */
 
 if (app.documents.length == 0) exit();

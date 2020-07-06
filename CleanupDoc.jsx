@@ -1,7 +1,7 @@
 ﻿/*
-	Delete gremlins v1.8.4
+	Cleanup document v1.8.4
 	© July 2020, Paul Chiorean
-	This script does some househeeping.
+	This script does some housekeeping on the current document.
 */
 
 if (app.documents.length == 0) exit();

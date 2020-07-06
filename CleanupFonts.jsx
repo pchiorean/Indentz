@@ -1,5 +1,5 @@
 ﻿/*
-	Normalize fonts 1.0.2
+	Cleanup fonts 1.0.2
 	© June 2020, Paul Chiorean
 	This script replaces missing or unwanted fonts with their equivalents.
 */

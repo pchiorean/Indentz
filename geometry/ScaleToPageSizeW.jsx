@@ -1,7 +1,7 @@
 /*
 	Scale to page (left/right) v1.0.7
 	© June 2020, Paul Chiorean
-	This script scales the selected objects to the page left/right dimensions.
+	This script scales the selected objects to the page left/right size.
 */
 
 if (app.documents.length == 0) exit();

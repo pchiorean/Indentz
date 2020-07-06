@@ -1,7 +1,7 @@
 /*
 	Fit to spread margins v1.4.0
 	© July 2020, Paul Chiorean
-	This script resizes the selection to the spread margins.
+	This script resizes the selected objects to the spread margins, if it exceeds them.
 */
 
 if (app.documents.length == 0) exit();

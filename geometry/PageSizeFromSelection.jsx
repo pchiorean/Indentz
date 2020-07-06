@@ -1,7 +1,7 @@
 /*
 	Page size from selection v1.6.0
 	© June 2020, Paul Chiorean
-	This script sets the page size to the selection bounds.
+	This script sets the page size to the selected objects bounds.
 */
 
 if (app.documents.length == 0) exit();

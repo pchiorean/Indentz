@@ -1,8 +1,8 @@
 ﻿/*
-	Make defaults v1.13.4
+	Default layers and more v1.13.4
 	© July 2020, Paul Chiorean
-	This script sets default settings, creates swatches & layers, merges similar layers, 
-	replaces some unwanted fonts and sets page dimensions.
+	This script sets default settings, creates swatches & layers, merges similar layers,
+	replaces some unwanted fonts and sets page dimensions from the filename.
 */
 
 if (app.documents.length == 0) exit();
