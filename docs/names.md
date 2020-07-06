@@ -8,11 +8,11 @@ Legacy name                     | Release name                 | Fn
 :---                            | :---                         | ---:
 fit2page.jsx                    | FitToPage.jsx                | F11
 fit2pagebleed.jsx               | FitToPageBleed.jsx           | ⇧F11
-fit2pagebleedF.jsx              | FitToPageBleedForced.jsx     | ⇧⌘F11
+fit2pagebleedF.jsx              | FitToPageBleedForced.jsx     | ⌘F11
 fit2pagemargins.jsx             | FitToPageMargins.jsx         | ⌥F11
 fit2spread.jsx                  | FitToSpread.jsx              | F12
 fit2spreadbleed.jsx             | FitToSpreadBleed.jsx         | ⇧F12
-fit2spreadbleedF.jsx            | FitToSpreadBleedForced.jsx   | ⇧⌘F12
+fit2spreadbleedF.jsx            | FitToSpreadBleedForced.jsx   | ⌘F12
 fit2spreadmargins.jsx           | FitToSpreadMargins.jsx       | ⌥F12
 undo_fitting.jsx                | FitUndo.jsx                  | 
 page_margins_from_selection.jsx | PageMarginsFromSelection.jsx | 
@@ -21,7 +21,7 @@ page_size_from_margins.jsx      | PageSizeFromMargins.jsx      |
 page_size_from_selection.jsx    | PageSizeFromSelection.jsx    | 
 scale2pagemargins.jsx           | ScaleToPageMargins.jsx       | ⌥F5
 scale2pagemarginsH.jsx          | ScaleToPageMarginsH.jsx      | 
-scale2pagemarginsW.jsx          | ScaleToPageMarginsW.jsx      | ⌥⇧F5
+scale2pagemarginsW.jsx          | ScaleToPageMarginsW.jsx      | 
 scale2pagesize.jsx              | ScaleToPageSize.jsx          | F5
 scale2pagesizeH.jsx             | ScaleToPageSizeH.jsx         | 
 scale2pagesizeW.jsx             | ScaleToPageSizeW.jsx         | 
