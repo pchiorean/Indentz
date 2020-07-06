@@ -4,8 +4,7 @@ Acest script automatizează declinarea unui master pe baza unui tabel cu informa
 
 ## Pregătire
 
-Avem un fișier InDesign, denumit în continuare *master*, în care fiecare pagină e un vizual cu un anumit raport (rație). Nu contează dacă sunt în ordine, paginile vor fi sortate automat în funcție de rații.
-
+Avem un fișier InDesign, denumit în continuare *master*, în care fiecare pagină e un vizual cu un anumit raport (rație). <!-- Nu contează dacă sunt în ordine, paginile vor fi sortate automat în funcție de rații. -->
 În același folder cu masterul trebuie pregătit un fișier text cu același nume, exportat din Excel cu opțiunea *tab delimited*, conținând opt coloane:
 
 ID|Vizibil W|Vizibil H|Total W|Total H|Raport|Vizual|Denumire
@@ -26,7 +25,7 @@ ID|Vizibil W|Vizibil H|Total W|Total H|Raport|Vizual|Denumire
 
 **`Raport`**: Informația e preluată din Excel, dar aici nu e folosită.
 
-**`Vizual`**: Opțional masterul poate să conțină un set de layere cu layout-uri alternative (de ex. Layout 1/Layout 2, Valora/Denner, D/F/I, etc). Scriptul preia din coloana `Vizual` setul de layere și, pentru fiecare fișier, îl va exporta doar pe cel care apare în coloană. De exemplu, în "04_Denumire_Layout1_320x305_300x320" vor fi șterse `L2` și `L3` și va rămâne `L1`. Restul layerelor rămân neatinse. \
+**`Vizual`**: Opțional masterul poate să conțină un set de layere cu layout-uri alternative (de ex. Layout 1/Layout 2, Valora/Denner, D/F/I, etc). Scriptul preia din coloana `Vizual` setul de layere și, pentru fiecare fișier, îl va exporta doar pe cel din celulă. De exemplu, în "04_Denumire_Layout1_320x305_300x320" vor fi șterse `L2` și `L3` și va rămâne `L1`. Restul layerelor rămân neatinse. \
 Dacă coloana e goală, masterul nu e modificat în nici un fel.
 
 **`Denumire`**: Fișierele vor avea exact denumirea din coloană, deci atenție la caractere ilegale în nume de fișiere.
