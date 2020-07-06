@@ -1,7 +1,7 @@
 /*
 	Fit to page bleed v1.4.0
 	© July 2020, Paul Chiorean
-	This script resizes the selected objects to the page bleed size, if it exceeds it.
+	This script resizes the selected objects to the page bleed size, if they exceed it.
 */
 
 if (app.documents.length == 0) exit();

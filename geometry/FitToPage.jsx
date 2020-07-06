@@ -1,7 +1,7 @@
 /*
 	Fit to page v1.6.0
 	© July 2020, Paul Chiorean
-	This script resizes the selected objects to the page size, if it exceeds it.
+	This script resizes the selected objects to the page size, if they exceed it.
 */
 
 if (app.documents.length == 0) exit();
