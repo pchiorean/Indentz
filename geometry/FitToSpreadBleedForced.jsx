@@ -1,5 +1,5 @@
 /*
-	Fit to spread bleed, forced v1.7.0
+	Fit to spread bleed, forced v1.8.0
 	© July 2020, Paul Chiorean
 	This script resizes the selected objects to the spread bleed size.
 */
@@ -48,7 +48,13 @@ function Fit(obj) {
 		(obj.absoluteRotationAngle == 0 ||
 		Math.abs(obj.absoluteRotationAngle) == 90 ||
 		Math.abs(obj.absoluteRotationAngle) == 180)) {
-			obj.geometricBounds = size; return;
+		if (obj.name == "HW" || obj.label == "HW") {
+			obj.geometricBounds = [
+				(spread.pages[0].bounds[2] - spread.pages[0].bounds[0]) * 0.9,
+				size[1], size[2], size[3]
+			];
+			return;
+		} else { obj.geometricBounds = size; return };
 	}
 	// Case 2: Groups
 	if (obj.constructor.name == "Group") {

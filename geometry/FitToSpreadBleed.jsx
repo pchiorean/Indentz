@@ -1,5 +1,5 @@
 /*
-	Fit to spread bleed v1.7.0
+	Fit to spread bleed v1.8.0
 	© July 2020, Paul Chiorean
 	This script resizes the selected objects to the spread bleed size, if they exceed it.
 */
@@ -47,7 +47,9 @@ function Fit(obj) {
 		Number(szOv[0].toFixed(11)) >= Number(size[0].toFixed(11)) &&
 		Number(szOv[1].toFixed(11)) >= Number(size[1].toFixed(11)) &&
 		Number(szOv[2].toFixed(11)) <= Number(size[2].toFixed(11)) &&
-		Number(szOv[3].toFixed(11)) <= Number(size[3].toFixed(11))
+		Number(szOv[3].toFixed(11)) <= Number(size[3].toFixed(11)) &&
+		// and is not HW
+		(obj.name != "HW" && obj.label != "HW")
 	) return;
 	// Clipping rectangle properties
 	var clipFrameP = {
@@ -62,7 +64,13 @@ function Fit(obj) {
 		(obj.absoluteRotationAngle == 0 ||
 		Math.abs(obj.absoluteRotationAngle) == 90 ||
 		Math.abs(obj.absoluteRotationAngle) == 180)) {
-			obj.geometricBounds = size; return;
+		if (obj.name == "HW" || obj.label == "HW") {
+			obj.geometricBounds = [
+				(spread.pages[0].bounds[2] - spread.pages[0].bounds[0]) * 0.9,
+				szB[1], szB[2], szB[3]
+			];
+			return;
+		} else { obj.geometricBounds = size; return };
 	}
 	// Case 2: Text frames
 	if (obj.constructor.name == "TextFrame" &&
