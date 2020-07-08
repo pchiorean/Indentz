@@ -1,7 +1,7 @@
 ﻿/*
 	Prepare for print v1.4.5
 	© June 2020, Paul Chiorean
-	This script hides 'safe area' layer and moves dielines to separate spreads.
+	This script hides "safe area" layer and moves dielines to separate spreads.
 */
 
 if (app.documents.length == 0) exit();

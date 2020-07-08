@@ -1,7 +1,7 @@
 /*
 	Show safe area layer v1.1.2
 	© June 2020, Paul Chiorean
-	This script shows the 'safe area' layer (or equivalents).
+	This script shows the "safe area" layer (or equivalents).
 */
 
 if (app.documents.length == 0) exit();
