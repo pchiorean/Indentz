@@ -1,10 +1,8 @@
-# indesign-jsx
-
-Scripturile din acest folder sunt împărțite în mai multe categorii:
+Am scris scripturile acestea ca să-mi fie de ajutor cu mici sarcini repetitive în InDesign. Sunt câteva categorii:
 
 ## Seria `FitToPage/Spread`
 
-Aceste scripturi lucrează cu o selecție de unul sau mai multe obiecte. Pentru fiecare obiect în parte, dacă dimensiunile acestuia depășesc dimensiunile paginii (`FitToPage`), ale marginii paginii (`FitToPageMargins`), sau ale bleed-ului paginii (`FitToPageBleed`), le restrânge la acestea.
+Acestea redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Pentru fiecare obiect, dacă dimensiunile acestuia depășesc dimensiunile paginii (`FitToPage`), ale marginii paginii (`FitToPageMargins`), sau ale bleed-ului paginii (`FitToPageBleed`), le constrânge la acestea.
 
 Înainte | FitToPage | FitToPageMargins | FitToPageBleed
 :---: | :---: | :---: | :---:
@@ -16,7 +14,7 @@ Aceste scripturi lucrează cu o selecție de unul sau mai multe obiecte. Pentru 
 
 #### Undo
 
-Frame-urile obișnuite, rectangulare, sunt redimensionate pur și simplu. Obiectele rotite, grupurile etc sunt încapsulate într-un clipping frame și acesta e redimensionat. Dacă se rulează a doua oară pe un astfel de obiect, îl va restaura. Alternativ, dacă se dorește restaurarea tuturor obiectelor deodată, se poate rula scriptul `FitUndo`.
+Frame-urile obișnuite, rectangulare, sunt redimensionate pur și simplu. Obiectele rotite, grupurile etc sunt încapsulate într-un clipping frame și acesta e redimensionat. Dacă îl rulați a doua oară pe un astfel de obiect, îl va restaura. Alternativ, dacă doriți restaurarea tuturor obiectelor deodată, rulați scriptul `FitUndo`.
 
 ## Seria `ScaleToPage`
 
@@ -30,7 +28,7 @@ Variantele `H` (height) și `W` (width) scalează la înălțimea, respectiv lă
 
 ## Seria `PageSize`
 
-Scripturile din această serie redimensionează paginile documentului în funcție de numele fișierului, de marginile paginii, sau de obiectele selectate:
+Acestea redimensionează paginile documentului în funcție de numele fișierului, de marginile paginii, sau de obiectele selectate:
 
 * `PageSizeFromFilename` caută în numele fișierului perechi de numere de genul `000x000`, unde `000` înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de `mm` sau `cm`. Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. `000x000_000x000`), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. \
 Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
@@ -47,7 +45,7 @@ Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată
 
 ## Seria `TextAutosize`
 
-Aceste scripturi "strâng" unul sau mai multe chenare de text la conținut, aliniindu-le la centru (`TextAutosize`), la stânga (`TextAutosizeL`), sau la dreapta (`TextAutosizeR`). Dacă textul are un singur rând, vor seta **Auto-Sizing** la **Height and Width**. Dacă are mai multe rânduri, la prima rulare îl vor seta la **Height Only**, a doua oară la **Height and Width** (caz în care trebuie avut grijă ca textul să fie în prealabil rupt manual pe rânduri).
+Uneori, mai ales când am text scurt pe un singur rând, îmi doresc să-l pot manevra mai ușor, ca în Illustrator. Aceste scripturi "strâng" chenarul la text și-l aliniază la centru (`TextAutosize`), la stânga (`TextAutosizeL`), sau la dreapta (`TextAutosizeR`). Dacă textul are un singur rând, vor seta **Auto-Sizing** la **Height and Width**. Dacă are mai multe rânduri, la prima rulare îl vor seta la **Height Only**, a doua oară la **Height and Width** (caz în care trebuie avut grijă ca textul să fie în prealabil rupt manual pe rânduri).
 
 Înainte | TextAutosizeL (1) | TextAutosizeL (2)
 :---: | :---: | :---:
