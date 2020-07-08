@@ -1,7 +1,7 @@
 ﻿/*
-	Cleanup document v1.8.4
+	Doc cleanup v1.8.5
 	© July 2020, Paul Chiorean
-	This script does some housekeeping on the current document.
+	This script sets default settings, cleans up swatches/layers/pages/guides and redefines scaling to 100%.
 */
 
 if (app.documents.length == 0) exit();
