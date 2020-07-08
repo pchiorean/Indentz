@@ -1,5 +1,5 @@
 /*
-	Zoom to selection v1.8.1
+	Zoom to selection v1.8.2
 	© June 2020, Paul Chiorean
 	This script zooms to the selected objects or, if nothing is selected, to the current spread.
 */
@@ -7,8 +7,6 @@
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var window = app.activeWindow;
-var selPg = window.activePage;
-var selSp = selPg.parent;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 var sel = doc.selection; // Save selection
