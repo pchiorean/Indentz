@@ -1,5 +1,5 @@
 /*
-	Fit to spread margins v1.5.0
+	Fit to spread margins v1.5.1
 	© July 2020, Paul Chiorean
 	This script resizes the selected objects to the spread margins, if they exceed them.
 */
@@ -60,7 +60,7 @@ function Fit(obj) {
 	}
 	// Case 1: Simple rectangles
 	if (obj.constructor.name == "Rectangle" &&
-		obj.strokeWeight == 0 &&
+		obj.strokeWeight <= 1 &&
 		(obj.absoluteRotationAngle == 0 ||
 		Math.abs(obj.absoluteRotationAngle) == 90 ||
 		Math.abs(obj.absoluteRotationAngle) == 180)) {

@@ -1,5 +1,5 @@
 /*
-	Fit to page bleed, forced v1.4.0
+	Fit to page bleed, forced v1.4.1
 	© July 2020, Paul Chiorean
 	This script resizes the selected objects to the page bleed size.
 */
@@ -38,7 +38,7 @@ function Fit(obj) {
 	}
 	// Case 1: Simple rectangles
 	if (obj.constructor.name == "Rectangle" &&
-		obj.strokeWeight == 0 &&
+		// obj.strokeWeight == 0 &&
 		(obj.absoluteRotationAngle == 0 ||
 		Math.abs(obj.absoluteRotationAngle) == 90 ||
 		Math.abs(obj.absoluteRotationAngle) == 180)) {
