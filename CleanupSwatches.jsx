@@ -1,7 +1,7 @@
 /*
 	Cleanup swatches v1.2.1
 	June 2020, Paul Chiorean
-	This script converts RGB process colors to CMYK, removes CMYK swatch duplicates,
+	This script converts RGB process colors to CMYK, removes duplicates,
 	sets every name in "C= M= Y= K=" form and deletes unused swatches.
 	
 	NormalizeCMYK written by Marc Autret:

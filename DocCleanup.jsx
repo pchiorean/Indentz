@@ -1,7 +1,7 @@
 ﻿/*
 	Doc cleanup v1.8.5
 	© July 2020, Paul Chiorean
-	This script sets default settings, cleans up swatches/layers/pages/guides and resets scaling.
+	This script changes some settings, cleans up swatches/layers/pages/guides and resets scaling.
 */
 
 if (app.documents.length == 0) exit();
