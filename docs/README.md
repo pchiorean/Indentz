@@ -1,6 +1,6 @@
 Collection of InDesign scripts for simple and repetitive tasks: resizing objects to the page geometry or modifying it; creating positioning grids for certain brands; cleaning up the document and making default layers and special colors; preparing for print; better zooming.
 
-Many of them are designed to be run through a shortcut. You can found a configuration suggestion in the [Shortcuts](#shortcuts) section. Some are intended to be run in the [`batch_convert.jsx`](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
+Many of them are designed to be run through a shortcut. You can found a configuration suggestion in the [Shortcuts](#shortcuts) section. Some are intended to be run in the [**batch_convert.jsx**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
 
 ## Description
 
@@ -42,13 +42,13 @@ After which:
 
   The script detects and combines several similar layers, as follows:
 
-  > **safe area**: _Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible area, Visible area_ \
-  > **dielines**: _Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe_ \
-  > **varnish**: _UV, Varnish_ \
-  > **HW**: _WHW, WH, wh, hw, Hw Logo_ \
-  > **type**: _Type, TEXT, TEXTES, Text, text, txt, copy_ \
-  > **artwork**: _Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer\_lucru_ \
-  > **bg**: _background, BACKGROUND, BG, HG, Hintergrund_
+  > **`safe area`**: `Visible`, `visible`, `Vizibil`, `vizibil`, `Vis. area`, `vis. area`, `visible area`, `Visible area` \
+  > **`dielines`**: `Cut`, `diecut`, `die cut`, `Die Cut`, `cut lines`, `stanze`, `Stanze`, `decoupe` \
+  > **`varnish`**: `UV`, `Varnish` \
+  > **`HW`**: `WHW`, `WH`, `wh`, `hw`, `Hw Logo` \
+  > **`type`**: `Type`, `TEXT`, `TEXTES`, `Text`, `text`, `txt`, `copy` \
+  > **`artwork`**: `Ebene 1`, `Calque 1`, `Artwork`, `AW`, `Layouts`, `Layout`, `layout`, `Layer\_lucru` \
+  > **`bg`**: `background`, `BACKGROUND`, `BG`, `HG`, `Hintergrund`
 
 ### CleanupFonts
 
@@ -77,12 +77,12 @@ Sometimes objects that have a label attached _(Script Label)_ are reused, which 
 
 * **CleanupLabels** deletes all labels from a document.
 
-* **CleanupLabelsBR** deletes only the tags used by the `BatchResize` script:
-  > *alignL*, *alignR*, *alignT*, *alignB*, *alignTL*, *alignBL*, *alignTR*, *alignBR*, *alignC*, *alignCh*, *alignCv*, *fit*, *bleed*.
+* **CleanupLabelsBR** deletes only the tags used by the **BatchResize** script:
+  > `alignL`, `alignR`, `alignT`, `alignB`, `alignTL`, `alignBL`, `alignTR`, `alignBR`, `alignC`, `alignCh`, `alignCv`, `fit`, `bleed`.
 
 ### CleanupSwatches
 
-Converts RGB process colors to CMYK, removes duplicates, sets every name in "C= M= Y= K=" form and deletes unused swatches.
+Converts RGB process colors to CMYK, removes duplicates, sets every name in "C= M= Y= K=" form and deletes unused swatches. Spot colors remain unchanged.
 
 <!-- ![Clean swatches](img/cleanupswatches.gif) -->
 
@@ -99,11 +99,6 @@ Resize one or more selected objects, without scaling them. Ordinary frames are s
 * **FitUndo**: if you want to restore all objects at once.
 
 <!-- ![Înainte](img/fittopage.gif) -->
-<!--
-Before | FitToPage | FitToPageMargins | FitToPageBleed
-:---: | :---: | :---: | :---:
-![Before](img/fittopage-0.png) | ![FitToPage](img/fittopage-1.png) | ![FitToPageBleed](img/fittopage-2.png) | ![FitToPageMargins](img/fittopage-3.png)
--->
 
 ### ScaleToPage series
 
@@ -114,17 +109,12 @@ These also work with one or more objects, but scale them proportionally, as a bl
 * The **H** (height) and **W** (width) variants scale to the height or width of the page or page margins.
 
 <!-- ![Înainte](img/scaletopage.gif) -->
-<!--
-Before | ScaleToPageSizeH | ScaleToPageMarginsH
-:---: | :---: | :---:
-![Before](img/scaletopage-0.png) | ![FitToPage](img/scaletopage-1.png) | ![FitToPageBleed](img/scaletopage-2.png)
--->
 
 ### PageSize series
 
 Resize the pages of the document based on the file name, page margins, or selected objects.
 
-* **PageSizeFromFilename** searches the file name for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it will be the size of the page. If two are found (e.g. `000x000_000x000`), the larger pair will be the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this is considered bleed.
+* **PageSizeFromFilename** searches the file name for pairs of numbers like "000x000" (where "000" means a group of at least one digit, followed or not by decimals, and optionally by "mm" or "cm"). If only one pair is found, it will be the size of the page. If two are found (e.g. "000x000_000x000"), the larger pair will be the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this is considered bleed.
 
   Example:
   > VYPE_FR_MentholBan_Sticker_Vitrine_Phrase_**1400x400_700x137_5**mm.indd
@@ -141,20 +131,15 @@ Sets the page margins to the selected objects.
 
 Fit the frame to the text and sets auto-sizing, vertical justification and paragraph alignment:
 
-* **TextAutosize**: Auto-Sizing: center; Vertical Justification: center; Paragraph: align center.
+* **TextAutosize**: _Auto-Sizing: center. Vertical Justification: center. Paragraph: align center._
 
-* **TextAutosizeL**: Auto-Sizing: top-left; Vertical Justification: top; Paragraph: align left.
+* **TextAutosizeL**: _Auto-Sizing: top-left. Vertical Justification: top. Paragraph: align left._
 
-* **TextAutosizeR**: Auto-Sizing: top-right; Vertical Justification: top; Paragraph: align right.
+* **TextAutosizeR**: _Auto-Sizing: top-right. Vertical Justification: top. Paragraph: align right._
 
-_Auto-Sizing Type_ will be set to _Height and Width_ if the text has only one line. If it has multiple lines, the first run will set to _Height Only_, the second run _Height and Width_ (in which case care must be taken that the text is broken manually).
+_Auto-Sizing Type_ will be set to _Height and width_ if the text has only one line. If it has multiple lines, the first run will set to _Height only_, the second run _Height and width_ (in which case care must be taken that the text is broken manually).
 
 <!-- ![Înainte](img/textautosize.gif) -->
-<!--
-Before | 1st run | 2nd run
-:---: | :---: | :---:
-![Înainte](img/textautosize-0.png) | ![FitToPage](img/textautosize-1.png) | ![FitToPageBleed](img/textautosize-2.png)
--->
 
 ### Grid series
 
@@ -166,15 +151,15 @@ Create positioning grids for certain brands.
 
 ### Print series
 
-These are making some preparations for export and can be run in `batch_convert.jsx`.
+These are making some preparations for export and can be run in **batch_convert.jsx**.
 
-* **PrepareForPrint** hides the *safe area* layer and moves the dielines from *dielines* to separate spreads.
+* **PrepareForPrint** hides the `safe area` layer and moves the dielines from `dielines` layer to separate spreads.
 
-* **SafeArea** creates a frame the size of the page margins on the *safe area*.
+* **SafeArea** creates a frame the size of the page margins on the `safe area`.
 
-* **SafeAreaHideLayer** and **SafeAreaShowLayer** hide or show *safe area*.
+* **SafeAreaHideLayer** and **SafeAreaShowLayer** hide or show `safe area`.
 
-The scripts detect similar layers like *visible*, *vizibil*, *vis. area* or *diecut*, *die cut*, *cut lines*, *stanze*.
+The scripts detect similar layers like `visible`, `vizibil`, `vis. area` or `diecut`, `die cut`, `cut lines`, `stanze`.
 
 ### ZoomToSelection
 
@@ -202,7 +187,6 @@ Script | Fn | Script | Fn | Script | Fn
 ## Installing
 
 1. Open Adobe InDesign.
-2. Choose **Window** > **Utilities** > **Scripts**.
+2. Choose **Window > Utilities > Scripts**.
 3. In the _Scripts panel_, right click on **User** and choose **Reveal in Finder** (Mac) or **Reveal in Explorer** (PC).
 4. Copy the files inside the **Scripts Panel** folder.
-

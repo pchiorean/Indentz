@@ -1,6 +1,6 @@
 Colecție de scripturi InDesign pentru operații simple și repetitive: dimensionarea obiectelor la geometria paginii sau modificarea ei; crearea unor grile de poziționare pentru anumite branduri; "curățarea" documentului și crearea layerelor și culorilor speciale; pregătirea pentru tipar; un zoom îmbunătățit.
 
-O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O sugestie de configurare găsiți în secțiunea [Shortcuts](#shortcuts). Unele pot fi rulate în scriptul [`batch_convert.jsx`](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
+O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O sugestie de configurare găsiți în secțiunea [Shortcuts](#shortcuts). Unele pot fi rulate în scriptul [**batch_convert.jsx**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
 
 ## Descriere
 
@@ -42,13 +42,13 @@ După care:
 
   Scriptul detectează și combină câteva layere similare, după cum urmează:
 
-  > **safe area**: _Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible area, Visible area_ \
-  > **dielines**: _Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe_ \
-  > **varnish**: _UV, Varnish_ \
-  > **HW**: _WHW, WH, wh, hw, Hw Logo_ \
-  > **type**: _Type, TEXT, TEXTES, Text, text, txt, copy_ \
-  > **artwork**: _Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer\_lucru_ \
-  > **bg**: _background, BACKGROUND, BG, HG, Hintergrund_
+  > **`safe area`**: `Visible`, `visible`, `Vizibil`, `vizibil`, `Vis. area`, `vis. area`, `visible area`, `Visible area` \
+  > **`dielines`**: `Cut`, `diecut`, `die cut`, `Die Cut`, `cut lines`, `stanze`, `Stanze`, `decoupe` \
+  > **`varnish`**: `UV`, `Varnish` \
+  > **`HW`**: `WHW`, `WH`, `wh`, `hw`, `Hw Logo` \
+  > **`type`**: `Type`, `TEXT`, `TEXTES`, `Text`, `text`, `txt`, `copy` \
+  > **`artwork`**: `Ebene 1`, `Calque 1`, `Artwork`, `AW`, `Layouts`, `Layout`, `layout`, `Layer\_lucru` \
+  > **`bg`**: `background`, `BACKGROUND`, `BG`, `HG`, `Hintergrund`
 
 ### CleanupFonts
 
@@ -77,12 +77,12 @@ Uneori se refolosesc obiecte care au o etichetă atașată _(Script Label)_, car
 
 * **CleanupLabels** șterge toate etichetele dintr-un document.
 
-* **CleanupLabelsBR** șterge doar etichetele folosite de scriptul `BatchResize`:
-  > *alignL, alignR, alignT, alignB, alignTL, alignBL, alignTR, alignBR, alignC, alignCh, alignCv, fit, bleed*.
+* **CleanupLabelsBR** șterge doar etichetele folosite de scriptul **BatchResize**:
+  > `alignL`, `alignR`, `alignT`, `alignB`, `alignTL`, `alignBL`, `alignTR`, `alignBR`, `alignC`, `alignCh`, `alignCv`, `fit`, `bleed`.
 
 ### CleanupSwatches
 
-Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește culorile CMYK după formula "C= M= Y= K=" și șterge culorile nefolosite.
+Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește culorile CMYK după formula "C= M= Y= K=" și șterge culorile nefolosite. Culorile spot rămân neschimbate.
 
 <!-- ![Clean swatches](img/cleanupswatches.gif) -->
 
@@ -99,11 +99,6 @@ Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Fr
 * **FitUndo**: dacă doriți să restaurați toate obiectele simultan.
 
 <!-- ![Înainte](img/fittopage.gif) -->
-<!--
-Înainte | FitToPage | FitToPageMargins | FitToPageBleed
-:---: | :---: | :---: | :---:
-![Înainte](img/fittopage-0.png) | ![FitToPage](img/fittopage-1.png) | ![FitToPageBleed](img/fittopage-2.png) | ![FitToPageMargins](img/fittopage-3.png)
--->
 
 ### Seria ScaleToPage
 
@@ -114,17 +109,12 @@ Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează 
 * Variantele **H** (height) și **W** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
 
 <!-- ![Înainte](img/scaletopage.gif) -->
-<!--
-Înainte | ScaleToPageSizeH | ScaleToPageMarginsH
-:---: | :---: | :---:
-![Înainte](img/scaletopage-0.png) | ![FitToPage](img/scaletopage-1.png) | ![FitToPageBleed](img/scaletopage-2.png)
--->
 
 ### Seria PageSize
 
 Redimensionează paginile documentului în funcție de numele fișierului, de marginile paginii, sau de obiectele selectate.
 
-* **PageSizeFromFilename** caută în numele fișierului perechi de numere de genul `000x000` (unde `000` înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de `mm` sau `cm`). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. `000x000_000x000`), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
+* **PageSizeFromFilename** caută în numele fișierului perechi de numere de genul "000x000" (unde "000" înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de "mm" sau "cm"). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. "000x000_000x000"), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
 
   Exemplu:
   > VYPE_FR_MentholBan_Sticker_Vitrine_Phrase_**1400x400_700x137_5**mm.indd
@@ -141,20 +131,15 @@ Setează marginile paginii la dimensiunile selecției.
 
 "Strâng" chenarul la text și setează dimensionarea automată, justificarea verticală și alinierea paragrafului:
 
-* **TextAutosize**: Auto-Sizing: center; Vertical Justification: center; Paragraph: align center.
+* **TextAutosize**: _Auto-Sizing: center. Vertical Justification: center. Paragraph: align center._
 
-* **TextAutosizeL**: Auto-Sizing: top-left; Vertical Justification: top; Paragraph: align left.
+* **TextAutosizeL**: _Auto-Sizing: top-left. Vertical Justification: top. Paragraph: align left._
 
-* **TextAutosizeR**: Auto-Sizing: top-right; Vertical Justification: top; Paragraph: align right.
+* **TextAutosizeR**: _Auto-Sizing: top-right. Vertical Justification: top. Paragraph: align right._
 
-_Auto-Sizing Type_ va fi setat _Height and Width_ dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta _Height Only_, a doua _Height and Width_ (caz în care trebuie avut grijă ca textul să fie rupt pe rânduri manual).
+_Auto-Sizing Type_ va fi setat _Height and width_ dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta _Height only_, a doua _Height and width_ (caz în care trebuie avut grijă ca textul să fie rupt pe rânduri manual).
 
 <!-- ![Înainte](img/textautosize.gif) -->
-<!--
-Înainte | Prima rulare | A doua rulare
-:---: | :---: | :---:
-![Înainte](img/textautosize-0.png) | ![FitToPage](img/textautosize-1.png) | ![FitToPageBleed](img/textautosize-2.png)
--->
 
 ### Seria Grid
 
@@ -166,15 +151,15 @@ Creează grile de poziționare pentru anumite branduri.
 
 ### Seria Print
 
-Fac câteva pregătiri pentru export și pot fi rulate în `batch_convert.jsx`.
+Fac câteva pregătiri pentru export și pot fi rulate în **batch_convert.jsx**..
 
-* **PrepareForPrint** ascunde layerul *safe area* și mută ștanțele de pe *dielines* pe spreaduri separate.
+* **PrepareForPrint** ascunde layerul `safe area` și mută ștanțele de pe `dielines` pe spreaduri separate.
 
-* **SafeArea** creează un frame de dimensiunea marginilor paginii pe *safe area*.
+* **SafeArea** creează un frame de dimensiunea marginilor paginii pe `safe area`.
 
-* **SafeAreaHideLayer** și **SafeAreaShowLayer** ascund sau afișează *safe area*.
+* **SafeAreaHideLayer** și **SafeAreaShowLayer** ascund sau afișează `safe area`.
 
-Scripturile detectează layerele similare gen *visible*, *vizibil*, *vis. area* sau *diecut*, *die cut*, *cut lines*, *stanze*.
+Scripturile detectează layerele similare gen `visible`, `vizibil`, `vis. area` sau `diecut`, `die cut`, `cut lines`, `stanze`.
 
 ### ZoomToSelection
 
@@ -202,7 +187,6 @@ Script | Fn | Script | Fn | Script | Fn
 ## Instalare
 
 1. Deschideți Adobe InDesign.
-2. Selectați **Window** > **Utilities** > **Scripts**.
+2. Selectați **Window > Utilities > Scripts**.
 3. În panoul _Scripts panel_, faceți clic dreapta pe **User** și alegeți **Reveal in Finder** sau **Reveal in Explorer** (PC).
 4. Copiați fișierele în folderul **Scripts Panel**.
-
