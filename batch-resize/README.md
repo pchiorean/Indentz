@@ -57,3 +57,8 @@ Dacă se dorește "resetarea" masterului se pot șterge toate etichetele cu ajut
 ## Execuție
 
 Pentru fiecare rând din tabel scriptul va alege din master pagina cu rația cea mai apropiată, o va scala la `Vizibil W` × `Vizibil H` și o va extinde la `Total W` × `Total H`. Dacă e cazul, va activa layoutul din coloana `Vizual`. Va plasa ID-ul, info box-ul, chenarul pentru aria vizibilă și va alinia elementele etichetate. Va salva fișierul cu numele din `Denumire` într-un subfolder cu numele rației folosite.
+
+## Credit
+
+Acest script este o variantă modificată a **Redimensionari v7** de Dan Ichimescu, 22 april 2020. \
+Modificări de Paul Chiorean, iulie 2020.
