@@ -1,6 +1,6 @@
 ﻿/*
-	Prepare for print v1.4.5
-	© June 2020, Paul Chiorean
+	Prepare for print v1.4.6
+	© July 2020, Paul Chiorean
 	This script hides "safe area" layer and moves dielines to separate spreads.
 */
 
@@ -10,7 +10,7 @@ app.scriptPreferences.enableRedraw = false;
 var doc = app.activeDocument;
 
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
-var dieLayerName = ["dielines", "diecut", "die cut", "Die Cut", "cut lines", "Stanze"];
+var dieLayerName = ["dielines", "diecut", "die cut", "Die Cut", "cut", "Cut", "cut lines", "stanze", "Stanze", "decoupe"];
 var safeLayer = FindLayer(safeLayerName);
 var dieLayer = FindLayer(dieLayerName);
 
