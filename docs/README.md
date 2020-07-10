@@ -42,13 +42,13 @@ After which:
 
   The script detects and combines several similar layers, as follows:
 
-  > `safe area`: _Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible area, Visible area_ \
-  > `dielines`: _Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe_ \
-  > `varnish`: _UV, Varnish_ \
-  > `HW`: _WHW, WH, wh, hw, Hw Logo_ \
-  > `type`: _Type, TEXT, TEXTES, Text, text, txt, copy_ \
-  > `artwork`: _Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer\_lucru_ \
-  > `bg`: _background, BACKGROUND, BG, HG, Hintergrund_
+  > **safe area**: _Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible area, Visible area_ \
+  > **dielines**: _Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe_ \
+  > **varnish**: _UV, Varnish_ \
+  > **HW**: _WHW, WH, wh, hw, Hw Logo_ \
+  > **type**: _Type, TEXT, TEXTES, Text, text, txt, copy_ \
+  > **artwork**: _Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer\_lucru_ \
+  > **bg**: _background, BACKGROUND, BG, HG, Hintergrund_
 
 ### CleanupFonts
 
@@ -73,7 +73,7 @@ Trade Gothic LT Std Condensed No. 18 | **Trade Gothic for LS Condensed No. 18**
 
 ### CleanupLabels
 
-Sometimes objects that have a label attached _(Script Label)_ are reused, which creates problems later.
+Sometimes objects that have a label attached _(Script Label)_ are reused, which potentially creates problems later.
 
 * **CleanupLabels** deletes all labels from a document.
 
@@ -82,7 +82,7 @@ Sometimes objects that have a label attached _(Script Label)_ are reused, which 
 
 ### CleanupSwatches
 
-Converts RGB process colors to CMYK, removes CMYK swatch duplicates, sets every name in "C= M= Y= K=" form and deletes unused swatches.
+Converts RGB process colors to CMYK, removes duplicates, sets every name in "C= M= Y= K=" form and deletes unused swatches.
 
 <!-- ![Clean swatches](img/cleanupswatches.gif) -->
 
@@ -124,18 +124,18 @@ Before | ScaleToPageSizeH | ScaleToPageMarginsH
 
 Resize the pages of the document based on the file name, page margins, or selected objects.
 
-* **PageSizeFromFilename** searches the file name for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it will be the size of the page. If two are found (e.g. `000x000_000x000`), the larger pair will be the page size, the smaller pair the visible area size. If followed by a one- or two-digit sequence, this is considered bleed.
+* **PageSizeFromFilename** searches the file name for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it will be the size of the page. If two are found (e.g. `000x000_000x000`), the larger pair will be the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this is considered bleed.
 
   Example:
   > VYPE_FR_MentholBan_Sticker_Vitrine_Phrase_**1400x400_700x137_5**mm.indd
 
-* **PageSizeFromMargins** resizes each page to its edges.
+* **PageSizeFromMargins** resizes each page to its margins.
 
-* **PageSizeFromSelection** resizes the current page to the selected objects (similar to **Fit to Selected Art** in Illustrator).
+* **PageSizeFromSelection** resizes the current page to the selected objects (similar to **Artboards > Fit to Selected Art** in Illustrator).
 
 ### PageMarginsFromSelection
 
-* Sets the page margins to the selected objects.
+Sets the page margins to the selected objects.
 
 ### TextAutosize series
 
@@ -147,7 +147,7 @@ Fit the frame to the text and sets auto-sizing, vertical justification and parag
 
 * **TextAutosizeR**: Auto-Sizing: top-right; Vertical Justification: top; Paragraph: align right.
 
-_Auto-Sizing Type_ will be set to _Height and Width_ if the text has only one line. If it has multiple lines, the first run will set to _Height Only_, the second run _Height and Width_ (in which case care must be taken that in advance the text is broken manually).
+_Auto-Sizing Type_ will be set to _Height and Width_ if the text has only one line. If it has multiple lines, the first run will set to _Height Only_, the second run _Height and Width_ (in which case care must be taken that the text is broken manually).
 
 <!-- ![Înainte](img/textautosize.gif) -->
 <!--
@@ -160,7 +160,7 @@ Before | 1st run | 2nd run
 
 Create positioning grids for certain brands.
 
-* **GridEPOK** sets the page margins and the number of columns according to the EPOK/LYFT/SKRUF grid system.
+* **GridEPOK** sets the page margins and the number of columns according to the EPOK grid system.
 
 * **GridLSBC** sets the page margins and some guides according to Lucky Strike BC guidelines.
 
@@ -168,13 +168,13 @@ Create positioning grids for certain brands.
 
 These are making some preparations for export and can be run in `batch_convert.jsx`.
 
-* **PrepareForPrint** hides `safe area` layer and moves the dielines from `dielines` to separate spreads.
+* **PrepareForPrint** hides the *safe area* layer and moves the dielines from *dielines* to separate spreads.
 
-* **SafeArea** creates a frame the size of the page margins on the `safe area`.
+* **SafeArea** creates a frame the size of the page margins on the *safe area*.
 
-* **SafeAreaHideLayer** and **SafeAreaShowLayer** hide or show `safe area`.
+* **SafeAreaHideLayer** and **SafeAreaShowLayer** hide or show *safe area*.
 
-The scripts detect similar layers like `visible`, `vizibil`, `vis. area` or `diecut`, `die cut`, `cut lines`, `stanze`.
+The scripts detect similar layers like *visible*, *vizibil*, *vis. area* or *diecut*, *die cut*, *cut lines*, *stanze*.
 
 ### ZoomToSelection
 
@@ -187,7 +187,7 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 ## Shortcuts
 
 Script | Fn | Script | Fn | Script | Fn
---- | ---: | --- | ---: | --- | ---:
+:--- | ---: | :--- | ---: | :--- | ---:
 **DocCleanup** | F2 | **DocDefaults** | ⌥F2
 **FitToPage** | F11 | **FitToPageMargins** | ⌥F11 | **FitToPageBleed** | ⇧F11
 ||||| **FitToPageBleedForced** | ⌘F11

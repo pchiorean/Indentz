@@ -42,13 +42,13 @@ După care:
 
   Scriptul detectează și combină câteva layere similare, după cum urmează:
 
-  > `safe area`: _Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible area, Visible area_ \
-  > `dielines`: _Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe_ \
-  > `varnish`: _UV, Varnish_ \
-  > `HW`: _WHW, WH, wh, hw, Hw Logo_ \
-  > `type`: _Type, TEXT, TEXTES, Text, text, txt, copy_ \
-  > `artwork`: _Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer\_lucru_ \
-  > `bg`: _background, BACKGROUND, BG, HG, Hintergrund_
+  > **safe area**: _Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible area, Visible area_ \
+  > **dielines**: _Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe_ \
+  > **varnish**: _UV, Varnish_ \
+  > **HW**: _WHW, WH, wh, hw, Hw Logo_ \
+  > **type**: _Type, TEXT, TEXTES, Text, text, txt, copy_ \
+  > **artwork**: _Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer\_lucru_ \
+  > **bg**: _background, BACKGROUND, BG, HG, Hintergrund_
 
 ### CleanupFonts
 
@@ -73,7 +73,7 @@ Trade Gothic LT Std Condensed No. 18 | **Trade Gothic for LS Condensed No. 18**
 
 ### CleanupLabels
 
-Uneori se refolosesc obiecte care au o etichetă atașată _(Script Label)_, care creează probleme ulterior.
+Uneori se refolosesc obiecte care au o etichetă atașată _(Script Label)_, care pot crea probleme ulterior.
 
 * **CleanupLabels** șterge toate etichetele dintr-un document.
 
@@ -131,11 +131,11 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 * **PageSizeFromMargins** redimensionează fiecare pagină la marginile acesteia.
 
-* **PageSizeFromSelection** redimensionează pagina curentă la obiectele selectate (similar cu **Fit to Selected Art** din Illustrator).
+* **PageSizeFromSelection** redimensionează pagina curentă la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
 
 ### PageMarginsFromSelection
 
-* Setează marginile paginii la dimensiunile selecției.
+Setează marginile paginii la dimensiunile selecției.
 
 ### Seria TextAutosize
 
@@ -147,7 +147,7 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 * **TextAutosizeR**: Auto-Sizing: top-right; Vertical Justification: top; Paragraph: align right.
 
-_Auto-Sizing Type_ va fi setat _Height and Width_ dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta _Height Only_, a doua _Height and Width_ (caz în care trebuie avut grijă ca anterior textul să fie rupt pe rânduri manual).
+_Auto-Sizing Type_ va fi setat _Height and Width_ dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta _Height Only_, a doua _Height and Width_ (caz în care trebuie avut grijă ca textul să fie rupt pe rânduri manual).
 
 <!-- ![Înainte](img/textautosize.gif) -->
 <!--
@@ -160,7 +160,7 @@ _Auto-Sizing Type_ va fi setat _Height and Width_ dacă textul are un singur râ
 
 Creează grile de poziționare pentru anumite branduri.
 
-* **GridEPOK** setează marginile paginii și numărul de coloane conform grilei EPOK/LYFT/SKRUF.
+* **GridEPOK** setează marginile paginii și numărul de coloane conform grilei EPOK.
 
 * **GridLSBC** setează marginile paginii și câteva linii de ghidaj conform ghidului Lucky Strike BC.
 
@@ -168,13 +168,13 @@ Creează grile de poziționare pentru anumite branduri.
 
 Fac câteva pregătiri pentru export și pot fi rulate în `batch_convert.jsx`.
 
-* **PrepareForPrint** ascunde layerul `safe area` și mută ștanțele de pe `dielines` pe spreaduri separate.
+* **PrepareForPrint** ascunde layerul *safe area* și mută ștanțele de pe *dielines* pe spreaduri separate.
 
-* **SafeArea** creează un frame de dimensiunea marginilor paginii pe `safe area`.
+* **SafeArea** creează un frame de dimensiunea marginilor paginii pe *safe area*.
 
-* **SafeAreaHideLayer** și **SafeAreaShowLayer** ascund sau afișează `safe area`.
+* **SafeAreaHideLayer** și **SafeAreaShowLayer** ascund sau afișează *safe area*.
 
-Scripturile detectează layerele similare gen `visible`, `vizibil`, `vis. area` sau `diecut`, `die cut`, `cut lines`, `stanze`.
+Scripturile detectează layerele similare gen *visible*, *vizibil*, *vis. area* sau *diecut*, *die cut*, *cut lines*, *stanze*.
 
 ### ZoomToSelection
 
@@ -187,7 +187,7 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 ## Shortcuts
 
 Script | Fn | Script | Fn | Script | Fn
---- | ---: | --- | ---: | --- | ---:
+:--- | ---: | :--- | ---: | :--- | ---:
 **DocCleanup** | F2 | **DocDefaults** | ⌥F2
 **FitToPage** | F11 | **FitToPageMargins** | ⌥F11 | **FitToPageBleed** | ⇧F11
 ||||| **FitToPageBleedForced** | ⌘F11
