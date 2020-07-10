@@ -58,6 +58,7 @@ function Fit(obj) {
 		(obj.absoluteRotationAngle == 0 ||
 		Math.abs(obj.absoluteRotationAngle) == 90 ||
 		Math.abs(obj.absoluteRotationAngle) == 180)) {
+		// HW is a special case
 		if (obj.name == "HW" || obj.label == "HW") {
 			obj.geometricBounds = [
 				(page.bounds[2] - page.bounds[0]) * 0.9,
