@@ -1,5 +1,5 @@
 Legacy name                     | Name                             |  Fn  | Description
----                             | ---                              | ---: | ---
+:---                             | :---                              | ---: | :---
 **Batch Resize**                |
 batch_resize.jsx                | **BatchResize**.jsx              |      | This script automates the resizing of a master based on a size table.
 **Cleanup**                     |
@@ -8,7 +8,7 @@ remove_all_labels.jsx           | **CleanupLabels**.jsx            |      | This
 remove_br_labels.jsx            | **CleanupLabelsBR**.jsx          |      | This script removes all auto alignment labels used by BatchResize.jsx.
 normalize_swatches.jsx          | **CleanupSwatches**.jsx          |      | This script converts swatches to CMYK, renames them to C= M= Y= K=, deletes unused.
 delete_gremlins.jsx             | **DocCleanup**.jsx               |   F2 | This script changes some settings, cleans up swatches/layers/pages/guides and resets scaling.
-make_defaults.jsx               | **DocDefaults**.jsx              |  ⇧F2 | This script makes default swatches/layers, cleans up fonts and sets page dimensions from the filename.
+make_defaults.jsx               | **DocDefaults**.jsx              |  ⌥F2 | This script makes default swatches/layers, cleans up fonts and sets page dimensions from the filename.
 **Geometry**                    |
 fit2page.jsx                    | **FitToPage**.jsx                |  F11 | This script resizes the selected objects to the page size, if they exceed it.
 fit2pagebleed.jsx               | **FitToPageBleed**.jsx           | ⇧F11 | This script resizes the selected objects to the page bleed size, if they exceed it.
@@ -30,7 +30,7 @@ scale2pagesize.jsx              | **ScaleToPageSize**.jsx          |   F5 | This
 scale2pagesizeH.jsx             | **ScaleToPageSizeH**.jsx         |      | This script scales the selected objects to the page top/bottom size.
 scale2pagesizeW.jsx             | **ScaleToPageSizeW**.jsx         |      | This script scales the selected objects to the page left/right size.
 fit2text.jsx                    | **TextAutosize**.jsx             |   F6 | This script auto-sizes the text frame to the content, center aligned.
-fit2textL.jsx                   | **TextAutosizeL**.jsx            |  ⇧F6 | This script auto-sizes the text frame to the content, left aligned.
+fit2textL.jsx                   | **TextAutosizeL**.jsx            |  ⌥F6 | This script auto-sizes the text frame to the content, left aligned.
 fit2textR.jsx                   | **TextAutosizeR**.jsx            |  ⌘F6 | This script auto-sizes the text frame to the content, right aligned.
 **Grid**                        |
 grid4epok.jsx                   | **GridEPOK**.jsx                 |      | This script sets the page margins and columns to the EPOK grid system.
