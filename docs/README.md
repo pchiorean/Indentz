@@ -40,22 +40,24 @@ After which:
 
   ![Swatches & layers](img/docdefaults.png)
 
-  The script detects and combines several similar layers, as follows:
+  The script detects and merges several similar layers, as follows:
 
-  > **`safe area`**: `Visible`, `visible`, `Vizibil`, `vizibil`, `Vis. area`, `vis. area`, `visible area`, `Visible area` \
-  > **`dielines`**: `Cut`, `diecut`, `die cut`, `Die Cut`, `cut lines`, `stanze`, `Stanze`, `decoupe` \
-  > **`varnish`**: `UV`, `Varnish` \
-  > **`HW`**: `WHW`, `WH`, `wh`, `hw`, `Hw Logo` \
-  > **`type`**: `Type`, `TEXT`, `TEXTES`, `Text`, `text`, `txt`, `copy` \
-  > **`artwork`**: `Ebene 1`, `Calque 1`, `Artwork`, `AW`, `Layouts`, `Layout`, `layout`, `Layer\_lucru` \
-  > **`bg`**: `background`, `BACKGROUND`, `BG`, `HG`, `Hintergrund`
+  Final layer | Merged layers
+  :--- | :---
+  **`safe area`** | `Visible`, `visible`, `Vizibil`, `vizibil`, `Vis. area`, `vis. area`, `visible area`, `Visible area`
+  **`dielines`** | `Cut`, `diecut`, `die cut`, `Die Cut`, `cut lines`, `stanze`, `Stanze`, `decoupe`
+  **`varnish`** | `UV`, `Varnish`
+  **`HW`** | `WHW`, `WH`, `wh`, `hw`, `Hw Logo`
+  **`type`** | `Type`, `TEXT`, `TEXTES`, `Text`, `text`, `txt`, `copy`
+  **`artwork`** | `Ebene 1`, `Calque 1`, `Artwork`, `AW`, `Layouts`, `Layout`, `layout`, `Layer_lucru`
+  **`bg`** | `background`, `BACKGROUND`, `BG`, `HG`, `Hintergrund`
 
 ### CleanupFonts
 
 Replaces some missing or unwanted fonts with equivalents. For now, the list is hardcoded in the script, but can be edited with a text editor:
 
 Old font | New font
---- | ---
+:--- | :---
 Akzidenz Grotesk Bold | **AkzidenzGrotesk Bold**
 Arial Bold | **Helvetica Neue Bold**
 FoundryGridnik Regular | **Foundry Gridnik Regular**
