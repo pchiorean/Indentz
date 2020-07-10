@@ -1,4 +1,6 @@
-Colecție de scripturi InDesign pentru operații simple și repetitive: dimensionarea obiectelor la geometria paginii sau modificarea ei; crearea unor grile de poziționare pentru anumite branduri; "curățarea" documentului și crearea layerelor și culorilor speciale; pregătirea pentru tipar; un zoom îmbunătățit.
+# Name
+
+Colecție de scripturi InDesign pentru operații simple și repetitive: "curățarea" documentului și crearea layerelor și culorilor speciale, dimensionarea obiectelor la geometria paginii sau modificarea ei, crearea unor grile de poziționare pentru anumite branduri, pregătirea pentru tipar, un zoom îmbunătățit.
 
 O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O sugestie de configurare găsiți în secțiunea [Shortcuts](#shortcuts). Unele pot fi rulate în scriptul [**batch_convert.jsx**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
 
@@ -188,7 +190,6 @@ Script | Fn | Script | Fn | Script | Fn
 
 ## Instalare
 
-1. Deschideți Adobe InDesign.
-2. Selectați **Window > Utilities > Scripts**.
-3. În panoul _Scripts panel_, faceți clic dreapta pe **User** și alegeți **Reveal in Finder** sau **Reveal in Explorer** (PC).
-4. Copiați fișierele în folderul **Scripts Panel**.
+1. Deschideți **Window > Utilities > Scripts**.
+2. Faceți clic dreapta pe folderul **User** și selectați **Reveal in Finder/Explorer**.
+3. Copiați fișierele în acest folder.

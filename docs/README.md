@@ -1,4 +1,6 @@
-Collection of InDesign scripts for simple and repetitive tasks: resizing objects to the page geometry or modifying it; creating positioning grids for certain brands; cleaning up the document and making default layers and special colors; preparing for print; better zooming.
+# Name
+
+Collection of InDesign scripts for simple and repetitive tasks: cleaning up the document and making default layers and special colors, resizing objects to the page geometry or modifying it, creating positioning grids for certain brands, preparing for print, better zooming.
 
 Many of them are designed to be run through a shortcut. You can found a configuration suggestion in the [Shortcuts](#shortcuts) section. Some are intended to be run in the [**batch_convert.jsx**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
 
@@ -186,9 +188,8 @@ Script | Fn | Script | Fn | Script | Fn
 
 <!-- ![Shortcuts](img/shortcuts.png) -->
 
-## Installing
+## Installation
 
-1. Open Adobe InDesign.
-2. Choose **Window > Utilities > Scripts**.
-3. In the _Scripts panel_, right click on **User** and choose **Reveal in Finder** (Mac) or **Reveal in Explorer** (PC).
-4. Copy the files inside the **Scripts Panel** folder.
+1. Open **Window > Utilities > Scripts**.
+2. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
+3. Copy files to this folder.
