@@ -1,4 +1,4 @@
-# Installation
+# Installing
 
 1. Open Adobe InDesign.
 2. Choose `Window` > `Utilities` > `Scripts`.
