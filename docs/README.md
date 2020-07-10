@@ -42,21 +42,21 @@ After which:
 
   The script detects and merges several similar layers, as follows:
 
-  Final layer | Merged layers
+  Before | After
   :--- | :---
-  **`safe area`** | `Visible`, `visible`, `Vizibil`, `vizibil`, `Vis. area`, `vis. area`, `visible area`, `Visible area`
-  **`dielines`** | `Cut`, `diecut`, `die cut`, `Die Cut`, `cut lines`, `stanze`, `Stanze`, `decoupe`
-  **`varnish`** | `UV`, `Varnish`
-  **`HW`** | `WHW`, `WH`, `wh`, `hw`, `Hw Logo`
-  **`type`** | `Type`, `TEXT`, `TEXTES`, `Text`, `text`, `txt`, `copy`
-  **`artwork`** | `Ebene 1`, `Calque 1`, `Artwork`, `AW`, `Layouts`, `Layout`, `layout`, `Layer_lucru`
-  **`bg`** | `background`, `BACKGROUND`, `BG`, `HG`, `Hintergrund`
+  Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible area, Visible area | `safe area`
+  Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe | `dielines`
+  UV, Varnish | `varnish`
+  WHW, WH, wh, hw, Hw Logo | `HW`
+  Type, TEXT, TEXTES, Text, text, txt, copy | `type`
+  Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer_lucru | `artwork`
+  background, BACKGROUND, BG, HG, Hintergrund | `bg`
 
 ### CleanupFonts
 
 Replaces some missing or unwanted fonts with equivalents. For now, the list is hardcoded in the script, but can be edited with a text editor:
 
-Old font | New font
+Before | After
 :--- | :---
 Akzidenz Grotesk Bold | **AkzidenzGrotesk Bold**
 Arial Bold | **Helvetica Neue Bold**
