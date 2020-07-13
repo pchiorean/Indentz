@@ -41,7 +41,7 @@ function Fit(obj) {
 		szOg[2] > szB[0] ? Math.max(szOv[0], szB[0]) : szOg[0], // top
 		szOg[3] > szB[1] ? Math.max(szOv[1], szB[1]) : szOg[1], // left
 		szOg[0] < szB[2] ? Math.min(szOv[2], szB[2]) : szOg[2], // bottom
-		szOg[1] < szB[3] ? Math.min(szOv[3], szB[3]) : szOg[3] // right
+		szOg[1] < szB[3] ? Math.min(szOv[3], szB[3]) : szOg[3]  // right
 	];
 	if ( // Skip if obj size is smaller than target size
 		Number(szOv[0].toFixed(11)) >= Number(size[0].toFixed(11)) &&
