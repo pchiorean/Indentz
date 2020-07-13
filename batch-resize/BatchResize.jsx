@@ -1,5 +1,7 @@
 /*
 	Batch resize v7.20j
+	Automates the resizing of a master based on a size table.
+
 	A modified version of Redimensionari v7 by Dan Ichimescu, 22 April 2020
 	July 2020, Paul Chiorean
 
