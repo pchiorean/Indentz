@@ -1,8 +1,7 @@
 /*
-	Safe area v1.6.2
+	Safe area v1.6.3
 	© July 2020, Paul Chiorean
-	This script creates a "safe area" frame, on every page (or spread)
-	for which margins are defined, if it doesn't already exist.
+	Creates a "safe area" frame, on every page/spread for which margins are defined.
 */
 
 if (app.documents.length == 0) exit();

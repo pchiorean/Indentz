@@ -1,7 +1,7 @@
 /*
-	Page size from page margins v1.2.3
-	© June 2020, Paul Chiorean
-	This script sets the page size to the page margins.
+	Page size from page margins v1.2.4
+	© July 2020, Paul Chiorean
+	Sets the page size to the page margins.
 */
 
 if (app.documents.length == 0) exit();

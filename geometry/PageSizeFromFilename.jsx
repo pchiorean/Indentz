@@ -1,7 +1,7 @@
 /*
-	Page size from filename v1.5.0
-	© June 2020, Paul Chiorean
-	This script sets every page size and margins based on the filename.
+	Page size from filename v1.5.1
+	© July 2020, Paul Chiorean
+	Sets every page size and margins based on the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 */
 

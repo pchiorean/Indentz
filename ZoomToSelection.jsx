@@ -1,7 +1,7 @@
 /*
-	Zoom to selection v1.8.2
-	© June 2020, Paul Chiorean
-	This script zooms to the selected objects or, if nothing is selected, to the current spread.
+	Zoom to selection v1.8.3
+	© July 2020, Paul Chiorean
+	Zooms to the selected objects or, if nothing is selected, to the current spread.
 */
 
 if (app.documents.length == 0) exit();

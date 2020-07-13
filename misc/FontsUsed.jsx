@@ -1,7 +1,7 @@
 /*
-	Used fonts 1.1.1
-	© May 2020, Paul Chiorean
-	This script makes a list of the fonts used in the current document.
+	Used fonts 1.1.2
+	© July 2020, Paul Chiorean
+	Makes a list of the fonts used in the current document.
 */
 
 if (app.documents.length == 0) exit();

@@ -1,7 +1,7 @@
 /*
-	EPOK grid 1.0.0
+	EPOK grid 1.0.1
 	© July 2020, Paul Chiorean
-	This script sets the page margins and columns to the EPOK grid system.
+	Sets the page margins and columns to the EPOK grid system.
 */
 
 if (app.documents.length == 0) exit();

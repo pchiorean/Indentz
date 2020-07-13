@@ -1,7 +1,7 @@
 /*
-	Fit to page margins v1.6.1
+	Fit to page margins v1.6.2
 	© July 2020, Paul Chiorean
-	This script resizes the selected objects to the page margins, if they exceed them.
+	Resizes the selected objects to the page margins, if they exceed them.
 */
 
 if (app.documents.length == 0) exit();

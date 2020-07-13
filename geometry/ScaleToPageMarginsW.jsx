@@ -1,7 +1,7 @@
 /*
-	Scale to page margins (left/right) v1.4.12
-	© June 2020, Paul Chiorean
-	This script scales the selected objects to the page left/right margins.
+	Scale to page margins (left/right) v1.4.13
+	© July 2020, Paul Chiorean
+	Scales the selected objects to the page left/right margins.
 */
 
 if (app.documents.length == 0) exit();

@@ -1,7 +1,7 @@
 /*
-	Page margins from selection v1.1.0
-	© June 2020, Paul Chiorean
-	This script sets the page margins to the selected objects bounds.
+	Page margins from selection v1.1.1
+	© July 2020, Paul Chiorean
+	Sets the page margins to the selected objects bounds.
 */
 
 if (app.documents.length == 0) exit();

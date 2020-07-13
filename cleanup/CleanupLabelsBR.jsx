@@ -1,7 +1,7 @@
 /*
-	Cleanup BR labels v1.0.2
+	Cleanup BR labels v1.0.3
 	© July 2020, Paul Chiorean
-	This script removes all auto alignment labels used by BatchResize.jsx.
+	Removes all auto alignment labels used by BatchResize.jsx.
 */
 
 if (app.documents.length == 0) exit();

@@ -1,7 +1,7 @@
 /*
-	Fit frame to text, left v1.4.1
+	Fit frame to text, left v1.4.2
 	© July 2020, Paul Chiorean
-	This script auto-sizes the text frame to the content, left aligned.
+	Auto-sizes the text frame to the content, left aligned.
 */
 
 if (app.documents.length == 0) exit();

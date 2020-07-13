@@ -1,7 +1,7 @@
 /*
-	Page ratios v1.1.5
+	Page ratios v1.1.6
 	© July 2020, Paul Chiorean
-	This script calculates the ratio of each page and displays it in the upper left corner.
+	Calculates the ratio of each page and displays it in the upper left corner.
 */
 
 if (app.documents.length == 0) exit();

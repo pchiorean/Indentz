@@ -1,7 +1,7 @@
 /*
-	Fit to spread bleed v1.8.1
+	Fit to spread bleed v1.8.2
 	© July 2020, Paul Chiorean
-	This script resizes the selected objects to the spread bleed size, if they exceed it.
+	Resizes the selected objects to the spread bleed size, if they exceed it.
 */
 
 if (app.documents.length == 0) exit();

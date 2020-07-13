@@ -1,8 +1,7 @@
 /*
-	Cleanup swatches v1.2.1
-	June 2020, Paul Chiorean
-	This script converts RGB process colors to CMYK, removes duplicates,
-	sets every name in "C= M= Y= K=" form and deletes unused swatches.
+	Cleanup swatches v1.2.2
+	July 2020, Paul Chiorean
+	Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused.
 	
 	NormalizeCMYK written by Marc Autret:
 	https://www.indiscripts.com/post/2018/06/indesign-scripting-forum-roundup-12

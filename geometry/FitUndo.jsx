@@ -1,7 +1,7 @@
 /*
-	Undo fitting v1.0.0
+	Undo fitting v1.0.1
 	© July 2020, Paul Chiorean
-	This script restores objects clipped in "<clip group>" by the "fit" scripts.
+	Restores objects clipped in "\<clip group\>" by the "fit" scripts.
 */
 
 if (app.documents.length == 0) exit();

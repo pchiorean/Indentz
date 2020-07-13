@@ -1,7 +1,7 @@
 ﻿/*
-	Cleanup fonts 1.0.2
-	© June 2020, Paul Chiorean
-	This script replaces missing or unwanted fonts with equivalents.
+	Cleanup fonts 1.0.3
+	© July 2020, Paul Chiorean
+	Replaces missing or unwanted fonts with equivalents.
 */
 
 if (app.documents.length == 0) exit();

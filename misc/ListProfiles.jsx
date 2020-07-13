@@ -1,7 +1,7 @@
 /*
-	List color profiles 1.1.0
+	List color profiles 1.1.1
 	© July 2020, Paul Chiorean
-	This script shows all color profiles available to the document.
+	Shows all color profiles available to the document.
 */
 
 if (app.documents.length == 0) exit();
