@@ -1,3 +1,8 @@
+/*
+	HW 0.3.0-alpha
+	© July 2020, Paul Chiorean
+*/
+
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
@@ -8,6 +13,14 @@ if (!hwLayer.isValid) {
 	doc.layers.add({ name: hwLayerName, layerColor: UIColors.LIGHT_GRAY });
 	hwLayer.move(LocationOptions.AT_BEGINNING);
 }
+// If a white rectangle is selected, label it "HW"
+var sel = doc.selection;
+if (sel.length == 1 && 
+	sel[0].constructor.name == "Rectangle" &&
+	sel[0].fillColor.name == "Paper") {
+		sel[0].label = "HW";
+	}
+// Add 10% bottom guides
 for (var i = 0; i < doc.pages.length; i++) {
 	var szPg = doc.pages[i].bounds[2];
 	var szMg = szPg - (doc.pages[i].marginPreferences.top + doc.pages[i].marginPreferences.bottom);
