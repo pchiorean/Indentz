@@ -1,8 +1,8 @@
-# Name
+# Indentz
 
-Colecție de scripturi InDesign pentru operații simple și repetitive: "curățarea" documentului și crearea layerelor și culorilor speciale, dimensionarea obiectelor la geometria paginii sau modificarea ei, crearea unor grile de poziționare pentru anumite branduri, pregătirea pentru tipar, un zoom îmbunătățit.
+Colecție de scripturi InDesign pentru operații simple și repetitive: "curățarea" documentului, crearea unor layere și culori speciale, dimensionarea obiectelor la geometria paginii sau modificarea ei, crearea unor grile de poziționare pentru anumite branduri, pregătire pentru tipar, un zoom îmbunătățit.
 
-O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O sugestie de configurare găsiți în secțiunea [Shortcuts](#shortcuts). Unele pot fi rulate în scriptul [**batch_convert.jsx**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
+O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O sugestie de configurare găsiți în secțiunea [Shortcuts](#shortcuts). Câteva pot fi rulate în scriptul [**batch_convert.jsx**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
 
 ## Descriere
 
@@ -42,9 +42,9 @@ După care:
 
   ![Culori și layere](img/docdefaults.png)
 
-  Scriptul detectează și combină câteva layere similare, după cum urmează:
+  Scriptul combină câteva layere similare, după cum urmează:
 
-  Înainte | După
+  Layer | Combinat cu
   :--- | :---
   Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible area, Visible area | `safe area`
   Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe | `dielines`
@@ -63,8 +63,8 @@ După care:
 Akzidenz Grotesk Bold | **AkzidenzGrotesk Bold**
 Arial Bold | **Helvetica Neue Bold**
 FoundryGridnik Regular | **Foundry Gridnik Regular**
-FoundryGridnik Bold | **Foundry Gridnik Bold**
 FoundryGridnik Medium | **Foundry Gridnik Medium**
+FoundryGridnik Bold | **Foundry Gridnik Bold**
 Gotham Light Regular | **Gotham Light**
 Gotham Book Regular | **Gotham Book**
 Gotham Medium Regular | **Gotham Medium**
@@ -72,12 +72,12 @@ Gotham Bold Regular | **Gotham Bold**
 Gotham Black Regular | **Gotham Black**
 Helvetica Neue LT Std 65 Medium | **Helvetica Neue Medium**
 Helvetica Neue LT Std 75 Bold | **Helvetica Neue Bold**
-Trade Gothic LT Std Bold Condensed No. 20 | **Trade Gothic for LS Bold Condensed No. 20**
 Trade Gothic LT Std Condensed No. 18 | **Trade Gothic for LS Condensed No. 18**
+Trade Gothic LT Std Bold Condensed No. 20 | **Trade Gothic for LS Bold Condensed No. 20**
 
 ### CleanupLabels
 
-Uneori se refolosesc obiecte care au o etichetă atașată _(Script Label)_, care pot crea probleme ulterior.
+Uneori se refolosesc obiecte care au o etichetă atașată _(Script Label)_, și asta poate crea probleme ulterior.
 
 * **CleanupLabels** șterge toate etichetele dintr-un document.
 
@@ -120,8 +120,9 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 * **PageSizeFromFilename** caută în numele fișierului perechi de numere de genul "000x000" (unde "000" înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de "mm" sau "cm"). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. "000x000_000x000"), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
 
-  Exemplu:
-  > VYPE_FR_MentholBan_Sticker_Vitrine_Phrase_**1400x400_700x137_5**mm.indd
+  Exemple:
+  > VYPE_FR_MentholBan_Sticker_Vitrine_**1400x400_700x137_5**mm.indd \
+  > LS_AT_MEXIT_Automateneinleger_**597x517_577x500.5_3**mm V4.indd
 
 * **PageSizeFromMargins** redimensionează fiecare pagină la marginile acesteia.
 
@@ -155,15 +156,15 @@ Creează grile de poziționare pentru anumite branduri.
 
 ### Seria Print
 
-Fac câteva pregătiri pentru export și pot fi rulate în **batch_convert.jsx**..
+Fac câteva pregătiri pentru export și pot fi rulate în **batch_convert.jsx**.
 
 * **PrepareForPrint** ascunde layerul `safe area` și mută ștanțele de pe `dielines` pe spreaduri separate.
 
-* **SafeArea** creează un frame de dimensiunea marginilor paginii pe `safe area`.
+* **SafeArea** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`.
 
 * **SafeAreaHideLayer** și **SafeAreaShowLayer** ascund sau afișează `safe area`.
 
-Scripturile detectează layerele similare gen `visible`, `vizibil`, `vis. area` sau `diecut`, `die cut`, `cut lines`, `stanze`.
+Scripturile detectează nume alternative gen `visible`, `vizibil`, `vis. area` pentru `safe area`, sau `diecut`, `die cut`, `cut lines`, `stanze` pentru `dielines`.
 
 ### ZoomToSelection
 
@@ -179,9 +180,9 @@ Script | Fn | Script | Fn | Script | Fn
 :--- | ---: | :--- | ---: | :--- | ---:
 **DocCleanup** | F2 | **DocDefaults** | ⌥F2
 **FitToPage** | F11 | **FitToPageMargins** | ⌥F11 | **FitToPageBleed** | ⇧F11
-||||| **FitToPageBleedForced** | ⌘F11
+||||| **FitToPageBleedForced** | ⇧⌘F11
 **FitToSpread** | F12 | **FitToSpreadMargins** | ⌥F12 | **FitToSpreadBleed** | ⇧F12
-||||| **FitToSpreadBleedForced** | ⌘F12
+||||| **FitToSpreadBleedForced** | ⇧⌘F12
 **ScaleToPageSize** | F5 | **ScaleToPageMargins** | ⌥F5
 **TextAutosize** | F6 | **TextAutosizeL** | ⌥F6 | **TextAutosizeR** | ⌘F6
 **ZoomToSelection** | F4
@@ -193,3 +194,9 @@ Script | Fn | Script | Fn | Script | Fn
 1. Deschideți **Window > Utilities > Scripts**.
 2. Faceți clic dreapta pe folderul **User** și selectați **Reveal in Finder/Explorer**.
 3. Copiați fișierele în acest folder.
+
+## Autor și licență
+
+O parte din codul din acest repository se bazează pe cod din postări de pe bloguri, postări de pe forumuri sau din tutoriale de Dave Saunders, Marc Autret, Peter Werner, Richard Harrington și Peter Kahrel. "BatchResize" este o versiune modificată a "Redimensionari v7" de Dan Ichimescu. Restul este creat de mine, Paul Chiorean \<jpeg AT basement.ro\>, și este distribuit sub licența XXX.
+
+Vă rog să-mi trimiteți un e-mail sau [să raportați o problemă pe Github](http://github.com/pchiorean/indesign-jsx/issues) dacă întâmpinați probleme sau aveți sugestii.

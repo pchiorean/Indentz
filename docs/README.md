@@ -1,8 +1,8 @@
-# Name
+# Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks: cleaning up the document and making default layers and special colors, resizing objects to the page geometry or modifying it, creating positioning grids for certain brands, preparing for print, better zooming.
+Collection of InDesign scripts for simple and repetitive tasks: cleaning up the document, making default layers and special colors, resizing objects to the page geometry or modifying it, creating positioning grids for certain brands, preparing for print, better zooming.
 
-Many of them are designed to be run through a shortcut. You can found a configuration suggestion in the [Shortcuts](#shortcuts) section. Some are intended to be run in the [**batch_convert.jsx**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
+Many are designed to be run through a shortcut. You can found a configuration suggestion in the [Shortcuts](#shortcuts) section. Some are intended to be run in the [**batch_convert.jsx**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
 
 ## Description
 
@@ -42,9 +42,9 @@ After which:
 
   ![Swatches & layers](img/docdefaults.png)
 
-  The script detects and merges several similar layers, as follows:
+  The script merges several similar layers, as follows:
 
-  Before | After
+  Layer | Merged to
   :--- | :---
   Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible area, Visible area | `safe area`
   Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe | `dielines`
@@ -63,8 +63,8 @@ Before | After
 Akzidenz Grotesk Bold | **AkzidenzGrotesk Bold**
 Arial Bold | **Helvetica Neue Bold**
 FoundryGridnik Regular | **Foundry Gridnik Regular**
-FoundryGridnik Bold | **Foundry Gridnik Bold**
 FoundryGridnik Medium | **Foundry Gridnik Medium**
+FoundryGridnik Bold | **Foundry Gridnik Bold**
 Gotham Light Regular | **Gotham Light**
 Gotham Book Regular | **Gotham Book**
 Gotham Medium Regular | **Gotham Medium**
@@ -72,8 +72,8 @@ Gotham Bold Regular | **Gotham Bold**
 Gotham Black Regular | **Gotham Black**
 Helvetica Neue LT Std 65 Medium | **Helvetica Neue Medium**
 Helvetica Neue LT Std 75 Bold | **Helvetica Neue Bold**
-Trade Gothic LT Std Bold Condensed No. 20 | **Trade Gothic for LS Bold Condensed No. 20**
 Trade Gothic LT Std Condensed No. 18 | **Trade Gothic for LS Condensed No. 18**
+Trade Gothic LT Std Bold Condensed No. 20 | **Trade Gothic for LS Bold Condensed No. 20**
 
 ### CleanupLabels
 
@@ -120,8 +120,9 @@ Resize the pages of the document based on the file name, page margins, or select
 
 * **PageSizeFromFilename** searches the file name for pairs of numbers like "000x000" (where "000" means a group of at least one digit, followed or not by decimals, and optionally by "mm" or "cm"). If only one pair is found, it will be the size of the page. If two are found (e.g. "000x000_000x000"), the larger pair will be the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this is considered bleed.
 
-  Example:
-  > VYPE_FR_MentholBan_Sticker_Vitrine_Phrase_**1400x400_700x137_5**mm.indd
+  Examples:
+  > VYPE_FR_MentholBan_Sticker_Vitrine_**1400x400_700x137_5**mm.indd \
+  > LS_AT_MEXIT_Automateneinleger_**597x517_577x500.5_3**mm V4.indd
 
 * **PageSizeFromMargins** resizes each page to its margins.
 
@@ -141,7 +142,7 @@ Fit the frame to the text and sets auto-sizing, vertical justification and parag
 
 * **TextAutosizeR**: _Auto-Sizing: top-right. Vertical Justification: top. Paragraph: align right._
 
-_Auto-Sizing Type_ will be set to _Height and width_ if the text has only one line. If it has multiple lines, the first run will set to _Height only_, the second run _Height and width_ (in which case care must be taken that the text is broken manually).
+_Auto-Sizing Type_ will be set to _Height and width_ if the text has only one line. If it has multiple lines, the first run will set it to _Height only_, the second run to _Height and width_ (in which case care must be taken that the text is broken manually).
 
 <!-- ![Înainte](img/textautosize.gif) -->
 
@@ -159,11 +160,11 @@ These are making some preparations for export and can be run in **batch_convert.
 
 * **PrepareForPrint** hides the `safe area` layer and moves the dielines from `dielines` layer to separate spreads.
 
-* **SafeArea** creates a frame the size of the page margins on the `safe area`.
+* **SafeArea** creates a frame the size of the page margins on the `safe area` layer.
 
 * **SafeAreaHideLayer** and **SafeAreaShowLayer** hide or show `safe area`.
 
-The scripts detect similar layers like `visible`, `vizibil`, `vis. area` or `diecut`, `die cut`, `cut lines`, `stanze`.
+The scripts detect alternative layer names like `visible`, `vizibil`, `vis. area` for `safe area`, or `diecut`, `die cut`, `cut lines`, `stanze` for `dielines`.
 
 ### ZoomToSelection
 
@@ -179,9 +180,9 @@ Script | Fn | Script | Fn | Script | Fn
 :--- | ---: | :--- | ---: | :--- | ---:
 **DocCleanup** | F2 | **DocDefaults** | ⌥F2
 **FitToPage** | F11 | **FitToPageMargins** | ⌥F11 | **FitToPageBleed** | ⇧F11
-||||| **FitToPageBleedForced** | ⌘F11
+||||| **FitToPageBleedForced** | ⇧⌘F11
 **FitToSpread** | F12 | **FitToSpreadMargins** | ⌥F12 | **FitToSpreadBleed** | ⇧F12
-||||| **FitToSpreadBleedForced** | ⌘F12
+||||| **FitToSpreadBleedForced** | ⇧⌘F12
 **ScaleToPageSize** | F5 | **ScaleToPageMargins** | ⌥F5
 **TextAutosize** | F6 | **TextAutosizeL** | ⌥F6 | **TextAutosizeR** | ⌘F6
 **ZoomToSelection** | F4
@@ -193,3 +194,11 @@ Script | Fn | Script | Fn | Script | Fn
 1. Open **Window > Utilities > Scripts**.
 2. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
 3. Copy files to this folder.
+
+## Author and license
+
+Some of the code contained in this repository is based on code in blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. "BatchResize" is a modified version of "Redimensionari v7" by Dan Ichimescu. The rest is created by me, Paul Chiorean \<jpeg AT basement.ro\>, and released under the XXX License (see [LICENSE.txt](LICENSE.txt)).
+
+<!-- XXX is available under the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0) and can be used free of charge, for both commercial and non-commercial purposes. You do not need to give credit to me, although I will appreciate it if you do. -->
+
+Please send me an e-mail or [report an issue on Github](http://github.com/pchiorean/indesign-jsx/issues) if you encounter problems or have any suggestions.
