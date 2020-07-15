@@ -43,6 +43,7 @@ function ShowProps(obj) {
 
 // Scrollable alert function by Peter Kahrel
 // http://forums.adobe.com/message/2869250#2869250
+// Modified for failsafe alert height.
 function AlertScroll(title, input) {
 	if (input instanceof Array) input = input.join("\r");
 	var w = new Window("dialog", title);

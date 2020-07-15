@@ -20,7 +20,7 @@ AlertScroll("Color Profiles", resultArray);
 
 // Scrollable alert function by Peter Kahrel
 // http://forums.adobe.com/message/2869250#2869250
-// Added a failsafe alert height
+// Modified for failsafe alert height.
 function AlertScroll(title, input) {
 	if (input instanceof Array) input = input.join("\r");
 	var w = new Window("dialog", title);
