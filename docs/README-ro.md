@@ -202,6 +202,6 @@ Script | Fn | Script | Fn | Script | Fn
 
 O parte din codul din acest repository se bazează pe cod din postări de pe bloguri, postări de pe forumuri sau din tutoriale de Dave Saunders, Marc Autret, Peter Werner, Richard Harrington și Peter Kahrel. "BatchResize" este o versiune modificată a "Redimensionari v7" de Dan Ichimescu. Restul codului este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
 
-Vă rog să-mi trimiteți un e-mail la <jpeg AT basement.ro> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
+Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
 README-ro.md • 15 iulie 2020, 21:42 (UTC).

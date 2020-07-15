@@ -134,7 +134,7 @@ Sets the page margins to the selected objects.
 
 ### TextAutosize series
 
-Fit the frame to the text and sets auto-sizing, vertical justification and paragraph alignment:
+Fit the frame to the text and set auto-sizing, vertical justification and paragraph alignment:
 
 * **TextAutosize**: _Auto-Sizing: center. Vertical Justification: center. Paragraph: align center._
 
@@ -160,7 +160,7 @@ These are making some preparations for export and can be run in **batch_convert.
 
 * **PrepareForPrint** does the following:
   * hides the `safe area` layer;
-  * moves UV markings from `varnish` to separate spreads,
+  * moves UV markings from `varnish` to separate spreads;
   * moves the dielines from `dielines` to separate spreads.
 
 * **SafeArea** creates a frame the size of the page margins on the `safe area` layer. Its color is a swatch, `Safe area`, which if it does not already exist will be created with the value "C=0 M=100 Y=0 K=0".
@@ -202,6 +202,6 @@ Script | Fn | Script | Fn | Script | Fn
 
 Some of the code contained in this repository is based on code in blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. "BatchResize" is a modified version of "Redimensionari v7" by Dan Ichimescu. The rest of the code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-Please send me an e-mail at <jpeg AT basement.ro> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
+Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
 README.md • 15 July 2020, 21:42 (UTC).
