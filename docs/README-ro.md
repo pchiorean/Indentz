@@ -56,24 +56,24 @@ După care:
 
 ### CleanupFonts
 
-Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Deocamdată lista e definită în script, dar poate fi editată cu un editor text:
+Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul. Prima linie (antetul) este ignorată. Lista curentă este următoarea:
 
-Înainte | După
-:--- | :---
-Akzidenz Grotesk Bold | **AkzidenzGrotesk Bold**
-Arial Bold | **Helvetica Neue Bold**
-FoundryGridnik Regular | **Foundry Gridnik Regular**
-FoundryGridnik Medium | **Foundry Gridnik Medium**
-FoundryGridnik Bold | **Foundry Gridnik Bold**
-Gotham Light Regular | **Gotham Light**
-Gotham Book Regular | **Gotham Book**
-Gotham Medium Regular | **Gotham Medium**
-Gotham Bold Regular | **Gotham Bold**
-Gotham Black Regular | **Gotham Black**
-Helvetica Neue LT Std 65 Medium | **Helvetica Neue Medium**
-Helvetica Neue LT Std 75 Bold | **Helvetica Neue Bold**
-Trade Gothic LT Std Condensed No. 18 | **Trade Gothic for LS Condensed No. 18**
-Trade Gothic LT Std Bold Condensed No. 20 | **Trade Gothic for LS Bold Condensed No. 20**
+Nume vechi | Stil | Nume nou | Stil
+:--- | :--- | :--- | :---
+Akzidenz Grotesk | Bold | **AkzidenzGrotesk** | **Bold**
+Arial | Bold | **Helvetica Neue** | **Bold**
+FoundryGridnik | Regular | **Foundry Gridnik** | **Regular**
+FoundryGridnik | Bold | **Foundry Gridnik** | **Bold**
+FoundryGridnik | Medium | **Foundry Gridnik** | **Medium**
+Gotham Light | Regular | **Gotham** | **Light**
+Gotham Book | Regular | **Gotham** | **Book**
+Gotham Medium | Regular | **Gotham** | **Medium**
+Gotham Bold | Regular | **Gotham** | **Bold**
+Gotham Black | Regular | **Gotham** | **Black**
+Helvetica Neue LT Std | 65 Medium | **Helvetica Neue** | **Medium**
+Helvetica Neue LT Std | 75 Bold | **Helvetica Neue** | **Bold**
+Trade Gothic LT Std | Bold Condensed No. 20 | **Trade Gothic for LS** | **Bold Condensed No. 20**
+Trade Gothic LT Std | Condensed No. 18 | **Trade Gothic for LS** | **Condensed No. 18**
 
 ### CleanupLabels
 
