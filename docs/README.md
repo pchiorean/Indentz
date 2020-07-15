@@ -118,7 +118,7 @@ These also work with one or more objects, but scale them proportionally, as a bl
 
 Resize the pages of the document based on the file name, page margins, or selected objects.
 
-* **PageSizeFromFilename** searches the file name for pairs of numbers like "000x000" (where "000" means a group of at least one digit, followed or not by decimals, and optionally by "mm" or "cm"). If only one pair is found, it will be the size of the page. If two are found (e.g. "000x000_000x000"), the larger pair will be the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this is considered bleed.
+* **PageSizeFromFilename** searches the file name for pairs of numbers like "000x000" (where "000" means a group of at least one digit, followed or not by decimals, and optionally by "mm" or "cm"). If only one pair is found, it will be the size of the page. If two are found (e.g., "000x000_000x000"), the larger pair will be the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this is considered bleed.
 
   Examples:
   > VYPE_FR_MentholBan_Sticker_Vitrine_**1400x400_700x137_5**mm.indd \
@@ -203,3 +203,5 @@ Script | Fn | Script | Fn | Script | Fn
 Some of the code contained in this repository is based on code in blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. "BatchResize" is a modified version of "Redimensionari v7" by Dan Ichimescu. The rest of the code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 Please send me an e-mail at <jpeg AT basement.ro> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
+
+README.md • 15 July 2020, 21:42 (UTC).
