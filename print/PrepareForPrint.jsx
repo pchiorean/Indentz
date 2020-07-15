@@ -1,7 +1,7 @@
 ﻿/*
-	Prepare for print v1.4.7
+	Prepare for print v1.5.0
 	© July 2020, Paul Chiorean
-	Hides "safe area" layer and moves dielines to separate spreads.
+	Hides "safe area" layer and moves varnish & dielines to separate spreads.
 */
 
 if (app.documents.length == 0) exit();
@@ -11,36 +11,40 @@ var doc = app.activeDocument;
 
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
 var dieLayerName = ["dielines", "diecut", "die cut", "Die Cut", "cut", "Cut", "cut lines", "stanze", "Stanze", "decoupe"];
+var uvLayerName = ["varnish", "Varnish", "UV"];
 var safeLayer = FindLayer(safeLayerName);
 var dieLayer = FindLayer(dieLayerName);
+var uvLayer = FindLayer(uvLayerName);
 
 doc.layers.everyItem().locked = false; // Unlock all layers
 try { safeLayer.visible = false } catch (_) {}; // Hide 'safe area' layer
 try { dieLayer.visible = true } catch (_) {}; // Show 'dielines' layer
+try { uvLayer.visible = true } catch (_) {}; // Show 'varnish' layer
 
-if (dieLayer != null) Prepare4Print();
+if (dieLayer != null) Prepare4Print(dieLayer);
+if (uvLayer != null) Prepare4Print(uvLayer);
 
 
-function Prepare4Print() { // Move dielines to separate spread(s)
+function Prepare4Print(layer) { // Move items on 'layer' to separate spread(s)
 	var selSp, pageItem;
 	for (var i = 0; i < doc.spreads.length; i++) {
 		selSp = doc.spreads[i];
-		if (!LayerHasItems(selSp, dieLayer)) continue;
-		// Spread has dielines; duplicate it
+		if (!LayerHasItems(selSp, layer)) continue;
+		// Spread has items on 'layer'; duplicate it
 		selSp.duplicate(LocationOptions.AFTER, selSp);
-		// Pass 1: delete dielines from this spread
+		// Pass 1: delete items on 'layer' from this spread
 		for (var j = 0; j < selSp.pageItems.length; j++) {
 			pageItem = selSp.pageItems.item(j);
 			// Check for locked items
-			if (pageItem.itemLayer.name == dieLayer.name) {
+			if (pageItem.itemLayer.name == layer.name) {
 				if (pageItem.locked) pageItem.locked = false;
 				pageItem.remove(); j--;
 			}
 		}
-		// Pass 2: delete non-dielines from next spread
+		// Pass 2: delete items not on 'layer' from next spread
 		for (var j = 0; j < doc.spreads[i + 1].pageItems.length; j++) {
 			pageItem = doc.spreads[i + 1].pageItems.item(j);
-			if (pageItem.itemLayer.name !== dieLayer.name) {
+			if (pageItem.itemLayer.name !== layer.name) {
 				if (pageItem.locked) pageItem.locked = false;
 				pageItem.remove(); j--;
 			}
