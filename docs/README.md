@@ -88,7 +88,7 @@ Sometimes objects that have a label attached _(Script Label)_ are reused, which 
 
 Converts RGB process colors to CMYK, removes duplicates, sets every name in "C= M= Y= K=" form and deletes unused swatches. Spot colors remain unchanged.
 
-<!-- ![Clean swatches](img/cleanupswatches.gif) -->
+<!-- ![](img/cleanupswatches.gif) -->
 
 ### FitToPage/FitToSpread series
 
@@ -102,7 +102,7 @@ Resize one or more selected objects, without scaling them. Ordinary frames are s
 
 * **FitUndo**: if you want to restore all objects at once.
 
-<!-- ![Înainte](img/fittopage.gif) -->
+<!-- ![](img/fittopage.gif) -->
 
 ### ScaleToPage series
 
@@ -112,7 +112,7 @@ These also work with one or more objects, but scale them proportionally, as a bl
 
 * The **H** (height) and **W** (width) variants scale to the height or width of the page or page margins.
 
-<!-- ![Înainte](img/scaletopage.gif) -->
+<!-- ![](img/scaletopage.gif) -->
 
 ### PageSize series
 
@@ -144,7 +144,7 @@ Fit the frame to the text and sets auto-sizing, vertical justification and parag
 
 _Auto-Sizing Type_ will be set to _Height and width_ if the text has only one line. If it has multiple lines, the first run will set it to _Height only_, the second run to _Height and width_ (in which case care must be taken that the text is broken manually).
 
-<!-- ![Înainte](img/textautosize.gif) -->
+<!-- ![](img/textautosize.gif) -->
 
 ### Grid series
 
@@ -158,9 +158,12 @@ Create positioning grids for certain brands.
 
 These are making some preparations for export and can be run in **batch_convert.jsx**.
 
-* **PrepareForPrint** hides the `safe area` layer and moves the dielines from `dielines` layer to separate spreads.
+* **PrepareForPrint** does the following:
+  * hides the `safe area` layer;
+  * moves UV markings from `varnish` to separate spreads,
+  * moves the dielines from `dielines` to separate spreads.
 
-* **SafeArea** creates a frame the size of the page margins on the `safe area` layer.
+* **SafeArea** creates a frame the size of the page margins on the `safe area` layer. Its color is a swatch, `Safe area`, which if it does not already exist will be created with the value "C=0 M=100 Y=0 K=0".
 
 * **SafeAreaHideLayer** and **SafeAreaShowLayer** hide or show `safe area`.
 
@@ -187,7 +190,7 @@ Script | Fn | Script | Fn | Script | Fn
 **TextAutosize** | F6 | **TextAutosizeL** | ⌥F6 | **TextAutosizeR** | ⌘F6
 **ZoomToSelection** | F4
 
-<!-- ![Shortcuts](img/shortcuts.png) -->
+<!-- ![](img/shortcuts.png) -->
 
 ## Installation
 
@@ -195,10 +198,8 @@ Script | Fn | Script | Fn | Script | Fn
 2. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
 3. Copy files to this folder.
 
-## Author and license
+## License
 
-Some of the code contained in this repository is based on code in blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. "BatchResize" is a modified version of "Redimensionari v7" by Dan Ichimescu. The rest is created by me, Paul Chiorean \<jpeg AT basement.ro\>, and released under the XXX License (see [LICENSE.txt](LICENSE.txt)).
+Some of the code contained in this repository is based on code in blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. "BatchResize" is a modified version of "Redimensionari v7" by Dan Ichimescu. The rest of the code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-<!-- XXX is available under the [Apache 2.0 license](https://www.apache.org/licenses/LICENSE-2.0) and can be used free of charge, for both commercial and non-commercial purposes. You do not need to give credit to me, although I will appreciate it if you do. -->
-
-Please send me an e-mail or [report an issue on Github](http://github.com/pchiorean/indesign-jsx/issues) if you encounter problems or have any suggestions.
+Please send me an e-mail at <jpeg AT basement.ro> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.

@@ -88,7 +88,7 @@ Uneori se refolosesc obiecte care au o etichetă atașată _(Script Label)_, și
 
 Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește culorile CMYK după formula "C= M= Y= K=" și șterge culorile nefolosite. Culorile spot rămân neschimbate.
 
-<!-- ![Clean swatches](img/cleanupswatches.gif) -->
+<!-- ![](img/cleanupswatches.gif) -->
 
 ### Seria FitToPage/FitToSpread
 
@@ -102,7 +102,7 @@ Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Fr
 
 * **FitUndo**: dacă doriți să restaurați toate obiectele simultan.
 
-<!-- ![Înainte](img/fittopage.gif) -->
+<!-- ![](img/fittopage.gif) -->
 
 ### Seria ScaleToPage
 
@@ -112,7 +112,7 @@ Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează 
 
 * Variantele **H** (height) și **W** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
 
-<!-- ![Înainte](img/scaletopage.gif) -->
+<!-- ![](img/scaletopage.gif) -->
 
 ### Seria PageSize
 
@@ -144,7 +144,7 @@ Setează marginile paginii la dimensiunile selecției.
 
 _Auto-Sizing Type_ va fi setat _Height and width_ dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta _Height only_, a doua _Height and width_ (caz în care trebuie avut grijă ca textul să fie rupt pe rânduri manual).
 
-<!-- ![Înainte](img/textautosize.gif) -->
+<!-- ![](img/textautosize.gif) -->
 
 ### Seria Grid
 
@@ -158,9 +158,12 @@ Creează grile de poziționare pentru anumite branduri.
 
 Fac câteva pregătiri pentru export și pot fi rulate în **batch_convert.jsx**.
 
-* **PrepareForPrint** ascunde layerul `safe area` și mută ștanțele de pe `dielines` pe spreaduri separate.
+* **PrepareForPrint** face următoarele:
+  * ascunde layerul `safe area`;
+  * mută marcajele pentru lac UV de pe `varnish` pe spreaduri separate;
+  * mută ștanțele de pe `dielines` pe spreaduri separate.
 
-* **SafeArea** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`.
+* **SafeArea** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Culoarea lui este un swatch, `Safe area`, care dacă nu există deja va fi creat cu valoarea "C=0 M=100 Y=0 K=0".
 
 * **SafeAreaHideLayer** și **SafeAreaShowLayer** ascund sau afișează `safe area`.
 
@@ -187,7 +190,7 @@ Script | Fn | Script | Fn | Script | Fn
 **TextAutosize** | F6 | **TextAutosizeL** | ⌥F6 | **TextAutosizeR** | ⌘F6
 **ZoomToSelection** | F4
 
-<!-- ![Shortcuts](img/shortcuts.png) -->
+<!-- ![](img/shortcuts.png) -->
 
 ## Instalare
 
@@ -195,8 +198,8 @@ Script | Fn | Script | Fn | Script | Fn
 2. Faceți clic dreapta pe folderul **User** și selectați **Reveal in Finder/Explorer**.
 3. Copiați fișierele în acest folder.
 
-## Autor și licență
+## Licență
 
-O parte din codul din acest repository se bazează pe cod din postări de pe bloguri, postări de pe forumuri sau din tutoriale de Dave Saunders, Marc Autret, Peter Werner, Richard Harrington și Peter Kahrel. "BatchResize" este o versiune modificată a "Redimensionari v7" de Dan Ichimescu. Restul este creat de mine, Paul Chiorean \<jpeg AT basement.ro\>, și este distribuit sub licența XXX.
+O parte din codul din acest repository se bazează pe cod din postări de pe bloguri, postări de pe forumuri sau din tutoriale de Dave Saunders, Marc Autret, Peter Werner, Richard Harrington și Peter Kahrel. "BatchResize" este o versiune modificată a "Redimensionari v7" de Dan Ichimescu. Restul codului este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
 
-Vă rog să-mi trimiteți un e-mail sau [să raportați o problemă pe Github](http://github.com/pchiorean/indesign-jsx/issues) dacă întâmpinați probleme sau aveți sugestii.
+Vă rog să-mi trimiteți un e-mail la <jpeg AT basement.ro> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
