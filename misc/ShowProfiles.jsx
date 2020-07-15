@@ -1,5 +1,5 @@
 /*
-	List color profiles 1.1.1
+	Show color profiles 1.1.1
 	© July 2020, Paul Chiorean
 	Shows all color profiles available to the document.
 */
@@ -20,6 +20,7 @@ AlertScroll("Color Profiles", resultArray);
 
 // Scrollable alert function by Peter Kahrel
 // http://forums.adobe.com/message/2869250#2869250
+// Added a failsafe alert height
 function AlertScroll(title, input) {
 	if (input instanceof Array) input = input.join("\r");
 	var w = new Window("dialog", title);
