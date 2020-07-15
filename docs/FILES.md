@@ -3,7 +3,7 @@ Legacy name                     | Name                             |   Fn  | Des
 **Batch Resize**                                                           |
 batch_resize.jsx                | **BatchResize**.jsx              |       | Automates the resizing of a master based on a size table.
 **Cleanup**                                                                |
-normalize_fonts.jsx             | **CleanupFonts**.jsx             |       | Replaces missing or unwanted fonts with equivalents.
+normalize_fonts.jsx             | **CleanupFonts**.jsx             |       | Replaces missing or unwanted fonts with equivalents from a list.
 remove_all_labels.jsx           | **CleanupLabels**.jsx            |       | Removes all labels from the document.
 remove_br_labels.jsx            | **CleanupLabelsBR**.jsx          |       | Removes all auto alignment labels used by BatchResize.jsx.
 normalize_swatches.jsx          | **CleanupSwatches**.jsx          |       | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused.
@@ -44,11 +44,11 @@ safe_area_layer_show.jsx        | **SafeAreaShowLayer**.jsx        |       | Sho
 zoom2selection.jsx              | **ZoomToSelection**.jsx          |    F4 | Zooms to the selected objects or, if nothing is selected, to the current spread.
 **Miscellaneous**                                                          |
 _playground.jsx                 | **_playground**.jsx              |   F10 | Used for testing.
-finish.jsx                      | **Finish**.jsx                   |  ⇧F10 | Used for quick fixes.
-fonts_used.jsx                  | **FontsUsed**.jsx                |       | Makes a list of the fonts used in the current document.
+finish.jsx                      | **_finish**.jsx                  |  ⌥F10 | Used for quick fixes.
 hw.jsx                          | **HW**.jsx                       |       | WIP
-list_profiles.jsx               | **ListProfiles**.jsx             |       | Shows all color profiles available to the document.
 page_ratios.jsx                 | **PageRatios**.jsx               |       | Calculates the ratio of each page and displays it in the upper left corner.
+fonts_used.jsx                  | **ShowFonts**.jsx                |       | Shows all fonts used in the current document.
+list_profiles.jsx               | **ShowProfiles**.jsx             |       | Shows all color profiles available to the document.
 show_properties.jsx             | **ShowProperties**.jsx           |       | Shows all properties and methods of a selected object.
 
 <!-- white_rama.jsx                  | **WhiteRama**.jsx                |       | -->
