@@ -1,0 +1,15 @@
+Old Name	Style	New Name	Style
+Akzidenz Grotesk	Bold	AkzidenzGrotesk	Bold
+Arial	Bold	Helvetica Neue	Bold
+FoundryGridnik	Regular	Foundry Gridnik	Regular
+FoundryGridnik	Bold	Foundry Gridnik	Bold
+FoundryGridnik	Medium	Foundry Gridnik	Medium
+Gotham Light	Regular	Gotham	Light
+Gotham Book	Regular	Gotham	Book
+Gotham Medium	Regular	Gotham	Medium
+Gotham Bold	Regular	Gotham	Bold
+Gotham Black	Regular	Gotham	Black
+Helvetica Neue LT Std	65 Medium	Helvetica Neue	Medium
+Helvetica Neue LT Std	75 Bold	Helvetica Neue	Bold
+Trade Gothic LT Std	Bold Condensed No. 20	Trade Gothic for LS	Bold Condensed No. 20
+Trade Gothic LT Std	Condensed No. 18	Trade Gothic for LS	Condensed No. 18
