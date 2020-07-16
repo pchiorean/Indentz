@@ -1,6 +1,7 @@
 # Changelog
 All notable changes to this project will be documented in this file.
 
+<!--
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ## [Unreleased]
@@ -17,3 +18,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 [#00]: Issue #00
 [0.0.0]: Link to release
+-->
+
+## [20200716](https://github.com/pchiorean/Indentz/releases/tag/20200716)
+- First release.
