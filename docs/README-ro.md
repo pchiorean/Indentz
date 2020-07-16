@@ -1,6 +1,6 @@
 # Indentz
 
-Colecție de scripturi InDesign pentru operații simple și repetitive: "curățarea" documentului, crearea unor layere și culori speciale, dimensionarea obiectelor la geometria paginii sau modificarea ei, crearea unor grile de poziționare pentru anumite branduri, pregătire pentru tipar, un zoom îmbunătățit.
+Colecție de scripturi InDesign pentru operații simple și repetitive: "curățarea" documentului, crearea unor layere și culori speciale, dimensionarea obiectelor la geometria paginii sau modificarea ei, pregătire pentru tipar, un zoom îmbunătățit.
 
 O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O sugestie de configurare găsiți în secțiunea [Shortcuts](#shortcuts). Câteva pot fi rulate în scriptul [**batch_convert.jsx**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
 
@@ -215,4 +215,4 @@ O parte din codul din acest repository se bazează pe cod din postări de pe blo
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 16 iulie 2020, 06:57 (UTC).
+README-ro.md • 16 iulie 2020, 10:18 (UTC).

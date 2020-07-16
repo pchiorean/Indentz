@@ -1,6 +1,6 @@
 # Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks: cleaning up the document, making default layers and special colors, resizing objects to the page geometry or modifying it, creating positioning grids for certain brands, preparing for print, better zooming.
+Collection of InDesign scripts for simple and repetitive tasks: cleaning up the document, making default layers and special colors, resizing objects to the page geometry or modifying it, preparing for print, better zooming.
 
 Many are designed to be run through a shortcut. You can found a configuration suggestion in the [Shortcuts](#shortcuts) section. Some are intended to be run in the [**batch_convert.jsx**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
 
@@ -216,4 +216,4 @@ Some of the code contained in this repository is based on code in blog posts, fo
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 16 July 2020, 06:57 (UTC).
+README.md • 16 July 2020, 10:18 (UTC).
