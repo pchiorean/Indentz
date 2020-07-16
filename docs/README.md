@@ -148,13 +148,13 @@ _Auto-Sizing Type_ will be set to _Height and width_ if the text has only one li
 
 <!-- ![](img/textautosize.gif) -->
 
-### Grid series
+<!-- ### Grid series
 
 Create positioning grids for certain brands.
 
 * **GridEPOK** sets the page margins and the number of columns according to the EPOK grid system.
 
-* **GridLSBC** sets the page margins and some guides according to Lucky Strike BC guidelines.
+* **GridLSBC** sets the page margins and some guides according to Lucky Strike BC guidelines. -->
 
 ### Print series
 

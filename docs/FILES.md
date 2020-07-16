@@ -1,7 +1,5 @@
 Name                             |   Fn  | Description
 :---                             |  ---: | :---
-**Batch Resize**                                                           |
-**BatchResize**.jsx              |       | Automates the resizing of a master based on a size table.
 **Cleanup**                                                                |
 **CleanupFonts**.jsx             |       | Replaces missing or unwanted fonts with equivalents from a list.
 **CleanupLabels**.jsx            |       | Removes all labels from the document.
@@ -32,9 +30,6 @@ Name                             |   Fn  | Description
 **TextAutosize**.jsx             |    F6 | Auto-sizes the text frame to the content, center aligned.
 **TextAutosizeL**.jsx            |   ⌥F6 | Auto-sizes the text frame to the content, left aligned.
 **TextAutosizeR**.jsx            |   ⌘F6 | Auto-sizes the text frame to the content, right aligned.
-**Grid**                                                                   |
-**GridEPOK**.jsx                 |       | Sets the page margins and columns to the EPOK grid system.
-**GridLSBC**.jsx                 |       | Sets the page margins and puts in place some guides for the LS BC grid system.
 **Print**                                                                  |
 **PrepareForPrint**.jsx          |       | Hides "safe area" layer and moves dielines to separate spreads.
 **SafeArea**.jsx                 |       | Creates a "safe area" frame, on every page/spread for which margins are defined.

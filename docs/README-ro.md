@@ -148,14 +148,13 @@ _Auto-Sizing Type_ va fi setat _Height and width_ dacă textul are un singur râ
 
 <!-- ![](img/textautosize.gif) -->
 
-### Seria Grid
+<!-- ### Seria Grid
 
 Creează grile de poziționare pentru anumite branduri.
 
 * **GridEPOK** setează marginile paginii și numărul de coloane conform grilei EPOK.
 
-* **GridLSBC** setează marginile paginii și câteva linii de ghidaj conform ghidului Lucky Strike BC.
-
+* **GridLSBC** setează marginile paginii și câteva linii de ghidaj conform ghidului Lucky Strike BC. -->
 ### Seria Print
 
 Fac câteva pregătiri pentru export și pot fi rulate în **batch_convert.jsx**.
