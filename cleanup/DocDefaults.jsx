@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v1.13.6
+	Default layers and more v1.13.7
 	© July 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -99,6 +99,7 @@ const safeSwatchName = "Safe area";
 			case "Layout":
 			case "layout":
 			case "Layer_lucru":
+			case "Elemente":
 				try { doc.layers.add({ name: artLayerName }) } catch (_) {};
 				artLayer.merge(docLayer); i--;
 		}
@@ -141,6 +142,7 @@ const safeSwatchName = "Safe area";
 			case "wh":
 			case "hw":
 			case "Hw Logo":
+			case "Logo HW":
 				try { doc.layers.add({ name: hwLayerName }) } catch (_) {};
 				hwLayer.merge(docLayer); i--;
 		}
@@ -201,6 +203,7 @@ const safeSwatchName = "Safe area";
 			case "cut lines":
 			case "stanze":
 			case "Stanze":
+			case "Stanz":
 			case "decoupe":
 				try { doc.layers.add({ name: dieLayerName }) } catch (_) {};
 				dieLayer.merge(docLayer); i--;
