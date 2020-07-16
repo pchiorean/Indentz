@@ -1,5 +1,5 @@
 /*
-	Finishing 0.3.0
+	Finishing 0.4.0
 	© July 2020, Paul Chiorean
 	Used for quick fixes.
 */
@@ -7,6 +7,23 @@
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var page = app.activeWindow.activePage;
+
+switch (doc.selection[0].paragraphs[0].justification) {
+	case 1818584692: // Justification.LEFT_ALIGN
+		doc.selection[0].textFramePreferences.properties = {
+			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
+			verticalJustification: VerticalJustification.BOTTOM_ALIGN
+		}
+		break;
+	case 1919379572: // Justification.RIGHT_ALIGN
+		doc.selection[0].textFramePreferences.properties = {
+			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_RIGHT_POINT,
+			verticalJustification: VerticalJustification.BOTTOM_ALIGN
+		}
+		break;
+}
+
+TextBlack2Black();
 
 // Relink("LS_Toniq_FRONT_final_v11.png", "LS_Toniq_FRONT_final_v11_sansTONIQ.png");
 
@@ -43,7 +60,7 @@ function ExpandItems() {
 	}
 }
 
-function TextRegColor(){ // Converts text with "Registration" to CMYK
+function TextReg2CMYK(){ // Converts text with "Registration" to CMYK
 	try { doc.colors.add({
 		name: "Reg. black",
 		model: ColorModel.PROCESS,
@@ -59,6 +76,42 @@ function TextRegColor(){ // Converts text with "Registration" to CMYK
 	app.changeTextPreferences.fillColor = "Reg. black";
 	doc.changeText();
 	app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
+}
+
+function TextBlack2Black(){
+	try { doc.colors.add({
+		name: "C=60 M=40 Y=40 K=100",
+		model: ColorModel.PROCESS, space:
+		ColorSpace.CMYK, colorValue: [60, 40, 40, 100] });
+	} catch (_) {};
+
+	try { doc.colors.add({
+		name: "R=0 G=0 B=0" });
+	} catch (_) {
+		app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
+		app.findChangeTextOptions.includeHiddenLayers =
+		app.findChangeTextOptions.includeLockedLayersForFind =
+		app.findChangeTextOptions.includeLockedStoriesForFind =
+		app.findChangeTextOptions.includeMasterPages = true;
+		app.findTextPreferences.fillColor = "R=0 G=0 B=0";
+		app.changeTextPreferences.fillColor = "Black";
+		doc.changeText();
+		app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
+	};
+
+	try { doc.colors.add({
+		name: "R=30 G=30 B=27" });
+	} catch (_) {
+		app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
+		app.findChangeTextOptions.includeHiddenLayers =
+		app.findChangeTextOptions.includeLockedLayersForFind =
+		app.findChangeTextOptions.includeLockedStoriesForFind =
+		app.findChangeTextOptions.includeMasterPages = true;
+		app.findTextPreferences.fillColor = "R=30 G=30 B=27";
+		app.changeTextPreferences.fillColor = "C=60 M=40 Y=40 K=100";
+		doc.changeText();
+		app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
+	};
 }
 
 function Relink(oldLink, newLink) {
