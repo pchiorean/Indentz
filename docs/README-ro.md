@@ -123,8 +123,8 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 * **PageSizeFromFilename** caută în numele fișierului perechi de numere de genul "000x000" (unde "000" înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de "mm" sau "cm"). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. "000x000_000x000"), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
 
   Exemple:
-  > VYPE_FR_MentholBan_Sticker_Vitrine_**1400x400_700x137_5**mm.indd \
-  > LS_AT_MEXIT_Automateneinleger_**597x517_577x500.5_3**mm V4.indd
+  > Filename1_**1400x400_700x137_5**mm.indd \
+  > Filename2_**597x517_577x500.5_3**mm V4.indd
 
 * **PageSizeFromMargins** redimensionează fiecare pagină la marginile acesteia.
 

@@ -123,8 +123,8 @@ Resize the pages of the document based on the file name, page margins, or select
 * **PageSizeFromFilename** searches the file name for pairs of numbers like "000x000" (where "000" means a group of at least one digit, followed or not by decimals, and optionally by "mm" or "cm"). If only one pair is found, it will be the size of the page. If two are found (e.g., "000x000_000x000"), the larger pair will be the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this is considered bleed.
 
   Examples:
-  > VYPE_FR_MentholBan_Sticker_Vitrine_**1400x400_700x137_5**mm.indd \
-  > LS_AT_MEXIT_Automateneinleger_**597x517_577x500.5_3**mm V4.indd
+  > Filename1_**1400x400_700x137_5**mm.indd \
+  > Filename2_**597x517_577x500.5_3**mm V4.indd
 
 * **PageSizeFromMargins** resizes each page to its margins.
 
