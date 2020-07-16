@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for print v1.5.0
+	Prepare for print v1.5.1
 	© July 2020, Paul Chiorean
 	Hides "safe area" layer and moves varnish & dielines to separate spreads.
 */
@@ -10,7 +10,7 @@ app.scriptPreferences.enableRedraw = false;
 var doc = app.activeDocument;
 
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
-var dieLayerName = ["dielines", "diecut", "die cut", "Die Cut", "cut", "Cut", "cut lines", "stanze", "Stanze", "decoupe"];
+var dieLayerName = ["dielines", "diecut", "die cut", "Die Cut", "cut", "Cut", "cut lines", "stanze", "Stanze", "Stanz", "decoupe"];
 var uvLayerName = ["varnish", "Varnish", "UV"];
 var safeLayer = FindLayer(safeLayerName);
 var dieLayer = FindLayer(dieLayerName);

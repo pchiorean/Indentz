@@ -1,5 +1,5 @@
 /*
-	Safe area v1.6.3
+	Safe area v1.6.4
 	© July 2020, Paul Chiorean
 	Creates a "safe area" frame, on every page/spread for which margins are defined.
 */
@@ -10,7 +10,7 @@ var doc = app.activeDocument;
 // Defaults
 var scope = doc.pages; // doc.pages or doc.spreads
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
-var dieLayerName = ["dielines", "diecut", "die cut", "Die Cut", "cut lines", "Stanze"];
+var dieLayerName = ["dielines", "diecut", "die cut", "Die Cut", "cut", "Cut", "cut lines", "stanze", "Stanze", "Stanz", "decoupe"];
 const safeSwatchName = "Safe area";
 const saFrameP = {
 	label: "safe area",
