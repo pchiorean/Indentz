@@ -75,6 +75,8 @@ Helvetica Neue LT Std | 75 Bold | **Helvetica Neue** | **Bold**
 Trade Gothic LT Std | Bold Condensed No. 20 | **Trade Gothic for LS** | **Bold Condensed No. 20**
 Trade Gothic LT Std | Condensed No. 18 | **Trade Gothic for LS** | **Condensed No. 18**
 
+You can use **ShowFonts** to get a tab delimited list of used fonts.
+
 ### CleanupLabels
 
 Sometimes objects that have a label attached _(Script Label)_ are reused, which potentially creates problems later.
@@ -177,6 +179,16 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 * if the cursor is in the text, zooms on the whole frame;
 * without anything selected zooms on the spread.
 
+### Miscellaneous
+
+* **PageRatios** calculates the ratio of each page and displays it in the upper left corner.
+
+* **ShowFonts** shows all fonts used in the current document.
+
+* **ShowProfiles** shows all color profiles available to InDesign.
+
+* **ShowProperties** shows properties and methods of a selected object (useful for debugging).
+
 ## Shortcuts
 
 Script | Fn | Script | Fn | Script | Fn
@@ -204,4 +216,4 @@ Some of the code contained in this repository is based on code in blog posts, fo
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 15 July 2020, 21:42 (UTC).
+README.md • 16 July 2020, 06:57 (UTC).

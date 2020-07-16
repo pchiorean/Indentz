@@ -75,6 +75,8 @@ Helvetica Neue LT Std | 75 Bold | **Helvetica Neue** | **Bold**
 Trade Gothic LT Std | Bold Condensed No. 20 | **Trade Gothic for LS** | **Bold Condensed No. 20**
 Trade Gothic LT Std | Condensed No. 18 | **Trade Gothic for LS** | **Condensed No. 18**
 
+Puteți utiliza **ShowFonts** pentru a obține o listă cu fonturile folosite (tab separated).
+
 ### CleanupLabels
 
 Uneori se refolosesc obiecte care au o etichetă atașată _(Script Label)_, și asta poate crea probleme ulterior.
@@ -177,6 +179,16 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 * dacă cursorul e în text, face zoom la întreg cadrul;
 * fără nimic selectat face vizibil întreg spreadul.
 
+### Diverse
+
+* **PageRatios** calculează rația fiecărei pagini și o afișează în colțul din stânga sus.
+
+* **ShowFonts** afișează toate fonturile utilizate în documentul curent.
+
+* **ShowProfiles** afișează toate profilele de culori disponibile.
+
+* **ShowProperties** afișează proprietățile și metodele unui obiect selectat (util pentru depanare).
+
 ## Shortcuts
 
 Script | Fn | Script | Fn | Script | Fn
@@ -204,4 +216,4 @@ O parte din codul din acest repository se bazează pe cod din postări de pe blo
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 15 iulie 2020, 21:42 (UTC).
+README-ro.md • 16 iulie 2020, 06:57 (UTC).
