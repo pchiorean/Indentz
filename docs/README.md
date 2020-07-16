@@ -212,7 +212,7 @@ Script | Fn | Script | Fn | Script | Fn
 
 ## License
 
-Some of the code contained in this repository is based on code in blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. "BatchResize" is a modified version of "Redimensionari v7" by Dan Ichimescu. The rest of the code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)).
+Some of the code contained in this repository is based on code in blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. The rest of the code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)).
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
