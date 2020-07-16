@@ -1,5 +1,5 @@
 /*
-	Show Used fonts 1.1.2
+	Show Used fonts 1.1.3
 	© July 2020, Paul Chiorean
 	Shows all fonts used in the current document.
 */
@@ -11,19 +11,19 @@ var fontName1 = [], fontName2 = [], fontName3 = [], fontName4 = [], fontName5 = 
 for (var i = 0; i < usedFonts.length; i++) {
 	switch (String(usedFonts[i].status)) {
 		case "INSTALLED":
-			fontName1.push(usedFonts[i].fontFamily + " " + usedFonts[i].fontStyleName);
+			fontName1.push(usedFonts[i].fontFamily + "\t" + usedFonts[i].fontStyleName);
 			break;
 		case "SUBSTITUTED":
-			fontName2.push(usedFonts[i].fontFamily + " " + usedFonts[i].fontStyleName);
+			fontName2.push(usedFonts[i].fontFamily + "\t" + usedFonts[i].fontStyleName);
 			break;
 		case "FAUXED":
-			fontName3.push(usedFonts[i].fontFamily + " " + usedFonts[i].fontStyleName);
+			fontName3.push(usedFonts[i].fontFamily + "\t" + usedFonts[i].fontStyleName);
 			break;
 		case "NOT_AVAILABLE":
-			fontName4.push(usedFonts[i].fontFamily + " " + usedFonts[i].fontStyleName);
+			fontName4.push(usedFonts[i].fontFamily + "\t" + usedFonts[i].fontStyleName);
 			break;
 		case "UNKNOWN":
-			fontName5.push(usedFonts[i].fontFamily + " " + usedFonts[i].fontStyleName);
+			fontName5.push(usedFonts[i].fontFamily + "\t" + usedFonts[i].fontStyleName);
 			break;
 	}
 }
