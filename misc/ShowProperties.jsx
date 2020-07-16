@@ -1,5 +1,5 @@
 /*
-	Show properties 1.2.1
+	Show properties 1.2.2
 	© July 2020, Paul Chiorean
 	Shows all properties and methods of a selected object.
 */
@@ -19,11 +19,11 @@ ShowProps(obj);
 function ShowProps(obj) {
 	var resultArray = [];
 	// Object
-	resultArray.push('\rObject:\r');
+	resultArray.push('\rOBJECT:\r');
 	resultArray.push(obj.reflect.name);
 	resultArray.push(obj.toSource());
 	// Properties
-	resultArray.push('\rProperties:\r');
+	resultArray.push('\rPROPERTIES:\r');
 	var props = obj.reflect.properties.sort();
 	for (var i = 0; i < props.length; i++) {
 		if (props[i].toString() === "__proto__" || props[i].toString() === "reflect" || props[i].toString() === "properties") continue;
@@ -32,7 +32,7 @@ function ShowProps(obj) {
 		else resultArray.push(props[i] + " = " + result);
 	}
 	// Methods
-	resultArray.push('\rMethods:\r');
+	resultArray.push('\rMETHODS:\r');
 	var props = obj.reflect.methods.sort();
 	for (var i = 0; i < props.length; i++) {
 		if (props[i].toString() === "==" || props[i].toString() === "===") continue;
