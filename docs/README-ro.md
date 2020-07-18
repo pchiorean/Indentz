@@ -79,12 +79,7 @@ Puteți utiliza **ShowFonts** pentru a obține o listă cu fonturile folosite (t
 
 ### CleanupLabels
 
-Uneori se refolosesc obiecte care au o etichetă atașată _(Script Label)_, și asta poate crea probleme ulterior.
-
-* **CleanupLabels** șterge toate etichetele dintr-un document.
-
-* **CleanupLabelsBR** șterge doar etichetele folosite de scriptul **BatchResize**:
-  > `alignL`, `alignR`, `alignT`, `alignB`, `alignTL`, `alignBL`, `alignTR`, `alignBR`, `alignC`, `alignCh`, `alignCv`, `fit`, `bleed`.
+Uneori se refolosesc obiecte care au o etichetă atașată _(Script Label)_, și asta poate crea probleme ulterior. **CleanupLabels** șterge toate etichetele dintr-un document.
 
 ### CleanupSwatches
 
@@ -148,13 +143,6 @@ _Auto-Sizing Type_ va fi setat _Height and width_ dacă textul are un singur râ
 
 <!-- ![](img/textautosize.gif) -->
 
-<!-- ### Seria Grid
-
-Creează grile de poziționare pentru anumite branduri.
-
-* **GridEPOK** setează marginile paginii și numărul de coloane conform grilei EPOK.
-
-* **GridLSBC** setează marginile paginii și câteva linii de ghidaj conform ghidului Lucky Strike BC. -->
 ### Seria Print
 
 Fac câteva pregătiri pentru export și pot fi rulate în **batch_convert.jsx**.

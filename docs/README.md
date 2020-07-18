@@ -79,12 +79,7 @@ You can use **ShowFonts** to get a tab delimited list of used fonts.
 
 ### CleanupLabels
 
-Sometimes objects that have a label attached _(Script Label)_ are reused, which potentially creates problems later.
-
-* **CleanupLabels** deletes all labels from a document.
-
-* **CleanupLabelsBR** deletes only the tags used by the **BatchResize** script:
-  > `alignL`, `alignR`, `alignT`, `alignB`, `alignTL`, `alignBL`, `alignTR`, `alignBR`, `alignC`, `alignCh`, `alignCv`, `fit`, `bleed`.
+Sometimes objects that have a label attached _(Script Label)_ are reused, which potentially creates problems later. **CleanupLabels** deletes all labels from a document.
 
 ### CleanupSwatches
 
@@ -147,14 +142,6 @@ Fit the frame to the text and set auto-sizing, vertical justification and paragr
 _Auto-Sizing Type_ will be set to _Height and width_ if the text has only one line. If it has multiple lines, the first run will set it to _Height only_, the second run to _Height and width_ (in which case care must be taken that the text is broken manually).
 
 <!-- ![](img/textautosize.gif) -->
-
-<!-- ### Grid series
-
-Create positioning grids for certain brands.
-
-* **GridEPOK** sets the page margins and the number of columns according to the EPOK grid system.
-
-* **GridLSBC** sets the page margins and some guides according to Lucky Strike BC guidelines. -->
 
 ### Print series
 
