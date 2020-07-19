@@ -1,5 +1,5 @@
 /*
-	Show properties 1.2.2
+	Show properties 1.2.3
 	© July 2020, Paul Chiorean
 	Shows all properties and methods of a selected object.
 */
@@ -50,6 +50,7 @@ function AlertScroll(title, input) {
 	var list = w.add("edittext", undefined, input, { multiline: true, scrolling: true });
 	list.maximumSize.height = app.documents.length > 0 ? app.activeWindow.bounds[2] * .75 : 880;
 	list.minimumSize.width = 650;
+	list.active = true;
 	w.add("button", undefined, "Close", { name: "ok" });
 	w.show();
 }
