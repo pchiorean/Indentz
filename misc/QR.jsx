@@ -1,5 +1,5 @@
 /*
-	QR code v1.2.1
+	QR code v1.2.2
 	© July 2020, Paul Chiorean
 	Adds a QR code to the current document or saves it in a separate file.
 	If "QR.txt" is found, batch process it.
@@ -24,8 +24,7 @@ function BatchQR() {
 		infoLine[0] = infoLine[0].match(/_QR\.indd$/g) ? infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
 		MakeQRFile(infoLine[1], infoLine[0]);
 	}
-	infoFile.close();
-	doc.close();
+	infoFile.close(); doc.close();
 	alert("Batch processed " + line + " records from \'QR.txt\'.");
 }
 
@@ -127,7 +126,7 @@ function MakeQROnPage(QRLabel) {
 
 function MakeQRFile(QRLabel, fn) {
 	if (!fn) { var fn = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd" }
-	var target = app.documents.add(false);
+	var target = app.documents.add();
 	var page = target.pages[0];
 	var infoLayer = MakeInfoLayer(target);
 	var label = page.textFrames.add({
@@ -182,7 +181,7 @@ function MakeQRFile(QRLabel, fn) {
 	var targetFolder = Folder(doc.filePath + "/QR Codes");
 	targetFolder.create();
 	target.save(File(targetFolder + "/" + fn));
-	target.close();
+	if (!label.overflows) target.close();
 }
 
 function MakeInfoLayer(doc) {
