@@ -353,7 +353,19 @@
 			<p><strong>PageRatios</strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus.</p>
 		</li>
 		<li>
-			<p><strong>QR</strong> adaugă un cod QR în documentul curent sau îl salvează într-un fișier separat.</p>
+			<p><strong>QR</strong> adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într-un
+				fișier separat. Are două moduri de operare, modul batch sau modul manual:</p>
+			<ul>
+				<li>
+					<p>Batch: dacă găsește un fișier numit <code>QR.txt</code> în același folder, îl procesează. Trebuie
+						să fie un fișier TSV <em>(tab-separated values)</em>; prima coloană e numele fișierului, a doua
+						codul QR. Prima linie (antetul) este ignorată.</p>
+				</li>
+				<li>
+					<p>Manual: în caz contrar, solicită codul și îl adaugă pe pagină sau într-un fișier separat, în
+						funcție de un switch.</p>
+				</li>
+			</ul>
 		</li>
 		<li>
 			<p><strong>ShowFonts</strong> afișează toate fonturile utilizate în documentul curent.</p>
@@ -460,7 +472,7 @@
 	<p>Vă rog să-mi trimiteți un e-mail la &lt;jpeg AT basement.ro&gt; sau <a
 			href="https://github.com/pchiorean/Indentz/issues">raportați o problemă pe Github</a> dacă întâmpinați
 		probleme sau aveți sugestii.</p>
-	<p>README-ro.md • 20 iulie 2020, 12:47 (UTC).</p>
+	<p>README-ro.md • 20 iulie 2020, 16:29 (UTC).</p>
 
 </body>
 

@@ -170,7 +170,11 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
 * **PageRatios** calculates the ratio of each page and displays it in the upper left corner.
 
-* **QR** adds a QR code to the current document or saves it in a separate file.
+* **QR** adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, batch or manual mode:
+
+  * Batch: if a file named `QR.txt` is found in the same folder, it processes it. It must be a 2 column TSV *(tab-separated values)* file; the first column is the filename, the second the QR code. The first line (the header) is ignored.
+
+  * Manually: otherwise, it asks for the QR text and adds the code on the page or a separate file, depending on a switch.
 
 * **ShowFonts** shows all fonts used in the current document.
 
@@ -205,4 +209,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 20 July 2020, 12:47 (UTC).
+README.md • 20 July 2020, 16:29 (UTC).

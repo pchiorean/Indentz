@@ -170,7 +170,11 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 * **PageRatios** calculează rația fiecărei pagini și o afișează în colțul din stânga sus.
 
-* **QR** adaugă un cod QR în documentul curent sau îl salvează într-un fișier separat.
+* **QR** adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într-un fișier separat. Are două moduri de operare, modul batch sau modul manual:
+
+  * Batch: dacă găsește un fișier numit `QR.txt` în același folder, îl procesează. Trebuie să fie un fișier TSV *(tab-separated values)*; prima coloană e numele fișierului, a doua codul QR. Prima linie (antetul) este ignorată.
+
+  * Manual: în caz contrar, solicită codul și îl adaugă pe pagină sau într-un fișier separat, în funcție de un switch.
 
 * **ShowFonts** afișează toate fonturile utilizate în documentul curent.
 
@@ -205,4 +209,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 20 iulie 2020, 12:47 (UTC).
+README-ro.md • 20 iulie 2020, 16:29 (UTC).
