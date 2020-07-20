@@ -1,5 +1,5 @@
 /*
-	QR code v1.1.0
+	QR code v1.2.1
 	© July 2020, Paul Chiorean
 	Adds a QR code to the current document or saves it in a separate file.
 	If "QR.txt" is found, batch process it.
@@ -21,10 +21,12 @@ function BatchQR() {
 		if (!infoLine[0] || !infoLine[1]) {
 			alert ("Missing data in record " + line + "."); exit();
 		}
-		MakeQRFile(infoLine[1], File(doc.filePath + "/" + infoLine[0] + "_QR.indd"));
+		infoLine[0] = infoLine[0].match(/_QR\.indd$/g) ? infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
+		MakeQRFile(infoLine[1], infoLine[0]);
 	}
 	infoFile.close();
-	alert("Found \"QR.txt\", processed " + line + " records.");
+	doc.close();
+	alert("Batch processed " + line + " records from \'QR.txt\'.");
 }
 
 function ManuallyQR() {
@@ -123,9 +125,8 @@ function MakeQROnPage(QRLabel) {
 	}
 }
 
-function MakeQRFile(QRLabel, file) {
-	if (!file) { var file = File(doc.filePath + "/" +
-		doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd") }
+function MakeQRFile(QRLabel, fn) {
+	if (!fn) { var fn = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd" }
 	var target = app.documents.add(false);
 	var page = target.pages[0];
 	var infoLayer = MakeInfoLayer(target);
@@ -177,7 +178,10 @@ function MakeQRFile(QRLabel, file) {
 	target.documentPreferences.pageWidth = page.bounds[3] - page.bounds[1];
 	target.documentPreferences.pageHeight = page.bounds[2] - page.bounds[0];
 	QR.ungroup();
-	target.save(file);
+
+	var targetFolder = Folder(doc.filePath + "/QR Codes");
+	targetFolder.create();
+	target.save(File(targetFolder + "/" + fn));
 	target.close();
 }
 
