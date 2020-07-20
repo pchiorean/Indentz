@@ -170,7 +170,7 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
 * **`PageRatios.jsx`** calculates the ratio of each page and displays it in the upper left corner.
 
-* **`QR.jsx`** adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, batch or manual mode:
+* **`QR.jsx`** adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, batch or manual:
 
   * Batch: if a file named `QR.txt` is found in the same folder, it processes it. It must be a 2 column TSV *(tab-separated values)* file; the first column is the filename, the second the QR code. The first line (the header) is ignored.
 
