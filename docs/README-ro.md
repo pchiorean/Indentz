@@ -199,8 +199,8 @@ Script | Fn | Script | Fn | Script | Fn
 
 ## Licență
 
-O parte din codul din acest repository se bazează pe cod din postări de pe bloguri, postări de pe forumuri sau din tutoriale de Dave Saunders, Marc Autret, Peter Werner, Richard Harrington și Peter Kahrel. Restul codului este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)).
+O parte din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Dave Saunders, Marc Autret, Peter Werner, Richard Harrington și Peter Kahrel. Restul codului este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)).
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 16 iulie 2020, 10:18 (UTC).
+README-ro.md • 20 iulie 2020, 09:34 (UTC).
