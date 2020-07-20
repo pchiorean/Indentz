@@ -170,6 +170,8 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 * **PageRatios** calculează rația fiecărei pagini și o afișează în colțul din stânga sus.
 
+* **QR** adaugă un cod QR în documentul curent sau îl salvează într-un fișier separat.
+
 * **ShowFonts** afișează toate fonturile utilizate în documentul curent.
 
 * **ShowProfiles** afișează toate profilele de culori disponibile.
@@ -203,4 +205,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 20 iulie 2020, 09:34 (UTC).
+README-ro.md • 20 iulie 2020, 12:47 (UTC).

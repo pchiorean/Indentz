@@ -1,405 +1,467 @@
 <!DOCTYPE html>
-    <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Indentz</title>
-        <style>
-</style>
-        
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-<style>
-            body {
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
-                font-size: 14px;
-                line-height: 1.6;
-            }
-        </style>
-        <style>
-.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
-</style>
-        
-        
-        
-    </head>
-    <body class="vscode-light">
-        <h1 id="indentz">Indentz</h1>
-<p>Colecție de scripturi InDesign pentru operații simple și repetitive: &quot;curățarea&quot; documentului, crearea unor layere și culori speciale, dimensionarea obiectelor la geometria paginii sau modificarea ei, pregătire pentru tipar, un zoom îmbunătățit.</p>
-<p>O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O sugestie de configurare găsiți în secțiunea <a href="#shortcuts">Shortcuts</a>. Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong>batch_convert.jsx</strong></a> de Peter Kahrel.</p>
-<h2 id="descriere">Descriere</h2>
-<h3 id="doccleanupdocdefaults">DocCleanup/DocDefaults</h3>
-<p>Sunt două scripturi gândite să fie folosite împreună – unul &quot;curăță&quot;, celălalt &quot;pregătește terenul&quot;.</p>
-<p>Mai întâi schimbă câteva setări după preferințele mele, după cum urmează:</p>
-<blockquote>
-<p><strong>Rulers:</strong> Reset Zero Point <br>
-<strong>Rulers Units:</strong> Millimeters <br>
-<strong>View:</strong> Show Rulers <br>
-<strong>View:</strong> Show Frame Edges <br>
-<strong>Document Intent:</strong> Print <br>
-<strong>Transparency Blend Space:</strong> CMYK <br>
-<strong>CMYK Profile:</strong> ISO Coated v2 (ECI) <br>
-<strong>RGB Profile:</strong> sRGB IEC61966-2.1 <br>
-<strong>Grids &amp; Guides:</strong> Show Guides <br>
-<strong>Grids &amp; Guides:</strong> Unlock Guides <br>
-<strong>Guides &amp; Pasteboard: Margins:</strong> H 150 mm, V 25 mm <br>
-<strong>Guides &amp; Pasteboard: Preview Background:</strong> Light Gray <br>
-<strong>Keyboard Increments: Cursor Key:</strong> 0.2 mm <br>
-<strong>Keyboard Increments: Size/Leading:</strong> 0.5 pt <br>
-<strong>Keyboard Increments: Baseline Shift:</strong> 0.1 pt <br>
-<strong>Keyboard Increments: Kerning/Tracking:</strong> 5/1000 em <br>
-<strong>Layers:</strong> Ungroup Remembers Layers <br>
-<strong>Layers:</strong> Paste Remembers Layers <br>
-<strong>Transform Reference Point:</strong> Center <br>
-<strong>Type Options:</strong> Use Typographer's Quotes <br>
-<strong>Type Options:</strong> Apply Leading to Entire Paragraphs</p>
-</blockquote>
-<p>După care:</p>
-<ul>
-<li>
-<p><strong>DocCleanup</strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%, șterge toate liniile de ghidaj.</p>
-</li>
-<li>
-<p><strong>DocDefaults</strong> creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite și stabilește geometria paginii din numele fișierului.</p>
-<p><img src="img/docdefaults.png" alt="Culori și layere"></p>
-<p>Scriptul combină câteva layere similare, după cum urmează:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Layer</th>
-<th style="text-align:left">Combinat cu</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible area, Visible area</td>
-<td style="text-align:left"><code>safe area</code></td>
-</tr>
-<tr>
-<td style="text-align:left">Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe</td>
-<td style="text-align:left"><code>dielines</code></td>
-</tr>
-<tr>
-<td style="text-align:left">UV, Varnish</td>
-<td style="text-align:left"><code>varnish</code></td>
-</tr>
-<tr>
-<td style="text-align:left">WHW, WH, wh, hw, Hw Logo</td>
-<td style="text-align:left"><code>HW</code></td>
-</tr>
-<tr>
-<td style="text-align:left">Type, TEXT, TEXTES, Text, text, txt, copy</td>
-<td style="text-align:left"><code>type</code></td>
-</tr>
-<tr>
-<td style="text-align:left">Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer_lucru</td>
-<td style="text-align:left"><code>artwork</code></td>
-</tr>
-<tr>
-<td style="text-align:left">background, BACKGROUND, BG, HG, Hintergrund</td>
-<td style="text-align:left"><code>bg</code></td>
-</tr>
-</tbody>
-</table>
-</li>
-</ul>
-<h3 id="cleanupfonts">CleanupFonts</h3>
-<p>Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV <em>(tab-separated values)</em> cu 4 coloane, cu același nume ca scriptul. Prima linie (antetul) este ignorată. Lista curentă este următoarea:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Nume vechi</th>
-<th style="text-align:left">Stil</th>
-<th style="text-align:left">Nume nou</th>
-<th style="text-align:left">Stil</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">Akzidenz Grotesk</td>
-<td style="text-align:left">Bold</td>
-<td style="text-align:left"><strong>AkzidenzGrotesk</strong></td>
-<td style="text-align:left"><strong>Bold</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">Arial</td>
-<td style="text-align:left">Bold</td>
-<td style="text-align:left"><strong>Helvetica Neue</strong></td>
-<td style="text-align:left"><strong>Bold</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">FoundryGridnik</td>
-<td style="text-align:left">Regular</td>
-<td style="text-align:left"><strong>Foundry Gridnik</strong></td>
-<td style="text-align:left"><strong>Regular</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">FoundryGridnik</td>
-<td style="text-align:left">Bold</td>
-<td style="text-align:left"><strong>Foundry Gridnik</strong></td>
-<td style="text-align:left"><strong>Bold</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">FoundryGridnik</td>
-<td style="text-align:left">Medium</td>
-<td style="text-align:left"><strong>Foundry Gridnik</strong></td>
-<td style="text-align:left"><strong>Medium</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">Gotham Light</td>
-<td style="text-align:left">Regular</td>
-<td style="text-align:left"><strong>Gotham</strong></td>
-<td style="text-align:left"><strong>Light</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">Gotham Book</td>
-<td style="text-align:left">Regular</td>
-<td style="text-align:left"><strong>Gotham</strong></td>
-<td style="text-align:left"><strong>Book</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">Gotham Medium</td>
-<td style="text-align:left">Regular</td>
-<td style="text-align:left"><strong>Gotham</strong></td>
-<td style="text-align:left"><strong>Medium</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">Gotham Bold</td>
-<td style="text-align:left">Regular</td>
-<td style="text-align:left"><strong>Gotham</strong></td>
-<td style="text-align:left"><strong>Bold</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">Gotham Black</td>
-<td style="text-align:left">Regular</td>
-<td style="text-align:left"><strong>Gotham</strong></td>
-<td style="text-align:left"><strong>Black</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">Helvetica Neue LT Std</td>
-<td style="text-align:left">65 Medium</td>
-<td style="text-align:left"><strong>Helvetica Neue</strong></td>
-<td style="text-align:left"><strong>Medium</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">Helvetica Neue LT Std</td>
-<td style="text-align:left">75 Bold</td>
-<td style="text-align:left"><strong>Helvetica Neue</strong></td>
-<td style="text-align:left"><strong>Bold</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">Trade Gothic LT Std</td>
-<td style="text-align:left">Bold Condensed No. 20</td>
-<td style="text-align:left"><strong>Trade Gothic for LS</strong></td>
-<td style="text-align:left"><strong>Bold Condensed No. 20</strong></td>
-</tr>
-<tr>
-<td style="text-align:left">Trade Gothic LT Std</td>
-<td style="text-align:left">Condensed No. 18</td>
-<td style="text-align:left"><strong>Trade Gothic for LS</strong></td>
-<td style="text-align:left"><strong>Condensed No. 18</strong></td>
-</tr>
-</tbody>
-</table>
-<p>Puteți utiliza <strong>ShowFonts</strong> pentru a obține o listă cu fonturile folosite (tab separated).</p>
-<h3 id="cleanuplabels">CleanupLabels</h3>
-<p>Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. <strong>CleanupLabels</strong> șterge toate etichetele dintr-un document.</p>
-<h3 id="cleanupswatches">CleanupSwatches</h3>
-<p>Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește culorile CMYK după formula &quot;C= M= Y= K=&quot; și șterge culorile nefolosite. Culorile spot rămân neschimbate.</p>
-<!-- ![](img/cleanupswatches.gif) -->
-<h3 id="seria-fittopagefittospread">Seria FitToPage/FitToSpread</h3>
-<p>Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame-urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într-un <em>clipping frame</em> și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.</p>
-<ul>
-<li>
-<p><strong>FitToPage/Margins/Bleed</strong> constrâng dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii.</p>
-</li>
-<li>
-<p><strong>FitToSpread/Margins/Bleed</strong> fac același lucru pentru paginile grupate într-un spread.</p>
-</li>
-<li>
-<p><strong>FitToPageBleedForced</strong> și <strong>FitToPageSpreadForced</strong> redimensionează exact la bleedul paginii sau ale spreadului. Sunt utile, de exemplu, pentru imaginea de background.</p>
-</li>
-<li>
-<p><strong>FitUndo</strong>: dacă doriți să restaurați toate obiectele simultan.</p>
-</li>
-</ul>
-<!-- ![](img/fittopage.gif) -->
-<h3 id="seria-scaletopage">Seria ScaleToPage</h3>
-<p>Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar.</p>
-<ul>
-<li>
-<p><strong>ScaleToPageSize</strong> și <strong>ScaleToPageMargins</strong> scalează la dimensiunile paginii sau marginii.</p>
-</li>
-<li>
-<p>Variantele <strong>H</strong> (height) și <strong>W</strong> (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.</p>
-</li>
-</ul>
-<!-- ![](img/scaletopage.gif) -->
-<h3 id="seria-pagesize">Seria PageSize</h3>
-<p>Redimensionează paginile documentului în funcție de numele fișierului, de marginile paginii, sau de obiectele selectate.</p>
-<ul>
-<li>
-<p><strong>PageSizeFromFilename</strong> caută în numele fișierului perechi de numere de genul &quot;000x000&quot; (unde &quot;000&quot; înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de &quot;mm&quot; sau &quot;cm&quot;). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. &quot;000x000_000x000&quot;), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.</p>
-<p>Exemple:</p>
-<blockquote>
-<p>Filename1_<strong>1400x400_700x137_5</strong>mm.indd <br>
-Filename2_<strong>597x517_577x500.5_3</strong>mm V4.indd</p>
-</blockquote>
-</li>
-<li>
-<p><strong>PageSizeFromMargins</strong> redimensionează fiecare pagină la marginile acesteia.</p>
-</li>
-<li>
-<p><strong>PageSizeFromSelection</strong> redimensionează pagina curentă la obiectele selectate (similar cu <strong>Artboards &gt; Fit to Selected Art</strong> din Illustrator).</p>
-</li>
-</ul>
-<h3 id="pagemarginsfromselection">PageMarginsFromSelection</h3>
-<p>Setează marginile paginii la dimensiunile selecției.</p>
-<h3 id="seria-textautosize">Seria TextAutosize</h3>
-<p>&quot;Strâng&quot; chenarul la text și setează dimensionarea automată, justificarea verticală și alinierea paragrafului:</p>
-<ul>
-<li>
-<p><strong>TextAutosize</strong>: <em>Auto-Sizing: center. Vertical Justification: center. Paragraph: align center.</em></p>
-</li>
-<li>
-<p><strong>TextAutosizeL</strong>: <em>Auto-Sizing: top-left. Vertical Justification: top. Paragraph: align left.</em></p>
-</li>
-<li>
-<p><strong>TextAutosizeR</strong>: <em>Auto-Sizing: top-right. Vertical Justification: top. Paragraph: align right.</em></p>
-</li>
-</ul>
-<p><em>Auto-Sizing Type</em> va fi setat <em>Height and width</em> dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta <em>Height only</em>, a doua <em>Height and width</em> (caz în care trebuie avut grijă ca textul să fie rupt pe rânduri manual).</p>
-<!-- ![](img/textautosize.gif) -->
-<h3 id="seria-print">Seria Print</h3>
-<p>Fac câteva pregătiri pentru export și pot fi rulate în <strong>batch_convert.jsx</strong>.</p>
-<ul>
-<li>
-<p><strong>PrepareForPrint</strong> face următoarele:</p>
-<ul>
-<li>ascunde layerul <code>safe area</code>;</li>
-<li>mută marcajele pentru lac UV de pe <code>varnish</code> pe spreaduri separate;</li>
-<li>mută ștanțele de pe <code>dielines</code> pe spreaduri separate.</li>
-</ul>
-</li>
-<li>
-<p><strong>SafeArea</strong> creează un frame de dimensiunea marginilor paginii pe layerul <code>safe area</code>. Culoarea lui este un swatch, <code>Safe area</code>, care dacă nu există deja va fi creat cu valoarea &quot;C=0 M=100 Y=0 K=0&quot;.</p>
-</li>
-<li>
-<p><strong>SafeAreaHideLayer</strong> și <strong>SafeAreaShowLayer</strong> ascund sau afișează <code>safe area</code>.</p>
-</li>
-</ul>
-<p>Scripturile detectează nume alternative gen <code>visible</code>, <code>vizibil</code>, <code>vis. area</code> pentru <code>safe area</code>, sau <code>diecut</code>, <code>die cut</code>, <code>cut lines</code>, <code>stanze</code> pentru <code>dielines</code>.</p>
-<h3 id="zoomtoselection">ZoomToSelection</h3>
-<p>Asemănător cu <strong>Fit Selection in Window</strong> (⌥⌘=), dar cu câteva îmbunătățiri:</p>
-<ul>
-<li>aduce selecția puțin mai aproape;</li>
-<li>dacă cursorul e în text, face zoom la întreg cadrul;</li>
-<li>fără nimic selectat face vizibil întreg spreadul.</li>
-</ul>
-<h3 id="diverse">Diverse</h3>
-<ul>
-<li>
-<p><strong>PageRatios</strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus.</p>
-</li>
-<li>
-<p><strong>ShowFonts</strong> afișează toate fonturile utilizate în documentul curent.</p>
-</li>
-<li>
-<p><strong>ShowProfiles</strong> afișează toate profilele de culori disponibile.</p>
-</li>
-<li>
-<p><strong>ShowProperties</strong> afișează proprietățile și metodele unui obiect selectat (util pentru depanare).</p>
-</li>
-</ul>
-<h2 id="shortcuts">Shortcuts</h2>
-<table>
-<thead>
-<tr>
-<th style="text-align:left">Script</th>
-<th style="text-align:right">Fn</th>
-<th style="text-align:left">Script</th>
-<th style="text-align:right">Fn</th>
-<th style="text-align:left">Script</th>
-<th style="text-align:right">Fn</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left"><strong>DocCleanup</strong></td>
-<td style="text-align:right">F2</td>
-<td style="text-align:left"><strong>DocDefaults</strong></td>
-<td style="text-align:right">⌥F2</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>FitToPage</strong></td>
-<td style="text-align:right">F11</td>
-<td style="text-align:left"><strong>FitToPageMargins</strong></td>
-<td style="text-align:right">⌥F11</td>
-<td style="text-align:left"><strong>FitToPageBleed</strong></td>
-<td style="text-align:right">⇧F11</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-<td style="text-align:left"><strong>FitToPageBleedForced</strong></td>
-<td style="text-align:right">⇧⌘F11</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>FitToSpread</strong></td>
-<td style="text-align:right">F12</td>
-<td style="text-align:left"><strong>FitToSpreadMargins</strong></td>
-<td style="text-align:right">⌥F12</td>
-<td style="text-align:left"><strong>FitToSpreadBleed</strong></td>
-<td style="text-align:right">⇧F12</td>
-</tr>
-<tr>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-<td style="text-align:left"><strong>FitToSpreadBleedForced</strong></td>
-<td style="text-align:right">⇧⌘F12</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>ScaleToPageSize</strong></td>
-<td style="text-align:right">F5</td>
-<td style="text-align:left"><strong>ScaleToPageMargins</strong></td>
-<td style="text-align:right">⌥F5</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>TextAutosize</strong></td>
-<td style="text-align:right">F6</td>
-<td style="text-align:left"><strong>TextAutosizeL</strong></td>
-<td style="text-align:right">⌥F6</td>
-<td style="text-align:left"><strong>TextAutosizeR</strong></td>
-<td style="text-align:right">⌘F6</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>ZoomToSelection</strong></td>
-<td style="text-align:right">F4</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-</tr>
-</tbody>
-</table>
-<!-- ![](img/shortcuts.png) -->
-<h2 id="instalare">Instalare</h2>
-<ol>
-<li>Deschideți <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
-<li>Faceți clic dreapta pe folderul <strong>User</strong> și selectați <strong>Reveal in Finder/Explorer</strong>.</li>
-<li>Copiați fișierele în acest folder.</li>
-</ol>
-<h2 id="licență">Licență</h2>
-<p>O parte din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Dave Saunders, Marc Autret, Peter Werner, Richard Harrington și Peter Kahrel. Restul codului este publicat sub licența MIT (<a href="../LICENSE.txt">LICENSE.txt</a>).</p>
-<p>Vă rog să-mi trimiteți un e-mail la &lt;jpeg AT basement.ro&gt; sau <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă pe Github</a> dacă întâmpinați probleme sau aveți sugestii.</p>
-<p>README-ro.md • 20 iulie 2020, 09:34 (UTC).</p>
+<html>
 
-    </body>
-    </html>
+<head>
+	<meta charset="UTF-8">
+	<title>Indentz</title>
+	<style>
+	</style>
+
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+	<link rel="stylesheet"
+		href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
+	<style>
+		body {
+			font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
+			font-size: 14px;
+			line-height: 1.6;
+		}
+	</style>
+	<style>
+		.task-list-item {
+			list-style-type: none;
+		}
+
+		.task-list-item-checkbox {
+			margin-left: -20px;
+			vertical-align: middle;
+		}
+	</style>
+
+
+
+</head>
+
+<body class="vscode-light">
+	<h1 id="indentz">Indentz</h1>
+	<p>Colecție de scripturi InDesign pentru operații simple și repetitive: &quot;curățarea&quot; documentului, crearea
+		unor layere și culori speciale, dimensionarea obiectelor la geometria paginii sau modificarea ei, pregătire
+		pentru tipar, un zoom îmbunătățit.</p>
+	<p>O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O sugestie de configurare găsiți în
+		secțiunea <a href="#shortcuts">Shortcuts</a>. Câteva pot fi rulate în scriptul <a
+			href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong>batch_convert.jsx</strong></a>
+		de Peter Kahrel.</p>
+	<h2 id="descriere">Descriere</h2>
+	<h3 id="doccleanupdocdefaults">DocCleanup/DocDefaults</h3>
+	<p>Sunt două scripturi gândite să fie folosite împreună – unul &quot;curăță&quot;, celălalt &quot;pregătește
+		terenul&quot;.</p>
+	<p>Mai întâi schimbă câteva setări după preferințele mele, după cum urmează:</p>
+	<blockquote>
+		<p><strong>Rulers:</strong> Reset Zero Point <br>
+			<strong>Rulers Units:</strong> Millimeters <br>
+			<strong>View:</strong> Show Rulers <br>
+			<strong>View:</strong> Show Frame Edges <br>
+			<strong>Document Intent:</strong> Print <br>
+			<strong>Transparency Blend Space:</strong> CMYK <br>
+			<strong>CMYK Profile:</strong> ISO Coated v2 (ECI) <br>
+			<strong>RGB Profile:</strong> sRGB IEC61966-2.1 <br>
+			<strong>Grids &amp; Guides:</strong> Show Guides <br>
+			<strong>Grids &amp; Guides:</strong> Unlock Guides <br>
+			<strong>Guides &amp; Pasteboard: Margins:</strong> H 150 mm, V 25 mm <br>
+			<strong>Guides &amp; Pasteboard: Preview Background:</strong> Light Gray <br>
+			<strong>Keyboard Increments: Cursor Key:</strong> 0.2 mm <br>
+			<strong>Keyboard Increments: Size/Leading:</strong> 0.5 pt <br>
+			<strong>Keyboard Increments: Baseline Shift:</strong> 0.1 pt <br>
+			<strong>Keyboard Increments: Kerning/Tracking:</strong> 5/1000 em <br>
+			<strong>Layers:</strong> Ungroup Remembers Layers <br>
+			<strong>Layers:</strong> Paste Remembers Layers <br>
+			<strong>Transform Reference Point:</strong> Center <br>
+			<strong>Type Options:</strong> Use Typographer's Quotes <br>
+			<strong>Type Options:</strong> Apply Leading to Entire Paragraphs</p>
+	</blockquote>
+	<p>După care:</p>
+	<ul>
+		<li>
+			<p><strong>DocCleanup</strong> șterge culorile, layerele și paginile neutilizate, deblochează toate
+				elementele, le resetează scalarea la 100%, șterge toate liniile de ghidaj.</p>
+		</li>
+		<li>
+			<p><strong>DocDefaults</strong> creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă
+				sau nedorite și stabilește geometria paginii din numele fișierului.</p>
+			<p><img src="img/docdefaults.png" alt="Culori și layere"></p>
+			<p>Scriptul combină câteva layere similare, după cum urmează:</p>
+			<table>
+				<thead>
+					<tr>
+						<th style="text-align:left">Layer</th>
+						<th style="text-align:left">Combinat cu</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="text-align:left">Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible
+							area, Visible area</td>
+						<td style="text-align:left"><code>safe area</code></td>
+					</tr>
+					<tr>
+						<td style="text-align:left">Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe
+						</td>
+						<td style="text-align:left"><code>dielines</code></td>
+					</tr>
+					<tr>
+						<td style="text-align:left">UV, Varnish</td>
+						<td style="text-align:left"><code>varnish</code></td>
+					</tr>
+					<tr>
+						<td style="text-align:left">WHW, WH, wh, hw, Hw Logo</td>
+						<td style="text-align:left"><code>HW</code></td>
+					</tr>
+					<tr>
+						<td style="text-align:left">Type, TEXT, TEXTES, Text, text, txt, copy</td>
+						<td style="text-align:left"><code>type</code></td>
+					</tr>
+					<tr>
+						<td style="text-align:left">Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer_lucru
+						</td>
+						<td style="text-align:left"><code>artwork</code></td>
+					</tr>
+					<tr>
+						<td style="text-align:left">background, BACKGROUND, BG, HG, Hintergrund</td>
+						<td style="text-align:left"><code>bg</code></td>
+					</tr>
+				</tbody>
+			</table>
+		</li>
+	</ul>
+	<h3 id="cleanupfonts">CleanupFonts</h3>
+	<p>Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV <em>(tab-separated
+			values)</em> cu 4 coloane, cu același nume ca scriptul. Prima linie (antetul) este ignorată. Lista curentă
+		este următoarea:</p>
+	<table>
+		<thead>
+			<tr>
+				<th style="text-align:left">Nume vechi</th>
+				<th style="text-align:left">Stil</th>
+				<th style="text-align:left">Nume nou</th>
+				<th style="text-align:left">Stil</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align:left">Akzidenz Grotesk</td>
+				<td style="text-align:left">Bold</td>
+				<td style="text-align:left"><strong>AkzidenzGrotesk</strong></td>
+				<td style="text-align:left"><strong>Bold</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">Arial</td>
+				<td style="text-align:left">Bold</td>
+				<td style="text-align:left"><strong>Helvetica Neue</strong></td>
+				<td style="text-align:left"><strong>Bold</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">FoundryGridnik</td>
+				<td style="text-align:left">Regular</td>
+				<td style="text-align:left"><strong>Foundry Gridnik</strong></td>
+				<td style="text-align:left"><strong>Regular</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">FoundryGridnik</td>
+				<td style="text-align:left">Bold</td>
+				<td style="text-align:left"><strong>Foundry Gridnik</strong></td>
+				<td style="text-align:left"><strong>Bold</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">FoundryGridnik</td>
+				<td style="text-align:left">Medium</td>
+				<td style="text-align:left"><strong>Foundry Gridnik</strong></td>
+				<td style="text-align:left"><strong>Medium</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">Gotham Light</td>
+				<td style="text-align:left">Regular</td>
+				<td style="text-align:left"><strong>Gotham</strong></td>
+				<td style="text-align:left"><strong>Light</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">Gotham Book</td>
+				<td style="text-align:left">Regular</td>
+				<td style="text-align:left"><strong>Gotham</strong></td>
+				<td style="text-align:left"><strong>Book</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">Gotham Medium</td>
+				<td style="text-align:left">Regular</td>
+				<td style="text-align:left"><strong>Gotham</strong></td>
+				<td style="text-align:left"><strong>Medium</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">Gotham Bold</td>
+				<td style="text-align:left">Regular</td>
+				<td style="text-align:left"><strong>Gotham</strong></td>
+				<td style="text-align:left"><strong>Bold</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">Gotham Black</td>
+				<td style="text-align:left">Regular</td>
+				<td style="text-align:left"><strong>Gotham</strong></td>
+				<td style="text-align:left"><strong>Black</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">Helvetica Neue LT Std</td>
+				<td style="text-align:left">65 Medium</td>
+				<td style="text-align:left"><strong>Helvetica Neue</strong></td>
+				<td style="text-align:left"><strong>Medium</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">Helvetica Neue LT Std</td>
+				<td style="text-align:left">75 Bold</td>
+				<td style="text-align:left"><strong>Helvetica Neue</strong></td>
+				<td style="text-align:left"><strong>Bold</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">Trade Gothic LT Std</td>
+				<td style="text-align:left">Bold Condensed No. 20</td>
+				<td style="text-align:left"><strong>Trade Gothic for LS</strong></td>
+				<td style="text-align:left"><strong>Bold Condensed No. 20</strong></td>
+			</tr>
+			<tr>
+				<td style="text-align:left">Trade Gothic LT Std</td>
+				<td style="text-align:left">Condensed No. 18</td>
+				<td style="text-align:left"><strong>Trade Gothic for LS</strong></td>
+				<td style="text-align:left"><strong>Condensed No. 18</strong></td>
+			</tr>
+		</tbody>
+	</table>
+	<p>Puteți utiliza <strong>ShowFonts</strong> pentru a obține o listă cu fonturile folosite (tab separated).</p>
+	<h3 id="cleanuplabels">CleanupLabels</h3>
+	<p>Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme
+		ulterior. <strong>CleanupLabels</strong> șterge toate etichetele dintr-un document.</p>
+	<h3 id="cleanupswatches">CleanupSwatches</h3>
+	<p>Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește culorile CMYK după formula &quot;C=
+		M= Y= K=&quot; și șterge culorile nefolosite. Culorile spot rămân neschimbate.</p>
+	<!-- ![](img/cleanupswatches.gif) -->
+	<h3 id="seria-fittopagefittospread">Seria FitToPage/FitToSpread</h3>
+	<p>Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame-urile obișnuite sunt
+		redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse
+		într-un <em>clipping frame</em> și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de
+		obiect, îl va restaura.</p>
+	<ul>
+		<li>
+			<p><strong>FitToPage/Margins/Bleed</strong> constrâng dimensiunile unui obiect la dimensiunile paginii, ale
+				marginii sau ale bleedului paginii.</p>
+		</li>
+		<li>
+			<p><strong>FitToSpread/Margins/Bleed</strong> fac același lucru pentru paginile grupate într-un spread.</p>
+		</li>
+		<li>
+			<p><strong>FitToPageBleedForced</strong> și <strong>FitToPageSpreadForced</strong> redimensionează exact la
+				bleedul paginii sau ale spreadului. Sunt utile, de exemplu, pentru imaginea de background.</p>
+		</li>
+		<li>
+			<p><strong>FitUndo</strong>: dacă doriți să restaurați toate obiectele simultan.</p>
+		</li>
+	</ul>
+	<!-- ![](img/fittopage.gif) -->
+	<h3 id="seria-scaletopage">Seria ScaleToPage</h3>
+	<p>Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar.
+	</p>
+	<ul>
+		<li>
+			<p><strong>ScaleToPageSize</strong> și <strong>ScaleToPageMargins</strong> scalează la dimensiunile paginii
+				sau marginii.</p>
+		</li>
+		<li>
+			<p>Variantele <strong>H</strong> (height) și <strong>W</strong> (width) scalează la înălțimea, respectiv
+				lățimea paginii sau marginii.</p>
+		</li>
+	</ul>
+	<!-- ![](img/scaletopage.gif) -->
+	<h3 id="seria-pagesize">Seria PageSize</h3>
+	<p>Redimensionează paginile documentului în funcție de numele fișierului, de marginile paginii, sau de obiectele
+		selectate.</p>
+	<ul>
+		<li>
+			<p><strong>PageSizeFromFilename</strong> caută în numele fișierului perechi de numere de genul
+				&quot;000x000&quot; (unde &quot;000&quot; înseamnă un grup de cel puțin o cifră, urmată sau nu de
+				zecimale, și opțional de &quot;mm&quot; sau &quot;cm&quot;). Dacă găsește doar o pereche, aceasta va fi
+				dimensiunea paginii. Dacă găsește două (de ex. &quot;000x000_000x000&quot;), perechea mai mare va fi
+				dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de
+				una sau două cifre, aceasta e considerată bleed.</p>
+			<p>Exemple:</p>
+			<blockquote>
+				<p>Filename1_<strong>1400x400_700x137_5</strong>mm.indd <br>
+					Filename2_<strong>597x517_577x500.5_3</strong>mm V4.indd</p>
+			</blockquote>
+		</li>
+		<li>
+			<p><strong>PageSizeFromMargins</strong> redimensionează fiecare pagină la marginile acesteia.</p>
+		</li>
+		<li>
+			<p><strong>PageSizeFromSelection</strong> redimensionează pagina curentă la obiectele selectate (similar cu
+				<strong>Artboards &gt; Fit to Selected Art</strong> din Illustrator).</p>
+		</li>
+	</ul>
+	<h3 id="pagemarginsfromselection">PageMarginsFromSelection</h3>
+	<p>Setează marginile paginii la dimensiunile selecției.</p>
+	<h3 id="seria-textautosize">Seria TextAutosize</h3>
+	<p>&quot;Strâng&quot; chenarul la text și setează dimensionarea automată, justificarea verticală și alinierea
+		paragrafului:</p>
+	<ul>
+		<li>
+			<p><strong>TextAutosize</strong>: <em>Auto-Sizing: center. Vertical Justification: center. Paragraph: align
+					center.</em></p>
+		</li>
+		<li>
+			<p><strong>TextAutosizeL</strong>: <em>Auto-Sizing: top-left. Vertical Justification: top. Paragraph: align
+					left.</em></p>
+		</li>
+		<li>
+			<p><strong>TextAutosizeR</strong>: <em>Auto-Sizing: top-right. Vertical Justification: top. Paragraph: align
+					right.</em></p>
+		</li>
+	</ul>
+	<p><em>Auto-Sizing Type</em> va fi setat <em>Height and width</em> dacă textul are un singur rând. Dacă are mai
+		multe rânduri, prima rulare îl va seta <em>Height only</em>, a doua <em>Height and width</em> (caz în care
+		trebuie avut grijă ca textul să fie rupt pe rânduri manual).</p>
+	<!-- ![](img/textautosize.gif) -->
+	<h3 id="seria-print">Seria Print</h3>
+	<p>Fac câteva pregătiri pentru export și pot fi rulate în <strong>batch_convert.jsx</strong>.</p>
+	<ul>
+		<li>
+			<p><strong>PrepareForPrint</strong> face următoarele:</p>
+			<ul>
+				<li>ascunde layerul <code>safe area</code>;</li>
+				<li>mută marcajele pentru lac UV de pe <code>varnish</code> pe spreaduri separate;</li>
+				<li>mută ștanțele de pe <code>dielines</code> pe spreaduri separate.</li>
+			</ul>
+		</li>
+		<li>
+			<p><strong>SafeArea</strong> creează un frame de dimensiunea marginilor paginii pe layerul
+				<code>safe area</code>. Culoarea lui este un swatch, <code>Safe area</code>, care dacă nu există deja va
+				fi creat cu valoarea &quot;C=0 M=100 Y=0 K=0&quot;.</p>
+		</li>
+		<li>
+			<p><strong>SafeAreaHideLayer</strong> și <strong>SafeAreaShowLayer</strong> ascund sau afișează
+				<code>safe area</code>.</p>
+		</li>
+	</ul>
+	<p>Scripturile detectează nume alternative gen <code>visible</code>, <code>vizibil</code>, <code>vis. area</code>
+		pentru <code>safe area</code>, sau <code>diecut</code>, <code>die cut</code>, <code>cut lines</code>,
+		<code>stanze</code> pentru <code>dielines</code>.</p>
+	<h3 id="zoomtoselection">ZoomToSelection</h3>
+	<p>Asemănător cu <strong>Fit Selection in Window</strong> (⌥⌘=), dar cu câteva îmbunătățiri:</p>
+	<ul>
+		<li>aduce selecția puțin mai aproape;</li>
+		<li>dacă cursorul e în text, face zoom la întreg cadrul;</li>
+		<li>fără nimic selectat face vizibil întreg spreadul.</li>
+	</ul>
+	<h3 id="diverse">Diverse</h3>
+	<ul>
+		<li>
+			<p><strong>PageRatios</strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus.</p>
+		</li>
+		<li>
+			<p><strong>QR</strong> adaugă un cod QR în documentul curent sau îl salvează într-un fișier separat.</p>
+		</li>
+		<li>
+			<p><strong>ShowFonts</strong> afișează toate fonturile utilizate în documentul curent.</p>
+		</li>
+		<li>
+			<p><strong>ShowProfiles</strong> afișează toate profilele de culori disponibile.</p>
+		</li>
+		<li>
+			<p><strong>ShowProperties</strong> afișează proprietățile și metodele unui obiect selectat (util pentru
+				depanare).</p>
+		</li>
+	</ul>
+	<h2 id="shortcuts">Shortcuts</h2>
+	<table>
+		<thead>
+			<tr>
+				<th style="text-align:left">Script</th>
+				<th style="text-align:right">Fn</th>
+				<th style="text-align:left">Script</th>
+				<th style="text-align:right">Fn</th>
+				<th style="text-align:left">Script</th>
+				<th style="text-align:right">Fn</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align:left"><strong>DocCleanup</strong></td>
+				<td style="text-align:right">F2</td>
+				<td style="text-align:left"><strong>DocDefaults</strong></td>
+				<td style="text-align:right">⌥F2</td>
+				<td style="text-align:left"></td>
+				<td style="text-align:right"></td>
+			</tr>
+			<tr>
+				<td style="text-align:left"><strong>FitToPage</strong></td>
+				<td style="text-align:right">F11</td>
+				<td style="text-align:left"><strong>FitToPageMargins</strong></td>
+				<td style="text-align:right">⌥F11</td>
+				<td style="text-align:left"><strong>FitToPageBleed</strong></td>
+				<td style="text-align:right">⇧F11</td>
+			</tr>
+			<tr>
+				<td style="text-align:left"></td>
+				<td style="text-align:right"></td>
+				<td style="text-align:left"></td>
+				<td style="text-align:right"></td>
+				<td style="text-align:left"><strong>FitToPageBleedForced</strong></td>
+				<td style="text-align:right">⇧⌘F11</td>
+			</tr>
+			<tr>
+				<td style="text-align:left"><strong>FitToSpread</strong></td>
+				<td style="text-align:right">F12</td>
+				<td style="text-align:left"><strong>FitToSpreadMargins</strong></td>
+				<td style="text-align:right">⌥F12</td>
+				<td style="text-align:left"><strong>FitToSpreadBleed</strong></td>
+				<td style="text-align:right">⇧F12</td>
+			</tr>
+			<tr>
+				<td style="text-align:left"></td>
+				<td style="text-align:right"></td>
+				<td style="text-align:left"></td>
+				<td style="text-align:right"></td>
+				<td style="text-align:left"><strong>FitToSpreadBleedForced</strong></td>
+				<td style="text-align:right">⇧⌘F12</td>
+			</tr>
+			<tr>
+				<td style="text-align:left"><strong>ScaleToPageSize</strong></td>
+				<td style="text-align:right">F5</td>
+				<td style="text-align:left"><strong>ScaleToPageMargins</strong></td>
+				<td style="text-align:right">⌥F5</td>
+				<td style="text-align:left"></td>
+				<td style="text-align:right"></td>
+			</tr>
+			<tr>
+				<td style="text-align:left"><strong>TextAutosize</strong></td>
+				<td style="text-align:right">F6</td>
+				<td style="text-align:left"><strong>TextAutosizeL</strong></td>
+				<td style="text-align:right">⌥F6</td>
+				<td style="text-align:left"><strong>TextAutosizeR</strong></td>
+				<td style="text-align:right">⌘F6</td>
+			</tr>
+			<tr>
+				<td style="text-align:left"><strong>ZoomToSelection</strong></td>
+				<td style="text-align:right">F4</td>
+				<td style="text-align:left"></td>
+				<td style="text-align:right"></td>
+				<td style="text-align:left"></td>
+				<td style="text-align:right"></td>
+			</tr>
+		</tbody>
+	</table>
+	<!-- ![](img/shortcuts.png) -->
+	<h2 id="instalare">Instalare</h2>
+	<ol>
+		<li>Deschideți <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
+		<li>Faceți clic dreapta pe folderul <strong>User</strong> și selectați <strong>Reveal in
+				Finder/Explorer</strong>.</li>
+		<li>Copiați fișierele în acest folder.</li>
+	</ol>
+	<h2 id="licență">Licență</h2>
+	<p>O parte din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din
+		tutoriale de Dave Saunders, Marc Autret, Peter Werner, Richard Harrington și Peter Kahrel. Restul codului este
+		publicat sub licența MIT (<a href="../LICENSE.txt">LICENSE.txt</a>).</p>
+	<p>Vă rog să-mi trimiteți un e-mail la &lt;jpeg AT basement.ro&gt; sau <a
+			href="https://github.com/pchiorean/Indentz/issues">raportați o problemă pe Github</a> dacă întâmpinați
+		probleme sau aveți sugestii.</p>
+	<p>README-ro.md • 20 iulie 2020, 12:47 (UTC).</p>
+
+</body>
+
+</html>
