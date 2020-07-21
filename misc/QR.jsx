@@ -1,34 +1,38 @@
 /*
-	QR code v1.2.2
+	QR code v1.3.0
 	© July 2020, Paul Chiorean
 	Adds a QR code to the current document or saves it in a separate file.
 	If "QR.txt" is found, batch process it.
 */
 
 if (app.documents.length == 0) { alert("Open a file and try again."); exit() };
-app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
-
 var doc = app.activeDocument;
+app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
+app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALL;
+// Look for "QR.txt"
 var infoFile = File(doc.filePath + "/QR.txt");
 if (infoFile.open("r")) { BatchQR() } else { ManuallyQR() };
 
 
-function BatchQR() {
-	var line = 0;
+function BatchQR() { // Noninteractive: batch process "QR.txt"
+	var line = 0, err = 0;
 	infoFile.readln().split("\t");
 	while (!infoFile.eof) {
 		var infoLine = infoFile.readln().split("\t"); line++;
 		if (!infoLine[0] || !infoLine[1]) {
 			alert ("Missing data in record " + line + "."); exit();
 		}
-		infoLine[0] = infoLine[0].match(/_QR\.indd$/g) ? infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
-		MakeQRFile(infoLine[1], infoLine[0]);
+		infoLine[0] = infoLine[0].match(/_QR\.indd$/g) ?
+			infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
+		if (MakeQRFile(infoLine[1], infoLine[0])) err++; // Count files with overflows
 	}
 	infoFile.close(); doc.close();
-	alert("Batch processed " + line + " records from \'QR.txt\'.");
+	var msg = "Batch processed " + line + " records from \'QR.txt\'.";
+	if (err > 0) msg = msg + "\r" + err + " file(s) need attention.";
+	alert(msg);
 }
 
-function ManuallyQR() {
+function ManuallyQR() { // Interactive: ask for QR text and destination
 	var w = new Window("dialog");
 		w.text = "Generate QR Code";
 		w.orientation = "column";
@@ -52,9 +56,8 @@ function ManuallyQR() {
 		cancel.text = "Cancel";
 	var ok = okcancel.add("button", undefined, undefined, { name: "ok" });
 		ok.text = "OK";
-
 	var result = w.show();
-	if (result == 2 || !label.text) { exit() };
+	if (result == 2 || !label.text) { exit() }; // Empty or cancelled
 	var QRLabel = label.text;
 	switch (flg_onfile.value) {
 		case false: MakeQROnPage(QRLabel); break;
@@ -62,7 +65,7 @@ function ManuallyQR() {
 	}
 }
 
-function MakeQROnPage(QRLabel) {
+function MakeQROnPage(QRLabel) { // Put QR on each page
 	var infoLayer = MakeInfoLayer(doc);
 	for (var i = 0; i < doc.pages.length; i++) {
 		var page = doc.pages.item(i);
@@ -110,10 +113,10 @@ function MakeQROnPage(QRLabel) {
 		code.frameFittingOptions.properties = {
 			fittingAlignment: AnchorPoint.CENTER_ANCHOR,
 			fittingOnEmptyFrame: EmptyFrameFittingOptions.PROPORTIONALLY,
-			bottomCrop: 7.26313937552231,
+			topCrop: 7.26313937552231,
 			leftCrop: 7.26313937552231,
-			rightCrop: 7.26313937552231,
-			topCrop: 7.26313937552231
+			bottomCrop: 7.26313937552231,
+			rightCrop: 7.26313937552231
 		}
 		code.epss[0].localDisplaySetting = ViewDisplaySettings.HIGH_QUALITY;
 		var QR = page.groups.add([label, code]);
@@ -124,8 +127,8 @@ function MakeQROnPage(QRLabel) {
 	}
 }
 
-function MakeQRFile(QRLabel, fn) {
-	if (!fn) { var fn = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd" }
+function MakeQRFile(QRLabel, fn) { // Put QR on 'fn' file
+	if (!fn) var fn = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd";
 	var target = app.documents.add();
 	var page = target.pages[0];
 	var infoLayer = MakeInfoLayer(target);
@@ -161,10 +164,10 @@ function MakeQRFile(QRLabel, fn) {
 	code.frameFittingOptions.properties = {
 		fittingAlignment: AnchorPoint.CENTER_ANCHOR,
 		fittingOnEmptyFrame: EmptyFrameFittingOptions.PROPORTIONALLY,
-		bottomCrop: 4.97468772366082,
+		topCrop: 4.97468772366082,
 		leftCrop: 4.57520063728848,
-		rightCrop: 4.57520063728848,
-		topCrop: 4.97468772366082
+		bottomCrop: 4.97468772366082,
+		rightCrop: 4.57520063728848
 	}
 	code.epss[0].localDisplaySetting = ViewDisplaySettings.HIGH_QUALITY;
 	var QR = page.groups.add([label, code]);
@@ -177,15 +180,17 @@ function MakeQRFile(QRLabel, fn) {
 	target.documentPreferences.pageWidth = page.bounds[3] - page.bounds[1];
 	target.documentPreferences.pageHeight = page.bounds[2] - page.bounds[0];
 	QR.ungroup();
-
+	// Create folder and save file
 	var targetFolder = Folder(doc.filePath + "/QR Codes");
 	targetFolder.create();
 	target.save(File(targetFolder + "/" + fn));
-	if (!label.overflows) target.close();
+	// Keep file opened if text overflows
+	if (label.overflows) { return true } else { target.close() };
 }
 
 function MakeInfoLayer(doc) {
 	var idLayerName = "id", idLayer = doc.layers.item(idLayerName);
+	var hwLayerName = "HW", hwLayer = doc.layers.item(hwLayerName);
 	var infoLayerName = "info", infoLayer = doc.layers.item(infoLayerName);
 	if (!infoLayer.isValid) doc.layers.add({ name: infoLayerName });
 	infoLayer.properties = {
@@ -194,7 +199,8 @@ function MakeInfoLayer(doc) {
 		locked: false,
 		printable: true
 	};
-	if (idLayer.isValid) infoLayer.move(LocationOptions.after, idLayer);
-	else infoLayer.move(LocationOptions.AT_BEGINNING);
+	if (idLayer.isValid) { infoLayer.move(LocationOptions.after, idLayer);
+	} else if (hwLayer.isValid) { infoLayer.move(LocationOptions.before, hwLayer);
+	} else infoLayer.move(LocationOptions.AT_BEGINNING);
 	return infoLayer;
 }
