@@ -6,7 +6,7 @@ O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O suge
 
 ## Descriere
 
-### **`DocCleanup.jsx`** / **`DocDefaults.jsx`**
+#### **`DocCleanup.jsx`** / **`DocDefaults.jsx`**
 
 Sunt două scripturi gândite să fie folosite împreună – unul "curăță", celălalt "pregătește terenul".
 
@@ -54,7 +54,7 @@ După care:
   Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer_lucru | `artwork`
   background, BACKGROUND, BG, HG, Hintergrund | `bg`
 
-### **`CleanupFonts.jsx`**
+#### **`CleanupFonts.jsx`**
 
 Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul. Prima linie (antetul) este ignorată. Lista curentă este următoarea:
 
@@ -77,17 +77,17 @@ Trade Gothic LT Std | Condensed No. 18 | **Trade Gothic for LS** | **Condensed N
 
 Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă cu fonturile folosite (tab separated).
 
-### **`CleanupLabels.jsx`**
+#### **`CleanupLabels.jsx`**
 
 Uneori se refolosesc obiecte care au o etichetă atașată _(Script Label)_, și asta poate crea probleme ulterior. **CleanupLabels.jsx** șterge toate etichetele dintr-un document.
 
-### **`CleanupSwatches.jsx`**
+#### **`CleanupSwatches.jsx`**
 
 Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește culorile CMYK după formula "C= M= Y= K=" și șterge culorile nefolosite. Culorile spot rămân neschimbate.
 
 <!-- ![](img/cleanupswatches.gif) -->
 
-### Seria **`FitToPage`** / **`FitToSpread`**
+#### Seria **`FitToPage`** / **`FitToSpread`**
 
 Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame-urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într-un _clipping frame_ și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.
 
@@ -101,7 +101,7 @@ Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Fr
 
 <!-- ![](img/fittopage.gif) -->
 
-### Seria **`ScaleToPage`**
+#### Seria **`ScaleToPage`**
 
 Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar.
 
@@ -111,7 +111,7 @@ Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează 
 
 <!-- ![](img/scaletopage.gif) -->
 
-### Seria **`PageSize`**
+#### Seria **`PageSize`**
 
 Redimensionează paginile documentului în funcție de numele fișierului, de marginile paginii, sau de obiectele selectate.
 
@@ -125,11 +125,11 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 * **`PageSizeFromSelection.jsx`** redimensionează pagina curentă la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
 
-### **`PageMarginsFromSelection.jsx`**
+#### **`PageMarginsFromSelection.jsx`**
 
 Setează marginile paginii la dimensiunile selecției.
 
-### Seria **`TextAutosize`**
+#### Seria **`TextAutosize`**
 
 "Strâng" chenarul la text și setează dimensionarea automată, justificarea verticală și alinierea paragrafului:
 
@@ -143,7 +143,7 @@ _Auto-Sizing Type_ va fi setat _Height and width_ dacă textul are un singur râ
 
 <!-- ![](img/textautosize.gif) -->
 
-### Seria **Print**
+#### Seria **Print**
 
 Fac câteva pregătiri pentru export și pot fi rulate în **`batch_convert.jsx`**.
 
@@ -158,7 +158,7 @@ Fac câteva pregătiri pentru export și pot fi rulate în **`batch_convert.jsx`
 
 Scripturile detectează nume alternative gen `visible`, `vizibil`, `vis. area` pentru `safe area`, sau `diecut`, `die cut`, `cut lines`, `stanze` pentru `dielines`.
 
-### **`ZoomToSelection.jsx`**
+#### **`ZoomToSelection.jsx`**
 
 Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
 
@@ -166,7 +166,7 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 * dacă cursorul e în text, face zoom la întreg cadrul;
 * fără nimic selectat face vizibil întreg spreadul.
 
-### Diverse
+#### Diverse
 
 * **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus.
 

@@ -43,8 +43,8 @@
 			href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>
 		de Peter Kahrel.</p>
 	<h2 id="descriere">Descriere</h2>
-	<h3 id="doccleanupjsx--docdefaultsjsx"><strong><code>DocCleanup.jsx</code></strong> /
-		<strong><code>DocDefaults.jsx</code></strong></h3>
+	<h4 id="doccleanupjsx--docdefaultsjsx"><strong><code>DocCleanup.jsx</code></strong> /
+		<strong><code>DocDefaults.jsx</code></strong></h4>
 	<p>Sunt două scripturi gândite să fie folosite împreună – unul &quot;curăță&quot;, celălalt &quot;pregătește
 		terenul&quot;.</p>
 	<p>Mai întâi schimbă câteva setări după preferințele mele, după cum urmează:</p>
@@ -126,7 +126,7 @@
 			</table>
 		</li>
 	</ul>
-	<h3 id="cleanupfontsjsx"><strong><code>CleanupFonts.jsx</code></strong></h3>
+	<h4 id="cleanupfontsjsx"><strong><code>CleanupFonts.jsx</code></strong></h4>
 	<p>Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV <em>(tab-separated
 			values)</em> cu 4 coloane, cu același nume ca scriptul. Prima linie (antetul) este ignorată. Lista curentă
 		este următoarea:</p>
@@ -228,15 +228,15 @@
 	</table>
 	<p>Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> pentru a obține o listă cu fonturile folosite (tab
 		separated).</p>
-	<h3 id="cleanuplabelsjsx"><strong><code>CleanupLabels.jsx</code></strong></h3>
+	<h4 id="cleanuplabelsjsx"><strong><code>CleanupLabels.jsx</code></strong></h4>
 	<p>Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme
 		ulterior. <strong>CleanupLabels.jsx</strong> șterge toate etichetele dintr-un document.</p>
-	<h3 id="cleanupswatchesjsx"><strong><code>CleanupSwatches.jsx</code></strong></h3>
+	<h4 id="cleanupswatchesjsx"><strong><code>CleanupSwatches.jsx</code></strong></h4>
 	<p>Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește culorile CMYK după formula &quot;C=
 		M= Y= K=&quot; și șterge culorile nefolosite. Culorile spot rămân neschimbate.</p>
 	<!-- ![](img/cleanupswatches.gif) -->
-	<h3 id="seria-fittopage--fittospread">Seria <strong><code>FitToPage</code></strong> /
-		<strong><code>FitToSpread</code></strong></h3>
+	<h4 id="seria-fittopage--fittospread">Seria <strong><code>FitToPage</code></strong> /
+		<strong><code>FitToSpread</code></strong></h4>
 	<p>Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame-urile obișnuite sunt
 		redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse
 		într-un <em>clipping frame</em> și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de
@@ -262,7 +262,7 @@
 		</li>
 	</ul>
 	<!-- ![](img/fittopage.gif) -->
-	<h3 id="seria-scaletopage">Seria <strong><code>ScaleToPage</code></strong></h3>
+	<h4 id="seria-scaletopage">Seria <strong><code>ScaleToPage</code></strong></h4>
 	<p>Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar.
 	</p>
 	<ul>
@@ -276,7 +276,7 @@
 		</li>
 	</ul>
 	<!-- ![](img/scaletopage.gif) -->
-	<h3 id="seria-pagesize">Seria <strong><code>PageSize</code></strong></h3>
+	<h4 id="seria-pagesize">Seria <strong><code>PageSize</code></strong></h4>
 	<p>Redimensionează paginile documentului în funcție de numele fișierului, de marginile paginii, sau de obiectele
 		selectate.</p>
 	<ul>
@@ -302,9 +302,9 @@
 				selectate (similar cu <strong>Artboards &gt; Fit to Selected Art</strong> din Illustrator).</p>
 		</li>
 	</ul>
-	<h3 id="pagemarginsfromselectionjsx"><strong><code>PageMarginsFromSelection.jsx</code></strong></h3>
+	<h4 id="pagemarginsfromselectionjsx"><strong><code>PageMarginsFromSelection.jsx</code></strong></h4>
 	<p>Setează marginile paginii la dimensiunile selecției.</p>
-	<h3 id="seria-textautosize">Seria <strong><code>TextAutosize</code></strong></h3>
+	<h4 id="seria-textautosize">Seria <strong><code>TextAutosize</code></strong></h4>
 	<p>&quot;Strâng&quot; chenarul la text și setează dimensionarea automată, justificarea verticală și alinierea
 		paragrafului:</p>
 	<ul>
@@ -325,7 +325,7 @@
 		multe rânduri, prima rulare îl va seta <em>Height only</em>, a doua <em>Height and width</em> (caz în care
 		trebuie avut grijă ca textul să fie rupt pe rânduri manual).</p>
 	<!-- ![](img/textautosize.gif) -->
-	<h3 id="seria-print">Seria <strong>Print</strong></h3>
+	<h4 id="seria-print">Seria <strong>Print</strong></h4>
 	<p>Fac câteva pregătiri pentru export și pot fi rulate în <strong><code>batch_convert.jsx</code></strong>.</p>
 	<ul>
 		<li>
@@ -349,14 +349,14 @@
 	<p>Scripturile detectează nume alternative gen <code>visible</code>, <code>vizibil</code>, <code>vis. area</code>
 		pentru <code>safe area</code>, sau <code>diecut</code>, <code>die cut</code>, <code>cut lines</code>,
 		<code>stanze</code> pentru <code>dielines</code>.</p>
-	<h3 id="zoomtoselectionjsx"><strong><code>ZoomToSelection.jsx</code></strong></h3>
+	<h4 id="zoomtoselectionjsx"><strong><code>ZoomToSelection.jsx</code></strong></h4>
 	<p>Asemănător cu <strong>Fit Selection in Window</strong> (⌥⌘=), dar cu câteva îmbunătățiri:</p>
 	<ul>
 		<li>aduce selecția puțin mai aproape;</li>
 		<li>dacă cursorul e în text, face zoom la întreg cadrul;</li>
 		<li>fără nimic selectat face vizibil întreg spreadul.</li>
 	</ul>
-	<h3 id="diverse">Diverse</h3>
+	<h4 id="diverse">Diverse</h4>
 	<ul>
 		<li>
 			<p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din

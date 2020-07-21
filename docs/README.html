@@ -43,8 +43,8 @@
 			href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>
 		script by Peter Kahrel.</p>
 	<h2 id="description">Description</h2>
-	<h3 id="doccleanupjsx--docdefaultsjsx"><strong><code>DocCleanup.jsx</code></strong> /
-		<strong><code>DocDefaults.jsx</code></strong></h3>
+	<h4 id="doccleanupjsx--docdefaultsjsx"><strong><code>DocCleanup.jsx</code></strong> /
+		<strong><code>DocDefaults.jsx</code></strong></h4>
 	<p>These are two scripts meant to be used together – one &quot;cleans&quot;, the other &quot;prepares the
 		ground&quot;.</p>
 	<p>First, they change some settings according to my preferences, as follows:</p>
@@ -126,7 +126,7 @@
 			</table>
 		</li>
 	</ul>
-	<h3 id="cleanupfontsjsx"><strong><code>CleanupFonts.jsx</code></strong></h3>
+	<h4 id="cleanupfontsjsx"><strong><code>CleanupFonts.jsx</code></strong></h4>
 	<p>Replaces some missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV
 		<em>(tab-separated values)</em> file with the same name as the script. The first line (the header) is ignored.
 		The current list is as follows:</p>
@@ -227,15 +227,15 @@
 		</tbody>
 	</table>
 	<p>You can use <strong><code>ShowFonts.jsx</code></strong> to get a tab delimited list of used fonts.</p>
-	<h3 id="cleanuplabelsjsx"><strong><code>CleanupLabels.jsx</code></strong></h3>
+	<h4 id="cleanuplabelsjsx"><strong><code>CleanupLabels.jsx</code></strong></h4>
 	<p>Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which potentially creates
 		problems later. <strong><code>CleanupLabels.jsx</code></strong> deletes all labels from a document.</p>
-	<h3 id="cleanupswatchesjsx"><strong><code>CleanupSwatches.jsx</code></strong></h3>
+	<h4 id="cleanupswatchesjsx"><strong><code>CleanupSwatches.jsx</code></strong></h4>
 	<p>Converts RGB process colors to CMYK, removes duplicates, sets every name in &quot;C= M= Y= K=&quot; form and
 		deletes unused swatches. Spot colors remain unchanged.</p>
 	<!-- ![](img/cleanupswatches.gif) -->
-	<h3 id="fittopage--fittospread-series"><strong><code>FitToPage</code></strong> /
-		<strong><code>FitToSpread</code></strong> series</h3>
+	<h4 id="fittopage--fittospread-series"><strong><code>FitToPage</code></strong> /
+		<strong><code>FitToSpread</code></strong> series</h4>
 	<p>Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to
 		deform them, rotated objects, ovals, groups, etc. are clipped in a frame and this is resized. If you run the
 		script a second time on such an object, it will restore it.</p>
@@ -259,7 +259,7 @@
 		</li>
 	</ul>
 	<!-- ![](img/fittopage.gif) -->
-	<h3 id="scaletopage-series"><strong><code>ScaleToPage</code></strong> series</h3>
+	<h4 id="scaletopage-series"><strong><code>ScaleToPage</code></strong> series</h4>
 	<p>These also work with one or more objects, but scale them proportionally, as a block.</p>
 	<ul>
 		<li>
@@ -272,7 +272,7 @@
 		</li>
 	</ul>
 	<!-- ![](img/scaletopage.gif) -->
-	<h3 id="pagesize-series"><strong><code>PageSize</code></strong> series</h3>
+	<h4 id="pagesize-series"><strong><code>PageSize</code></strong> series</h4>
 	<p>Resize the pages of the document based on the file name, page margins, or selected objects.</p>
 	<ul>
 		<li>
@@ -296,9 +296,9 @@
 				(similar to <strong>Artboards &gt; Fit to Selected Art</strong> in Illustrator).</p>
 		</li>
 	</ul>
-	<h3 id="pagemarginsfromselectionjsx"><strong><code>PageMarginsFromSelection.jsx</code></strong></h3>
+	<h4 id="pagemarginsfromselectionjsx"><strong><code>PageMarginsFromSelection.jsx</code></strong></h4>
 	<p>Sets the page margins to the selected objects.</p>
-	<h3 id="textautosize-series"><strong><code>TextAutosize</code></strong> series</h3>
+	<h4 id="textautosize-series"><strong><code>TextAutosize</code></strong> series</h4>
 	<p>Fit the frame to the text and set auto-sizing, vertical justification and paragraph alignment:</p>
 	<ul>
 		<li>
@@ -318,7 +318,7 @@
 		multiple lines, the first run will set it to <em>Height only</em>, the second run to <em>Height and width</em>
 		(in which case care must be taken that the text is broken manually).</p>
 	<!-- ![](img/textautosize.gif) -->
-	<h3 id="print-series"><strong>Print</strong> series</h3>
+	<h4 id="print-series"><strong>Print</strong> series</h4>
 	<p>These are making some preparations for export and can be run in <strong><code>batch_convert.jsx</code></strong>.</p>
 	<ul>
 		<li>
@@ -342,14 +342,14 @@
 	<p>The scripts detect alternative layer names like <code>visible</code>, <code>vizibil</code>,
 		<code>vis. area</code> for <code>safe area</code>, or <code>diecut</code>, <code>die cut</code>,
 		<code>cut lines</code>, <code>stanze</code> for <code>dielines</code>.</p>
-	<h3 id="zoomtoselectionjsx"><strong><code>ZoomToSelection.jsx</code></strong></h3>
+	<h4 id="zoomtoselectionjsx"><strong><code>ZoomToSelection.jsx</code></strong></h4>
 	<p>Similar to <strong>Fit Selection in Window</strong> (⌥⌘=), but with some improvements:</p>
 	<ul>
 		<li>brings the selection a little closer;</li>
 		<li>if the cursor is in the text, zooms on the whole frame;</li>
 		<li>without anything selected zooms on the spread.</li>
 	</ul>
-	<h3 id="miscellaneous">Miscellaneous</h3>
+	<h4 id="miscellaneous">Miscellaneous</h4>
 	<ul>
 		<li>
 			<p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and displays it in the

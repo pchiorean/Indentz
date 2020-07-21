@@ -6,7 +6,7 @@ Many are designed to be run through a shortcut. You can found a configuration su
 
 ## Description
 
-### **`DocCleanup.jsx`** / **`DocDefaults.jsx`**
+#### **`DocCleanup.jsx`** / **`DocDefaults.jsx`**
 
 These are two scripts meant to be used together – one "cleans", the other "prepares the ground".
 
@@ -54,7 +54,7 @@ After which:
   Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer_lucru | `artwork`
   background, BACKGROUND, BG, HG, Hintergrund | `bg`
 
-### **`CleanupFonts.jsx`**
+#### **`CleanupFonts.jsx`**
 
 Replaces some missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script. The first line (the header) is ignored. The current list is as follows:
 
@@ -77,17 +77,17 @@ Trade Gothic LT Std | Condensed No. 18 | **Trade Gothic for LS** | **Condensed N
 
 You can use **`ShowFonts.jsx`** to get a tab delimited list of used fonts.
 
-### **`CleanupLabels.jsx`**
+#### **`CleanupLabels.jsx`**
 
 Sometimes objects that have a label attached _(Script Label)_ are reused, which potentially creates problems later. **`CleanupLabels.jsx`** deletes all labels from a document.
 
-### **`CleanupSwatches.jsx`**
+#### **`CleanupSwatches.jsx`**
 
 Converts RGB process colors to CMYK, removes duplicates, sets every name in "C= M= Y= K=" form and deletes unused swatches. Spot colors remain unchanged.
 
 <!-- ![](img/cleanupswatches.gif) -->
 
-### **`FitToPage`** / **`FitToSpread`** series
+#### **`FitToPage`** / **`FitToSpread`** series
 
 Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame and this is resized. If you run the script a second time on such an object, it will restore it.
 
@@ -101,7 +101,7 @@ Resize one or more selected objects, without scaling them. Ordinary frames are s
 
 <!-- ![](img/fittopage.gif) -->
 
-### **`ScaleToPage`** series
+#### **`ScaleToPage`** series
 
 These also work with one or more objects, but scale them proportionally, as a block.
 
@@ -111,7 +111,7 @@ These also work with one or more objects, but scale them proportionally, as a bl
 
 <!-- ![](img/scaletopage.gif) -->
 
-### **`PageSize`** series
+#### **`PageSize`** series
 
 Resize the pages of the document based on the file name, page margins, or selected objects.
 
@@ -125,11 +125,11 @@ Resize the pages of the document based on the file name, page margins, or select
 
 * **`PageSizeFromSelection.jsx`** resizes the current page to the selected objects (similar to **Artboards > Fit to Selected Art** in Illustrator).
 
-### **`PageMarginsFromSelection.jsx`**
+#### **`PageMarginsFromSelection.jsx`**
 
 Sets the page margins to the selected objects.
 
-### **`TextAutosize`** series
+#### **`TextAutosize`** series
 
 Fit the frame to the text and set auto-sizing, vertical justification and paragraph alignment:
 
@@ -143,7 +143,7 @@ _Auto-Sizing Type_ will be set to _Height and width_ if the text has only one li
 
 <!-- ![](img/textautosize.gif) -->
 
-### **Print** series
+#### **Print** series
 
 These are making some preparations for export and can be run in **`batch_convert.jsx`**.
 
@@ -158,7 +158,7 @@ These are making some preparations for export and can be run in **`batch_convert
 
 The scripts detect alternative layer names like `visible`, `vizibil`, `vis. area` for `safe area`, or `diecut`, `die cut`, `cut lines`, `stanze` for `dielines`.
 
-### **`ZoomToSelection.jsx`**
+#### **`ZoomToSelection.jsx`**
 
 Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
@@ -166,7 +166,7 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 * if the cursor is in the text, zooms on the whole frame;
 * without anything selected zooms on the spread.
 
-### Miscellaneous
+#### Miscellaneous
 
 * **`PageRatios.jsx`** calculates the ratio of each page and displays it in the upper left corner.
 
