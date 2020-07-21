@@ -1,5 +1,5 @@
 /*
-	Fit to page bleed, forced v1.4.2
+	Fit to page bleed, forced v1.9.0
 	© July 2020, Paul Chiorean
 	Resizes the selected objects to the page bleed size.
 */
@@ -36,22 +36,26 @@ function Fit(obj) {
 		fillColor: "None", strokeColor: "None",
 		geometricBounds: size
 	}
-	// Case 1: Simple rectangles
+	// Case 1: Objects labeled "HW"
+	if (obj.name == "HW" || obj.label == "HW") {
+		obj.geometricBounds = [
+			(page.bounds[2] - page.bounds[0]) * 0.9, size[1], size[2], size[3]
+		];
+		if (obj.constructor.name == "TextFrame") {
+			obj.textFramePreferences.insetSpacing = [
+				0, 0, doc.documentPreferences.properties.documentBleedBottomOffset, 0
+			]}
+		return;
+	}
+	// Case 2: Simple rectangles
 	if (obj.constructor.name == "Rectangle" &&
-		// obj.strokeWeight == 0 &&
+		// obj.strokeWeight <= 1 &&
 		(obj.absoluteRotationAngle == 0 ||
 		Math.abs(obj.absoluteRotationAngle) == 90 ||
 		Math.abs(obj.absoluteRotationAngle) == 180)) {
-		// HW is a special case
-		if (obj.name == "HW" || obj.label == "HW") {
-			obj.geometricBounds = [
-				(page.bounds[2] - page.bounds[0]) * 0.9,
-				size[1], size[2], size[3]
-			];
-			return;
-		} else { obj.geometricBounds = size; return };
+			obj.geometricBounds = size; return;
 	}
-	// Case 2: Groups
+	// Case 3: Groups
 	if (obj.constructor.name == "Group") {
 		var frame = page.rectangles.add(clipFrameP); // Make clipping rectangle
 		frame.sendToBack(obj);

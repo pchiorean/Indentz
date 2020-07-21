@@ -1,5 +1,5 @@
 /*
-	Fit to page margins v1.6.2
+	Fit to page margins v1.9.0
 	© July 2020, Paul Chiorean
 	Resizes the selected objects to the page margins, if they exceed them.
 */
@@ -42,8 +42,7 @@ function Fit(obj) {
 		Number(szOv[1].toFixed(11)) >= Number(size[1].toFixed(11)) &&
 		Number(szOv[2].toFixed(11)) <= Number(size[2].toFixed(11)) &&
 		Number(szOv[3].toFixed(11)) <= Number(size[3].toFixed(11)) &&
-		// and is not HW
-		(obj.name != "HW" && obj.label != "HW")
+		(obj.name != "HW" && obj.label != "HW") // and is not HW
 	) return;
 	// Clipping rectangle properties
 	var clipFrameP = {
@@ -52,28 +51,31 @@ function Fit(obj) {
 		fillColor: "None", strokeColor: "None",
 		geometricBounds: size
 	}
-	// Case 1: Simple rectangles
+	// Case 1: Objects labeled "HW"
+	if (obj.name == "HW" || obj.label == "HW") {
+		obj.geometricBounds = [
+			szB[0] + (szB[2] - szB[0]) * 0.9, szB[1], szB[2], szB[3]
+		];
+		if (obj.constructor.name == "TextFrame")
+			obj.textFramePreferences.insetSpacing = [0, 0, 0, 0];
+		return;
+	}
+	// Case 2: Simple rectangles
 	if (obj.constructor.name == "Rectangle" &&
 		obj.strokeWeight <= 1 &&
 		(obj.absoluteRotationAngle == 0 ||
 		Math.abs(obj.absoluteRotationAngle) == 90 ||
 		Math.abs(obj.absoluteRotationAngle) == 180)) {
-		// HW is a special case
-		if (obj.name == "HW" || obj.label == "HW") {
-			obj.geometricBounds = [
-				szB[0] + (szB[2] - szB[0]) * 0.9, szB[1], szB[2], szB[3]
-			];
-			return;
-		} else { obj.geometricBounds = size; return };
+			obj.geometricBounds = size; return;
 	}
-	// Case 2: Text frames
+	// Case 3: Text frames
 	if (obj.constructor.name == "TextFrame" &&
 		(obj.absoluteRotationAngle == 0 ||
 		Math.abs(obj.absoluteRotationAngle) == 90 ||
 		Math.abs(obj.absoluteRotationAngle) == 180)) {
 			obj.geometricBounds = size; return;
 	}
-	// Case 3: Orthogonal lines
+	// Case 4: Orthogonal lines
 	if (obj.constructor.name == "GraphicLine" && (szOg[0] == szOg[2]) || (szOg[1] == szOg[3])) {
 		// Make temp rectangle and resolve TL-BR
 		var frame = page.rectangles.add(clipFrameP);
