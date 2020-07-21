@@ -1,11 +1,12 @@
 /*
-	HW 0.3.0-alpha
+	HW 0.4.0-alpha
 	© July 2020, Paul Chiorean
 */
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
+// Make layer
 var hwLayerName = FindLayer(["HW", "hw", "WH", "wh", "WHW"]);
 var hwLayer = doc.layers.item(hwLayerName);
 try { hwLayer.locked = false } catch (_) {};
@@ -16,7 +17,8 @@ if (!hwLayer.isValid) {
 // If a white rectangle is selected, label it "HW"
 var sel = doc.selection;
 if (sel.length == 1 && 
-	sel[0].constructor.name == "Rectangle" &&
+	(sel[0].constructor.name == "Rectangle" ||
+	sel[0].constructor.name == "TextFrame") &&
 	sel[0].fillColor.name == "Paper") {
 		sel[0].label = "HW";
 	}
@@ -25,8 +27,8 @@ for (var i = 0; i < doc.pages.length; i++) {
 	var szPg = doc.pages[i].bounds[2];
 	var szMg = szPg - (doc.pages[i].marginPreferences.top + doc.pages[i].marginPreferences.bottom);
 	var j, guide;
-	for (j = (guide = doc.pages[i].guides.everyItem().getElements()).length; j--; 
-	(guide[j].label == "HW") && guide[j].remove());
+	for (j = (guide = doc.pages[i].guides.everyItem().getElements()).length; j--;
+		(guide[j].label == "HW") && guide[j].remove());
 	doc.pages[i].guides.add(undefined, {
 		itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
 		orientation: HorizontalOrVertical.horizontal,
