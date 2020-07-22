@@ -191,7 +191,7 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
 Script | Fn | Script | Fn | Script | Fn
 :--- | ---: | :--- | ---: | :--- | ---:
-**`DocCleanup.jsx`** | F2 | **`DocDefaults.jsx`** | ⌥F2
+**`DocCleanup.jsx`** | F2 | **`DocDefaults.jsx`** | ⌥F2 | **`CleanupSwatches.jsx`** | ⇧F2
 **`FitToPage.jsx`** | F11 | **`FitToPageMargins.jsx`** | ⌥F11 | **`FitToPageBleed.jsx`** | ⇧F11
 ||||| **`FitToPageBleedForced.jsx`** | ⇧⌘F11
 **`FitToSpread.jsx`** | F12 | **`FitToSpreadMargins.jsx`** | ⌥F12 | **`FitToSpreadBleed.jsx`** | ⇧F12
@@ -214,4 +214,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 22 July 2020, 08:21 (UTC).
+README.md • 22 July 2020, 17:26 (UTC).

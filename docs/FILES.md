@@ -3,7 +3,7 @@ Name                               |   Fn  | Description
 **Cleanup**                                |
 **`CleanupFonts.jsx`**             |       | Replaces missing or unwanted fonts with equivalents from a list
 **`CleanupLabels.jsx`**            |       | Removes all labels from the document
-**`CleanupSwatches.jsx`**          |       | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
+**`CleanupSwatches.jsx`**          |   ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 **`DocCleanup.jsx`**               |    F2 | Changes some settings, cleans up swatches/layers/pages/guides and resets scaling
 **`DocDefaults.jsx`**              |   ⌥F2 | Makes default swatches/layers, cleans up fonts and sets page dimensions from the filename
 **Geometry**                               |
