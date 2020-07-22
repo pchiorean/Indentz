@@ -172,9 +172,14 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 * **`QR.jsx`** adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într-un fișier separat. Are două moduri de operare, batch sau manual:
 
-  * Batch: dacă găsește un fișier numit `QR.txt` în același folder, îl procesează. Trebuie să fie un fișier TSV *(tab-separated values)*; prima coloană e numele fișierului, a doua codul QR. Prima linie (antetul) este ignorată.
+  * **Batch:** dacă găsește un fișier numit `QR.txt` în același folder, îl procesează. Trebuie să fie un fișier TSV *(tab-separated values)*; prima coloană e numele fișierului, a doua codul QR. Prima linie (antetul) este ignorată:
 
-  * Manual: în caz contrar, solicită codul și îl adaugă pe pagină sau într-un fișier separat, în funcție de un switch.
+    Fișier | @QR
+    :--- | :---
+    **`Filename1_1400x400_700x137_5mm_QR.indd`** | FILE1 1400x400_700x137
+    **`Filename2_597x517_577x500.5_3mm V4_QR.indd`** | FILE2 597x517_577x500.5
+
+  * **Manual:** în caz contrar, solicită codul și îl adaugă pe pagină sau într-un fișier separat, în funcție de un switch.
 
 * **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent.
 
@@ -209,4 +214,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 20 iulie 2020, 20:13 (UTC).
+README-ro.md • 22 iulie 2020, 08:21 (UTC).

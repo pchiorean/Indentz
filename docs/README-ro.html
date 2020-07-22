@@ -80,8 +80,7 @@
 		<li>
 			<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește
 				câteva fonturi lipsă sau nedorite și stabilește geometria paginii din numele fișierului.</p>
-			<p><img src="img/docdefaults.png"
-					alt="Culori și layere"></p>
+			<p><img src="img/docdefaults.png" alt="Culori și layere"></p>
 			<p>Scriptul combină câteva layere similare, după cum urmează:</p>
 			<table>
 				<thead>
@@ -369,7 +368,27 @@
 				<li>
 					<p>Batch: dacă găsește un fișier numit <code>QR.txt</code> în același folder, îl procesează. Trebuie
 						să fie un fișier TSV <em>(tab-separated values)</em>; prima coloană e numele fișierului, a doua
-						codul QR. Prima linie (antetul) este ignorată.</p>
+						codul QR. Prima linie (antetul) este ignorată:</p>
+					<table>
+						<thead>
+							<tr>
+								<th style="text-align:left">Filename</th>
+								<th style="text-align:left">@QR</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td style="text-align:left">
+									<strong><code>Filename1_1400x400_700x137_5mm_QR.indd</code></strong></td>
+								<td style="text-align:left">FILE1 1400x400_700x137</td>
+							</tr>
+							<tr>
+								<td style="text-align:left">
+									<strong><code>Filename2_597x517_577x500.5_3mm V4_QR.indd</code></strong></td>
+								<td style="text-align:left">FILE2 597x517_577x500.5</td>
+							</tr>
+						</tbody>
+					</table>
 				</li>
 				<li>
 					<p>Manual: în caz contrar, solicită codul și îl adaugă pe pagină sau într-un fișier separat, în
@@ -482,7 +501,7 @@
 	<p>Vă rog să-mi trimiteți un e-mail la &lt;jpeg AT basement.ro&gt; sau <a
 			href="https://github.com/pchiorean/Indentz/issues">raportați o problemă pe Github</a> dacă întâmpinați
 		probleme sau aveți sugestii.</p>
-	<p>README-ro.md • 20 iulie 2020, 20:13 (UTC).</p>
+	<p>README-ro.md • 22 iulie 2020, 08:21 (UTC).</p>
 
 </body>
 

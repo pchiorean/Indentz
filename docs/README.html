@@ -80,8 +80,7 @@
 		<li>
 			<p><strong><code>DocDefaults.jsx</code></strong> creates some swatches &amp; layers, merges similar layers,
 				replaces some missing or unwanted fonts, and sets the page geometry from the filename.</p>
-			<p><img src="img/docdefaults.png"
-					alt="Swatches &amp; layers"></p>
+			<p><img src="img/docdefaults.png" alt="Swatches &amp; layers"></p>
 			<p>The script merges several similar layers, as follows:</p>
 			<table>
 				<thead>
@@ -319,7 +318,8 @@
 		(in which case care must be taken that the text is broken manually).</p>
 	<!-- ![](img/textautosize.gif) -->
 	<h4 id="print-series"><strong>Print</strong> series</h4>
-	<p>These are making some preparations for export and can be run in <strong><code>batch_convert.jsx</code></strong>.</p>
+	<p>These are making some preparations for export and can be run in <strong><code>batch_convert.jsx</code></strong>.
+	</p>
 	<ul>
 		<li>
 			<p><strong><code>PrepareForPrint.jsx</code></strong> does the following:</p>
@@ -362,7 +362,27 @@
 				<li>
 					<p>Batch: if a file named <code>QR.txt</code> is found in the same folder, it processes it. It must
 						be a 2 column TSV <em>(tab-separated values)</em> file; the first column is the filename, the
-						second the QR code. The first line (the header) is ignored.</p>
+						second the QR code. The first line (the header) is ignored:</p>
+					<table>
+						<thead>
+							<tr>
+								<th style="text-align:left">Filename</th>
+								<th style="text-align:left">@QR</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td style="text-align:left">
+									<strong><code>Filename1_1400x400_700x137_5mm_QR.indd</code></strong></td>
+								<td style="text-align:left">FILE1 1400x400_700x137</td>
+							</tr>
+							<tr>
+								<td style="text-align:left">
+									<strong><code>Filename2_597x517_577x500.5_3mm V4_QR.indd</code></strong></td>
+								<td style="text-align:left">FILE2 597x517_577x500.5</td>
+							</tr>
+						</tbody>
+					</table>
 				</li>
 				<li>
 					<p>Manually: otherwise, it asks for the QR text and adds the code on the page or a separate file,
@@ -474,7 +494,7 @@
 	<p>Please send me an e-mail at &lt;jpeg AT basement.ro&gt; or <a
 			href="https://github.com/pchiorean/Indentz/issues">report an issue on Github</a> if you encounter problems
 		or have any suggestions.</p>
-	<p>README.md • 20 July 2020, 20:13 (UTC).</p>
+	<p>README.md • 22 July 2020, 08:21 (UTC).</p>
 
 </body>
 
