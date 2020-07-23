@@ -10,7 +10,7 @@ O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O suge
 
 Sunt două scripturi gândite să fie folosite împreună – unul "curăță", celălalt "pregătește terenul".
 
-Mai întâi schimbă câteva setări după preferințele mele, după cum urmează:
+Mai întâi schimbă câteva setări după preferințele mele:
 
 > **Rulers:** Reset Zero Point \
 > **Rulers Units:** Millimeters \
@@ -46,12 +46,12 @@ După care:
 
   Layer | Combinat cu
   :--- | :---
-  Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible area, Visible area | `safe area`
-  Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe | `dielines`
+  Rahmen, Vis. area, Visible area, Visible, Vizibil | `safe area`
+  cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze | `dielines`
   UV, Varnish | `varnish`
-  WHW, WH, wh, hw, Hw Logo | `HW`
-  Type, TEXT, TEXTES, Text, text, txt, copy | `type`
-  Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer_lucru | `artwork`
+  HW Logo, Logo HW, hw, WH, WHW | `HW`
+  Copy, Text, TEXT, TEXTES, TXT, Type | `type`
+  Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
   background, BACKGROUND, BG, HG, Hintergrund | `bg`
 
 #### **`CleanupFonts.jsx`**
@@ -85,8 +85,6 @@ Uneori se refolosesc obiecte care au o etichetă atașată _(Script Label)_, și
 
 Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește culorile CMYK după formula "C= M= Y= K=" și șterge culorile nefolosite. Culorile spot rămân neschimbate.
 
-<!-- ![](img/cleanupswatches.gif) -->
-
 #### Seria **`FitToPage`** / **`FitToSpread`**
 
 Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame-urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într-un _clipping frame_ și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.
@@ -99,8 +97,6 @@ Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Fr
 
 * **`FitUndo.jsx`**: dacă doriți să restaurați toate obiectele simultan.
 
-<!-- ![](img/fittopage.gif) -->
-
 #### Seria **`ScaleToPage`**
 
 Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar.
@@ -108,8 +104,6 @@ Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează 
 * **`ScaleToPageSize.jsx`** și **`ScaleToPageMargins.jsx`** scalează la dimensiunile paginii sau marginii.
 
 * Variantele **`H`** (height) și **`W`** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
-
-<!-- ![](img/scaletopage.gif) -->
 
 #### Seria **`PageSize`**
 
@@ -140,8 +134,6 @@ Setează marginile paginii la dimensiunile selecției.
 * **`TextAutosizeR.jsx`**: _Auto-Sizing: top-right. Vertical Justification: top. Paragraph: align right._
 
 _Auto-Sizing Type_ va fi setat _Height and width_ dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta _Height only_, a doua _Height and width_ (caz în care trebuie avut grijă ca textul să fie rupt pe rânduri manual).
-
-<!-- ![](img/textautosize.gif) -->
 
 #### Seria **Print**
 
@@ -200,8 +192,6 @@ Script | Fn | Script | Fn | Script | Fn
 **`TextAutosize.jsx`** | F6 | **`TextAutosizeL.jsx`** | ⌥F6 | **`TextAutosizeR.jsx`** | ⌘F6
 **`ZoomToSelection.jsx`** | F4
 
-<!-- ![](img/shortcuts.png) -->
-
 ## Instalare
 
 1. Deschideți **Window > Utilities > Scripts**.
@@ -214,4 +204,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 22 iulie 2020, 17:26 (UTC).
+README-ro.md • 23 iulie 2020, 05:17 (UTC).

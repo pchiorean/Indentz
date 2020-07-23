@@ -10,7 +10,7 @@ Many are designed to be run through a shortcut. You can found a configuration su
 
 These are two scripts meant to be used together – one "cleans", the other "prepares the ground".
 
-First, they change some settings according to my preferences, as follows:
+First, they change some settings according to my preferences:
 
 > **Rulers:** Reset Zero Point \
 > **Rulers Units:** Millimeters \
@@ -46,12 +46,12 @@ After which:
 
   Layer | Merged to
   :--- | :---
-  Visible, visible, Vizibil, vizibil, Vis. area, vis. area, visible area, Visible area | `safe area`
-  Cut, diecut, die cut, Die Cut, cut lines, stanze, Stanze, decoupe | `dielines`
+  Rahmen, Vis. area, Visible area, Visible, Vizibil | `safe area`
+  cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze | `dielines`
   UV, Varnish | `varnish`
-  WHW, WH, wh, hw, Hw Logo | `HW`
-  Type, TEXT, TEXTES, Text, text, txt, copy | `type`
-  Ebene 1, Calque 1, Artwork, AW, Layouts, Layout, layout, Layer_lucru | `artwork`
+  HW Logo, Logo HW, hw, WH, WHW | `HW`
+  Copy, Text, TEXT, TEXTES, TXT, Type | `type`
+  Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
   background, BACKGROUND, BG, HG, Hintergrund | `bg`
 
 #### **`CleanupFonts.jsx`**
@@ -85,8 +85,6 @@ Sometimes objects that have a label attached _(Script Label)_ are reused, which 
 
 Converts RGB process colors to CMYK, removes duplicates, sets every name in "C= M= Y= K=" form and deletes unused swatches. Spot colors remain unchanged.
 
-<!-- ![](img/cleanupswatches.gif) -->
-
 #### **`FitToPage`** / **`FitToSpread`** series
 
 Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame and this is resized. If you run the script a second time on such an object, it will restore it.
@@ -99,8 +97,6 @@ Resize one or more selected objects, without scaling them. Ordinary frames are s
 
 * **`FitUndo.jsx`**: if you want to restore all objects at once.
 
-<!-- ![](img/fittopage.gif) -->
-
 #### **`ScaleToPage`** series
 
 These also work with one or more objects, but scale them proportionally, as a block.
@@ -108,8 +104,6 @@ These also work with one or more objects, but scale them proportionally, as a bl
 * **`ScaleToPageSize.jsx`** and **`ScaleToPageMargins.jsx`** scale to the page size or page margins.
 
 * The **`H`** (height) and **`W`** (width) variants scale to the height or width of the page or page margins.
-
-<!-- ![](img/scaletopage.gif) -->
 
 #### **`PageSize`** series
 
@@ -140,8 +134,6 @@ Fit the frame to the text and set auto-sizing, vertical justification and paragr
 * **`TextAutosizeR.jsx`**: _Auto-Sizing: top-right. Vertical Justification: top. Paragraph: align right._
 
 _Auto-Sizing Type_ will be set to _Height and width_ if the text has only one line. If it has multiple lines, the first run will set it to _Height only_, the second run to _Height and width_ (in which case care must be taken that the text is broken manually).
-
-<!-- ![](img/textautosize.gif) -->
 
 #### **Print** series
 
@@ -200,8 +192,6 @@ Script | Fn | Script | Fn | Script | Fn
 **`TextAutosize.jsx`** | F6 | **`TextAutosizeL.jsx`** | ⌥F6 | **`TextAutosizeR.jsx`** | ⌘F6
 **`ZoomToSelection.jsx`** | F4
 
-<!-- ![](img/shortcuts.png) -->
-
 ## Installation
 
 1. Open **Window > Utilities > Scripts**.
@@ -214,4 +204,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 22 July 2020, 17:26 (UTC).
+README.md • 23 July 2020, 05:17 (UTC).
