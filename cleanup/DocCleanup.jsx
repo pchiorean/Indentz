@@ -1,5 +1,5 @@
 ﻿/*
-	Doc cleanup v1.8.6
+	Doc cleanup v1.8.7
 	© July 2020, Paul Chiorean
 	Changes some settings, cleans up swatches/layers/pages/guides and resets scaling.
 */
@@ -69,12 +69,18 @@ var doc = app.activeDocument;
 	}
 })();
 
-// Step 4. Delete unused layers
+// Step 4. Delete guides
+(function() {
+	var g = doc.guides.everyItem().getElements();
+	for (var i = 0; i < g.length; i++)  if (g[i].label != "HW") g[i].remove();
+})();
+
+// Step 5. Delete unused layers
 (function() {
 	try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (_) {};
 })();
 
-// Step 5. Delete empty spreads
+// Step 6. Delete empty spreads
 (function() {
 	var s = doc.spreads;
 	for (var i = 0; i < s.length; i++) {
@@ -82,7 +88,7 @@ var doc = app.activeDocument;
 	}
 })();
 
-// Step 6. Unlock all items & redefine scaling to 100%
+// Step 7. Unlock all items & redefine scaling to 100%
 (function() {
 	for (var i = 0; i < doc.spreads.length; i++) {
 		var item, items = doc.spreads[i].allPageItems;
@@ -91,10 +97,4 @@ var doc = app.activeDocument;
 			item.redefineScaling();
 		}
 	}
-})();
-
-// Step 7. Delete guides
-(function() {
-	var g = doc.guides.everyItem().getElements();
-	for (var i = 0; i < g.length; i++)  if (g[i].label != "HW") g[i].remove();
 })();
