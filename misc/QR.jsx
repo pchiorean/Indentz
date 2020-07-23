@@ -24,7 +24,7 @@ function BatchQR() { // Noninteractive: batch process "QR.txt"
 		}
 		infoLine[0] = infoLine[0].match(/_QR\.indd$/g) ?
 			infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
-		if (MakeQRFile(infoLine[1], infoLine[0])) err++; // Count files with overflows
+		if (QROnFile(infoLine[1], infoLine[0])) err++; // Count files with overflows
 	}
 	infoFile.close(); doc.close();
 	var msg = "Batch processed " + line + " records from \'QR.txt\'.";
@@ -60,12 +60,12 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 	if (result == 2 || !label.text) { exit() }; // Empty or cancelled
 	var QRLabel = label.text;
 	switch (flg_onfile.value) {
-		case false: MakeQROnPage(QRLabel); break;
-		case true: MakeQRFile(QRLabel); break;
+		case false: QROnPage(QRLabel); break;
+		case true: QROnFile(QRLabel); break;
 	}
 }
 
-function MakeQROnPage(QRLabel) { // Put QR on each page
+function QROnPage(QRLabel) { // Put QR on each page
 	var infoLayer = MakeInfoLayer(doc);
 	for (var i = 0; i < doc.pages.length; i++) {
 		var page = doc.pages.item(i);
@@ -127,7 +127,7 @@ function MakeQROnPage(QRLabel) { // Put QR on each page
 	}
 }
 
-function MakeQRFile(QRLabel, fn) { // Put QR on 'fn' file
+function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
 	if (!fn) var fn = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd";
 	var target = app.documents.add();
 	var page = target.pages[0];
@@ -148,7 +148,7 @@ function MakeQRFile(QRLabel, fn) { // Put QR on 'fn' file
 		hyphenation: false,
 		fillColor: "Black"
 	}
-	label.geometricBounds = [0, 0, 16.4046459005573,56.6929133858268];
+	label.geometricBounds = [0, 0, 16.4046459005573, 56.6929133858268];
 	label.textFramePreferences.properties = {
 		verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 		firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
@@ -159,7 +159,7 @@ function MakeQRFile(QRLabel, fn) { // Put QR on 'fn' file
 	}
 	var code = page.rectangles.add({ itemLayer: infoLayer.name, label: "QR" });
 	code.absoluteRotationAngle = -90;
-	code.geometricBounds = [16.4046459005572,0,73.7007874015747,56.6929133858268];
+	code.geometricBounds = [16.4046459005572, 0, 73.7007874015747, 56.6929133858268];
 	code.createPlainTextQRCode(QRLabel);
 	code.frameFittingOptions.properties = {
 		fittingAlignment: AnchorPoint.CENTER_ANCHOR,
