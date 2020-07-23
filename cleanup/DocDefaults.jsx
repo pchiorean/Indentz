@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v1.13.8
+	Default layers and more v1.13.9
 	© July 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -165,6 +165,7 @@ const safeSwatchName = "Safe area";
 	for (var i = 0; i < doc.layers.length; i++) {
 		var docLayer = doc.layers.item(i);
 		switch (docLayer.name) {
+			case "info copy":
 			case "ratio":
 				try { doc.layers.add({ name: infoLayerName }) } catch (_) {};
 				infoLayer.merge(docLayer); i--;
