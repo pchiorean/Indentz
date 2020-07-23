@@ -36,7 +36,7 @@ function FitFrame2Text(sel, align) {
 	switch (set_oldVJ) {
 		case 1785951334: // VerticalJustification.JUSTIFY_ALIGN
 			exit();
-		case 1953460256 || 1785951334: // VerticalJustification.TOP_ALIGN || VerticalJustification.JUSTIFY_ALIGN
+		case 1953460256: // VerticalJustification.TOP_ALIGN
 			var cBefore = sel.resolve(AnchorPoint.TOP_CENTER_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
 			sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.TOP_CENTER_POINT;
 			sel.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
