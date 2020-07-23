@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v1.13.7
+	Default layers and more v1.13.8
 	© July 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -91,15 +91,18 @@ const safeSwatchName = "Safe area";
 	for (var i = 0; i < doc.layers.length; i++) {
 		var docLayer = doc.layers.item(i);
 		switch (docLayer.name) {
-			case "Ebene 1":
-			case "Calque 1":
 			case "Artwork":
+			case "aw":
 			case "AW":
-			case "Layouts":
-			case "Layout":
-			case "layout":
-			case "Layer_lucru":
+			case "Calque 1":
+			case "Ebene 1":
 			case "Elemente":
+			case "Layer 1":
+			case "Layer_lucru":
+			case "layout":
+			case "Layout":
+			case "layouts":
+			case "Layouts":
 				try { doc.layers.add({ name: artLayerName }) } catch (_) {};
 				artLayer.merge(docLayer); i--;
 		}
@@ -115,13 +118,16 @@ const safeSwatchName = "Safe area";
 	for (var i = 0; i < doc.layers.length; i++) {
 		var docLayer = doc.layers.item(i);
 		switch (docLayer.name) {
-			case "Type":
-			case "TEXT":
-			case "TEXTES":
-			case "Text":
-			case "text":
-			case "txt":
 			case "copy":
+			case "Copy":
+			case "text":
+			case "Text":
+			case "TEXT":
+			case "Textes":
+			case "TEXTES":
+			case "txt":
+			case "TXT":
+			case "Type":
 				try { doc.layers.add({ name: txtLayerName }) } catch (_) {};
 				txtLayer.merge(docLayer); i--;
 		}
@@ -137,12 +143,13 @@ const safeSwatchName = "Safe area";
 	for (var i = 0; i < doc.layers.length; i++) {
 		var docLayer = doc.layers.item(i);
 		switch (docLayer.name) {
-			case "WHW":
-			case "WH":
-			case "wh":
-			case "hw":
 			case "Hw Logo":
+			case "HW Logo":
+			case "hw":
 			case "Logo HW":
+			case "wh":
+			case "WH":
+			case "WHW":
 				try { doc.layers.add({ name: hwLayerName }) } catch (_) {};
 				hwLayer.merge(docLayer); i--;
 		}
@@ -174,14 +181,16 @@ const safeSwatchName = "Safe area";
 	for (var i = 0; i < doc.layers.length; i++) {
 		var docLayer = doc.layers.item(i);
 		switch (docLayer.name) {
-			case "Visible":
-			case "visible":
-			case "Vizibil":
-			case "vizibil":
-			case "Vis. area":
+			case "rahmen":
+			case "Rahmen":
 			case "vis. area":
+			case "Vis. area":
 			case "visible area":
 			case "Visible area":
+			case "visible":
+			case "Visible":
+			case "vizibil":
+			case "Vizibil":
 				try { doc.layers.add({ name: safeLayerName }) } catch (_) {};
 				safeLayer.merge(docLayer); i--;
 		}
@@ -196,15 +205,20 @@ const safeSwatchName = "Safe area";
 	for (var i = 0; i < doc.layers.length; i++) {
 		var docLayer = doc.layers.item(i);
 		switch (docLayer.name) {
+			case "cut lines":
+			case "Cut lines":
+			case "cut":
 			case "Cut":
-			case "diecut":
+			case "decoupe":
+			case "Decoupe":
 			case "die cut":
 			case "Die Cut":
-			case "cut lines":
+			case "diecut":
+			case "Diecut":
+			case "stanz":
+			case "Stanz":
 			case "stanze":
 			case "Stanze":
-			case "Stanz":
-			case "decoupe":
 				try { doc.layers.add({ name: dieLayerName }) } catch (_) {};
 				dieLayer.merge(docLayer); i--;
 		}
