@@ -1,5 +1,5 @@
 /*
-	QR code v1.3.0
+	QR code v1.4.0
 	© July 2020, Paul Chiorean
 	Adds a QR code to the current document or saves it in a separate file.
 	If "QR.txt" is found, batch process it.
@@ -87,7 +87,7 @@ function QROnPage(QRLabel) { // Put QR on each page
 			hyphenation: false,
 			fillColor: "Black"
 		}
-		label.geometricBounds = [
+				label.geometricBounds = [
 			0, page.bounds[1],
 			23.4912600737857, page.bounds[1] + 62.3622047244095
 		];
@@ -121,8 +121,24 @@ function QROnPage(QRLabel) { // Put QR on each page
 		code.epss[0].localDisplaySetting = ViewDisplaySettings.HIGH_QUALITY;
 		var QR = page.groups.add([label, code]);
 		QR.absoluteRotationAngle = 90;
-		doc.align(QR, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
-		doc.align(QR, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
+		// Check and, if possible, put QR outside safe area
+		var mgs = Margins(page);
+		var szLabel = {
+			width: label.geometricBounds[3] - label.geometricBounds[1],
+			height: label.geometricBounds[2] - label.geometricBounds[0]
+		}
+		var szCode = {
+			width: code.geometricBounds[3] - code.geometricBounds[1],
+			height: code.geometricBounds[2] - code.geometricBounds[0]
+		}
+		if ((mgs.left >= szLabel.width + szCode.width - 1.45) ||
+			(mgs.bottom >= szCode.height + 6.23622047244442 - 1.45)) {
+				doc.align(QR, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
+				doc.align(QR, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
+			} else {
+				doc.align(QR, AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+				doc.align(QR, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		}
 		QR.ungroup();
 	}
 }
@@ -203,4 +219,13 @@ function MakeInfoLayer(doc) {
 	} else if (hwLayer.isValid) { infoLayer.move(LocationOptions.before, hwLayer);
 	} else infoLayer.move(LocationOptions.AT_BEGINNING);
 	return infoLayer;
+}
+
+function Margins(page) { // Return page margins
+	return {
+		top: page.marginPreferences.top,
+		left: (page.side == PageSideOptions.LEFT_HAND) ? page.marginPreferences.right : page.marginPreferences.left,
+		bottom: page.marginPreferences.bottom,
+		right: (page.side == PageSideOptions.LEFT_HAND) ? page.marginPreferences.left : page.marginPreferences.right
+	}
 }
