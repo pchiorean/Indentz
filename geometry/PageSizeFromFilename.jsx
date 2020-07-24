@@ -1,5 +1,5 @@
 /*
-	Page size from filename v1.5.1
+	Page size from filename v1.5.2
 	© July 2020, Paul Chiorean
 	Sets every page size and margins based on the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -33,7 +33,7 @@ for (var i = 0; i < szArr.length; i++) {
 	szArr[i] = szArr[i].replace(/,/g, "."); // Replace commas
 }
 // Check number of pairs and set page size and, if defined, page margins
-var page, szPg, szMg, mgPg;
+var page, szPg, szMg, mgs;
 var dimA = szArr[0].split("x"); // First pair
 szPg = { width: Number(dimA[0]), height: Number(dimA[1]) };
 if (szArr.length == 2) { // If 2 pairs (page size & page margins), page size is larger
@@ -46,7 +46,7 @@ if (szArr.length == 2) { // If 2 pairs (page size & page margins), page size is 
 		width: Math.min(Number(dimA[0]), Number(dimB[0])),
 		height: Math.min(Number(dimA[1]), Number(dimB[1]))
 	}
-	mgPg = {
+	mgs = {
 		top: (szPg.height - szMg.height) / 2,
 		left: (szPg.width - szMg.width) / 2,
 		bottom: (szPg.height - szMg.height) / 2,
@@ -63,7 +63,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 		AnchorPoint.CENTER_ANCHOR,
 		ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
 		[szPg.width / 0.352777777777778, szPg.height / 0.352777777777778]);
-	if (mgPg != null) page.marginPreferences.properties = mgPg; // Set margins
+	if (mgs != null) page.marginPreferences.properties = mgs; // Set margins
 }
 // Also set document size
 if (!flag_S) {
