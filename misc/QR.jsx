@@ -87,7 +87,7 @@ function QROnPage(QRLabel) { // Put QR on each page
 			hyphenation: false,
 			fillColor: "Black"
 		}
-				label.geometricBounds = [
+		label.geometricBounds = [
 			0, page.bounds[1],
 			23.4912600737857, page.bounds[1] + 62.3622047244095
 		];
