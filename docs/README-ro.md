@@ -119,9 +119,7 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 * **`PageSizeFromSelection.jsx`** redimensionează pagina curentă la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
 
-#### **`PageMarginsFromSelection.jsx`**
-
-Setează marginile paginii la dimensiunile selecției.
+* **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
 #### Seria **`TextAutosize`**
 
@@ -204,4 +202,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 23 iulie 2020, 05:17 (UTC).
+README-ro.md • 25 iulie 2020, 07:54 (UTC).

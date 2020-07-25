@@ -119,9 +119,7 @@ Resize the pages of the document based on the file name, page margins, or select
 
 * **`PageSizeFromSelection.jsx`** resizes the current page to the selected objects (similar to **Artboards > Fit to Selected Art** in Illustrator).
 
-#### **`PageMarginsFromSelection.jsx`**
-
-Sets the page margins to the selected objects.
+* **`PageMarginsFromSelection.jsx`** sets the page margins to the selected objects.
 
 #### **`TextAutosize`** series
 
@@ -204,4 +202,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 23 July 2020, 05:17 (UTC).
+README.md • 25 July 2020, 07:54 (UTC).
