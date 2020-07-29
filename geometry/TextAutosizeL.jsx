@@ -1,5 +1,5 @@
 /*
-	Fit frame to text, left v1.5.0
+	Fit frame to text, left v1.5.1
 	© July 2020, Paul Chiorean
 	Auto-sizes the text frame to the content, left aligned.
 */
@@ -16,8 +16,8 @@ for (var i = 0; i < sel.length; i++) {
 function FitFrame2Text(sel, align) {
 	switch (align) {
 		case "center":
-			var set_AS = AutoSizingReferenceEnum.CENTER_POINT;
-			var set_VJ = VerticalJustification.CENTER_ALIGN;
+			var set_AS = AutoSizingReferenceEnum.TOP_CENTER_POINT;
+			var set_VJ = VerticalJustification.TOP_ALIGN;
 			var set_PJ = Justification.CENTER_ALIGN;
 			break;
 		case "left":
