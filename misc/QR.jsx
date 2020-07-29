@@ -1,5 +1,5 @@
 /*
-	QR code v1.4.0
+	QR code v1.5.0
 	© July 2020, Paul Chiorean
 	Adds a QR code to the current document or saves it in a separate file.
 	If "QR.txt" is found, batch process it.
@@ -15,6 +15,7 @@ if (infoFile.open("r")) { BatchQR() } else { ManuallyQR() };
 
 
 function BatchQR() { // Noninteractive: batch process "QR.txt"
+	if (!confirm("Found \'QR.txt\', process it?")) exit();
 	var line = 0, err = 0;
 	infoFile.readln().split("\t");
 	while (!infoFile.eof) {
@@ -57,12 +58,13 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 	var ok = okcancel.add("button", undefined, undefined, { name: "ok" });
 		ok.text = "OK";
 	var result = w.show();
-	if (result == 2 || !label.text) { exit() }; // Empty or cancelled
+	if (result == 2 || !label.text) { w.destroy(); exit() }; // Empty or cancelled
 	var QRLabel = label.text;
 	switch (flg_onfile.value) {
 		case false: QROnPage(QRLabel); break;
 		case true: QROnFile(QRLabel); break;
 	}
+	w.destroy();
 }
 
 function QROnPage(QRLabel) { // Put QR on each page
