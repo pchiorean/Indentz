@@ -1,5 +1,5 @@
 /*
-	Fit frame to text, left v1.5.1
+	Fit frame to text, left v1.6.0
 	© July 2020, Paul Chiorean
 	Auto-sizes the text frame to the content, left aligned.
 */
@@ -14,65 +14,69 @@ for (var i = 0; i < sel.length; i++) {
 }
 
 function FitFrame2Text(sel, align) {
-	switch (align) {
-		case "center":
-			var set_AS = AutoSizingReferenceEnum.TOP_CENTER_POINT;
-			var set_VJ = VerticalJustification.TOP_ALIGN;
-			var set_PJ = Justification.CENTER_ALIGN;
-			break;
-		case "left":
-			var set_AS = AutoSizingReferenceEnum.TOP_LEFT_POINT;
-			var set_VJ = VerticalJustification.TOP_ALIGN;
-			var set_PJ = Justification.LEFT_ALIGN;
-			break;
-		case "right":
-			var set_AS = AutoSizingReferenceEnum.TOP_RIGHT_POINT;
-			var set_VJ = VerticalJustification.TOP_ALIGN;
-			var set_PJ = Justification.RIGHT_ALIGN;
-			break;
-	}
+	if (sel.textFramePreferences.verticalJustification == VerticalJustification.JUSTIFY_ALIGN) exit(); // WIP
+	// Save settings
 	var set_oldAS = sel.textFramePreferences.autoSizingType;
 	var set_oldVJ = sel.textFramePreferences.verticalJustification;
+	// Set auto-size reference point
 	switch (set_oldVJ) {
-		case 1785951334: // VerticalJustification.JUSTIFY_ALIGN
-			exit();
-		case 1953460256: // VerticalJustification.TOP_ALIGN
-			var cBefore = sel.resolve(AnchorPoint.TOP_CENTER_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
-			sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.TOP_CENTER_POINT;
-			sel.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
-			sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.BOTTOM_CENTER_POINT;
-			sel.textFramePreferences.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
-			sel.textFramePreferences.useNoLineBreaksForAutoSizing = true;
-			var cAfter = sel.resolve(AnchorPoint.TOP_CENTER_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
-			break;
-		case 1667591796: // VerticalJustification.CENTER_ALIGN
-			var cBefore = sel.resolve(AnchorPoint.CENTER_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
-			sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.CENTER_POINT;
-			sel.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
-			sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.BOTTOM_CENTER_POINT;
-			sel.textFramePreferences.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
-			sel.textFramePreferences.useNoLineBreaksForAutoSizing = true;
-			var cAfter = sel.resolve(AnchorPoint.CENTER_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
-			break;
-		case 1651471469: // VerticalJustification.BOTTOM_ALIGN
-			var cBefore = sel.resolve(AnchorPoint.BOTTOM_CENTER_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
-			sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.BOTTOM_CENTER_POINT;
-			sel.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
-			sel.textFramePreferences.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
-			sel.textFramePreferences.useNoLineBreaksForAutoSizing = true;
-			var cAfter = sel.resolve(AnchorPoint.BOTTOM_CENTER_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
-			break;
+		case VerticalJustification.TOP_ALIGN:
+			sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.TOP_CENTER_POINT; break;
+		case VerticalJustification.CENTER_ALIGN:
+			sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.CENTER_POINT; break;
+		case VerticalJustification.BOTTOM_ALIGN:
+			sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.BOTTOM_CENTER_POINT; break;
 	}
-	sel.textFramePreferences.autoSizingType = set_oldAS;
-	var set_AST = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
+	// Resize frame
+	sel.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
+	switch (align) {
+		case "center":
+			sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.BOTTOM_CENTER_POINT; break;
+		case "left":
+			sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.BOTTOM_LEFT_POINT; break;
+		case "right":
+			sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.BOTTOM_RIGHT_POINT; break;
+	}
+	sel.textFramePreferences.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
+	sel.textFramePreferences.useNoLineBreaksForAutoSizing = true;
+	// Set frame tightening
 	if (sel.lines.length > 1) {
-		set_AST = sel.textFramePreferences.autoSizingType ==
-		AutoSizingTypeEnum.OFF ? AutoSizingTypeEnum.HEIGHT_ONLY : AutoSizingTypeEnum.HEIGHT_AND_WIDTH
+		sel.textFramePreferences.autoSizingType = set_oldAS == AutoSizingTypeEnum.OFF ?
+			AutoSizingTypeEnum.HEIGHT_ONLY : AutoSizingTypeEnum.HEIGHT_AND_WIDTH
+	} else {
+		sel.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
 	}
-	sel.textFramePreferences.properties = {
-		autoSizingType: set_AST,
-		autoSizingReferencePoint: set_AS,
-		verticalJustification: set_oldVJ
+	// Set alignment
+	switch (align) {
+		case "center":
+			switch (set_oldVJ) {
+				case VerticalJustification.TOP_ALIGN:
+					sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.TOP_CENTER_POINT; break;
+				case VerticalJustification.CENTER_ALIGN:
+					sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.CENTER_POINT; break;
+				case VerticalJustification.BOTTOM_ALIGN:
+					sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.BOTTOM_CENTER_POINT; break;
+			}
+			sel.paragraphs.everyItem().justification = Justification.CENTER_ALIGN; break;
+		case "left":
+			switch (set_oldVJ) {
+				case VerticalJustification.TOP_ALIGN:
+					sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.TOP_LEFT_POINT; break;
+				case VerticalJustification.CENTER_ALIGN:
+					sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.LEFT_CENTER_POINT; break;
+				case VerticalJustification.BOTTOM_ALIGN:
+					sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.BOTTOM_LEFT_POINT; break;
+			}
+			sel.paragraphs.everyItem().justification = Justification.LEFT_ALIGN; break;
+		case "right":
+			switch (set_oldVJ) {
+				case VerticalJustification.TOP_ALIGN:
+					sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.TOP_RIGHT_POINT; break;
+				case VerticalJustification.CENTER_ALIGN:
+					sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.RIGHT_CENTER_POINT; break;
+				case VerticalJustification.BOTTOM_ALIGN:
+					sel.textFramePreferences.autoSizingReferencePoint = AutoSizingReferenceEnum.BOTTOM_RIGHT_POINT; break;
+			}
+			sel.paragraphs.everyItem().justification = Justification.RIGHT_ALIGN; break;
 	}
-	sel.paragraphs.everyItem().justification = set_PJ;
 }
