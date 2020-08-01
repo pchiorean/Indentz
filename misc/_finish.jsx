@@ -1,5 +1,5 @@
 /*
-	Finishing 0.4.0
+	Finishing 0.4.1
 	© July 2020, Paul Chiorean
 	Used for quick fixes.
 */
@@ -81,10 +81,10 @@ function TextReg2CMYK(){ // Converts text with "Registration" to CMYK
 function TextBlack2Black(){
 	try { doc.colors.add({
 		name: "C=60 M=40 Y=40 K=100",
-		model: ColorModel.PROCESS, space:
-		ColorSpace.CMYK, colorValue: [60, 40, 40, 100] });
+		model: ColorModel.PROCESS,
+		space: ColorSpace.CMYK,
+		colorValue: [60, 40, 40, 100] });
 	} catch (_) {};
-
 	try { doc.colors.add({
 		name: "R=0 G=0 B=0" });
 	} catch (_) {
@@ -95,23 +95,10 @@ function TextBlack2Black(){
 		app.findChangeTextOptions.includeMasterPages = true;
 		app.findTextPreferences.fillColor = "R=0 G=0 B=0";
 		app.changeTextPreferences.fillColor = "Black";
+		// app.changeTextPreferences.fillColor = "C=60 M=40 Y=40 K=100";
 		doc.changeText();
 		app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
-	};
-
-	try { doc.colors.add({
-		name: "R=30 G=30 B=27" });
-	} catch (_) {
-		app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
-		app.findChangeTextOptions.includeHiddenLayers =
-		app.findChangeTextOptions.includeLockedLayersForFind =
-		app.findChangeTextOptions.includeLockedStoriesForFind =
-		app.findChangeTextOptions.includeMasterPages = true;
-		app.findTextPreferences.fillColor = "R=30 G=30 B=27";
-		app.changeTextPreferences.fillColor = "C=60 M=40 Y=40 K=100";
-		doc.changeText();
-		app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
-	};
+	}
 }
 
 function Relink(oldLink, newLink) {
