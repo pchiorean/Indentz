@@ -1,5 +1,5 @@
 /*
-	L grid 1.1.2
+	L grid 1.1.3
 	© July 2020, Paul Chiorean
 */
 
@@ -17,7 +17,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 		width: doc.pages[i].bounds[3] - doc.pages[i].bounds[1],
 		height: doc.pages[i].bounds[2] - doc.pages[i].bounds[0]
 	}
-	switch (szPg.width / szPg.height <= 1) { // Page orientation
+	switch (szPg.width / szPg.height <= 1) {
 		case true: // Portrait
 			// Logo = 12% of format height except HW
 			// Outer ring = 116% of logo
@@ -40,7 +40,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 			// Outer ring = 116% of logo
 			// Margin = 30% of logo
 			// Bottom margin = 2 x margin
-			var k = (szPg.width / szPg.height >= 3) ? 1.2 : 1; // XL
+			var k = (szPg.width / szPg.height >= 3) ? 1.2 : 1; // XL formats
 			var mg = Math.ceil(szPg.height * 0.9 * 0.14 * 0.3 * k);
 			var logo = mg * 3.333333333333333;
 			// Set margins
@@ -52,7 +52,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 				itemLayer: "guides", guideColor: UIColors.GREEN,
 				orientation: HorizontalOrVertical.horizontal,
 				location: szPg.height * 0.9 / 2 });
-			// Horizontal bottom guide for extreme formats
+			// Horizontal bottom guide for XL formats
 			doc.pages[i].guides.add(undefined, {
 				itemLayer: "guides", guideColor: UIColors.GREEN,
 				orientation: HorizontalOrVertical.horizontal,
