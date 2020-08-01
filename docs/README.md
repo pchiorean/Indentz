@@ -123,7 +123,7 @@ Resize the pages of the document based on the file name, page margins, or select
 
 #### **`TextAutosize`** series
 
-Fit the frame to the text and set auto-sizing and paragraph alignment to center, left or right. By setting vertical justification, you can control where the auto-sizing reference point will be:
+Fit the frame to the text and set auto-sizing and paragraph alignment to center, left or right. By setting **Vertical Justification**, you can control where the auto-sizing reference point will be on the vertical axis:
 
 * **`TextAutosize.jsx`**: **Auto-Sizing Reference Point:** *top-center/center/bottom-center*. **Paragraph:** *align center.*
 

@@ -123,7 +123,7 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 #### Seria **`TextAutosize`**
 
-"Strâng" chenarul la text și setează dimensionarea automată și alinierea paragrafului la centru/stânga/dreapta. Prin setarea justificării verticale puteți controla unde va fi punctul de referință pentru dimensionarea automată:
+"Strâng" chenarul la text și setează dimensionarea automată și alinierea paragrafului la centru/stânga/dreapta. Setând **Vertical Justification** puteți controla unde va fi punctul de referință pentru dimensionarea automată pe axa verticală:
 
 * **`TextAutosize.jsx`**: **Auto-Sizing Reference Point:** *top-center/center/bottom-center*. **Paragraph:** *align center.*
 
