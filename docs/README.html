@@ -4,49 +4,24 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Indentz</title>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
 	<style>
-	</style>
-
-	<link rel="stylesheet"
-		href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
-	<link rel="stylesheet"
-		href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-	<style>
-		body {
-			font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
-			font-size: 14px;
-			line-height: 1.6;
-		}
+		body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif; font-size: 14px; line-height: 1.6; }
 	</style>
 	<style>
-		.task-list-item {
-			list-style-type: none;
-		}
-
-		.task-list-item-checkbox {
-			margin-left: -20px;
-			vertical-align: middle;
-		}
+		.task-list-item { list-style-type: none; }
+		.task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
 	</style>
-
-
-
 </head>
 
 <body class="vscode-light">
 	<h1 id="indentz">Indentz</h1>
-	<p>Collection of InDesign scripts for simple and repetitive tasks: cleaning up the document, making default layers
-		and special colors, resizing objects to the page geometry or modifying it, preparing for print, better zooming.
-	</p>
-	<p>Many are designed to be run through a shortcut. You can found a configuration suggestion in the <a
-			href="#shortcuts">Shortcuts</a> section. Some are intended to be run in the <a
-			href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>
-		script by Peter Kahrel.</p>
+	<p>Collection of InDesign scripts for simple and repetitive tasks: cleaning up the document, making default layers and special colors, resizing objects to the page geometry or modifying it, preparing for print, better zooming.</p>
+	<p>Many are designed to be run through a shortcut. You can found a configuration suggestion in the <a href="#shortcuts">Shortcuts</a> section. Some are intended to be run in the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
 	<h2 id="description">Description</h2>
-	<h4 id="doccleanupjsx--docdefaultsjsx"><strong><code>DocCleanup.jsx</code></strong> /
-		<strong><code>DocDefaults.jsx</code></strong></h4>
-	<p>These are two scripts meant to be used together – one &quot;cleans&quot;, the other &quot;prepares the
-		ground&quot;.</p>
+	<h4 id="doccleanupjsx--docdefaultsjsx"><strong><code>DocCleanup.jsx</code></strong> / <strong><code>DocDefaults.jsx</code></strong></h4>
+	<p>These are two scripts meant to be used together – one &quot;cleans&quot;, the other &quot;prepares the ground&quot;.</p>
 	<p>First, they change some settings according to my preferences:</p>
 	<blockquote>
 		<p><strong>Rulers:</strong> Reset Zero Point <br>
@@ -74,12 +49,10 @@
 	<p>After which:</p>
 	<ul>
 		<li>
-			<p><strong><code>DocCleanup.jsx</code></strong> cleans up unused swatches/layers/pages, unlocks all items,
-				resets their scaling to 100%, removes all guides.</p>
+			<p><strong><code>DocCleanup.jsx</code></strong> cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%, removes all guides.</p>
 		</li>
 		<li>
-			<p><strong><code>DocDefaults.jsx</code></strong> creates some swatches &amp; layers, merges similar layers,
-				replaces some missing or unwanted fonts, and sets the page geometry from the filename.</p>
+			<p><strong><code>DocDefaults.jsx</code></strong> creates some swatches &amp; layers, merges similar layers, replaces some missing or unwanted fonts, and sets the page geometry from the filename.</p>
 			<p><img src="img/docdefaults.png" alt="Swatches &amp; layers"></p>
 			<p>The script merges several similar layers, as follows:</p>
 			<table>
@@ -124,9 +97,7 @@
 		</li>
 	</ul>
 	<h4 id="cleanupfontsjsx"><strong><code>CleanupFonts.jsx</code></strong></h4>
-	<p>Replaces some missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV
-		<em>(tab-separated values)</em> file with the same name as the script. The first line (the header) is ignored.
-		The current list is as follows:</p>
+	<p>Replaces some missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV <em>(tab-separated values)</em> file with the same name as the script. The first line (the header) is ignored. The default list is as follows:</p>
 	<table>
 		<thead>
 			<tr>
@@ -225,30 +196,20 @@
 	</table>
 	<p>You can use <strong><code>ShowFonts.jsx</code></strong> to get a tab delimited list of used fonts.</p>
 	<h4 id="cleanuplabelsjsx"><strong><code>CleanupLabels.jsx</code></strong></h4>
-	<p>Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which potentially creates
-		problems later. <strong><code>CleanupLabels.jsx</code></strong> deletes all labels from a document.</p>
+	<p>Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which potentially creates problems later. <strong><code>CleanupLabels.jsx</code></strong> deletes all labels from a document.</p>
 	<h4 id="cleanupswatchesjsx"><strong><code>CleanupSwatches.jsx</code></strong></h4>
-	<p>Converts RGB process colors to CMYK, removes duplicates, sets every name in &quot;C= M= Y= K=&quot; form and
-		deletes unused swatches. Spot colors remain unchanged.</p>
-	<h4 id="fittopage--fittospread-series"><strong><code>FitToPage</code></strong> /
-		<strong><code>FitToSpread</code></strong> series</h4>
-	<p>Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to
-		deform them, rotated objects, ovals, groups, etc. are clipped in a frame and this is resized. If you run the
-		script a second time on such an object, it will restore it.</p>
+	<p>Converts RGB process colors to CMYK, removes duplicates, sets every name in &quot;C= M= Y= K=&quot; form and deletes unused swatches. Spot colors remain unchanged.</p>
+	<h4 id="fittopage--fittospread-series"><strong><code>FitToPage</code></strong> / <strong><code>FitToSpread</code></strong> series</h4>
+	<p>Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame and this is resized. If you run the script a second time on such an object, it will restore it.</p>
 	<ul>
 		<li>
-			<p><strong><code>FitToPage.jsx</code></strong> / <strong><code>FitToPageMargins.jsx</code></strong> /
-				<strong><code>FitToPageBleed.jsx</code></strong> constrain the size of an object to the size of the
-				page, the page margins, or the page bleed.</p>
+			<p><strong><code>FitToPage.jsx</code></strong> / <strong><code>FitToPageMargins.jsx</code></strong> / <strong><code>FitToPageBleed.jsx</code></strong> constrain the size of an object to the size of the page, the page margins, or the page bleed.</p>
 		</li>
 		<li>
-			<p><strong><code>FitToSpread.jsx</code></strong> / <strong><code>FitToSpreadMargins.jsx</code></strong> /
-				<strong><code>FitToSpreadBleed.jsx</code></strong> do the same for pages grouped in a spread.</p>
+			<p><strong><code>FitToSpread.jsx</code></strong> / <strong><code>FitToSpreadMargins.jsx</code></strong> / <strong><code>FitToSpreadBleed.jsx</code></strong> do the same for pages grouped in a spread.</p>
 		</li>
 		<li>
-			<p><strong><code>FitToPageBleedForced.jsx</code></strong> and
-				<strong><code>FitToPageSpreadForced.jsx</code></strong> resize exactly to the page or the spread bleed.
-				They are useful, for example, for the background image.</p>
+			<p><strong><code>FitToPageBleedForced.jsx</code></strong> and <strong><code>FitToPageSpreadForced.jsx</code></strong> resize exactly to the page or the spread bleed. They are useful, for example, for the background image.</p>
 		</li>
 		<li>
 			<p><strong><code>FitUndo.jsx</code></strong>: if you want to restore all objects at once.</p>
@@ -258,60 +219,48 @@
 	<p>These also work with one or more objects, but scale them proportionally, as a block.</p>
 	<ul>
 		<li>
-			<p><strong><code>ScaleToPageSize.jsx</code></strong> and
-				<strong><code>ScaleToPageMargins.jsx</code></strong> scale to the page size or page margins.</p>
+			<p><strong><code>ScaleToPageSize.jsx</code></strong> and <strong><code>ScaleToPageMargins.jsx</code></strong> scale to the page size or page margins.</p>
 		</li>
 		<li>
-			<p>The <strong><code>H</code></strong> (height) and <strong><code>W</code></strong> (width) variants scale
-				to the height or width of the page or page margins.</p>
+			<p>The <strong><code>H</code></strong> (height) and <strong><code>W</code></strong> (width) variants scale to the height or width of the page or page margins.</p>
 		</li>
 	</ul>
 	<h4 id="pagesize-series"><strong><code>PageSize</code></strong> series</h4>
 	<p>Resize the pages of the document based on the file name, page margins, or selected objects.</p>
 	<ul>
 		<li>
-			<p><strong><code>PageSizeFromFilename.jsx</code></strong> searches the file name for pairs of numbers like
-				&quot;000x000&quot; (where &quot;000&quot; means a group of at least one digit, followed or not by
-				decimals, and optionally by &quot;mm&quot; or &quot;cm&quot;). If only one pair is found, it will be the
-				size of the page. If two are found (e.g., &quot;000x000_000x000&quot;), the larger pair will be the page
-				size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this is
-				considered bleed.</p>
+			<p><strong><code>PageSizeFromFilename.jsx</code></strong> searches the file name for pairs of numbers like &quot;000x000&quot; (where &quot;000&quot; means a group of at least one digit, followed or not by decimals, and optionally by &quot;mm&quot; or &quot;cm&quot;). If only one pair is found, it will be the size of the page. If two are found (e.g., &quot;000x000_000x000&quot;), the larger pair will be the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this is considered bleed.</p>
 			<p>Examples:</p>
 			<blockquote>
 				<p>Filename1_<strong>1400x400_700x137_5</strong>mm.indd <br>
-					Filename2_<strong>597x517_577x500.5_3</strong>mm V4.indd</p>
+				Filename2_<strong>597x517_577x500.5_3</strong>mm V4.indd</p>
 			</blockquote>
 		</li>
 		<li>
 			<p><strong><code>PageSizeFromMargins.jsx</code></strong> resizes each page to its margins.</p>
 		</li>
 		<li>
-			<p><strong><code>PageSizeFromSelection.jsx</code></strong> resizes the current page to the selected objects
-				(similar to <strong>Artboards &gt; Fit to Selected Art</strong> in Illustrator).</p>
+			<p><strong><code>PageSizeFromSelection.jsx</code></strong> resizes the current page to the selected objects (similar to <strong>Artboards &gt; Fit to Selected Art</strong> in Illustrator).</p>
 		</li>
 		<li>
-			<p><strong><code>PageMarginsFromSelection.jsx</code></strong> sets the page margins to the selected objects.</p>
+			<p><strong><code>PageMarginsFromSelection.jsx</code></strong> sets the page margins to the selected objects.
+			</p>
 		</li>
 	</ul>
 	<h4 id="textautosize-series"><strong><code>TextAutosize</code></strong> series</h4>
-	<p>Fit the frame to the text and set auto-sizing, vertical justification and paragraph alignment:</p>
+	<p>Fit the frame to the text and set auto-sizing and paragraph alignment to center, left or right. By setting vertical justification, you can control where the auto-sizing reference point will be:</p>
 	<ul>
 		<li>
-			<p><strong><code>TextAutosize.jsx</code></strong>: <em>Auto-Sizing: center. Vertical Justification: center.
-					Paragraph: align center.</em></p>
+			<p><strong><code>TextAutosize.jsx</code></strong>: <strong>Auto-Sizing Reference Point:</strong> <em>top-center/center/bottom-center</em>. <strong>Paragraph:</strong> <em>align center.</em></p>
 		</li>
 		<li>
-			<p><strong><code>TextAutosizeL.jsx</code></strong>: <em>Auto-Sizing: top-left. Vertical Justification: top.
-					Paragraph: align left.</em></p>
+			<p><strong><code>TextAutosizeL.jsx</code></strong>: <strong>Auto-Sizing Reference Point:</strong> <em>top-left/center-left/bottom-left</em>. <strong>Paragraph:</strong> <em>align left.</em></p>
 		</li>
 		<li>
-			<p><strong><code>TextAutosizeR.jsx</code></strong>: <em>Auto-Sizing: top-right. Vertical Justification: top.
-					Paragraph: align right.</em></p>
+			<p><strong><code>TextAutosizeR.jsx</code></strong>: <strong>Auto-Sizing Reference Point:</strong> <em>top-right/center-right/bottom-right</em>. <strong>Paragraph:</strong> <em>align right.</em></p>
 		</li>
 	</ul>
-	<p><em>Auto-Sizing Type</em> will be set to <em>Height and width</em> if the text has only one line. If it has
-		multiple lines, the first run will set it to <em>Height only</em>, the second run to <em>Height and width</em>
-		(in which case care must be taken that the text is broken manually).</p>
+	<p><strong>Auto-Sizing Type</strong> will be set to <em>Height and width</em> if the text has only one line. If it has multiple lines, the first run will set it to <em>Height only</em>, the second run to <em>Height and width</em> (in which case care must be taken that the lines are broken manually).</p>
 	<h4 id="print-series"><strong>Print</strong> series</h4>
 	<p>These are making some preparations for export and can be run in <strong><code>batch_convert.jsx</code></strong>.
 	</p>
@@ -325,18 +274,13 @@
 			</ul>
 		</li>
 		<li>
-			<p><strong><code>SafeArea.jsx</code></strong> creates a frame the size of the page margins on the
-				<code>safe area</code> layer. Its color is a swatch, <code>Safe area</code>, which if it does not
-				already exist will be created with the value &quot;C=0 M=100 Y=0 K=0&quot;.</p>
+			<p><strong><code>SafeArea.jsx</code></strong> creates a frame the size of the page margins on the <code>safe area</code> layer. Its color is a swatch, <code>Safe area</code>, which if it does not already exist will be created with the value &quot;C=0 M=100 Y=0 K=0&quot;.</p>
 		</li>
 		<li>
-			<p><strong><code>SafeAreaHideLayer.jsx</code></strong> and
-				<strong><code>SafeAreaShowLayer.jsx</code></strong> hide or show <code>safe area</code>.</p>
+			<p><strong><code>SafeAreaHideLayer.jsx</code></strong> and <strong><code>SafeAreaShowLayer.jsx</code></strong> hide or show <code>safe area</code>.</p>
 		</li>
 	</ul>
-	<p>The scripts detect alternative layer names like <code>visible</code>, <code>vizibil</code>,
-		<code>vis. area</code> for <code>safe area</code>, or <code>diecut</code>, <code>die cut</code>,
-		<code>cut lines</code>, <code>stanze</code> for <code>dielines</code>.</p>
+	<p>The scripts detect alternative layer names like <code>visible</code>, <code>vizibil</code>, <code>vis. area</code> for <code>safe area</code>, or <code>diecut</code>, <code>die cut</code>, <code>cut lines</code>, <code>stanze</code> for <code>dielines</code>.</p>
 	<h4 id="zoomtoselectionjsx"><strong><code>ZoomToSelection.jsx</code></strong></h4>
 	<p>Similar to <strong>Fit Selection in Window</strong> (⌥⌘=), but with some improvements:</p>
 	<ul>
@@ -347,17 +291,13 @@
 	<h4 id="miscellaneous">Miscellaneous</h4>
 	<ul>
 		<li>
-			<p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and displays it in the
-				upper left corner.</p>
+			<p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and displays it in the upper left corner.</p>
 		</li>
 		<li>
-			<p><strong><code>QR.jsx</code></strong> adds a QR code on the bottom left corner of each page, or saves it
-				in a separate file. It has two operating modes, batch or manual:</p>
+			<p><strong><code>QR.jsx</code></strong> adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, batch or manual:</p>
 			<ul>
 				<li>
-					<p>Batch: if a file named <code>QR.txt</code> is found in the same folder, it processes it. It must
-						be a 2 column TSV <em>(tab-separated values)</em> file; the first column is the filename, the
-						second the QR code. The first line (the header) is ignored:</p>
+					<p>Batch: if a file named <code>QR.txt</code> is found in the same folder, it processes it. It must be a 2 column TSV <em>(tab-separated values)</em> file; the first column is the filename, the second the QR code. The first line (the header) is ignored:</p>
 					<table>
 						<thead>
 							<tr>
@@ -380,8 +320,7 @@
 					</table>
 				</li>
 				<li>
-					<p>Manually: otherwise, it asks for the QR text and adds the code on the page or a separate file,
-						depending on a switch.</p>
+					<p>Manually: otherwise, it asks for the QR text and adds the code on the page or a separate file, depending on a switch.</p>
 				</li>
 			</ul>
 		</li>
@@ -392,8 +331,7 @@
 			<p><strong><code>ShowProfiles.jsx</code></strong> shows all color profiles available to InDesign.</p>
 		</li>
 		<li>
-			<p><strong><code>ShowProperties.jsx</code></strong> shows properties and methods of a selected object
-				(useful for debugging).</p>
+			<p><strong><code>ShowProperties.jsx</code></strong> shows properties and methods of a selected object (useful for debugging).</p>
 		</li>
 	</ul>
 	<h2 id="shortcuts">Shortcuts</h2>
@@ -482,14 +420,9 @@
 		<li>Copy files to this folder.</li>
 	</ol>
 	<h2 id="license">License</h2>
-	<p>Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Dave Saunders,
-		Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. The rest of the code is released under the MIT
-		License (see <a href="../LICENSE.txt">LICENSE.txt</a>).</p>
-	<p>Please send me an e-mail at &lt;jpeg AT basement.ro&gt; or <a
-			href="https://github.com/pchiorean/Indentz/issues">report an issue on Github</a> if you encounter problems
-		or have any suggestions.</p>
-	<p>README.md • 25 July 2020, 07:54 (UTC).</p>
-
+	<p>Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. The rest of the code is released under the MIT License (see <a href="../LICENSE.txt">LICENSE.txt</a>).</p>
+	<p>Please send me an e-mail at &lt;jpeg AT basement.ro&gt; or <a href="https://github.com/pchiorean/Indentz/issues">report an issue on Github</a> if you encounter problems or have any suggestions.</p>
+	<p>README.md • 1 August 2020, 13:44 (UTC).</p>
 </body>
 
 </html>

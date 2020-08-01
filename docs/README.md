@@ -56,7 +56,7 @@ After which:
 
 #### **`CleanupFonts.jsx`**
 
-Replaces some missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script. The first line (the header) is ignored. The current list is as follows:
+Replaces some missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script. The first line (the header) is ignored. The default list is as follows:
 
 Old Name | Style | New Name | Style
 :--- | :--- | :--- | :---
@@ -123,15 +123,15 @@ Resize the pages of the document based on the file name, page margins, or select
 
 #### **`TextAutosize`** series
 
-Fit the frame to the text and set auto-sizing, vertical justification and paragraph alignment:
+Fit the frame to the text and set auto-sizing and paragraph alignment to center, left or right. By setting vertical justification, you can control where the auto-sizing reference point will be:
 
-* **`TextAutosize.jsx`**: _Auto-Sizing: center. Vertical Justification: center. Paragraph: align center._
+* **`TextAutosize.jsx`**: **Auto-Sizing Reference Point:** *top-center/center/bottom-center*. **Paragraph:** *align center.*
 
-* **`TextAutosizeL.jsx`**: _Auto-Sizing: top-left. Vertical Justification: top. Paragraph: align left._
+* **`TextAutosizeL.jsx`**: **Auto-Sizing Reference Point:** *top-left/center-left/bottom-left*. **Paragraph:** *align left.*
 
-* **`TextAutosizeR.jsx`**: _Auto-Sizing: top-right. Vertical Justification: top. Paragraph: align right._
+* **`TextAutosizeR.jsx`**: **Auto-Sizing Reference Point:** *top-right/center-right/bottom-right*. **Paragraph:** *align right.*
 
-_Auto-Sizing Type_ will be set to _Height and width_ if the text has only one line. If it has multiple lines, the first run will set it to _Height only_, the second run to _Height and width_ (in which case care must be taken that the text is broken manually).
+**Auto-Sizing Type** will be set to *Height and width* if the text has only one line. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width* (in which case care must be taken that the lines are broken manually).
 
 #### **Print** series
 
@@ -202,4 +202,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 25 July 2020, 07:54 (UTC).
+README.md • 1 August 2020, 13:44 (UTC).

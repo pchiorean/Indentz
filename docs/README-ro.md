@@ -56,7 +56,7 @@ După care:
 
 #### **`CleanupFonts.jsx`**
 
-Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul. Prima linie (antetul) este ignorată. Lista curentă este următoarea:
+Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul. Prima linie (antetul) este ignorată. Lista implicită este următoarea:
 
 Nume vechi | Stil | Nume nou | Stil
 :--- | :--- | :--- | :---
@@ -123,15 +123,15 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 #### Seria **`TextAutosize`**
 
-"Strâng" chenarul la text și setează dimensionarea automată, justificarea verticală și alinierea paragrafului:
+"Strâng" chenarul la text și setează dimensionarea automată și alinierea paragrafului la centru/stânga/dreapta. Prin setarea justificării verticale puteți controla unde va fi punctul de referință pentru dimensionarea automată:
 
-* **`TextAutosize.jsx`**: _Auto-Sizing: center. Vertical Justification: center. Paragraph: align center._
+* **`TextAutosize.jsx`**: **Auto-Sizing Reference Point:** *top-center/center/bottom-center*. **Paragraph:** *align center.*
 
-* **`TextAutosizeL.jsx`**: _Auto-Sizing: top-left. Vertical Justification: top. Paragraph: align left._
+* **`TextAutosizeL.jsx`**: **Auto-Sizing Reference Point:** *top-left/center-left/bottom-left*. **Paragraph:** *align left.*
 
-* **`TextAutosizeR.jsx`**: _Auto-Sizing: top-right. Vertical Justification: top. Paragraph: align right._
+* **`TextAutosizeR.jsx`**: **Auto-Sizing Reference Point:** *top-right/center-right/bottom-right*. **Paragraph:** *align right.*
 
-_Auto-Sizing Type_ va fi setat _Height and width_ dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta _Height only_, a doua _Height and width_ (caz în care trebuie avut grijă ca textul să fie rupt pe rânduri manual).
+**Auto-Sizing Type** va fi setat *Height and width* dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width* (caz în care trebuie avut grijă ca rândurile să fie rupte manual).
 
 #### Seria **Print**
 
@@ -202,4 +202,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 25 iulie 2020, 07:54 (UTC).
+README-ro.md • 1 august 2020, 13:44 (UTC).
