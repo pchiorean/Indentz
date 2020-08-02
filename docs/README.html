@@ -49,12 +49,12 @@
 	<p>After which:</p>
 	<ul>
 		<li>
-			<p><strong><code>DocCleanup.jsx</code></strong> cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%, removes all guides.</p>
+			<p><strong><code>DocCleanup.jsx</code></strong> cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100% &amp; removes all guides.</p>
 		</li>
 		<li>
-			<p><strong><code>DocDefaults.jsx</code></strong> creates some swatches &amp; layers, merges similar layers, replaces some missing or unwanted fonts, and sets the page geometry from the filename.</p>
+			<p><strong><code>DocDefaults.jsx</code></strong> creates some swatches &amp; layers, replaces some missing or unwanted fonts (it runs <strong><code>CleanupFonts.jsx</code></strong>), and sets the page geometry from the filename (it runs <strong><code>PageSizeFromFilename.jsx</code></strong>).</p>
 			<p><img src="img/docdefaults.png" alt="Swatches &amp; layers"></p>
-			<p>The script merges several similar layers, as follows:</p>
+			<p>The script also merges several similar layers, as follows:</p>
 			<table>
 				<thead>
 					<tr>
@@ -441,7 +441,7 @@
 	<h2 id="license">License</h2>
 	<p>Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. The rest of the code is released under the MIT License (see <a href="../LICENSE.txt">LICENSE.txt</a>).</p>
 	<p>Please send me an e-mail at &lt;jpeg AT basement.ro&gt; or <a href="https://github.com/pchiorean/Indentz/issues">report an issue on Github</a> if you encounter problems or have any suggestions.</p>
-	<p>README.md • 2 August 2020, 11:05 (UTC).</p>
+	<p>README.md • 2 August 2020, 12:55 (UTC).</p>
 </body>
 
 </html>

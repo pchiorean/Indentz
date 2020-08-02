@@ -36,13 +36,13 @@ Mai întâi schimbă câteva setări după preferințele mele:
 
 După care:
 
-* **`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%, șterge toate liniile de ghidaj.
+* **`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.
 
-* **`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite și stabilește geometria paginii din numele fișierului.
+* **`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează `CleanupFonts.jsx`), și stabilește geometria paginii din numele fișierului (rulează `PageSizeFromFilename.jsx`).
 
   ![Culori și layere](img/docdefaults.png)
 
-  Scriptul combină câteva layere similare, după cum urmează:
+  De asemenea, scriptul combină câteva layere similare, după cum urmează:
 
   Layer | Combinat cu
   :--- | :---
@@ -202,4 +202,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 2 august 2020, 11:05 (UTC).
+README-ro.md • 2 august 2020, 12:55 (UTC).

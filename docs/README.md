@@ -36,13 +36,13 @@ First, they change some settings according to my preferences:
 
 After which:
 
-* **`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%, removes all guides.
+* **`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100% & removes all guides.
 
-* **`DocDefaults.jsx`** creates some swatches & layers, merges similar layers, replaces some missing or unwanted fonts, and sets the page geometry from the filename.
+* **`DocDefaults.jsx`** creates some swatches & layers, replaces some missing or unwanted fonts (it runs `CleanupFonts.jsx`), and sets the page geometry from the filename (it runs `PageSizeFromFilename.jsx`).
 
   ![Swatches & layers](img/docdefaults.png)
 
-  The script merges several similar layers, as follows:
+  The script also merges several similar layers, as follows:
 
   Layer | Merged to
   :--- | :---
@@ -202,4 +202,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 2 August 2020, 11:05 (UTC).
+README.md • 2 August 2020, 12:55 (UTC).
