@@ -79,7 +79,7 @@ Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă cu fonturile folos
 
 #### **`CleanupLabels.jsx`**
 
-Uneori se refolosesc obiecte care au o etichetă atașată _(Script Label)_, și asta poate crea probleme ulterior. **CleanupLabels.jsx** șterge toate etichetele dintr-un document.
+Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **CleanupLabels.jsx** șterge toate etichetele dintr-un document.
 
 #### **`CleanupSwatches.jsx`**
 
@@ -87,7 +87,7 @@ Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește 
 
 #### Seria **`FitToPage`** / **`FitToSpread`**
 
-Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame-urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într-un _clipping frame_ și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.
+Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame-urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într-un *clipping frame* și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.
 
 * **`FitToPage.jsx`** / **`FitToPageMargins.jsx`** / **`FitToPageBleed.jsx`** constrâng dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii.
 
@@ -125,11 +125,11 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 "Strâng" chenarul la text și setează dimensionarea automată și alinierea paragrafului la centru/stânga/dreapta. Setând **Vertical Justification** puteți controla unde va fi punctul de referință pentru dimensionarea automată pe axa verticală:
 
-* **`TextAutosize.jsx`**: **Auto-Sizing Reference Point:** *top-center/center/bottom-center*. **Paragraph:** *align center.*
-
-* **`TextAutosizeL.jsx`**: **Auto-Sizing Reference Point:** *top-left/center-left/bottom-left*. **Paragraph:** *align left.*
-
-* **`TextAutosizeR.jsx`**: **Auto-Sizing Reference Point:** *top-right/center-right/bottom-right*. **Paragraph:** *align right.*
+  **Vertical Justification** | **`TextAutosizeL.jsx`** | **`TextAutosize.jsx`** | **`TextAutosizeR.jsx`**
+  :--- | :---: | :---: | :---:
+  *Top* | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
+  *Center* | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
+  *Bottom* | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
 
 **Auto-Sizing Type** va fi setat *Height and width* dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width* (caz în care trebuie avut grijă ca rândurile să fie rupte manual).
 
@@ -169,7 +169,7 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
     **`Filename1_1400x400_700x137_5mm_QR.indd`** | FILE1 1400x400_700x137
     **`Filename2_597x517_577x500.5_3mm V4_QR.indd`** | FILE2 597x517_577x500.5
 
-  * **Manual:** în caz contrar, solicită codul și îl adaugă pe pagină sau într-un fișier separat, în funcție de un switch.
+  * **Manual:** în caz contrar, solicită codul și îl adaugă pe pagină sau într-un fișier separat.
 
 * **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent.
 
@@ -202,4 +202,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 1 august 2020, 13:44 (UTC).
+README-ro.md • 2 august 2020, 11:05 (UTC).

@@ -249,17 +249,36 @@
 	</ul>
 	<h4 id="textautosize-series"><strong><code>TextAutosize</code></strong> series</h4>
 	<p>Fit the frame to the text and set auto-sizing and paragraph alignment to center, left or right. By setting <strong>Vertical Justification</strong>, you can control where the auto-sizing reference point will be on the vertical axis:</p>
-	<ul>
-		<li>
-			<p><strong><code>TextAutosize.jsx</code></strong>: <strong>Auto-Sizing Reference Point:</strong> <em>top-center/center/bottom-center</em>. <strong>Paragraph:</strong> <em>align center.</em></p>
-		</li>
-		<li>
-			<p><strong><code>TextAutosizeL.jsx</code></strong>: <strong>Auto-Sizing Reference Point:</strong> <em>top-left/center-left/bottom-left</em>. <strong>Paragraph:</strong> <em>align left.</em></p>
-		</li>
-		<li>
-			<p><strong><code>TextAutosizeR.jsx</code></strong>: <strong>Auto-Sizing Reference Point:</strong> <em>top-right/center-right/bottom-right</em>. <strong>Paragraph:</strong> <em>align right.</em></p>
-		</li>
-	</ul>
+	<table>
+		<thead>
+			<tr>
+				<th style="text-align:left"><strong></strong>Vertical Justification</strong></th>
+				<th style="text-align:center"><strong><code>TextAutosizeL.jsx</code></strong></th>
+				<th style="text-align:center"><strong><code>TextAutosize.jsx</code></strong></th>
+				<th style="text-align:center"><strong><code>TextAutosizeR.jsx</code></strong></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align:left"><em>Top</em></td>
+				<td style="text-align:center"><img src="img/textautosize-TL.png" alt="top-left"></td>
+				<td style="text-align:center"><img src="img/textautosize-TC.png" alt="top-center"></td>
+				<td style="text-align:center"><img src="img/textautosize-TR.png" alt="top-right"></td>
+			</tr>
+			<tr>
+				<td style="text-align:left"><em>Center</em></td>
+				<td style="text-align:center"><img src="img/textautosize-CL.png" alt="center-left"></td>
+				<td style="text-align:center"><img src="img/textautosize-C.png" alt="center"></td>
+				<td style="text-align:center"><img src="img/textautosize-CR.png" alt="center-right"></td>
+			</tr>
+			<tr>
+				<td style="text-align:left"><em>Bottom</em></td>
+				<td style="text-align:center"><img src="img/textautosize-BL.png" alt="bottom-left"></td>
+				<td style="text-align:center"><img src="img/textautosize-BC.png" alt="bottom-center"></td>
+				<td style="text-align:center"><img src="img/textautosize-BR.png" alt="bottom-right"></td>
+			</tr>
+		</tbody>
+	</table>
 	<p><strong>Auto-Sizing Type</strong> will be set to <em>Height and width</em> if the text has only one line. If it has multiple lines, the first run will set it to <em>Height only</em>, the second run to <em>Height and width</em> (in which case care must be taken that the lines are broken manually).</p>
 	<h4 id="print-series"><strong>Print</strong> series</h4>
 	<p>These are making some preparations for export and can be run in <strong><code>batch_convert.jsx</code></strong>.
@@ -320,7 +339,7 @@
 					</table>
 				</li>
 				<li>
-					<p>Manually: otherwise, it asks for the QR text and adds the code on the page or a separate file, depending on a switch.</p>
+					<p>Manually: otherwise, it asks for the QR text and adds the code on the page or in a separate file.</p>
 				</li>
 			</ul>
 		</li>
@@ -422,7 +441,7 @@
 	<h2 id="license">License</h2>
 	<p>Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. The rest of the code is released under the MIT License (see <a href="../LICENSE.txt">LICENSE.txt</a>).</p>
 	<p>Please send me an e-mail at &lt;jpeg AT basement.ro&gt; or <a href="https://github.com/pchiorean/Indentz/issues">report an issue on Github</a> if you encounter problems or have any suggestions.</p>
-	<p>README.md • 1 August 2020, 13:44 (UTC).</p>
+	<p>README.md • 2 August 2020, 11:05 (UTC).</p>
 </body>
 
 </html>

@@ -79,7 +79,7 @@ You can use **`ShowFonts.jsx`** to get a tab delimited list of used fonts.
 
 #### **`CleanupLabels.jsx`**
 
-Sometimes objects that have a label attached _(Script Label)_ are reused, which potentially creates problems later. **`CleanupLabels.jsx`** deletes all labels from a document.
+Sometimes objects that have a label attached *(Script Label)* are reused, which potentially creates problems later. **`CleanupLabels.jsx`** deletes all labels from a document.
 
 #### **`CleanupSwatches.jsx`**
 
@@ -125,11 +125,11 @@ Resize the pages of the document based on the file name, page margins, or select
 
 Fit the frame to the text and set auto-sizing and paragraph alignment to center, left or right. By setting **Vertical Justification**, you can control where the auto-sizing reference point will be on the vertical axis:
 
-* **`TextAutosize.jsx`**: **Auto-Sizing Reference Point:** *top-center/center/bottom-center*. **Paragraph:** *align center.*
-
-* **`TextAutosizeL.jsx`**: **Auto-Sizing Reference Point:** *top-left/center-left/bottom-left*. **Paragraph:** *align left.*
-
-* **`TextAutosizeR.jsx`**: **Auto-Sizing Reference Point:** *top-right/center-right/bottom-right*. **Paragraph:** *align right.*
+  **Vertical Justification** | **`TextAutosizeL.jsx`** | **`TextAutosize.jsx`** | **`TextAutosizeR.jsx`**
+  :--- | :---: | :---: | :---:
+  *Top* | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
+  *Center* | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
+  *Bottom* | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
 
 **Auto-Sizing Type** will be set to *Height and width* if the text has only one line. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width* (in which case care must be taken that the lines are broken manually).
 
@@ -169,7 +169,7 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
     **`Filename1_1400x400_700x137_5mm_QR.indd`** | FILE1 1400x400_700x137
     **`Filename2_597x517_577x500.5_3mm V4_QR.indd`** | FILE2 597x517_577x500.5
 
-  * **Manually:** otherwise, it asks for the QR text and adds the code on the page or a separate file, depending on a switch.
+  * **Manually:** otherwise, it asks for the QR text and adds the code on the page or in a separate file.
 
 * **`ShowFonts.jsx`** shows all fonts used in the current document.
 
@@ -202,4 +202,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 1 August 2020, 13:44 (UTC).
+README.md • 2 August 2020, 11:05 (UTC).
