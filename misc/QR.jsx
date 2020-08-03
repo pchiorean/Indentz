@@ -58,13 +58,12 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 	var ok = okcancel.add("button", undefined, undefined, { name: "ok" });
 		ok.text = "OK";
 	var result = w.show();
-	if (result == 2 || !label.text) { w.destroy(); exit() }; // Empty or cancelled
+	if (result == 2 || !label.text) { exit() }; // Empty or cancelled
 	var QRLabel = label.text;
 	switch (flg_onfile.value) {
 		case false: QROnPage(QRLabel); break;
 		case true: QROnFile(QRLabel); break;
 	}
-	w.destroy();
 }
 
 function QROnPage(QRLabel) { // Put QR on each page
