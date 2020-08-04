@@ -10,7 +10,7 @@ Many are designed to be run through a shortcut. You can found a configuration su
 
 These are two scripts meant to be used together – one "cleans", the other "prepares the ground".
 
-First, they change some settings according to my preferences:
+First, they change several settings according to my preferences:
 
 > **Rulers:** Reset Zero Point \
 > **Rulers Units:** Millimeters \
@@ -38,7 +38,7 @@ After which:
 
 * **`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100% & removes all guides.
 
-* **`DocDefaults.jsx`** creates some swatches & layers, replaces some missing or unwanted fonts (it runs `CleanupFonts.jsx`), and sets the page geometry from the filename (it runs `PageSizeFromFilename.jsx`).
+* **`DocDefaults.jsx`** creates several swatches & layers, replaces several missing or unwanted fonts (it runs `CleanupFonts.jsx`), and sets the page geometry from the filename (it runs `PageSizeFromFilename.jsx`).
 
   ![Swatches & layers](img/docdefaults.png)
 
@@ -56,7 +56,7 @@ After which:
 
 #### **`CleanupFonts.jsx`**
 
-Replaces some missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script. The first line (the header) is ignored. The default list is as follows:
+Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script. The first line (the header) is ignored. The default list is as follows:
 
 Old Name | Style | New Name | Style
 :--- | :--- | :--- | :---
@@ -135,7 +135,7 @@ Fit the frame to the text and set it to auto-size. You can control where the aut
 
 #### **Print** series
 
-These are making some preparations for export and can be run in **`batch_convert.jsx`**.
+These are making several preparations for export and can be run in **`batch_convert.jsx`**.
 
 * **`PrepareForPrint.jsx`** does the following:
   * hides the `safe area` layer;
