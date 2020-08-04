@@ -123,9 +123,9 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 #### Seria **`TextAutosize`**
 
-"Strâng" chenarul la text și setează dimensionarea automată și alinierea paragrafului la centru/stânga/dreapta. Setând **Vertical Justification** puteți controla unde va fi punctul de referință pentru dimensionarea automată pe axa verticală:
+"Strâng" chenarul la text și îi setează dimensionarea automată. Puteți controla unde va fi punctul de referință pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Vertical Justification** pentru axa verticală:
 
-  **Vertical Justification** | **`TextAutosizeL.jsx`** | **`TextAutosize.jsx`** | **`TextAutosizeR.jsx`**
+  **Vertical Justification** | **Align left** | **Align center** | **Align right**
   :--- | :---: | :---: | :---:
   *Top* | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
   *Center* | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
@@ -202,4 +202,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 2 august 2020, 12:55 (UTC).
+README-ro.md • 4 august 2020, 19:30 (UTC).

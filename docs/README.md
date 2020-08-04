@@ -123,9 +123,9 @@ Resize the pages of the document based on the file name, page margins, or select
 
 #### **`TextAutosize`** series
 
-Fit the frame to the text and set auto-sizing and paragraph alignment to center, left or right. By setting **Vertical Justification**, you can control where the auto-sizing reference point will be on the vertical axis:
+Fit the frame to the text and set it to auto-size. You can control where the auto-sizing reference point will be by setting **Paragraph Alignment** for the horizontal axis, and **Vertical Justification** for the vertical axis:
 
-  **Vertical Justification** | **`TextAutosizeL.jsx`** | **`TextAutosize.jsx`** | **`TextAutosizeR.jsx`**
+  **Vertical Justification** | **Align left** | **Align center** | **Align right**
   :--- | :---: | :---: | :---:
   *Top* | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
   *Center* | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
@@ -202,4 +202,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 2 August 2020, 12:55 (UTC).
+README.md • 4 August 2020, 19:30 (UTC).
