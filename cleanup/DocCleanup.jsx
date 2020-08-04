@@ -1,6 +1,6 @@
 ﻿/*
-	Doc cleanup v1.8.7
-	© July 2020, Paul Chiorean
+	Doc cleanup v1.8.8
+	© August 2020, Paul Chiorean
 	Changes some settings, cleans up swatches/layers/pages/guides and resets scaling.
 */
 
@@ -20,7 +20,7 @@ var doc = app.activeDocument;
 	doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
 	doc.viewPreferences.showFrameEdges = true;
 	doc.viewPreferences.showRulers = true;
-	doc.pasteboardPreferences.pasteboardMargins = ["150mm", "25mm"];
+	// doc.pasteboardPreferences.pasteboardMargins = ["150mm", "25mm"];
 	doc.pasteboardPreferences.previewBackgroundColor = UIColors.LIGHT_GRAY;
 	doc.viewPreferences.cursorKeyIncrement = "0.2mm";
 	doc.textPreferences.leadingKeyIncrement = "0.5pt";
