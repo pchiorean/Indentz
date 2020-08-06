@@ -1,6 +1,6 @@
 ﻿/*
-	Default layers and more v1.13.9
-	© July 2020, Paul Chiorean
+	Default layers and more v1.13.10
+	© Default 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
 */
@@ -220,6 +220,7 @@ const safeSwatchName = "Safe area";
 			case "Stanz":
 			case "stanze":
 			case "Stanze":
+			case "Stanzform":
 				try { doc.layers.add({ name: dieLayerName }) } catch (_) {};
 				dieLayer.merge(docLayer); i--;
 		}
