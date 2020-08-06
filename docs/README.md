@@ -61,6 +61,7 @@ Replaces several missing or unwanted fonts with equivalents from a list. The lis
 Old Name | Style | New Name | Style
 :--- | :--- | :--- | :---
 Akzidenz Grotesk | Bold | **AkzidenzGrotesk** | **Bold**
+Arial | Regular | **Helvetica Neue** | **Regular**
 Arial | Bold | **Helvetica Neue** | **Bold**
 FoundryGridnik | Regular | **Foundry Gridnik** | **Regular**
 FoundryGridnik | Bold | **Foundry Gridnik** | **Bold**
@@ -202,4 +203,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 4 August 2020, 19:30 (UTC).
+README.md • 6 August 2020, 12:43 (UTC).

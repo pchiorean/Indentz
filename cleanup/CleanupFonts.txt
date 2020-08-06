@@ -1,5 +1,6 @@
 Old Name	Style	New Name	Style
 Akzidenz Grotesk	Bold	AkzidenzGrotesk	Bold
+Arial	Regular	Helvetica Neue	Regular
 Arial	Bold	Helvetica Neue	Bold
 FoundryGridnik	Regular	Foundry Gridnik	Regular
 FoundryGridnik	Bold	Foundry Gridnik	Bold

@@ -61,6 +61,7 @@ După care:
 Nume vechi | Stil | Nume nou | Stil
 :--- | :--- | :--- | :---
 Akzidenz Grotesk | Bold | **AkzidenzGrotesk** | **Bold**
+Arial | Regular | **Helvetica Neue** | **Regular**
 Arial | Bold | **Helvetica Neue** | **Bold**
 FoundryGridnik | Regular | **Foundry Gridnik** | **Regular**
 FoundryGridnik | Bold | **Foundry Gridnik** | **Bold**
@@ -202,4 +203,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 4 august 2020, 19:30 (UTC).
+README-ro.md • 6 august 2020, 12:43 (UTC).
