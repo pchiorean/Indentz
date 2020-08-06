@@ -7,7 +7,7 @@ if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
 // Make layer
-var hwLayerName = FindLayer(["HW", "hw", "WH", "wh", "WHW"]);
+var hwLayerName = FindLayer(["HW", "Hw Logo", "HW Logo", "hw", "Logo HW", "wh", "WH", "WHW"]);
 var hwLayer = doc.layers.item(hwLayerName);
 try { hwLayer.locked = false } catch (_) {};
 if (!hwLayer.isValid) {
