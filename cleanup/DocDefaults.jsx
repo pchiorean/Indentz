@@ -1,6 +1,6 @@
 ﻿/*
-	Default layers and more v1.13.10
-	© Default 2020, Paul Chiorean
+	Default layers and more v1.14.0
+	© August 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
 */
@@ -46,6 +46,8 @@ const safeSwatchName = "Safe area";
 	doc.textPreferences.typographersQuotes = true;
 	doc.textPreferences.useParagraphLeading = true;
 	doc.documentPreferences.intent = DocumentIntentOptions.PRINT_INTENT;
+	doc.documentPreferences.allowPageShuffle = false;
+	doc.documentPreferences.preserveLayoutWhenShuffling = true;
 	doc.transparencyPreferences.blendingSpace = BlendingSpace.CMYK;
 	app.transformPreferences.adjustStrokeWeightWhenScaling = true;
 	app.transformPreferences.adjustEffectsWhenScaling = true;
