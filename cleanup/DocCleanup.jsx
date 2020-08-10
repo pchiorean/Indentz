@@ -72,7 +72,7 @@ var doc = app.activeDocument;
 // Step 4. Delete guides
 (function() {
 	var g = doc.guides.everyItem().getElements();
-	for (var i = 0; i < g.length; i++)  if (g[i].label != "HW") g[i].remove();
+	for (var i = 0; i < g.length; i++) if (g[i].label != "HW") g[i].remove();
 })();
 
 // Step 5. Delete unused layers
