@@ -28,6 +28,7 @@ Mai întâi schimbă câteva setări după preferințele mele:
 > **Keyboard Increments: Size/Leading:** 0.5 pt \
 > **Keyboard Increments: Baseline Shift:** 0.1 pt \
 > **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
+> **Pages:** Allow Document Pages to Shuffle \
 > **Layers:** Ungroup Remembers Layers \
 > **Layers:** Paste Remembers Layers \
 > **Transform Reference Point:** Center \
@@ -203,4 +204,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 6 august 2020, 12:43 (UTC).
+README-ro.md • 10 august 2020, 19:21 (UTC).

@@ -28,6 +28,7 @@ First, they change several settings according to my preferences:
 > **Keyboard Increments: Size/Leading:** 0.5 pt \
 > **Keyboard Increments: Baseline Shift:** 0.1 pt \
 > **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
+> **Pages:** Allow Document Pages to Shuffle \
 > **Layers:** Ungroup Remembers Layers \
 > **Layers:** Paste Remembers Layers \
 > **Transform Reference Point:** Center \
@@ -203,4 +204,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 6 August 2020, 12:43 (UTC).
+README.md • 10 August 2020, 19:21 (UTC).
