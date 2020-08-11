@@ -1,5 +1,5 @@
 /*
-	Align to left v1.0.0
+	Align to left v1.0.1
 	© August 2020, Paul Chiorean
 */
 
@@ -14,7 +14,6 @@ var set_ADB = app.alignDistributePreferences.alignDistributeBounds;
 for (var i = 0; i < sel.length; i++) {
 	var obj = sel[i], page;
 	if (page = obj.parentPage) {
-		doc.align(obj, AlignOptions.VERTICAL_CENTERS, set_ADB);
 		doc.align(obj, AlignOptions.LEFT_EDGES, set_ADB);
 	}
 }
