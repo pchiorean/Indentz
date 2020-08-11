@@ -1,6 +1,6 @@
 /*
-	QR code v1.5.0
-	© July 2020, Paul Chiorean
+	QR code v1.5.1
+	© August 2020, Paul Chiorean
 	Adds a QR code to the current document or saves it in a separate file.
 	If "QR.txt" is found, batch process it.
 */
@@ -8,7 +8,6 @@
 if (app.documents.length == 0) { alert("Open a file and try again."); exit() };
 var doc = app.activeDocument;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
-app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALL;
 // Look for "QR.txt"
 var infoFile = File(doc.filePath + "/QR.txt");
 if (infoFile.open("r")) { BatchQR() } else { ManuallyQR() };
