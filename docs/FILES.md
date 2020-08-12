@@ -1,5 +1,17 @@
 Name                               |   Fn  | Description
 :---                               |  ---: | :---
+**Align**                                  |
+**`AlignToB.jsx`**                 |  Num2 | Aligns the selected objects to the bottom of the "Align To" setting
+**`AlignToBL.jsx`**                |  Num1 | Aligns the selected objects to the bottom-left of the "Align To" setting
+**`AlignToBR.jsx`**                |  Num3 | Aligns the selected objects to the bottom-right of the "Align To" setting
+**`AlignToC.jsx`**                 |  Num5 | Aligns the selected objects to the center of the "Align To" setting
+**`AlignToL.jsx`**                 |  Num4 | Aligns the selected objects to the left of the "Align To" setting
+**`AlignToR.jsx`**                 |  Num6 | Aligns the selected objects to the right of the "Align To" setting
+**`AlignToT.jsx`**                 |  Num8 | Aligns the selected objects to the top of the "Align To" setting
+**`AlignToTL.jsx`**                |  Num7 | Aligns the selected objects to the top-left of the "Align To" setting
+**`AlignToTR.jsx`**                |  Num9 | Aligns the selected objects to the top-right of the "Align To" setting
+**`ResetAlignTo.jsx`**             | ⌃Num0 | Resets "Align To" setting to default
+**`ToggleAlignTo.jsx`**            |  Num0 | Toggles "Align To" setting
 **Cleanup**                                |
 **`CleanupFonts.jsx`**             |       | Replaces missing or unwanted fonts with equivalents from a list
 **`CleanupLabels.jsx`**            |       | Removes all labels from the document
