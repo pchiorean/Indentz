@@ -1,6 +1,6 @@
 /*
-	Page size from filename v1.5.2
-	© July 2020, Paul Chiorean
+	Page size from filename v1.6.0
+	© August 2020, Paul Chiorean
 	Sets every page size and margins based on the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 */
@@ -18,11 +18,11 @@ app.generalPreferences.objectsMoveWithPage = false;
 var docName = doc.name.substr(0, doc.name.lastIndexOf(".")); // Get name w/o extension
 // Get '_000[.0] [mm] x 000[.0] [mm]' pairs
 var szArr = docName.match(/[_-]\s?\d+([.,]\d+)?\s?([cm]m)?\s?x\s?\d+([.,]\d+)?\s?([cm]m)?(?!x)(?!\d)/ig);
-	// 1. [_-] -- '_' or '-' separator between pairs
-	// 2. \d+([.,]\d+)?([cm]m)? -- group 1: digits, optional decimals, optional cm/mm
-	// 3. x -- 'x' separator between groups
-	// 4. \d+([.,]\d+)?(cm|mm)? -- group 2
-	// 5. (?!x)(?!\d) -- discard if more groups (to avoid 000x00x00 et al)
+// 1. [_-] -- '_' or '-' separator between pairs
+// 2. \d+([.,]\d+)?([cm]m)? -- group 1: digits, optional decimals, optional cm/mm
+// 3. x -- 'x' separator between groups
+// 4. \d+([.,]\d+)?(cm|mm)? -- group 2
+// 5. (?!x)(?!\d) -- discard if more groups (to avoid 000x00x00 et al)
 if (szArr == null) exit();
 
 // Sanitize dimensions array
@@ -63,7 +63,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 		AnchorPoint.CENTER_ANCHOR,
 		ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
 		[szPg.width / 0.352777777777778, szPg.height / 0.352777777777778]);
-	if (mgs != null) page.marginPreferences.properties = mgs; // Set margins
+	if (mgs != null) SafeArea(); // Set margins and safe area
 }
 // Also set document size
 if (!flag_S) {
@@ -72,11 +72,57 @@ if (!flag_S) {
 }
 // Check for bleed: try to match '_00 [mm]' after '0 [mm]'
 var bleed = /\d\s?(?:[cm]m)?[_+](\d{1,2})\s?(?:[cm]m)/i.exec(docName);
-	// 1. \d(?:[cm]m)? -- 1 digit followed by optional mm/cm (non-capturing group)
-	// 2. [_+] -- '_' or '+' separator
-	// 3. (\d{1,2}) -- 1 or 2 digits (capturing group #1)
-	// 4. (?:[cm]m) -- mandatory mm/cm (non-capturing group)
+// 1. \d(?:[cm]m)? -- 1 digit followed by optional mm/cm (non-capturing group)
+// 2. [_+] -- '_' or '+' separator
+// 3. (\d{1,2}) -- 1 or 2 digits (capturing group #1)
+// 4. (?:[cm]m) -- mandatory mm/cm (non-capturing group)
 if (bleed != null) {
 	doc.documentPreferences.documentBleedUniformSize = true;
 	doc.documentPreferences.documentBleedTopOffset = bleed[1];
+}
+
+
+function SafeArea() { // Draw a 'safe area' frame
+	var safeSwatchName = "Safe area";
+	var safeSwatch = doc.swatches.itemByName(safeSwatchName);
+	if (!safeSwatch.isValid) {
+		doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, 
+		space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
+	}
+	var safeLayerName = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"]);
+	var safeLayerFrameP = {
+		label: "safe area",
+		contentType: ContentType.UNASSIGNED,
+		fillColor: "None",
+		strokeColor: safeSwatchName,
+		strokeWeight: "0.75pt",
+		strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
+		strokeType: "$ID/Canned Dashed 3x2",
+		overprintStroke: false
+	}
+	doc.activeLayer = doc.layers.item(0);
+	var safeLayer = doc.layers.item(safeLayerName);
+	if (!safeLayer.isValid) doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW });
+	// safeLayer.move(LocationOptions.BEFORE, XXXX);
+
+	var mgPg, mgBounds, safeLayerFrame;
+	mgPg = {
+		top: (szPg.height - szMg.height) / 2,
+		left: (szPg.width - szMg.width) / 2,
+		bottom: (szPg.height - szMg.height) / 2,
+		right: (szPg.width - szMg.width) / 2
+	};
+	if (mgPg.top + mgPg.left + mgPg.bottom + mgPg.right == 0) return;
+	mgBounds = [mgPg.top, mgPg.left, szMg.height + mgPg.top, szMg.width + mgPg.left];
+	page.marginPreferences.properties = mgPg;
+	safeLayerFrame = page.rectangles.add(safeLayerFrameP);
+	safeLayerFrame.properties = { itemLayer: safeLayerName, geometricBounds: mgBounds };
+}
+
+function FindLayer(names) { // Find first layer from a list of names
+	for (var i = 0; i < names.length; i++) {
+		var layer = doc.layers.item(names[i]);
+		if (layer.isValid) return names[i];
+	}
+	return names[0]; // Nothing found, return first name
 }
