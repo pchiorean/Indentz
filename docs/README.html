@@ -17,9 +17,12 @@
 
 <body class="vscode-light">
 	<h1 id="indentz">Indentz</h1>
-	<p>Collection of InDesign scripts for simple and repetitive tasks: cleaning up the document, making default layers and special colors, resizing objects to the page geometry or modifying it, preparing for print, better zooming.</p>
-	<p>Many are designed to be run through a shortcut. You can found a configuration suggestion in the <a href="#shortcuts">Shortcuts</a> section. Some are intended to be run in the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
+	<p>Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run through a shortcut. You can found a configuration suggestion in the <a href="#shortcuts">Shortcuts</a> section. Some are intended to be run in the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
 	<h2 id="description">Description</h2>
+	<h4 id="alignto-series"><strong><code>AlignTo</code></strong> series</h4>
+	<p>Align selected object(s) to the top/bottom/left/right/center of the reference defined by the <strong>Align To</strong> setting. With <code>ToggleAlignTo.jsx</code> you can toggle the alignment to the item, margins, page or spread (just run it repeatedly). <code>ResetAlignTo.jsx</code> resets the setting to default.</p>
+	<p><img src="img/alignto.png" alt="Align Panel"></p>
+	<p>The idea is to assign them to the numeric keypad for easy usage, otherwise it doesn't make much sense.</p>
 	<h4 id="doccleanupjsx--docdefaultsjsx"><strong><code>DocCleanup.jsx</code></strong> / <strong><code>DocDefaults.jsx</code></strong></h4>
 	<p>These are two scripts meant to be used together – one &quot;cleans&quot;, the other &quot;prepares the ground&quot;.</p>
 	<p>First, they change several settings according to my preferences:</p>
@@ -54,7 +57,7 @@
 		</li>
 		<li>
 			<p><strong><code>DocDefaults.jsx</code></strong> creates several swatches &amp; layers, replaces several missing or unwanted fonts (it runs <strong><code>CleanupFonts.jsx</code></strong>), and sets the page geometry from the filename (it runs <strong><code>PageSizeFromFilename.jsx</code></strong>).</p>
-			<p><img src="img/docdefaults.png" alt="Swatches &amp; layers"></p>
+			<p><img src="img/docdefaults.png" alt="Swatches &amp; Layers"></p>
 			<p>The script also merges several similar layers, as follows:</p>
 			<table>
 				<thead>
@@ -98,109 +101,7 @@
 		</li>
 	</ul>
 	<h4 id="cleanupfontsjsx"><strong><code>CleanupFonts.jsx</code></strong></h4>
-	<p>Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV <em>(tab-separated values)</em> file with the same name as the script. The first line (the header) is ignored. The default list is as follows:</p>
-	<table>
-		<thead>
-			<tr>
-				<th style="text-align:left">Old Name</th>
-				<th style="text-align:left">Style</th>
-				<th style="text-align:left">New Name</th>
-				<th style="text-align:left">Style</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td style="text-align:left">Akzidenz Grotesk</td>
-				<td style="text-align:left">Bold</td>
-				<td style="text-align:left"><strong>AkzidenzGrotesk</strong></td>
-				<td style="text-align:left"><strong>Bold</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">Arial</td>
-				<td style="text-align:left">Regular</td>
-				<td style="text-align:left"><strong>Helvetica Neue</strong></td>
-				<td style="text-align:left"><strong>Regular</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">Arial</td>
-				<td style="text-align:left">Bold</td>
-				<td style="text-align:left"><strong>Helvetica Neue</strong></td>
-				<td style="text-align:left"><strong>Bold</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">FoundryGridnik</td>
-				<td style="text-align:left">Regular</td>
-				<td style="text-align:left"><strong>Foundry Gridnik</strong></td>
-				<td style="text-align:left"><strong>Regular</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">FoundryGridnik</td>
-				<td style="text-align:left">Bold</td>
-				<td style="text-align:left"><strong>Foundry Gridnik</strong></td>
-				<td style="text-align:left"><strong>Bold</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">FoundryGridnik</td>
-				<td style="text-align:left">Medium</td>
-				<td style="text-align:left"><strong>Foundry Gridnik</strong></td>
-				<td style="text-align:left"><strong>Medium</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">Gotham Light</td>
-				<td style="text-align:left">Regular</td>
-				<td style="text-align:left"><strong>Gotham</strong></td>
-				<td style="text-align:left"><strong>Light</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">Gotham Book</td>
-				<td style="text-align:left">Regular</td>
-				<td style="text-align:left"><strong>Gotham</strong></td>
-				<td style="text-align:left"><strong>Book</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">Gotham Medium</td>
-				<td style="text-align:left">Regular</td>
-				<td style="text-align:left"><strong>Gotham</strong></td>
-				<td style="text-align:left"><strong>Medium</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">Gotham Bold</td>
-				<td style="text-align:left">Regular</td>
-				<td style="text-align:left"><strong>Gotham</strong></td>
-				<td style="text-align:left"><strong>Bold</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">Gotham Black</td>
-				<td style="text-align:left">Regular</td>
-				<td style="text-align:left"><strong>Gotham</strong></td>
-				<td style="text-align:left"><strong>Black</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">Helvetica Neue LT Std</td>
-				<td style="text-align:left">65 Medium</td>
-				<td style="text-align:left"><strong>Helvetica Neue</strong></td>
-				<td style="text-align:left"><strong>Medium</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">Helvetica Neue LT Std</td>
-				<td style="text-align:left">75 Bold</td>
-				<td style="text-align:left"><strong>Helvetica Neue</strong></td>
-				<td style="text-align:left"><strong>Bold</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">Trade Gothic LT Std</td>
-				<td style="text-align:left">Bold Condensed No. 20</td>
-				<td style="text-align:left"><strong>Trade Gothic for LS</strong></td>
-				<td style="text-align:left"><strong>Bold Condensed No. 20</strong></td>
-			</tr>
-			<tr>
-				<td style="text-align:left">Trade Gothic LT Std</td>
-				<td style="text-align:left">Condensed No. 18</td>
-				<td style="text-align:left"><strong>Trade Gothic for LS</strong></td>
-				<td style="text-align:left"><strong>Condensed No. 18</strong></td>
-			</tr>
-		</tbody>
-	</table>
+	<p>Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV <em>(tab-separated values)</em> file with the same name as the script (<a href="cleanup/CleanupFonts.txt"><code>CleanupFonts.txt</code></a>). The first line (the header) is ignored. </p>
 	<p>You can use <strong><code>ShowFonts.jsx</code></strong> to get a tab delimited list of used fonts.</p>
 	<h4 id="cleanuplabelsjsx"><strong><code>CleanupLabels.jsx</code></strong></h4>
 	<p>Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which potentially creates problems later. <strong><code>CleanupLabels.jsx</code></strong> deletes all labels from a document.</p>
@@ -260,9 +161,9 @@
 		<thead>
 			<tr>
 				<th style="text-align:left"><strong></strong>Vertical Justification</strong></th>
-				<th style="text-align:center"><strong><code>TextAutosizeL.jsx</code></strong></th>
-				<th style="text-align:center"><strong><code>TextAutosize.jsx</code></strong></th>
-				<th style="text-align:center"><strong><code>TextAutosizeR.jsx</code></strong></th>
+				<th style="text-align:center"><strong><code>¶ Align left</code></strong></th>
+				<th style="text-align:center"><strong><code>¶ Align center</code></strong></th>
+				<th style="text-align:center"><strong><code>¶ Align right</code></strong></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -374,6 +275,38 @@
 		</thead>
 		<tbody>
 			<tr>
+				<td style="text-align:left"><strong><code>AlignToTL.jsx</code></strong></td>
+				<td style="text-align:right">Num7</td>
+				<td style="text-align:left"><strong><code>AlignToT.jsx</code></strong></td>
+				<td style="text-align:right">Num8</td>
+				<td style="text-align:left"><strong><code>AlignToTR.jsx</code></strong></td>
+				<td style="text-align:right">Num9</td>
+			</tr>
+			<tr>
+				<td style="text-align:left"><strong><code>AlignToL.jsx</code></strong></td>
+				<td style="text-align:right">Num4</td>
+				<td style="text-align:left"><strong><code>AlignToC.jsx</code></strong></td>
+				<td style="text-align:right">Num5</td>
+				<td style="text-align:left"><strong><code>AlignToR.jsx</code></strong></td>
+				<td style="text-align:right">Num6</td>
+			</tr>
+			<tr>
+				<td style="text-align:left"><strong><code>AlignToBL.jsx</code></strong></td>
+				<td style="text-align:right">Num1</td>
+				<td style="text-align:left"><strong><code>AlignToB.jsx</code></strong></td>
+				<td style="text-align:right">Num2</td>
+				<td style="text-align:left"><strong><code>AlignToBR.jsx</code></strong></td>
+				<td style="text-align:right">Num3</td>
+			</tr>
+			<tr>
+				<td style="text-align:left"><strong><code>ToggleAlignTo.jsx</code></strong></td>
+				<td style="text-align:right">Num0</td>
+				<td style="text-align:left"><strong><code>ResetAlignTo.jsx</code></strong></td>
+				<td style="text-align:right">⌃Num0</td>
+				<td style="text-align:left"></td>
+				<td style="text-align:right"></td>
+			</tr>
+			<tr>
 				<td style="text-align:left"><strong><code>DocCleanup.jsx</code></strong></td>
 				<td style="text-align:right">F2</td>
 				<td style="text-align:left"><strong><code>DocDefaults.jsx</code></strong></td>
@@ -432,8 +365,8 @@
 			<tr>
 				<td style="text-align:left"><strong><code>ZoomToSelection.jsx</code></strong></td>
 				<td style="text-align:right">F4</td>
-				<td style="text-align:left"></td>
-				<td style="text-align:right"></td>
+				<td style="text-align:left"><strong><code>QR.jsx</code></strong></td>
+				<td style="text-align:right">F9</td>
 				<td style="text-align:left"></td>
 				<td style="text-align:right"></td>
 			</tr>
@@ -448,7 +381,7 @@
 	<h2 id="license">License</h2>
 	<p>Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. The rest of the code is released under the MIT License (see <a href="../LICENSE.txt">LICENSE.txt</a>).</p>
 	<p>Please send me an e-mail at &lt;jpeg AT basement.ro&gt; or <a href="https://github.com/pchiorean/Indentz/issues">report an issue on Github</a> if you encounter problems or have any suggestions.</p>
-	<p>README.md • 10 August 2020, 19:21 (UTC).</p>
+	<p>README.md • 12 August 2020, 17:30 (UTC).</p>
 </body>
 
 </html>

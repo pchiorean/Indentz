@@ -1,10 +1,16 @@
 # Indentz
 
-Colecție de scripturi InDesign pentru operații simple și repetitive: "curățarea" documentului, crearea unor layere și culori speciale, dimensionarea obiectelor la geometria paginii sau modificarea ei, pregătire pentru tipar, un zoom îmbunătățit.
-
-O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O sugestie de configurare găsiți în secțiunea [Shortcuts](#shortcuts). Câteva pot fi rulate în scriptul [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
+Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O sugestie de configurare găsiți în secțiunea [Shortcuts](#shortcuts). Câteva pot fi rulate în scriptul [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
 
 ## Descriere
+
+#### Seria **`AlignTo`**
+
+Aliniază obiectul selectat la partea de sus/jos/stânga/dreapta/centru a referinței definite de setarea **Align To**. Cu `ToggleAlignTo.jsx` puteți comuta alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). `ResetAlignTo.jsx` resetează setarea.
+
+![Align Panel](img/alignto.png)
+
+Ideea e să le alocați tastaturii numerice pentru o utilizare ușoară, altfel nu prea au sens.
 
 #### **`DocCleanup.jsx`** / **`DocDefaults.jsx`**
 
@@ -57,27 +63,9 @@ După care:
 
 #### **`CleanupFonts.jsx`**
 
-Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul. Prima linie (antetul) este ignorată. Lista implicită este următoarea:
+Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([`CleanupFonts.txt`](cleanup/CleanupFonts.txt)). Prima linie (antetul) este ignorată.
 
-Nume vechi | Stil | Nume nou | Stil
-:--- | :--- | :--- | :---
-Akzidenz Grotesk | Bold | **AkzidenzGrotesk** | **Bold**
-Arial | Regular | **Helvetica Neue** | **Regular**
-Arial | Bold | **Helvetica Neue** | **Bold**
-FoundryGridnik | Regular | **Foundry Gridnik** | **Regular**
-FoundryGridnik | Bold | **Foundry Gridnik** | **Bold**
-FoundryGridnik | Medium | **Foundry Gridnik** | **Medium**
-Gotham Light | Regular | **Gotham** | **Light**
-Gotham Book | Regular | **Gotham** | **Book**
-Gotham Medium | Regular | **Gotham** | **Medium**
-Gotham Bold | Regular | **Gotham** | **Bold**
-Gotham Black | Regular | **Gotham** | **Black**
-Helvetica Neue LT Std | 65 Medium | **Helvetica Neue** | **Medium**
-Helvetica Neue LT Std | 75 Bold | **Helvetica Neue** | **Bold**
-Trade Gothic LT Std | Bold Condensed No. 20 | **Trade Gothic for LS** | **Bold Condensed No. 20**
-Trade Gothic LT Std | Condensed No. 18 | **Trade Gothic for LS** | **Condensed No. 18**
-
-Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă cu fonturile folosite (tab separated).
+Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă cu fonturile folosite *(tab separated)*.
 
 #### **`CleanupLabels.jsx`**
 
@@ -127,7 +115,7 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 "Strâng" chenarul la text și îi setează dimensionarea automată. Puteți controla unde va fi punctul de referință pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Vertical Justification** pentru axa verticală:
 
-  **Vertical Justification** | **Align left** | **Align center** | **Align right**
+  **Vertical Justification** | **¶ Align left** | **¶ Align center** | **¶ Align right**
   :--- | :---: | :---: | :---:
   *Top* | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
   *Center* | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
@@ -183,6 +171,10 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 Script | Fn | Script | Fn | Script | Fn
 :--- | ---: | :--- | ---: | :--- | ---:
+**`AlignToTL.jsx`** | Num7 | **`AlignToT.jsx`** | Num8 | **`AlignToTR.jsx`** | Num9
+**`AlignToL.jsx`** | Num4 | **`AlignToC.jsx`** | Num5 | **`AlignToR.jsx`** | Num6
+**`AlignToBL.jsx`** | Num1 | **`AlignToB.jsx`** | Num2 | **`AlignToBR.jsx`** | Num3
+**`ToggleAlignTo.jsx`** | Num0 | **`ResetAlignTo.jsx`** | ⌃Num0
 **`DocCleanup.jsx`** | F2 | **`DocDefaults.jsx`** | ⌥F2 | **`CleanupSwatches.jsx`** | ⇧F2
 **`FitToPage.jsx`** | F11 | **`FitToPageMargins.jsx`** | ⌥F11 | **`FitToPageBleed.jsx`** | ⇧F11
 ||||| **`FitToPageBleedForced.jsx`** | ⇧⌘F11
@@ -190,7 +182,7 @@ Script | Fn | Script | Fn | Script | Fn
 ||||| **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12
 **`ScaleToPageSize.jsx`** | F5 | **`ScaleToPageMargins.jsx`** | ⌥F5
 **`TextAutosize.jsx`** | F6 | **`TextAutosizeL.jsx`** | ⌥F6 | **`TextAutosizeR.jsx`** | ⌘F6
-**`ZoomToSelection.jsx`** | F4
+**`ZoomToSelection.jsx`** | F4 | **`QR.jsx`** | F9
 
 ## Instalare
 
@@ -204,4 +196,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 10 august 2020, 19:21 (UTC).
+README-ro.md • 12 august 2020, 17:30 (UTC).

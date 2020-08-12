@@ -1,10 +1,16 @@
 # Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks: cleaning up the document, making default layers and special colors, resizing objects to the page geometry or modifying it, preparing for print, better zooming.
-
-Many are designed to be run through a shortcut. You can found a configuration suggestion in the [Shortcuts](#shortcuts) section. Some are intended to be run in the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
+Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run through a shortcut. You can found a configuration suggestion in the [Shortcuts](#shortcuts) section. Some are intended to be run in the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
 
 ## Description
+
+#### **`AlignTo`** series
+
+Align selected object(s) to the top/bottom/left/right/center of the reference defined by the **Align To** setting. With `ToggleAlignTo.jsx` you can toggle the alignment to the item, margins, page or spread (just run it repeatedly). `ResetAlignTo.jsx` resets the setting to default.
+
+![Align Panel](img/alignto.png)
+
+The idea is to assign them to the numeric keypad for easy usage, otherwise it doesn't make much sense.
 
 #### **`DocCleanup.jsx`** / **`DocDefaults.jsx`**
 
@@ -41,7 +47,7 @@ After which:
 
 * **`DocDefaults.jsx`** creates several swatches & layers, replaces several missing or unwanted fonts (it runs `CleanupFonts.jsx`), and sets the page geometry from the filename (it runs `PageSizeFromFilename.jsx`).
 
-  ![Swatches & layers](img/docdefaults.png)
+  ![Swatches & Layers](img/docdefaults.png)
 
   The script also merges several similar layers, as follows:
 
@@ -57,25 +63,7 @@ After which:
 
 #### **`CleanupFonts.jsx`**
 
-Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script. The first line (the header) is ignored. The default list is as follows:
-
-Old Name | Style | New Name | Style
-:--- | :--- | :--- | :---
-Akzidenz Grotesk | Bold | **AkzidenzGrotesk** | **Bold**
-Arial | Regular | **Helvetica Neue** | **Regular**
-Arial | Bold | **Helvetica Neue** | **Bold**
-FoundryGridnik | Regular | **Foundry Gridnik** | **Regular**
-FoundryGridnik | Bold | **Foundry Gridnik** | **Bold**
-FoundryGridnik | Medium | **Foundry Gridnik** | **Medium**
-Gotham Light | Regular | **Gotham** | **Light**
-Gotham Book | Regular | **Gotham** | **Book**
-Gotham Medium | Regular | **Gotham** | **Medium**
-Gotham Bold | Regular | **Gotham** | **Bold**
-Gotham Black | Regular | **Gotham** | **Black**
-Helvetica Neue LT Std | 65 Medium | **Helvetica Neue** | **Medium**
-Helvetica Neue LT Std | 75 Bold | **Helvetica Neue** | **Bold**
-Trade Gothic LT Std | Bold Condensed No. 20 | **Trade Gothic for LS** | **Bold Condensed No. 20**
-Trade Gothic LT Std | Condensed No. 18 | **Trade Gothic for LS** | **Condensed No. 18**
+Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([`CleanupFonts.txt`](cleanup/CleanupFonts.txt)). The first line (the header) is ignored.
 
 You can use **`ShowFonts.jsx`** to get a tab delimited list of used fonts.
 
@@ -127,7 +115,7 @@ Resize the pages of the document based on the file name, page margins, or select
 
 Fit the frame to the text and set it to auto-size. You can control where the auto-sizing reference point will be by setting **Paragraph Alignment** for the horizontal axis, and **Vertical Justification** for the vertical axis:
 
-  **Vertical Justification** | **Align left** | **Align center** | **Align right**
+  **Vertical Justification** | **¶ Align left** | **¶ Align center** | **¶ Align right**
   :--- | :---: | :---: | :---:
   *Top* | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
   *Center* | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
@@ -183,6 +171,10 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
 Script | Fn | Script | Fn | Script | Fn
 :--- | ---: | :--- | ---: | :--- | ---:
+**`AlignToTL.jsx`** | Num7 | **`AlignToT.jsx`** | Num8 | **`AlignToTR.jsx`** | Num9
+**`AlignToL.jsx`** | Num4 | **`AlignToC.jsx`** | Num5 | **`AlignToR.jsx`** | Num6
+**`AlignToBL.jsx`** | Num1 | **`AlignToB.jsx`** | Num2 | **`AlignToBR.jsx`** | Num3
+**`ToggleAlignTo.jsx`** | Num0 | **`ResetAlignTo.jsx`** | ⌃Num0
 **`DocCleanup.jsx`** | F2 | **`DocDefaults.jsx`** | ⌥F2 | **`CleanupSwatches.jsx`** | ⇧F2
 **`FitToPage.jsx`** | F11 | **`FitToPageMargins.jsx`** | ⌥F11 | **`FitToPageBleed.jsx`** | ⇧F11
 ||||| **`FitToPageBleedForced.jsx`** | ⇧⌘F11
@@ -190,7 +182,7 @@ Script | Fn | Script | Fn | Script | Fn
 ||||| **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12
 **`ScaleToPageSize.jsx`** | F5 | **`ScaleToPageMargins.jsx`** | ⌥F5
 **`TextAutosize.jsx`** | F6 | **`TextAutosizeL.jsx`** | ⌥F6 | **`TextAutosizeR.jsx`** | ⌘F6
-**`ZoomToSelection.jsx`** | F4
+**`ZoomToSelection.jsx`** | F4 | **`QR.jsx`** | F9
 
 ## Installation
 
@@ -204,4 +196,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 10 August 2020, 19:21 (UTC).
+README.md • 12 August 2020, 17:30 (UTC).
