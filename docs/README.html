@@ -101,7 +101,7 @@
 		</li>
 	</ul>
 	<h4 id="cleanupfontsjsx"><strong><code>CleanupFonts.jsx</code></strong></h4>
-	<p>Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV <em>(tab-separated values)</em> file with the same name as the script (<a href="../cleanup/CleanupFonts.txt"><code>CleanupFonts.txt</code></a>). The first line (the header) is ignored. </p>
+	<p>Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV <em>(tab-separated values)</em> file with the same name as the script (<a href="../cleanup/CleanupFonts.txt"><strong><code>CleanupFonts.txt</code></strong></a>). The first line (the header) is ignored. </p>
 	<p>You can use <strong><code>ShowFonts.jsx</code></strong> to get a tab delimited list of used fonts.</p>
 	<h4 id="cleanuplabelsjsx"><strong><code>CleanupLabels.jsx</code></strong></h4>
 	<p>Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which potentially creates problems later. <strong><code>CleanupLabels.jsx</code></strong> deletes all labels from a document.</p>
@@ -224,7 +224,7 @@
 			<p><strong><code>QR.jsx</code></strong> adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, batch or manual:</p>
 			<ul>
 				<li>
-					<p>Batch: if a file named <code>QR.txt</code> is found in the same folder, it processes it. It must be a 2 column TSV <em>(tab-separated values)</em> file; the first column is the filename, the second the QR code. The first line (the header) is ignored:</p>
+					<p><strong>Batch:</strong> if a file named <code>QR.txt</code> is found in the same folder, it processes it. It must be a 2 column TSV <em>(tab-separated values)</em> file; the first column is the filename, the second the QR code. The first line (the header) is ignored:</p>
 					<table>
 						<thead>
 							<tr>
@@ -247,7 +247,7 @@
 					</table>
 				</li>
 				<li>
-					<p>Manually: otherwise, it asks for the QR text and adds the code on the page or in a separate file.</p>
+					<p><strong>Manually:</strong> otherwise, it asks for the QR text and adds the code on the page or in a separate file.</p>
 				</li>
 			</ul>
 		</li>
