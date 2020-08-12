@@ -6,7 +6,7 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 #### Seria **`AlignTo`**
 
-Aliniază obiectul selectat la partea de sus/jos/stânga/dreapta/centru a referinței definite de setarea **Align To**. Cu `ToggleAlignTo.jsx` puteți comuta alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). `ResetAlignTo.jsx` resetează setarea.
+Aliniază obiectul selectat la partea de sus/jos/stânga/dreapta/centru a referinței definite de setarea **Align To**. Cu **`ToggleAlignTo.jsx`** puteți comuta alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). **`ResetAlignTo.jsx`** resetează setarea.
 
 ![Align Panel](img/alignto.png)
 
@@ -45,7 +45,7 @@ După care:
 
 * **`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.
 
-* **`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează `CleanupFonts.jsx`), și stabilește geometria paginii din numele fișierului (rulează `PageSizeFromFilename.jsx`).
+* **`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează **`CleanupFonts.jsx`**), și stabilește geometria paginii din numele fișierului (rulează **`PageSizeFromFilename.jsx`**).
 
   ![Culori și layere](img/docdefaults.png)
 
@@ -63,13 +63,13 @@ După care:
 
 #### **`CleanupFonts.jsx`**
 
-Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([`CleanupFonts.txt`](../cleanup/CleanupFonts.txt)). Prima linie (antetul) este ignorată.
+Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). Prima linie (antetul) este ignorată.
 
 Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă cu fonturile folosite *(tab separated)*.
 
 #### **`CleanupLabels.jsx`**
 
-Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **CleanupLabels.jsx** șterge toate etichetele dintr-un document.
+Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **`CleanupLabels.jsx`** șterge toate etichetele dintr-un document.
 
 #### **`CleanupSwatches.jsx`**
 

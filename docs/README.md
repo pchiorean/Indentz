@@ -6,7 +6,7 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 #### **`AlignTo`** series
 
-Align selected object(s) to the top/bottom/left/right/center of the reference defined by the **Align To** setting. With `ToggleAlignTo.jsx` you can toggle the alignment to the item, margins, page or spread (just run it repeatedly). `ResetAlignTo.jsx` resets the setting to default.
+Align selected object(s) to the top/bottom/left/right/center of the reference defined by the **Align To** setting. With **`ToggleAlignTo.jsx`** you can toggle the alignment to the item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to default.
 
 ![Align Panel](img/alignto.png)
 
@@ -45,7 +45,7 @@ After which:
 
 * **`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100% & removes all guides.
 
-* **`DocDefaults.jsx`** creates several swatches & layers, replaces several missing or unwanted fonts (it runs `CleanupFonts.jsx`), and sets the page geometry from the filename (it runs `PageSizeFromFilename.jsx`).
+* **`DocDefaults.jsx`** creates several swatches & layers, replaces several missing or unwanted fonts (it runs **`CleanupFonts.jsx`**), and sets the page geometry from the filename (it runs **`PageSizeFromFilename.jsx`**).
 
   ![Swatches & Layers](img/docdefaults.png)
 
@@ -63,7 +63,7 @@ After which:
 
 #### **`CleanupFonts.jsx`**
 
-Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([`CleanupFonts.txt`](../cleanup/CleanupFonts.txt)). The first line (the header) is ignored.
+Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). The first line (the header) is ignored.
 
 You can use **`ShowFonts.jsx`** to get a tab delimited list of used fonts.
 

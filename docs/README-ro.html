@@ -20,7 +20,7 @@
 	<p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut. O sugestie de configurare găsiți în secțiunea <a href="#shortcuts">Shortcuts</a>. Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
 	<h2 id="descriere">Descriere</h2>
 	<h4 id="seria-alignto">Seria <strong><code>AlignTo</code></strong></h4>
-	<p>Aliniază obiectul selectat la partea de sus/jos/stânga/dreapta/centru a referinței definite de setarea <strong>Align To</strong>. Cu <code>ToggleAlignTo.jsx</code> puteți comuta alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). <code>ResetAlignTo.jsx</code> resetează setarea.</p>
+	<p>Aliniază obiectul selectat la partea de sus/jos/stânga/dreapta/centru a referinței definite de setarea <strong>Align To</strong>. Cu <strong><code>ToggleAlignTo.jsx</code></strong> puteți comuta alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). <strong><code>ResetAlignTo.jsx</code></strong> resetează setarea.</p>
 	<p><img src="img/alignto.png" alt="Align Panel"></p>
 	<p>Ideea e să le alocați tastaturii numerice pentru o utilizare ușoară, altfel nu prea au sens.</p>
 	<h4 id="doccleanupjsx--docdefaultsjsx"><strong><code>DocCleanup.jsx</code></strong> / <strong><code>DocDefaults.jsx</code></strong></h4>
@@ -56,7 +56,7 @@
 			<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.</p>
 		</li>
 		<li>
-			<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează <code>CleanupFonts.jsx</code>) și stabilește geometria paginii din numele fișierului (rulează <strong><code>PageSizeFromFilename.jsx</code></strong>).</p>
+			<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează <strong><code>CleanupFonts.jsx</code></strong>) și stabilește geometria paginii din numele fișierului (rulează <strong><code>PageSizeFromFilename.jsx</code></strong>).</p>
 			<p><img src="img/docdefaults.png" alt="Culori și layere"></p>
 			<p>De asemenea, scriptul combină câteva layere similare, după cum urmează:</p>
 			<table>
@@ -104,7 +104,7 @@
 	<p>Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV <em>(tab-separated values)</em> cu 4 coloane, cu același nume ca scriptul (<a href="../cleanup/CleanupFonts.txt"><code>CleanupFonts.txt</code></a>). Prima linie (antetul) este ignorată.</p>
 	<p>Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> pentru a obține o listă cu fonturile folosite <em>(tab separated)</em>.</p>
 	<h4 id="cleanuplabelsjsx"><strong><code>CleanupLabels.jsx</code></strong></h4>
-	<p>Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. <strong>CleanupLabels.jsx</strong> șterge toate etichetele dintr-un document.</p>
+	<p>Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. <strong><code>CleanupLabels.jsx</code></strong> șterge toate etichetele dintr-un document.</p>
 	<h4 id="cleanupswatchesjsx"><strong><code>CleanupSwatches.jsx</code></strong></h4>
 	<p>Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește culorile CMYK după formula &quot;C= M= Y= K=&quot; și șterge culorile nefolosite. Culorile spot rămân neschimbate.</p>
 	<h4 id="seria-fittopage--fittospread">Seria <strong><code>FitToPage</code></strong> / <strong><code>FitToSpread</code></strong></h4>
