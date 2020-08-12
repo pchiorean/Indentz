@@ -1,5 +1,5 @@
 /*
-	QR code v1.5.1
+	QR code v1.5.2
 	© August 2020, Paul Chiorean
 	Adds a QR code to the current document or saves it in a separate file.
 	If "QR.txt" is found, batch process it.
@@ -67,6 +67,7 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 
 function QROnPage(QRLabel) { // Put QR on each page
 	var infoLayer = MakeInfoLayer(doc);
+	doc.activeLayer = infoLayer;
 	for (var i = 0; i < doc.pages.length; i++) {
 		var page = doc.pages.item(i);
 		for (var j = 0; j < page.pageItems.length; j++)
