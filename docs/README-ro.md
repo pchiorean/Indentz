@@ -63,7 +63,7 @@ După care:
 
 #### **`CleanupFonts.jsx`**
 
-Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([`CleanupFonts.txt`](cleanup/CleanupFonts.txt)). Prima linie (antetul) este ignorată.
+Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([`CleanupFonts.txt`](../cleanup/CleanupFonts.txt)). Prima linie (antetul) este ignorată.
 
 Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă cu fonturile folosite *(tab separated)*.
 
@@ -196,4 +196,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 12 august 2020, 17:30 (UTC).
+README-ro.md • 12 august 2020, 19:39 (UTC).

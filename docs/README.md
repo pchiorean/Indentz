@@ -63,7 +63,7 @@ After which:
 
 #### **`CleanupFonts.jsx`**
 
-Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([`CleanupFonts.txt`](cleanup/CleanupFonts.txt)). The first line (the header) is ignored.
+Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([`CleanupFonts.txt`](../cleanup/CleanupFonts.txt)). The first line (the header) is ignored.
 
 You can use **`ShowFonts.jsx`** to get a tab delimited list of used fonts.
 
@@ -196,4 +196,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
 
-README.md • 12 August 2020, 17:30 (UTC).
+README.md • 12 August 2020, 19:39 (UTC).
