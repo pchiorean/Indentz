@@ -1,5 +1,5 @@
 /*
-	QR code v1.5.2
+	QR code v1.6.0
 	© August 2020, Paul Chiorean
 	Adds a QR code to the current document or saves it in a separate file.
 	If "QR.txt" is found, batch process it.
@@ -22,8 +22,10 @@ function BatchQR() { // Noninteractive: batch process "QR.txt"
 		if (!infoLine[0] || !infoLine[1]) {
 			alert ("Missing data in record " + line + "."); exit();
 		}
+		infoLine[0] = infoLine[0].match(/\.indd$/g) ?
+			infoLine[0] : infoLine[0] + '.indd'; // Add extension
 		infoLine[0] = infoLine[0].match(/_QR\.indd$/g) ?
-			infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
+			infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd'); // Add '_QR'
 		if (QROnFile(infoLine[1], infoLine[0])) err++; // Count files with overflows
 	}
 	infoFile.close(); doc.close();
