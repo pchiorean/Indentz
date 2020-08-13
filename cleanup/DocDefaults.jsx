@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v1.14.0
+	Default layers and more v1.14.1
 	© August 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -190,6 +190,7 @@ const safeSwatchName = "Safe area";
 			case "Vis. area":
 			case "visible area":
 			case "Visible area":
+			case "Visible Area":
 			case "visible":
 			case "Visible":
 			case "vizibil":
