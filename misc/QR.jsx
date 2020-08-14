@@ -1,5 +1,5 @@
 /*
-	QR code v1.6.0
+	QR code v1.7.0
 	© August 2020, Paul Chiorean
 	Adds a QR code to the current document or saves it in a separate file.
 	If "QR.txt" is found, batch process it.
@@ -8,7 +8,8 @@
 if (app.documents.length == 0) { alert("Open a file and try again."); exit() };
 var doc = app.activeDocument;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
-// Look for "QR.txt"
+
+// Look for "QR.txt" and select operating mode
 var infoFile = File(doc.filePath + "/QR.txt");
 if (infoFile.open("r")) { BatchQR() } else { ManuallyQR() };
 
@@ -19,14 +20,12 @@ function BatchQR() { // Noninteractive: batch process "QR.txt"
 	infoFile.readln().split("\t");
 	while (!infoFile.eof) {
 		var infoLine = infoFile.readln().split("\t"); line++;
-		if (!infoLine[0] || !infoLine[1]) {
-			alert ("Missing data in record " + line + "."); exit();
-		}
-		infoLine[0] = infoLine[0].match(/\.indd$/g) ?
-			infoLine[0] : infoLine[0] + '.indd'; // Add extension
-		infoLine[0] = infoLine[0].match(/_QR\.indd$/g) ?
-			infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd'); // Add '_QR'
-		if (QROnFile(infoLine[1], infoLine[0])) err++; // Count files with overflows
+		if (!infoLine[0] || !infoLine[1]) { alert ("Missing data in record " + line + "."); exit() };
+		// Add extension and '_QR'
+		infoLine[0] = infoLine[0].match(/\.indd$/g) ? infoLine[0] : infoLine[0] + '.indd';
+		infoLine[0] = infoLine[0].match(/_QR\.indd$/g) ? infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
+		// Count files with overflows
+		if (QROnFile(infoLine[1], infoLine[0])) err++;
 	}
 	infoFile.close(); doc.close();
 	var msg = "Batch processed " + line + " records from \'QR.txt\'.";
@@ -59,8 +58,8 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 	var ok = okcancel.add("button", undefined, undefined, { name: "ok" });
 		ok.text = "OK";
 	var result = w.show();
-	if (result == 2 || !label.text) { exit() }; // Empty or cancelled
-	var QRLabel = label.text;
+	if (!label.text || result == 2) { exit() };
+	var QRLabel = label.text.toUpperCase();
 	switch (flg_onfile.value) {
 		case false: QROnPage(QRLabel); break;
 		case true: QROnFile(QRLabel); break;
@@ -76,7 +75,7 @@ function QROnPage(QRLabel) { // Put QR on each page
 			if (page.pageItems.item(j).label == "QR") { page.pageItems.item(j).remove(); j-- };
 		var label = page.textFrames.add({
 			itemLayer: infoLayer.name,
-			contents: QRLabel,
+			contents: SplitLines(QRLabel),
 			label: "QR",
 			fillColor: "None"
 		});
@@ -86,20 +85,16 @@ function QROnPage(QRLabel) { // Put QR on each page
 			autoLeading: 100,
 			horizontalScale: 92,
 			tracking: -15,
-			capitalization: Capitalization.ALL_CAPS,
 			hyphenation: false,
 			fillColor: "Black"
 		}
-		label.geometricBounds = [
-			0, page.bounds[1],
-			23.4912600737857, page.bounds[1] + 62.3622047244095
-		];
+		label.geometricBounds = [0, page.bounds[1], 23.4912600737857, page.bounds[1] + 62.3622047244095];
 		label.textFramePreferences.properties = {
 			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
 			autoSizingType: AutoSizingTypeEnum.HEIGHT_ONLY,
-			useNoLineBreaksForAutoSizing: true,
+			// useNoLineBreaksForAutoSizing: true,
 			insetSpacing: [7.08661417322835, 7.08661417322835, 2.83464566929134, 0]
 		}
 		var code = page.rectangles.add({
@@ -153,7 +148,7 @@ function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
 	var infoLayer = MakeInfoLayer(target);
 	var label = page.textFrames.add({
 		itemLayer: infoLayer.name,
-		contents: QRLabel,
+		contents: SplitLines(QRLabel),
 		label: "QR",
 		fillColor: "None"
 	});
@@ -173,8 +168,7 @@ function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
 		firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 		autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
 		autoSizingType: AutoSizingTypeEnum.HEIGHT_ONLY,
-		useNoLineBreaksForAutoSizing: true,
-		insetSpacing: [2.83464566929134, 2.83464566929134, 0, 0]
+		insetSpacing: [2.83464566929134, 2.83464566929134, 0, 1.41732283464567]
 	}
 	var code = page.rectangles.add({ itemLayer: infoLayer.name, label: "QR" });
 	code.absoluteRotationAngle = -90;
@@ -219,9 +213,14 @@ function MakeInfoLayer(doc) {
 		printable: true
 	};
 	if (idLayer.isValid) { infoLayer.move(LocationOptions.after, idLayer);
-	} else if (hwLayer.isValid) { infoLayer.move(LocationOptions.before, hwLayer);
-	} else infoLayer.move(LocationOptions.AT_BEGINNING);
+		} else if (hwLayer.isValid) { infoLayer.move(LocationOptions.before, hwLayer);
+		} else infoLayer.move(LocationOptions.AT_BEGINNING);
 	return infoLayer;
+}
+
+function SplitLines(QRLabel) {
+	// Replace '|' with Zero Width Space (aka Discretionary Line Break)
+	return QRLabel.replace(/\|/g, '\u200B');
 }
 
 function Margins(page) { // Return page margins
