@@ -18,11 +18,13 @@
 <body class="vscode-light">
 	<h1 id="indentz">Indentz</h1>
 	<p>Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run through a shortcut. You can found a configuration suggestion in the <a href="#shortcuts">Shortcuts</a> section. Some are intended to be run in the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
+
 	<h2 id="description">Description</h2>
 	<h4 id="alignto-series"><strong><code>AlignTo</code></strong> series</h4>
 	<p>Align selected object(s) to the top/bottom/left/right/center of the reference defined by the <strong>Align To</strong> setting. With <strong><code>ToggleAlignTo.jsx</code></strong> you can toggle the alignment to the item, margins, page or spread (just run it repeatedly). <strong><code>ResetAlignTo.jsx</code></strong> resets the setting to default.</p>
 	<p><img src="img/alignto.png" alt="Align Panel"></p>
 	<p>The idea is to assign them to the numeric keypad for easy usage, otherwise it doesn't make much sense.</p>
+
 	<h4 id="doccleanupjsx--docdefaultsjsx"><strong><code>DocCleanup.jsx</code></strong> / <strong><code>DocDefaults.jsx</code></strong></h4>
 	<p>These are two scripts meant to be used together – one &quot;cleans&quot;, the other &quot;prepares the ground&quot;.</p>
 	<p>First, they change several settings according to my preferences:</p>
@@ -100,13 +102,17 @@
 			</table>
 		</li>
 	</ul>
+
 	<h4 id="cleanupfontsjsx"><strong><code>CleanupFonts.jsx</code></strong></h4>
 	<p>Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV <em>(tab-separated values)</em> file with the same name as the script (<a href="../cleanup/CleanupFonts.txt"><strong><code>CleanupFonts.txt</code></strong></a>). The first line (the header) is ignored. </p>
 	<p>You can use <strong><code>ShowFonts.jsx</code></strong> to get a tab delimited list of used fonts.</p>
+
 	<h4 id="cleanuplabelsjsx"><strong><code>CleanupLabels.jsx</code></strong></h4>
 	<p>Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which potentially creates problems later. <strong><code>CleanupLabels.jsx</code></strong> deletes all labels from a document.</p>
+
 	<h4 id="cleanupswatchesjsx"><strong><code>CleanupSwatches.jsx</code></strong></h4>
 	<p>Converts RGB process colors to CMYK, removes duplicates, sets every name in &quot;C= M= Y= K=&quot; form and deletes unused swatches. Spot colors remain unchanged.</p>
+
 	<h4 id="fittopage--fittospread-series"><strong><code>FitToPage</code></strong> / <strong><code>FitToSpread</code></strong> series</h4>
 	<p>Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame and this is resized. If you run the script a second time on such an object, it will restore it.</p>
 	<ul>
@@ -123,6 +129,7 @@
 			<p><strong><code>FitUndo.jsx</code></strong>: if you want to restore all objects at once.</p>
 		</li>
 	</ul>
+
 	<h4 id="scaletopage-series"><strong><code>ScaleToPage</code></strong> series</h4>
 	<p>These also work with one or more objects, but scale them proportionally, as a block.</p>
 	<ul>
@@ -133,6 +140,7 @@
 			<p>The <strong><code>H</code></strong> (height) and <strong><code>W</code></strong> (width) variants scale to the height or width of the page or page margins.</p>
 		</li>
 	</ul>
+
 	<h4 id="pagesize-series"><strong><code>PageSize</code></strong> series</h4>
 	<p>Resize the pages of the document based on the file name, page margins, or selected objects.</p>
 	<ul>
@@ -155,15 +163,16 @@
 			</p>
 		</li>
 	</ul>
+
 	<h4 id="textautosize-series"><strong><code>TextAutosize</code></strong> series</h4>
 	<p>Fit the frame to the text and set it to auto-size. You can control where the auto-sizing reference point will be by setting <strong>Paragraph Alignment</strong> for the horizontal axis, and <strong>Vertical Justification</strong> for the vertical axis:</p>
 	<table>
 		<thead>
 			<tr>
-				<th style="text-align:left"><strong></strong>Vertical Justification</strong></th>
-				<th style="text-align:center"><strong><code>¶ Align left</code></strong></th>
-				<th style="text-align:center"><strong><code>¶ Align center</code></strong></th>
-				<th style="text-align:center"><strong><code>¶ Align right</code></strong></th>
+				<th style="text-align:left"><strong>Vertical Justification</strong></th>
+				<th style="text-align:center"><strong>¶ Align left</strong></th>
+				<th style="text-align:center"><strong>¶ Align center</strong></th>
+				<th style="text-align:center"><strong>¶ Align right</strong></th>
 			</tr>
 		</thead>
 		<tbody>
@@ -188,9 +197,9 @@
 		</tbody>
 	</table>
 	<p><strong>Auto-Sizing Type</strong> will be set to <em>Height and width</em> if the text has only one line. If it has multiple lines, the first run will set it to <em>Height only</em>, the second run to <em>Height and width</em> (in which case care must be taken that the lines are broken manually).</p>
+
 	<h4 id="print-series"><strong>Print</strong> series</h4>
-	<p>These are making several preparations for export and can be run in <strong><code>batch_convert.jsx</code></strong>.
-	</p>
+	<p>These are making several preparations for export and can be run in <strong><code>batch_convert.jsx</code></strong>.</p>
 	<ul>
 		<li>
 			<p><strong><code>PrepareForPrint.jsx</code></strong> does the following:</p>
@@ -208,6 +217,7 @@
 		</li>
 	</ul>
 	<p>The scripts detect alternative layer names like <code>visible</code>, <code>vizibil</code>, <code>vis. area</code> for <code>safe area</code>, or <code>diecut</code>, <code>die cut</code>, <code>cut lines</code>, <code>stanze</code> for <code>dielines</code>.</p>
+
 	<h4 id="zoomtoselectionjsx"><strong><code>ZoomToSelection.jsx</code></strong></h4>
 	<p>Similar to <strong>Fit Selection in Window</strong> (⌥⌘=), but with some improvements:</p>
 	<ul>
@@ -215,16 +225,20 @@
 		<li>if the cursor is in the text, zooms on the whole frame;</li>
 		<li>without anything selected zooms on the spread.</li>
 	</ul>
+
 	<h4 id="miscellaneous">Miscellaneous</h4>
 	<ul>
 		<li>
 			<p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and displays it in the upper left corner.</p>
 		</li>
 		<li>
-			<p><strong><code>QR.jsx</code></strong> adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, batch or manual:</p>
+			<p><strong><code>QR.jsx</code></strong> adds a QR code on the bottom left corner of each page, or saves it in aseparate file. It has two operating modes, manually or batch:</p>
 			<ul>
 				<li>
-					<p><strong>Batch:</strong> if a file named <code>QR.txt</code> is found in the same folder, it processes it. It must be a 2 column TSV <em>(tab-separated values)</em> file; the first column is the filename, the second the QR code. The first line (the header) is ignored:</p>
+					<p><strong>Manually:</strong> It asks for the QR text and adds the code on the page or in a separatefile.</p>
+				</li>
+				<li>
+					<p><strong>Batch:</strong> If a file named <code>QR.txt</code> is found in the same folder, it processes it. It must be a 2 column TSV <em>(tab-separated values)</em> file; the first column is the filename, the second the QR code. The first line (the header) is ignored:</p>
 					<table>
 						<thead>
 							<tr>
@@ -246,10 +260,8 @@
 						</tbody>
 					</table>
 				</li>
-				<li>
-					<p><strong>Manually:</strong> otherwise, it asks for the QR text and adds the code on the page or in a separate file.</p>
-				</li>
 			</ul>
+			<p>You can use &quot;|&quot; for breaking the lines manually.</p>
 		</li>
 		<li>
 			<p><strong><code>ShowFonts.jsx</code></strong> shows all fonts used in the current document.</p>
@@ -261,6 +273,7 @@
 			<p><strong><code>ShowProperties.jsx</code></strong> shows properties and methods of a selected object (useful for debugging).</p>
 		</li>
 	</ul>
+
 	<h2 id="shortcuts">Shortcuts</h2>
 	<table>
 		<thead>
@@ -372,16 +385,18 @@
 			</tr>
 		</tbody>
 	</table>
+
 	<h2 id="installation">Installation</h2>
 	<ol>
 		<li>Open <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
 		<li>Right-click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
 		<li>Copy files to this folder.</li>
 	</ol>
+
 	<h2 id="license">License</h2>
 	<p>Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. The rest of the code is released under the MIT License (see <a href="../LICENSE.txt">LICENSE.txt</a>).</p>
-	<p>Please send me an e-mail at &lt;jpeg AT basement.ro&gt; or <a href="https://github.com/pchiorean/Indentz/issues">report an issue on Github</a> if you encounter problems or have any suggestions.</p>
-	<p>README.md • 12 August 2020, 19:39 (UTC).</p>
+	<p>Please send me an e-mail at &lt;jpeg AT basement.ro&gt; or <a href="https://github.com/pchiorean/Indentz/issues">report an issue</a> on Github if you encounter problems or have any suggestions.</p>
+	<p>README.md • 15 August 2020.</p>
 </body>
 
 </html>

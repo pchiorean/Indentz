@@ -150,16 +150,18 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
 * **`PageRatios.jsx`** calculates the ratio of each page and displays it in the upper left corner.
 
-* **`QR.jsx`** adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, batch or manual:
+* **`QR.jsx`** adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, manually or batch:
 
-  * **Batch:** if a file named `QR.txt` is found in the same folder, it processes it. It must be a 2 column TSV *(tab-separated values)* file; the first column is the filename, the second the QR code. The first line (the header) is ignored:
+  * **Manually:** It asks for the QR text and adds the code on the page or in a separate file.
+
+  * **Batch:** If a file named `QR.txt` is found in the same folder, it processes it. It must be a 2 column TSV *(tab-separated values)* file; the first column is the filename, the second the QR code. The first line (the header) is ignored:
 
     Filename | @QR
     :--- | :---
     **`Filename1_1400x400_700x137_5mm_QR.indd`** | FILE1 1400x400_700x137
     **`Filename2_597x517_577x500.5_3mm V4_QR.indd`** | FILE2 597x517_577x500.5
 
-  * **Manually:** otherwise, it asks for the QR text and adds the code on the page or in a separate file.
+  You can use "|" for breaking the lines manually.
 
 * **`ShowFonts.jsx`** shows all fonts used in the current document.
 
@@ -194,6 +196,6 @@ Script | Fn | Script | Fn | Script | Fn
 
 Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. The rest of the code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)).
 
-Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue on Github](https://github.com/pchiorean/Indentz/issues) if you encounter problems or have any suggestions.
+Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • 12 August 2020, 19:39 (UTC).
+README.md • 15 August 2020.

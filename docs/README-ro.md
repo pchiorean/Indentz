@@ -150,16 +150,18 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 * **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus.
 
-* **`QR.jsx`** adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într-un fișier separat. Are două moduri de operare, batch sau manual:
+* **`QR.jsx`** adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într-un fișier separat. Are două moduri de operare, manual sau batch:
 
-  * **Batch:** dacă găsește un fișier numit `QR.txt` în același folder, îl procesează. Trebuie să fie un fișier TSV *(tab-separated values)*; prima coloană e numele fișierului, a doua codul QR. Prima linie (antetul) este ignorată:
+  * **Manual:** Solicită codul și îl adaugă pe pagină sau într-un fișier separat.
+
+  * **Batch:** Dacă găsește un fișier numit `QR.txt` în același folder, îl procesează. Trebuie să fie un fișier TSV *(tab-separated values)*; prima coloană e numele fișierului, a doua codul QR. Prima linie (antetul) este ignorată:
 
     Fișier | @QR
     :--- | :---
     **`Filename1_1400x400_700x137_5mm_QR.indd`** | FILE1 1400x400_700x137
     **`Filename2_597x517_577x500.5_3mm V4_QR.indd`** | FILE2 597x517_577x500.5
 
-  * **Manual:** în caz contrar, solicită codul și îl adaugă pe pagină sau într-un fișier separat.
+  Puteți insera "|" pentru a rupe rândurile manual.
 
 * **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent.
 
@@ -194,6 +196,6 @@ Script | Fn | Script | Fn | Script | Fn
 
 O parte din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Dave Saunders, Marc Autret, Peter Werner, Richard Harrington și Peter Kahrel. Restul codului este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)).
 
-Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau [raportați o problemă pe Github](https://github.com/pchiorean/Indentz/issues) dacă întâmpinați probleme sau aveți sugestii.
+Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau să [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 12 august 2020, 19:39 (UTC).
+README-ro.md • 15 august 2020.
