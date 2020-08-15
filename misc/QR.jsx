@@ -1,7 +1,7 @@
 /*
-	QR code v1.7.0
+	QR code v1.7.1
 	© August 2020, Paul Chiorean
-	Adds a QR code to the current document or saves it in a separate file.
+	Adds a QR code to the current document or to a separate file.
 	If "QR.txt" is found, batch process it.
 */
 
@@ -43,10 +43,10 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 		w.st = w.add("statictext", undefined, undefined, { name: "st" });
 		w.st.text = "Enter QR code text:";
 	var label = w.add('edittext { properties: { name: "label", enterKeySignalsOnChange: true } }');
-		label.preferredSize.width = 400;
+		label.preferredSize.width = 450;
 		label.active = true;
 	var flg_onfile = w.add("checkbox", undefined, undefined, { name: "flg_onfile" });
-		flg_onfile.text = "Save on separate file";
+		flg_onfile.text = "Create separate file";
 	var okcancel = w.add("group", undefined, { name: "okcancel" });
 		okcancel.orientation = "row";
 		okcancel.alignChildren = ["center", "center"];
@@ -60,13 +60,14 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 	var result = w.show();
 	if (!label.text || result == 2) { exit() };
 	var QRLabel = label.text.toUpperCase();
+	var flg_manual = /\|/g.test(QRLabel); // If "|" found, set manual line break flag
 	switch (flg_onfile.value) {
-		case false: QROnPage(QRLabel); break;
+		case false: QROnPage(QRLabel, flg_manual); break;
 		case true: QROnFile(QRLabel); break;
 	}
 }
 
-function QROnPage(QRLabel) { // Put QR on each page
+function QROnPage(QRLabel, flg_manual) { // Put QR on each page
 	var infoLayer = MakeInfoLayer(doc);
 	doc.activeLayer = infoLayer;
 	for (var i = 0; i < doc.pages.length; i++) {
@@ -75,7 +76,7 @@ function QROnPage(QRLabel) { // Put QR on each page
 			if (page.pageItems.item(j).label == "QR") { page.pageItems.item(j).remove(); j-- };
 		var label = page.textFrames.add({
 			itemLayer: infoLayer.name,
-			contents: SplitLines(QRLabel),
+			contents: QRLabel.replace(/\|/g, "\u000A"), // Replace "|" with forcedLineBreak
 			label: "QR",
 			fillColor: "None"
 		});
@@ -93,8 +94,10 @@ function QROnPage(QRLabel) { // Put QR on each page
 			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
-			autoSizingType: AutoSizingTypeEnum.HEIGHT_ONLY,
-			// useNoLineBreaksForAutoSizing: true,
+			autoSizingType: flg_manual ? // If manual LB, set auto
+				AutoSizingTypeEnum.HEIGHT_AND_WIDTH :
+				AutoSizingTypeEnum.HEIGHT_ONLY,
+			useNoLineBreaksForAutoSizing: flg_manual,
 			insetSpacing: [7.08661417322835, 7.08661417322835, 2.83464566929134, 0]
 		}
 		var code = page.rectangles.add({
@@ -107,7 +110,7 @@ function QROnPage(QRLabel) { // Put QR on each page
 			23.4912600737857, page.bounds[1] + 6.23622047244442,
 			56.94007897142, page.bounds[1] + 39.6850393700788
 		];
-		code.createPlainTextQRCode(QRLabel);
+		code.createPlainTextQRCode(QRLabel.replace(/\|/g, ""));
 		code.frameFittingOptions.properties = {
 			fittingAlignment: AnchorPoint.CENTER_ANCHOR,
 			fittingOnEmptyFrame: EmptyFrameFittingOptions.PROPORTIONALLY,
@@ -148,7 +151,7 @@ function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
 	var infoLayer = MakeInfoLayer(target);
 	var label = page.textFrames.add({
 		itemLayer: infoLayer.name,
-		contents: SplitLines(QRLabel),
+		contents: QRLabel.replace(/\|/g, "\u200B"), // Replace "|" with discretionaryLineBreak
 		label: "QR",
 		fillColor: "None"
 	});
@@ -173,7 +176,7 @@ function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
 	var code = page.rectangles.add({ itemLayer: infoLayer.name, label: "QR" });
 	code.absoluteRotationAngle = -90;
 	code.geometricBounds = [16.4046459005572, 0, 73.7007874015747, 56.6929133858268];
-	code.createPlainTextQRCode(QRLabel);
+	code.createPlainTextQRCode(QRLabel.replace(/\|/g, ""));
 	code.frameFittingOptions.properties = {
 		fittingAlignment: AnchorPoint.CENTER_ANCHOR,
 		fittingOnEmptyFrame: EmptyFrameFittingOptions.PROPORTIONALLY,
@@ -216,11 +219,6 @@ function MakeInfoLayer(doc) {
 		} else if (hwLayer.isValid) { infoLayer.move(LocationOptions.before, hwLayer);
 		} else infoLayer.move(LocationOptions.AT_BEGINNING);
 	return infoLayer;
-}
-
-function SplitLines(QRLabel) {
-	// Replace '|' with Zero Width Space (aka Discretionary Line Break)
-	return QRLabel.replace(/\|/g, '\u200B');
 }
 
 function Margins(page) { // Return page margins
