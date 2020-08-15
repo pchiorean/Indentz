@@ -1,6 +1,6 @@
 /*
 	Fit frame to text v1.7.0
-	© July 2020, Paul Chiorean
+	© August 2020, Paul Chiorean
 	Auto-sizes the text frame to the content. 1st paragraph's justification sets
 	horizontal alignment; vertical justification sets vertical alignment.
 */

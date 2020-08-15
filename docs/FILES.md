@@ -38,9 +38,7 @@ Name                               |   Fn  | Description
 **`ScaleToPageSize.jsx`**          |    F5 | Scales the selected objects to the page size
 **`ScaleToPageSizeH.jsx`**         |       | Scales the selected objects to the page top/bottom size
 **`ScaleToPageSizeW.jsx`**         |       | Scales the selected objects to the page left/right size
-**`TextAutosize.jsx`**             |    F6 | Auto-sizes the text frame to the content, center aligned
-**`TextAutosizeL.jsx`**            |   ⌥F6 | Auto-sizes the text frame to the content, left aligned
-**`TextAutosizeR.jsx`**            |   ⌘F6 | Auto-sizes the text frame to the content, right aligned
+**`TextAutosize.jsx`**             |    F6 | Auto-sizes the text frame to the content
 **Print**                                  |
 **`PrepareForPrint.jsx`**          |       | Hides "safe area" layer and moves dielines to separate spreads
 **`SafeArea.jsx`**                 |       | Creates a "safe area" frame, on every page/spread for which margins are defined
@@ -53,7 +51,7 @@ Name                               |   Fn  | Description
 **`_finish.jsx`**                  |  ⌥F10 | Used for quick fixes
 **`HW.jsx`**                       |       | WIP
 **`PageRatios.jsx`**               |       | Calculates the ratio of each page and displays it in the upper left corner
-**`QR.jsx`**                       |       | Adds a QR code to the current document or saves it in a separate file
+**`QR.jsx`**                       |       | Adds a QR code to the current document or to a separate file
 **`ShowFonts.jsx`**                |       | Shows all fonts used in the current document
 **`ShowProfiles.jsx`**             |       | Shows all color profiles available to the document
 **`ShowProperties.jsx`**           |       | Shows all properties and methods of a selected object
