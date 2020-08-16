@@ -4,7 +4,7 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 ## Description
 
-#### **`AlignTo`** series
+### **`AlignTo`** series
 
 Align selected object(s) to the top/bottom/left/right/center of the reference defined by the **Align To** setting. With **`ToggleAlignTo.jsx`** you can toggle the alignment to the item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to default.
 
@@ -12,7 +12,7 @@ Align selected object(s) to the top/bottom/left/right/center of the reference de
 
 The idea is to assign them to the numeric keypad for easy usage, otherwise it doesn't make much sense.
 
-#### **`DocCleanup.jsx`** / **`DocDefaults.jsx`**
+### **`DocCleanup.jsx`** / **`DocDefaults.jsx`**
 
 These are two scripts meant to be used together – one "cleans", the other "prepares the ground".
 
@@ -61,21 +61,21 @@ After which:
   Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
   background, BACKGROUND, BG, HG, Hintergrund | `bg`
 
-#### **`CleanupFonts.jsx`**
+### **`CleanupFonts.jsx`**
 
 Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). The first line (the header) is ignored.
 
 You can use **`ShowFonts.jsx`** to get a tab delimited list of used fonts.
 
-#### **`CleanupLabels.jsx`**
+### **`CleanupLabels.jsx`**
 
 Sometimes objects that have a label attached *(Script Label)* are reused, which potentially creates problems later. **`CleanupLabels.jsx`** deletes all labels from a document.
 
-#### **`CleanupSwatches.jsx`**
+### **`CleanupSwatches.jsx`**
 
 Converts RGB process colors to CMYK, removes duplicates, sets every name in "C= M= Y= K=" form and deletes unused swatches. Spot colors remain unchanged.
 
-#### **`FitToPage`** / **`FitToSpread`** series
+### **`FitToPage`** / **`FitToSpread`** series
 
 Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame and this is resized. If you run the script a second time on such an object, it will restore it.
 
@@ -87,7 +87,7 @@ Resize one or more selected objects, without scaling them. Ordinary frames are s
 
 * **`FitUndo.jsx`**: if you want to restore all objects at once.
 
-#### **`ScaleToPage`** series
+### **`ScaleToPage`** series
 
 These also work with one or more objects, but scale them proportionally, as a block.
 
@@ -95,7 +95,7 @@ These also work with one or more objects, but scale them proportionally, as a bl
 
 * The **`H`** (height) and **`W`** (width) variants scale to the height or width of the page or page margins.
 
-#### **`PageSize`** series
+### **`PageSize`** series
 
 Resize the pages of the document based on the file name, page margins, or selected objects.
 
@@ -111,7 +111,7 @@ Resize the pages of the document based on the file name, page margins, or select
 
 * **`PageMarginsFromSelection.jsx`** sets the page margins to the selected objects.
 
-#### **`TextAutosize`** series
+### **`TextAutosize`** series
 
 Fit the frame to the text and set it to auto-size. You can control where the auto-sizing reference point will be by setting **Paragraph Alignment** for the horizontal axis, and **Vertical Justification** for the vertical axis:
 
@@ -123,7 +123,7 @@ Fit the frame to the text and set it to auto-size. You can control where the aut
 
 **Auto-Sizing Type** will be set to *Height and width* if the text has only one line. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width* (in which case care must be taken that the lines are broken manually).
 
-#### **Print** series
+### **Print** series
 
 These are making several preparations for export and can be run in **`batch_convert.jsx`**.
 
@@ -138,7 +138,22 @@ These are making several preparations for export and can be run in **`batch_conv
 
 The scripts detect alternative layer names like `visible`, `vizibil`, `vis. area` for `safe area`, or `diecut`, `die cut`, `cut lines`, `stanze` for `dielines`.
 
-#### **`ZoomToSelection.jsx`**
+### **`QR.jsx`**
+
+Adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, manually or batch:
+
+* **Manually:** It asks for the QR text and adds the code on the page or in a separate file.
+
+* **Batch:** If a file named `QR.txt` is found in the same folder, it processes it. It must be a 2 column TSV *(tab-separated values)* file; the first column is the filename, the second the QR code. The first line (the header) is ignored:
+
+  Filename | @QR
+  :--- | :---
+  **`Filename1_1400x400_700x137_5mm_QR.indd`** | FILE1 1400x400_700x137
+  **`Filename2_597x517_577x500.5_3mm V4_QR.indd`** | FILE2 597x517_577x500.5
+
+You can use "|" for breaking the lines manually.
+
+### **`ZoomToSelection.jsx`**
 
 Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
@@ -146,22 +161,9 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 * if the cursor is in the text, zooms on the whole frame;
 * without anything selected zooms on the spread.
 
-#### Miscellaneous
+### Miscellaneous
 
 * **`PageRatios.jsx`** calculates the ratio of each page and displays it in the upper left corner.
-
-* **`QR.jsx`** adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, manually or batch:
-
-  * **Manually:** It asks for the QR text and adds the code on the page or in a separate file.
-
-  * **Batch:** If a file named `QR.txt` is found in the same folder, it processes it. It must be a 2 column TSV *(tab-separated values)* file; the first column is the filename, the second the QR code. The first line (the header) is ignored:
-
-    Filename | @QR
-    :--- | :---
-    **`Filename1_1400x400_700x137_5mm_QR.indd`** | FILE1 1400x400_700x137
-    **`Filename2_597x517_577x500.5_3mm V4_QR.indd`** | FILE2 597x517_577x500.5
-
-  You can use "|" for breaking the lines manually.
 
 * **`ShowFonts.jsx`** shows all fonts used in the current document.
 
@@ -184,7 +186,7 @@ Script | Fn | Script | Fn | Script | Fn
 ||||| **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12
 **`ScaleToPageSize.jsx`** | F5 | **`ScaleToPageMargins.jsx`** | ⌥F5
 **`TextAutosize.jsx`** | F6 | **`TextAutosizeL.jsx`** | ⌥F6 | **`TextAutosizeR.jsx`** | ⌘F6
-**`ZoomToSelection.jsx`** | F4 | **`QR.jsx`** | F9
+**`QR.jsx`** | F9 | **`ZoomToSelection.jsx`** | F4
 
 ## Installation
 
@@ -198,4 +200,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • 15 August 2020.
+README.md • 16 August 2020.

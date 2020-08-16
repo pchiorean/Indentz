@@ -4,7 +4,7 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 ## Descriere
 
-#### Seria **`AlignTo`**
+### Seria **`AlignTo`**
 
 Aliniază obiectul selectat la partea de sus/jos/stânga/dreapta/centru a referinței definite de setarea **Align To**. Cu **`ToggleAlignTo.jsx`** puteți comuta alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). **`ResetAlignTo.jsx`** resetează setarea.
 
@@ -12,7 +12,7 @@ Aliniază obiectul selectat la partea de sus/jos/stânga/dreapta/centru a referi
 
 Ideea e să le alocați tastaturii numerice pentru o utilizare ușoară, altfel nu prea au sens.
 
-#### **`DocCleanup.jsx`** / **`DocDefaults.jsx`**
+### **`DocCleanup.jsx`** / **`DocDefaults.jsx`**
 
 Sunt două scripturi gândite să fie folosite împreună – unul "curăță", celălalt "pregătește terenul".
 
@@ -61,21 +61,21 @@ După care:
   Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
   background, BACKGROUND, BG, HG, Hintergrund | `bg`
 
-#### **`CleanupFonts.jsx`**
+### **`CleanupFonts.jsx`**
 
 Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). Prima linie (antetul) este ignorată.
 
 Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă cu fonturile folosite *(tab separated)*.
 
-#### **`CleanupLabels.jsx`**
+### **`CleanupLabels.jsx`**
 
 Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **`CleanupLabels.jsx`** șterge toate etichetele dintr-un document.
 
-#### **`CleanupSwatches.jsx`**
+### **`CleanupSwatches.jsx`**
 
 Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește culorile CMYK după formula "C= M= Y= K=" și șterge culorile nefolosite. Culorile spot rămân neschimbate.
 
-#### Seria **`FitToPage`** / **`FitToSpread`**
+### Seria **`FitToPage`** / **`FitToSpread`**
 
 Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame-urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într-un *clipping frame* și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.
 
@@ -87,7 +87,7 @@ Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Fr
 
 * **`FitUndo.jsx`**: dacă doriți să restaurați toate obiectele simultan.
 
-#### Seria **`ScaleToPage`**
+### Seria **`ScaleToPage`**
 
 Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar.
 
@@ -95,7 +95,7 @@ Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează 
 
 * Variantele **`H`** (height) și **`W`** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
 
-#### Seria **`PageSize`**
+### Seria **`PageSize`**
 
 Redimensionează paginile documentului în funcție de numele fișierului, de marginile paginii, sau de obiectele selectate.
 
@@ -111,7 +111,7 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 * **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
-#### Seria **`TextAutosize`**
+### Seria **`TextAutosize`**
 
 "Strâng" chenarul la text și îi setează dimensionarea automată. Puteți controla unde va fi punctul de referință pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Vertical Justification** pentru axa verticală:
 
@@ -123,7 +123,7 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 **Auto-Sizing Type** va fi setat *Height and width* dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width* (caz în care trebuie avut grijă ca rândurile să fie rupte manual).
 
-#### Seria **Print**
+### Seria **Print**
 
 Fac câteva pregătiri pentru export și pot fi rulate în **`batch_convert.jsx`**.
 
@@ -138,7 +138,22 @@ Fac câteva pregătiri pentru export și pot fi rulate în **`batch_convert.jsx`
 
 Scripturile detectează nume alternative gen `visible`, `vizibil`, `vis. area` pentru `safe area`, sau `diecut`, `die cut`, `cut lines`, `stanze` pentru `dielines`.
 
-#### **`ZoomToSelection.jsx`**
+### **`QR.jsx`**
+
+Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într-un fișier separat. Are două moduri de operare, manual sau batch:
+
+* **Manual:** Solicită codul și îl adaugă pe pagină sau într-un fișier separat.
+
+* **Batch:** Dacă găsește un fișier numit `QR.txt` în același folder, îl procesează. Trebuie să fie un fișier TSV *(tab-separated values)*; prima coloană e numele fișierului, a doua codul QR. Prima linie (antetul) este ignorată:
+
+  Fișier | @QR
+  :--- | :---
+  **`Filename1_1400x400_700x137_5mm_QR.indd`** | FILE1 1400x400_700x137
+  **`Filename2_597x517_577x500.5_3mm V4_QR.indd`** | FILE2 597x517_577x500.5
+
+Puteți insera "|" pentru a rupe rândurile manual.
+
+### **`ZoomToSelection.jsx`**
 
 Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
 
@@ -146,22 +161,9 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 * dacă cursorul e în text, face zoom la întreg cadrul;
 * fără nimic selectat face vizibil întreg spreadul.
 
-#### Diverse
+### Diverse
 
 * **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus.
-
-* **`QR.jsx`** adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într-un fișier separat. Are două moduri de operare, manual sau batch:
-
-  * **Manual:** Solicită codul și îl adaugă pe pagină sau într-un fișier separat.
-
-  * **Batch:** Dacă găsește un fișier numit `QR.txt` în același folder, îl procesează. Trebuie să fie un fișier TSV *(tab-separated values)*; prima coloană e numele fișierului, a doua codul QR. Prima linie (antetul) este ignorată:
-
-    Fișier | @QR
-    :--- | :---
-    **`Filename1_1400x400_700x137_5mm_QR.indd`** | FILE1 1400x400_700x137
-    **`Filename2_597x517_577x500.5_3mm V4_QR.indd`** | FILE2 597x517_577x500.5
-
-  Puteți insera "|" pentru a rupe rândurile manual.
 
 * **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent.
 
@@ -184,7 +186,7 @@ Script | Fn | Script | Fn | Script | Fn
 ||||| **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12
 **`ScaleToPageSize.jsx`** | F5 | **`ScaleToPageMargins.jsx`** | ⌥F5
 **`TextAutosize.jsx`** | F6 | **`TextAutosizeL.jsx`** | ⌥F6 | **`TextAutosizeR.jsx`** | ⌘F6
-**`ZoomToSelection.jsx`** | F4 | **`QR.jsx`** | F9
+**`QR.jsx`** | F9 | **`ZoomToSelection.jsx`** | F4
 
 ## Instalare
 
@@ -198,4 +200,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau să [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 15 august 2020.
+README-ro.md • 16 august 2020.
