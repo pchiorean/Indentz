@@ -11,11 +11,12 @@ app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 // Look for "QR.txt" and select operating mode
 var infoFile = File(doc.filePath + "/QR.txt");
-if (infoFile.open("r")) { BatchQR() } else { ManuallyQR() };
+if (infoFile.open("r")) {
+	if (confirm("Found \'QR.txt\', do you want to batch process it?")) { BatchQR() } else { ManuallyQR() };
+} else { ManuallyQR() };
 
 
 function BatchQR() { // Noninteractive: batch process "QR.txt"
-	if (!confirm("Found \'QR.txt\', process it?")) exit();
 	var line = 0, err = 0;
 	infoFile.readln().split("\t");
 	while (!infoFile.eof) {
@@ -59,8 +60,8 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 		ok.text = "OK";
 	var result = w.show();
 	if (!label.text || result == 2) { exit() };
-	var QRLabel = label.text.toUpperCase();
-	var flg_manual = /\|/g.test(QRLabel); // If "|" found, set manual line break flag
+	var QRLabel = label.text;
+	var flg_manual = /\|/g.test(QRLabel); // If "|" found, set forcedLineBreak flag
 	switch (flg_onfile.value) {
 		case false: QROnPage(QRLabel, flg_manual); break;
 		case true: QROnFile(QRLabel); break;
@@ -68,6 +69,9 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 }
 
 function QROnPage(QRLabel, flg_manual) { // Put QR on each page
+	QRLabel = QRLabel.toUpperCase(); // Make label uppercase
+	QRLabel = QRLabel.replace(/_/g, "_\u200B"); // Add discretionaryLineBreak after "_"
+	QRLabel = QRLabel.replace(/\|/g, "\u000A"); // Replace "|" with forcedLineBreak
 	var infoLayer = MakeInfoLayer(doc);
 	doc.activeLayer = infoLayer;
 	for (var i = 0; i < doc.pages.length; i++) {
@@ -76,7 +80,7 @@ function QROnPage(QRLabel, flg_manual) { // Put QR on each page
 			if (page.pageItems.item(j).label == "QR") { page.pageItems.item(j).remove(); j-- };
 		var label = page.textFrames.add({
 			itemLayer: infoLayer.name,
-			contents: QRLabel.replace(/\|/g, "\u000A"), // Replace "|" with forcedLineBreak
+			contents: QRLabel,
 			label: "QR",
 			fillColor: "None"
 		});
@@ -110,7 +114,7 @@ function QROnPage(QRLabel, flg_manual) { // Put QR on each page
 			23.4912600737857, page.bounds[1] + 6.23622047244442,
 			56.94007897142, page.bounds[1] + 39.6850393700788
 		];
-		code.createPlainTextQRCode(QRLabel.replace(/\|/g, ""));
+	code.createPlainTextQRCode(QRLabel.replace(/[|\u000A\u200B]/g, ""));
 		code.frameFittingOptions.properties = {
 			fittingAlignment: AnchorPoint.CENTER_ANCHOR,
 			fittingOnEmptyFrame: EmptyFrameFittingOptions.PROPORTIONALLY,
@@ -145,13 +149,16 @@ function QROnPage(QRLabel, flg_manual) { // Put QR on each page
 }
 
 function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
+	QRLabel = QRLabel.toUpperCase(); // Make label uppercase
+	QRLabel = QRLabel.replace(/_/g, "_\u200B"); // Add discretionaryLineBreak after "_"
+	QRLabel = QRLabel.replace(/\|/g, "\u200B"); // Replace "|" with discretionaryLineBreak
 	if (!fn) var fn = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd";
 	var target = app.documents.add();
 	var page = target.pages[0];
 	var infoLayer = MakeInfoLayer(target);
 	var label = page.textFrames.add({
 		itemLayer: infoLayer.name,
-		contents: QRLabel.replace(/\|/g, "\u200B"), // Replace "|" with discretionaryLineBreak
+		contents: QRLabel,
 		label: "QR",
 		fillColor: "None"
 	});
@@ -176,7 +183,7 @@ function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
 	var code = page.rectangles.add({ itemLayer: infoLayer.name, label: "QR" });
 	code.absoluteRotationAngle = -90;
 	code.geometricBounds = [16.4046459005572, 0, 73.7007874015747, 56.6929133858268];
-	code.createPlainTextQRCode(QRLabel.replace(/\|/g, ""));
+	code.createPlainTextQRCode(QRLabel.replace(/[|\u000A\u200B]/g, ""));
 	code.frameFittingOptions.properties = {
 		fittingAlignment: AnchorPoint.CENTER_ANCHOR,
 		fittingOnEmptyFrame: EmptyFrameFittingOptions.PROPORTIONALLY,
