@@ -1,5 +1,5 @@
 /*
-	QR code v1.7.1
+	QR code v1.7.2
 	© August 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If "QR.txt" is found, batch process it.
@@ -30,7 +30,8 @@ function BatchQR() { // Noninteractive: batch process "QR.txt"
 	}
 	infoFile.close(); doc.close();
 	var msg = "Batch processed " + line + " records from \'QR.txt\'.";
-	if (err > 0) msg = msg + "\r" + err + " file(s) need attention.";
+	if (err == 1) msg = msg + "\r" + "One file needs attention.";
+	else if (err > 0) msg = msg + "\r" + err + " files need attention.";
 	alert(msg);
 }
 
