@@ -1,5 +1,5 @@
 /*
-	QR code v1.7.2
+	QR code v1.8.0
 	© August 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If "QR.txt" is found, batch process it.
@@ -36,40 +36,52 @@ function BatchQR() { // Noninteractive: batch process "QR.txt"
 }
 
 function ManuallyQR() { // Interactive: ask for QR text and destination
+	/*
+	Backup JSON code for https://scriptui.joonas.me:
+	{"activeId":7,"items":{"item-0":{"id":0,"type":"Dialog","parentId":false,"style":{"enabled":true,"varName":"w","windowType":"Dialog","creationProps":{"su1PanelCoordinates":false,"maximizeButton":false,"minimizeButton":false,"independent":false,"closeButton":true,"borderless":false,"resizeable":false},"text":"Generate QR Code","preferredSize":[0,0],"margins":16,"orientation":"row","spacing":10,"alignChildren":["left","top"]}},"item-2":{"id":2,"type":"EditText","parentId":8,"style":{"enabled":true,"varName":"label","creationProps":{"noecho":false,"readonly":false,"multiline":false,"scrollable":false,"borderless":false,"enterKeySignalsOnChange":true},"softWrap":true,"text":"","justify":"left","preferredSize":[430,0],"alignment":null,"helpTip":"Use '|' for manual line breaks"}},"item-3":{"id":3,"type":"Checkbox","parentId":4,"style":{"enabled":true,"varName":"flg_onfile","text":"Separate file","preferredSize":[0,0],"alignment":null,"helpTip":null,"checked":false}},"item-4":{"id":4,"type":"Group","parentId":0,"style":{"enabled":true,"varName":"okcancel","preferredSize":[0,0],"margins":0,"orientation":"column","spacing":10,"alignChildren":["fill","top"],"alignment":null}},"item-5":{"id":5,"type":"Button","parentId":4,"style":{"enabled":true,"varName":"ok","text":"OK","justify":"center","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-6":{"id":6,"type":"Button","parentId":4,"style":{"enabled":true,"varName":"cancel","text":"Cancel","justify":"center","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-7":{"id":7,"type":"Checkbox","parentId":8,"style":{"enabled":true,"varName":"flg_white","text":"White label text","preferredSize":[0,0],"alignment":null,"helpTip":"Ignored when saving on separate file"}},"item-8":{"id":8,"type":"Panel","parentId":0,"style":{"enabled":true,"varName":"qpanel","creationProps":{"borderStyle":"etched","su1PanelCoordinates":false},"text":"","preferredSize":[0,0],"margins":10,"orientation":"column","spacing":10,"alignChildren":["left","top"],"alignment":null}},"item-9":{"id":9,"type":"StaticText","parentId":8,"style":{"enabled":true,"varName":"st","creationProps":{"truncate":"none","multiline":false,"scrolling":false},"softWrap":false,"text":"Enter QR code text:","justify":"left","preferredSize":[0,0],"alignment":null,"helpTip":null}}},"order":[0,8,9,2,7,4,5,6,3],"settings":{"importJSON":true,"indentSize":false,"cepExport":false,"includeCSSJS":true,"showDialog":false,"functionWrapper":false,"afterEffectsDockable":false,"itemReferenceList":"None"}}
+	*/
 	var w = new Window("dialog");
 		w.text = "Generate QR Code";
-		w.orientation = "column";
-		w.alignChildren = ["left", "top"];
+		w.orientation = "row";
+		w.alignChildren = ["left","top"];
 		w.spacing = 10;
 		w.margins = 16;
-		w.st = w.add("statictext", undefined, undefined, { name: "st" });
-		w.st.text = "Enter QR code text:";
-	var label = w.add('edittext { properties: { name: "label", enterKeySignalsOnChange: true } }');
-		label.preferredSize.width = 450;
+	var qpanel = w.add("panel", undefined, undefined, {name: "qpanel"});
+		qpanel.orientation = "column";
+		qpanel.alignChildren = ["left","top"];
+		qpanel.spacing = 10;
+		qpanel.margins = 10;
+	var st = qpanel.add("statictext", undefined, undefined, {name: "st"});
+		st.text = "Enter QR code text:";
+	var label = qpanel.add('edittext {properties: {name: "label", enterKeySignalsOnChange: true}}');
+		label.helpTip = "Use '|' for manual line breaks";
+		label.preferredSize.width = 430;
 		label.active = true;
-	var flg_onfile = w.add("checkbox", undefined, undefined, { name: "flg_onfile" });
-		flg_onfile.text = "Create separate file";
-	var okcancel = w.add("group", undefined, { name: "okcancel" });
-		okcancel.orientation = "row";
-		okcancel.alignChildren = ["center", "center"];
+	var flg_white = qpanel.add("checkbox", undefined, undefined, {name: "flg_white"});
+		flg_white.text = "White label text";
+		flg_white.helpTip = "Ignored when saving on separate file";
+	var okcancel = w.add("group", undefined, {name: "okcancel"});
+		okcancel.orientation = "column";
+		okcancel.alignChildren = ["fill","top"];
 		okcancel.spacing = 10;
 		okcancel.margins = 0;
-		okcancel.alignment = ["right", "top"];
-	var cancel = okcancel.add("button", undefined, undefined, { name: "cancel" });
-		cancel.text = "Cancel";
-	var ok = okcancel.add("button", undefined, undefined, { name: "ok" });
+	var ok = okcancel.add("button", undefined, undefined, {name: "ok"});
 		ok.text = "OK";
+	var cancel = okcancel.add("button", undefined, undefined, {name: "cancel"});
+		cancel.text = "Cancel";
+	var flg_onfile = okcancel.add("checkbox", undefined, undefined, {name: "flg_onfile"});
+		flg_onfile.text = "Separate file";
 	var result = w.show();
 	if (!label.text || result == 2) { exit() };
 	var QRLabel = label.text;
 	var flg_manual = /\|/g.test(QRLabel); // If "|" found, set forcedLineBreak flag
 	switch (flg_onfile.value) {
-		case false: QROnPage(QRLabel, flg_manual); break;
+		case false: QROnPage(QRLabel, flg_manual, flg_white); break;
 		case true: QROnFile(QRLabel); break;
 	}
 }
 
-function QROnPage(QRLabel, flg_manual) { // Put QR on each page
+function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 	QRLabel = QRLabel.toUpperCase(); // Make label uppercase
 	QRLabel = QRLabel.replace(/_/g, "_\u200B"); // Add discretionaryLineBreak after "_"
 	QRLabel = QRLabel.replace(/\|/g, "\u000A"); // Replace "|" with forcedLineBreak
@@ -92,7 +104,7 @@ function QROnPage(QRLabel, flg_manual) { // Put QR on each page
 			horizontalScale: 92,
 			tracking: -15,
 			hyphenation: false,
-			fillColor: "Black"
+			fillColor: flg_white ? "Paper" : "Black"
 		}
 		label.geometricBounds = [0, page.bounds[1], 23.4912600737857, page.bounds[1] + 62.3622047244095];
 		label.textFramePreferences.properties = {
