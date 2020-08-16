@@ -144,7 +144,7 @@ Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvea
 
 * **Manual:** Solicită codul și îl adaugă pe pagină sau într-un fișier separat.
 
-* **Batch:** Dacă găsește un fișier numit `QR.txt` în același folder, îl procesează. Trebuie să fie un fișier TSV *(tab-separated values)*; prima coloană e numele fișierului, a doua codul QR. Prima linie (antetul) este ignorată:
+* **Batch:** Dacă găsește un fișier numit `QR.txt` în același folder, citește codurile din el. Acesta trebuie să fie un fișier TSV *(tab-separated values)*; prima coloană e numele fișierului, a doua codul QR. Prima linie (antetul) este ignorată:
 
   Fișier | @QR
   :--- | :---

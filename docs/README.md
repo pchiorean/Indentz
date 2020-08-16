@@ -144,7 +144,7 @@ Adds a QR code on the bottom left corner of each page, or saves it in a separate
 
 * **Manually:** It asks for the QR text and adds the code on the page or in a separate file.
 
-* **Batch:** If a file named `QR.txt` is found in the same folder, it processes it. It must be a 2 column TSV *(tab-separated values)* file; the first column is the filename, the second the QR code. The first line (the header) is ignored:
+* **Batch:** If a file named `QR.txt` is found in the same folder, it reads the codes from it. It must be a 2 column TSV *(tab-separated values)* file; the first column is the filename, the second the QR code. The first line (the header) is ignored:
 
   Filename | @QR
   :--- | :---
