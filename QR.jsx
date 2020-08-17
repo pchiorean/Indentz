@@ -75,7 +75,6 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 	if (!label.text || result == 2) { exit() };
 	var QRLabel = label.text;
 	var flg_manual = /\|/g.test(QRLabel); // If "|" found, set forcedLineBreak flag
-	alert(flg_white.value);
 	switch (flg_onfile.value) {
 		case false: QROnPage(QRLabel, flg_manual, flg_white.value); break;
 		case true: QROnFile(QRLabel); break;
