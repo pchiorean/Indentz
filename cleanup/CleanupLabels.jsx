@@ -1,11 +1,15 @@
 /*
-	Cleanup labels v1.0.1
-	© July 2020, Paul Chiorean
+	Cleanup labels v1.1.0
+	© August 2020, Paul Chiorean
 	Removes all labels from the document.
 */
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
-var item, items = doc.allPageItems;
 
+if (doc.selection.length == 0) {
+	var item, items = doc.allPageItems;
+} else {
+	var item, items = doc.selection;
+}
 while (item = items.shift()) item.label = "";
