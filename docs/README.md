@@ -185,8 +185,7 @@ Script | Fn | Script | Fn | Script | Fn
 **`FitToSpread.jsx`** | F12 | **`FitToSpreadMargins.jsx`** | ⌥F12 | **`FitToSpreadBleed.jsx`** | ⇧F12
 ||||| **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12
 **`ScaleToPageSize.jsx`** | F5 | **`ScaleToPageMargins.jsx`** | ⌥F5
-**`TextAutosize.jsx`** | F6 | **`TextAutosizeL.jsx`** | ⌥F6 | **`TextAutosizeR.jsx`** | ⌘F6
-**`QR.jsx`** | F9 | **`ZoomToSelection.jsx`** | F4
+**`TextAutosize.jsx`** | F6 | **`QR.jsx`** | F9 | **`ZoomToSelection.jsx`** | F4
 
 ## Installation
 
