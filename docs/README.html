@@ -17,15 +17,15 @@
 
 <body class="vscode-light">
 	<h1 id="indentz">Indentz</h1>
-	<p>Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run through a shortcut. You can found a configuration suggestion in the <a href="#shortcuts">Shortcuts</a> section. Some are intended to be run in the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
+	<p>Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run through a shortcut (you can found a configuration suggestion in the <a href="#shortcuts">Shortcuts</a> section). Some are intended to be run in the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
 
 	<h2 id="description">Description</h2>
-	<h3 id="alignto-series"><strong><code>AlignTo</code></strong> series</h3>
+	<h3 id="alignto-series"><strong>AlignTo</strong> series</h3>
 	<p>Align selected object(s) to the top/bottom/left/right/center of the reference defined by the <strong>Align To</strong> setting. With <strong><code>ToggleAlignTo.jsx</code></strong> you can toggle the alignment to the item, margins, page or spread (just run it repeatedly). <strong><code>ResetAlignTo.jsx</code></strong> resets the setting to default.</p>
 	<p><img src="img/alignto.png" alt="Align Panel"></p>
 	<p>The idea is to assign them to the numeric keypad for easy usage, otherwise it doesn't make much sense.</p>
 
-	<h3 id="doccleanupjsx--docdefaultsjsx"><strong><code>DocCleanup.jsx</code></strong> / <strong><code>DocDefaults.jsx</code></strong></h3>
+	<h3 id="doccleanupjsx--docdefaultsjsx"><strong>DocCleanup.jsx</strong> / <strong>DocDefaults.jsx</strong></h3>
 	<p>These are two scripts meant to be used together – one &quot;cleans&quot;, the other &quot;prepares the ground&quot;.</p>
 	<p>First, they change several settings according to my preferences:</p>
 	<blockquote>
@@ -58,7 +58,7 @@
 			<p><strong><code>DocCleanup.jsx</code></strong> cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100% &amp; removes all guides.</p>
 		</li>
 		<li>
-			<p><strong><code>DocDefaults.jsx</code></strong> creates several swatches &amp; layers, replaces several missing or unwanted fonts (it runs <strong><code>CleanupFonts.jsx</code></strong>), and sets the page geometry from the filename (it runs <strong><code>PageSizeFromFilename.jsx</code></strong>).</p>
+			<p><strong><code>DocDefaults.jsx</code></strong> creates several swatches &amp; layers, replaces some missing or unwanted fonts (it runs <strong><code>CleanupFonts.jsx</code></strong>), and sets the page geometry from the filename (it runs <strong><code>PageSizeFromFilename.jsx</code></strong>).</p>
 			<p><img src="img/docdefaults.png" alt="Swatches &amp; Layers"></p>
 			<p>The script also merges several similar layers, as follows:</p>
 			<table>
@@ -103,17 +103,17 @@
 		</li>
 	</ul>
 
-	<h3 id="cleanupfontsjsx"><strong><code>CleanupFonts.jsx</code></strong></h3>
+	<h3 id="cleanupfontsjsx"><strong>CleanupFonts.jsx</strong></h3>
 	<p>Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV <em>(tab-separated values)</em> file with the same name as the script (<a href="../cleanup/CleanupFonts.txt"><strong><code>CleanupFonts.txt</code></strong></a>). The first line (the header) is ignored. </p>
 	<p>You can use <strong><code>ShowFonts.jsx</code></strong> to get a tab delimited list of used fonts.</p>
 
-	<h3 id="cleanuplabelsjsx"><strong><code>CleanupLabels.jsx</code></strong></h3>
-	<p>Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which potentially creates problems later. <strong><code>CleanupLabels.jsx</code></strong> deletes all labels from a document.</p>
+	<h3 id="cleanuplabelsjsx"><strong>CleanupLabels.jsx</strong></h3>
+	<p>Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which may create problems later. <strong><code>CleanupLabels.jsx</code></strong> deletes labels from a document.</p>
 
-	<h3 id="cleanupswatchesjsx"><strong><code>CleanupSwatches.jsx</code></strong></h3>
+	<h3 id="cleanupswatchesjsx"><strong>CleanupSwatches.jsx</strong></h3>
 	<p>Converts RGB process colors to CMYK, removes duplicates, sets every name in &quot;C= M= Y= K=&quot; form and deletes unused swatches. Spot colors remain unchanged.</p>
 
-	<h3 id="fittopage--fittospread-series"><strong><code>FitToPage</code></strong> / <strong><code>FitToSpread</code></strong> series</h3>
+	<h3 id="fittopage--fittospread-series"><strong>FitToPage</strong> / <strong>FitToSpread</strong> series</h3>
 	<p>Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame and this is resized. If you run the script a second time on such an object, it will restore it.</p>
 	<ul>
 		<li>
@@ -130,7 +130,7 @@
 		</li>
 	</ul>
 
-	<h3 id="scaletopage-series"><strong><code>ScaleToPage</code></strong> series</h3>
+	<h3 id="scaletopage-series"><strong>ScaleToPage</strong> series</h3>
 	<p>These also work with one or more objects, but scale them proportionally, as a block.</p>
 	<ul>
 		<li>
@@ -141,7 +141,7 @@
 		</li>
 	</ul>
 
-	<h3 id="pagesize-series"><strong><code>PageSize</code></strong> series</h3>
+	<h3 id="pagesize-series"><strong>PageSize</strong> series</h3>
 	<p>Resize the pages of the document based on the file name, page margins, or selected objects.</p>
 	<ul>
 		<li>
@@ -164,7 +164,7 @@
 		</li>
 	</ul>
 
-	<h3 id="textautosizejsx"><strong><code>TextAutosize.jsx</code></strong></h3>
+	<h3 id="textautosizejsx"><strong>TextAutosize.jsx</strong></h3>
 	<p>Fits the frame to the text and sets it to auto-size. You can control where the auto-sizing reference point will be by setting <strong>Paragraph Alignment</strong> for the horizontal axis, and <strong>Vertical Justification</strong> for the vertical axis:</p>
 	<table>
 		<thead>
@@ -218,11 +218,11 @@
 	</ul>
 	<p>The scripts detect alternative layer names like <code>visible</code>, <code>vizibil</code>, <code>vis. area</code> for <code>safe area</code>, or <code>diecut</code>, <code>die cut</code>, <code>cut lines</code>, <code>stanze</code> for <code>dielines</code>.</p>
 
-	<h3 id="qrjsx"><strong><code>QR.jsx</code></strong></h3>
-	<p>Adds a QR code on the bottom left corner of each page, or saves it in aseparate file. It has two operating modes, manually or batch:</p>
+	<h3 id="qrjsx"><strong>QR.jsx</strong></h3>
+	<p>Adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, manually or batch:</p>
 	<ul>
 		<li>
-			<p><strong>Manually:</strong> It asks for the QR text and adds the code on the page or in a separatefile.</p>
+			<p><strong>Manually:</strong> It asks for the QR text and adds the code on the page or in a separate file.</p>
 		</li>
 		<li>
 			<p><strong>Batch:</strong> If a file named <code>QR.txt</code> is found in the same folder, it reads the codes from it. It must be a 2 column TSV <em>(tab-separated values)</em> file; the first column is the filename, the second the QR code. The first line (the header) is ignored:</p>
@@ -250,7 +250,7 @@
 	</ul>
 	<p>You can use &quot;|&quot; for breaking the lines manually.</p>
 
-	<h3 id="zoomtoselectionjsx"><strong><code>ZoomToSelection.jsx</code></strong></h3>
+	<h3 id="zoomtoselectionjsx"><strong>ZoomToSelection.jsx</strong></h3>
 	<p>Similar to <strong>Fit Selection in Window</strong> (⌥⌘=), but with some improvements:</p>
 	<ul>
 		<li>brings the selection a little closer;</li>

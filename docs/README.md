@@ -1,10 +1,10 @@
 # Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run through a shortcut. You can found a configuration suggestion in the [Shortcuts](#shortcuts) section. Some are intended to be run in the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
+Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run through a shortcut (you can found a configuration suggestion in the [Shortcuts](#shortcuts) section). Some are intended to be run in the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
 
 ## Description
 
-### **`AlignTo`** series
+### **AlignTo** series
 
 Align selected object(s) to the top/bottom/left/right/center of the reference defined by the **Align To** setting. With **`ToggleAlignTo.jsx`** you can toggle the alignment to the item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to default.
 
@@ -12,7 +12,7 @@ Align selected object(s) to the top/bottom/left/right/center of the reference de
 
 The idea is to assign them to the numeric keypad for easy usage, otherwise it doesn't make much sense.
 
-### **`DocCleanup.jsx`** / **`DocDefaults.jsx`**
+### **DocCleanup.jsx** / **DocDefaults.jsx**
 
 These are two scripts meant to be used together – one "cleans", the other "prepares the ground".
 
@@ -45,7 +45,7 @@ After which:
 
 * **`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100% & removes all guides.
 
-* **`DocDefaults.jsx`** creates several swatches & layers, replaces several missing or unwanted fonts (it runs **`CleanupFonts.jsx`**), and sets the page geometry from the filename (it runs **`PageSizeFromFilename.jsx`**).
+* **`DocDefaults.jsx`** creates several swatches & layers, replaces some missing or unwanted fonts (it runs **`CleanupFonts.jsx`**), and sets the page geometry from the filename (it runs **`PageSizeFromFilename.jsx`**).
 
   ![Swatches & Layers](img/docdefaults.png)
 
@@ -61,21 +61,21 @@ After which:
   Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
   background, BACKGROUND, BG, HG, Hintergrund | `bg`
 
-### **`CleanupFonts.jsx`**
+### **CleanupFonts.jsx**
 
 Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). The first line (the header) is ignored.
 
 You can use **`ShowFonts.jsx`** to get a tab delimited list of used fonts.
 
-### **`CleanupLabels.jsx`**
+### **CleanupLabels.jsx**
 
-Sometimes objects that have a label attached *(Script Label)* are reused, which potentially creates problems later. **`CleanupLabels.jsx`** deletes all labels from a document.
+Sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. **`CleanupLabels.jsx`** deletes labels from a document.
 
-### **`CleanupSwatches.jsx`**
+### **CleanupSwatches.jsx**
 
 Converts RGB process colors to CMYK, removes duplicates, sets every name in "C= M= Y= K=" form and deletes unused swatches. Spot colors remain unchanged.
 
-### **`FitToPage`** / **`FitToSpread`** series
+### **FitToPage** / **FitToSpread** series
 
 Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame and this is resized. If you run the script a second time on such an object, it will restore it.
 
@@ -87,7 +87,7 @@ Resize one or more selected objects, without scaling them. Ordinary frames are s
 
 * **`FitUndo.jsx`**: if you want to restore all objects at once.
 
-### **`ScaleToPage`** series
+### **ScaleToPage** series
 
 These also work with one or more objects, but scale them proportionally, as a block.
 
@@ -95,7 +95,7 @@ These also work with one or more objects, but scale them proportionally, as a bl
 
 * The **`H`** (height) and **`W`** (width) variants scale to the height or width of the page or page margins.
 
-### **`PageSize`** series
+### **PageSize** series
 
 Resize the pages of the document based on the file name, page margins, or selected objects.
 
@@ -111,7 +111,7 @@ Resize the pages of the document based on the file name, page margins, or select
 
 * **`PageMarginsFromSelection.jsx`** sets the page margins to the selected objects.
 
-### **`TextAutosize.jsx`**
+### **TextAutosize.jsx**
 
 Fits the frame to the text and sets it to auto-size. You can control where the auto-sizing reference point will be by setting **Paragraph Alignment** for the horizontal axis, and **Vertical Justification** for the vertical axis:
 
@@ -138,7 +138,7 @@ These are making several preparations for export and can be run in **`batch_conv
 
 The scripts detect alternative layer names like `visible`, `vizibil`, `vis. area` for `safe area`, or `diecut`, `die cut`, `cut lines`, `stanze` for `dielines`.
 
-### **`QR.jsx`**
+### **QR.jsx**
 
 Adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, manually or batch:
 
@@ -153,7 +153,7 @@ Adds a QR code on the bottom left corner of each page, or saves it in a separate
 
 You can use "|" for breaking the lines manually.
 
-### **`ZoomToSelection.jsx`**
+### **ZoomToSelection.jsx**
 
 Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
