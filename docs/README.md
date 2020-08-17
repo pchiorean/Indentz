@@ -111,9 +111,9 @@ Resize the pages of the document based on the file name, page margins, or select
 
 * **`PageMarginsFromSelection.jsx`** sets the page margins to the selected objects.
 
-### **`TextAutosize`** series
+### **`TextAutosize.jsx`**
 
-Fit the frame to the text and set it to auto-size. You can control where the auto-sizing reference point will be by setting **Paragraph Alignment** for the horizontal axis, and **Vertical Justification** for the vertical axis:
+Fits the frame to the text and sets it to auto-size. You can control where the auto-sizing reference point will be by setting **Paragraph Alignment** for the horizontal axis, and **Vertical Justification** for the vertical axis:
 
   **Vertical Justification** | **¶ Align left** | **¶ Align center** | **¶ Align right**
   :--- | :---: | :---: | :---:
@@ -200,4 +200,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • 16 August 2020.
+README.md • 17 August 2020.

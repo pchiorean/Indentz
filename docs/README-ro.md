@@ -111,9 +111,9 @@ Redimensionează paginile documentului în funcție de numele fișierului, de ma
 
 * **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
-### Seria **`TextAutosize`**
+### **`TextAutosize.jsx`**
 
-"Strâng" chenarul la text și îi setează dimensionarea automată. Puteți controla unde va fi punctul de referință pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Vertical Justification** pentru axa verticală:
+"Strânge" chenarul la text și îi setează dimensionarea automată. Puteți controla unde va fi punctul de referință pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Vertical Justification** pentru axa verticală:
 
   **Vertical Justification** | **¶ Align left** | **¶ Align center** | **¶ Align right**
   :--- | :---: | :---: | :---:
@@ -200,4 +200,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau să [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 16 august 2020.
+README-ro.md • 17 august 2020.
