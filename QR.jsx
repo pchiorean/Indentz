@@ -1,5 +1,5 @@
 /*
-	QR code v1.8.1
+	QR code v1.9.0
 	© August 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If "QR.txt" is found, batch process it.
@@ -36,46 +36,38 @@ function BatchQR() { // Noninteractive: batch process "QR.txt"
 }
 
 function ManuallyQR() { // Interactive: ask for QR text and destination
-	/*
+/*
 	Backup JSON code for https://scriptui.joonas.me:
-	{"activeId":7,"items":{"item-0":{"id":0,"type":"Dialog","parentId":false,"style":{"enabled":true,"varName":"w","windowType":"Dialog","creationProps":{"su1PanelCoordinates":false,"maximizeButton":false,"minimizeButton":false,"independent":false,"closeButton":true,"borderless":false,"resizeable":false},"text":"Generate QR Code","preferredSize":[0,0],"margins":16,"orientation":"row","spacing":10,"alignChildren":["left","top"]}},"item-2":{"id":2,"type":"EditText","parentId":8,"style":{"enabled":true,"varName":"label","creationProps":{"noecho":false,"readonly":false,"multiline":false,"scrollable":false,"borderless":false,"enterKeySignalsOnChange":true},"softWrap":true,"text":"","justify":"left","preferredSize":[430,0],"alignment":null,"helpTip":"Use '|' for manual line breaks"}},"item-3":{"id":3,"type":"Checkbox","parentId":4,"style":{"enabled":true,"varName":"flg_onfile","text":"Separate file","preferredSize":[0,0],"alignment":null,"helpTip":null,"checked":false}},"item-4":{"id":4,"type":"Group","parentId":0,"style":{"enabled":true,"varName":"okcancel","preferredSize":[0,0],"margins":0,"orientation":"column","spacing":10,"alignChildren":["fill","top"],"alignment":null}},"item-5":{"id":5,"type":"Button","parentId":4,"style":{"enabled":true,"varName":"ok","text":"OK","justify":"center","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-6":{"id":6,"type":"Button","parentId":4,"style":{"enabled":true,"varName":"cancel","text":"Cancel","justify":"center","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-7":{"id":7,"type":"Checkbox","parentId":8,"style":{"enabled":true,"varName":"flg_white","text":"White label text","preferredSize":[0,0],"alignment":null,"helpTip":"Ignored when saving on separate file"}},"item-8":{"id":8,"type":"Panel","parentId":0,"style":{"enabled":true,"varName":"qpanel","creationProps":{"borderStyle":"etched","su1PanelCoordinates":false},"text":"","preferredSize":[0,0],"margins":10,"orientation":"column","spacing":10,"alignChildren":["left","top"],"alignment":null}},"item-9":{"id":9,"type":"StaticText","parentId":8,"style":{"enabled":true,"varName":"st","creationProps":{"truncate":"none","multiline":false,"scrolling":false},"softWrap":false,"text":"Enter QR code text:","justify":"left","preferredSize":[0,0],"alignment":null,"helpTip":null}}},"order":[0,8,9,2,7,4,5,6,3],"settings":{"importJSON":true,"indentSize":false,"cepExport":false,"includeCSSJS":true,"showDialog":false,"functionWrapper":false,"afterEffectsDockable":false,"itemReferenceList":"None"}}
+	{"activeId":7,"items":{"item-0":{"id":0,"type":"Dialog","parentId":false,"style":{"enabled":true,"varName":"w","windowType":"Dialog","creationProps":{"su1PanelCoordinates":false,"maximizeButton":false,"minimizeButton":false,"independent":false,"closeButton":true,"borderless":false,"resizeable":false},"text":"Generate QR Code","preferredSize":[0,0],"margins":16,"orientation":"row","spacing":10,"alignChildren":["left","top"]}},"item-2":{"id":2,"type":"EditText","parentId":8,"style":{"enabled":true,"varName":"label","creationProps":{"noecho":false,"readonly":false,"multiline":false,"scrollable":false,"borderless":false,"enterKeySignalsOnChange":true},"softWrap":true,"text":"","justify":"left","preferredSize":[430,0],"alignment":null,"helpTip":"Use '|' for manual line breaks"}},"item-4":{"id":4,"type":"Group","parentId":0,"style":{"enabled":true,"varName":"buttons","preferredSize":[0,0],"margins":0,"orientation":"column","spacing":10,"alignChildren":["fill","top"],"alignment":null}},"item-5":{"id":5,"type":"Button","parentId":4,"style":{"enabled":true,"varName":"ok","text":"On page","justify":"center","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-6":{"id":6,"type":"Button","parentId":4,"style":{"enabled":true,"varName":"cancel","text":"Cancel","justify":"center","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-7":{"id":7,"type":"Checkbox","parentId":8,"style":{"enabled":true,"varName":"flg_white","text":"White label text","preferredSize":[0,0],"alignment":null,"helpTip":"Ignored when saving on separate file"}},"item-8":{"id":8,"type":"Panel","parentId":0,"style":{"enabled":true,"varName":"qpanel","creationProps":{"borderStyle":"etched","su1PanelCoordinates":false},"text":"","preferredSize":[0,0],"margins":10,"orientation":"column","spacing":10,"alignChildren":["left","top"],"alignment":null}},"item-9":{"id":9,"type":"StaticText","parentId":8,"style":{"enabled":true,"varName":"st","creationProps":{"truncate":"none","multiline":false,"scrolling":false},"softWrap":false,"text":"Enter QR code text:","justify":"left","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-10":{"id":10,"type":"Button","parentId":4,"style":{"enabled":true,"varName":"onfile","text":"On file","justify":"center","preferredSize":[0,0],"alignment":null,"helpTip":null}}},"order":[0,8,9,2,7,4,5,10,6],"settings":{"importJSON":true,"indentSize":false,"cepExport":false,"includeCSSJS":true,"showDialog":false,"functionWrapper":false,"afterEffectsDockable":false,"itemReferenceList":"None"}}
 	*/
+	var flg_onfile;
 	var w = new Window("dialog");
 		w.text = "Generate QR Code";
 		w.orientation = "row";
 		w.alignChildren = ["left","top"];
-		w.spacing = 10;
-		w.margins = 16;
 	var qpanel = w.add("panel", undefined, undefined, {name: "qpanel"});
 		qpanel.orientation = "column";
 		qpanel.alignChildren = ["left","top"];
-		qpanel.spacing = 10;
-		qpanel.margins = 10;
-	var st = qpanel.add("statictext", undefined, undefined, {name: "st"});
-		st.text = "Enter QR code text:";
+	qpanel.add("statictext", undefined, "Enter QR code text:", {name: "st"});
 	var label = qpanel.add('edittext {properties: {name: "label", enterKeySignalsOnChange: true}}');
 		label.helpTip = "Use '|' for manual line breaks";
 		label.preferredSize.width = 430;
 		label.active = true;
-	var flg_white = qpanel.add("checkbox", undefined, undefined, {name: "flg_white"});
-		flg_white.text = "White label text";
+	var flg_white = qpanel.add("checkbox", undefined, "White text", {name: "flg_white"});
 		flg_white.helpTip = "Ignored when saving on separate file";
-	var okcancel = w.add("group", undefined, {name: "okcancel"});
-		okcancel.orientation = "column";
-		okcancel.alignChildren = ["fill","top"];
-		okcancel.spacing = 10;
-		okcancel.margins = 0;
-	var ok = okcancel.add("button", undefined, undefined, {name: "ok"});
-		ok.text = "OK";
-	var cancel = okcancel.add("button", undefined, undefined, {name: "cancel"});
-		cancel.text = "Cancel";
-	var flg_onfile = okcancel.add("checkbox", undefined, undefined, {name: "flg_onfile"});
-		flg_onfile.text = "Separate file";
+	var buttons = w.add("group", undefined, {name: "buttons"});
+		buttons.orientation = "column";
+		buttons.alignChildren = ["fill","top"];
+	var onpage = buttons.add("button", undefined, "On page", {name: "ok"});
+	var onfile = buttons.add("button", undefined, "On file", {name: "onfile"});
+	buttons.add("button", undefined, "Cancel", {name: "cancel"});
+	onpage.onClick = function() { flg_onfile = false; w.close() };
+	onfile.onClick = function() { flg_onfile = true; w.close() };
 	var result = w.show();
 	if (!label.text || result == 2) { exit() };
 	var QRLabel = label.text;
 	var flg_manual = /\|/g.test(QRLabel); // If "|" found, set forcedLineBreak flag
-	switch (flg_onfile.value) {
+	switch (flg_onfile) {
 		case false: QROnPage(QRLabel, flg_manual, flg_white.value); break;
 		case true: QROnFile(QRLabel); break;
 	}
@@ -111,7 +103,7 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
-			autoSizingType: flg_manual ? // If manual LB, set auto
+			autoSizingType: (flg_manual || label.lines.length == 1) ? // If manual LB, set auto
 				AutoSizingTypeEnum.HEIGHT_AND_WIDTH :
 				AutoSizingTypeEnum.HEIGHT_ONLY,
 			useNoLineBreaksForAutoSizing: flg_manual,
@@ -244,8 +236,10 @@ function MakeInfoLayer(doc) {
 function Margins(page) { // Return page margins
 	return {
 		top: page.marginPreferences.top,
-		left: (page.side == PageSideOptions.LEFT_HAND) ? page.marginPreferences.right : page.marginPreferences.left,
+		left: (page.side == PageSideOptions.LEFT_HAND) ?
+			page.marginPreferences.right : page.marginPreferences.left,
 		bottom: page.marginPreferences.bottom,
-		right: (page.side == PageSideOptions.LEFT_HAND) ? page.marginPreferences.left : page.marginPreferences.right
+		right: (page.side == PageSideOptions.LEFT_HAND) ?
+			page.marginPreferences.left : page.marginPreferences.right
 	}
 }
