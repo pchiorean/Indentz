@@ -1,5 +1,5 @@
 /*
-	QR code v1.8.0
+	QR code v1.8.1
 	© August 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If "QR.txt" is found, batch process it.
@@ -75,8 +75,9 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 	if (!label.text || result == 2) { exit() };
 	var QRLabel = label.text;
 	var flg_manual = /\|/g.test(QRLabel); // If "|" found, set forcedLineBreak flag
+	alert(flg_white.value);
 	switch (flg_onfile.value) {
-		case false: QROnPage(QRLabel, flg_manual, flg_white); break;
+		case false: QROnPage(QRLabel, flg_manual, flg_white.value); break;
 		case true: QROnFile(QRLabel); break;
 	}
 }
