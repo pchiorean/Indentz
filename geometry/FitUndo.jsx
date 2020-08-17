@@ -1,26 +1,23 @@
 /*
-	Undo fitting v1.1.0
-	© July 2020, Paul Chiorean
+	Undo fitting v1.2.0
+	© August 2020, Paul Chiorean
 	Restores objects clipped in "\<clip group\>" by the "fit" scripts.
 */
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
-var sel = doc.selection;
-var scope = sel.length == 0 ? doc.pageItems : sel;
-for (var i = 0; i < scope.length; i++) {
-	var obj = scope[i], page;
-	if (page = obj.parentPage) UndoFit(obj);
-}
+var item, items = doc.selection.length == 0 ?
+	doc.pageItems.everyItem().getElements() : doc.selection;
+while (item = items.shift()) UndoFit(item);
 
 
-function UndoFit(obj) { // Undo if already clipped
-	if ((obj.label == "<clip group>" || obj.name == "<clip group>") &&
-		obj.pageItems.length == 0 ) { obj.label = ""; obj.name = "" };
-	if (obj.label == "<clip group>" && obj.pageItems[0].isValid) {
-		var objD = obj.pageItems[0].duplicate();
-		objD.sendToBack(obj); obj.remove(); app.select(objD);
+function UndoFit(item) { // Undo if already clipped
+	if ((item.label == "<clip group>" || item.name == "<clip group>") &&
+		item.pageItems.length == 0 ) { item.label = ""; item.name = "" };
+	if (item.label == "<clip group>" && item.pageItems[0].isValid) {
+		var itemD = item.pageItems[0].duplicate();
+		itemD.sendToBack(item); item.remove(); app.select(itemD);
 		return;
 	}
 }
