@@ -1,6 +1,6 @@
 /*
-	HW 0.4.0-alpha
-	© July 2020, Paul Chiorean
+	HW 0.4.1-alpha
+	© August 2020, Paul Chiorean
 */
 
 if (app.documents.length == 0) exit();
@@ -29,6 +29,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 	var j, guide;
 	for (j = (guide = doc.pages[i].guides.everyItem().getElements()).length; j--;
 		(guide[j].label == "HW") && guide[j].remove());
+	doc.activeLayer = hwLayer;
 	doc.pages[i].guides.add(undefined, {
 		itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
 		orientation: HorizontalOrVertical.horizontal,
