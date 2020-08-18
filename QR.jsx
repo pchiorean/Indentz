@@ -1,5 +1,5 @@
 /*
-	QR code v1.9.0
+	QR code v1.9.1
 	© August 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If "QR.txt" is found, batch process it.
@@ -98,7 +98,7 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 			hyphenation: false,
 			fillColor: flg_white ? "Paper" : "Black"
 		}
-		label.geometricBounds = [0, page.bounds[1], 23.4912600737857, page.bounds[1] + 62.3622047244095];
+		label.geometricBounds = [0, page.bounds[1], 24.9085829084314, page.bounds[1] + 61.0988746102401];
 		label.textFramePreferences.properties = {
 			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
@@ -107,7 +107,7 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 				AutoSizingTypeEnum.HEIGHT_AND_WIDTH :
 				AutoSizingTypeEnum.HEIGHT_ONLY,
 			useNoLineBreaksForAutoSizing: flg_manual,
-			insetSpacing: [7.08661417322835, 7.08661417322835, 2.83464566929134, 0]
+			insetSpacing: [8.50393700787402, 7.08661417322835, 2.83464566929134, 0]
 		}
 		var code = page.rectangles.add({
 			itemLayer: infoLayer.name,
@@ -116,8 +116,8 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 		});
 		code.absoluteRotationAngle = -90;
 		code.geometricBounds = [
-			23.4912600737857, page.bounds[1] + 6.23622047244442,
-			56.94007897142, page.bounds[1] + 39.6850393700788
+			24.9085829084314, page.bounds[1] + 6.51968503937007,
+			58.3574018060656, page.bounds[1] + 39.9685039370045
 		];
 	code.createPlainTextQRCode(QRLabel.replace(/[|\u000A\u200B]/g, ""));
 		code.frameFittingOptions.properties = {
