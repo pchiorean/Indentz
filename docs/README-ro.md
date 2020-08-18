@@ -57,7 +57,7 @@ După care:
   cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze | `dielines`
   UV, Varnish | `varnish`
   HW Logo, Logo HW, hw, WH, WHW | `HW`
-  Copy, Text, TEXT, TEXTES, TXT, Type | `type`
+  Copy, Text, TEXT, TEXTES, TXT, Type | `text and logos`
   Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
   background, BACKGROUND, BG, HG, Hintergrund | `bg`
 
@@ -199,4 +199,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau să [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 17 august 2020.
+README-ro.md • 18 august 2020.

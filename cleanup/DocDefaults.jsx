@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v1.14.1
+	Default layers and more v1.15.0
 	© August 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -15,7 +15,7 @@ const uvLayerName = "varnish";
 const guidesLayerName = "guides";
 const infoLayerName = "info";
 const hwLayerName = "HW";
-const txtLayerName = "type";
+const txtLayerName = "text and logos";
 const artLayerName = "artwork";
 const bgLayerName = "bg";
 // Swatch names
@@ -129,6 +129,7 @@ const safeSwatchName = "Safe area";
 			case "TEXTES":
 			case "txt":
 			case "TXT":
+			case "type":
 			case "Type":
 				try { doc.layers.add({ name: txtLayerName }) } catch (_) {};
 				txtLayer.merge(docLayer); i--;

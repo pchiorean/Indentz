@@ -57,7 +57,7 @@ After which:
   cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze | `dielines`
   UV, Varnish | `varnish`
   HW Logo, Logo HW, hw, WH, WHW | `HW`
-  Copy, Text, TEXT, TEXTES, TXT, Type | `type`
+  Copy, Text, TEXT, TEXTES, TXT, Type | `text and logos`
   Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
   background, BACKGROUND, BG, HG, Hintergrund | `bg`
 
@@ -199,4 +199,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • 17 August 2020.
+README.md • 18 August 2020.
