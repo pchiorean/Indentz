@@ -23,11 +23,11 @@
 	<h3 id="seria-alignto">Seria <strong>AlignTo</strong></h3>
 	<p>Aliniază obiectul selectat la partea de sus/jos/stânga/dreapta/centru a referinței definite de setarea <strong>Align To</strong>. Cu margini, pagină sau spread (rulați scriptul în mod repetat). <strong><code>ResetAlignTo.jsx</code></strong> resetează setarea.</p>
 	<p><img src="img/alignto.png" alt="Align Panel"></p>
-	<p>Ideea e să le alocați tastaturii numerice pentru o utilizare ușoară, altfel nu prea au sens.</p>
+	<p>Ideal e să le alocați tastaturii numerice pentru o utilizare ușoară (v. [Shortcuts](#shortcuts)).</p>
 
 	<h3 id="doccleanupjsx--docdefaultsjsx"><strong>DocCleanup.jsx</strong> / <strong>DocDefaults.jsx</strong></h3>
 	<p>Sunt două scripturi gândite să fie folosite împreună – unul &quot;curăță&quot;, celălalt &quot;pregătește terenul&quot;.</p>
-	<p>Mai întâi schimbă câteva setări după preferințele mele:</p>
+	<p>Ambele schimbă câteva setări după preferințele mele:</p>
 	<blockquote>
 		<p><strong>Rulers:</strong> Reset Zero Point <br>
 			<strong>Rulers Units:</strong> Millimeters <br>
@@ -52,11 +52,7 @@
 			<strong>Type Options:</strong> Use Typographer's Quotes <br>
 			<strong>Type Options:</strong> Apply Leading to Entire Paragraphs</p>
 	</blockquote>
-	<p>După care:</p>
 	<ul>
-		<li>
-			<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.</p>
-		</li>
 		<li>
 			<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează <strong><code>CleanupFonts.jsx</code></strong>), și stabilește geometria paginii din numele fișierului (rulează <strong><code>PageSizeFromFilename.jsx</code></strong>).</p>
 			<p><img src="img/docdefaults.png" alt="Culori și layere"></p>
@@ -100,6 +96,9 @@
 					</tr>
 				</tbody>
 			</table>
+		</li>
+		<li>
+			<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.</p>
 		</li>
 	</ul>
 
@@ -274,6 +273,7 @@
 	</ul>
 
 	<h2 id="shortcuts">Shortcut-uri</h2>
+	<p>Rularea unui script folosit frecvent din panoul <strong>Scripts</strong> poate deveni obositoare, deoarece trebuie să îl localizați, apoi să faceți dublu clic pe script. Puteți face asta instantaneu, atribuindu-i o scurtătură din <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>. Configurația mea este următoarea:</p>
 	<table>
 		<thead>
 			<tr>
@@ -387,7 +387,7 @@
 	<h2 id="licență">Licență</h2>
 	<p>O parte din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Dave Saunders, Marc Autret, Peter Werner, Richard Harrington și Peter Kahrel. Restul codului este publicat sub licența MIT (<a href="../LICENSE.txt">LICENSE.txt</a>).</p>
 	<p>Vă rog să-mi trimiteți un e-mail la &lt;jpeg AT basement.ro&gt; sau să <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
-	<p>README-ro.md • 18 august 2020.</p>
+	<p>README-ro.md • 19 august 2020.</p>
 </body>
 
 </html>

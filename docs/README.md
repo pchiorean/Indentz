@@ -10,13 +10,13 @@ Align selected object(s) to the top/bottom/left/right/center of the reference de
 
 ![Align Panel](img/alignto.png)
 
-The idea is to assign them to the numeric keypad for easy usage, otherwise it doesn't make much sense.
+Ideally, they are assigned to the numeric keypad for easy use (see [Shortcuts](#shortcuts)).
 
 ### **DocCleanup.jsx** / **DocDefaults.jsx**
 
 These are two scripts meant to be used together – one "cleans", the other "prepares the ground".
 
-First, they change several settings according to my preferences:
+Both change several settings according to my preferences:
 
 > **Rulers:** Reset Zero Point \
 > **Rulers Units:** Millimeters \
@@ -41,10 +41,6 @@ First, they change several settings according to my preferences:
 > **Type Options:** Use Typographer's Quotes \
 > **Type Options:** Apply Leading to Entire Paragraphs
 
-After which:
-
-* **`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100% & removes all guides.
-
 * **`DocDefaults.jsx`** creates several swatches & layers, replaces some missing or unwanted fonts (it runs **`CleanupFonts.jsx`**), and sets the page geometry from the filename (it runs **`PageSizeFromFilename.jsx`**).
 
   ![Swatches & Layers](img/docdefaults.png)
@@ -60,6 +56,8 @@ After which:
   Copy, Text, TEXT, TEXTES, TXT, Type | `text and logos`
   Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
   background, BACKGROUND, BG, HG, Hintergrund | `bg`
+
+* **`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100% & removes all guides.
 
 ### **CleanupFonts.jsx**
 
@@ -77,7 +75,7 @@ Converts RGB process colors to CMYK, removes duplicates, sets every name in "C= 
 
 ### **FitToPage** / **FitToSpread** series
 
-Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame and this is resized. If you run the script a second time on such an object, it will restore it.
+Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. If you run the script a second time on such an object, it will restore it.
 
 * **`FitToPage.jsx`** / **`FitToPageMargins.jsx`** / **`FitToPageBleed.jsx`** constrain the size of an object to the size of the page, the page margins, or the page bleed.
 
@@ -173,6 +171,8 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
 ## Shortcuts
 
+Running a frequently used script from the **Scripts** panel can become annoying, since you have to locate it, then double-click the script. You can make the process instantaneous by assigning a keyboard shortcut to it from **Edit > Keyboard Shortcuts... > Product Area > Scripts**. My configuration is the following:
+
 Script | Fn | Script | Fn | Script | Fn
 :--- | ---: | :--- | ---: | :--- | ---:
 **`AlignToTL.jsx`** | Num7 | **`AlignToT.jsx`** | Num8 | **`AlignToTR.jsx`** | Num9
@@ -199,4 +199,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • 18 August 2020.
+README.md • 19 August 2020.

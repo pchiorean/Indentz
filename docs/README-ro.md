@@ -10,13 +10,13 @@ Aliniază obiectul selectat la partea de sus/jos/stânga/dreapta/centru a referi
 
 ![Align Panel](img/alignto.png)
 
-Ideea e să le alocați tastaturii numerice pentru o utilizare ușoară, altfel nu prea au sens.
+Ideal e să le alocați tastaturii numerice pentru o utilizare ușoară (v. [Shortcuts](#shortcuts)).
 
 ### **DocCleanup.jsx** / **DocDefaults.jsx**
 
 Sunt două scripturi gândite să fie folosite împreună – unul "curăță", celălalt "pregătește terenul".
 
-Mai întâi schimbă câteva setări după preferințele mele:
+Ambele schimbă câteva setări după preferințele mele:
 
 > **Rulers:** Reset Zero Point \
 > **Rulers Units:** Millimeters \
@@ -41,10 +41,6 @@ Mai întâi schimbă câteva setări după preferințele mele:
 > **Type Options:** Use Typographer's Quotes \
 > **Type Options:** Apply Leading to Entire Paragraphs
 
-După care:
-
-* **`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.
-
 * **`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează **`CleanupFonts.jsx`**), și stabilește geometria paginii din numele fișierului (rulează **`PageSizeFromFilename.jsx`**).
 
   ![Culori și layere](img/docdefaults.png)
@@ -60,6 +56,8 @@ După care:
   Copy, Text, TEXT, TEXTES, TXT, Type | `text and logos`
   Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
   background, BACKGROUND, BG, HG, Hintergrund | `bg`
+
+* **`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.
 
 ### **CleanupFonts.jsx**
 
@@ -173,6 +171,8 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 ## Shortcut-uri
 
+Rularea unui script folosit frecvent din panoul **Scripts** poate deveni obositoare, deoarece trebuie să îl localizați, apoi să faceți dublu clic pe script. Puteți face asta instantaneu, atribuindu-i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**. Configurația mea este următoarea:
+
 Script | Fn | Script | Fn | Script | Fn
 :--- | ---: | :--- | ---: | :--- | ---:
 **`AlignToTL.jsx`** | Num7 | **`AlignToT.jsx`** | Num8 | **`AlignToTR.jsx`** | Num9
@@ -199,4 +199,4 @@ O parte din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau să [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 18 august 2020.
+README-ro.md • 19 august 2020.
