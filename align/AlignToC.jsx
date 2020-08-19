@@ -28,7 +28,7 @@ switch (SelectOption()) {
 
 function SelectOption() {
 	var w = new Window("dialog");
-		w.text = "Center";
+		w.text = "Select alignment";
 		w.orientation = "row";
 		w.alignChildren = ["center","top"];
 	var center = w.add("panel {text: 'Center', name: 'center'}");
