@@ -1,5 +1,5 @@
 /*
-	QR code v1.9.1
+	QR code v1.9.2
 	© August 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If "QR.txt" is found, batch process it.
@@ -48,10 +48,10 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 	var qpanel = w.add("panel", undefined, undefined, {name: "qpanel"});
 		qpanel.orientation = "column";
 		qpanel.alignChildren = ["left","top"];
-	qpanel.add("statictext", undefined, "Enter QR code text:", {name: "st"});
+		qpanel.add("statictext", undefined, "Enter QR code text:", {name: "st"});
 	var label = qpanel.add('edittext {properties: {name: "label", enterKeySignalsOnChange: true}}');
 		label.helpTip = "Use '|' for manual line breaks";
-		label.preferredSize.width = 430;
+		label.characters = 56;
 		label.active = true;
 	var flg_white = qpanel.add("checkbox", undefined, "White text", {name: "flg_white"});
 		flg_white.helpTip = "Ignored when saving on separate file";
@@ -60,9 +60,9 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 		buttons.alignChildren = ["fill","top"];
 	var onpage = buttons.add("button", undefined, "On page", {name: "ok"});
 	var onfile = buttons.add("button", undefined, "On file", {name: "onfile"});
-	buttons.add("button", undefined, "Cancel", {name: "cancel"});
 	onpage.onClick = function() { flg_onfile = false; w.close() };
 	onfile.onClick = function() { flg_onfile = true; w.close() };
+	buttons.add("button", undefined, "Cancel", {name: "cancel"});
 	var result = w.show();
 	if (!label.text || result == 2) { exit() };
 	var QRLabel = label.text;
