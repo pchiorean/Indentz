@@ -1,6 +1,6 @@
 # Indentz
 
-Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut (o sugestie de configurare găsiți în secțiunea [Shortcuts](#shortcuts)). Câteva pot fi rulate în scriptul [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
+Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr&#x2011;un shortcut (o sugestie de configurare găsiți în secțiunea [Shortcuts](#shortcuts)). Câteva pot fi rulate în scriptul [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
 
 ## Descriere
 
@@ -45,7 +45,7 @@ Ambele schimbă câteva setări după preferințele mele:
 
   ![Culori și layere](img/docdefaults.png)
 
-  De asemenea, scriptul combină câteva layere similare, după cum urmează:
+  De asemenea, scriptul combină câteva layere similare:
 
   Layer | Combinat cu
   :--- | :---
@@ -67,19 +67,19 @@ Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă cu fonturile folos
 
 ### **CleanupLabels.jsx**
 
-Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **`CleanupLabels.jsx`** șterge etichetele dintr-un document.
+Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **`CleanupLabels.jsx`** șterge toate etichetele din document (dacă nu e selectat nimic) sau din elementele selectate.
 
 ### **CleanupSwatches.jsx**
 
-Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește culorile CMYK după formula "C= M= Y= K=" și șterge culorile nefolosite. Culorile spot rămân neschimbate.
+Convertește swatch&#x2011;urile RGB la CMYK, elimină duplicatele, le redenumește după formula "C= M= Y= K=" și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
 ### Seria **FitToPage** / **FitToSpread**
 
-Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame-urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într-un *clipping frame* și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.
+Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame&#x2011;urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într&#x2011;un *clipping frame* și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.
 
 * **`FitToPage.jsx`** / **`FitToPageMargins.jsx`** / **`FitToPageBleed.jsx`** constrâng dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii.
 
-* **`FitToSpread.jsx`** / **`FitToSpreadMargins.jsx`** / **`FitToSpreadBleed.jsx`** fac același lucru pentru paginile grupate într-un spread.
+* **`FitToSpread.jsx`** / **`FitToSpreadMargins.jsx`** / **`FitToSpreadBleed.jsx`** fac același lucru pentru paginile grupate într&#x2011;un spread.
 
 * **`FitToPageBleedForced.jsx`** și **`FitToPageSpreadForced.jsx`** redimensionează exact la bleedul paginii sau ale spreadului. Sunt utile, de exemplu, pentru imaginea de background.
 
@@ -130,7 +130,7 @@ Fac câteva pregătiri pentru export și pot fi rulate în **`batch_convert.jsx`
   * mută marcajele pentru lac UV de pe `varnish` pe spreaduri separate;
   * mută ștanțele de pe `dielines` pe spreaduri separate.
 
-* **`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Culoarea lui este un swatch, `Safe area`, care dacă nu există deja va fi creat cu valoarea "C=0 M=100 Y=0 K=0".
+* **`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Culoarea lui este un swatch, `Safe area`, care dacă nu există deja va fi creat cu valoarea "C=0 M=100 Y=0 K=0".
 
 * **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează `safe area`.
 
@@ -138,9 +138,9 @@ Scripturile detectează nume alternative gen `visible`, `vizibil`, `vis. area` p
 
 ### **QR.jsx**
 
-Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într-un fișier separat. Are două moduri de operare, manual sau batch:
+Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într&#x2011;un fișier separat. Are două moduri de operare, manual sau batch:
 
-* **Manual:** Solicită codul și îl adaugă pe pagină sau într-un fișier separat.
+* **Manual:** Solicită codul și îl adaugă pe pagină sau într&#x2011;un fișier separat.
 
 * **Batch:** Dacă găsește un fișier numit `QR.txt` în același folder, citește codurile din el. Fișierul trebuie să fie un TSV *(tab-separated values)*; prima coloană e numele fișierului, a doua codul QR. Prima linie (antetul) e ignorată:
 
@@ -169,9 +169,9 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 * **`ShowProperties.jsx`** afișează proprietățile și metodele unui obiect selectat (util pentru depanare).
 
-## Shortcut-uri
+## Shortcut&#x2011;uri
 
-Rularea unui script folosit frecvent din panoul **Scripts** poate deveni obositoare, deoarece trebuie să îl localizați, apoi să faceți dublu clic pe script. Puteți face asta instantaneu, atribuindu-i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**. Configurația mea este următoarea:
+Rularea unui script folosit frecvent din panoul **Scripts** poate deveni obositoare, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu&#x2011;i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**. Configurația mea este următoarea:
 
 Script | Fn | Script | Fn | Script | Fn
 :--- | ---: | :--- | ---: | :--- | ---:
@@ -195,8 +195,6 @@ Script | Fn | Script | Fn | Script | Fn
 
 ## Licență
 
-O parte din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Dave Saunders, Marc Autret, Peter Werner, Richard Harrington și Peter Kahrel. Restul codului este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)).
+Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Vă rog să&#x2011;mi trimiteți un e&#x2011;mail la \<jpeg AT basement.ro\> sau să [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-Vă rog să-mi trimiteți un e-mail la \<jpeg AT basement.ro\> sau să [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
-
-README-ro.md • 19 august 2020.
+README-ro.md • 20 august 2020.

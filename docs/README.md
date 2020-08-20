@@ -45,7 +45,7 @@ Both change several settings according to my preferences:
 
   ![Swatches & Layers](img/docdefaults.png)
 
-  The script also merges several similar layers, as follows:
+  The script also merges several similar layers:
 
   Layer | Merged to
   :--- | :---
@@ -67,11 +67,11 @@ You can use **`ShowFonts.jsx`** to get a tab delimited list of used fonts.
 
 ### **CleanupLabels.jsx**
 
-Sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. **`CleanupLabels.jsx`** deletes labels from a document.
+Sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. **`CleanupLabels.jsx`** deletes all labels from the document (if nothing is selected), or from the selected items.
 
 ### **CleanupSwatches.jsx**
 
-Converts RGB process colors to CMYK, removes duplicates, sets every name in "C= M= Y= K=" form and deletes unused swatches. Spot colors remain unchanged.
+Converts RGB process swatches to CMYK, removes duplicates, renames them to "C= M= Y= K=" form, and deletes unused ones. Spot colors remain unchanged.
 
 ### **FitToPage** / **FitToSpread** series
 
@@ -130,7 +130,7 @@ These are making several preparations for export and can be run in **`batch_conv
   * moves UV markings from `varnish` to separate spreads;
   * moves the dielines from `dielines` to separate spreads.
 
-* **`SafeArea.jsx`** creates a frame the size of the page margins on the `safe area` layer. Its color is a swatch, `Safe area`, which if it does not already exist will be created with the value "C=0 M=100 Y=0 K=0".
+* **`SafeArea.jsx`** creates a frame the size of the page margins on the `safe area` layer. Its color is a swatch, `Safe area`, which if it does not already exist will be created with the value "C=0 M=100 Y=0 K=0".
 
 * **`SafeAreaHideLayer.jsx`** and **`SafeAreaShowLayer.jsx`** hide or show `safe area`.
 
@@ -195,8 +195,6 @@ Script | Fn | Script | Fn | Script | Fn
 
 ## License
 
-Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, Richard Harrington, and Peter Kahrel. The rest of the code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)).
+The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-Please send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
-
-README.md • 19 August 2020.
+README.md • 20 August 2020.

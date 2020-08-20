@@ -17,7 +17,7 @@
 
 <body class="vscode-light">
 	<h1 id="indentz">Indentz</h1>
-	<p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr-un shortcut (o sugestie de configurare găsiți în secțiunea <a href="#shortcuts">Shortcuts</a>). Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
+	<p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr&#x2011;un shortcut (o sugestie de configurare găsiți în secțiunea <a href="#shortcuts">Shortcuts</a>). Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
 
 	<h2 id="descriere">Descriere</h2>
 	<h3 id="seria-alignto">Seria <strong>AlignTo</strong></h3>
@@ -56,7 +56,7 @@
 		<li>
 			<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează <strong><code>CleanupFonts.jsx</code></strong>), și stabilește geometria paginii din numele fișierului (rulează <strong><code>PageSizeFromFilename.jsx</code></strong>).</p>
 			<p><img src="img/docdefaults.png" alt="Culori și layere"></p>
-			<p>De asemenea, scriptul combină câteva layere similare, după cum urmează:</p>
+			<p>De asemenea, scriptul combină câteva layere similare:</p>
 			<table>
 				<thead>
 					<tr>
@@ -107,19 +107,19 @@
 	<p>Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> pentru a obține o listă cu fonturile folosite <em>(tab separated)</em>.</p>
 
 	<h3 id="cleanuplabelsjsx"><strong>CleanupLabels.jsx</strong></h3>
-	<p>Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. <strong><code>CleanupLabels.jsx</code></strong> șterge etichetele dintr-un document.</p>
+	<p>Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. <strong><code>CleanupLabels.jsx</code></strong> șterge toate etichetele din document (dacă nu e selectat nimic) sau din elementele selectate.</p>
 
 	<h3 id="cleanupswatchesjsx"><strong>CleanupSwatches.jsx</strong></h3>
-	<p>Convertește culorile de proces RGB la CMYK, elimină duplicatele, redenumește culorile CMYK după formula &quot;C= M= Y= K=&quot; și șterge culorile nefolosite. Culorile spot rămân neschimbate.</p>
+	<p>Convertește swatch&#x2011;urile RGB la CMYK, elimină duplicatele, le redenumește după formula &quot;C=&nbsp;M=&nbsp;Y=&nbsp;K=&quot; și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
 
 	<h3 id="seria-fittopage--fittospread">Seria <strong>FitToPage</strong> / <strong>FitToSpread</strong></h3>
-	<p>Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame-urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într-un <em>clipping frame</em> și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.</p>
+	<p>Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame&#x2011;urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într&#x2011;un <em>clipping frame</em> și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.</p>
 	<ul>
 		<li>
 			<p><strong><code>FitToPage.jsx</code></strong> / <strong><code>FitToPageMargins.jsx</code></strong> / <strong><code>FitToPageBleed.jsx</code></strong> constrâng dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii.</p>
 		</li>
 		<li>
-			<p><strong><code>FitToSpread.jsx</code></strong> / <strong><code>FitToSpreadMargins.jsx</code></strong> / <strong><code>FitToSpreadBleed.jsx</code></strong> fac același lucru pentru paginile grupate într-un spread.</p>
+			<p><strong><code>FitToSpread.jsx</code></strong> / <strong><code>FitToSpreadMargins.jsx</code></strong> / <strong><code>FitToSpreadBleed.jsx</code></strong> fac același lucru pentru paginile grupate într&#x2011;un spread.</p>
 		</li>
 		<li>
 			<p><strong><code>FitToPageBleedForced.jsx</code></strong> și <strong><code>FitToPageSpreadForced.jsx</code></strong> redimensionează exact la bleedul paginii sau ale spreadului. Sunt utile, de exemplu, pentru imaginea de background.</p>
@@ -208,7 +208,7 @@
 			</ul>
 		</li>
 		<li>
-			<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe layerul <code>safe area</code>. Culoarea lui este un swatch, <code>Safe area</code>, care dacă nu există deja va fi creat cu valoarea &quot;C=0 M=100 Y=0 K=0&quot;.</p>
+			<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe layerul <code>safe area</code>. Culoarea lui este un swatch, <code>Safe area</code>, care dacă nu există deja va fi creat cu valoarea &quot;C=0&nbsp;M=100&nbsp;Y=0&nbsp;K=0&quot;.</p>
 		</li>
 		<li>
 			<p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <code>safe area</code>.</p>
@@ -217,10 +217,10 @@
 	<p>Scripturile detectează nume alternative gen <code>visible</code>, <code>vizibil</code>, <code>vis. area</code> pentru <code>safe area</code>, sau <code>diecut</code>, <code>die cut</code>, <code>cut lines</code>, <code>stanze</code> pentru <code>dielines</code>.</p>
 
 	<h3 id="qrjsx"><strong>QR.jsx</strong></h3>
-	<p>Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într-un fișier separat. Are două moduri de operare, manual sau batch:</p>
+	<p>Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într&#x2011;un fișier separat. Are două moduri de operare, manual sau batch:</p>
 	<ul>
 		<li>
-			<p><strong>Manual:</strong> Solicită codul și îl adaugă pe pagină sau într-un fișier separat.</p>
+			<p><strong>Manual:</strong> Solicită codul și îl adaugă pe pagină sau într&#x2011;un fișier separat.</p>
 		</li>
 		<li>
 			<p><strong>Batch:</strong> Dacă găsește un fișier numit <code>QR.txt</code> în același folder, citește codurile din el. Fișierul trebuie să fie un TSV <em>(tab-separated values)</em>; prima coloană e numele fișierului, a doua codul QR. Prima linie (antetul) e ignorată:</p>
@@ -272,8 +272,8 @@
 		</li>
 	</ul>
 
-	<h2 id="shortcuts">Shortcut-uri</h2>
-	<p>Rularea unui script folosit frecvent din panoul <strong>Scripts</strong> poate deveni obositoare, deoarece trebuie să îl localizați, apoi să faceți dublu clic pe script. Puteți face asta instantaneu, atribuindu-i o scurtătură din <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>. Configurația mea este următoarea:</p>
+	<h2 id="shortcuts">Shortcut&#x2011;uri</h2>
+	<p>Rularea unui script folosit frecvent din panoul <strong>Scripts</strong> poate deveni obositoare, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu&#x2011;i o scurtătură din <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>. Configurația mea este următoarea:</p>
 	<table>
 		<thead>
 			<tr>
@@ -385,9 +385,8 @@
 	</ol>
 
 	<h2 id="licență">Licență</h2>
-	<p>O parte din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Dave Saunders, Marc Autret, Peter Werner, Richard Harrington și Peter Kahrel. Restul codului este publicat sub licența MIT (<a href="../LICENSE.txt">LICENSE.txt</a>).</p>
-	<p>Vă rog să-mi trimiteți un e-mail la &lt;jpeg AT basement.ro&gt; sau să <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
-	<p>README-ro.md • 19 august 2020.</p>
+	<p>Codul este publicat sub licența MIT (<a href="../LICENSE.txt">LICENSE.txt</a>). Vă rog să&#x2011;mi trimiteți un e&#x2011;mail la &lt;jpeg AT basement.ro&gt; sau să <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
+	<p>README-ro.md • 20 august 2020.</p>
 </body>
 
 </html>
