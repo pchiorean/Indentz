@@ -80,9 +80,9 @@ Convertește swatch&#x2011;urile RGB la CMYK, elimină duplicatele, le redenume�
 
 Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame&#x2011;urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într&#x2011;un *clipping frame* și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.
 
-**`FitToPage...`** constrâng dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. **`FitToSpread...`** fac același lucru pentru paginile grupate într&#x2011;un spread.
+**`FitToPage...`** constrânge dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. **`FitToSpread...`** face același lucru pentru paginile grupate într&#x2011;un spread.
 
-**`FitTo...Forced.jsx`** redimensionează exact la bleedul paginii sau ale spreadului. Sunt utile, de exemplu, pentru imaginea de background.
+**`FitTo...Forced.jsx`** redimensionează exact la bleedul paginii sau ale spreadului (util, de exemplu, pentru imaginea de background).
 
 **`FitUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 

@@ -6,7 +6,7 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 ### **AlignTo...**
 
-Align selected object(s) to the top/bottom/left/right/center of the reference defined by the **Align To** setting. With **`ToggleAlignTo.jsx`** you can toggle the alignment to the item, margins, page or spread (just run it repeatedly):
+Aligns selected object(s) to the top/bottom/left/right/center of the reference defined by the **Align To** setting. With **`ToggleAlignTo.jsx`** you can toggle the alignment to the item, margins, page or spread (just run it repeatedly):
 
 ![Align Panel](img/alignto.png)
 
@@ -78,13 +78,13 @@ Converts RGB process swatches to CMYK, removes duplicates, renames them to "C= 
 
 ### **FitTo...**
 
-Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. If you run the script a second time on such an object, it will restore it.
+Resizes one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. If you run the script a second time on such an object, it will restore it.
 
-**`FitToPage...`** constrain the size of an object to the size of the page, the page margins, or the page bleed. **`FitToSpread...`** do the same for pages grouped in a spread.
+**`FitToPage...`** constrains the size of an object to the size of the page, the page margins, or the page bleed. **`FitToSpread...`** does the same for pages grouped in a spread.
 
-**`FitTo...Forced.jsx`** resize exactly to the page or the spread bleed. They are useful, for example, for the background image.
+**`FitTo...Forced.jsx`** resizes exactly to the page or the spread bleed (useful, for example, for the background image).
 
-**`FitUndo.jsx`** restore one or several objects at once.
+**`FitUndo.jsx`** restores one or several objects at once.
 
 ### **ScaleTo...**
 
