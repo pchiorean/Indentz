@@ -29,7 +29,7 @@ Name                               |   Fn  | Description
 **`FitToSpreadMargins.jsx`**       |  ⌥F12 | Resizes the selected objects to the spread margins, if they exceed them
 **`FitUndo.jsx`**                  |       | Restores objects clipped in "\<clip group\>" by the "fit" scripts
 **`PageMarginsFromSelection.jsx`** |       | Sets the page margins to the selected objects bounds
-**`PageSizeFromFilename.jsx`**     |       | Sets every page size and margins based on the filename
+**`PageSizeFromFilename.jsx`**     |       | Sets every page size and margins according to the filename
 **`PageSizeFromMargins.jsx`**      |       | Sets the page size to the page margins
 **`PageSizeFromSelection.jsx`**    |       | Sets the page size to the selected objects bounds
 **`ScaleToPageMargins.jsx`**       |   ⌥F5 | Scales the selected objects to the page margins

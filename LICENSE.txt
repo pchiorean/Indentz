@@ -1,8 +1,7 @@
 Some of the code contained in this repository is based on code in blog posts, 
-forum posts, or tutorials by Dave Saunders, Marc Autret, Peter Werner, 
-Richard Harrington, and Peter Kahrel.
+forum posts, or tutorials.
 
-The rest of the code is released under the MIT License below:
+The code is released under the MIT License below:
 
 MIT License
 

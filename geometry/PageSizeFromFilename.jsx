@@ -1,7 +1,7 @@
 /*
-	Page size from filename v1.6.0
+	Page size from filename v1.6.1
 	© August 2020, Paul Chiorean
-	Sets every page size and margins based on the filename.
+	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 */
 

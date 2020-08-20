@@ -4,20 +4,40 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 ## Descriere
 
-### Seria **AlignTo**
+### **AlignTo...**
 
-Aliniază obiectul selectat la partea de sus/jos/stânga/dreapta/centru a referinței definite de setarea **Align To**. Cu **`ToggleAlignTo.jsx`** puteți comuta alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). **`ResetAlignTo.jsx`** resetează setarea.
+Aliniază obiectul selectat la partea de sus/jos/stânga/dreapta/centru a referinței definite de setarea **Align To**. Cu **`ToggleAlignTo.jsx`** puteți comuta alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat):
 
 ![Align Panel](img/alignto.png)
 
+**`ResetAlignTo.jsx`** resetează setarea la **Align to Selection**.
+
 Ideal e să le alocați tastaturii numerice pentru o utilizare ușoară (v. [Shortcuts](#shortcuts)).
 
-### **DocCleanup.jsx** / **DocDefaults.jsx**
+### **DocCleanup** / **DocDefaults**
 
-Sunt două scripturi gândite să fie folosite împreună – unul "curăță", celălalt "pregătește terenul".
+**`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează [**`CleanupFonts.jsx`**](#cleanupfonts)), și stabilește geometria paginii din numele fișierului (rulează [**`PageSizeFromFilename.jsx`**](#pagesize)):
 
-Ambele schimbă câteva setări după preferințele mele:
+![Culori și layere](img/docdefaults.png)
 
+De asemenea, scriptul combină câteva layere:
+
+Layer | Combinat cu
+:--- | :---
+Rahmen, Vis. area, Visible area, Visible, Vizibil | `safe area`
+cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze | `dielines`
+UV, Varnish | `varnish`
+HW Logo, Logo HW, hw, WH, WHW | `HW`
+Copy, Text, TEXT, TEXTES, TXT, Type | `text and logos`
+Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
+background, BACKGROUND, BG, HG, Hintergrund | `bg`
+
+**`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.
+
+Ambele schimbă niște setări după preferințele mele.
+
+> <details><summary>Detalii</summary>
+>
 > **Rulers:** Reset Zero Point \
 > **Rulers Units:** Millimeters \
 > **View:** Show Rulers \
@@ -40,118 +60,99 @@ Ambele schimbă câteva setări după preferințele mele:
 > **Transform Reference Point:** Center \
 > **Type Options:** Use Typographer's Quotes \
 > **Type Options:** Apply Leading to Entire Paragraphs
+> </details>
 
-* **`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează **`CleanupFonts.jsx`**), și stabilește geometria paginii din numele fișierului (rulează **`PageSizeFromFilename.jsx`**).
+### **CleanupFonts**
 
-  ![Culori și layere](img/docdefaults.png)
-
-  De asemenea, scriptul combină câteva layere similare:
-
-  Layer | Combinat cu
-  :--- | :---
-  Rahmen, Vis. area, Visible area, Visible, Vizibil | `safe area`
-  cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze | `dielines`
-  UV, Varnish | `varnish`
-  HW Logo, Logo HW, hw, WH, WHW | `HW`
-  Copy, Text, TEXT, TEXTES, TXT, Type | `text and logos`
-  Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
-  background, BACKGROUND, BG, HG, Hintergrund | `bg`
-
-* **`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.
-
-### **CleanupFonts.jsx**
-
-Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). Prima linie (antetul) este ignorată.
+Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). Prima linie (capul de tabel) este ignorată.
 
 Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă cu fonturile folosite *(tab separated)*.
 
-### **CleanupLabels.jsx**
+### **CleanupLabels**
 
 Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **`CleanupLabels.jsx`** șterge toate etichetele din document (dacă nu e selectat nimic) sau din elementele selectate.
 
-### **CleanupSwatches.jsx**
+### **CleanupSwatches**
 
 Convertește swatch&#x2011;urile RGB la CMYK, elimină duplicatele, le redenumește după formula "C= M= Y= K=" și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
-### Seria **FitToPage** / **FitToSpread**
+### **FitTo...**
 
 Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame&#x2011;urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într&#x2011;un *clipping frame* și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.
 
-* **`FitToPage.jsx`** / **`FitToPageMargins.jsx`** / **`FitToPageBleed.jsx`** constrâng dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii.
+**`FitToPage...`** constrâng dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. **`FitToSpread...`** fac același lucru pentru paginile grupate într&#x2011;un spread.
 
-* **`FitToSpread.jsx`** / **`FitToSpreadMargins.jsx`** / **`FitToSpreadBleed.jsx`** fac același lucru pentru paginile grupate într&#x2011;un spread.
+**`FitTo...Forced.jsx`** redimensionează exact la bleedul paginii sau ale spreadului. Sunt utile, de exemplu, pentru imaginea de background.
 
-* **`FitToPageBleedForced.jsx`** și **`FitToPageSpreadForced.jsx`** redimensionează exact la bleedul paginii sau ale spreadului. Sunt utile, de exemplu, pentru imaginea de background.
+**`FitUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
-* **`FitUndo.jsx`**: dacă doriți să restaurați toate obiectele simultan.
-
-### Seria **ScaleToPage**
+### **ScaleTo...**
 
 Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar.
 
-* **`ScaleToPageSize.jsx`** și **`ScaleToPageMargins.jsx`** scalează la dimensiunile paginii sau marginii.
+**`ScaleToPageSize.jsx`** și **`ScaleToPageMargins.jsx`** scalează la dimensiunile paginii sau marginii.
 
-* Variantele **`H`** (height) și **`W`** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
+Variantele **`H`** (height) și **`W`** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
 
-### Seria **PageSize**
+### **PageSize...**
 
-Redimensionează paginile documentului în funcție de numele fișierului, de marginile paginii, sau de obiectele selectate.
+**`PageSizeFromFilename.jsx`** redimensionează paginile documentului în funcție de numele fișierului:
 
-* **`PageSizeFromFilename.jsx`** caută în numele fișierului perechi de numere de genul "000x000" (unde "000" înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de "mm" sau "cm"). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. "000x000_000x000"), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
+Fișier | Dimensiune | Safe area | Bleed
+:--- | :---: | :---: | :---:
+**Filename1\_`1400x400`\_`700x137`\_`5`mm\_QR.indd** | 1400x400 | 700x137 | 5
+**Filename2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd** | 597x517 | 577x500.5 | 3
 
-  Exemple:
-  > Filename1_**1400x400_700x137_5**mm.indd \
-  > Filename2_**597x517_577x500.5_3**mm V4.indd
+> <details><summary>Detalii</summary>
+> Caută în numele fișierului perechi de numere de genul "000x000" (unde "000" înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de "mm" sau "cm"). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. "000x000_000x000"), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
+> </details>
 
-* **`PageSizeFromMargins.jsx`** redimensionează fiecare pagină la marginile acesteia.
+**`PageSizeFromMargins.jsx`** redimensionează fiecare pagină la marginile acesteia.
 
-* **`PageSizeFromSelection.jsx`** redimensionează pagina curentă la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
+**`PageSizeFromSelection.jsx`** redimensionează pagina curentă la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
 
-* **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
+**`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
-### **TextAutosize.jsx**
+### **TextAutosize**
 
 "Strânge" chenarul la text și îi setează dimensionarea automată. Puteți controla unde va fi punctul de referință pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Vertical Justification** pentru axa verticală:
 
-  **Vertical Justification** | **¶ Align left** | **¶ Align center** | **¶ Align right**
-  :--- | :---: | :---: | :---:
-  *Top* | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
-  *Center* | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
-  *Bottom* | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
+**Vertical Justification** | **¶ Align left** | **¶ Align center** | **¶ Align right**
+:--- | :---: | :---: | :---:
+*Top* | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
+*Center* | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
+*Bottom* | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
 
 **Auto-Sizing Type** va fi setat *Height and width* dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width* (caz în care trebuie avut grijă ca rândurile să fie rupte manual).
 
-### Seria **Print**
+### **Print**
 
-Fac câteva pregătiri pentru export și pot fi rulate în **`batch_convert.jsx`**.
+Acestea fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
 
-* **`PrepareForPrint.jsx`** face următoarele:
-  * ascunde layerul `safe area`;
-  * mută marcajele pentru lac UV de pe `varnish` pe spreaduri separate;
-  * mută ștanțele de pe `dielines` pe spreaduri separate.
+**`PrepareForPrint.jsx`** ascunde layerul `safe area` și mută ștanțele și marcajele pentru lac UV de pe `dielines` / `varnish` pe spreaduri separate.
 
-* **`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Culoarea lui este un swatch, `Safe area`, care dacă nu există deja va fi creat cu valoarea "C=0 M=100 Y=0 K=0".
+**`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Folosește swatch&#x2011;ul `Safe area`, care dacă nu există va fi creat cu valoarea "C=0 M=100 Y=0 K=0".
 
-* **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează `safe area`.
+**`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează `safe area`.
 
-Scripturile detectează nume alternative gen `visible`, `vizibil`, `vis. area` pentru `safe area`, sau `diecut`, `die cut`, `cut lines`, `stanze` pentru `dielines`.
+Scripturile acestea detectează layere alternative gen *visible*, *vizibil*, *vis. area* pentru `safe area`, sau *diecut*, *die cut*, *cut lines*, *stanze* pentru `dielines`.
 
-### **QR.jsx**
+### **QR**
 
 Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într&#x2011;un fișier separat. Are două moduri de operare, manual sau batch:
 
-* **Manual:** Solicită codul și îl adaugă pe pagină sau într&#x2011;un fișier separat.
+* **Manual:** Solicită codul și îl adaugă pe pagină (sau într&#x2011;un fișier separat).
 
-* **Batch:** Dacă găsește un fișier numit `QR.txt` în același folder, citește codurile din el. Fișierul trebuie să fie un TSV *(tab-separated values)*; prima coloană e numele fișierului, a doua codul QR. Prima linie (antetul) e ignorată:
+* **Batch:** Dacă în același folder există un fișier numit **`QR.txt`**, scriptul va genera fișiere QR cu numele și codurile din acesta. Trebuie să fie un TSV *(tab-separated values)*; prima coloană e numele fișierului QR, a doua codul. Prima linie (antetul) e ignorată:
 
-  Fișier | @QR
+  Fișier QR | Cod QR
   :--- | :---
-  **`Filename1_1400x400_700x137_5mm_QR.indd`** | FILE1 1400x400_700x137
-  **`Filename2_597x517_577x500.5_3mm V4_QR.indd`** | FILE2 597x517_577x500.5
+  **Filename1_1400x400_700x137_5mm_QR.indd** | FILE1 1400x400_700x137
+  **Filename2_597x517_577x500.5_3mm V4_QR.indd** | FILE2 597x517_577x500.5 V4
 
-Puteți insera "|" pentru a rupe rândurile manual.
+Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
 
-### **ZoomToSelection.jsx**
+### **ZoomToSelection**
 
 Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
 
@@ -161,17 +162,17 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 ### Diverse
 
-* **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus.
+**`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus.
 
-* **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent.
+**`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent.
 
-* **`ShowProfiles.jsx`** afișează toate profilele de culori disponibile.
+**`ShowProfiles.jsx`** afișează toate profilele de culori disponibile.
 
-* **`ShowProperties.jsx`** afișează proprietățile și metodele unui obiect selectat (util pentru depanare).
+**`ShowProperties.jsx`** afișează proprietățile și metodele unui obiect selectat (util pentru depanare).
 
 ## Shortcut&#x2011;uri
 
-Rularea unui script folosit frecvent din panoul **Scripts** poate deveni obositoare, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu&#x2011;i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**. Configurația mea este următoarea:
+Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplăcută, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu&#x2011;i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**. Configurația mea este următoarea:
 
 Script | Fn | Script | Fn | Script | Fn
 :--- | ---: | :--- | ---: | :--- | ---:
@@ -195,6 +196,6 @@ Script | Fn | Script | Fn | Script | Fn
 
 ## Licență
 
-Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Vă rog să&#x2011;mi trimiteți un e&#x2011;mail la \<jpeg AT basement.ro\> sau să [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
+Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți&#x2011;mi un e&#x2011;mail la \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
 README-ro.md • 20 august 2020.
