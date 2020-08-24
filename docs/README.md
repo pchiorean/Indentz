@@ -172,7 +172,7 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
 ## Shortcuts
 
-Running a frequently used script from the **Scripts** panel is quite annoying, since you have to locate it, then double-click the script. You can make the process instantaneous by assigning a keyboard shortcut to it from **Edit > Keyboard Shortcuts... > Product Area > Scripts**. My configuration is the following:
+Running a frequently used script from the **Scripts** panel is quite annoying, since every time you have to locate it, then double-click the script. You can make the process instantaneous by assigning a keyboard shortcut to it from **Edit > Keyboard Shortcuts... > Product Area > Scripts**. My configuration is the following:
 
 Script | Fn | Script | Fn | Script | Fn
 :--- | ---: | :--- | ---: | :--- | ---:
