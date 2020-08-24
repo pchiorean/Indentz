@@ -1,6 +1,6 @@
 /*
-	Fit to spread bleed v1.9.0
-	© July 2020, Paul Chiorean
+	Fit to spread bleed v1.9.1
+	© August 2020, Paul Chiorean
 	Resizes the selected objects to the spread bleed size, if they exceed it.
 */
 
@@ -71,7 +71,7 @@ function Fit(obj) {
 	}
 	// Case 2: Simple rectangles
 	if (obj.constructor.name == "Rectangle" &&
-		obj.strokeWeight <= 1 &&
+		obj.strokeWeight == 0 &&
 		(obj.absoluteRotationAngle == 0 ||
 		Math.abs(obj.absoluteRotationAngle) == 90 ||
 		Math.abs(obj.absoluteRotationAngle) == 180)) {
@@ -99,7 +99,8 @@ function Fit(obj) {
 			Number(size[2].toFixed(11)) >= Number(frame_BR[3].toFixed(11)) &&
 			Number(size[3].toFixed(11)) >= Number(frame_BR[2].toFixed(11))
 		) return;
-		if (obj.endCap != 1919115632) { // If endcap is round, skip
+		if (obj.endCap == 1650680176 && // EndCap.BUTT_END_CAP
+			obj.strokeWeight >= 0.5 ) {
 			obj.reframe(CoordinateSpaces.SPREAD_COORDINATES, [frame_TL, frame_BR]);
 			return;
 		}
