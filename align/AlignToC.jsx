@@ -43,7 +43,7 @@ function SelectOption() {
 		okcancel.alignChildren = ["fill","top"];
 		okcancel.add("button {text: 'Ok', name: 'ok'}");
 		okcancel.add("button {text: 'Cancel', name: 'cancel'}");
-	if (w.show() == 2) { exit() };
+	if (w.show() == 2) exit();
 	for (i = 0; i < center.children.length; i++)
 		if (center.children[i].value == true) return i;
 }
