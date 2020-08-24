@@ -1,5 +1,5 @@
 /*
-	HW 0.4.1-alpha
+	HW 0.5.0-alpha
 	© August 2020, Paul Chiorean
 */
 
@@ -14,33 +14,38 @@ if (!hwLayer.isValid) {
 	doc.layers.add({ name: hwLayerName, layerColor: UIColors.LIGHT_GRAY });
 	hwLayer.move(LocationOptions.AT_BEGINNING);
 }
-// If a white rectangle is selected, label it "HW"
+// If a rectangle is selected, label it "HW" and make it white
 var sel = doc.selection;
-if (sel.length == 1 && 
-	(sel[0].constructor.name == "Rectangle" ||
-	sel[0].constructor.name == "TextFrame") &&
-	sel[0].fillColor.name == "Paper") {
-		sel[0].label = "HW";
+if (sel.length >= 1) {
+	for (var i = 0; i < sel.length; i++) {
+		if (sel[i].constructor.name == "Rectangle" || sel[i].constructor.name == "TextFrame") {
+			sel[i].label = "HW"; sel[i].fillColor = "Paper" }
 	}
-// Add 10% bottom guides
-for (var i = 0; i < doc.pages.length; i++) {
-	var szPg = doc.pages[i].bounds[2];
-	var szMg = szPg - (doc.pages[i].marginPreferences.top + doc.pages[i].marginPreferences.bottom);
+	MkGuide(sel[0].parentPage); // Add 10% guide on this page
+} else { // Add 10% guide on all pages
+	for (var i = 0; i < doc.pages.length; i++) MkGuide(doc.pages[i]);
+}
+
+
+function MkGuide(page) { // Add 10% bottom guides
+	var szPg = page.bounds[2];
+	var szMg = szPg - (page.marginPreferences.top + page.marginPreferences.bottom);
 	var j, guide;
-	for (j = (guide = doc.pages[i].guides.everyItem().getElements()).length; j--;
+	for (j = (guide = page.guides.everyItem().getElements()).length; j--;
 		(guide[j].label == "HW") && guide[j].remove());
 	doc.activeLayer = hwLayer;
-	doc.pages[i].guides.add(undefined, {
+	page.guides.add(undefined, {
 		itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
 		orientation: HorizontalOrVertical.horizontal,
 		location: szPg * 0.9
 	});
-	if (szMg == szPg) continue;
-	doc.pages[i].guides.add(undefined, {
-		itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
-		orientation: HorizontalOrVertical.horizontal,
-		location: doc.pages[i].marginPreferences.top + szMg * 0.9
-	});
+	if (szMg != szPg) {
+		page.guides.add(undefined, {
+			itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
+			orientation: HorizontalOrVertical.horizontal,
+			location: page.marginPreferences.top + szMg * 0.9
+		});
+	}
 }
 
 function FindLayer(names) { // Find first layer from a list of names
