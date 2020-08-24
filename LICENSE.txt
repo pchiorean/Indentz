@@ -1,8 +1,3 @@
-Some of the code contained in this repository is based on code in blog posts, 
-forum posts, or tutorials.
-
-The code is released under the MIT License below:
-
 MIT License
 
 Copyright (c) 2020 Paul Chiorean <jpeg AT basement.ro>
