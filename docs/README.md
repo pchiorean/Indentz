@@ -123,7 +123,7 @@ Fits the frame to the text and sets it to auto-size. You can control where the a
 *Center* | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
 *Bottom* | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
 
-**Auto-Sizing Type** will be set to *Height and width* if the text has only one line. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width* (in which case care must be taken that the lines are broken manually).
+If the text has only one line, **Auto-Sizing Type** will be set to *Height and width*. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width* (in which case care must be taken that the lines are broken manually).
 
 ### **Print**
 
@@ -198,4 +198,4 @@ Script | Fn | Script | Fn | Script | Fn
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • 20 August 2020.
+README.md • 27 August 2020.

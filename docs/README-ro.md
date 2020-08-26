@@ -123,7 +123,7 @@ Fișier | Dimensiune | Safe area | Bleed
 *Center* | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
 *Bottom* | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
 
-**Auto-Sizing Type** va fi setat *Height and width* dacă textul are un singur rând. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width* (caz în care trebuie avut grijă ca rândurile să fie rupte manual).
+Dacă textul are un singur rând, **Auto-Sizing Type** va fi setat *Height and width*. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width* (caz în care trebuie avut grijă ca rândurile să fie rupte manual).
 
 ### **Print**
 
@@ -198,4 +198,4 @@ Script | Fn | Script | Fn | Script | Fn
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți&#x2011;mi un e&#x2011;mail la \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 20 august 2020.
+README-ro.md • 27 august 2020.
