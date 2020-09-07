@@ -1,6 +1,6 @@
 /*
-	QR code v1.9.2
-	© August 2020, Paul Chiorean
+	QR code v1.9.3
+	© September 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If "QR.txt" is found, batch process it.
 */
@@ -87,7 +87,8 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 			itemLayer: infoLayer.name,
 			contents: QRLabel,
 			label: "QR",
-			fillColor: "None"
+			fillColor: "None",
+			strokeColor: "None"
 		});
 		label.paragraphs.everyItem().properties = {
 			appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
@@ -96,7 +97,8 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 			horizontalScale: 92,
 			tracking: -15,
 			hyphenation: false,
-			fillColor: flg_white ? "Paper" : "Black"
+			fillColor: flg_white ? "Paper" : "Black",
+			strokeColor: "None"
 		}
 		label.geometricBounds = [0, page.bounds[1], 24.9085829084314, page.bounds[1] + 61.0988746102401];
 		label.textFramePreferences.properties = {
@@ -112,7 +114,8 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 		var code = page.rectangles.add({
 			itemLayer: infoLayer.name,
 			label: "QR",
-			fillColor: "Paper"
+			fillColor: "Paper",
+			strokeColor: "None"
 		});
 		code.absoluteRotationAngle = -90;
 		code.geometricBounds = [
@@ -165,7 +168,8 @@ function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
 		itemLayer: infoLayer.name,
 		contents: QRLabel,
 		label: "QR",
-		fillColor: "None"
+		fillColor: "None",
+		strokeColor: "None"
 	});
 	label.paragraphs.everyItem().properties = {
 		appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
