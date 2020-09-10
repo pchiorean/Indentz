@@ -1,6 +1,6 @@
 /*
-	Page ratios v1.1.6
-	© July 2020, Paul Chiorean
+	Page ratios v1.2.0
+	© September 2020, Paul Chiorean
 	Calculates the ratio of each page and displays it in the upper left corner.
 */
 
@@ -11,7 +11,7 @@ var infoLayerName = "info", infoLayer = doc.layers.item(infoLayerName);
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 if (!infoLayer.isValid) doc.layers.add({ name: infoLayerName });
-infoLayer.properties = { layerColor: UIColors.CYAN, visible: true, locked: false, printable: false };
+infoLayer.properties = { layerColor: UIColors.CYAN, visible: true, locked: false, printable: true };
 if (idLayer.isValid) infoLayer.move(LocationOptions.after, idLayer);
 else infoLayer.move(LocationOptions.AT_BEGINNING);
 
@@ -19,7 +19,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 	var page = doc.pages.item(i); var size = Bounds(page);
 	var ratio = ((size[3] - size[1]) / (size[2] - size[0])).toFixed(3);
 	for (var j = 0; j < page.pageItems.length; j++) if (page.pageItems.item(j).label == "ratio") page.pageItems.item(j).remove();
-	var infoFrame = page.textFrames.add({ itemLayer: infoLayer.name, contents: ratio, label: "ratio", fillColor: "Black" });
+	var infoFrame = page.textFrames.add({ itemLayer: infoLayer.name, contents: ratio, label: "ratio", fillColor: "Black", nonprinting: true });
 	infoFrame.paragraphs.everyItem().properties = {
 		appliedFont: app.fonts.item("Verdana\tBold"), pointSize: 32, fillColor: "Paper" };
 	infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
