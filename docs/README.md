@@ -6,13 +6,11 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 ### **AlignTo...**
 
-Aligns selected object(s) to the top/bottom/left/right/center of the reference defined by the **Align To** setting. With **`ToggleAlignTo.jsx`** you can toggle the alignment to the item, margins, page or spread (just run it repeatedly):
+Aligns selected object(s) to the reference defined by the **Align To** setting. With **`ToggleAlignTo.jsx`** you can set the alignment to the item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to **Align to Selection**.
 
 ![Align Panel](img/alignto.png)
 
-**`ResetAlignTo.jsx`** resets the setting to **Align to Selection**.
-
-Ideally, they are assigned to the numeric keypad for easy use (see [Shortcuts](#shortcuts)).
+Ideally, they should be assigned to the numeric keypad for easy use (see [Shortcuts](#shortcuts)).
 
 ### **DocCleanup** / **DocDefaults**
 
@@ -115,13 +113,13 @@ Filename | Total size | Safe area | Bleed
 
 ### **TextAutosize**
 
-Fits the frame to the text and sets it to auto-size. You can control where the auto-sizing reference point will be by setting **Paragraph Alignment** for the horizontal axis, and **Vertical Justification** for the vertical axis:
+Fits the frame to the text and sets it to auto-size. You can control where the auto-sizing reference point will be by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
 
-**Vertical Justification** | **¶ Align left** | **¶ Align center** | **¶ Align right**
-:--- | :---: | :---: | :---:
-*Top* | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
-*Center* | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
-*Bottom* | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
+| | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
+:---: | :---: | :---: | :---:
+![Vertical Justification Top](img/verticaljustification-T.png) | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
+![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
+![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
 
 If the text has only one line, **Auto-Sizing Type** will be set to *Height and width*. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width*.
 
@@ -172,7 +170,7 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
 ## Shortcuts
 
-Running a frequently used script from the **Scripts** panel is quite annoying, since every time you have to locate it, then double-click the script. You can make the process instantaneous by assigning a keyboard shortcut to it from **Edit > Keyboard Shortcuts... > Product Area > Scripts**. My configuration is the following:
+Running a frequently used script from the **Scripts** panel is quite annoying, since every time you have to locate it, then double-click the script. You can make the process instantaneous by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts**. My configuration is the following:
 
 Script | Fn | Script | Fn | Script | Fn
 :--- | ---: | :--- | ---: | :--- | ---:
@@ -198,4 +196,4 @@ Script | Fn | Script | Fn | Script | Fn
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • 27 August 2020.
+README.md • September 14, 2020.
