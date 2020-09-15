@@ -4,13 +4,19 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 ## Description
 
-### **AlignTo...**
+### **AlignTo...** / **SetRefPointTo...**
 
-Aligns selected object(s) to the reference defined by the **Align To** setting. With **`ToggleAlignTo.jsx`** you can set the alignment to the item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to **Align to Selection**.
+**`AlignTo...`** aligns the selected object(s) to the reference defined by **Align To**:
 
 ![Align Panel](img/alignto.png)
 
-Ideally, they should be assigned to the numeric keypad for easy use (see [Shortcuts](#shortcuts)).
+**`ToggleAlignTo.jsx`** toggles the alignment to the item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to **Align to Selection**.
+
+**`SetRefPoint...`** change the reference point used for transformations (like clicking the little squares in the proxy):
+
+![Transform Panel](img/setrefpoint.png)
+
+Both sets are meant to be assigned to the numeric keypad (see [Shortcuts](#shortcuts)).
 
 ### **DocCleanup** / **DocDefaults**
 
@@ -113,7 +119,7 @@ Filename | Total size | Safe area | Bleed
 
 ### **TextAutosize**
 
-Fits the frame to the text and sets it to auto-size. You can control where the auto-sizing reference point will be by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
+Fits the frame to the text and sets it to auto-size. You control the auto-sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
 
 | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
 :---: | :---: | :---: | :---:

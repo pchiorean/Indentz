@@ -21,11 +21,14 @@
 	<p>Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run through a shortcut (you can found a configuration suggestion in the <a href="#shortcuts">Shortcuts</a> section). Some are intended to be run in the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
 
 	<h2 id="description">Description</h2>
-	<h3 id="alignto"><strong>AlignTo...</strong></h3>
-	<p>Aligns selected object(s) to the reference defined by the <strong>Align To</strong> setting. With <strong><code>ToggleAlignTo.jsx</code></strong> you can set the alignment to the item, margins, page or spread (just run it repeatedly). <strong><code>ResetAlignTo.jsx</code></strong> resets the setting to <strong>Align to Selection</strong>.</p>
+	<h3 id="alignto"><strong>AlignTo...</strong> / <strong>SetRefPointTo...</strong></h3>
+	<p><strong><code>AlignTo...</code></strong> aligns the selected object(s) to the reference defined by <strong>Align To</strong>:</p>
 	<p><img src="img/alignto.png" alt="Align Panel"></p>
-	<p>Ideally, they should be assigned to the numeric keypad for easy use (see <a href="#shortcuts">Shortcuts</a>).</p>
-
+	<p><strong><code>ToggleAlignTo.jsx</code></strong> toggles the alignment to the item, margins, page or spread (just run it repeatedly). <strong><code>ResetAlignTo.jsx</code></strong> resets the setting to <strong>Align to Selection</strong>.</p>
+	<p><strong><code>SetRefPoint...</code></strong> change the reference point used for transformations (like clicking the little squares in the proxy):</p>
+	<p><img src="img/setrefpoint.png" alt="Transform Panel"></p>
+	<p>Both sets should be assigned to the numeric keypad for easy use (see <a href="#shortcuts">Shortcuts</a>).</p>
+	
 	<h3 id="doccleanup--docdefaults"><strong>DocCleanup</strong> / <strong>DocDefaults</strong></h3>
 	<p><strong><code>DocDefaults.jsx</code></strong> creates several swatches &amp; layers, replaces several missing or unwanted fonts (it runs <a href="#cleanupfonts"><strong><code>CleanupFonts.jsx</code></strong></a>), and sets the page geometry from the filename (it runs <a href="#pagesize"><strong><code>PageSizeFromFilename.jsx</code></strong></a>):</p>
 	<p><img src="img/docdefaults.png" alt="Swatches &amp; Layers"></p>
@@ -159,7 +162,7 @@
 	<p><strong><code>PageMarginsFromSelection.jsx</code></strong> sets the page margins to the selected objects.</p>
 
 	<h3 id="textautosize"><strong>TextAutosize</strong></h3>
-	<p>Fits the frame to the text and sets it to auto-size. You can control where the auto-sizing reference point will be by setting <strong>Paragraph Alignment</strong> for the horizontal axis, and <strong>Text Frame Options &gt; Vertical Justification</strong> for the vertical axis:</p>
+	<p>Fits the frame to the text and sets it to auto-size. You control the auto-sizing reference point by setting <strong>Paragraph Alignment</strong> for the horizontal axis, and <strong>Text Frame Options &gt; Vertical Justification</strong> for the vertical axis:</p>
 	<table>
 		<thead>
 			<tr>

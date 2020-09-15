@@ -1,17 +1,27 @@
 Name                               |   Fn  | Description
 :---                               |  ---: | :---
 **Align**                                  |
-**`AlignToB.jsx`**                 |  Num2 | Aligns the selected objects to the bottom of the "Align To" setting
-**`AlignToBL.jsx`**                |  Num1 | Aligns the selected objects to the bottom-left of the "Align To" setting
-**`AlignToBR.jsx`**                |  Num3 | Aligns the selected objects to the bottom-right of the "Align To" setting
-**`AlignToC.jsx`**                 |  Num5 | Aligns the selected objects to the center of the "Align To" setting
-**`AlignToL.jsx`**                 |  Num4 | Aligns the selected objects to the left of the "Align To" setting
-**`AlignToR.jsx`**                 |  Num6 | Aligns the selected objects to the right of the "Align To" setting
-**`AlignToT.jsx`**                 |  Num8 | Aligns the selected objects to the top of the "Align To" setting
-**`AlignToTL.jsx`**                |  Num7 | Aligns the selected objects to the top-left of the "Align To" setting
-**`AlignToTR.jsx`**                |  Num9 | Aligns the selected objects to the top-right of the "Align To" setting
-**`ResetAlignTo.jsx`**             | ⌃Num0 | Resets "Align To" setting to default
-**`ToggleAlignTo.jsx`**            |  Num0 | Toggles "Align To" setting
+**`AlignToBL.jsx`**                |  Num1 | Aligns the selected objects to the bottom-left of the **Align To** setting
+**`AlignToB.jsx`**                 |  Num2 | Aligns the selected objects to the bottom of the **Align To** setting
+**`AlignToBR.jsx`**                |  Num3 | Aligns the selected objects to the bottom-right of the **Align To** setting
+**`AlignToL.jsx`**                 |  Num4 | Aligns the selected objects to the left of the **Align To** setting
+**`AlignToC.jsx`**                 |  Num5 | Aligns the selected objects to the center of the **Align To** setting
+**`AlignToR.jsx`**                 |  Num6 | Aligns the selected objects to the right of the **Align To** setting
+**`AlignToTL.jsx`**                |  Num7 | Aligns the selected objects to the top-left of the **Align To** setting
+**`AlignToT.jsx`**                 |  Num8 | Aligns the selected objects to the top of the **Align To** setting
+**`AlignToTR.jsx`**                |  Num9 | Aligns the selected objects to the top-right of the **Align To** setting
+**`ResetAlignTo.jsx`**             | ⌃Num0 | Resets **Align To** setting to default
+**`ToggleAlignTo.jsx`**            |  Num0 | Toggles **Align To** setting
+**Proxy**                                  |
+**`SetRefPointToBL.jsx`**          | ⌃Num1 | Sets **Transform Reference Point** to bottom-left
+**`SetRefPointToB.jsx`**           | ⌃Num2 | Sets **Transform Reference Point** to bottom
+**`SetRefPointToBR.jsx`**          | ⌃Num3 | Sets **Transform Reference Point** to bottom-right
+**`SetRefPointToL.jsx`**           | ⌃Num4 | Sets **Transform Reference Point** to left
+**`SetRefPointToC.jsx`**           | ⌃Num5 | Sets **Transform Reference Point** to center
+**`SetRefPointToR.jsx`**           | ⌃Num6 | Sets **Transform Reference Point** to right
+**`SetRefPointToTL.jsx`**          | ⌃Num7 | Sets **Transform Reference Point** to top-left
+**`SetRefPointToT.jsx`**           | ⌃Num8 | Sets **Transform Reference Point** to top
+**`SetRefPointToTR.jsx`**          | ⌃Num9 | Sets **Transform Reference Point** to top-right
 **Cleanup**                                |
 **`CleanupFonts.jsx`**             |       | Replaces missing or unwanted fonts with equivalents from a list
 **`CleanupLabels.jsx`**            |       | Removes all labels from the document
@@ -27,7 +37,7 @@ Name                               |   Fn  | Description
 **`FitToSpreadBleed.jsx`**         |  ⇧F12 | Resizes the selected objects to the spread bleed size, if they exceed it
 **`FitToSpreadBleedForced.jsx`**   | ⇧⌘F12 | Resizes the selected objects to the spread bleed size
 **`FitToSpreadMargins.jsx`**       |  ⌥F12 | Resizes the selected objects to the spread margins, if they exceed them
-**`FitUndo.jsx`**                  |       | Restores objects clipped in "\<clip group\>" by the "fit" scripts
+**`FitUndo.jsx`**                  |       | Restores objects clipped in '\<clip group\>' by the 'fit' scripts
 **`PageMarginsFromSelection.jsx`** |       | Sets the page margins to the selected objects bounds
 **`PageSizeFromFilename.jsx`**     |       | Sets every page size and margins according to the filename
 **`PageSizeFromMargins.jsx`**      |       | Sets the page size to the page margins
@@ -40,10 +50,10 @@ Name                               |   Fn  | Description
 **`ScaleToPageSizeW.jsx`**         |       | Scales the selected objects to the page left/right size
 **`TextAutosize.jsx`**             |    F6 | Auto-sizes the text frame to the content
 **Print**                                  |
-**`PrepareForPrint.jsx`**          |       | Hides "safe area" layer and moves dielines to separate spreads
-**`SafeArea.jsx`**                 |       | Creates a "safe area" frame, on every page/spread for which margins are defined
-**`SafeAreaHideLayer.jsx`**        |       | Hides the "safe area" layer (or equivalents)
-**`SafeAreaShowLayer.jsx`**        |       | Shows the "safe area" layer (or equivalents)
+**`PrepareForPrint.jsx`**          |       | Hides `safe area` layer and moves dielines to separate spreads
+**`SafeArea.jsx`**                 |       | Creates a `safe area` frame, on every page/spread for which margins are defined
+**`SafeAreaHideLayer.jsx`**        |       | Hides the `safe area` layer (or equivalents)
+**`SafeAreaShowLayer.jsx`**        |       | Shows the `safe area` layer (or equivalents)
 **Other**                                  |
 **`QR.jsx`**                       |    F9 | Adds a QR code to the current document or to a separate file
 **`ZoomToSelection.jsx`**          |    F4 | Zooms to the selected objects or, if nothing is selected, to the current spread

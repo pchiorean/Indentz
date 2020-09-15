@@ -21,11 +21,13 @@
 	<p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (o sugestie de configurare găsiți în secțiunea <a href="#shortcuts">Shortcuts</a>). Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
 
 	<h2 id="descriere">Descriere</h2>
-	<h3 id="alignto"><strong>AlignTo...</strong></h3>
-	<p>Aliniază obiectul selectat la referința definită de setarea <strong>Align To</strong>. Cu <strong><code>ToggleAlignTo.jsx</code></strong> puteți comuta alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). <strong><code>ResetAlignTo.jsx</code></strong> resetează setarea la <strong>Align to Selection</strong>.</p>
+	<h3 id="alignto"><strong>AlignTo...</strong> / <strong>SetRefPointTo...</strong></h3>
+	<p><strong><code>AlignTo...</code></strong> aliniază obiectul selectat la referința definită de <strong>Align To</strong>.</p>
 	<p><img src="img/alignto.png" alt="Align Panel"></p>
-	<p>Ideal e să le alocați tastaturii numerice pentru o utilizare ușoară (v. <a href="#shortcuts">Shortcuts</a>).</p>
-
+	<p><strong><code>ToggleAlignTo.jsx</code></strong> schimbă alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). <strong><code>ResetAlignTo.jsx</code></strong> resetează setarea la <strong>Align to Selection</strong>.</p>
+	<p><strong><code>SetRefPoint...</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor din proxy:</p>
+	<p><img src="img/setrefpoint.png" alt="Transform Panel"></p>
+	<p>Ambele seturi ar trebui alocate tastaturii numerice pentru o utilizare ușoară (v. <a href="#shortcuts">Shortcuts</a>).</p>
 	<h3 id="doccleanup--docdefaults"><strong>DocCleanup</strong> / <strong>DocDefaults</strong></h3>
 	<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează <a href="#cleanupfonts"><strong><code>CleanupFonts.jsx</code></strong></a>), și stabilește geometria paginii din numele fișierului (rulează <a href="#pagesize"><strong><code>PageSizeFromFilename.jsx</code></strong></a>):</p>
 	<p><img src="img/docdefaults.png" alt="Culori și layere"></p>
@@ -160,7 +162,7 @@
 	<p><strong><code>PageMarginsFromSelection.jsx</code></strong> setează marginile paginii la dimensiunile selecției.</p>
 
 	<h3 id="textautosize"><strong>TextAutosize</strong></h3>
-	<p>&quot;Strânge&quot; chenarul la text și îi setează dimensionarea automată. Puteți controla unde va fi punctul de referință pentru dimensionarea automată setând <strong>Paragraph Alignment</strong> pentru axa orizontală și <strong>Text Frame Options &gt; Vertical Justification</strong> pentru axa verticală:</p>
+	<p>&quot;Strânge&quot; chenarul la text și îi setează dimensionarea automată. Puteți controla punctul de referință pentru dimensionarea automată setând <strong>Paragraph Alignment</strong> pentru axa orizontală și <strong>Text Frame Options &gt; Vertical Justification</strong> pentru axa verticală:</p>
 	<table>
 		<thead>
 			<tr>

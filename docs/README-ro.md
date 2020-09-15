@@ -4,13 +4,19 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 ## Descriere
 
-### **AlignTo...**
+### **AlignTo...** / **SetRefPointTo...**
 
-Aliniază obiectul selectat la referința definită de setarea **Align To**. Cu **`ToggleAlignTo.jsx`** puteți comuta alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). **`ResetAlignTo.jsx`** resetează setarea la **Align to Selection**.
+**`AlignTo...`** aliniază obiectul selectat la referința definită de **Align To**.
 
 ![Align Panel](img/alignto.png)
 
-Ideal e să le alocați tastaturii numerice pentru o utilizare ușoară (v. [Shortcuts](#shortcuts)).
+**`ToggleAlignTo.jsx`** schimbă alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). **`ResetAlignTo.jsx`** resetează setarea la **Align to Selection**.
+
+**`SetRefPoint...`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor din proxy:
+
+![Transform Panel](img/setrefpoint.png)
+
+Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. [Shortcuts](#shortcuts)).
 
 ### **DocCleanup** / **DocDefaults**
 
@@ -113,7 +119,7 @@ Fișier | Dimensiune | Safe area | Bleed
 
 ### **TextAutosize**
 
-"Strânge" chenarul la text și îi setează dimensionarea automată. Puteți controla unde va fi punctul de referință pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
+"Strânge" chenarul la text și îi setează dimensionarea automată. Puteți controla punctul de referință pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
 
 | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
 :---: | :---: | :---: | :---:
