@@ -1,6 +1,6 @@
 /*
-	Align to center v1.2.0
-	© August 2020, Paul Chiorean
+	Align to center v1.2.1
+	© September 2020, Paul Chiorean
 */
 
 if (app.documents.length == 0) exit();
@@ -27,16 +27,17 @@ switch (SelectOption()) {
 
 
 function SelectOption() {
-	var w = new Window("dialog");
-		w.text = "Select alignment";
+	var w = new Window("dialog", "Select alignment");
 		w.orientation = "row";
 		w.alignChildren = ["center","top"];
-	var center = w.add("panel {text: 'Center', name: 'center'}");
+	var center = w.add("panel {text: 'Center'}");
+		center.spacing = 5;
+		center.margins = [10,15,10,12];
 		center.orientation = "column";
 		center.alignChildren = ["left","top"];
-		center.add("radiobutton {text: 'Horizontal', name: 'centerH'}");
-		center.add("radiobutton {text: 'Vertical', name: 'centerV'}");
-		center.add("radiobutton {text: 'Both', name: 'centerC'}");
+		center.add("radiobutton {text: 'Horizontal'}");
+		center.add("radiobutton {text: 'Vertical'}");
+		center.add("radiobutton {text: 'Both'}");
 		center.children[0].active = center.children[0].value = true;
 	var okcancel = w.add("group", undefined, {name: "okcancel"});
 		okcancel.orientation = "column";
