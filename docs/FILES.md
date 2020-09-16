@@ -58,7 +58,6 @@ Name                               |   Fn  | Description
 **`QR.jsx`**                       |    F9 | Adds a QR code to the current document or to a separate file
 **`ZoomToSelection.jsx`**          |    F4 | Zooms to the selected objects or, if nothing is selected, to the current spread
 **Miscellaneous**                          |
-**`_playground.jsx`**              |   F10 | Used for testing
 **`_finish.jsx`**                  |  ⌥F10 | Used for quick fixes
 **`HW.jsx`**                       |  ⇧F10 | WIP
 **`PageRatios.jsx`**               |       | Calculates the ratio of each page and displays it in the upper left corner
