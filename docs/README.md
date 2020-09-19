@@ -121,11 +121,44 @@ Filename | Total size | Safe area | Bleed
 
 Fits the frame to the text and sets it to auto-size. You control the auto-sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
 
+<!--
 | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
 :---: | :---: | :---: | :---:
 ![Vertical Justification Top](img/verticaljustification-T.png) | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
 ![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
 ![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
+-->
+
+<table>
+	<thead>
+		<tr>
+			<th style="text-align:center"></th>
+			<th style="text-align:center"><img src="img/paragraphalign-L.png" alt="¶ Align left"></th>
+			<th style="text-align:center"><img src="img/paragraphalign-C.png" alt="¶ Align center"></th>
+			<th style="text-align:center"><img src="img/paragraphalign-R.png" alt="¶ Align right"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th style="text-align:center"><img src="img/verticaljustification-T.png" alt="Vertical Justification Top"></th>
+			<td style="text-align:center"><img src="img/textautosize-TL.png" alt="top-left"></td>
+			<td style="text-align:center"><img src="img/textautosize-TC.png" alt="top-center"></td>
+			<td style="text-align:center"><img src="img/textautosize-TR.png" alt="top-right"></td>
+		</tr>
+		<tr>
+			<th style="text-align:center"><img src="img/verticaljustification-C.png" alt="Vertical Justification Center"></th>
+			<td style="text-align:center"><img src="img/textautosize-CL.png" alt="center-left"></td>
+			<td style="text-align:center"><img src="img/textautosize-C.png" alt="center"></td>
+			<td style="text-align:center"><img src="img/textautosize-CR.png" alt="center-right"></td>
+		</tr>
+		<tr>
+			<th style="text-align:center"><img src="img/verticaljustification-B.png" alt="Vertical Justification Bottom"></th>
+			<td style="text-align:center"><img src="img/textautosize-BL.png" alt="bottom-left"></td>
+			<td style="text-align:center"><img src="img/textautosize-BC.png" alt="bottom-center"></td>
+			<td style="text-align:center"><img src="img/textautosize-BR.png" alt="bottom-right"></td>
+		</tr>
+	</tbody>
+</table>
 
 If the text has only one line, **Auto-Sizing Type** will be set to *Height and width*. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width*.
 
@@ -184,6 +217,9 @@ Script | Fn | Script | Fn | Script | Fn
 **`AlignToL.jsx`** | Num4 | **`AlignToC.jsx`** | Num5 | **`AlignToR.jsx`** | Num6
 **`AlignToBL.jsx`** | Num1 | **`AlignToB.jsx`** | Num2 | **`AlignToBR.jsx`** | Num3
 **`ToggleAlignTo.jsx`** | Num0 | **`ResetAlignTo.jsx`** | ⌃Num0
+**`SetRefPointTL.jsx`** | ⌃Num7 | **`SetRefPointT.jsx`** | ⌃Num8 | **`SetRefPointTR.jsx`** | ⌃Num9
+**`SetRefPointL.jsx`** | ⌃Num4 | **`SetRefPointC.jsx`** | ⌃Num5 | **`SetRefPointR.jsx`** | ⌃Num6
+**`SetRefPointBL.jsx`** | ⌃Num1 | **`SetRefPointB.jsx`** | ⌃Num2 | **`SetRefPointBR.jsx`** | ⌃Num3
 **`DocCleanup.jsx`** | F2 | **`DocDefaults.jsx`** | ⌥F2 | **`CleanupSwatches.jsx`** | ⇧F2
 **`FitToPage.jsx`** | F11 | **`FitToPageMargins.jsx`** | ⌥F11 | **`FitToPageBleed.jsx`** | ⇧F11
 ||||| **`FitToPageBleedForced.jsx`** | ⇧⌘F11
@@ -204,4 +240,4 @@ Script | Fn | Script | Fn | Script | Fn
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • September 17, 2020.
+README.md • September 19, 2020.
