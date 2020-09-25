@@ -232,7 +232,7 @@ Script | Fn | Script | Fn | Script | Fn
 
 <table>
 <tbody>
-	<th style="text-align:left">Align</th>
+	<th colspan="6">Align</th>
 	<tr>
 		<td style="text-align:left"><strong><code>AlignToTL.jsx</code></strong></td>
 		<td style="text-align:right">Num7</td>
@@ -264,7 +264,7 @@ Script | Fn | Script | Fn | Script | Fn
 		<td style="text-align:right">⌃Num0</td>
 		<td style="text-align:left" colspan="2"></td>
 	</tr>
-	<th style="text-align:left">Proxy</th>
+	<th colspan="6">Proxy</th>
 	<tr>
 		<td style="text-align:left"><strong><code>SetRefPointTL.jsx</code></strong></td>
 		<td style="text-align:right">⌃Num7</td>
@@ -289,7 +289,7 @@ Script | Fn | Script | Fn | Script | Fn
 		<td style="text-align:left"><strong><code>SetRefPointBR.jsx</code></strong></td>
 		<td style="text-align:right">⌃Num3</td>
 	</tr>
-	<th style="text-align:left">Cleanup</th>
+	<th colspan="6">Cleanup</th>
 	<tr>
 		<td style="text-align:left"><strong><code>DocCleanup.jsx</code></strong></td>
 		<td style="text-align:right">F2</td>
@@ -298,7 +298,7 @@ Script | Fn | Script | Fn | Script | Fn
 		<td style="text-align:left"><strong><code>CleanupSwatches.jsx</code></strong></td>
 		<td style="text-align:right">⇧F2</td>
 	</tr>
-	<th style="text-align:left">Geometry • Fit</th>
+	<th colspan="6">Geometry • Fit</th>
 	<tr>
 		<td style="text-align:left" rowspan="2"><strong><code>FitToPage.jsx</code></strong></td>
 		<td style="text-align:right" rowspan="2">F11</td>
@@ -323,7 +323,7 @@ Script | Fn | Script | Fn | Script | Fn
 		<td style="text-align:left"><strong><code>FitToSpreadBleedForced.jsx</code></strong></td>
 		<td style="text-align:right">⇧⌘F12</td>
 	</tr>
-	<th style="text-align:left">Geometry • Scale</th>
+	<th colspan="6">Geometry • Scale</th>
 	<tr>
 		<td style="text-align:left"><strong><code>ScaleToPageSize.jsx</code></strong></td>
 		<td style="text-align:right">F5</td>
@@ -331,7 +331,7 @@ Script | Fn | Script | Fn | Script | Fn
 		<td style="text-align:right">⌥F5</td>
 		<td style="text-align:left" colspan="2"></td>
 	</tr>
-	<th style="text-align:left">Other</th>
+	<th colspan="6">Other</th>
 	<tr>
 		<td style="text-align:left"><strong><code>TextAutosize.jsx</code></strong></td>
 		<td style="text-align:right">F6</td>
