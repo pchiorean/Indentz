@@ -70,7 +70,7 @@ Ambele schimbă niște setări după preferințele mele.
 
 Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). Prima linie (capul de tabel) este ignorată.
 
-Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă cu fonturile folosite *(tab separated)*.
+Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă a fonturilor pentru copy-paste în **`CleanupFonts.txt`**.
 
 ### **CleanupLabels**
 
@@ -199,11 +199,11 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 ### Diverse
 
-**`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus.
+**`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus (util pentru mastere).
 
-**`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent.
+**`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`CleanupFonts.jsx`**).
 
-**`ShowProfiles.jsx`** afișează toate profilele de culori disponibile.
+**`ShowProfiles.jsx`** afișează toate profilele de culori disponibile (util când *credeți* că aveți instalat un profil de culoare).
 
 **`ShowProperties.jsx`** afișează proprietățile și metodele unui obiect selectat (util pentru depanare).
 
@@ -211,6 +211,7 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplăcută, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu&#x2011;i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**. Configurația mea este următoarea:
 
+<!--
 Script | Fn | Script | Fn | Script | Fn
 :--- | ---: | :--- | ---: | :--- | ---:
 **`AlignToTL.jsx`** | Num7 | **`AlignToT.jsx`** | Num8 | **`AlignToTR.jsx`** | Num9
@@ -227,6 +228,120 @@ Script | Fn | Script | Fn | Script | Fn
 ||||| **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12
 **`ScaleToPageSize.jsx`** | F5 | **`ScaleToPageMargins.jsx`** | ⌥F5
 **`TextAutosize.jsx`** | F6 | **`QR.jsx`** | F9 | **`ZoomToSelection.jsx`** | F4
+-->
+
+<table>
+<tbody>
+	<th style="text-align:left">Align</th>
+	<tr>
+		<td style="text-align:left"><strong><code>AlignToTL.jsx</code></strong></td>
+		<td style="text-align:right">Num7</td>
+		<td style="text-align:left"><strong><code>AlignToT.jsx</code></strong></td>
+		<td style="text-align:right">Num8</td>
+		<td style="text-align:left"><strong><code>AlignToTR.jsx</code></strong></td>
+		<td style="text-align:right">Num9</td>
+	</tr>
+	<tr>
+		<td style="text-align:left"><strong><code>AlignToL.jsx</code></strong></td>
+		<td style="text-align:right">Num4</td>
+		<td style="text-align:left"><strong><code>AlignToC.jsx</code></strong></td>
+		<td style="text-align:right">Num5</td>
+		<td style="text-align:left"><strong><code>AlignToR.jsx</code></strong></td>
+		<td style="text-align:right">Num6</td>
+	</tr>
+	<tr>
+		<td style="text-align:left"><strong><code>AlignToBL.jsx</code></strong></td>
+		<td style="text-align:right">Num1</td>
+		<td style="text-align:left"><strong><code>AlignToB.jsx</code></strong></td>
+		<td style="text-align:right">Num2</td>
+		<td style="text-align:left"><strong><code>AlignToBR.jsx</code></strong></td>
+		<td style="text-align:right">Num3</td>
+	</tr>
+	<tr>
+		<td style="text-align:left"><strong><code>ToggleAlignTo.jsx</code></strong></td>
+		<td style="text-align:right">Num0</td>
+		<td style="text-align:left"><strong><code>ResetAlignTo.jsx</code></strong></td>
+		<td style="text-align:right">⌃Num0</td>
+		<td style="text-align:left" colspan="2"></td>
+	</tr>
+	<th style="text-align:left">Proxy</th>
+	<tr>
+		<td style="text-align:left"><strong><code>SetRefPointTL.jsx</code></strong></td>
+		<td style="text-align:right">⌃Num7</td>
+		<td style="text-align:left"><strong><code>SetRefPointT.jsx</code></strong></td>
+		<td style="text-align:right">⌃Num8</td>
+		<td style="text-align:left"><strong><code>SetRefPointTR.jsx</code></strong></td>
+		<td style="text-align:right">⌃Num9</td>
+	</tr>
+	<tr>
+		<td style="text-align:left"><strong><code>SetRefPointL.jsx</code></strong></td>
+		<td style="text-align:right">⌃Num4</td>
+		<td style="text-align:left"><strong><code>SetRefPointC.jsx</code></strong></td>
+		<td style="text-align:right">⌃Num5</td>
+		<td style="text-align:left"><strong><code>SetRefPointR.jsx</code></strong></td>
+		<td style="text-align:right">⌃Num6</td>
+	</tr>
+	<tr>
+		<td style="text-align:left"><strong><code>SetRefPointBL.jsx</code></strong></td>
+		<td style="text-align:right">⌃Num1</td>
+		<td style="text-align:left"><strong><code>SetRefPointB.jsx</code></strong></td>
+		<td style="text-align:right">⌃Num2</td>
+		<td style="text-align:left"><strong><code>SetRefPointBR.jsx</code></strong></td>
+		<td style="text-align:right">⌃Num3</td>
+	</tr>
+	<th style="text-align:left">Cleanup</th>
+	<tr>
+		<td style="text-align:left"><strong><code>DocCleanup.jsx</code></strong></td>
+		<td style="text-align:right">F2</td>
+		<td style="text-align:left"><strong><code>DocDefaults.jsx</code></strong></td>
+		<td style="text-align:right">⌥F2</td>
+		<td style="text-align:left"><strong><code>CleanupSwatches.jsx</code></strong></td>
+		<td style="text-align:right">⇧F2</td>
+	</tr>
+	<th style="text-align:left">Geometry • Fit</th>
+	<tr>
+		<td style="text-align:left" rowspan="2"><strong><code>FitToPage.jsx</code></strong></td>
+		<td style="text-align:right" rowspan="2">F11</td>
+		<td style="text-align:left" rowspan="2"><strong><code>FitToPageMargins.jsx</code></strong></td>
+		<td style="text-align:right" rowspan="2">⌥F11</td>
+		<td style="text-align:left"><strong><code>FitToPageBleed.jsx</code></strong></td>
+		<td style="text-align:right">⇧F11</td>
+	</tr>
+	<tr>
+		<td style="text-align:left"><strong><code>FitToPageBleedForced.jsx</code></strong></td>
+		<td style="text-align:right">⇧⌘F11</td>
+	</tr>
+	<tr>
+		<td style="text-align:left" rowspan="2"><strong><code>FitToSpread.jsx</code></strong></td>
+		<td style="text-align:right" rowspan="2">F12</td>
+		<td style="text-align:left" rowspan="2"><strong><code>FitToSpreadMargins.jsx</code></strong></td>
+		<td style="text-align:right" rowspan="2">⌥F12</td>
+		<td style="text-align:left"><strong><code>FitToSpreadBleed.jsx</code></strong></td>
+		<td style="text-align:right">⇧F12</td>
+	</tr>
+	<tr>
+		<td style="text-align:left"><strong><code>FitToSpreadBleedForced.jsx</code></strong></td>
+		<td style="text-align:right">⇧⌘F12</td>
+	</tr>
+	<th style="text-align:left">Geometry • Scale</th>
+	<tr>
+		<td style="text-align:left"><strong><code>ScaleToPageSize.jsx</code></strong></td>
+		<td style="text-align:right">F5</td>
+		<td style="text-align:left"><strong><code>ScaleToPageMargins.jsx</code></strong></td>
+		<td style="text-align:right">⌥F5</td>
+		<td style="text-align:left" colspan="2"></td>
+	</tr>
+	<th style="text-align:left">Other</th>
+	<tr>
+		<td style="text-align:left"><strong><code>TextAutosize.jsx</code></strong></td>
+		<td style="text-align:right">F6</td>
+		<td style="text-align:left"><strong><code>QR.jsx</code></strong></td>
+		<td style="text-align:right">F9</td>
+		<td style="text-align:left"><strong><code>ZoomToSelection.jsx</code></strong></td>
+		<td style="text-align:right">F4</td>
+	</tr>
+</tbody>
+</table>
 
 ## Instalare
 
@@ -240,4 +355,4 @@ Script | Fn | Script | Fn | Script | Fn
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți&#x2011;mi un e&#x2011;mail la \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 19 septembrie 2020.
+README-ro.md • 25 septembrie 2020.
