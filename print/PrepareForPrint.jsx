@@ -1,7 +1,7 @@
 ﻿/*
-	Prepare for print v1.5.2
-	© August 2020, Paul Chiorean
-	Hides "safe area" layer and moves varnish & dielines to separate spreads.
+	Prepare for print v1.6.0
+	© September 2020, Paul Chiorean
+	Hides "safe area" layer and moves white, varnish & dielines to separate spreads.
 */
 
 if (app.documents.length == 0) exit();
@@ -11,17 +11,21 @@ var doc = app.activeDocument;
 
 var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
 var dieLayerName = ["dielines", "diecut", "die cut", "Die Cut", "decoupe", "cut", "Cut", "cut lines", "stanze", "Stanze", "Stanz", "Stanzform"];
+var whiteLayerName = ["white", "WHITE"];
 var uvLayerName = ["varnish", "Varnish", "UV"];
 var safeLayer = FindLayer(safeLayerName);
 var dieLayer = FindLayer(dieLayerName);
+var whiteLayer = FindLayer(whiteLayerName);
 var uvLayer = FindLayer(uvLayerName);
 
-doc.layers.everyItem().locked = false; // Unlock all layers
-try { safeLayer.visible = false } catch (_) {}; // Hide 'safe area' layer
-try { dieLayer.visible = true } catch (_) {}; // Show 'dielines' layer
-try { uvLayer.visible = true } catch (_) {}; // Show 'varnish' layer
+doc.layers.everyItem().locked = false;
+try { safeLayer.visible = false } catch (_) {};
+try { dieLayer.visible = true } catch (_) {};
+try { whiteLayer.visible = true } catch (_) {};
+try { uvLayer.visible = true } catch (_) {};
 
 if (dieLayer != null) Prepare4Print(dieLayer);
+if (whiteLayer != null) Prepare4Print(whiteLayer);
 if (uvLayer != null) Prepare4Print(uvLayer);
 
 

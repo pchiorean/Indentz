@@ -1,6 +1,6 @@
 ﻿/*
-	Default layers and more v1.15.0
-	© August 2020, Paul Chiorean
+	Default layers and more v1.16.0
+	© September 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
 */
@@ -12,16 +12,19 @@ var doc = app.activeDocument;
 const safeLayerName = "safe area";
 const dieLayerName = "dielines";
 const uvLayerName = "varnish";
+const whiteLayerName = "white";
 const guidesLayerName = "guides";
 const infoLayerName = "info";
 const hwLayerName = "HW";
 const txtLayerName = "text and logos";
+const prodLayerName = "products";
 const artLayerName = "artwork";
 const bgLayerName = "bg";
 // Swatch names
+const whiteSwatchName = "White";
+const uvSwatchName = "Varnish";
 const cutSwatchName = "Cut";
 const foldSwatchName = "Fold";
-const uvSwatchName = "Varnish";
 const safeSwatchName = "Safe area";
 
 // Step 0. Initialisation
@@ -68,9 +71,10 @@ const safeSwatchName = "Safe area";
 // Step 1. Add default swatches
 (function() {
 	try { doc.colors.add({ name: "C=60 M=40 Y=40 K=100", model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [60, 40, 40, 100] }) } catch (_) {};
+	try { doc.colors.add({ name: whiteSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 10, 10, 0] }) } catch (_) {};
+	try { doc.colors.add({ name: uvSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 10, 70, 0] }) } catch (_) {};
 	try { doc.colors.add({ name: cutSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
 	try { doc.colors.add({ name: foldSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [100, 0, 0, 0] }) } catch (_) {};
-	try { doc.colors.add({ name: uvSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 10, 70, 0] }) } catch (_) {};
 	try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
 })();
 
@@ -78,10 +82,12 @@ const safeSwatchName = "Safe area";
 (function() {
 	var bgLayer = doc.layers.item(bgLayerName);
 	var artLayer = doc.layers.item(artLayerName);
+	var prodLayer = doc.layers.item(prodLayerName);
 	var txtLayer = doc.layers.item(txtLayerName);
 	var hwLayer = doc.layers.item(hwLayerName);
 	var infoLayer = doc.layers.item(infoLayerName);
 	var guidesLayer = doc.layers.item(guidesLayerName);
+	var whiteLayer = doc.layers.item(whiteLayerName);
 	var uvLayer = doc.layers.item(uvLayerName);
 	var dieLayer = doc.layers.item(dieLayerName);
 	var safeLayer = doc.layers.item(safeLayerName);
@@ -112,8 +118,24 @@ const safeSwatchName = "Safe area";
 	if (artLayer.isValid) { artLayer.layerColor = UIColors.LIGHT_BLUE;
 	} else {
 		doc.layers.add({ name: artLayerName, layerColor: UIColors.LIGHT_BLUE });
-		// try { artLayer.move(LocationOptions.after, txtLayer) } catch (_) {};
+		// try { artLayer.move(LocationOptions.after, prodLayer) } catch (_) {};
 		artLayer.visible = false;
+	}
+	// Products layer
+	doc.activeLayer = doc.layers.item(0); // Select first layer
+	for (var i = 0; i < doc.layers.length; i++) {
+		var docLayer = doc.layers.item(i);
+		switch (docLayer.name) {
+			case "tins":
+				try { doc.layers.add({ name: prodLayerName }) } catch (_) {};
+				prodLayer.merge(docLayer); i--;
+		}
+	}
+	if (prodLayer.isValid) { prodLayer.layerColor = UIColors.BLUE;
+	} else {
+		doc.layers.add({ name: prodLayerName, layerColor: UIColors.BLUE });
+		// try { prodLayer.move(LocationOptions.after, artLayer) } catch (_) {};
+		prodLayer.visible = false;
 	}
 	// Type layer
 	doc.activeLayer = doc.layers.item(0);
@@ -138,7 +160,7 @@ const safeSwatchName = "Safe area";
 	if (txtLayer.isValid) { txtLayer.layerColor = UIColors.GREEN;
 	} else {
 		doc.layers.add({ name: txtLayerName, layerColor: UIColors.GREEN });
-		// txtLayer.move(LocationOptions.before, artLayer);
+		// txtLayer.move(LocationOptions.before, prodLayer);
 		txtLayer.visible = false;
 	}
 	// HW layer
@@ -251,6 +273,22 @@ const safeSwatchName = "Safe area";
 		uvLayer.visible = false;
 	}
 	uvLayer.move(LocationOptions.after, dieLayer);
+	// White layer
+	for (var i = 0; i < doc.layers.length; i++) {
+		var docLayer = doc.layers.item(i);
+		switch (docLayer.name) {
+			case "White":
+			case "WHITE":
+				try { doc.layers.add({ name: whiteLayerName }) } catch (_) {};
+				whiteLayer.merge(docLayer); i--;
+		}
+	}
+	if (whiteLayer.isValid) { whiteLayer.layerColor = UIColors.CUTE_TEAL;
+	} else {
+		doc.layers.add({ name: whiteLayerName, layerColor: UIColors.CUTE_TEAL });
+		whiteLayer.visible = false;
+	}
+	whiteLayer.move(LocationOptions.after, uvLayer);
 	// Guides layer
 	for (var i = 0; i < doc.layers.length; i++) {
 		var docLayer = doc.layers.item(i);
@@ -265,7 +303,7 @@ const safeSwatchName = "Safe area";
 		doc.layers.add({ name: guidesLayerName, layerColor: UIColors.MAGENTA, printable: false });
 		guidesLayer.visible = false;
 	}
-	guidesLayer.move(LocationOptions.after, uvLayer);
+	guidesLayer.move(LocationOptions.after, whiteLayer);
 	// Background layer
 	for (var i = 0; i < doc.layers.length; i++) {
 		var docLayer = doc.layers.item(i);
