@@ -4,84 +4,18 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 ## Description
 
-### **AlignTo...** / **SetRefPointTo...**
+### **AlignTo...** and **SetRefPointTo...**
+![Align Panel](img/alignto.png) ![Transform Panel](img/setrefpoint.png)
 
-**`AlignTo...`** aligns the selected object(s) to the reference defined by **Align To**:
+**`AlignTo...`** aligns the selected object(s) to the reference defined by the **Align To** option. **`ToggleAlignTo.jsx`** toggles the alignment to the item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to **Align to Selection**.
 
-![Align Panel](img/alignto.png)
-
-**`ToggleAlignTo.jsx`** toggles the alignment to the item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to **Align to Selection**.
-
-**`SetRefPoint...`** change the reference point used for transformations (like clicking the little squares in the proxy):
-
-![Transform Panel](img/setrefpoint.png)
+**`SetRefPoint...`** change the reference point used for transformations (like clicking the little proxy squares in the **Transform** palette).
 
 Both sets are meant to be assigned to the numeric keypad (see [Shortcuts](#shortcuts)).
 
-### **DocCleanup** / **DocDefaults**
-
-**`DocDefaults.jsx`** creates several swatches & layers, replaces several missing or unwanted fonts (it runs [**`CleanupFonts.jsx`**](#cleanupfonts)), and sets the page geometry from the filename (it runs [**`PageSizeFromFilename.jsx`**](#pagesize)):
-
-![Swatches & Layers](img/docdefaults.png)
-
-The script also merges several layers:
-
-Layer | Merged to
-:--- | :---
-Rahmen, Vis. area, Visible area, Visible, Vizibil | `safe area`
-cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze | `dielines`
-UV, Varnish | `varnish`
-HW Logo, Logo HW, hw, WH, WHW | `HW`
-Copy, Text, TEXT, TEXTES, TXT, Type | `text and logos`
-Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
-background, BACKGROUND, BG, HG, Hintergrund | `bg`
-
-**`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%, and removes all guides.
-
-Both change some settings according to my preferences.
-
-> <details><summary>Details</summary>
->
-> **Rulers:** Reset Zero Point \
-> **Rulers Units:** Millimeters \
-> **View:** Show Rulers \
-> **View:** Show Frame Edges \
-> **Document Intent:** Print \
-> **Transparency Blend Space:** CMYK \
-> **CMYK Profile:** ISO Coated v2 (ECI) \
-> **RGB Profile:** sRGB IEC61966-2.1 \
-> **Grids & Guides:** Show Guides \
-> **Grids & Guides:** Unlock Guides \
-> **Guides & Pasteboard: Margins:** H 150 mm, V 25 mm \
-> **Guides & Pasteboard: Preview Background:** Light Gray \
-> **Keyboard Increments: Cursor Key:** 0.2 mm \
-> **Keyboard Increments: Size/Leading:** 0.5 pt \
-> **Keyboard Increments: Baseline Shift:** 0.1 pt \
-> **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
-> **Pages:** Allow Document Pages to Shuffle \
-> **Layers:** Ungroup Remembers Layers \
-> **Layers:** Paste Remembers Layers \
-> **Transform Reference Point:** Center \
-> **Type Options:** Use Typographer's Quotes \
-> **Type Options:** Apply Leading to Entire Paragraphs
-> </details>
-
-### **CleanupFonts**
-
-Replaces several missing or unwanted fonts with equivalents from a list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). The first line (the header) and lines beginning with ";" are ignored.
-
-You can use **`ShowFonts.jsx`** to get a tab delimited list of fonts for copy-pasting in **`CleanupFonts.txt`**.
-
-### **CleanupLabels**
-
-Sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. **`CleanupLabels.jsx`** deletes all labels from the document (if nothing is selected), or from the selected items.
-
-### **CleanupSwatches**
-
-Converts RGB process swatches to CMYK, removes duplicates, renames them to "C= M= Y= K=" form, and deletes unused ones. Spot colors remain unchanged.
+---
 
 ### **FitTo...**
-
 Resizes one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. If you run the script a second time on such an object, it will restore it.
 
 **`FitToPage...`** constrains the size of an object to the size of the page, the page margins, or the page bleed. **`FitToSpread...`** does the same for pages grouped in a spread.
@@ -91,7 +25,6 @@ Resizes one or more selected objects, without scaling them. Ordinary frames are 
 **`FitUndo.jsx`** restores one or several objects at once.
 
 ### **ScaleTo...**
-
 These also work with one or more objects, but scale them proportionally, as a block.
 
 **`ScaleToPageSize.jsx`** and **`ScaleToPageMargins.jsx`** scale to the page size or page margins.
@@ -99,7 +32,6 @@ These also work with one or more objects, but scale them proportionally, as a bl
 The **`H`** (height) and **`W`** (width) variants scale to the height or width of the page or page margins.
 
 ### **PageSize...**
-
 **`PageSizeFromFilename.jsx`** resizes the pages of the document according to the file name:
 
 Filename | Total size | Safe area | Bleed
@@ -118,7 +50,6 @@ Filename | Total size | Safe area | Bleed
 **`PageMarginsFromSelection.jsx`** sets the page margins to the selected objects.
 
 ### **TextAutosize**
-
 Fits the frame to the text and sets it to auto-size. You control the auto-sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
 
 <!--
@@ -162,11 +93,72 @@ Fits the frame to the text and sets it to auto-size. You control the auto-sizing
 
 If the text has only one line, **Auto-Sizing Type** will be set to *Height and width*. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width*.
 
-### **Print**
+---
 
+### **CleanupFonts**
+Replaces fonts from a substitution list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). The first line (the header) and lines beginning with ";" are ignored.
+
+You can use **`ShowFonts.jsx`** to get a tab delimited list of fonts for copy-pasting in **`CleanupFonts.txt`**.
+
+### **CleanupLabels**
+Sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. **`CleanupLabels.jsx`** deletes all labels from the document (if nothing is selected), or only from the selected items.
+
+### **CleanupSwatches**
+Converts RGB process swatches to CMYK, removes duplicates, renames them to "C= M= Y= K=" form, and deletes unused ones. Spot colors remain unchanged.
+
+### **DocCleanup** and **DocDefaults**
+**`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%, and removes all guides.
+
+**`DocDefaults.jsx`** creates several swatches & layers, replaces several missing or unwanted fonts (it runs **`CleanupFonts.jsx`**), and sets the page geometry from the filename (it runs **`PageSizeFromFilename.jsx`**).
+
+![Swatches & Layers](img/docdefaults.png)
+
+It also merges several layers:
+
+Layer | Merged to
+:--- | :---
+Rahmen, Vis. area, Visible area, Visible, Vizibil | `safe area`
+cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze | `dielines`
+UV, Varnish | `varnish`
+HW Logo, Logo HW, hw, WH, WHW | `HW`
+Copy, Text, TEXT, TEXTES, TXT, Type | `text and logos`
+Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
+background, BACKGROUND, BG, HG, Hintergrund | `bg`
+
+Both scripts change some settings according to my preferences.
+
+> <details><summary>Details</summary>
+>
+> **Rulers:** Reset Zero Point \
+> **Rulers Units:** Millimeters \
+> **View:** Show Rulers \
+> **View:** Show Frame Edges \
+> **Document Intent:** Print \
+> **Transparency Blend Space:** CMYK \
+> **CMYK Profile:** ISO Coated v2 (ECI) \
+> **RGB Profile:** sRGB IEC61966-2.1 \
+> **Grids & Guides:** Show Guides \
+> **Grids & Guides:** Unlock Guides \
+> **Guides & Pasteboard: Margins:** H 150 mm, V 25 mm \
+> **Guides & Pasteboard: Preview Background:** Light Gray \
+> **Keyboard Increments: Cursor Key:** 0.2 mm \
+> **Keyboard Increments: Size/Leading:** 0.5 pt \
+> **Keyboard Increments: Baseline Shift:** 0.1 pt \
+> **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
+> **Pages:** Allow Document Pages to Shuffle \
+> **Layers:** Ungroup Remembers Layers \
+> **Layers:** Paste Remembers Layers \
+> **Transform Reference Point:** Center \
+> **Type Options:** Use Typographer's Quotes \
+> **Type Options:** Apply Leading to Entire Paragraphs
+> </details>
+
+---
+
+### **Print**
 These are making several preparations for export and can be run in [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
 
-**`PrepareForPrint.jsx`** hides the `safe area` layer and moves the dielines and UV markings from `dielines` / `varnish` to separate spreads.
+**`PrepareForPrint.jsx`** hides the `safe area` layer and moves the dielines, white and UV markings from `dielines` / `white` / `varnish` to separate spreads.
 
 **`SafeArea.jsx`** creates a frame the size of the page margins on the `safe area` layer. It uses the `Safe area` swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
 
@@ -174,8 +166,9 @@ These are making several preparations for export and can be run in [**`batch_con
 
 These scripts detect alternative layers like *visible*, *vizibil*, *vis. area* for `safe area`, or *diecut*, *die cut*, *cut lines*, *stanze* for `dielines`.
 
-### **QR**
+---
 
+### **QR**
 Adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, manually or batch:
 
 * **Manually:** It prompts for the QR text and adds the code on the page (or in a separate file).
@@ -189,16 +182,18 @@ Adds a QR code on the bottom left corner of each page, or saves it in a separate
 
 You can use "|" for manually splitting the text into several lines.
 
-### **ZoomToSelection**
+---
 
+### **ZoomToSelection**
 Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
 * brings the selection a little closer;
 * if the cursor is in the text, zooms on the whole frame;
 * without anything selected zooms on the spread.
 
-### Miscellaneous
+---
 
+### Miscellaneous
 **`PageRatios.jsx`** calculates the ratio of each page and displays it in the upper left corner (useful for masters).
 
 **`ShowFonts.jsx`** shows all fonts used in the current document (useful with **`CleanupFonts.jsx`**).
@@ -355,4 +350,4 @@ Script | Fn | Script | Fn | Script | Fn
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • September 25, 2020.
+README.md • September 26, 2020.

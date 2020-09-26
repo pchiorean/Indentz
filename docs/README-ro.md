@@ -4,84 +4,18 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 ## Descriere
 
-### **AlignTo...** / **SetRefPointTo...**
+### **AlignTo...** și **SetRefPointTo...**
+![Align Panel](img/alignto.png) ![Transform Panel](img/setrefpoint.png)
 
-**`AlignTo...`** aliniază obiectul selectat la referința definită de **Align To**.
+**`AlignTo...`** aliniază obiectul selectat la referința definită de opțiunea **Align To**. **`ToggleAlignTo.jsx`** schimbă alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). **`ResetAlignTo.jsx`** o resetează la **Align to Selection**.
 
-![Align Panel](img/alignto.png)
-
-**`ToggleAlignTo.jsx`** schimbă alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). **`ResetAlignTo.jsx`** resetează setarea la **Align to Selection**.
-
-**`SetRefPoint...`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor din proxy:
-
-![Transform Panel](img/setrefpoint.png)
+**`SetRefPoint...`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**.
 
 Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. [Shortcuts](#shortcuts)).
 
-### **DocCleanup** / **DocDefaults**
-
-**`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează [**`CleanupFonts.jsx`**](#cleanupfonts)), și stabilește geometria paginii din numele fișierului (rulează [**`PageSizeFromFilename.jsx`**](#pagesize)):
-
-![Culori și layere](img/docdefaults.png)
-
-De asemenea, scriptul combină câteva layere:
-
-Layer | Combinat cu
-:--- | :---
-Rahmen, Vis. area, Visible area, Visible, Vizibil | `safe area`
-cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze | `dielines`
-UV, Varnish | `varnish`
-HW Logo, Logo HW, hw, WH, WHW | `HW`
-Copy, Text, TEXT, TEXTES, TXT, Type | `text and logos`
-Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
-background, BACKGROUND, BG, HG, Hintergrund | `bg`
-
-**`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.
-
-Ambele schimbă niște setări după preferințele mele.
-
-> <details><summary>Detalii</summary>
->
-> **Rulers:** Reset Zero Point \
-> **Rulers Units:** Millimeters \
-> **View:** Show Rulers \
-> **View:** Show Frame Edges \
-> **Document Intent:** Print \
-> **Transparency Blend Space:** CMYK \
-> **CMYK Profile:** ISO Coated v2 (ECI) \
-> **RGB Profile:** sRGB IEC61966-2.1 \
-> **Grids & Guides:** Show Guides \
-> **Grids & Guides:** Unlock Guides \
-> **Guides & Pasteboard: Margins:** H 150 mm, V 25 mm \
-> **Guides & Pasteboard: Preview Background:** Light Gray \
-> **Keyboard Increments: Cursor Key:** 0.2 mm \
-> **Keyboard Increments: Size/Leading:** 0.5 pt \
-> **Keyboard Increments: Baseline Shift:** 0.1 pt \
-> **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
-> **Pages:** Allow Document Pages to Shuffle \
-> **Layers:** Ungroup Remembers Layers \
-> **Layers:** Paste Remembers Layers \
-> **Transform Reference Point:** Center \
-> **Type Options:** Use Typographer's Quotes \
-> **Type Options:** Apply Leading to Entire Paragraphs
-> </details>
-
-### **CleanupFonts**
-
-Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). Prima linie (capul de tabel) și liniile care încep cu ";" sunt ignorate.
-
-Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă a fonturilor pentru copy-paste în **`CleanupFonts.txt`**.
-
-### **CleanupLabels**
-
-Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **`CleanupLabels.jsx`** șterge toate etichetele din document (dacă nu e selectat nimic) sau din elementele selectate.
-
-### **CleanupSwatches**
-
-Convertește swatch&#x2011;urile RGB la CMYK, elimină duplicatele, le redenumește după formula "C= M= Y= K=" și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
+---
 
 ### **FitTo...**
-
 Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame&#x2011;urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într&#x2011;un *clipping frame* și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.
 
 **`FitToPage...`** constrânge dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. **`FitToSpread...`** face același lucru pentru paginile grupate într&#x2011;un spread.
@@ -91,7 +25,6 @@ Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Fr
 **`FitUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
 ### **ScaleTo...**
-
 Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar.
 
 **`ScaleToPageSize.jsx`** și **`ScaleToPageMargins.jsx`** scalează la dimensiunile paginii sau marginii.
@@ -99,7 +32,6 @@ Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează 
 Variantele **`H`** (height) și **`W`** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
 
 ### **PageSize...**
-
 **`PageSizeFromFilename.jsx`** redimensionează paginile documentului în funcție de numele fișierului:
 
 Fișier | Dimensiune | Safe area | Bleed
@@ -118,7 +50,6 @@ Fișier | Dimensiune | Safe area | Bleed
 **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
 ### **TextAutosize**
-
 "Strânge" chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
 
 <!--
@@ -162,11 +93,72 @@ Fișier | Dimensiune | Safe area | Bleed
 
 Dacă textul are un singur rând, **Auto-Sizing Type** va fi setat *Height and width*. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width*.
 
-### **Print**
+---
 
+### **CleanupFonts**
+Înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). Prima linie (capul de tabel) și liniile care încep cu ";" sunt ignorate.
+
+Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă a fonturilor pentru copy-paste în **`CleanupFonts.txt`**.
+
+### **CleanupLabels**
+Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **`CleanupLabels.jsx`** șterge toate etichetele din document (dacă nu e selectat nimic) sau doar din elementele selectate.
+
+### **CleanupSwatches**
+Convertește swatch&#x2011;urile RGB la CMYK, elimină duplicatele, le redenumește după formula "C= M= Y= K=" și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
+
+### **DocCleanup** și **DocDefaults**
+**`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.
+
+**`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează **`CleanupFonts.jsx`**), și stabilește geometria paginii din numele fișierului (rulează **`PageSizeFromFilename.jsx`**).
+
+![Culori și layere](img/docdefaults.png)
+
+De asemenea, scriptul combină câteva layere:
+
+Layer | Combinat cu
+:--- | :---
+Rahmen, Vis. area, Visible area, Visible, Vizibil | `safe area`
+cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze | `dielines`
+UV, Varnish | `varnish`
+HW Logo, Logo HW, hw, WH, WHW | `HW`
+Copy, Text, TEXT, TEXTES, TXT, Type | `text and logos`
+Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
+background, BACKGROUND, BG, HG, Hintergrund | `bg`
+
+Ambele scripturi schimbă niște setări după preferințele mele.
+
+> <details><summary>Detalii</summary>
+>
+> **Rulers:** Reset Zero Point \
+> **Rulers Units:** Millimeters \
+> **View:** Show Rulers \
+> **View:** Show Frame Edges \
+> **Document Intent:** Print \
+> **Transparency Blend Space:** CMYK \
+> **CMYK Profile:** ISO Coated v2 (ECI) \
+> **RGB Profile:** sRGB IEC61966-2.1 \
+> **Grids & Guides:** Show Guides \
+> **Grids & Guides:** Unlock Guides \
+> **Guides & Pasteboard: Margins:** H 150 mm, V 25 mm \
+> **Guides & Pasteboard: Preview Background:** Light Gray \
+> **Keyboard Increments: Cursor Key:** 0.2 mm \
+> **Keyboard Increments: Size/Leading:** 0.5 pt \
+> **Keyboard Increments: Baseline Shift:** 0.1 pt \
+> **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
+> **Pages:** Allow Document Pages to Shuffle \
+> **Layers:** Ungroup Remembers Layers \
+> **Layers:** Paste Remembers Layers \
+> **Transform Reference Point:** Center \
+> **Type Options:** Use Typographer's Quotes \
+> **Type Options:** Apply Leading to Entire Paragraphs
+> </details>
+
+---
+
+### **Print**
 Acestea fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
 
-**`PrepareForPrint.jsx`** ascunde layerul `safe area` și mută ștanțele și marcajele pentru lac UV de pe `dielines` / `varnish` pe spreaduri separate.
+**`PrepareForPrint.jsx`** ascunde layerul `safe area` și mută ștanțele și marcajele pentru alb și lac UV de pe `dielines` / `white` / `varnish` pe spreaduri separate.
 
 **`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Folosește swatch&#x2011;ul `Safe area`, care dacă nu există va fi creat cu valoarea "C=0 M=100 Y=0 K=0".
 
@@ -174,8 +166,9 @@ Acestea fac câteva pregătiri pentru export și pot fi rulate în [**`batch_con
 
 Scripturile acestea detectează layere alternative gen *visible*, *vizibil*, *vis. area* pentru `safe area`, sau *diecut*, *die cut*, *cut lines*, *stanze* pentru `dielines`.
 
-### **QR**
+---
 
+### **QR**
 Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într&#x2011;un fișier separat. Are două moduri de operare, manual sau batch:
 
 * **Manual:** Solicită codul și îl adaugă pe pagină (sau într&#x2011;un fișier separat).
@@ -189,16 +182,18 @@ Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvea
 
 Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
 
-### **ZoomToSelection**
+---
 
+### **ZoomToSelection**
 Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
 
 * aduce selecția puțin mai aproape;
 * dacă cursorul e în text, face zoom la întreg cadrul;
 * fără nimic selectat face vizibil întreg spreadul.
 
-### Diverse
+---
 
+### Diverse
 **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus (util pentru mastere).
 
 **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`CleanupFonts.jsx`**).
@@ -355,4 +350,4 @@ Script | Fn | Script | Fn | Script | Fn
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți&#x2011;mi un e&#x2011;mail la \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 25 septembrie 2020.
+README-ro.md • 26 septembrie 2020.

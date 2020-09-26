@@ -20,19 +20,113 @@
 	<h1 id="indentz">Indentz</h1>
 	<p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (o sugestie de configurare găsiți în secțiunea <a href="#shortcuts">Shortcuts</a>). Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
 
-	<h2 id="descriere">Descriere</h2>
-	<h3 id="alignto"><strong>AlignTo...</strong> / <strong>SetRefPointTo...</strong></h3>
-	<p><strong><code>AlignTo...</code></strong> aliniază obiectul selectat la referința definită de <strong>Align To</strong>.</p>
-	<p><img src="img/alignto.png" alt="Align Panel"></p>
-	<p><strong><code>ToggleAlignTo.jsx</code></strong> schimbă alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). <strong><code>ResetAlignTo.jsx</code></strong> resetează setarea la <strong>Align to Selection</strong>.</p>
-	<p><strong><code>SetRefPoint...</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor din proxy:</p>
-	<p><img src="img/setrefpoint.png" alt="Transform Panel"></p>
-	<p>Ambele seturi ar trebui alocate tastaturii numerice pentru o utilizare ușoară (v. <a href="#shortcuts">Shortcuts</a>).</p>
-	<h3 id="doccleanup--docdefaults"><strong>DocCleanup</strong> / <strong>DocDefaults</strong></h3>
-	<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează <a href="#cleanupfonts"><strong><code>CleanupFonts.jsx</code></strong></a>), și stabilește geometria paginii din numele fișierului (rulează <a href="#pagesize"><strong><code>PageSizeFromFilename.jsx</code></strong></a>):</p>
+	<h2 id="description">Descriere</h2>
+	<h3 id="alignto"><strong>AlignTo...</strong> și <strong>SetRefPointTo...</strong></h3>
+	<p><img src="img/alignto.png" alt="Align Panel"> <img src="img/setrefpoint.png" alt="Transform Panel"></p>
+	<p><strong><code>AlignTo...</code></strong> aliniază obiectul selectat la referința definită de opțiunea <strong>Align To</strong>. <strong><code>ToggleAlignTo.jsx</code></strong> schimbă alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). <strong><code>ResetAlignTo.jsx</code></strong> o resetează la <strong>Align to Selection</strong>.</p>
+	<p><strong><code>SetRefPoint...</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta <strong>Transform</strong>.</p>
+	<p>Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. <a href="#shortcuts">Shortcuts</a>).</p>
+	<hr>
+	<h3 id="fitto"><strong>FitTo...</strong></h3>
+	<p>Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un <em>clipping frame</em> și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.</p>
+	<p><strong><code>FitToPage...</code></strong> constrânge dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. <strong><code>FitToSpread...</code></strong> face același lucru pentru paginile grupate într‑un spread.</p>
+	<p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la bleedul paginii sau ale spreadului (util, de exemplu, pentru imaginea de background).</p>
+	<p><strong><code>FitUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
+
+	<h3 id="scaleto"><strong>ScaleTo...</strong></h3>
+	<p>Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar. </p>
+	<p><strong><code>ScaleToPageSize.jsx</code></strong> și <strong><code>ScaleToPageMargins.jsx</code></strong> scalează la dimensiunile paginii sau marginii.</p>
+	<p>Variantele <strong><code>H</code></strong> (height) și <strong><code>W</code></strong> (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.</p>
+
+	<h3 id="pagesize"><strong>PageSize...</strong></h3>
+	<p><strong><code>PageSizeFromFilename.jsx</code></strong> redimensionează paginile documentului în funcție de numele fișierului:</p>
+	<p><table>
+		<thead>
+			<tr>
+				<th style="text-align:left">Fișier</th>
+				<th style="text-align:center">Dimensiune</th>
+				<th style="text-align:center">Safe area</th>
+				<th style="text-align:center">Bleed</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td style="text-align:left">
+					<strong>Filename1_<code>1400x400</code>_<code>700x137</code>_<code>5</code>mm_QR.indd</strong></td>
+				<td style="text-align:center">1400x400</td>
+				<td style="text-align:center">700x137</td>
+				<td style="text-align:center">5</td>
+			</tr>
+			<tr>
+				<td style="text-align:left">
+					<strong>Filename2_<code>597x517</code>_<code>577x500.5</code>_<code>3</code>mm V4_QR.indd</strong>
+				</td>
+				<td style="text-align:center">597x517</td>
+				<td style="text-align:center">577x500.5</td>
+				<td style="text-align:center">3</td>
+			</tr>
+		</tbody>
+	</table></p>
+	<blockquote>
+		<details>
+			<summary>Detalii</summary>
+			<p>Caută în numele fișierului perechi de numere de genul "000x000" (unde "000" înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de "mm" sau "cm"). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. "000x000_000x000"), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.</p>
+		</details>
+	</blockquote>
+	<p><strong><code>PageSizeFromMargins.jsx</code></strong> redimensionează fiecare pagină la marginile acesteia.</p>
+	<p><strong><code>PageSizeFromSelection.jsx</code></strong> redimensionează pagina curentă la obiectele selectate (similar cu <strong>Artboards &gt; Fit to Selected Art</strong> din Illustrator).</p>
+	<p><strong><code>PageMarginsFromSelection.jsx</code></strong> setează marginile paginii la dimensiunile selecției.</p>
+
+	<h3 id="textautosize"><strong>TextAutosize</strong></h3>
+	<p>&quot;Strânge&quot; chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând <strong>Paragraph Alignment</strong> pentru axa orizontală și <strong>Text Frame Options &gt; Vertical Justification</strong> pentru axa verticală:</p>
+	<p><table>
+		<thead>
+			<tr>
+				<th style="text-align:center"></th>
+				<th style="text-align:center"><img src="img/paragraphalign-L.png" alt="¶ Align left"></th>
+				<th style="text-align:center"><img src="img/paragraphalign-C.png" alt="¶ Align center"></th>
+				<th style="text-align:center"><img src="img/paragraphalign-R.png" alt="¶ Align right"></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th style="text-align:center"><img src="img/verticaljustification-T.png" alt="Vertical Justification Top"></th>
+				<td style="text-align:center"><img src="img/textautosize-TL.png" alt="top-left"></td>
+				<td style="text-align:center"><img src="img/textautosize-TC.png" alt="top-center"></td>
+				<td style="text-align:center"><img src="img/textautosize-TR.png" alt="top-right"></td>
+			</tr>
+			<tr>
+				<th style="text-align:center"><img src="img/verticaljustification-C.png" alt="Vertical Justification Center"></th>
+				<td style="text-align:center"><img src="img/textautosize-CL.png" alt="center-left"></td>
+				<td style="text-align:center"><img src="img/textautosize-C.png" alt="center"></td>
+				<td style="text-align:center"><img src="img/textautosize-CR.png" alt="center-right"></td>
+			</tr>
+			<tr>
+				<th style="text-align:center"><img src="img/verticaljustification-B.png" alt="Vertical Justification Bottom"></th>
+				<td style="text-align:center"><img src="img/textautosize-BL.png" alt="bottom-left"></td>
+				<td style="text-align:center"><img src="img/textautosize-BC.png" alt="bottom-center"></td>
+				<td style="text-align:center"><img src="img/textautosize-BR.png" alt="bottom-right"></td>
+			</tr>
+		</tbody>
+	</table></p>
+	<p>Dacă textul are un singur rând, <strong>Auto-Sizing Type</strong> va fi setat <em>Height and width</em>. Dacă are mai multe rânduri, prima rulare îl va seta <em>Height only</em>, a doua <em>Height and width</em>.</p>
+	<hr>
+	<h3 id="cleanupfonts"><strong>CleanupFonts</strong></h3>
+	<p>Înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV <em>(tab-separated values)</em> cu 4 coloane, cu același nume ca scriptul (<a href="../cleanup/CleanupFonts.txt"><strong><code>CleanupFonts.txt</code></strong></a>). Prima linie (capul de tabel) și liniile care încep cu ";" sunt ignorate.</p>
+	<p>Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> pentru a obține o listă a fonturilor pentru copy-paste în <strong><code>CleanupFonts.txt</code></strong>.</p>
+
+	<h3 id="cleanuplabels"><strong>CleanupLabels</strong></h3>
+	<p>Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. <strong><code>CleanupLabels.jsx</code></strong> șterge toate etichetele din document (dacă nu e selectat nimic) sau doar din elementele selectate.</p>
+
+	<h3 id="cleanupswatches"><strong>CleanupSwatches</strong></h3>
+	<p>Convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula &quot;C= M= Y= K=&quot; și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
+
+	<h3 id="doccleanup"><strong>DocCleanup</strong> and <strong>DocDefaults</strong></h3>
+	<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.</p>
+	<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează <a href="#cleanupfonts"><strong><code>CleanupFonts.jsx</code></strong></a>), și stabilește geometria paginii din numele fișierului (rulează <a href="#pagesize"><strong><code>PageSizeFromFilename.jsx</code></strong></a>).</p>
 	<p><img src="img/docdefaults.png" alt="Culori și layere"></p>
 	<p>De asemenea, scriptul combină câteva layere:</p>
-	<table>
+	<p><table>
 		<thead>
 			<tr>
 				<th style="text-align:left">Layer</th>
@@ -69,9 +163,8 @@
 				<td style="text-align:left"><code>bg</code></td>
 			</tr>
 		</tbody>
-	</table>
-	<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.</p>
-	<p>Ambele schimbă niște setări după preferințele mele.</p>
+	</table></p>
+	<p>Ambele scripturi schimbă niște setări după preferințele mele.</p>
 	<blockquote>
 		<details>
 			<summary>Detalii</summary>
@@ -99,109 +192,14 @@
 				<strong>Type Options:</strong> Apply Leading to Entire Paragraphs</p>
 		</details>
 	</blockquote>
-
-	<h3 id="cleanupfonts"><strong>CleanupFonts</strong></h3>
-	<p>Înlocuiește unele fonturi lipsă sau nedorite cu echivalentele lor. Lista este un fișier TSV <em>(tab-separated values)</em> cu 4 coloane, cu același nume ca scriptul (<a href="../cleanup/CleanupFonts.txt"><strong><code>CleanupFonts.txt</code></strong></a>). Prima linie (capul de tabel) și liniile care încep cu ";" sunt ignorate.</p>
-	<p>Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> pentru a obține o listă a fonturilor pentru copy-paste în <strong><code>CleanupFonts.txt</code></strong>.</p>
-
-	<h3 id="cleanuplabels"><strong>CleanupLabels</strong></h3>
-	<p>Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. <strong><code>CleanupLabels.jsx</code></strong> șterge toate etichetele din document (dacă nu e selectat nimic) sau din elementele selectate.</p>
-
-	<h3 id="cleanupswatches"><strong>CleanupSwatches</strong></h3>
-	<p>Convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula &quot;C= M= Y= K=&quot; și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
-
-	<h3 id="fitto"><strong>FitTo...</strong></h3>
-	<p>Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un <em>clipping frame</em> și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.</p>
-	<p><strong><code>FitToPage...</code></strong> constrânge dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. <strong><code>FitToSpread...</code></strong> face același lucru pentru paginile grupate într‑un spread.</p>
-	<p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la bleedul paginii sau ale spreadului (util, de exemplu, pentru imaginea de background).</p>
-	<p><strong><code>FitUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
-
-	<h3 id="scaleto"><strong>ScaleTo...</strong></h3>
-	<p>Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar. </p>
-	<p><strong><code>ScaleToPageSize.jsx</code></strong> și <strong><code>ScaleToPageMargins.jsx</code></strong> scalează la dimensiunile paginii sau marginii.</p>
-	<p>Variantele <strong><code>H</code></strong> (height) și <strong><code>W</code></strong> (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.</p>
-
-	<h3 id="pagesize"><strong>PageSize...</strong></h3>
-	<p><strong><code>PageSizeFromFilename.jsx</code></strong> redimensionează paginile documentului în funcție de numele
-		fișierului:</p>
-	<table>
-		<thead>
-			<tr>
-				<th style="text-align:left">Fișier</th>
-				<th style="text-align:center">Dimensiune</th>
-				<th style="text-align:center">Safe area</th>
-				<th style="text-align:center">Bleed</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td style="text-align:left">
-					<strong>Filename1_<code>1400x400</code>_<code>700x137</code>_<code>5</code>mm_QR.indd</strong></td>
-				<td style="text-align:center">1400x400</td>
-				<td style="text-align:center">700x137</td>
-				<td style="text-align:center">5</td>
-			</tr>
-			<tr>
-				<td style="text-align:left">
-					<strong>Filename2_<code>597x517</code>_<code>577x500.5</code>_<code>3</code>mm V4_QR.indd</strong>
-				</td>
-				<td style="text-align:center">597x517</td>
-				<td style="text-align:center">577x500.5</td>
-				<td style="text-align:center">3</td>
-			</tr>
-		</tbody>
-	</table>
-	<blockquote>
-		<details>
-			<summary>Detalii</summary>
-			<p>Caută în numele fișierului perechi de numere de genul "000x000" (unde "000" înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de "mm" sau "cm"). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. "000x000_000x000"), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.</p>
-		</details>
-	</blockquote>
-	<p><strong><code>PageSizeFromMargins.jsx</code></strong> redimensionează fiecare pagină la marginile acesteia.</p>
-	<p><strong><code>PageSizeFromSelection.jsx</code></strong> redimensionează pagina curentă la obiectele selectate (similar cu <strong>Artboards &gt; Fit to Selected Art</strong> din Illustrator).</p>
-	<p><strong><code>PageMarginsFromSelection.jsx</code></strong> setează marginile paginii la dimensiunile selecției.</p>
-
-	<h3 id="textautosize"><strong>TextAutosize</strong></h3>
-	<p>&quot;Strânge&quot; chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând <strong>Paragraph Alignment</strong> pentru axa orizontală și <strong>Text Frame Options &gt; Vertical Justification</strong> pentru axa verticală:</p>
-	<table>
-		<thead>
-			<tr>
-				<th style="text-align:center"></th>
-				<th style="text-align:center"><img src="img/paragraphalign-L.png" alt="¶ Align left"></th>
-				<th style="text-align:center"><img src="img/paragraphalign-C.png" alt="¶ Align center"></th>
-				<th style="text-align:center"><img src="img/paragraphalign-R.png" alt="¶ Align right"></th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th style="text-align:center"><img src="img/verticaljustification-T.png" alt="Vertical Justification Top"></th>
-				<td style="text-align:center"><img src="img/textautosize-TL.png" alt="top-left"></td>
-				<td style="text-align:center"><img src="img/textautosize-TC.png" alt="top-center"></td>
-				<td style="text-align:center"><img src="img/textautosize-TR.png" alt="top-right"></td>
-			</tr>
-			<tr>
-				<th style="text-align:center"><img src="img/verticaljustification-C.png" alt="Vertical Justification Center"></th>
-				<td style="text-align:center"><img src="img/textautosize-CL.png" alt="center-left"></td>
-				<td style="text-align:center"><img src="img/textautosize-C.png" alt="center"></td>
-				<td style="text-align:center"><img src="img/textautosize-CR.png" alt="center-right"></td>
-			</tr>
-			<tr>
-				<th style="text-align:center"><img src="img/verticaljustification-B.png" alt="Vertical Justification Bottom"></th>
-				<td style="text-align:center"><img src="img/textautosize-BL.png" alt="bottom-left"></td>
-				<td style="text-align:center"><img src="img/textautosize-BC.png" alt="bottom-center"></td>
-				<td style="text-align:center"><img src="img/textautosize-BR.png" alt="bottom-right"></td>
-			</tr>
-		</tbody>
-	</table>
-	<p>Dacă textul are un singur rând, <strong>Auto-Sizing Type</strong> va fi setat <em>Height and width</em>. Dacă are mai multe rânduri, prima rulare îl va seta <em>Height only</em>, a doua <em>Height and width</em>.</p>
-
+	<hr>
 	<h3 id="print"><strong>Print</strong></h3>
 	<p>Acestea fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>.</p>
-	<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde layerul <code>safe area</code> și mută ștanțele și marcajele pentru lac UV de pe <code>dielines</code> / <code>varnish</code> pe spreaduri separate.</p>
+	<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde layerul <code>safe area</code> și mută ștanțele și marcajele pentru alb și lac UV de pe <code>dielines</code> / <code>white</code> / <code>varnish</code> pe spreaduri separate.</p>
 	<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe layerul <code>safe area</code>. Folosește swatch‑ul <code>Safe area</code>, care dacă nu există va fi creat cu valoarea &quot;C=0 M=100 Y=0 K=0&quot;.</p>
 	<p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <code>safe area</code>.</p>
 	<p>Scripturile acestea detectează layere alternative gen <em>visible</em>, <em>vizibil</em>, <em>vis. area</em> pentru <code>safe area</code>, sau <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> pentru <code>dielines</code>.</p>
-
+	<hr>
 	<h3 id="qr"><strong>QR</strong></h3>
 	<p>Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într‑un fișier separat. Are două moduri de operare, manual sau batch:</p>
 	<ul>
@@ -209,9 +207,8 @@
 			<p><strong>Manual:</strong> Solicită codul și îl adaugă pe pagină (sau într‑un fișier separat).</p>
 		</li>
 		<li>
-			<p><strong>Batch:</strong> Dacă în același folder există un fișier numit
-				<strong><code>QR.txt</code></strong>, scriptul va genera fișiere QR cu numele și codurile din acesta. Trebuie să fie un TSV <em>(tab-separated values)</em>; prima coloană e numele fișierului QR, a doua codul. Prima linie (antetul) e ignorată:</p>
-			<table>
+			<p><strong>Batch:</strong> Dacă în același folder există un fișier numit <strong><code>QR.txt</code></strong>, scriptul va genera fișiere QR cu numele și codurile din acesta. Trebuie să fie un TSV <em>(tab-separated values)</em>; prima coloană e numele fișierului QR, a doua codul. Prima linie (antetul) e ignorată:</p>
+			<p><table>
 				<thead>
 					<tr>
 						<th style="text-align:left">Fișier QR</th>
@@ -228,28 +225,28 @@
 						<td style="text-align:left">FILE2 597x517_577x500.5 V4</td>
 					</tr>
 				</tbody>
-			</table>
+			</table></p>
 		</li>
 	</ul>
 	<p>Puteți insera &quot;|&quot; pentru împărțirea manuală a textului în mai multe rânduri.</p>
-
-	<h3 id="zoomtoselection"><strong>ZoomToSelection</strong></h3>
+	<hr>
+	<h3 id="zoom"><strong>ZoomToSelection</strong></h3>
 	<p>Asemănător cu <strong>Fit Selection in Window</strong> (⌥⌘=), dar cu câteva îmbunătățiri:</p>
 	<ul>
 		<li>aduce selecția puțin mai aproape;</li>
 		<li>dacă cursorul e în text, face zoom la întreg cadrul;</li>
 		<li>fără nimic selectat face vizibil întreg spreadul.</li>
 	</ul>
-
-	<h3 id="diverse">Diverse</h3>
+	<hr>
+	<h3 id="misc">Diverse</h3>
 	<p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus (util pentru mastere).</p>
 	<p><strong><code>ShowFonts.jsx</code></strong> afișează toate fonturile utilizate în documentul curent (util pentru <strong><code>CleanupFonts.jsx</code></strong>).</p>
 	<p><strong><code>ShowProfiles.jsx</code></strong> afișează toate profilele de culori disponibile (util când <em>credeți</em> că aveți instalat un profil de culoare).</p>
 	<p><strong><code>ShowProperties.jsx</code></strong> afișează proprietățile și metodele unui obiect selectat (util pentru depanare).</p>
 
-	<h2 id="shortcuturi">Shortcut‑uri</h2>
+	<h2 id="shortcuts">Shortcut‑uri</h2>
 	<p>Rularea unui script folosit frecvent din panoul <strong>Scripts</strong> este destul de neplăcută, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu‑i o scurtătură din <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>. Configurația mea este următoarea:</p>
-	<table>
+	<p><table>
 		<tbody>
 			<th colspan="6">Align</th>
 			<tr>
@@ -360,18 +357,18 @@
 				<td style="text-align:right">F4</td>
 			</tr>
 		</tbody>
-	</table>
+	</table></p>
 		
-	<h2 id="instalare">Instalare</h2>
+	<h2 id="install">Instalare</h2>
 	<ol>
 		<li>Deschideți <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
 		<li>Faceți clic dreapta pe folderul <strong>User</strong> și selectați <strong>Reveal in Finder/Explorer</strong>.</li>
 		<li>Copiați fișierele în acest folder.</li>
 	</ol>
 
-	<h2 id="licență">Licență</h2>
+	<h2 id="license">Licență</h2>
 	<p>Codul este publicat sub licența MIT (<a href="../LICENSE.txt">LICENSE.txt</a>). Trimiteți‑mi un e‑mail la &lt;jpeg AT basement.ro&gt; sau <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
-	<p>README-ro.md • 25 septembrie 2020.</p>
+	<p>README-ro.md • 26 septembrie 2020.</p>
 
 </body>
 
