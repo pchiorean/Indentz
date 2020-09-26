@@ -204,7 +204,6 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplăcută, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu&#x2011;i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**. Configurația mea este următoarea:
 
-<!--
 | Align                   |       | Proxy                   |       | Fit/Scale                        |       | Cleanup                   |     |
 | :---------------------- | ----: | :---------------------- | ----: | :------------------------------- | ----: | :------------------------ | --: |
 | **`AlignToTL.jsx`**     |  Num7 | **`SetRefPointTL.jsx`** | ⌃Num7 | **`FitToPage.jsx`**              |   F11 | **`DocCleanup.jsx`**      |  F2 |
@@ -218,130 +217,6 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 | **`AlignToBR.jsx`**     |  Num3 | **`SetRefPointBR.jsx`** | ⌃Num3 | **`ScaleToPageSize.jsx`**        |    F5 |                           |
 | **`ToggleAlignTo.jsx`** |  Num0 |                         |       | **`ScaleToPageMargins.jsx`**     |   ⌥F5 |                           |
 | **`ResetAlignTo.jsx`**  | ⌃Num0 |                         |       | **`TextAutosize.jsx`**           |    F6 |                           |
--->
-
-<table>
-	<tr>
-		<td style="text-align:left"><strong>Align</strong></td>
-		<td style="text-align:right"></td>
-		<td style="text-align:left"><strong>Proxy</strong></td>
-		<td style="text-align:right"></td>
-		<td style="text-align:left"><strong>Fit/Scale</strong></td>
-		<td style="text-align:right"></td>
-		<td style="text-align:left"><strong>Cleanup</strong></td>
-		<td style="text-align:right"></td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>AlignToTL.jsx</code></strong></td>
-		<td style="text-align:right">Num7</td>
-		<td style="text-align:left"><strong><code>SetRefPointTL.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num7</td>
-		<td style="text-align:left"><strong><code>FitToPage.jsx</code></strong></td>
-		<td style="text-align:right">F11</td>
-		<td style="text-align:left"><strong><code>DocCleanup.jsx</code></strong></td>
-		<td style="text-align:right">F2</td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>AlignToL.jsx</code></strong></td>
-		<td style="text-align:right">Num4</td>
-		<td style="text-align:left"><strong><code>SetRefPointL.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num4</td>
-		<td style="text-align:left"><strong><code>FitToPageMargins.jsx</code></strong></td>
-		<td style="text-align:right">⌥F11</td>
-		<td style="text-align:left"><strong><code>DocDefaults.jsx</code></strong></td>
-		<td style="text-align:right">⌥F2</td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>AlignToBL.jsx</code></strong></td>
-		<td style="text-align:right">Num1</td>
-		<td style="text-align:left"><strong><code>SetRefPointBL.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num1</td>
-		<td style="text-align:left"><strong><code>FitToPageBleed.jsx</code></strong></td>
-		<td style="text-align:right">⇧F11</td>
-		<td style="text-align:left"><strong><code>CleanupSwatches.jsx</code></strong></td>
-		<td style="text-align:right">⇧F2</td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>AlignToT.jsx</code></strong></td>
-		<td style="text-align:right">Num8</td>
-		<td style="text-align:left"><strong><code>SetRefPointT.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num8</td>
-		<td style="text-align:left"><strong><code>FitToPageBleedForced.jsx</code></strong></td>
-		<td style="text-align:right">⇧⌘F11</td>
-		<td style="text-align:left"><strong>Other</strong></td>
-		<td style="text-align:right"></td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>AlignToC.jsx</code></strong></td>
-		<td style="text-align:right">Num5</td>
-		<td style="text-align:left"><strong><code>SetRefPointC.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num5</td>
-		<td style="text-align:left"><strong><code>FitToSpread.jsx</code></strong></td>
-		<td style="text-align:right">F12</td>
-		<td style="text-align:left"><strong><code>QR.jsx</code></strong></td>
-		<td style="text-align:right">F9</td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>AlignToB.jsx</code></strong></td>
-		<td style="text-align:right">Num2</td>
-		<td style="text-align:left"><strong><code>SetRefPointB.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num2</td>
-		<td style="text-align:left"><strong><code>FitToSpreadMargins.jsx</code></strong></td>
-		<td style="text-align:right">⌥F12</td>
-		<td style="text-align:left"><strong><code>ZoomToSelection.jsx</code></strong></td>
-		<td style="text-align:right">F4</td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>AlignToTR.jsx</code></strong></td>
-		<td style="text-align:right">Num9</td>
-		<td style="text-align:left"><strong><code>SetRefPointTR.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num9</td>
-		<td style="text-align:left"><strong><code>FitToSpreadBleed.jsx</code></strong></td>
-		<td style="text-align:right">⇧F12</td>
-		<td style="text-align:left"></td>
-		<td style="text-align:right"></td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>AlignToR.jsx</code></strong></td>
-		<td style="text-align:right">Num6</td>
-		<td style="text-align:left"><strong><code>SetRefPointR.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num6</td>
-		<td style="text-align:left"><strong><code>FitToSpreadBleedForced.jsx</code></strong></td>
-		<td style="text-align:right">⇧⌘F12</td>
-		<td style="text-align:left"></td>
-		<td style="text-align:right"></td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>AlignToBR.jsx</code></strong></td>
-		<td style="text-align:right">Num3</td>
-		<td style="text-align:left"><strong><code>SetRefPointBR.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num3</td>
-		<td style="text-align:left"><strong><code>ScaleToPageSize.jsx</code></strong></td>
-		<td style="text-align:right">F5</td>
-		<td style="text-align:left"></td>
-		<td style="text-align:right"></td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>ToggleAlignTo.jsx</code></strong></td>
-		<td style="text-align:right">Num0</td>
-		<td style="text-align:left"></td>
-		<td style="text-align:right"></td>
-		<td style="text-align:left"><strong><code>ScaleToPageMargins.jsx</code></strong></td>
-		<td style="text-align:right">⌥F5</td>
-		<td style="text-align:left"></td>
-		<td style="text-align:right"></td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>ResetAlignTo.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num0</td>
-		<td style="text-align:left"></td>
-		<td style="text-align:right"></td>
-		<td style="text-align:left"><strong><code>TextAutosize.jsx</code></strong></td>
-		<td style="text-align:right">F6</td>
-		<td style="text-align:left"></td>
-		<td style="text-align:right"></td>
-	</tr>
-</table>
 
 ## Instalare
 
