@@ -61,34 +61,34 @@ Fits the frame to the text and sets it to auto-size. You control the auto-sizing
 -->
 
 <table>
-	<thead>
-		<tr>
-			<th style="text-align:center"></th>
-			<th style="text-align:center"><img src="img/paragraphalign-L.png" alt="¶ Align left"></th>
-			<th style="text-align:center"><img src="img/paragraphalign-C.png" alt="¶ Align center"></th>
-			<th style="text-align:center"><img src="img/paragraphalign-R.png" alt="¶ Align right"></th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<th style="text-align:center"><img src="img/verticaljustification-T.png" alt="Vertical Justification Top"></th>
-			<td style="text-align:center"><img src="img/textautosize-TL.png" alt="top-left"></td>
-			<td style="text-align:center"><img src="img/textautosize-TC.png" alt="top-center"></td>
-			<td style="text-align:center"><img src="img/textautosize-TR.png" alt="top-right"></td>
-		</tr>
-		<tr>
-			<th style="text-align:center"><img src="img/verticaljustification-C.png" alt="Vertical Justification Center"></th>
-			<td style="text-align:center"><img src="img/textautosize-CL.png" alt="center-left"></td>
-			<td style="text-align:center"><img src="img/textautosize-C.png" alt="center"></td>
-			<td style="text-align:center"><img src="img/textautosize-CR.png" alt="center-right"></td>
-		</tr>
-		<tr>
-			<th style="text-align:center"><img src="img/verticaljustification-B.png" alt="Vertical Justification Bottom"></th>
-			<td style="text-align:center"><img src="img/textautosize-BL.png" alt="bottom-left"></td>
-			<td style="text-align:center"><img src="img/textautosize-BC.png" alt="bottom-center"></td>
-			<td style="text-align:center"><img src="img/textautosize-BR.png" alt="bottom-right"></td>
-		</tr>
-	</tbody>
+<thead>
+	<tr>
+		<th style="text-align:center"></th>
+		<th style="text-align:center"><img src="img/paragraphalign-L.png" alt="¶ Align left"></th>
+		<th style="text-align:center"><img src="img/paragraphalign-C.png" alt="¶ Align center"></th>
+		<th style="text-align:center"><img src="img/paragraphalign-R.png" alt="¶ Align right"></th>
+	</tr>
+</thead>
+<tbody>
+	<tr>
+		<th style="text-align:center"><img src="img/verticaljustification-T.png" alt="Vertical Justification Top"></th>
+		<td style="text-align:center"><img src="img/textautosize-TL.png" alt="top-left"></td>
+		<td style="text-align:center"><img src="img/textautosize-TC.png" alt="top-center"></td>
+		<td style="text-align:center"><img src="img/textautosize-TR.png" alt="top-right"></td>
+	</tr>
+	<tr>
+		<th style="text-align:center"><img src="img/verticaljustification-C.png" alt="Vertical Justification Center"></th>
+		<td style="text-align:center"><img src="img/textautosize-CL.png" alt="center-left"></td>
+		<td style="text-align:center"><img src="img/textautosize-C.png" alt="center"></td>
+		<td style="text-align:center"><img src="img/textautosize-CR.png" alt="center-right"></td>
+	</tr>
+	<tr>
+		<th style="text-align:center"><img src="img/verticaljustification-B.png" alt="Vertical Justification Bottom"></th>
+		<td style="text-align:center"><img src="img/textautosize-BL.png" alt="bottom-left"></td>
+		<td style="text-align:center"><img src="img/textautosize-BC.png" alt="bottom-center"></td>
+		<td style="text-align:center"><img src="img/textautosize-BR.png" alt="bottom-right"></td>
+	</tr>
+</tbody>
 </table>
 
 If the text has only one line, **Auto-Sizing Type** will be set to *Height and width*. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width*.
@@ -205,134 +205,137 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 Running a frequently used script from the **Scripts** panel is quite annoying, since every time you have to locate it, then double-click the script. You can make the process instantaneous by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts**. My configuration is the following:
 
 <!--
-Script | Fn | Script | Fn | Script | Fn
-:--- | ---: | :--- | ---: | :--- | ---:
-**`AlignToTL.jsx`** | Num7 | **`AlignToT.jsx`** | Num8 | **`AlignToTR.jsx`** | Num9
-**`AlignToL.jsx`** | Num4 | **`AlignToC.jsx`** | Num5 | **`AlignToR.jsx`** | Num6
-**`AlignToBL.jsx`** | Num1 | **`AlignToB.jsx`** | Num2 | **`AlignToBR.jsx`** | Num3
-**`ToggleAlignTo.jsx`** | Num0 | **`ResetAlignTo.jsx`** | ⌃Num0
-**`SetRefPointTL.jsx`** | ⌃Num7 | **`SetRefPointT.jsx`** | ⌃Num8 | **`SetRefPointTR.jsx`** | ⌃Num9
-**`SetRefPointL.jsx`** | ⌃Num4 | **`SetRefPointC.jsx`** | ⌃Num5 | **`SetRefPointR.jsx`** | ⌃Num6
-**`SetRefPointBL.jsx`** | ⌃Num1 | **`SetRefPointB.jsx`** | ⌃Num2 | **`SetRefPointBR.jsx`** | ⌃Num3
-**`DocCleanup.jsx`** | F2 | **`DocDefaults.jsx`** | ⌥F2 | **`CleanupSwatches.jsx`** | ⇧F2
-**`FitToPage.jsx`** | F11 | **`FitToPageMargins.jsx`** | ⌥F11 | **`FitToPageBleed.jsx`** | ⇧F11
-||||| **`FitToPageBleedForced.jsx`** | ⇧⌘F11
-**`FitToSpread.jsx`** | F12 | **`FitToSpreadMargins.jsx`** | ⌥F12 | **`FitToSpreadBleed.jsx`** | ⇧F12
-||||| **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12
-**`ScaleToPageSize.jsx`** | F5 | **`ScaleToPageMargins.jsx`** | ⌥F5
-**`TextAutosize.jsx`** | F6 | **`QR.jsx`** | F9 | **`ZoomToSelection.jsx`** | F4
+| Align                   |       | Proxy                   |       | Fit/Scale                        |       | Cleanup                   |     |
+| :---------------------- | ----: | :---------------------- | ----: | :------------------------------- | ----: | :------------------------ | --: |
+| **`AlignToTL.jsx`**     |  Num7 | **`SetRefPointTL.jsx`** | ⌃Num7 | **`FitToPage.jsx`**              |   F11 | **`DocCleanup.jsx`**      |  F2 |
+| **`AlignToL.jsx`**      |  Num4 | **`SetRefPointL.jsx`**  | ⌃Num4 | **`FitToPageMargins.jsx`**       |  ⌥F11 | **`DocDefaults.jsx`**     | ⌥F2 |
+| **`AlignToBL.jsx`**     |  Num1 | **`SetRefPointBL.jsx`** | ⌃Num1 | **`FitToPageBleed.jsx`**         |  ⇧F11 | **`CleanupSwatches.jsx`** | ⇧F2 |
+| **`AlignToT.jsx`**      |  Num8 | **`SetRefPointT.jsx`**  | ⌃Num8 | **`FitToPageBleedForced.jsx`**   | ⇧⌘F11 | **Other**                 |
+| **`AlignToC.jsx`**      |  Num5 | **`SetRefPointC.jsx`**  | ⌃Num5 | **`FitToSpread.jsx`**            |   F12 | **`QR.jsx`**              |  F9 |
+| **`AlignToB.jsx`**      |  Num2 | **`SetRefPointB.jsx`**  | ⌃Num2 | **`FitToSpreadMargins.jsx`**     |  ⌥F12 | **`ZoomToSelection.jsx`** |  F4 |
+| **`AlignToTR.jsx`**     |  Num9 | **`SetRefPointTR.jsx`** | ⌃Num9 | **`FitToSpreadBleed.jsx`**       |  ⇧F12 |                           |
+| **`AlignToR.jsx`**      |  Num6 | **`SetRefPointR.jsx`**  | ⌃Num6 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12 |                           |
+| **`AlignToBR.jsx`**     |  Num3 | **`SetRefPointBR.jsx`** | ⌃Num3 | **`ScaleToPageSize.jsx`**        |    F5 |                           |
+| **`ToggleAlignTo.jsx`** |  Num0 |                         |       | **`ScaleToPageMargins.jsx`**     |   ⌥F5 |                           |
+| **`ResetAlignTo.jsx`**  | ⌃Num0 |                         |       | **`TextAutosize.jsx`**           |    F6 |                           |
 -->
 
 <table>
+<thead>
+<tr>
+	<th style="text-align:left">Align</th>
+	<th style="text-align:right"></th>
+	<th style="text-align:left">Proxy</th>
+	<th style="text-align:right"></th>
+	<th style="text-align:left">Fit/Scale</th>
+	<th style="text-align:right"></th>
+	<th style="text-align:left">Cleanup</th>
+	<th style="text-align:right"></th>
+</tr>
+</thead>
 <tbody>
-	<th colspan="6">Align</th>
-	<tr>
-		<td style="text-align:left"><strong><code>AlignToTL.jsx</code></strong></td>
-		<td style="text-align:right">Num7</td>
-		<td style="text-align:left"><strong><code>AlignToT.jsx</code></strong></td>
-		<td style="text-align:right">Num8</td>
-		<td style="text-align:left"><strong><code>AlignToTR.jsx</code></strong></td>
-		<td style="text-align:right">Num9</td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>AlignToL.jsx</code></strong></td>
-		<td style="text-align:right">Num4</td>
-		<td style="text-align:left"><strong><code>AlignToC.jsx</code></strong></td>
-		<td style="text-align:right">Num5</td>
-		<td style="text-align:left"><strong><code>AlignToR.jsx</code></strong></td>
-		<td style="text-align:right">Num6</td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>AlignToBL.jsx</code></strong></td>
-		<td style="text-align:right">Num1</td>
-		<td style="text-align:left"><strong><code>AlignToB.jsx</code></strong></td>
-		<td style="text-align:right">Num2</td>
-		<td style="text-align:left"><strong><code>AlignToBR.jsx</code></strong></td>
-		<td style="text-align:right">Num3</td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>ToggleAlignTo.jsx</code></strong></td>
-		<td style="text-align:right">Num0</td>
-		<td style="text-align:left"><strong><code>ResetAlignTo.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num0</td>
-		<td style="text-align:left" colspan="2"></td>
-	</tr>
-	<th colspan="6">Proxy</th>
-	<tr>
-		<td style="text-align:left"><strong><code>SetRefPointTL.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num7</td>
-		<td style="text-align:left"><strong><code>SetRefPointT.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num8</td>
-		<td style="text-align:left"><strong><code>SetRefPointTR.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num9</td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>SetRefPointL.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num4</td>
-		<td style="text-align:left"><strong><code>SetRefPointC.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num5</td>
-		<td style="text-align:left"><strong><code>SetRefPointR.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num6</td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>SetRefPointBL.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num1</td>
-		<td style="text-align:left"><strong><code>SetRefPointB.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num2</td>
-		<td style="text-align:left"><strong><code>SetRefPointBR.jsx</code></strong></td>
-		<td style="text-align:right">⌃Num3</td>
-	</tr>
-	<th colspan="6">Cleanup</th>
-	<tr>
-		<td style="text-align:left"><strong><code>DocCleanup.jsx</code></strong></td>
-		<td style="text-align:right">F2</td>
-		<td style="text-align:left"><strong><code>DocDefaults.jsx</code></strong></td>
-		<td style="text-align:right">⌥F2</td>
-		<td style="text-align:left"><strong><code>CleanupSwatches.jsx</code></strong></td>
-		<td style="text-align:right">⇧F2</td>
-	</tr>
-	<th colspan="6">Geometry • Fit</th>
-	<tr>
-		<td style="text-align:left" rowspan="2"><strong><code>FitToPage.jsx</code></strong></td>
-		<td style="text-align:right" rowspan="2">F11</td>
-		<td style="text-align:left" rowspan="2"><strong><code>FitToPageMargins.jsx</code></strong></td>
-		<td style="text-align:right" rowspan="2">⌥F11</td>
-		<td style="text-align:left"><strong><code>FitToPageBleed.jsx</code></strong></td>
-		<td style="text-align:right">⇧F11</td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>FitToPageBleedForced.jsx</code></strong></td>
-		<td style="text-align:right">⇧⌘F11</td>
-	</tr>
-	<tr>
-		<td style="text-align:left" rowspan="2"><strong><code>FitToSpread.jsx</code></strong></td>
-		<td style="text-align:right" rowspan="2">F12</td>
-		<td style="text-align:left" rowspan="2"><strong><code>FitToSpreadMargins.jsx</code></strong></td>
-		<td style="text-align:right" rowspan="2">⌥F12</td>
-		<td style="text-align:left"><strong><code>FitToSpreadBleed.jsx</code></strong></td>
-		<td style="text-align:right">⇧F12</td>
-	</tr>
-	<tr>
-		<td style="text-align:left"><strong><code>FitToSpreadBleedForced.jsx</code></strong></td>
-		<td style="text-align:right">⇧⌘F12</td>
-	</tr>
-	<th colspan="6">Geometry • Scale</th>
-	<tr>
-		<td style="text-align:left"><strong><code>ScaleToPageSize.jsx</code></strong></td>
-		<td style="text-align:right">F5</td>
-		<td style="text-align:left"><strong><code>ScaleToPageMargins.jsx</code></strong></td>
-		<td style="text-align:right">⌥F5</td>
-		<td style="text-align:left" colspan="2"></td>
-	</tr>
-	<th colspan="6">Other</th>
-	<tr>
-		<td style="text-align:left"><strong><code>TextAutosize.jsx</code></strong></td>
-		<td style="text-align:right">F6</td>
-		<td style="text-align:left"><strong><code>QR.jsx</code></strong></td>
-		<td style="text-align:right">F9</td>
-		<td style="text-align:left"><strong><code>ZoomToSelection.jsx</code></strong></td>
-		<td style="text-align:right">F4</td>
-	</tr>
+<tr>
+	<td style="text-align:left"><strong><code>AlignToTL.jsx</code></strong></td>
+	<td style="text-align:right">Num7</td>
+	<td style="text-align:left"><strong><code>SetRefPointTL.jsx</code></strong></td>
+	<td style="text-align:right">⌃Num7</td>
+	<td style="text-align:left"><strong><code>FitToPage.jsx</code></strong></td>
+	<td style="text-align:right">F11</td>
+	<td style="text-align:left"><strong><code>DocCleanup.jsx</code></strong></td>
+	<td style="text-align:right">F2</td>
+</tr>
+<tr>
+	<td style="text-align:left"><strong><code>AlignToL.jsx</code></strong></td>
+	<td style="text-align:right">Num4</td>
+	<td style="text-align:left"><strong><code>SetRefPointL.jsx</code></strong></td>
+	<td style="text-align:right">⌃Num4</td>
+	<td style="text-align:left"><strong><code>FitToPageMargins.jsx</code></strong></td>
+	<td style="text-align:right">⌥F11</td>
+	<td style="text-align:left"><strong><code>DocDefaults.jsx</code></strong></td>
+	<td style="text-align:right">⌥F2</td>
+</tr>
+<tr>
+	<td style="text-align:left"><strong><code>AlignToBL.jsx</code></strong></td>
+	<td style="text-align:right">Num1</td>
+	<td style="text-align:left"><strong><code>SetRefPointBL.jsx</code></strong></td>
+	<td style="text-align:right">⌃Num1</td>
+	<td style="text-align:left"><strong><code>FitToPageBleed.jsx</code></strong></td>
+	<td style="text-align:right">⇧F11</td>
+	<td style="text-align:left"><strong><code>CleanupSwatches.jsx</code></strong></td>
+	<td style="text-align:right">⇧F2</td>
+</tr>
+<tr>
+	<td style="text-align:left"><strong><code>AlignToT.jsx</code></strong></td>
+	<td style="text-align:right">Num8</td>
+	<td style="text-align:left"><strong><code>SetRefPointT.jsx</code></strong></td>
+	<td style="text-align:right">⌃Num8</td>
+	<td style="text-align:left"><strong><code>FitToPageBleedForced.jsx</code></strong></td>
+	<td style="text-align:right">⇧⌘F11</td>
+	<td style="text-align:left" colspan="2"><strong>Other</strong></td>
+</tr>
+<tr>
+	<td style="text-align:left"><strong><code>AlignToC.jsx</code></strong></td>
+	<td style="text-align:right">Num5</td>
+	<td style="text-align:left"><strong><code>SetRefPointC.jsx</code></strong></td>
+	<td style="text-align:right">⌃Num5</td>
+	<td style="text-align:left"><strong><code>FitToSpread.jsx</code></strong></td>
+	<td style="text-align:right">F12</td>
+	<td style="text-align:left"><strong><code>QR.jsx</code></strong></td>
+	<td style="text-align:right">F9</td>
+</tr>
+<tr>
+	<td style="text-align:left"><strong><code>AlignToB.jsx</code></strong></td>
+	<td style="text-align:right">Num2</td>
+	<td style="text-align:left"><strong><code>SetRefPointB.jsx</code></strong></td>
+	<td style="text-align:right">⌃Num2</td>
+	<td style="text-align:left"><strong><code>FitToSpreadMargins.jsx</code></strong></td>
+	<td style="text-align:right">⌥F12</td>
+	<td style="text-align:left"><strong><code>ZoomToSelection.jsx</code></strong></td>
+	<td style="text-align:right">F4</td>
+</tr>
+<tr>
+	<td style="text-align:left"><strong><code>AlignToTR.jsx</code></strong></td>
+	<td style="text-align:right">Num9</td>
+	<td style="text-align:left"><strong><code>SetRefPointTR.jsx</code></strong></td>
+	<td style="text-align:right">⌃Num9</td>
+	<td style="text-align:left"><strong><code>FitToSpreadBleed.jsx</code></strong></td>
+	<td style="text-align:right">⇧F12</td>
+	<td style="text-align:left" colspan="2"></td>
+</tr>
+<tr>
+	<td style="text-align:left"><strong><code>AlignToR.jsx</code></strong></td>
+	<td style="text-align:right">Num6</td>
+	<td style="text-align:left"><strong><code>SetRefPointR.jsx</code></strong></td>
+	<td style="text-align:right">⌃Num6</td>
+	<td style="text-align:left"><strong><code>FitToSpreadBleedForced.jsx</code></strong></td>
+	<td style="text-align:right">⇧⌘F12</td>
+	<td style="text-align:left" colspan="2"></td>
+</tr>
+<tr>
+	<td style="text-align:left"><strong><code>AlignToBR.jsx</code></strong></td>
+	<td style="text-align:right">Num3</td>
+	<td style="text-align:left"><strong><code>SetRefPointBR.jsx</code></strong></td>
+	<td style="text-align:right">⌃Num3</td>
+	<td style="text-align:left"><strong><code>ScaleToPageSize.jsx</code></strong></td>
+	<td style="text-align:right">F5</td>
+	<td style="text-align:left" colspan="2"></td>
+</tr>
+<tr>
+	<td style="text-align:left"><strong><code>ToggleAlignTo.jsx</code></strong></td>
+	<td style="text-align:right">Num0</td>
+	<td style="text-align:left" colspan="2"></td>
+	<td style="text-align:left"><strong><code>ScaleToPageMargins.jsx</code></strong></td>
+	<td style="text-align:right">⌥F5</td>
+	<td style="text-align:left" colspan="2"></td>
+</tr>
+<tr>
+	<td style="text-align:left"><strong><code>ResetAlignTo.jsx</code></strong></td>
+	<td style="text-align:right">⌃Num0</td>
+	<td style="text-align:left" colspan="2"></td>
+	<td style="text-align:left"><strong><code>TextAutosize.jsx</code></strong></td>
+	<td style="text-align:right">F6</td>
+	<td style="text-align:left" colspan="2"></td>
+</tr>
 </tbody>
 </table>
 
