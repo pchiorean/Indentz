@@ -156,15 +156,13 @@ Both scripts change some settings according to my preferences.
 ---
 
 ### **Print**
-These are making several preparations for export and can be run in [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
+Make several preparations for export; can be used with [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detect alternative layers like *visible*, *vizibil*, *vis. area* for `safe area`, or *diecut*, *die cut*, *cut lines*, *stanze* for `dielines`.
 
 **`PrepareForPrint.jsx`** hides the `safe area` layer and moves the dielines, white and UV markings from `dielines` / `white` / `varnish` to separate spreads.
 
 **`SafeArea.jsx`** creates a frame the size of the page margins on the `safe area` layer. It uses the `Safe area` swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
 
 **`SafeAreaHideLayer.jsx`** and **`SafeAreaShowLayer.jsx`** hide or show `safe area`.
-
-These scripts detect alternative layers like *visible*, *vizibil*, *vis. area* for `safe area`, or *diecut*, *die cut*, *cut lines*, *stanze* for `dielines`.
 
 ---
 

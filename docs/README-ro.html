@@ -194,11 +194,10 @@
 	</blockquote>
 	<hr>
 	<h3 id="print"><strong>Print</strong></h3>
-	<p>Acestea fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>.</p>
+	<p>Fac câteva pregătiri pentru export; pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează layere alternative gen <em>visible</em>, <em>vizibil</em>, <em>vis. area</em> pentru <code>safe area</code>, sau <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> pentru <code>dielines</code>.</p>
 	<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde layerul <code>safe area</code> și mută ștanțele și marcajele pentru alb și lac UV de pe <code>dielines</code> / <code>white</code> / <code>varnish</code> pe spreaduri separate.</p>
 	<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe layerul <code>safe area</code>. Folosește swatch‑ul <code>Safe area</code>, care dacă nu există va fi creat cu valoarea &quot;C=0 M=100 Y=0 K=0&quot;.</p>
 	<p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <code>safe area</code>.</p>
-	<p>Scripturile acestea detectează layere alternative gen <em>visible</em>, <em>vizibil</em>, <em>vis. area</em> pentru <code>safe area</code>, sau <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> pentru <code>dielines</code>.</p>
 	<hr>
 	<h3 id="qr"><strong>QR</strong></h3>
 	<p>Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într‑un fișier separat. Are două moduri de operare, manual sau batch:</p>

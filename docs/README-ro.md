@@ -156,15 +156,13 @@ Ambele scripturi schimbă niște setări după preferințele mele.
 ---
 
 ### **Print**
-Acestea fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
+Fac câteva pregătiri pentru export; pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează layere alternative gen *visible*, *vizibil*, *vis. area* pentru `safe area`, sau *diecut*, *die cut*, *cut lines*, *stanze* pentru `dielines`.
 
 **`PrepareForPrint.jsx`** ascunde layerul `safe area` și mută ștanțele și marcajele pentru alb și lac UV de pe `dielines` / `white` / `varnish` pe spreaduri separate.
 
 **`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Folosește swatch&#x2011;ul `Safe area`, care dacă nu există va fi creat cu valoarea "C=0 M=100 Y=0 K=0".
 
 **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează `safe area`.
-
-Scripturile acestea detectează layere alternative gen *visible*, *vizibil*, *vis. area* pentru `safe area`, sau *diecut*, *die cut*, *cut lines*, *stanze* pentru `dielines`.
 
 ---
 
