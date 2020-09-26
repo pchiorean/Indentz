@@ -223,14 +223,10 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplÄ
 <table>
 <thead>
 <tr>
-	<th style="text-align:left">Align</th>
-	<th style="text-align:right"></th>
-	<th style="text-align:left">Proxy</th>
-	<th style="text-align:right"></th>
-	<th style="text-align:left">Fit/Scale</th>
-	<th style="text-align:right"></th>
-	<th style="text-align:left">Cleanup</th>
-	<th style="text-align:right"></th>
+	<th style="text-align:center" colspan="2">Align</th>
+	<th style="text-align:center" colspan="2">Proxy</th>
+	<th style="text-align:center" colspan="2">Fit/Scale</th>
+	<th style="text-align:center" colspan="2">Cleanup</th>
 </tr>
 </thead>
 <tbody>
@@ -271,7 +267,7 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplÄ
 	<td style="text-align:right">âŒƒNum8</td>
 	<td style="text-align:left"><strong><code>FitToPageBleedForced.jsx</code></strong></td>
 	<td style="text-align:right">â‡§âŒ˜F11</td>
-	<td style="text-align:left" colspan="2"><strong>Other</strong></td>
+	<td style="text-align:center" colspan="2"><strong>Other</strong></td>
 </tr>
 <tr>
 	<td style="text-align:left"><strong><code>AlignToC.jsx</code></strong></td>
