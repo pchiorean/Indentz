@@ -222,10 +222,14 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplﾄ
 
 <table>
 	<tr>
-		<td style="text-align:left" colspan="2"><strong>Align</strong></td>
-		<td style="text-align:left" colspan="2"><strong>Proxy</strong></td>
-		<td style="text-align:left" colspan="2"><strong>Fit/Scale</strong></td>
-		<td style="text-align:left" colspan="2"><strong>Cleanup</strong></td>
+		<td style="text-align:left"><strong>Align</strong></td>
+		<td style="text-align:right"></td>
+		<td style="text-align:left"><strong>Proxy</strong></td>
+		<td style="text-align:right"></td>
+		<td style="text-align:left"><strong>Fit/Scale</strong></td>
+		<td style="text-align:right"></td>
+		<td style="text-align:left"><strong>Cleanup</strong></td>
+		<td style="text-align:right"></td>
 	</tr>
 	<tr>
 		<td style="text-align:left"><strong><code>AlignToTL.jsx</code></strong></td>
@@ -264,7 +268,8 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplﾄ
 		<td style="text-align:right">竚クum8</td>
 		<td style="text-align:left"><strong><code>FitToPageBleedForced.jsx</code></strong></td>
 		<td style="text-align:right">竍ｧ竚炉11</td>
-		<td style="text-align:left" colspan="2"><strong>Other</strong></td>
+		<td style="text-align:left"><strong>Other</strong></td>
+		<td style="text-align:right"></td>
 	</tr>
 	<tr>
 		<td style="text-align:left"><strong><code>AlignToC.jsx</code></strong></td>
@@ -293,7 +298,8 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplﾄ
 		<td style="text-align:right">竚クum9</td>
 		<td style="text-align:left"><strong><code>FitToSpreadBleed.jsx</code></strong></td>
 		<td style="text-align:right">竍ｧF12</td>
-		<td style="text-align:left" colspan="2"></td>
+		<td style="text-align:left"></td>
+		<td style="text-align:right"></td>
 	</tr>
 	<tr>
 		<td style="text-align:left"><strong><code>AlignToR.jsx</code></strong></td>
@@ -302,7 +308,8 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplﾄ
 		<td style="text-align:right">竚クum6</td>
 		<td style="text-align:left"><strong><code>FitToSpreadBleedForced.jsx</code></strong></td>
 		<td style="text-align:right">竍ｧ竚炉12</td>
-		<td style="text-align:left" colspan="2"></td>
+		<td style="text-align:left"></td>
+		<td style="text-align:right"></td>
 	</tr>
 	<tr>
 		<td style="text-align:left"><strong><code>AlignToBR.jsx</code></strong></td>
@@ -311,23 +318,28 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplﾄ
 		<td style="text-align:right">竚クum3</td>
 		<td style="text-align:left"><strong><code>ScaleToPageSize.jsx</code></strong></td>
 		<td style="text-align:right">F5</td>
-		<td style="text-align:left" colspan="2"></td>
+		<td style="text-align:left"></td>
+		<td style="text-align:right"></td>
 	</tr>
 	<tr>
 		<td style="text-align:left"><strong><code>ToggleAlignTo.jsx</code></strong></td>
 		<td style="text-align:right">Num0</td>
-		<td style="text-align:left" colspan="2"></td>
+		<td style="text-align:left"></td>
+		<td style="text-align:right"></td>
 		<td style="text-align:left"><strong><code>ScaleToPageMargins.jsx</code></strong></td>
 		<td style="text-align:right">竚･F5</td>
-		<td style="text-align:left" colspan="2"></td>
+		<td style="text-align:left"></td>
+		<td style="text-align:right"></td>
 	</tr>
 	<tr>
 		<td style="text-align:left"><strong><code>ResetAlignTo.jsx</code></strong></td>
 		<td style="text-align:right">竚クum0</td>
-		<td style="text-align:left" colspan="2"></td>
+		<td style="text-align:left"></td>
+		<td style="text-align:right"></td>
 		<td style="text-align:left"><strong><code>TextAutosize.jsx</code></strong></td>
 		<td style="text-align:right">F6</td>
-		<td style="text-align:left" colspan="2"></td>
+		<td style="text-align:left"></td>
+		<td style="text-align:right"></td>
 	</tr>
 </table>
 
