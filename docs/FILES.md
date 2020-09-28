@@ -29,6 +29,7 @@ Name                               |   Fn  | Description
 **`DocCleanup.jsx`**               |    F2 | Changes some settings, cleans up swatches/layers/pages/guides and resets scaling
 **`DocDefaults.jsx`**              |   ⌥F2 | Makes default swatches/layers, cleans up fonts and sets page dimensions from the filename
 **Geometry**                               |
+**`Clip.jsx`**                     | ⌃Num* | Clip selected objects in a "\<clip frame\>", or restores them
 **`FitToPage.jsx`**                |   F11 | Resizes the selected objects to the page size, if they exceed it
 **`FitToPageBleed.jsx`**           |  ⇧F11 | Resizes the selected objects to the page bleed size, if they exceed it
 **`FitToPageBleedForced.jsx`**     | ⇧⌘F11 | Resizes the selected objects to the page bleed size
@@ -37,7 +38,7 @@ Name                               |   Fn  | Description
 **`FitToSpreadBleed.jsx`**         |  ⇧F12 | Resizes the selected objects to the spread bleed size, if they exceed it
 **`FitToSpreadBleedForced.jsx`**   | ⇧⌘F12 | Resizes the selected objects to the spread bleed size
 **`FitToSpreadMargins.jsx`**       |  ⌥F12 | Resizes the selected objects to the spread margins, if they exceed them
-**`FitUndo.jsx`**                  |       | Restores objects clipped in '\<clip group\>' by the 'fit' scripts
+**`FitUndo.jsx`**                  |       | Restores objects clipped in a '\<clip group\>' by the 'fit' scripts
 **`PageMarginsFromSelection.jsx`** |       | Sets the page margins to the selected objects bounds
 **`PageSizeFromFilename.jsx`**     |       | Sets every page size and margins according to the filename
 **`PageSizeFromMargins.jsx`**      |       | Sets the page size to the page margins
