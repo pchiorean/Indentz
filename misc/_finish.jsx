@@ -111,9 +111,9 @@ function Relink(oldLink, newLink) {
 
 function FitLax(obj) {
 	// Undo if already clipped
-	if ((obj.label == "<clip group>" || obj.name == "<clip group>") &&
+	if ((obj.label == "<clip frame>" || obj.name == "<clip frame>") &&
 		obj.pageItems.length == 0 ) { obj.label = ""; obj.name = "" };
-	if (obj.label == "<clip group>" && obj.pageItems[0].isValid) {
+	if (obj.label == "<clip frame>" && obj.pageItems[0].isValid) {
 		var objD = obj.pageItems[0].duplicate();
 		objD.sendToBack(obj); obj.remove(); app.select(objD);
 		return;
@@ -138,7 +138,7 @@ function FitLax(obj) {
 	) return;
 	// Clipping rectangle properties
 	var clipFrameP = {
-		label: "<clip group>", name: "<clip group>",
+		label: "<clip frame>", name: "<clip frame>",
 		itemLayer: obj.itemLayer,
 		fillColor: "None", strokeColor: "None",
 		geometricBounds: size
@@ -194,9 +194,9 @@ function FitLax(obj) {
 
 function FitForced(obj) {
 	// Undo if already clipped
-	if ((obj.label == "<clip group>" || obj.name == "<clip group>") &&
+	if ((obj.label == "<clip frame>" || obj.name == "<clip frame>") &&
 		obj.pageItems.length == 0 ) { obj.label = ""; obj.name = "" };
-	if (obj.label == "<clip group>" && obj.pageItems[0].isValid) {
+	if (obj.label == "<clip frame>" && obj.pageItems[0].isValid) {
 		var objD = obj.pageItems[0].duplicate();
 		objD.sendToBack(obj); obj.remove(); app.select(objD);
 		return;
@@ -205,7 +205,7 @@ function FitForced(obj) {
 	var size = Bounds(page);
 	// Clipping rectangle properties
 	var clipFrameP = {
-		label: "<clip group>", name: "<clip group>",
+		label: "<clip frame>", name: "<clip frame>",
 		itemLayer: obj.itemLayer,
 		fillColor: "None", strokeColor: "None",
 		geometricBounds: size
