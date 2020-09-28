@@ -1,6 +1,6 @@
 /*
-	Page margins from selection v1.1.1
-	© July 2020, Paul Chiorean
+	Page margins from selection v1.2.0
+	© September 2020, Paul Chiorean
 	Sets the page margins to the selected objects bounds.
 */
 
@@ -26,7 +26,8 @@ for (var i = 1; i < selObj.length; i++) {
 	size[3] = Math.max(selObj[i].visibleBounds[3], size[3]);
 }
 // Set page margins
-page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
+page.marginPreferences.properties =
+	{ top: 0, left: 0, bottom: 0, right: 0, columnCount: 1, columnGutter: 0 };
 page.marginPreferences.properties =
 	{ top: size[0] - page.bounds[0], bottom: page.bounds[2] - size[2] };
 if (page.side == PageSideOptions.LEFT_HAND) {
