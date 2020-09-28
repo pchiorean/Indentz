@@ -1,5 +1,5 @@
 /*
-	E grid 1.2.0
+	E grid 1.2.1
 	© September 2020, Paul Chiorean
 */
 
@@ -7,7 +7,14 @@ if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
 for (var i = 0; i < doc.pages.length; i++) {
-	var mgBounds = Bounds(doc.pages[i]);
+	if ((doc.pages[i].marginPreferences.columnCount == 6 ||
+		doc.pages[i].marginPreferences.columnCount == 12) &&
+		doc.pages[i].marginPreferences.columnGutter == 0) {
+		var mgBounds = doc.pages[i].bounds;
+	} else {
+		var mgBounds = Bounds(doc.pages[i]);
+	}
+
 	var size = {
 		width: mgBounds[3] - mgBounds[1],
 		height: mgBounds[2] - mgBounds[0]
