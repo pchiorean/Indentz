@@ -1,6 +1,6 @@
 /*
-	Fit to page margins v1.9.1
-	© August 2020, Paul Chiorean
+	Fit to page margins v1.10.0
+	© September 2020, Paul Chiorean
 	Resizes the selected objects to the page margins, if they exceed them.
 */
 
@@ -20,10 +20,9 @@ for (var i = 0; i < sel.length; i++) {
 
 function Fit(obj) {
 	// Undo if already clipped
-	if ((obj.label == "<clip group>" || obj.name == "<clip group>") &&
-		obj.pageItems.length == 0 ) { obj.label = ""; obj.name = "" };
-	if (obj.label == "<clip group>" && obj.pageItems[0].isValid) {
+	if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
 		var objD = obj.pageItems[0].duplicate();
+		objD.label = obj.label;
 		objD.sendToBack(obj); obj.remove(); app.select(objD);
 		return;
 	}
@@ -42,17 +41,17 @@ function Fit(obj) {
 		Number(szOv[1].toFixed(11)) >= Number(size[1].toFixed(11)) &&
 		Number(szOv[2].toFixed(11)) <= Number(size[2].toFixed(11)) &&
 		Number(szOv[3].toFixed(11)) <= Number(size[3].toFixed(11)) &&
-		(obj.name != "HW" && obj.label != "HW") // and is not HW
+		(obj.label != "HW") // and is not HW
 	) return;
 	// Clipping rectangle properties
 	var clipFrameP = {
-		label: "<clip group>", name: "<clip group>",
+		name: "<clip frame>",
 		itemLayer: obj.itemLayer,
 		fillColor: "None", strokeColor: "None",
 		geometricBounds: size
 	}
 	// Case 1: Objects labeled "HW"
-	if (obj.name == "HW" || obj.label == "HW") {
+	if (obj.label == "HW") {
 		obj.geometricBounds = [
 			szB[0] + (szB[2] - szB[0]) * 0.9, szB[1], szB[2], szB[3]
 		];
@@ -98,9 +97,9 @@ function Fit(obj) {
 	}
 	// Other cases: Containment
 	var frame = page.rectangles.add(clipFrameP); // Make clipping rectangle
+	frame.label = obj.label;
 	frame.sendToBack(obj);
-	app.select(obj); app.cut();
-	app.select(frame); app.pasteInto();
+	app.select(obj); app.cut(); app.select(frame); app.pasteInto();
 }
 
 function Bounds(page) { // Return page margins bounds

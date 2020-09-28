@@ -1,6 +1,6 @@
 /*
-	Fit to page bleed, forced v1.9.0
-	© July 2020, Paul Chiorean
+	Fit to page bleed, forced v1.10.0
+	© September 2020, Paul Chiorean
 	Resizes the selected objects to the page bleed size.
 */
 
@@ -20,10 +20,9 @@ for (var i = 0; i < sel.length; i++) {
 
 function Fit(obj) {
 	// Undo if already clipped
-	if ((obj.label == "<clip group>" || obj.name == "<clip group>") &&
-		obj.pageItems.length == 0 ) { obj.label = ""; obj.name = "" };
-	if (obj.label == "<clip group>" && obj.pageItems[0].isValid) {
+	if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
 		var objD = obj.pageItems[0].duplicate();
+		objD.label = obj.label;
 		objD.sendToBack(obj); obj.remove(); app.select(objD);
 		return;
 	}
@@ -31,13 +30,13 @@ function Fit(obj) {
 	var size = Bounds(page);
 	// Clipping rectangle properties
 	var clipFrameP = {
-		label: "<clip group>", name: "<clip group>",
+		name: "<clip frame>",
 		itemLayer: obj.itemLayer,
 		fillColor: "None", strokeColor: "None",
 		geometricBounds: size
 	}
 	// Case 1: Objects labeled "HW"
-	if (obj.name == "HW" || obj.label == "HW") {
+	if (obj.label == "HW") {
 		obj.geometricBounds = [
 			(page.bounds[2] - page.bounds[0]) * 0.9, size[1], size[2], size[3]
 		];
@@ -59,8 +58,8 @@ function Fit(obj) {
 	if (obj.constructor.name == "Group") {
 		var frame = page.rectangles.add(clipFrameP); // Make clipping rectangle
 		frame.sendToBack(obj);
-		app.select(obj); app.cut();
-		app.select(frame); app.pasteInto();
+		frame.label = obj.label;
+		app.select(obj); app.cut(); app.select(frame); app.pasteInto();
 	}
 }
 
