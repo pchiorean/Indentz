@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v1.16.0
+	Default layers and more v1.16.1
 	© September 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -9,7 +9,7 @@ if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
 // Layer names
-const safeLayerName = "safe area";
+const saLayerName = "safe area";
 const dieLayerName = "dielines";
 const uvLayerName = "varnish";
 const whiteLayerName = "white";
@@ -25,7 +25,7 @@ const whiteSwatchName = "White";
 const uvSwatchName = "Varnish";
 const cutSwatchName = "Cut";
 const foldSwatchName = "Fold";
-const safeSwatchName = "Safe area";
+const saSwatchName = "Safe area";
 
 // Step 0. Initialisation
 (function() {
@@ -75,7 +75,7 @@ const safeSwatchName = "Safe area";
 	try { doc.colors.add({ name: uvSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 10, 70, 0] }) } catch (_) {};
 	try { doc.colors.add({ name: cutSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
 	try { doc.colors.add({ name: foldSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [100, 0, 0, 0] }) } catch (_) {};
-	try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
+	try { doc.colors.add({ name: saSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
 })();
 
 // Step 2. Make default layers (and merge with similar)
@@ -90,7 +90,7 @@ const safeSwatchName = "Safe area";
 	var whiteLayer = doc.layers.item(whiteLayerName);
 	var uvLayer = doc.layers.item(uvLayerName);
 	var dieLayer = doc.layers.item(dieLayerName);
-	var safeLayer = doc.layers.item(safeLayerName);
+	var saLayer = doc.layers.item(saLayerName);
 	// Unlock and mark existing layers light grey
 	doc.layers.everyItem().locked = false;
 	doc.layers.everyItem().layerColor = [215, 215, 215];
@@ -218,16 +218,16 @@ const safeSwatchName = "Safe area";
 			case "Visible":
 			case "vizibil":
 			case "Vizibil":
-				try { doc.layers.add({ name: safeLayerName }) } catch (_) {};
-				safeLayer.merge(docLayer); i--;
+				try { doc.layers.add({ name: saLayerName }) } catch (_) {};
+				saLayer.merge(docLayer); i--;
 		}
 	}
-	if (safeLayer.isValid) { safeLayer.layerColor = UIColors.YELLOW;
+	if (saLayer.isValid) { saLayer.layerColor = UIColors.YELLOW;
 	} else {
-		doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW });
-		safeLayer.visible = false;
+		doc.layers.add({ name: saLayerName, layerColor: UIColors.YELLOW });
+		saLayer.visible = false;
 	}
-	safeLayer.move(LocationOptions.AT_BEGINNING);
+	saLayer.move(LocationOptions.AT_BEGINNING);
 	// Dielines layer
 	for (var i = 0; i < doc.layers.length; i++) {
 		var docLayer = doc.layers.item(i);
@@ -256,7 +256,7 @@ const safeSwatchName = "Safe area";
 		doc.layers.add({ name: dieLayerName, layerColor: UIColors.RED });
 		dieLayer.visible = false;
 	}
-	dieLayer.move(LocationOptions.after, safeLayer);
+	dieLayer.move(LocationOptions.after, saLayer);
 	// Varnish layer
 	for (var i = 0; i < doc.layers.length; i++) {
 		var docLayer = doc.layers.item(i);

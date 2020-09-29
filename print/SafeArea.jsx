@@ -1,6 +1,6 @@
 /*
-	Safe area v1.6.4
-	© July 2020, Paul Chiorean
+	Safe area v1.6.5
+	© September 2020, Paul Chiorean
 	Creates a "safe area" frame, on every page/spread for which margins are defined.
 */
 
@@ -9,14 +9,13 @@ var doc = app.activeDocument;
 
 // Defaults
 var scope = doc.pages; // doc.pages or doc.spreads
-var safeLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
+var saLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
 var dieLayerName = ["dielines", "diecut", "die cut", "Die Cut", "cut", "Cut", "cut lines", "stanze", "Stanze", "Stanz", "decoupe"];
-const safeSwatchName = "Safe area";
+const saSwatchName = "Safe area";
 const saFrameP = {
-	label: "safe area",
+	name: "<safe area>", label: "safe area",
 	contentType: ContentType.UNASSIGNED,
-	fillColor: "None",
-	strokeColor: safeSwatchName,
+	fillColor: "None", strokeColor: saSwatchName,
 	strokeWeight: "0.5pt",
 	strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 	strokeType: "$ID/Canned Dashed 3x2",
@@ -24,40 +23,40 @@ const saFrameP = {
 }
 
 // Create 'safe area' layer
-var safeLayer, dieLayer;
-if (safeLayer = FindLayer(safeLayerName)) {
-	safeLayer.layerColor = UIColors.YELLOW;
-	safeLayer.visible = true; safeLayer.locked = false;
+var saLayer, dieLayer;
+if (saLayer = FindLayer(saLayerName)) {
+	saLayer.layerColor = UIColors.YELLOW;
+	saLayer.visible = true; saLayer.locked = false;
 	if (dieLayer = FindLayer(dieLayerName)) { // move it above 'dielines' layer
-		safeLayer.move(LocationOptions.before, dieLayer);
+		saLayer.move(LocationOptions.before, dieLayer);
 	}
 } else {
-	safeLayerName = safeLayerName[0];
-	safeLayer = doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW,
+	saLayerName = saLayerName[0];
+	saLayer = doc.layers.add({ name: saLayerName, layerColor: UIColors.YELLOW,
 	visible: true, locked: false });
 	if (dieLayer = FindLayer(dieLayerName)) { // move it below 'dielines' layer, or 1st
-		safeLayer.move(LocationOptions.before, dieLayer);
-	} else safeLayer.move(LocationOptions.AT_BEGINNING);
+		saLayer.move(LocationOptions.before, dieLayer);
+	} else saLayer.move(LocationOptions.AT_BEGINNING);
 }
 // Create 'Safe area' color
-try { doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS,
+try { doc.colors.add({ name: saSwatchName, model: ColorModel.PROCESS,
 	space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] })
 } catch (_) {};
 
 // Draw frames
 var saBounds, saFrame;
 for (var i = 0; i < scope.length; i++) {
-	saBounds = safeArea(scope[i]);
+	saBounds = SafeArea(scope[i]);
 	if (saBounds == false) continue; // No margins; skip
-	if (SafeLayerItems(scope[i])) continue; // Frame already exists
+	if (HasItems(scope[i])) continue; // Frame already exists
 	saFrame = scope[i].rectangles.add(saFrameP);
 	saFrame.geometricBounds = saBounds;
-	saFrame.itemLayer = safeLayer.name;
+	saFrame.itemLayer = saLayer.name;
 }
-try { safeLayer.locked = true } catch (_) {};
+try { saLayer.locked = true } catch (_) {};
 
 
-function safeArea(scope) { // Return safe area bounds
+function SafeArea(scope) { // Return safe area bounds
 	switch (scope.constructor.name) {
 		case "Page":
 			var mgPg = scope.marginPreferences;
@@ -119,7 +118,7 @@ function FindLayer(names) { // Find first layer from a list of names
 	}
 }
 
-function SafeLayerItems(scope) { // Check for items labeled 'safe area'
+function HasItems(scope) { // Check for items labeled 'safe area'
 	for (var i = 0; i < scope.pageItems.length; i++) {
 		if (scope.pageItems.item(i).label == "safe area") { return true } else continue;
 	}

@@ -1,12 +1,12 @@
 /*
-	Show safe area layer v1.1.4
-	© August 2020, Paul Chiorean
+	Show safe area layer v1.1.5
+	© September 2020, Paul Chiorean
 	Shows the "safe area" layer (or equivalents).
 */
 
 if (app.documents.length == 0) exit();
 
-var safeLayerName = [
+var saLayerName = [
 	"safe area",
 	"visible", "Visible",
 	"vizibil", "Vizibil",
@@ -14,9 +14,9 @@ var safeLayerName = [
 ];
 
 (function(doc) {
-	for (var i = 0; i < safeLayerName.length; i++) {
-		var safeLayer = doc.layers.item(safeLayerName[i]);
-		if (!safeLayer.isValid) continue;
-		try { doc.layers.item(safeLayer.name).visible = true } catch (_) {};
+	for (var i = 0; i < saLayerName.length; i++) {
+		var saLayer = doc.layers.item(saLayerName[i]);
+		if (!saLayer.isValid) continue;
+		try { doc.layers.item(saLayer.name).visible = true } catch (_) {};
 	}
 })(app.activeDocument);

@@ -1,6 +1,6 @@
 /*
-	Page size from filename v1.6.1
-	© August 2020, Paul Chiorean
+	Page size from filename v1.6.2
+	© September 2020, Paul Chiorean
 	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 */
@@ -83,29 +83,29 @@ if (bleed != null) {
 
 
 function SafeArea() { // Draw a 'safe area' frame
-	var safeSwatchName = "Safe area";
-	var safeSwatch = doc.swatches.itemByName(safeSwatchName);
-	if (!safeSwatch.isValid) {
-		doc.colors.add({ name: safeSwatchName, model: ColorModel.PROCESS, 
+	var saSwatchName = "Safe area";
+	var saSwatch = doc.swatches.itemByName(saSwatchName);
+	if (!saSwatch.isValid) {
+		doc.colors.add({ name: saSwatchName, model: ColorModel.PROCESS, 
 		space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
 	}
-	var safeLayerName = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"]);
-	var safeLayerFrameP = {
+	var saLayerName = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"]);
+	var saLayerFrameP = {
 		label: "safe area",
 		contentType: ContentType.UNASSIGNED,
 		fillColor: "None",
-		strokeColor: safeSwatchName,
+		strokeColor: saSwatchName,
 		strokeWeight: "0.75pt",
 		strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 		strokeType: "$ID/Canned Dashed 3x2",
 		overprintStroke: false
 	}
 	doc.activeLayer = doc.layers.item(0);
-	var safeLayer = doc.layers.item(safeLayerName);
-	if (!safeLayer.isValid) doc.layers.add({ name: safeLayerName, layerColor: UIColors.YELLOW });
-	// safeLayer.move(LocationOptions.BEFORE, XXXX);
+	var saLayer = doc.layers.item(saLayerName);
+	if (!saLayer.isValid) doc.layers.add({ name: saLayerName, layerColor: UIColors.YELLOW });
+	// saLayer.move(LocationOptions.BEFORE, XXXX);
 
-	var mgPg, mgBounds, safeLayerFrame;
+	var mgPg, mgBounds, saLayerFrame;
 	mgPg = {
 		top: (szPg.height - szMg.height) / 2,
 		left: (szPg.width - szMg.width) / 2,
@@ -115,8 +115,8 @@ function SafeArea() { // Draw a 'safe area' frame
 	if (mgPg.top + mgPg.left + mgPg.bottom + mgPg.right == 0) return;
 	mgBounds = [mgPg.top, mgPg.left, szMg.height + mgPg.top, szMg.width + mgPg.left];
 	page.marginPreferences.properties = mgPg;
-	safeLayerFrame = page.rectangles.add(safeLayerFrameP);
-	safeLayerFrame.properties = { itemLayer: safeLayerName, geometricBounds: mgBounds };
+	saLayerFrame = page.rectangles.add(saLayerFrameP);
+	saLayerFrame.properties = { itemLayer: saLayerName, geometricBounds: mgBounds };
 }
 
 function FindLayer(names) { // Find first layer from a list of names
