@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v1.16.1
+	Default layers and more v1.17.0
 	© September 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -16,6 +16,7 @@ const whiteLayerName = "white";
 const guidesLayerName = "guides";
 const infoLayerName = "info";
 const hwLayerName = "HW";
+const tcLayerName = "disclaimer";
 const txtLayerName = "text and logos";
 const prodLayerName = "products";
 const artLayerName = "artwork";
@@ -84,6 +85,7 @@ const saSwatchName = "Safe area";
 	var artLayer = doc.layers.item(artLayerName);
 	var prodLayer = doc.layers.item(prodLayerName);
 	var txtLayer = doc.layers.item(txtLayerName);
+	var tcLayer = doc.layers.item(tcLayerName);
 	var hwLayer = doc.layers.item(hwLayerName);
 	var infoLayer = doc.layers.item(infoLayerName);
 	var guidesLayer = doc.layers.item(guidesLayerName);
@@ -163,6 +165,22 @@ const saSwatchName = "Safe area";
 		// txtLayer.move(LocationOptions.before, prodLayer);
 		txtLayer.visible = false;
 	}
+	// Disclaimer layer
+	doc.activeLayer = doc.layers.item(0);
+	for (var i = 0; i < doc.layers.length; i++) {
+		var docLayer = doc.layers.item(i);
+		switch (docLayer.name) {
+			case "Disclaimer":
+				try { doc.layers.add({ name: tcLayerName }) } catch (_) {};
+				tcLayer.merge(docLayer); i--;
+		}
+	}
+	if (tcLayer.isValid) { tcLayer.layerColor = UIColors.GRAY;
+	} else {
+		doc.layers.add({ name: tcLayerName, layerColor: UIColors.GRAY });
+		// tcLayer.move(LocationOptions.before, txtLayer);
+		tcLayer.visible = false;
+	}
 	// HW layer
 	doc.activeLayer = doc.layers.item(0);
 	for (var i = 0; i < doc.layers.length; i++) {
@@ -184,7 +202,7 @@ const saSwatchName = "Safe area";
 		doc.layers.add({ name: hwLayerName, layerColor: UIColors.LIGHT_GRAY });
 		hwLayer.visible = false;
 	}
-	hwLayer.move(LocationOptions.before, txtLayer);
+	hwLayer.move(LocationOptions.before, tcLayer);
 	// Info layer
 	doc.activeLayer = doc.layers.item(0);
 	for (var i = 0; i < doc.layers.length; i++) {
