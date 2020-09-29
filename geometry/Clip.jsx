@@ -1,5 +1,5 @@
 /*
-	Clip v1.1.0
+	Clip v1.1.1
 	© September 2020, Paul Chiorean
 	Clip selected objects in a "\<clip frame\>", or restores them
 */
@@ -42,8 +42,7 @@ function Fit2Bounds(obj, page) {
 		var objD = obj.pageItems[0].duplicate();
 		objD.label = obj.label;
 		objD.sendToBack(obj); obj.remove(); obj = objD;
-		if (obj.name == "<clip group>" ||
-			(obj.constructor.name == "Rectangle" && obj.groups.length == 1)) {
+		if (obj.name == "<clip group>") {
 			var sel_BAK = obj.pageItems.everyItem().getElements();
 			obj.ungroup(); app.select(sel_BAK);
 		} else { app.select(obj) };
