@@ -52,10 +52,10 @@
 	<tbody>
 		<tr>
 			<td style="text-align:left">
-				<strong>Filename1_<code>1400x400</code>_<code>700x137</code>_<code>5</code>mm_QR.indd</strong></td>
+				<strong>Filename1_<code>1400x400</code>_<code>700x137</code>_<code>10</code>mm_QR.indd</strong></td>
 			<td style="text-align:center">1400x400</td>
 			<td style="text-align:center">700x137</td>
-			<td style="text-align:center">5</td>
+			<td style="text-align:center">10</td>
 		</tr>
 		<tr>
 			<td style="text-align:left">
@@ -122,8 +122,8 @@
 	<p>Convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula &quot;C= M= Y= K=&quot; și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
 
 	<h3 id="doccleanup"><strong>DocCleanup</strong> and <strong>DocDefaults</strong></h3>
-	<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.</p>
-	<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează <a href="#cleanupfonts"><strong><code>CleanupFonts.jsx</code></strong></a>), și stabilește geometria paginii din numele fișierului (rulează <a href="#pagesize"><strong><code>PageSizeFromFilename.jsx</code></strong></a>).</p>
+	<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%.</p>
+	<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește niște fonturi (rulează <a href="#cleanupfonts"><strong><code>CleanupFonts.jsx</code></strong></a>), stabilește dimensiunea paginii și marginile (rulează <a href="#pagesize"><strong><code>PageSizeFromFilename.jsx</code></strong></a>).</p>
 	<p><img src="img/docdefaults-swatches.png" alt="Culori"> <img src="img/docdefaults-layers.png" alt="Layere"></p>
 	<p>De asemenea, scriptul combină câteva layere:</p>
 	<p><table>
@@ -135,31 +135,39 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td style="text-align:left">Rahmen, Vis. area, Visible area, Visible, Vizibil</td>
+			<td style="text-align:left">rahmen, vis. area, visible, visible area, vizibil</td>
 			<td style="text-align:left"><code>safe area</code></td>
 		</tr>
 		<tr>
-			<td style="text-align:left">cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze</td>
+			<td style="text-align:left">cut, cut lines, decoupe, die cut, diecut, stanz, stanze, stanzform</td>
 			<td style="text-align:left"><code>dielines</code></td>
 		</tr>
 		<tr>
-			<td style="text-align:left">UV, Varnish</td>
+			<td style="text-align:left">uv, varnish</td>
 			<td style="text-align:left"><code>varnish</code></td>
 		</tr>
 		<tr>
-			<td style="text-align:left">HW Logo, Logo HW, hw, WH, WHW</td>
+			<td style="text-align:left">info copy, ratio</td>
+			<td style="text-align:left"><code>info</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">hw logo, logo hw, wh, whw</td>
 			<td style="text-align:left"><code>HW</code></td>
 		</tr>
 		<tr>
-			<td style="text-align:left">Copy, Text, TEXT, TEXTES, TXT, Type</td>
+			<td style="text-align:left">copy, text, textes, txt, type</td>
 			<td style="text-align:left"><code>text and logos</code></td>
 		</tr>
 		<tr>
-			<td style="text-align:left">Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts</td>
+			<td style="text-align:left">tins</td>
+			<td style="text-align:left"><code>products</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">artwork, aw, elemente, layout, layouts</td>
 			<td style="text-align:left"><code>artwork</code></td>
 		</tr>
 		<tr>
-			<td style="text-align:left">background, BACKGROUND, BG, HG, Hintergrund</td>
+			<td style="text-align:left">background, bg, hg, hintergrund</td>
 			<td style="text-align:left"><code>bg</code></td>
 		</tr>
 	</tbody>
@@ -200,7 +208,7 @@
 	<p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <code>safe area</code>.</p>
 	<hr>
 	<h3 id="qr"><strong>QR</strong></h3>
-	<p>Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într‑un fișier separat. Are două moduri de operare, manual sau batch:</p>
+	<p>Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într‑un fișier separat. Are două moduri de operare:</p>
 	<ul>
 		<li>
 			<p><strong>Manual:</strong> Solicită codul și îl adaugă pe pagină (sau într‑un fișier separat).</p>
@@ -216,7 +224,7 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td style="text-align:left"><strong>Filename1_1400x400_700x137_5mm_QR.indd</strong></td>
+					<td style="text-align:left"><strong>Filename1_1400x400_700x137_10mm_QR.indd</strong></td>
 					<td style="text-align:left">FILE1 1400x400_700x137</td>
 				</tr>
 				<tr>

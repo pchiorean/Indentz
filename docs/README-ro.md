@@ -36,7 +36,7 @@ Variantele **`H`** (height) și **`W`** (width) scalează la înălțimea, respe
 
 Fișier | Dimensiune | Safe area | Bleed
 :--- | :---: | :---: | :---:
-**Filename1\_`1400x400`\_`700x137`\_`5`mm\_QR.indd** | 1400x400 | 700x137 | 5
+**Filename1\_`1400x400`\_`700x137`\_`10`mm\_QR.indd** | 1400x400 | 700x137 | 10
 **Filename2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd** | 597x517 | 577x500.5 | 3
 
 > <details><summary>Detalii</summary>
@@ -107,9 +107,9 @@ Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și
 Convertește swatch&#x2011;urile RGB la CMYK, elimină duplicatele, le redenumește după formula "C= M= Y= K=" și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
 ### **DocCleanup** și **DocDefaults**
-**`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și șterge toate liniile de ghidaj.
+**`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%.
 
-**`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează **`CleanupFonts.jsx`**), și stabilește geometria paginii din numele fișierului (rulează **`PageSizeFromFilename.jsx`**).
+**`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește niște fonturi (rulează **`CleanupFonts.jsx`**), stabilește dimensiunea paginii și marginile (rulează **`PageSizeFromFilename.jsx`**).
 
 ![Culori](img/docdefaults-swatches.png) ![Layere](img/docdefaults-layers.png)
 
@@ -117,13 +117,15 @@ De asemenea, scriptul combină câteva layere:
 
 Layer | Combinat cu
 :--- | :---
-Rahmen, Vis. area, Visible area, Visible, Vizibil | `safe area`
-cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze | `dielines`
-UV, Varnish | `varnish`
-HW Logo, Logo HW, hw, WH, WHW | `HW`
-Copy, Text, TEXT, TEXTES, TXT, Type | `text and logos`
-Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
-background, BACKGROUND, BG, HG, Hintergrund | `bg`
+rahmen, vis. area, visible, visible area, vizibil | `safe area`
+cut, cut lines, decoupe, die cut, diecut, stanz, stanze, stanzform | `dielines`
+uv, varnish | `varnish`
+info copy, ratio | `info`
+hw logo, logo hw, wh, whw | `hw`
+copy, text, textes, txt, type | `text and logos`
+tins | `products`
+artwork, aw, elemente, layout, layouts | `artwork`
+background, bg, hg, hintergrund | `bg`
 
 Ambele scripturi schimbă niște setări după preferințele mele.
 
@@ -167,7 +169,7 @@ Fac câteva pregătiri pentru export; pot fi rulate în [**`batch_convert.jsx`**
 ---
 
 ### **QR**
-Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într&#x2011;un fișier separat. Are două moduri de operare, manual sau batch:
+Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într&#x2011;un fișier separat. Are două moduri de operare:
 
 * **Manual:** Solicită codul și îl adaugă pe pagină (sau într&#x2011;un fișier separat).
 
@@ -175,7 +177,7 @@ Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvea
 
   Fișier QR | Cod QR
   :--- | :---
-  **Filename1_1400x400_700x137_5mm_QR.indd** | FILE1 1400x400_700x137
+  **Filename1_1400x400_700x137_10mm_QR.indd** | FILE1 1400x400_700x137
   **Filename2_597x517_577x500.5_3mm V4_QR.indd** | FILE2 597x517_577x500.5 V4
 
 Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
@@ -212,10 +214,10 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 | **`AlignToL.jsx`**      |  Num4 | **`SetRefPointL.jsx`**  | ⌃Num4 | **`FitToPageMargins.jsx`**       |  ⌥F11 | **`DocDefaults.jsx`**     |  ⌥F2 |
 | **`AlignToBL.jsx`**     |  Num1 | **`SetRefPointBL.jsx`** | ⌃Num1 | **`FitToPageBleed.jsx`**         |  ⇧F11 | **`CleanupSwatches.jsx`** |  ⇧F2 |
 | **`AlignToT.jsx`**      |  Num8 | **`SetRefPointT.jsx`**  | ⌃Num8 | **`FitToPageBleedForced.jsx`**   | ⇧⌘F11 |                           |
-| **`AlignToC.jsx`**      |  Num5 | **`SetRefPointC.jsx`**  | ⌃Num5 | **`FitToSpread.jsx`**            |   F12 | **Other**                 |   F9 |
+| **`AlignToC.jsx`**      |  Num5 | **`SetRefPointC.jsx`**  | ⌃Num5 | **`FitToSpread.jsx`**            |   F12 | **Other**                 |
 | **`AlignToB.jsx`**      |  Num2 | **`SetRefPointB.jsx`**  | ⌃Num2 | **`FitToSpreadMargins.jsx`**     |  ⌥F12 | **`Clip.jsx`**            | Num* |
-| **`AlignToTR.jsx`**     |  Num9 | **`SetRefPointTR.jsx`** | ⌃Num9 | **`FitToSpreadBleed.jsx`**       |  ⇧F12 | **`QR.jsx`**              |
-| **`AlignToR.jsx`**      |  Num6 | **`SetRefPointR.jsx`**  | ⌃Num6 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12 | **`ZoomToSelection.jsx`** |
+| **`AlignToTR.jsx`**     |  Num9 | **`SetRefPointTR.jsx`** | ⌃Num9 | **`FitToSpreadBleed.jsx`**       |  ⇧F12 | **`QR.jsx`**              |   F9 |
+| **`AlignToR.jsx`**      |  Num6 | **`SetRefPointR.jsx`**  | ⌃Num6 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12 | **`ZoomToSelection.jsx`** |   F4 |
 | **`AlignToBR.jsx`**     |  Num3 | **`SetRefPointBR.jsx`** | ⌃Num3 | **`ScaleToPageSize.jsx`**        |    F5 |                           |
 | **`ToggleAlignTo.jsx`** |  Num0 |                         |       | **`ScaleToPageMargins.jsx`**     |   ⌥F5 |                           |
 | **`ResetAlignTo.jsx`**  | ⌃Num0 |                         |       | **`TextAutosize.jsx`**           |    F6 |                           |

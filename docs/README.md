@@ -36,7 +36,7 @@ The **`H`** (height) and **`W`** (width) variants scale to the height or width o
 
 Filename | Total size | Safe area | Bleed
 :--- | :---: | :---: | :---:
-**Filename1\_`1400x400`\_`700x137`\_`5`mm\_QR.indd** | 1400x400 | 700x137 | 5
+**Filename1\_`1400x400`\_`700x137`\_`10`mm\_QR.indd** | 1400x400 | 700x137 | 10
 **Filename2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd** | 597x517 | 577x500.5 | 3
 
 > <details><summary>Details</summary>
@@ -107,9 +107,9 @@ Sometimes objects that have a label attached *(Script Label)* are reused, which 
 Converts RGB process swatches to CMYK, removes duplicates, renames them to "C= M= Y= K=" form, and deletes unused ones. Spot colors remain unchanged.
 
 ### **DocCleanup** and **DocDefaults**
-**`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%, and removes all guides.
+**`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%.
 
-**`DocDefaults.jsx`** creates several swatches & layers, replaces several missing or unwanted fonts (it runs **`CleanupFonts.jsx`**), and sets the page geometry from the filename (it runs **`PageSizeFromFilename.jsx`**).
+**`DocDefaults.jsx`** creates several swatches & layers, replaces some fonts (it runs **`CleanupFonts.jsx`**), and sets the page size and margins (it runs **`PageSizeFromFilename.jsx`**).
 
 ![Swatches](img/docdefaults-swatches.png) ![Layers](img/docdefaults-layers.png)
 
@@ -117,13 +117,15 @@ It also merges several layers:
 
 Layer | Merged to
 :--- | :---
-Rahmen, Vis. area, Visible area, Visible, Vizibil | `safe area`
-cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze | `dielines`
-UV, Varnish | `varnish`
-HW Logo, Logo HW, hw, WH, WHW | `HW`
-Copy, Text, TEXT, TEXTES, TXT, Type | `text and logos`
-Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts | `artwork`
-background, BACKGROUND, BG, HG, Hintergrund | `bg`
+rahmen, vis. area, visible, visible area, vizibil | `safe area`
+cut, cut lines, decoupe, die cut, diecut, stanz, stanze, stanzform | `dielines`
+uv, varnish | `varnish`
+info copy, ratio | `info`
+hw logo, logo hw, wh, whw | `hw`
+copy, text, textes, txt, type | `text and logos`
+tins | `products`
+artwork, aw, elemente, layout, layouts | `artwork`
+background, bg, hg, hintergrund | `bg`
 
 Both scripts change some settings according to my preferences.
 
@@ -167,7 +169,7 @@ Make several preparations for export; can be used with [**`batch_convert.jsx`**]
 ---
 
 ### **QR**
-Adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, manually or batch:
+Adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes:
 
 * **Manually:** It prompts for the QR text and adds the code on the page (or in a separate file).
 
@@ -175,7 +177,7 @@ Adds a QR code on the bottom left corner of each page, or saves it in a separate
 
   QR Filename | QR Code
   :--- | :---
-  **Filename1_1400x400_700x137_5mm_QR.indd** | FILE1 1400x400_700x137
+  **Filename1_1400x400_700x137_10mm_QR.indd** | FILE1 1400x400_700x137
   **Filename2_597x517_577x500.5_3mm V4_QR.indd** | FILE2 597x517_577x500.5 V4
 
 You can use "|" for manually splitting the text into several lines.
@@ -212,10 +214,10 @@ Running a frequently used script from the **Scripts** panel is quite annoying, s
 | **`AlignToL.jsx`**      |  Num4 | **`SetRefPointL.jsx`**  | ⌃Num4 | **`FitToPageMargins.jsx`**       |  ⌥F11 | **`DocDefaults.jsx`**     |  ⌥F2 |
 | **`AlignToBL.jsx`**     |  Num1 | **`SetRefPointBL.jsx`** | ⌃Num1 | **`FitToPageBleed.jsx`**         |  ⇧F11 | **`CleanupSwatches.jsx`** |  ⇧F2 |
 | **`AlignToT.jsx`**      |  Num8 | **`SetRefPointT.jsx`**  | ⌃Num8 | **`FitToPageBleedForced.jsx`**   | ⇧⌘F11 |                           |
-| **`AlignToC.jsx`**      |  Num5 | **`SetRefPointC.jsx`**  | ⌃Num5 | **`FitToSpread.jsx`**            |   F12 | **Other**                 |   F9 |
+| **`AlignToC.jsx`**      |  Num5 | **`SetRefPointC.jsx`**  | ⌃Num5 | **`FitToSpread.jsx`**            |   F12 | **Other**                 |
 | **`AlignToB.jsx`**      |  Num2 | **`SetRefPointB.jsx`**  | ⌃Num2 | **`FitToSpreadMargins.jsx`**     |  ⌥F12 | **`Clip.jsx`**            | Num* |
-| **`AlignToTR.jsx`**     |  Num9 | **`SetRefPointTR.jsx`** | ⌃Num9 | **`FitToSpreadBleed.jsx`**       |  ⇧F12 | **`QR.jsx`**              |
-| **`AlignToR.jsx`**      |  Num6 | **`SetRefPointR.jsx`**  | ⌃Num6 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12 | **`ZoomToSelection.jsx`** |
+| **`AlignToTR.jsx`**     |  Num9 | **`SetRefPointTR.jsx`** | ⌃Num9 | **`FitToSpreadBleed.jsx`**       |  ⇧F12 | **`QR.jsx`**              |   F9 |
+| **`AlignToR.jsx`**      |  Num6 | **`SetRefPointR.jsx`**  | ⌃Num6 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12 | **`ZoomToSelection.jsx`** |   F4 |
 | **`AlignToBR.jsx`**     |  Num3 | **`SetRefPointBR.jsx`** | ⌃Num3 | **`ScaleToPageSize.jsx`**        |    F5 |                           |
 | **`ToggleAlignTo.jsx`** |  Num0 |                         |       | **`ScaleToPageMargins.jsx`**     |   ⌥F5 |                           |
 | **`ResetAlignTo.jsx`**  | ⌃Num0 |                         |       | **`TextAutosize.jsx`**           |    F6 |                           |

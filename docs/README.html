@@ -52,10 +52,10 @@
 	<tbody>
 		<tr>
 			<td style="text-align:left">
-				<strong>Filename1_<code>1400x400</code>_<code>700x137</code>_<code>5</code>mm_QR.indd</strong></td>
+				<strong>Filename1_<code>1400x400</code>_<code>700x137</code>_<code>10</code>mm_QR.indd</strong></td>
 			<td style="text-align:center">1400x400</td>
 			<td style="text-align:center">700x137</td>
-			<td style="text-align:center">5</td>
+			<td style="text-align:center">10</td>
 		</tr>
 		<tr>
 			<td style="text-align:left">
@@ -122,8 +122,8 @@
 	<p>Converts RGB process swatches to CMYK, removes duplicates, renames them to &quot;C= M= Y= K=&quot; form, and deletes unused ones. Spot colors remain unchanged.</p>
 
 	<h3 id="doccleanup"><strong>DocCleanup</strong> and <strong>DocDefaults</strong></h3>
-	<p><strong><code>DocCleanup.jsx</code></strong> cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%, and removes all guides.</p>
-	<p><strong><code>DocDefaults.jsx</code></strong> creates several swatches &amp; layers, replaces several missing or unwanted fonts (it runs <a href="#cleanupfonts"><strong><code>CleanupFonts.jsx</code></strong></a>), and sets the page geometry from the filename (it runs <a href="#pagesize"><strong><code>PageSizeFromFilename.jsx</code></strong></a>).</p>
+	<p><strong><code>DocCleanup.jsx</code></strong> cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%.</p>
+	<p><strong><code>DocDefaults.jsx</code></strong> creates several swatches &amp; layers, replaces some fonts (it runs <a href="#cleanupfonts"><strong><code>CleanupFonts.jsx</code></strong></a>), and sets the page size and margins (it runs <a href="#pagesize"><strong><code>PageSizeFromFilename.jsx</code></strong></a>).</p>
 	<p><img src="img/docdefaults-swatches.png" alt="Swatches"> <img src="img/docdefaults-layers.png" alt="Layers"></p>
 	<p>It also merges several layers:</p>
 	<p><table>
@@ -135,31 +135,39 @@
 	</thead>
 	<tbody>
 		<tr>
-			<td style="text-align:left">Rahmen, Vis. area, Visible area, Visible, Vizibil</td>
+			<td style="text-align:left">rahmen, vis. area, visible, visible area, vizibil</td>
 			<td style="text-align:left"><code>safe area</code></td>
 		</tr>
 		<tr>
-			<td style="text-align:left">cut lines, Cut, decoupe, die cut, diecut, Stanz, Stanze</td>
+			<td style="text-align:left">cut, cut lines, decoupe, die cut, diecut, stanz, stanze, stanzform</td>
 			<td style="text-align:left"><code>dielines</code></td>
 		</tr>
 		<tr>
-			<td style="text-align:left">UV, Varnish</td>
+			<td style="text-align:left">uv, varnish</td>
 			<td style="text-align:left"><code>varnish</code></td>
 		</tr>
 		<tr>
-			<td style="text-align:left">HW Logo, Logo HW, hw, WH, WHW</td>
+			<td style="text-align:left">info copy, ratio</td>
+			<td style="text-align:left"><code>info</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">hw logo, logo hw, wh, whw</td>
 			<td style="text-align:left"><code>HW</code></td>
 		</tr>
 		<tr>
-			<td style="text-align:left">Copy, Text, TEXT, TEXTES, TXT, Type</td>
+			<td style="text-align:left">copy, text, textes, txt, type</td>
 			<td style="text-align:left"><code>text and logos</code></td>
 		</tr>
 		<tr>
-			<td style="text-align:left">Artwork, AW, Layer 1, Calque 1, Ebene 1, Elemente, Layout, Layouts</td>
+			<td style="text-align:left">tins</td>
+			<td style="text-align:left"><code>products</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">artwork, aw, elemente, layout, layouts</td>
 			<td style="text-align:left"><code>artwork</code></td>
 		</tr>
 		<tr>
-			<td style="text-align:left">background, BACKGROUND, BG, HG, Hintergrund</td>
+			<td style="text-align:left">background, bg, hg, hintergrund</td>
 			<td style="text-align:left"><code>bg</code></td>
 		</tr>
 	</tbody>
@@ -200,7 +208,7 @@
 	<p><strong><code>SafeAreaHideLayer.jsx</code></strong> and <strong><code>SafeAreaShowLayer.jsx</code></strong> hide or show <code>safe area</code>.</p>
 	<hr>
 	<h3 id="qr"><strong>QR</strong></h3>
-	<p>Adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes, manually or batch:</p>
+	<p>Adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes:</p>
 	<ul>
 		<li>
 			<p><strong>Manually:</strong> It prompts for the QR text and adds the code on the page (or in a separate file).</p>
@@ -216,7 +224,7 @@
 			</thead>
 			<tbody>
 				<tr>
-					<td style="text-align:left"><strong>Filename1_1400x400_700x137_5mm_QR.indd</strong></td>
+					<td style="text-align:left"><strong>Filename1_1400x400_700x137_10mm_QR.indd</strong></td>
 					<td style="text-align:left">FILE1 1400x400_700x137</td>
 				</tr>
 				<tr>
