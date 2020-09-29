@@ -29,7 +29,6 @@ Name                               |   Fn  | Description
 **`DocCleanup.jsx`**               |    F2 | Changes some settings, cleans up swatches/layers/pages/guides and resets scaling
 **`DocDefaults.jsx`**              |   ⌥F2 | Makes default swatches/layers, cleans up fonts and sets page dimensions from the filename
 **Geometry**                               |
-**`Clip.jsx`**                     | ⌃Num* | Clip selected objects in a "\<clip frame\>", or restores them
 **`FitToPage.jsx`**                |   F11 | Resizes the selected objects to the page size, if they exceed it
 **`FitToPageBleed.jsx`**           |  ⇧F11 | Resizes the selected objects to the page bleed size, if they exceed it
 **`FitToPageBleedForced.jsx`**     | ⇧⌘F11 | Resizes the selected objects to the page bleed size
@@ -60,6 +59,7 @@ Name                               |   Fn  | Description
 **`ZoomToSelection.jsx`**          |    F4 | Zooms to the selected objects or, if nothing is selected, to the current spread
 **Miscellaneous**                          |
 **`_finish.jsx`**                  |  ⌥F10 | Used for quick fixes
+**`Clip.jsx`**                     |  Num* | Clip selected objects in a "\<clip frame\>", or restores them
 **`HW.jsx`**                       |  ⇧F10 | WIP
 **`PageRatios.jsx`**               |       | Calculates the ratio of each page and displays it in the upper left corner
 **`ShowFonts.jsx`**                |       | Shows all fonts used in the current document

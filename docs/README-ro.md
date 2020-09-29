@@ -192,6 +192,8 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 ---
 
 ### Diverse
+**`Clip.jsx`** inserează obiectele selectate într-un *clipping frame* sau le restaurează dacă sunt deja inserate.
+
 **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus (util pentru mastere).
 
 **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`CleanupFonts.jsx`**).
@@ -204,16 +206,16 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplăcută, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu&#x2011;i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**. Configurația mea este următoarea:
 
-| Align                   |       | Proxy                   |       | Fit/Scale                        |       | Cleanup                   |     |
-| :---------------------- | ----: | :---------------------- | ----: | :------------------------------- | ----: | :------------------------ | --: |
-| **`AlignToTL.jsx`**     |  Num7 | **`SetRefPointTL.jsx`** | ⌃Num7 | **`FitToPage.jsx`**              |   F11 | **`DocCleanup.jsx`**      |  F2 |
-| **`AlignToL.jsx`**      |  Num4 | **`SetRefPointL.jsx`**  | ⌃Num4 | **`FitToPageMargins.jsx`**       |  ⌥F11 | **`DocDefaults.jsx`**     | ⌥F2 |
-| **`AlignToBL.jsx`**     |  Num1 | **`SetRefPointBL.jsx`** | ⌃Num1 | **`FitToPageBleed.jsx`**         |  ⇧F11 | **`CleanupSwatches.jsx`** | ⇧F2 |
-| **`AlignToT.jsx`**      |  Num8 | **`SetRefPointT.jsx`**  | ⌃Num8 | **`FitToPageBleedForced.jsx`**   | ⇧⌘F11 | **Other**                 |
-| **`AlignToC.jsx`**      |  Num5 | **`SetRefPointC.jsx`**  | ⌃Num5 | **`FitToSpread.jsx`**            |   F12 | **`QR.jsx`**              |  F9 |
-| **`AlignToB.jsx`**      |  Num2 | **`SetRefPointB.jsx`**  | ⌃Num2 | **`FitToSpreadMargins.jsx`**     |  ⌥F12 | **`ZoomToSelection.jsx`** |  F4 |
-| **`AlignToTR.jsx`**     |  Num9 | **`SetRefPointTR.jsx`** | ⌃Num9 | **`FitToSpreadBleed.jsx`**       |  ⇧F12 |                           |
-| **`AlignToR.jsx`**      |  Num6 | **`SetRefPointR.jsx`**  | ⌃Num6 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12 |                           |
+| Align                   |       | Proxy                   |       | Fit/Scale                        |       | Cleanup                   |      |
+| :---------------------- | ----: | :---------------------- | ----: | :------------------------------- | ----: | :------------------------ | ---: |
+| **`AlignToTL.jsx`**     |  Num7 | **`SetRefPointTL.jsx`** | ⌃Num7 | **`FitToPage.jsx`**              |   F11 | **`DocCleanup.jsx`**      |   F2 |
+| **`AlignToL.jsx`**      |  Num4 | **`SetRefPointL.jsx`**  | ⌃Num4 | **`FitToPageMargins.jsx`**       |  ⌥F11 | **`DocDefaults.jsx`**     |  ⌥F2 |
+| **`AlignToBL.jsx`**     |  Num1 | **`SetRefPointBL.jsx`** | ⌃Num1 | **`FitToPageBleed.jsx`**         |  ⇧F11 | **`CleanupSwatches.jsx`** |  ⇧F2 |
+| **`AlignToT.jsx`**      |  Num8 | **`SetRefPointT.jsx`**  | ⌃Num8 | **`FitToPageBleedForced.jsx`**   | ⇧⌘F11 |                           |
+| **`AlignToC.jsx`**      |  Num5 | **`SetRefPointC.jsx`**  | ⌃Num5 | **`FitToSpread.jsx`**            |   F12 | **Other**                 |   F9 |
+| **`AlignToB.jsx`**      |  Num2 | **`SetRefPointB.jsx`**  | ⌃Num2 | **`FitToSpreadMargins.jsx`**     |  ⌥F12 | **`Clip.jsx`**            | Num* |
+| **`AlignToTR.jsx`**     |  Num9 | **`SetRefPointTR.jsx`** | ⌃Num9 | **`FitToSpreadBleed.jsx`**       |  ⇧F12 | **`QR.jsx`**              |
+| **`AlignToR.jsx`**      |  Num6 | **`SetRefPointR.jsx`**  | ⌃Num6 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12 | **`ZoomToSelection.jsx`** |
 | **`AlignToBR.jsx`**     |  Num3 | **`SetRefPointBR.jsx`** | ⌃Num3 | **`ScaleToPageSize.jsx`**        |    F5 |                           |
 | **`ToggleAlignTo.jsx`** |  Num0 |                         |       | **`ScaleToPageMargins.jsx`**     |   ⌥F5 |                           |
 | **`ResetAlignTo.jsx`**  | ⌃Num0 |                         |       | **`TextAutosize.jsx`**           |    F6 |                           |
@@ -230,4 +232,4 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți&#x2011;mi un e&#x2011;mail la \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 26 septembrie 2020.
+README-ro.md • 29 septembrie 2020.
