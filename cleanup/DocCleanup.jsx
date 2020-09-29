@@ -1,6 +1,6 @@
 ﻿/*
-	Doc cleanup v1.8.8
-	© August 2020, Paul Chiorean
+	Doc cleanup v1.8.9
+	© September 2020, Paul Chiorean
 	Changes some settings, cleans up swatches/layers/pages/guides and resets scaling.
 */
 
@@ -70,10 +70,10 @@ var doc = app.activeDocument;
 })();
 
 // Step 4. Delete guides
-(function() {
-	var g = doc.guides.everyItem().getElements();
-	for (var i = 0; i < g.length; i++) if (g[i].label != "HW") g[i].remove();
-})();
+// (function() {
+// 	var g = doc.guides.everyItem().getElements();
+// 	for (var i = 0; i < g.length; i++) if (g[i].label != "HW") g[i].remove();
+// })();
 
 // Step 5. Delete unused layers
 (function() {
