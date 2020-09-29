@@ -111,7 +111,7 @@ Convertește swatch&#x2011;urile RGB la CMYK, elimină duplicatele, le redenume�
 
 **`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește câteva fonturi lipsă sau nedorite (rulează **`CleanupFonts.jsx`**), și stabilește geometria paginii din numele fișierului (rulează **`PageSizeFromFilename.jsx`**).
 
-![Culori și layere](img/docdefaults.png)
+![Culori](img/docdefaults-swatches.png) ![Layere](img/docdefaults-layers.png)
 
 De asemenea, scriptul combină câteva layere:
 
@@ -232,4 +232,4 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți&#x2011;mi un e&#x2011;mail la \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 29 septembrie 2020.
+README-ro.md • 29 septembrie 2020

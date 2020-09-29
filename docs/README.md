@@ -111,7 +111,7 @@ Converts RGB process swatches to CMYK, removes duplicates, renames them to "C= 
 
 **`DocDefaults.jsx`** creates several swatches & layers, replaces several missing or unwanted fonts (it runs **`CleanupFonts.jsx`**), and sets the page geometry from the filename (it runs **`PageSizeFromFilename.jsx`**).
 
-![Swatches & Layers](img/docdefaults.png)
+![Swatches](img/docdefaults-swatches.png) ![Layers](img/docdefaults-layers.png)
 
 It also merges several layers:
 
@@ -232,4 +232,4 @@ Running a frequently used script from the **Scripts** panel is quite annoying, s
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • September 29, 2020.
+README.md • September 29, 2020
