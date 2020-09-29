@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v1.17.0
+	Default layers and more v1.18.0
 	© September 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -21,6 +21,7 @@ const txtLayerName = "text and logos";
 const prodLayerName = "products";
 const artLayerName = "artwork";
 const bgLayerName = "bg";
+const tmpLayerName = ".template";
 // Swatch names
 const whiteSwatchName = "White";
 const uvSwatchName = "Varnish";
@@ -81,6 +82,7 @@ const saSwatchName = "Safe area";
 
 // Step 2. Make default layers (and merge with similar)
 (function() {
+	var tmpLayer = doc.layers.item(tmpLayerName);
 	var bgLayer = doc.layers.item(bgLayerName);
 	var artLayer = doc.layers.item(artLayerName);
 	var prodLayer = doc.layers.item(prodLayerName);
@@ -104,11 +106,7 @@ const saSwatchName = "Safe area";
 			case "Artwork":
 			case "aw":
 			case "AW":
-			case "Calque 1":
-			case "Ebene 1":
 			case "Elemente":
-			case "Layer 1":
-			case "Layer_lucru":
 			case "layout":
 			case "Layout":
 			case "layouts":
@@ -341,6 +339,21 @@ const saSwatchName = "Safe area";
 		bgLayer.visible = false;
 	}
 	bgLayer.move(LocationOptions.AT_END);
+	// Template layer
+	for (var i = 0; i < doc.layers.length; i++) {
+		var docLayer = doc.layers.item(i);
+		switch (docLayer.name) {
+			case "Template":
+				try { doc.layers.add({ name: tmpLayerName }) } catch (_) {};
+				tmpLayer.merge(docLayer); i--;
+		}
+	}
+	if (tmpLayer.isValid) { tmpLayer.layerColor = UIColors.BLACK;
+	} else {
+		doc.layers.add({ name: tmpLayerName, layerColor: UIColors.BLACK });
+		tmpLayer.visible = false;
+	}
+	tmpLayer.move(LocationOptions.after, bgLayer);
 })();
 
 // Step 3. Replace fonts
