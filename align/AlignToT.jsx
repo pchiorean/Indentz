@@ -1,5 +1,5 @@
 /*
-	Align to top v2.0.0
+	Align to top v2.1.0
 	© September 2020, Paul Chiorean
 */
 
@@ -13,13 +13,6 @@ if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 if (sel.length == 1 && sel[0].locked) {
 	alert("This object is locked."); exit();
 }
-
-// Get selection's parent page
-var page;
-for (var i = 0; i < sel.length; i++) {
-	if (sel[i].parentPage != null) { page = doc.pages[sel[i].parentPage.documentOffset]; break };
-}
-if (page == null) { alert("Select an object on page and try again."); exit() };
 
 // Remember layers for grouping/ungrouping
 var set_URL = app.generalPreferences.ungroupRemembersLayers;
@@ -37,7 +30,7 @@ if (sel.length > 1) { // Multiple objects? Group them
 		objArray.push(sel[i]);
 	}
 	if (objArray.length > 1) { // We *may* encounter an empty objArray
-		obj = page.groups.add(objArray);
+		obj = doc.groups.add(objArray);
 		obj.name = "<align group>";
 		selBAK = obj.pageItems.everyItem().getElements();
 	} else { obj = objArray[0]; selBAK = obj }
