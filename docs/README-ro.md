@@ -118,7 +118,7 @@ De asemenea, scriptul combină câteva layere:
 Layer | Combinat cu
 :--- | :---
 rahmen, vis. area, visible, visible area, vizibil | `safe area`
-cut, cut lines, decoupe, die cut, diecut, stanz, stanze, stanzform | `dielines`
+cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanzform | `dielines`
 uv, varnish | `varnish`
 info copy, ratio | `info`
 hw logo, logo hw, wh, whw | `hw`
@@ -234,4 +234,4 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți&#x2011;mi un e&#x2011;mail la \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 29 septembrie 2020
+README-ro.md • 3 octombrie 2020

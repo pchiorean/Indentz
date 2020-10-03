@@ -16,7 +16,7 @@ Both sets are meant to be assigned to the numeric keypad (see [Shortcuts](#short
 ---
 
 ### **FitTo...**
-Resizes one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. If you run the script a second time on such an object, it will restore it.
+Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. If you run the script a second time on such an object, it will restore it.
 
 **`FitToPage...`** constrains the size of an object to the size of the page, the page margins, or the page bleed. **`FitToSpread...`** does the same for pages grouped in a spread.
 
@@ -118,7 +118,7 @@ It also merges several layers:
 Layer | Merged to
 :--- | :---
 rahmen, vis. area, visible, visible area, vizibil | `safe area`
-cut, cut lines, decoupe, die cut, diecut, stanz, stanze, stanzform | `dielines`
+cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanzform | `dielines`
 uv, varnish | `varnish`
 info copy, ratio | `info`
 hw logo, logo hw, wh, whw | `hw`
@@ -234,4 +234,4 @@ Running a frequently used script from the **Scripts** panel is quite annoying, s
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send me an e-mail at \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • September 29, 2020
+README.md • October 3, 2020
