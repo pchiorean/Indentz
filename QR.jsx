@@ -1,38 +1,49 @@
 /*
-	QR code v1.9.3
-	© September 2020, Paul Chiorean
+	QR code v1.10.0
+	© October 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If "QR.txt" is found, batch process it.
 */
 
 if (app.documents.length == 0) { alert("Open a file and try again."); exit() };
 var doc = app.activeDocument;
+var docPath = doc.filePath;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 // Look for "QR.txt" and select operating mode
-var infoFile = File(doc.filePath + "/QR.txt");
+var infoFile = File(docPath + "/QR.txt");
 if (infoFile.open("r")) {
-	if (confirm("Found \'QR.txt\', do you want to batch process it?")) { BatchQR() } else { ManuallyQR() };
+	if (confirm("Found \'QR.txt\', do you want to process it?")) { BatchQR() } else { ManuallyQR() };
 } else { ManuallyQR() };
 
 
 function BatchQR() { // Noninteractive: batch process "QR.txt"
-	var line = 0, err = 0;
-	infoFile.readln().split("\t");
+	var line = 0, fn = [], qr = [], width = 100;
+	var header = infoFile.readln().split("\t");
 	while (!infoFile.eof) {
-		var infoLine = infoFile.readln().split("\t"); line++;
-		if (!infoLine[0] || !infoLine[1]) { alert ("Missing data in record " + line + "."); exit() };
-		// Add extension and '_QR'
+		var infoLine = infoFile.readln().split("\t");
+		if (infoLine[0].toString().slice(0,1) == "\u003B") continue; // Skip ';' commented lines
+		if (!infoLine[0] && !infoLine[1]) continue;
+		line++;
+		if (!infoLine[0]) { alert ("Missing " + header[0] + " in record " + line + "."); exit() };
+		if (!infoLine[1]) { alert ("Missing " + header[1] + " in record " + line + "."); exit() };
 		infoLine[0] = infoLine[0].match(/\.indd$/g) ? infoLine[0] : infoLine[0] + '.indd';
 		infoLine[0] = infoLine[0].match(/_QR\.indd$/g) ? infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
-		// Count files with overflows
-		if (QROnFile(infoLine[1], infoLine[0])) err++;
+		fn[line-1] = infoLine[0];
+		qr[line-1] = infoLine[1]; width = (qr[line-1] > width) ? qr[line-1] : width;
 	}
 	infoFile.close(); doc.close();
-	var msg = "Batch processed " + line + " records from \'QR.txt\'.";
-	if (err == 1) msg = msg + "\r" + "One file needs attention.";
-	else if (err > 0) msg = msg + "\r" + err + " files need attention.";
-	alert(msg);
+	if (line < 1) { alert("Not enough records."); exit() }
+	var progressBar = new ProgressBar(width); progressBar.reset(line);
+	for (var i = 0, err = 0; i < line; i++) {
+		if (QROnFile(qr[i], fn[i])) err++; // Count files with errors (text overflow)
+		progressBar.update(i+1, qr[i]);
+	}
+	progressBar.close();
+	if (err != 0) {
+		var msg = (err == 1) ?"One file needs attention." : err + " files need attention.";
+		alert(msg);
+	}
 }
 
 function ManuallyQR() { // Interactive: ask for QR text and destination
@@ -213,7 +224,7 @@ function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
 	target.documentPreferences.pageHeight = page.bounds[2] - page.bounds[0];
 	QR.ungroup();
 	// Create folder and save file
-	var targetFolder = Folder(doc.filePath + "/QR Codes");
+	var targetFolder = Folder(docPath + "/QR Codes");
 	targetFolder.create();
 	target.save(File(targetFolder + "/" + fn));
 	// Keep file opened if text overflows
@@ -235,6 +246,25 @@ function MakeInfoLayer(doc) {
 		} else if (hwLayer.isValid) { infoLayer.move(LocationOptions.before, hwLayer);
 		} else infoLayer.move(LocationOptions.AT_BEGINNING);
 	return infoLayer;
+}
+
+function ProgressBar(width) {
+	var w = new Window("palette", "Batch Resize: " + decodeURI(infoFile.name));
+	w.pb = w.add("progressbar", [12, 12, (width*5), 24], 0, undefined);
+	w.st = w.add("statictext", [0, 0, (width*5-20), 20], undefined, { truncate: "middle" });
+	this.reset = function(max) {
+		w.pb.value = 0;
+		w.pb.maxvalue = max || 0;
+		w.pb.visible = !!max;
+		w.show();
+	}
+	this.update = function(val, code) {
+		w.pb.value = val;
+		w.st.text = "Processing code '" + code + "' (" + val + " of " + w.pb.maxvalue + ")";
+		w.show(); w.update();
+	}
+	this.hide = function() { w.hide() };
+	this.close = function() { w.close() };
 }
 
 function Margins(page) { // Return page margins
