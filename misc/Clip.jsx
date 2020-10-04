@@ -1,5 +1,5 @@
 /*
-	Clip v1.2.1
+	Clip v1.3.0
 	© September 2020, Paul Chiorean
 	Clip selected objects in a "\<clip frame\>", or restores them
 */
@@ -40,17 +40,18 @@ function Clip2Bounds(obj, page) {
 	if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
 		var objD = obj.pageItems[0].duplicate();
 		objD.label = obj.label;
-		objD.sendToBack(obj); obj.remove(); obj = objD;
+		objD.sendToBack(obj); obj.remove(); obj = objD; app.select(obj);
 		if (obj.name == "<clip group>") {
 			var sel_BAK = obj.pageItems.everyItem().getElements();
 			obj.ungroup(); app.select(sel_BAK);
-		} else if (obj.constructor.name == "Rectangle" && obj.groups.length == 1) {
-			var objD = obj.pageItems[0].duplicate();
-			objD.label = obj.label;
-			objD.sendToBack(obj); obj.remove(); obj = objD;
-			var sel_BAK = obj.pageItems.everyItem().getElements();
-			obj.ungroup(); app.select(sel_BAK);
-		} else { app.select(obj) };
+		}
+		return obj;
+	} else if (obj.constructor.name == "Rectangle" && obj.groups.length == 1) {
+		var objD = obj.pageItems[0].duplicate();
+		objD.label = obj.label;
+		objD.sendToBack(obj); obj.remove(); obj = objD; app.select(obj);
+		// var sel_BAK = obj.pageItems.everyItem().getElements();
+		// obj.ungroup(); app.select(sel_BAK);
 		return obj;
 	}
 	// Size is intersection between obj bounds and page bounds
