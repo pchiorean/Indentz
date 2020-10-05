@@ -16,13 +16,13 @@ Both sets are meant to be assigned to the numeric keypad (see [Shortcuts](#short
 ---
 
 ### **FitTo...**
-Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. If you run the script a second time on such an object, it will restore it.
+Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. <!-- If you run the script a second time on such an object, it will restore it. -->
 
 **`FitToPage...`** constrains the size of an object to the size of the page, the page margins, or the page bleed. **`FitToSpread...`** does the same for pages grouped in a spread.
 
 **`FitTo...Forced.jsx`** resizes exactly to the page or the spread bleed (useful, for example, for the background image).
 
-**`FitUndo.jsx`** restores one or several objects at once.
+**`FitUndo.jsx`** restores one or several clipped objects at once.
 
 ### **ScaleTo...**
 These also work with one or more objects, but scale them proportionally, as a block.

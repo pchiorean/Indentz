@@ -16,7 +16,7 @@ Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. [Shortcuts](
 ---
 
 ### **FitTo...**
-Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un *clipping frame* și acesta e redimensionat. Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura.
+Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un *clipping frame* și acesta e redimensionat. <!-- Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura. -->
 
 **`FitToPage...`** constrânge dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. **`FitToSpread...`** face același lucru pentru paginile grupate într‑un spread.
 
