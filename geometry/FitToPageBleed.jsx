@@ -1,6 +1,6 @@
 /*
-	Fit to page bleed v1.10.0
-	© September 2020, Paul Chiorean
+	Fit to page bleed v1.11.0
+	© October 2020, Paul Chiorean
 	Resizes the selected objects to the page bleed size, if they exceed it.
 */
 
@@ -20,12 +20,12 @@ for (var i = 0; i < sel.length; i++) {
 
 function Fit(obj) {
 	// Undo if already clipped
-	if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
-		var objD = obj.pageItems[0].duplicate();
-		objD.label = obj.label;
-		objD.sendToBack(obj); obj.remove(); app.select(objD);
-		return;
-	}
+	// if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
+	// 	var objD = obj.pageItems[0].duplicate();
+	// 	objD.label = obj.label;
+	// 	objD.sendToBack(obj); obj.remove(); app.select(objD);
+	// 	return;
+	// }
 	// Get target size
 	var szOg = obj.geometricBounds;
 	var szOv = obj.visibleBounds;
@@ -43,6 +43,10 @@ function Fit(obj) {
 		Number(szOv[3].toFixed(11)) <= Number(size[3].toFixed(11)) &&
 		(obj.label != "HW") // and is not HW
 	) return;
+	// If already clipped, just resize
+	if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
+		obj.geometricBounds = size; return;
+	}
 	// Clipping rectangle properties
 	var clipFrameP = {
 		name: "<clip frame>",

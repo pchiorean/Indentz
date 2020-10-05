@@ -1,6 +1,6 @@
 /*
-	Fit to spread bleed, forced v1.10.0
-	© September 2020, Paul Chiorean
+	Fit to spread bleed, forced v1.11.0
+	© October 2020, Paul Chiorean
 	Resizes the selected objects to the spread bleed size.
 */
 
@@ -25,12 +25,12 @@ doc.viewPreferences.rulerOrigin = ro;
 
 function Fit(obj) {
 	// Undo if already clipped
-	if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
-		var objD = obj.pageItems[0].duplicate();
-		objD.label = obj.label;
-		objD.sendToBack(obj); obj.remove(); app.select(objD);
-		return;
-	}
+	// if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
+	// 	var objD = obj.pageItems[0].duplicate();
+	// 	objD.label = obj.label;
+	// 	objD.sendToBack(obj); obj.remove(); app.select(objD);
+	// 	return;
+	// }
 	// Get target size
 	var spread = page.parent;
 	var size = Bounds(spread);
@@ -53,9 +53,13 @@ function Fit(obj) {
 			]}
 		return;
 	}
-	// Case 2: Simple rectangles
+	// Case 2a: If already clipped, just resize
+	if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
+		obj.geometricBounds = size; return;
+	}
+	// Case 2b: Simple rectangles
 	if (obj.constructor.name == "Rectangle" &&
-		// obj.strokeWeight <= 1 &&
+		obj.strokeWeight == 0 &&
 		(obj.absoluteRotationAngle == 0 ||
 		Math.abs(obj.absoluteRotationAngle) == 90 ||
 		Math.abs(obj.absoluteRotationAngle) == 180)) {
