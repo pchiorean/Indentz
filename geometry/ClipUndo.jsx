@@ -1,5 +1,5 @@
 /*
-	Undo fitting v1.2.0
+	Undo clipping v1.2.0
 	© September 2020, Paul Chiorean
 	Restores objects clipped in a "\<clip frame\>" by the "fit" scripts.
 */
