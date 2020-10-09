@@ -22,7 +22,7 @@ Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Fr
 
 **`FitTo...Forced.jsx`** redimensionează exact la bleedul paginii sau ale spreadului (util, de exemplu, pentru imaginea de background).
 
-**`FitUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
+**`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
 ### **ScaleTo...**
 Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar.

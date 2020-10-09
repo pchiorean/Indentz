@@ -22,7 +22,7 @@ Resize one or more selected objects, without scaling them. Ordinary frames are s
 
 **`FitTo...Forced.jsx`** resize exactly to the page or the spread bleed (useful, for example, for the background image).
 
-**`FitUndo.jsx`** restores one or several clipped objects at once.
+**`ClipUndo.jsx`** restores one or several clipped objects at once.
 
 ### **ScaleTo...**
 These also work with one or more objects, but scale them proportionally, as a block.
