@@ -22,33 +22,33 @@ Name                               |   Fn  | Description
 **`SetRefPointToTL.jsx`**          | ⌃Num7 | Sets **Transform Reference Point** to top-left
 **`SetRefPointToT.jsx`**           | ⌃Num8 | Sets **Transform Reference Point** to top
 **`SetRefPointToTR.jsx`**          | ⌃Num9 | Sets **Transform Reference Point** to top-right
-**Cleanup**                                |
-**`CleanupFonts.jsx`**             |       | Replaces missing or unwanted fonts with equivalents from a list
-**`CleanupLabels.jsx`**            |       | Removes all labels from the document
-**`CleanupSwatches.jsx`**          |   ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
-**`DocCleanup.jsx`**               |    F2 | Changes some settings, cleans up swatches/layers/pages/guides and resets scaling
-**`DocDefaults.jsx`**              |   ⌥F2 | Makes default swatches/layers, cleans up fonts and sets page dimensions from the filename
 **Geometry**                               |
-**`FitToPage.jsx`**                |   F11 | Resizes the selected objects to the page size, if they exceed it
-**`FitToPageBleed.jsx`**           |  ⇧F11 | Resizes the selected objects to the page bleed size, if they exceed it
+**`FitToPage.jsx`**                |   F11 | Resizes the selected objects to the page size
+**`FitToPageBleed.jsx`**           |  ⇧F11 | Resizes the selected objects to the page bleed size
 **`FitToPageBleedForced.jsx`**     | ⇧⌘F11 | Resizes the selected objects to the page bleed size
-**`FitToPageMargins.jsx`**         |  ⌥F11 | Resizes the selected objects to the page margins, if they exceed them
-**`FitToSpread.jsx`**              |   F12 | Resizes the selected objects to the spread size, if they exceed it
-**`FitToSpreadBleed.jsx`**         |  ⇧F12 | Resizes the selected objects to the spread bleed size, if they exceed it
+**`FitToPageMargins.jsx`**         |  ⌥F11 | Resizes the selected objects to the page margins
+**`FitToSpread.jsx`**              |   F12 | Resizes the selected objects to the spread size
+**`FitToSpreadBleed.jsx`**         |  ⇧F12 | Resizes the selected objects to the spread bleed size
 **`FitToSpreadBleedForced.jsx`**   | ⇧⌘F12 | Resizes the selected objects to the spread bleed size
-**`FitToSpreadMargins.jsx`**       |  ⌥F12 | Resizes the selected objects to the spread margins, if they exceed them
-**`FitUndo.jsx`**                  |       | Restores objects clipped in a '\<clip group\>' by the 'fit' scripts
-**`PageMarginsFromSelection.jsx`** |       | Sets the page margins to the selected objects bounds
-**`PageSizeFromFilename.jsx`**     |       | Sets every page size and margins according to the filename
-**`PageSizeFromMargins.jsx`**      |       | Sets the page size to the page margins
-**`PageSizeFromSelection.jsx`**    |       | Sets the page size to the selected objects bounds
+**`FitToSpreadMargins.jsx`**       |  ⌥F12 | Resizes the selected objects to the spread margins
+**`ClipUndo.jsx`**                 |       | Restores objects clipped in a '\<clip group\>' by the 'fit' scripts
 **`ScaleToPageMargins.jsx`**       |   ⌥F5 | Scales the selected objects to the page margins
 **`ScaleToPageMarginsH.jsx`**      |       | Scales the selected objects to the page top/bottom margins
 **`ScaleToPageMarginsW.jsx`**      |       | Scales the selected objects to the page left/right margins
 **`ScaleToPageSize.jsx`**          |    F5 | Scales the selected objects to the page size
 **`ScaleToPageSizeH.jsx`**         |       | Scales the selected objects to the page top/bottom size
 **`ScaleToPageSizeW.jsx`**         |       | Scales the selected objects to the page left/right size
+**`PageSizeFromFilename.jsx`**     |       | Sets every page size and margins according to the filename
+**`PageSizeFromMargins.jsx`**      |       | Sets the page size to the page margins
+**`PageSizeFromSelection.jsx`**    |       | Sets the page size to the selected objects bounds
+**`PageMarginsFromSelection.jsx`** |       | Sets the page margins to the selected objects bounds
 **`TextAutosize.jsx`**             |    F6 | Auto-sizes the text frame to the content
+**Cleanup**                                |
+**`CleanupFonts.jsx`**             |       | Replaces missing or unwanted fonts with equivalents from a list
+**`CleanupLabels.jsx`**            |       | Removes all labels from the document
+**`CleanupSwatches.jsx`**          |   ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
+**`DocCleanup.jsx`**               |    F2 | Changes some settings, cleans up swatches/layers/pages/guides and resets scaling
+**`DocDefaults.jsx`**              |   ⌥F2 | Makes default swatches/layers, cleans up fonts and sets page dimensions from the filename
 **Print**                                  |
 **`PrepareForPrint.jsx`**          |       | Hides `safe area` layer and moves dielines to separate spreads
 **`SafeArea.jsx`**                 |       | Creates a `safe area` frame, on every page/spread for which margins are defined
@@ -58,9 +58,7 @@ Name                               |   Fn  | Description
 **`QR.jsx`**                       |    F9 | Adds a QR code to the current document or to a separate file
 **`ZoomToSelection.jsx`**          |    F4 | Zooms to the selected objects or, if nothing is selected, to the current spread
 **Miscellaneous**                          |
-**`_finish.jsx`**                  |  ⌥F10 | Used for quick fixes
 **`Clip.jsx`**                     |  Num* | Clip selected objects in a "\<clip frame\>", or restores them
-**`HW.jsx`**                       |  ⇧F10 | WIP
 **`PageRatios.jsx`**               |       | Calculates the ratio of each page and displays it in the upper left corner
 **`ShowFonts.jsx`**                |       | Shows all fonts used in the current document
 **`ShowProfiles.jsx`**             |       | Shows all color profiles available to the document
