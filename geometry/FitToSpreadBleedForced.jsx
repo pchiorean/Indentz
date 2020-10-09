@@ -1,5 +1,5 @@
 /*
-	Fit to spread bleed, forced v1.11.0
+	Fit to spread bleed, forced v2.0.0
 	© October 2020, Paul Chiorean
 	Resizes the selected objects to the spread bleed size.
 */
@@ -8,73 +8,73 @@ if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
 var sel = doc.selection;
-if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
-	alert("Select an object and try again."); exit();
-}
-// Save setting and set ruler origin to spread
+if (sel.length == 0 || (sel[0].constructor.name == "Guide")) exit();
 var ro = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
-// Resize selected object(s)
 for (var i = 0; i < sel.length; i++) {
 	var obj = sel[i], page;
-	if (page = obj.parentPage) Fit(obj);
+	if (page = obj.parentPage) { page = page.parent; Fit(obj) }
 }
-// Restore ruler origin setting
 doc.viewPreferences.rulerOrigin = ro;
 
 
 function Fit(obj) {
-	// Undo if already clipped
-	// if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
-	// 	var objD = obj.pageItems[0].duplicate();
-	// 	objD.label = obj.label;
-	// 	objD.sendToBack(obj); obj.remove(); app.select(objD);
-	// 	return;
-	// }
-	// Get target size
-	var spread = page.parent;
-	var size = Bounds(spread);
-	// Clipping rectangle properties
-	var clipFrameP = {
-		name: "<clip frame>",
-		itemLayer: obj.itemLayer,
-		fillColor: "None", strokeColor: "None",
-		geometricBounds: size
-	}
-	// Case 1: Objects labeled "HW"
+	var pg = Bounds(page);
+	var fit = BlBounds(page);
+	var objRA = obj.absoluteRotationAngle;
+	// Case 1: Labeled 'HW'
 	if (obj.label == "HW") {
-		obj.geometricBounds = [
-			(spread.pages[0].bounds[2] - spread.pages[0].bounds[0]) * 0.9,
-				size[1], size[2], size[3]
-		];
-		if (obj.constructor.name == "TextFrame") {
-			obj.textFramePreferences.insetSpacing = [
-				0, 0, doc.documentPreferences.properties.documentBleedBottomOffset, 0
-			]}
+		obj.geometricBounds = [(pg[2] - pg[0]) * 0.9, fit[1], fit[2], fit[3]];
+		if (obj.constructor.name == "TextFrame")
+			obj.textFramePreferences.insetSpacing =
+				[0, 0, doc.documentPreferences.properties.documentBleedBottomOffset, 0];
 		return;
 	}
-	// Case 2a: If already clipped, just resize
+	// Case 2a: Already clipped
 	if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
-		obj.geometricBounds = size; return;
+		obj.geometricBounds = fit; return;
 	}
-	// Case 2b: Simple rectangles
+	// Case 2b: Already a container
+	if (obj.constructor.name == "Rectangle" &&
+		obj.pageItems.length == 1 &&
+		obj.strokeWeight == 0 &&
+		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
+			obj.geometricBounds = fit; return;
+	}
+	// Case 3: Simple rectangle
 	if (obj.constructor.name == "Rectangle" &&
 		obj.strokeWeight == 0 &&
-		(obj.absoluteRotationAngle == 0 ||
-		Math.abs(obj.absoluteRotationAngle) == 90 ||
-		Math.abs(obj.absoluteRotationAngle) == 180)) {
-			obj.geometricBounds = size; return;
+		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
+			obj.geometricBounds = fit; return;
 	}
-	// Case 3: Groups
-	if (obj.constructor.name == "Group") {
-		var frame = spread.rectangles.add(clipFrameP); // Make clipping rectangle
-	frame.label = obj.label;
-	frame.sendToBack(obj);
-	app.select(obj); app.cut(); app.select(frame); app.pasteInto();
+	// Case 4: Text frame
+	if (obj.constructor.name == "TextFrame" &&
+		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
+			obj.geometricBounds = fit; return;
 	}
+	// Other cases: Clip
+		var frame = doc.rectangles.add(
+			obj.itemLayer, LocationOptions.AFTER, obj,
+			{ name: "<clip frame>", label: obj.label,
+			fillColor: "None", strokeColor: "None",
+			geometricBounds: fit
+		}
+	);
+	frame.sendToBack(obj); app.select(obj); app.cut(); app.select(frame); app.pasteInto();
 }
 
-function Bounds(spread) { // Return spread bleed bounds
+function Bounds(spread) { // Return spread bounds
+	var fPg = spread.pages.firstItem();
+	var lPg = spread.pages.lastItem();
+	if (spread.pages.length == 1) { // Spread is single page
+		var size = fPg.bounds;
+	} else { // Spread is multiple pages
+		var size = [fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3]];
+	}
+	return size;
+}
+
+function BlBounds(spread) { // Return spread bleed bounds
 	var fPg = spread.pages.firstItem();
 	var lPg = spread.pages.lastItem();
 	var bleed = {

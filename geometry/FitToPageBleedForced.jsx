@@ -1,17 +1,16 @@
 /*
-	Fit to page bleed, forced v1.11.0
+	Fit to page bleed, forced v2.0.0
 	© October 2020, Paul Chiorean
 	Resizes the selected objects to the page bleed size.
 */
+
+app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
 var sel = doc.selection;
-if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
-	alert("Select an object and try again."); exit();
-}
-// Resize selected object(s)
+if (sel.length == 0 || (sel[0].constructor.name == "Guide")) exit();
 for (var i = 0; i < sel.length; i++) {
 	var obj = sel[i], page;
 	if (page = obj.parentPage) Fit(obj);
@@ -19,56 +18,55 @@ for (var i = 0; i < sel.length; i++) {
 
 
 function Fit(obj) {
-	// Undo if already clipped
-	// if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
-	// 	var objD = obj.pageItems[0].duplicate();
-	// 	objD.label = obj.label;
-	// 	objD.sendToBack(obj); obj.remove(); app.select(objD);
-	// 	return;
-	// }
-	// Get target size
-	var size = Bounds(page);
-	// Clipping rectangle properties
-	var clipFrameP = {
-		name: "<clip frame>",
-		itemLayer: obj.itemLayer,
-		fillColor: "None", strokeColor: "None",
-		geometricBounds: size
-	}
-	// Case 1: Objects labeled "HW"
+	var pg = Bounds(page);
+	var fit = BlBounds(page);
+	var objRA = obj.absoluteRotationAngle;
+	// Case 1: Labeled 'HW'
 	if (obj.label == "HW") {
-		obj.geometricBounds = [
-			(page.bounds[2] - page.bounds[0]) * 0.9, size[1], size[2], size[3]
-		];
-		if (obj.constructor.name == "TextFrame") {
-			obj.textFramePreferences.insetSpacing = [
-				0, 0, doc.documentPreferences.properties.documentBleedBottomOffset, 0
-			]}
+		obj.geometricBounds = [(pg[2] - pg[0]) * 0.9, fit[1], fit[2], fit[3]];
+		if (obj.constructor.name == "TextFrame")
+			obj.textFramePreferences.insetSpacing =
+				[0, 0, doc.documentPreferences.properties.documentBleedBottomOffset, 0];
 		return;
 	}
-	// Case 2a: If already clipped, just resize
+	// Case 2a: Already clipped
 	if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
-		obj.geometricBounds = size; return;
+		obj.geometricBounds = fit; return;
 	}
-	// Case 2b: Simple rectangles
+	// Case 2b: Already a container
+	if (obj.constructor.name == "Rectangle" &&
+		obj.pageItems.length == 1 &&
+		obj.strokeWeight == 0 &&
+		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
+			obj.geometricBounds = fit; return;
+	}
+	// Case 3: Simple rectangle
 	if (obj.constructor.name == "Rectangle" &&
 		obj.strokeWeight == 0 &&
-		(obj.absoluteRotationAngle == 0 ||
-		Math.abs(obj.absoluteRotationAngle) == 90 ||
-		Math.abs(obj.absoluteRotationAngle) == 180)) {
-			obj.geometricBounds = size; return;
+		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
+			obj.geometricBounds = fit; return;
 	}
-	// Case 3: Groups
-	if (obj.constructor.name == "Group") {
-		var frame = page.rectangles.add(clipFrameP); // Make clipping rectangle
-		frame.sendToBack(obj);
-		frame.label = obj.label;
-		app.select(obj); app.cut(); app.select(frame); app.pasteInto();
+	// Case 4: Text frame
+	if (obj.constructor.name == "TextFrame" &&
+		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
+			obj.geometricBounds = fit; return;
 	}
+	// Other cases: Clip
+		var frame = doc.rectangles.add(
+			obj.itemLayer, LocationOptions.AFTER, obj,
+			{ name: "<clip frame>", label: obj.label,
+			fillColor: "None", strokeColor: "None",
+			geometricBounds: fit
+		}
+	);
+	frame.sendToBack(obj); app.select(obj); app.cut(); app.select(frame); app.pasteInto();
 }
 
+function Bounds(page) { // Return page bounds
+	return page.bounds;
+}
 
-function Bounds(page) { // Return page bleed bounds
+function BlBounds(page) { // Return page bleed bounds
 	var fPg = page.parent.pages.firstItem();
 	var lPg = page.parent.pages.lastItem();
 	var bleed = {
