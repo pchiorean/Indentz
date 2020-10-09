@@ -16,9 +16,9 @@ Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. [Shortcuts](
 ---
 
 ### **FitTo...**
-Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un *clipping frame* și acesta e redimensionat. <!-- Dacă rulați un script a doua oară pe un astfel de obiect, îl va restaura. -->
+Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un *clipping frame* și acesta e redimensionat.
 
-**`FitToPage...`** constrânge dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. **`FitToSpread...`** face același lucru pentru paginile grupate într‑un spread.
+**`FitToPage...`** aduc dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. **`FitToSpread...`** fac același lucru pentru paginile grupate într‑un spread. Dacă obiectul este mai mare decât pagina, va fi redus; dacă este mai mic și intră într-o zonă „snap”, va fi mărit.
 
 **`FitTo...Forced.jsx`** redimensionează exact la bleedul paginii sau ale spreadului (util, de exemplu, pentru imaginea de background).
 
@@ -41,7 +41,7 @@ Fișier | Dimensiune | Safe area | Bleed
 
 > <details><summary>Detalii</summary>
 >
-> Caută în numele fișierului perechi de numere de genul "000x000" (unde "000" înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de "mm" sau "cm"). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. "000x000_000x000"), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
+> Caută în numele fișierului perechi de numere de genul „000x000” (unde „000” înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de „mm” sau „cm”). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. „000x000_000x000”), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
 > </details>
 
 **`PageSizeFromMargins.jsx`** redimensionează fiecare pagină la marginile acesteia.
@@ -51,7 +51,7 @@ Fișier | Dimensiune | Safe area | Bleed
 **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
 ### **TextAutosize**
-"Strânge" chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
+„Strânge” chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
 
 <!--
 | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
@@ -97,7 +97,7 @@ Dacă textul are un singur rând, **Auto-Sizing Type** va fi setat *Height and w
 ---
 
 ### **CleanupFonts**
-Înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). Prima linie (capul de tabel) și liniile care încep cu ";" sunt ignorate.
+Înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate.
 
 Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă a fonturilor pentru copy-paste în **`CleanupFonts.txt`**.
 
@@ -105,7 +105,7 @@ Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă a fonturilor pentr
 Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **`CleanupLabels.jsx`** șterge toate etichetele din document (dacă nu e selectat nimic) sau doar din elementele selectate.
 
 ### **CleanupSwatches**
-Convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula "C= M= Y= K=" și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
+Convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula „C= M= Y= K=” și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
 ### **DocCleanup** și **DocDefaults**
 **`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%.
@@ -163,7 +163,7 @@ Fac câteva pregătiri pentru export; pot fi rulate în [**`batch_convert.jsx`**
 
 **`PrepareForPrint.jsx`** ascunde layerul `safe area` și mută ștanțele și marcajele pentru alb și lac UV de pe `dielines` / `white` / `varnish` pe spreaduri separate.
 
-**`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Folosește swatch‑ul `Safe area`, care dacă nu există va fi creat cu valoarea "C=0 M=100 Y=0 K=0".
+**`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Folosește swatch‑ul `Safe area`, care dacă nu există va fi creat cu valoarea „C=0 M=100 Y=0 K=0”.
 
 **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează `safe area`.
 
@@ -181,7 +181,7 @@ Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvea
   **Filename1_1400x400_700x137_10mm_QR.indd** | FILE1 1400x400_700x137
   **Filename2_597x517_577x500.5_3mm V4_QR.indd** | FILE2 597x517_577x500.5 V4
 
-Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
+Puteți insera „|” pentru împărțirea manuală a textului în mai multe rânduri.
 
 ---
 
@@ -235,4 +235,4 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți un e‑mail la Paul Chiorean \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 5 octombrie 2020
+README-ro.md • 9 octombrie 2020

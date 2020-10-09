@@ -29,7 +29,7 @@
 	<hr>
 	<h3 id="fitto"><strong>FitTo...</strong></h3>
 	<p>Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un <em>clipping frame</em> și acesta e redimensionat.</p>
-	<p><strong><code>FitToPage...</code></strong> constrânge dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. <strong><code>FitToSpread...</code></strong> face același lucru pentru paginile grupate într‑un spread.</p>
+	<p><strong><code>FitToPage...</code></strong> aduc dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. <strong><code>FitToSpread...</code></strong> fac același lucru pentru paginile grupate într‑un spread. Dacă obiectul este mai mare decât pagina, va fi redus; dacă este mai mic și intră într-o zonă &ldquor;snap&rdquor;, va fi mărit.</p>
 	<p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la bleedul paginii sau ale spreadului (util, de exemplu, pentru imaginea de background).</p>
 	<p><strong><code>FitUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
 
@@ -70,7 +70,7 @@
 	<blockquote>
 		<details>
 			<summary>Detalii</summary>
-			<p>Caută în numele fișierului perechi de numere de genul "000x000" (unde "000" înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de "mm" sau "cm"). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. "000x000_000x000"), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.</p>
+			<p>Caută în numele fișierului perechi de numere de genul &ldquor;000x000&rdquor; (unde &ldquor;000&rdquor; înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de &ldquor;mm&rdquor; sau &ldquor;cm&rdquor;). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. &ldquor;000x000_000x000&rdquor;), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.</p>
 		</details>
 	</blockquote>
 	<p><strong><code>PageSizeFromMargins.jsx</code></strong> redimensionează fiecare pagină la marginile acesteia.</p>
@@ -78,7 +78,7 @@
 	<p><strong><code>PageMarginsFromSelection.jsx</code></strong> setează marginile paginii la dimensiunile selecției.</p>
 
 	<h3 id="textautosize"><strong>TextAutosize</strong></h3>
-	<p>&quot;Strânge&quot; chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând <strong>Paragraph Alignment</strong> pentru axa orizontală și <strong>Text Frame Options &gt; Vertical Justification</strong> pentru axa verticală:</p>
+	<p>&ldquor;Strânge&rdquor; chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând <strong>Paragraph Alignment</strong> pentru axa orizontală și <strong>Text Frame Options &gt; Vertical Justification</strong> pentru axa verticală:</p>
 	<p><table>
 	<thead>
 		<tr>
@@ -112,14 +112,14 @@
 	<p>Dacă textul are un singur rând, <strong>Auto-Sizing Type</strong> va fi setat <em>Height and width</em>. Dacă are mai multe rânduri, prima rulare îl va seta <em>Height only</em>, a doua <em>Height and width</em>.</p>
 	<hr>
 	<h3 id="cleanupfonts"><strong>CleanupFonts</strong></h3>
-	<p>Înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV <em>(tab-separated values)</em> cu 4 coloane, cu același nume ca scriptul (<a href="../cleanup/CleanupFonts.txt"><strong><code>CleanupFonts.txt</code></strong></a>). Prima linie (capul de tabel) și liniile care încep cu ";" sunt ignorate.</p>
+	<p>Înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV <em>(tab-separated values)</em> cu 4 coloane, cu același nume ca scriptul (<a href="../cleanup/CleanupFonts.txt"><strong><code>CleanupFonts.txt</code></strong></a>). Prima linie (capul de tabel) și liniile care încep cu &ldquor;;" sunt ignorate.</p>
 	<p>Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> pentru a obține o listă a fonturilor pentru copy-paste în <strong><code>CleanupFonts.txt</code></strong>.</p>
 
 	<h3 id="cleanuplabels"><strong>CleanupLabels</strong></h3>
 	<p>Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. <strong><code>CleanupLabels.jsx</code></strong> șterge toate etichetele din document (dacă nu e selectat nimic) sau doar din elementele selectate.</p>
 
 	<h3 id="cleanupswatches"><strong>CleanupSwatches</strong></h3>
-	<p>Convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula &quot;C= M= Y= K=&quot; și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
+	<p>Convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula &ldquor;C= M= Y= K=&rdquor; și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
 
 	<h3 id="doccleanup"><strong>DocCleanup</strong> and <strong>DocDefaults</strong></h3>
 	<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%.</p>
@@ -204,7 +204,7 @@
 	<h3 id="print"><strong>Print</strong></h3>
 	<p>Fac câteva pregătiri pentru export; pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează layere alternative gen <em>visible</em>, <em>vizibil</em>, <em>vis. area</em> pentru <code>safe area</code>, sau <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> pentru <code>dielines</code>.</p>
 	<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde layerul <code>safe area</code> și mută ștanțele și marcajele pentru alb și lac UV de pe <code>dielines</code> / <code>white</code> / <code>varnish</code> pe spreaduri separate.</p>
-	<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe layerul <code>safe area</code>. Folosește swatch‑ul <code>Safe area</code>, care dacă nu există va fi creat cu valoarea &quot;C=0 M=100 Y=0 K=0&quot;.</p>
+	<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe layerul <code>safe area</code>. Folosește swatch‑ul <code>Safe area</code>, care dacă nu există va fi creat cu valoarea &ldquor;C=0 M=100 Y=0 K=0&rdquor;.</p>
 	<p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <code>safe area</code>.</p>
 	<hr>
 	<h3 id="qr"><strong>QR</strong></h3>
@@ -235,7 +235,7 @@
 			</table></p>
 		</li>
 	</ul>
-	<p>Puteți insera &quot;|&quot; pentru împărțirea manuală a textului în mai multe rânduri.</p>
+	<p>Puteți insera &ldquor;|&rdquor; pentru împărțirea manuală a textului în mai multe rânduri.</p>
 	<hr>
 	<h3 id="zoom"><strong>ZoomToSelection</strong></h3>
 	<p>Asemănător cu <strong>Fit Selection in Window</strong> (⌥⌘=), dar cu câteva îmbunătățiri:</p>
@@ -375,7 +375,7 @@
 
 	<h2 id="license">Licență</h2>
 	<p>Codul este publicat sub licența MIT (<a href="../LICENSE.txt">LICENSE.txt</a>). Trimiteți un e‑mail la Paul Chiorean &lt;jpeg AT basement.ro&gt; sau <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
-	<p>README-ro.md • 5 octombrie 2020</p>
+	<p>README-ro.md • 9 octombrie 2020</p>
 
 </body>
 
