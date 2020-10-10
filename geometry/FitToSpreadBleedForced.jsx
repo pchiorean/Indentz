@@ -1,8 +1,10 @@
 /*
-	Fit to spread bleed, forced v2.0.0
+	Fit to spread bleed, forced v2.0.1
 	© October 2020, Paul Chiorean
 	Resizes the selected objects to the spread bleed size.
 */
+
+app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
