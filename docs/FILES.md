@@ -23,14 +23,17 @@ Name                               |   Fn  | Description
 **`SetRefPointToT.jsx`**           | ⌃Num8 | Sets **Transform Reference Point** to top
 **`SetRefPointToTR.jsx`**          | ⌃Num9 | Sets **Transform Reference Point** to top-right
 **Geometry**                               |
+**`FitTo.jsx`**                    |       | It's run internally by all the other FitTo scripts
 **`FitToPage.jsx`**                |   F11 | Resizes the selected objects to the page size
 **`FitToPageBleed.jsx`**           |  ⇧F11 | Resizes the selected objects to the page bleed size
-**`FitToPageBleedForced.jsx`**     | ⇧⌘F11 | Resizes the selected objects to the page bleed size
+**`FitToPageBleedForced.jsx`**     | ⇧⌘F11 | Resizes the selected objects to the page bleed size, forced
 **`FitToPageMargins.jsx`**         |  ⌥F11 | Resizes the selected objects to the page margins
+**`FitToPageMarginsForced.jsx`**   | ⌥⌘F11 | Resizes the selected objects to the page margins, forced
 **`FitToSpread.jsx`**              |   F12 | Resizes the selected objects to the spread size
 **`FitToSpreadBleed.jsx`**         |  ⇧F12 | Resizes the selected objects to the spread bleed size
-**`FitToSpreadBleedForced.jsx`**   | ⇧⌘F12 | Resizes the selected objects to the spread bleed size
+**`FitToSpreadBleedForced.jsx`**   | ⇧⌘F12 | Resizes the selected objects to the spread bleed size, forced
 **`FitToSpreadMargins.jsx`**       |  ⌥F12 | Resizes the selected objects to the spread margins
+**`FitToSpreadMarginsForced.jsx`** | ⌥⌘F12 | Resizes the selected objects to the spread margins, forced
 **`ClipUndo.jsx`**                 |       | Restores objects clipped in a '\<clip group\>' by the 'fit' scripts
 **`ScaleToPageMargins.jsx`**       |   ⌥F5 | Scales the selected objects to the page margins
 **`ScaleToPageMarginsH.jsx`**      |       | Scales the selected objects to the page top/bottom margins

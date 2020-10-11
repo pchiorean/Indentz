@@ -7,7 +7,7 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 ### **AlignTo...** and **SetRefPointTo...**
 ![Align Panel](img/alignto.png) ![Transform Panel](img/setrefpoint.png)
 
-**`AlignTo...`** aligns the selected object(s) to the reference defined by the **Align To** option. **`ToggleAlignTo.jsx`** toggles the alignment to the item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to **Align to Selection**.
+**`AlignTo...`** align the selected object(s) to the reference defined by the **Align To** option. **`ToggleAlignTo.jsx`** toggles the alignment to the item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to **Align to Selection**.
 
 **`SetRefPoint...`** change the reference point used for transformations (like clicking the little proxy squares in the **Transform** palette).
 
@@ -16,11 +16,11 @@ Both sets are meant to be assigned to the numeric keypad (see [Shortcuts](#short
 ---
 
 ### **FitTo...**
-Resize one or more selected objects, without scaling them. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized.
+**`FitToPage...`** resize the selected object(s), without scaling them: if the object is larger than the page/margins/bleed, it will be reduced; if it is smaller but inside a "snap" area, it will be enlarged. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. **`FitToSpread...`** do the same for pages grouped in a spread.
 
-**`FitToPage...`** bring the size of an object to the size of the page, the page margins, or the page bleed. **`FitToSpread...`** do the same for pages grouped in a spread. If the object is larger than the page, it will be reduced; if it is smaller and inside a "snap" area, it will be enlarged.
+**`FitTo...Forced.jsx`** resize exactly to the named dimensions.
 
-**`FitTo...Forced.jsx`** resize exactly to the page or the spread bleed (useful, for example, for the background image).
+**`FitTo.jsx`** it's not run directly, but it's called internally by the other scripts in the series.
 
 **`ClipUndo.jsx`** restores one or several clipped objects at once.
 
@@ -235,4 +235,4 @@ Running a frequently used script from the **Scripts** panel is quite annoying, s
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send an e-mail to Paul Chiorean \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • October 9, 2020
+README.md • October 11, 2020

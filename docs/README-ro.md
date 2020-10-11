@@ -16,11 +16,11 @@ Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. [Shortcuts](
 ---
 
 ### **FitTo...**
-Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un *clipping frame* și acesta e redimensionat.
+**`FitToPage...`** redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă „snap”, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un *clipping frame* și acesta e redimensionat. **`FitToSpread...`** fac același lucru pentru paginile grupate într‑un spread.
 
-**`FitToPage...`** aduc dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. **`FitToSpread...`** fac același lucru pentru paginile grupate într‑un spread. Dacă obiectul este mai mare decât pagina, va fi redus; dacă este mai mic și intră într-o zonă „snap”, va fi mărit.
+**`FitTo...Forced.jsx`** redimensionează exact la dimensiunile respective.
 
-**`FitTo...Forced.jsx`** redimensionează exact la bleedul paginii sau ale spreadului (util, de exemplu, pentru imaginea de background).
+**`FitTo.jsx`** nu se rulează direct, ci e apelat intern de celelalte scripturi din serie.
 
 **`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
@@ -235,4 +235,4 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți un e‑mail la Paul Chiorean \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 9 octombrie 2020
+README-ro.md • 11 octombrie 2020

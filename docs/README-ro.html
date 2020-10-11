@@ -28,9 +28,9 @@
 	<p>Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. <a href="#shortcuts">Shortcuts</a>).</p>
 	<hr>
 	<h3 id="fitto"><strong>FitTo...</strong></h3>
-	<p>Redimensionează unul sau mai multe obiecte selectate, fără să le scaleze. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un <em>clipping frame</em> și acesta e redimensionat.</p>
-	<p><strong><code>FitToPage...</code></strong> aduc dimensiunile unui obiect la dimensiunile paginii, ale marginii sau ale bleedului paginii. <strong><code>FitToSpread...</code></strong> fac același lucru pentru paginile grupate într‑un spread. Dacă obiectul este mai mare decât pagina, va fi redus; dacă este mai mic și intră într-o zonă &ldquor;snap&rdquor;, va fi mărit.</p>
-	<p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la bleedul paginii sau ale spreadului (util, de exemplu, pentru imaginea de background).</p>
+	<p><strong><code>FitToPage...</code></strong> redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă &ldquor;snap&rdquor;, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un <em>clipping frame</em> și acesta e redimensionat. <strong><code>FitToSpread...</code></strong> fac același lucru pentru paginile grupate într‑un spread.</p>
+	<p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la dimensiunile respective.</p>
+	<p><strong><code>FitTo.jsx</code></strong> nu se rulează direct, ci e apelat intern de celelalte scripturi din serie.</p>
 	<p><strong><code>ClipUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
 
 	<h3 id="scaleto"><strong>ScaleTo...</strong></h3>
@@ -375,7 +375,7 @@
 
 	<h2 id="license">Licență</h2>
 	<p>Codul este publicat sub licența MIT (<a href="../LICENSE.txt">LICENSE.txt</a>). Trimiteți un e‑mail la Paul Chiorean &lt;jpeg AT basement.ro&gt; sau <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
-	<p>README-ro.md • 9 octombrie 2020</p>
+	<p>README-ro.md • 11 octombrie 2020</p>
 
 </body>
 
