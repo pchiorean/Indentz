@@ -1,16 +1,18 @@
 /*
-	Fit to... v3.0.0
+	Fit to... v3.0.1
 	© October 2020, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/bleed.
 	It's run internally by all the other FitTo scripts with the following arguments:
 	1: SCOPE: "page" / "spread"
 	2: TARGET: null / "bleed" / "margins"
-	3: FORCED, DEBUG: true / false
+	3: FORCED: true / false
 */
 
-var SCOPE = !this.arguments[0] ? "page" : arguments[0];
-var TARGET = !this.arguments[1] ? null : arguments[1];
-var FORCED = !this.arguments[2] ? false : arguments[2];
+if (!this.arguments) {
+	var SCOPE = "page"; var TARGET = null; var FORCED = false;
+} else {
+	var SCOPE = arguments[0]; var TARGET = arguments[1]; var FORCED = arguments[2];
+}
 var DEBUG = false;
 var SNAP_ZONE = 6; // mm
 
@@ -70,7 +72,8 @@ function Fit(obj) {
 			nonprinting: true, geometricBounds: fitE });
 	}
 
-	if (obj.label == "HW") { // Objects labeled 'HW'
+	// Case 1: Objects labeled 'HW'
+	if (obj.label == "HW") {
 		obj.geometricBounds = TARGET == "margins" ?
 			[tg[0] + (tg[2] - tg[0]) * 0.9, tg[1], tg[2], tg[3]] :
 			[(pg[2] - pg[0]) * 0.9, tg[1], tg[2], tg[3]];
@@ -79,35 +82,31 @@ function Fit(obj) {
 				doc.documentPreferences.properties.documentBleedBottomOffset : 0, 0];
 		return;
 	}
-	if (obj.name == "<clip frame>" // Already clipped
-		&& obj.pageItems[0].isValid) {
-		obj.geometricBounds = FORCED ? tg : fitE;
-		return;
+	// Case 2: Already clipped
+	if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
+		obj.geometricBounds = FORCED ? tg : fitE; return;
 	}
-	switch (obj.constructor.name) {
-		case "Rectangle": // Simple rectangles or containers
-			if (obj.pageItems.length <= 1 &&
-				(obj.strokeWeight == 0 || obj.strokeAlignment == StrokeAlignment.INSIDE_ALIGNMENT) &&
-				(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180))
-					obj.geometricBounds = FORCED ? tg : fitE;
-			break;
-		case "TextFrame":
-			if (objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)
-					obj.geometricBounds = FORCED ? tg : fitE;
-			break;
-		case "GraphicLine": // Orthogonal lines
-			if (obj.constructor.name == "GraphicLine" &&
-				(objG[0] == objG[2]) || (objG[1] == objG[3])) {
-					// ***TODO***
-				}
-			break;
-		case "Group":
-			if (obj.constructor.name == "Group") Clip(FORCED ? tg : fitR);
-			break;
-		default: // Clip other cases
-			Clip(FORCED ? tg : fitE);
+	// Case 2: Simple rectangles or containers
+	if (obj.constructor.name == "Rectangle" &&
+		obj.pageItems.length == 1 &&
+		(obj.strokeWeight == 0 || obj.strokeAlignment == StrokeAlignment.INSIDE_ALIGNMENT) &&
+		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
+			obj.geometricBounds = FORCED ? tg : fitE; return;
 	}
-
+	// Case 3: Text frames
+	if (obj.constructor.name == "TextFrame" &&
+		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
+			obj.geometricBounds = FORCED ? tg : fitE; return;
+	}
+	// Case 4: Orthogonal lines
+	if (obj.constructor.name == "GraphicLine" &&
+		(objG[0] == objG[2]) || (objG[1] == objG[3])) {
+		return; // ***TODO***
+	}
+	// Case 5: Groups
+	if (obj.constructor.name == "Group") { Clip(FORCED ? tg : fitR); return; }
+	// Other cases: Clip
+	Clip(FORCED ? tg : fitE);
 
 	function Clip(fit) {
 		if (objV[0] >= tg[0] && objV[1] >= tg[1] && objV[2] <= tg[2] && objV[3] <= tg[3]) return;
