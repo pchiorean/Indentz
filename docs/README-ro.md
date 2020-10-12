@@ -22,6 +22,8 @@ Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. [Shortcuts](
 
 **`FitTo.jsx`** nu se rulează direct, ci e apelat intern de celelalte scripturi din serie.
 
+**`Clip.jsx`** inserează obiectele selectate într-un *clipping frame* sau le restaurează dacă sunt deja inserate.
+
 **`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
 ### **ScaleTo...**
@@ -195,8 +197,6 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 ---
 
 ### Diverse
-**`Clip.jsx`** inserează obiectele selectate într-un *clipping frame* sau le restaurează dacă sunt deja inserate.
-
 **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus (util pentru mastere).
 
 **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`CleanupFonts.jsx`**).
@@ -235,4 +235,4 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți un e‑mail la Paul Chiorean \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 11 octombrie 2020
+README-ro.md • 12 octombrie 2020

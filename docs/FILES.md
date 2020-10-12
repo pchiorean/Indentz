@@ -23,7 +23,7 @@ Name                               |   Fn  | Description
 **`SetRefPointToT.jsx`**           | ⌃Num8 | Sets **Transform Reference Point** to top
 **`SetRefPointToTR.jsx`**          | ⌃Num9 | Sets **Transform Reference Point** to top-right
 **Geometry**                               |
-**`FitTo.jsx`**                    |       | It's run internally by all the other FitTo scripts
+**`FitTo.jsx`**                    |       | It's run internally by all the other 'FitTo' scripts
 **`FitToPage.jsx`**                |   F11 | Resizes the selected objects to the page size
 **`FitToPageBleed.jsx`**           |  ⇧F11 | Resizes the selected objects to the page bleed size
 **`FitToPageBleedForced.jsx`**     | ⇧⌘F11 | Resizes the selected objects to the page bleed size, forced
@@ -34,7 +34,8 @@ Name                               |   Fn  | Description
 **`FitToSpreadBleedForced.jsx`**   | ⇧⌘F12 | Resizes the selected objects to the spread bleed size, forced
 **`FitToSpreadMargins.jsx`**       |  ⌥F12 | Resizes the selected objects to the spread margins
 **`FitToSpreadMarginsForced.jsx`** | ⌥⌘F12 | Resizes the selected objects to the spread margins, forced
-**`ClipUndo.jsx`**                 |       | Restores objects clipped in a '\<clip group\>' by the 'fit' scripts
+**`Clip.jsx`**                     |  Num* | Clip selected objects in a '\<clip frame\>', or restores them
+**`ClipUndo.jsx`**                 |       | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
 **`ScaleToPageMargins.jsx`**       |   ⌥F5 | Scales the selected objects to the page margins
 **`ScaleToPageMarginsH.jsx`**      |       | Scales the selected objects to the page top/bottom margins
 **`ScaleToPageMarginsW.jsx`**      |       | Scales the selected objects to the page left/right margins
@@ -61,7 +62,6 @@ Name                               |   Fn  | Description
 **`QR.jsx`**                       |    F9 | Adds a QR code to the current document or to a separate file
 **`ZoomToSelection.jsx`**          |    F4 | Zooms to the selected objects or, if nothing is selected, to the current spread
 **Miscellaneous**                          |
-**`Clip.jsx`**                     |  Num* | Clip selected objects in a "\<clip frame\>", or restores them
 **`PageRatios.jsx`**               |       | Calculates the ratio of each page and displays it in the upper left corner
 **`ShowFonts.jsx`**                |       | Shows all fonts used in the current document
 **`ShowProfiles.jsx`**             |       | Shows all color profiles available to the document

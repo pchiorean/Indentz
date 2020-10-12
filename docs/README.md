@@ -22,6 +22,8 @@ Both sets are meant to be assigned to the numeric keypad (see [Shortcuts](#short
 
 **`FitTo.jsx`** it's not run directly, but it's called internally by the other scripts in the series.
 
+**`Clip.jsx`** embeds selected objects in a clipping frame or restores them if already clipped.
+
 **`ClipUndo.jsx`** restores one or several clipped objects at once.
 
 ### **ScaleTo...**
@@ -195,8 +197,6 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 ---
 
 ### Miscellaneous
-**`Clip.jsx`** embeds selected objects in a clipping frame or restores them if already clipped.
-
 **`PageRatios.jsx`** calculates the ratio of each page and displays it in the upper left corner (useful for masters).
 
 **`ShowFonts.jsx`** shows all fonts used in the current document (useful with **`CleanupFonts.jsx`**).
@@ -235,4 +235,4 @@ Running a frequently used script from the **Scripts** panel is quite annoying, s
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send an e-mail to Paul Chiorean \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • October 11, 2020
+README.md • October 12, 2020

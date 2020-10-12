@@ -31,6 +31,7 @@
 	<p><strong><code>FitToPage...</code></strong> redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă &ldquor;snap&rdquor;, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un <em>clipping frame</em> și acesta e redimensionat. <strong><code>FitToSpread...</code></strong> fac același lucru pentru paginile grupate într‑un spread.</p>
 	<p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la dimensiunile respective.</p>
 	<p><strong><code>FitTo.jsx</code></strong> nu se rulează direct, ci e apelat intern de celelalte scripturi din serie.</p>
+	<p><strong><code>Clip.jsx</code></strong> inserează obiectele selectate într-un <em>clipping frame</em> sau le restaurează dacă sunt deja inserate.</p>
 	<p><strong><code>ClipUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
 
 	<h3 id="scaleto"><strong>ScaleTo...</strong></h3>
@@ -246,7 +247,6 @@
 	</ul>
 	<hr>
 	<h3 id="misc">Diverse</h3>
-	<p><strong><code>Clip.jsx</code></strong> inserează obiectele selectate într-un <em>clipping frame</em> sau le restaurează dacă sunt deja inserate.</p>
 	<p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus (util pentru mastere).</p>
 	<p><strong><code>ShowFonts.jsx</code></strong> afișează toate fonturile utilizate în documentul curent (util pentru <strong><code>CleanupFonts.jsx</code></strong>).</p>
 	<p><strong><code>ShowProfiles.jsx</code></strong> afișează toate profilele de culori disponibile (util când <em>credeți</em> că aveți instalat un profil de culoare).</p>
@@ -375,7 +375,7 @@
 
 	<h2 id="license">Licență</h2>
 	<p>Codul este publicat sub licența MIT (<a href="../LICENSE.txt">LICENSE.txt</a>). Trimiteți un e‑mail la Paul Chiorean &lt;jpeg AT basement.ro&gt; sau <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
-	<p>README-ro.md • 11 octombrie 2020</p>
+	<p>README-ro.md • 12 octombrie 2020</p>
 
 </body>
 
