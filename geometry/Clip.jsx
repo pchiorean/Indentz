@@ -1,5 +1,5 @@
 /*
-	Clip v1.4.0
+	Clip v1.5.0
 	© October 2020, Paul Chiorean
 	Clip selected objects in a "<clip frame>", or restores them
 */
@@ -30,8 +30,6 @@ app.clipboardPreferences.pasteRemembersLayers = set_PRL;
 
 
 function Clip(obj) {
-	var objRA = obj.absoluteRotationAngle;
-	// if (obj.label == "<clip group>") { obj.label = ""; obj.name = "<clip frame>" };
 	// Undo if already clipped
 	if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
 		var objD = obj.pageItems[0].duplicate();
@@ -42,13 +40,6 @@ function Clip(obj) {
 			obj.ungroup(); app.select(sel_BAK);
 		}
 		return obj;
-	} else if (obj.constructor.name == "Rectangle" &&
-		(obj.pageItems.length == 1 && obj.graphics.length != 1) &&
-		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
-			var objD = obj.pageItems[0].duplicate();
-			objD.label = obj.label;
-			objD.sendToBack(obj); obj.remove(); obj = objD; app.select(obj);
-			return obj;
 	}
 	// Clip!
 	var size = obj.visibleBounds;
