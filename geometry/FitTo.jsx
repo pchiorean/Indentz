@@ -1,5 +1,5 @@
 /*
-	Fit to... v3.0.1
+	Fit to... v3.0.2
 	© October 2020, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/bleed.
 	It's run internally by all the other FitTo scripts with the following arguments:
@@ -88,7 +88,7 @@ function Fit(obj) {
 	}
 	// Case 2: Simple rectangles or containers
 	if (obj.constructor.name == "Rectangle" &&
-		obj.pageItems.length == 1 &&
+		obj.pageItems.length <= 1 &&
 		(obj.strokeWeight == 0 || obj.strokeAlignment == StrokeAlignment.INSIDE_ALIGNMENT) &&
 		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
 			obj.geometricBounds = FORCED ? tg : fitE; return;
