@@ -25,14 +25,17 @@
 	<p><img src="img/alignto.png" alt="Align Panel"> <img src="img/setrefpoint.png" alt="Transform Panel"></p>
 	<p><strong><code>AlignTo...</code></strong> aliniază obiectul selectat la referința definită de opțiunea <strong>Align To</strong>. <strong><code>ToggleAlignTo.jsx</code></strong> schimbă alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). <strong><code>ResetAlignTo.jsx</code></strong> o resetează la <strong>Align to Selection</strong>.</p>
 	<p><strong><code>SetRefPoint...</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta <strong>Transform</strong>.</p>
-	<p>Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. <a href="#shortcuts">Shortcuts</a>).</p>
+	<p><strong>Notă:</strong> Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. <a href="#shortcuts">Shortcuts</a>).</p>
 	<hr>
+	<h3 id="fitto"><strong>ClipTo...</strong></h3>
+	<p>Pentru a manipula unele obiecte poate fi uneori util să le inserăm temporar într‑un container (<em>clipping frame</em>).</p>
+	<p><strong><code>Clip.jsx</code></strong> inserează obiectele selectate într-un <em>clipping frame</em> sau le restaurează dacă sunt deja inserate.</p>
+	<p><strong><code>ClipUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
+
 	<h3 id="fitto"><strong>FitTo...</strong></h3>
 	<p><strong><code>FitToPage...</code></strong> redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă &ldquor;snap&rdquor;, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un <em>clipping frame</em> și acesta e redimensionat. <strong><code>FitToSpread...</code></strong> fac același lucru pentru paginile grupate într‑un spread.</p>
 	<p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la dimensiunile respective.</p>
-	<p><strong><code>FitTo.jsx</code></strong> nu se rulează direct, ci e apelat intern de celelalte scripturi din serie.</p>
-	<p><strong><code>Clip.jsx</code></strong> inserează obiectele selectate într-un <em>clipping frame</em> sau le restaurează dacă sunt deja inserate.</p>
-	<p><strong><code>ClipUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
+	<p><strong>Notă:</strong> <strong><code>FitTo.jsx</code></strong> nu e gândit a fi rulat direct, ci e apelat intern de celelalte scripturi din serie.</p>
 
 	<h3 id="scaleto"><strong>ScaleTo...</strong></h3>
 	<p>Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar. </p>

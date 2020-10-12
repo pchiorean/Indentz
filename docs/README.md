@@ -11,20 +11,23 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 **`SetRefPoint...`** change the reference point used for transformations (like clicking the little proxy squares in the **Transform** palette).
 
-Both sets are meant to be assigned to the numeric keypad (see [Shortcuts](#shortcuts)).
+**Note:** Both sets are meant to be assigned to the numeric keypad (see [Shortcuts](#shortcuts)).
 
 ---
+
+### **ClipTo...**
+To manipulate some objects it can sometimes be useful to temporarily insert them into a container (clipping frame).
+
+**`Clip.jsx`** embeds selected objects in a clipping frame or restores them if already clipped.
+
+**`ClipUndo.jsx`** restores one or several clipped objects at once.
 
 ### **FitTo...**
 **`FitToPage...`** resize the selected object(s), without scaling them: if the object is larger than the page/margins/bleed, it will be reduced; if it is smaller but inside a "snap" area, it will be enlarged. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. **`FitToSpread...`** do the same for pages grouped in a spread.
 
 **`FitTo...Forced.jsx`** resize exactly to the named dimensions.
 
-**`FitTo.jsx`** it's not run directly, but it's called internally by the other scripts in the series.
-
-**`Clip.jsx`** embeds selected objects in a clipping frame or restores them if already clipped.
-
-**`ClipUndo.jsx`** restores one or several clipped objects at once.
+**Note:** **`FitTo.jsx`** is not meant to be run directly, but it's called internally by the other scripts in the series.
 
 ### **ScaleTo...**
 These also work with one or more objects, but scale them proportionally, as a block.

@@ -25,14 +25,17 @@
 	<p><img src="img/alignto.png" alt="Align Panel"> <img src="img/setrefpoint.png" alt="Transform Panel"></p>
 	<p><strong><code>AlignTo...</code></strong> align the selected object(s) to the reference defined by the <strong>Align To</strong> option. <strong><code>ToggleAlignTo.jsx</code></strong> toggles the alignment to the item, margins, page or spread (just run it repeatedly). <strong><code>ResetAlignTo.jsx</code></strong> resets the setting to <strong>Align to Selection</strong>.</p>
 	<p><strong><code>SetRefPoint...</code></strong> change the reference point used for transformations (like clicking the little proxy squares in the <strong>Transform</strong> palette).</p>
-	<p>Both sets are meant to be assigned to the numeric keypad (see <a href="#shortcuts">Shortcuts</a>).</p>
+	<p><strong>Note:</strong> Both sets are meant to be assigned to the numeric keypad (see <a href="#shortcuts">Shortcuts</a>).</p>
 	<hr>
+	<h3 id="fitto"><strong>ClipTo...</strong></h3>
+	<p>To manipulate some objects it can sometimes be useful to temporarily insert them into a container (clipping frame).</p>
+	<p><strong><code>Clip.jsx</code></strong> embeds selected objects in a clipping frame or restores them if already clipped.</p>
+	<p><strong><code>ClipUndo.jsx</code></strong> restores one or several clipped objects at once.</p>
+
 	<h3 id="fitto"><strong>FitTo...</strong></h3>
 	<p><strong><code>FitToPage...</code></strong> resize the selected object(s), without scaling them: if the object is larger than the page/margins/bleed, it will be reduced; if it is smaller but inside a &quot;snap&quot; area, it will be enlarged. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. <strong><code>FitToSpread...</code></strong> do the same for pages grouped in a spread.</p>
 	<p><strong><code>FitTo...Forced.jsx</code></strong> resize exactly to the named dimensions.</p>
-	<p><strong><code>FitTo.jsx</code></strong> it's not run directly, but it's called internally by the other scripts in the series.</p>
-	<p><strong><code>Clip.jsx</code></strong> embeds selected objects in a clipping frame or restores them if already clipped.</p>
-	<p><strong><code>ClipUndo.jsx</code></strong> restores one or several clipped objects at once.</p>
+	<p><strong>Note:</strong> <strong><code>FitTo.jsx</code></strong> is not meant to be run directly, but it's called internally by the other scripts in the series.</p>
 
 	<h3 id="scaleto"><strong>ScaleTo...</strong></h3>
 	<p>These also work with one or more objects, but scale them proportionally, as a block.</p>

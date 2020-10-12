@@ -11,20 +11,23 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 **`SetRefPoint...`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**.
 
-Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. [Shortcuts](#shortcuts)).
+**Notă:** Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. [Shortcuts](#shortcuts)).
 
 ---
+
+### **ClipTo...**
+Pentru a manipula unele obiecte poate fi uneori util să le inserăm temporar într‑un container (*clipping frame*).
+
+**`Clip.jsx`** inserează obiectele selectate într‑un *clipping frame* sau le restaurează dacă sunt deja inserate.
+
+**`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
 ### **FitTo...**
 **`FitToPage...`** redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă „snap”, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un *clipping frame* și acesta e redimensionat. **`FitToSpread...`** fac același lucru pentru paginile grupate într‑un spread.
 
 **`FitTo...Forced.jsx`** redimensionează exact la dimensiunile respective.
 
-**`FitTo.jsx`** nu se rulează direct, ci e apelat intern de celelalte scripturi din serie.
-
-**`Clip.jsx`** inserează obiectele selectate într-un *clipping frame* sau le restaurează dacă sunt deja inserate.
-
-**`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
+**Notă:** **`FitTo.jsx`** nu e gândit a fi rulat direct, ci e apelat intern de celelalte scripturi din serie.
 
 ### **ScaleTo...**
 Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar.
