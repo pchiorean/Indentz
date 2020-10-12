@@ -1,5 +1,5 @@
 /*
-	Fit to... v3.0.2
+	Fit to... v3.1.0
 	© October 2020, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/bleed.
 	It's run internally by all the other FitTo scripts with the following arguments:
@@ -14,7 +14,6 @@ if (!this.arguments) {
 	var SCOPE = arguments[0]; var TARGET = arguments[1]; var FORCED = arguments[2];
 }
 var DEBUG = false;
-var SNAP_ZONE = 6; // mm
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument, sel = doc.selection;
@@ -28,13 +27,18 @@ doc.viewPreferences.rulerOrigin = set_RO;
 
 function Fit(obj) {
 	var pg = Bounds(scope);
-	var pgZ = [pg[0] + SNAP_ZONE, pg[1] + SNAP_ZONE, pg[2] - SNAP_ZONE, pg[3] - SNAP_ZONE];
 	var tg = TARGET == null ? pg : TgBounds(scope);
+	var SNAP_ZONE = TARGET == "margins" ?
+		Math.min(tg[2] - tg[0], tg[3] - tg[1]) * 0.05 : Math.min(pg[2] - pg[0], pg[3] - pg[1]) * 0.05;
+	var pgZ = [pg[0] + SNAP_ZONE, pg[1] + SNAP_ZONE, pg[2] - SNAP_ZONE, pg[3] - SNAP_ZONE];
 	var tgZ = [tg[0] + SNAP_ZONE, tg[1] + SNAP_ZONE, tg[2] - SNAP_ZONE, tg[3] - SNAP_ZONE];
 	var zone = TARGET == "margins" ? tgZ : pgZ;
 	var objG = obj.geometricBounds;
 	var objV = obj.visibleBounds;
 	var objRA = obj.absoluteRotationAngle;
+	if (DEBUG) doc.textFrames.add(obj.itemLayer, LocationOptions.BEFORE, obj,
+		{ contents: "snap zone", fillColor: "None", strokeColor: "Cyan",
+		nonprinting: true, geometricBounds: TARGET == "margins" ? tgZ : pgZ });
 
 	if (!FORCED) {
 		// Check if obj is outside bounds / inside bounds but not in the snap zone
