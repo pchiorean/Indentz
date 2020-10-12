@@ -26,13 +26,15 @@ Name                               |   Fn  | Description
 **`FitTo.jsx`**                    |       | It's run internally by all the other 'FitTo' scripts
 **`FitToPage.jsx`**                |   F11 | Resizes the selected objects to the page size
 **`FitToPageBleed.jsx`**           |  ⇧F11 | Resizes the selected objects to the page bleed size
-**`FitToPageBleedForced.jsx`**     | ⇧⌘F11 | Resizes the selected objects to the page bleed size, forced
 **`FitToPageMargins.jsx`**         |  ⌥F11 | Resizes the selected objects to the page margins
-**`FitToPageMarginsForced.jsx`**   | ⌥⌘F11 | Resizes the selected objects to the page margins, forced
 **`FitToSpread.jsx`**              |   F12 | Resizes the selected objects to the spread size
 **`FitToSpreadBleed.jsx`**         |  ⇧F12 | Resizes the selected objects to the spread bleed size
-**`FitToSpreadBleedForced.jsx`**   | ⇧⌘F12 | Resizes the selected objects to the spread bleed size, forced
 **`FitToSpreadMargins.jsx`**       |  ⌥F12 | Resizes the selected objects to the spread margins
+**`FitToPageForced.jsx`**          |  ⌘F11 | Resizes the selected objects to the page size, forced
+**`FitToPageBleedForced.jsx`**     | ⇧⌘F11 | Resizes the selected objects to the page bleed size, forced
+**`FitToPageMarginsForced.jsx`**   | ⌥⌘F11 | Resizes the selected objects to the page margins, forced
+**`FitToSpreadForced.jsx`**        |  ⌘F12 | Resizes the selected objects to the spread size, forced
+**`FitToSpreadBleedForced.jsx`**   | ⇧⌘F12 | Resizes the selected objects to the spread bleed size, forced
 **`FitToSpreadMarginsForced.jsx`** | ⌥⌘F12 | Resizes the selected objects to the spread margins, forced
 **`Clip.jsx`**                     |  Num* | Clip selected objects in a '\<clip frame\>', or restores them
 **`ClipUndo.jsx`**                 |       | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
