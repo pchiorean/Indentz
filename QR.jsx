@@ -1,21 +1,22 @@
 /*
-	QR code v1.10.1
+	QR code v2.0.0
 	© October 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If "QR.txt" is found, batch process it.
 */
 
-if (app.documents.length == 0) { alert("Open a file and try again."); exit() };
-var doc = app.activeDocument;
-var docPath = doc.filePath;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.enableRedraw = false;
+
+var doc, docPath;
+try { doc = app.activeDocument, docPath = doc.filePath;
+} catch(_) { doc = app.documents.add(); ManuallyQR(); exit() }
 
 // Look for "QR.txt" and select operating mode
 var infoFile = File(docPath + "/QR.txt");
 if (infoFile.open("r")) {
-	if (confirm("Found \'QR.txt\', do you want to process it?")) { BatchQR() } else { ManuallyQR() };
-} else { ManuallyQR() };
+	if (confirm("Found \'QR.txt\', do you want to process it?")) { BatchQR() } else { ManuallyQR() }
+} else { ManuallyQR() }
 
 
 function BatchQR() { // Noninteractive: batch process "QR.txt"
@@ -26,8 +27,8 @@ function BatchQR() { // Noninteractive: batch process "QR.txt"
 		if (infoLine[0].toString().slice(0,1) == "\u003B") continue; // Skip ';' commented lines
 		if (!infoLine[0] && !infoLine[1]) continue;
 		line++;
-		if (!infoLine[0]) { alert ("Missing " + header[0] + " in record " + line + "."); exit() };
-		if (!infoLine[1]) { alert ("Missing " + header[1] + " in record " + line + "."); exit() };
+		if (!infoLine[0]) { alert ("Missing " + header[0] + " in record " + line + "."); exit() }
+		if (!infoLine[1]) { alert ("Missing " + header[1] + " in record " + line + "."); exit() }
 		infoLine[0] = infoLine[0].match(/\.indd$/g) ? infoLine[0] : infoLine[0] + '.indd';
 		infoLine[0] = infoLine[0].match(/_QR\.indd$/g) ? infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
 		fn[line-1] = infoLine[0];
@@ -72,11 +73,11 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 		buttons.alignChildren = ["fill","top"];
 	var onpage = buttons.add("button", undefined, "On page", {name: "ok"});
 	var onfile = buttons.add("button", undefined, "On file", {name: "onfile"});
-	onpage.onClick = function() { flg_onfile = false; w.close() };
-	onfile.onClick = function() { flg_onfile = true; w.close() };
+	onpage.onClick = function() { flg_onfile = false; w.close() }
+	onfile.onClick = function() { flg_onfile = true; w.close() }
 	buttons.add("button", undefined, "Cancel", {name: "cancel"});
 	var result = w.show();
-	if (!label.text || result == 2) { exit() };
+	if (!label.text || result == 2) { exit() }
 	var QRLabel = label.text;
 	var flg_manual = /\|/g.test(QRLabel); // If "|" found, set forcedLineBreak flag
 	switch (flg_onfile) {
@@ -94,7 +95,7 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 	for (var i = 0; i < doc.pages.length; i++) {
 		var page = doc.pages.item(i);
 		for (var j = 0; j < page.pageItems.length; j++)
-			if (page.pageItems.item(j).label == "QR") { page.pageItems.item(j).remove(); j-- };
+			if (page.pageItems.item(j).label == "QR") { page.pageItems.item(j).remove(); j-- }
 		var label = page.textFrames.add({
 			itemLayer: infoLayer.name,
 			contents: QRLabel,
@@ -229,7 +230,7 @@ function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
 	targetFolder.create();
 	target.save(File(targetFolder + "/" + fn));
 	// Keep file opened if text overflows
-	if (label.overflows) { return true } else { target.close() };
+	if (label.overflows) { return true } else { target.close() }
 }
 
 function MakeInfoLayer(doc) {
@@ -242,7 +243,7 @@ function MakeInfoLayer(doc) {
 		visible: true,
 		locked: false,
 		printable: true
-	};
+	}
 	if (idLayer.isValid) { infoLayer.move(LocationOptions.after, idLayer);
 		} else if (hwLayer.isValid) { infoLayer.move(LocationOptions.before, hwLayer);
 		} else infoLayer.move(LocationOptions.AT_BEGINNING);
@@ -264,8 +265,8 @@ function ProgressBar(width) {
 		w.st.text = "Processing code '" + code + "' (" + val + " of " + w.pb.maxvalue + ")";
 		w.show(); w.update();
 	}
-	this.hide = function() { w.hide() };
-	this.close = function() { w.close() };
+	this.hide = function() { w.hide() }
+	this.close = function() { w.close() }
 }
 
 function Margins(page) { // Return page margins
