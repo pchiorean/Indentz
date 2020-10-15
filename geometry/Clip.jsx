@@ -1,33 +1,39 @@
 /*
-	Clip v1.5.0
+	Clip v1.6.0
 	© October 2020, Paul Chiorean
 	Clip selected objects in a "<clip frame>", or restores them
 */
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
-
 var sel = doc.selection;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit();
 }
-// Remember layers for grouping/ungrouping
+
 var set_URL = app.generalPreferences.ungroupRemembersLayers;
 var set_PRL = app.clipboardPreferences.pasteRemembersLayers;
 app.generalPreferences.ungroupRemembersLayers = true;
 app.clipboardPreferences.pasteRemembersLayers = true;
-// If multiple selection, group it
-if (sel.length > 1) {
-	var selArray = [];
-	for (var i = 0; i < sel.length; i++) if (!sel[i].locked) selArray.push(sel[i]);
-	sel = doc.groups.add(selArray);
-	sel.name = "<clip group>";
-} else sel = sel[0];
-Clip(sel);
-// Restore layer grouping settings
+
+app.doScript(
+	main, ScriptLanguage.javascript, sel,
+	UndoModes.FAST_ENTIRE_SCRIPT, "Clipping"
+);
+
 app.generalPreferences.ungroupRemembersLayers = set_URL;
 app.clipboardPreferences.pasteRemembersLayers = set_PRL;
 
+
+function main(sel) {
+	if (sel.length > 1) { // If multiple selection, group it
+		var selArray = [];
+		for (var i = 0; i < sel.length; i++) if (!sel[i].locked) selArray.push(sel[i]);
+		sel = doc.groups.add(selArray);
+		sel.name = "<clip group>";
+	} else sel = sel[0];
+	Clip(sel);
+}
 
 function Clip(obj) {
 	// Undo if already clipped
