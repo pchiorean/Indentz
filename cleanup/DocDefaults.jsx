@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v1.20.0
+	Default layers and more v1.21.0
 	© October 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -252,6 +252,7 @@ const saSwatchName = "Safe area";
 			case "Cut lines":
 			case "cut":
 			case "Cut":
+			case "CUT":
 			case "decoupe":
 			case "Decoupe":
 			case "die cut":
