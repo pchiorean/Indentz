@@ -1,10 +1,10 @@
 /*
-	Fit to... v3.1.0
+	Fit to... v3.2.0
 	© October 2020, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/bleed.
 	It's run internally by all the other FitTo scripts with the following arguments:
-	1: SCOPE: "page" / "spread"
-	2: TARGET: null / "bleed" / "margins"
+	1: SCOPE: 'page' / 'spread'
+	2: TARGET: null / 'bleed' / 'margins'
 	3: FORCED: true / false
 */
 
@@ -21,15 +21,16 @@ if (sel.length == 0 || (sel[0].constructor.name == "Guide")) exit();
 var set_RO = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
-var obj, scope; while (obj = sel.shift()) if (scope = obj.parentPage) Fit(obj);
+var obj, page; while (obj = sel.shift()) if (page = obj.parentPage) Fit(obj);
 doc.viewPreferences.rulerOrigin = set_RO;
 
 
 function Fit(obj) {
-	var pg = Bounds(scope);
-	var tg = TARGET == null ? pg : TgBounds(scope);
+	var pg = Bounds(page, SCOPE, null);
+	var tg = Bounds(page, SCOPE, TARGET);
 	var SNAP_ZONE = TARGET == "margins" ?
-		Math.min(tg[2] - tg[0], tg[3] - tg[1]) * 0.05 : Math.min(pg[2] - pg[0], pg[3] - pg[1]) * 0.05;
+		Math.min(tg[2] - tg[0], tg[3] - tg[1]) * 0.05 :
+		Math.min(pg[2] - pg[0], pg[3] - pg[1]) * 0.05;
 	var pgZ = [pg[0] + SNAP_ZONE, pg[1] + SNAP_ZONE, pg[2] - SNAP_ZONE, pg[3] - SNAP_ZONE];
 	var tgZ = [tg[0] + SNAP_ZONE, tg[1] + SNAP_ZONE, tg[2] - SNAP_ZONE, tg[3] - SNAP_ZONE];
 	var zone = TARGET == "margins" ? tgZ : pgZ;
@@ -123,59 +124,54 @@ function Fit(obj) {
 	}
 }
 
-function Bounds(scope) {
-	switch(SCOPE) {
-		case "page":
-			return scope.bounds;
-		case "spread":
-			return scope.parent.pages.length == 1 ?
-				scope.parent.pages.firstItem().bounds :
-				[
-					scope.parent.pages.firstItem().bounds[0],
-					scope.parent.pages.firstItem().bounds[1],
-					scope.parent.pages.lastItem().bounds[2],
-					scope.parent.pages.lastItem().bounds[3]
-				];
-	}
-}
-
-function TgBounds(scope) {
-	var fPg = scope.parent.pages.firstItem();
-	var lPg = scope.parent.pages.lastItem();
+function Bounds(/*parent page*/page, /*'page','spread'*/scope, /*null,'bleed','margins'*/target) {
+	var fPg = page.parent.pages.firstItem();
+	var lPg = page.parent.pages.lastItem();
 	var bleed = {
 		top: doc.documentPreferences.properties.documentBleedTopOffset,
 		left: doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
 		bottom: doc.documentPreferences.properties.documentBleedBottomOffset,
 		right: doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
 	}
-	switch(SCOPE) {
+	switch(scope) {
 		case "page":
-			switch(TARGET) {
+			switch(target) {
+				case null:
+					return page.bounds;
 				case "bleed":
 					return [
-						scope.bounds[0] - bleed.top,
-						scope.bounds[1] - (scope == fPg ?
+						page.bounds[0] - bleed.top,
+						page.bounds[1] - (page == fPg ?
 							(fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left) :
 							0),
-						scope.bounds[2] + bleed.bottom,
-						scope.bounds[3] + (fPg == lPg ?
+						page.bounds[2] + bleed.bottom,
+						page.bounds[3] + (fPg == lPg ?
 							(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) :
-							scope == lPg ? bleed.right : 0)
+							page == lPg ? bleed.right : 0)
 					];
 				case "margins":
 					return [
-						scope.bounds[0] + scope.marginPreferences.top,
-						scope.side == PageSideOptions.LEFT_HAND ?
-							scope.bounds[1] + scope.marginPreferences.right :
-							scope.bounds[1] + scope.marginPreferences.left,
-						scope.bounds[2] - scope.marginPreferences.bottom,
-						scope.side == PageSideOptions.LEFT_HAND ?
-							scope.bounds[3] - scope.marginPreferences.left :
-							scope.bounds[3] - scope.marginPreferences.right
+						page.bounds[0] + page.marginPreferences.top,
+						page.side == PageSideOptions.LEFT_HAND ?
+							page.bounds[1] + page.marginPreferences.right :
+							page.bounds[1] + page.marginPreferences.left,
+						page.bounds[2] - page.marginPreferences.bottom,
+						page.side == PageSideOptions.LEFT_HAND ?
+							page.bounds[3] - page.marginPreferences.left :
+							page.bounds[3] - page.marginPreferences.right
 					];
 			}
 		case "spread":
-			switch(TARGET) {
+			switch(target) {
+				case null:
+					return page.parent.pages.length == 1 ?
+						page.parent.pages.firstItem().bounds :
+						[
+							page.parent.pages.firstItem().bounds[0],
+							page.parent.pages.firstItem().bounds[1],
+							page.parent.pages.lastItem().bounds[2],
+							page.parent.pages.lastItem().bounds[3]
+					];
 				case "bleed":
 					return [
 						fPg.bounds[0] - bleed.top,
