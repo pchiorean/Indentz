@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for print v1.7.0
+	Prepare for print v1.8.0
 	© October 2020, Paul Chiorean
 	Hides "safe area" layer and moves white, varnish & dielines to separate spreads.
 */
@@ -9,12 +9,13 @@ app.scriptPreferences.enableRedraw = false;
 var doc = app.activeDocument;
 
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
-// if (doc.documentPreferences.slugTopOffset < 15)
-// 	doc.documentPreferences.slugTopOffset = 15 + doc.documentPreferences.properties.documentBleedTopOffset;
+if (doc.documentPreferences.slugTopOffset < 9)
+	doc.documentPreferences.slugTopOffset = 9 +
+	doc.documentPreferences.properties.documentBleedTopOffset;
 
-var saLayer = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"]);
-var dieLayer = FindLayer(["dielines", "diecut", "die cut", "Die Cut", "decoupe", "cut", "Cut", "cut lines", "stanze", "Stanze", "Stanz", "Stanzform"]);
-var whiteLayer = FindLayer(["white", "WHITE"]);
+var saLayer = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil"]);
+var dieLayer = FindLayer(["dielines", "cut lines", "Cut lines", "die cut", "Die Cut", "diecut", "Diecut", "stanze", "Stanze"]);
+var whiteLayer = FindLayer(["white", "White", "WHITE"]);
 var uvLayer = FindLayer(["varnish", "Varnish", "UV"]);
 var infoLayer = doc.layers.item("info");
 if (!infoLayer.isValid) doc.layers.add({ name: "info", layerColor: UIColors.CYAN });
@@ -27,9 +28,15 @@ try { whiteLayer.visible = true } catch (_) {};
 try { uvLayer.visible = true } catch (_) {};
 try { infoLayer.visible = true } catch (_) {};
 
-if (dieLayer != null) Prepare4Print(dieLayer);
-if (whiteLayer != null) Prepare4Print(whiteLayer);
-if (uvLayer != null) Prepare4Print(uvLayer);
+if (dieLayer != null) {
+	app.doScript(Prepare4Print, ScriptLanguage.JAVASCRIPT, dieLayer,
+	UndoModes.FAST_ENTIRE_SCRIPT, dieLayer.name) };
+if (whiteLayer != null) {
+	app.doScript(Prepare4Print, ScriptLanguage.JAVASCRIPT, whiteLayer,
+	UndoModes.FAST_ENTIRE_SCRIPT, whiteLayer.name) };
+if (uvLayer != null) {
+	app.doScript(Prepare4Print, ScriptLanguage.JAVASCRIPT, uvLayer,
+	UndoModes.FAST_ENTIRE_SCRIPT, uvLayer.name) };
 
 
 function Prepare4Print(layer) { // Move items on 'layer' to separate spread(s)
@@ -72,10 +79,10 @@ function DrawInfoBox(spread, name) {
 	infoText.properties = {
 		appliedFont: app.fonts.item("Helvetica\tRegular"),
 		pointSize: 6,
-		fillColor: spread.pages[0].pageItems[0].fillColor.name == "None" ?
+		fillColor: /* spread.pages[0].pageItems[0].fillColor.name == "None" ?
 		(spread.pages[0].pageItems[0].strokeColor.name == "None" ?
 		"Registration" : spread.pages[0].pageItems[0].strokeColor) :
-		spread.pages[0].pageItems[0].fillColor,
+		spread.pages[0].pageItems[0].fillColor */ "Registration",
 		capitalization: Capitalization.ALL_CAPS
 	}
 	infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
@@ -86,7 +93,8 @@ function DrawInfoBox(spread, name) {
 		autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
 		useNoLineBreaksForAutoSizing: true
 	}
-	infoFrame.move([10, -4.2 - infoFrame.geometricBounds[2]]);
+	infoFrame.move([10, -4.2 - infoFrame.geometricBounds[2] -
+		doc.documentPreferences.properties.documentBleedTopOffset]);
 }
 
 function FindLayer(names) { // Find first layer from a list of names
