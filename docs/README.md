@@ -164,7 +164,7 @@ Both scripts change some settings according to my preferences.
 ---
 
 ### **Print**
-Make several preparations for export; can be used with [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detect alternative layers like *visible*, *vizibil*, *vis. area* for `safe area`, or *diecut*, *die cut*, *cut lines*, *stanze* for `dielines`.
+Make several preparations for export; can be used with [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detect alternative layers like *visible*, *vizibil* for `safe area`, or *diecut*, *die cut*, *cut lines*, *stanze* for `dielines`.
 
 **`PrepareForPrint.jsx`** hides the `safe area` layer and moves the dielines, white and UV markings from `dielines` / `white` / `varnish` to separate spreads.
 
@@ -238,4 +238,4 @@ Running a frequently used script from the **Scripts** panel is quite annoying, s
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send an e-mail to Paul Chiorean \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • October 12, 2020
+README.md • October 16, 2020
