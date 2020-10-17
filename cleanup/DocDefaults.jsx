@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v1.21.0
+	Default layers and more v2.0.0
 	© October 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -30,11 +30,13 @@ const foldSwatchName = "Fold";
 const saSwatchName = "Safe area";
 
 // Step 0. Initialisation
-(function() {
+app.doScript(
+function() {
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 	app.scriptPreferences.enableRedraw = false;
 	doc.zeroPoint = [0, 0];
-	try { doc.cmykProfile = "ISO Coated v2 (ECI)" } catch (_) { doc.cmykProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
+	try { doc.cmykProfile = "ISO Coated v2 (ECI)" } catch (_) {
+		doc.cmykProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
 	doc.rgbProfile = "sRGB IEC61966-2.1";
 	doc.guidePreferences.guidesShown = true;
 	doc.guidePreferences.guidesLocked = false;
@@ -68,20 +70,31 @@ const saSwatchName = "Safe area";
 	doc.pageItemDefaults.transparencySettings.blendingSettings.blendMode = BlendMode.NORMAL;
 	doc.pageItemDefaults.properties = { fillColor: "None", strokeColor: "None" };
 	doc.selection = [];
-})();
+},
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Initialisation");
 
 // Step 1. Add default swatches
-(function() {
-	try { doc.colors.add({ name: "C=60 M=40 Y=40 K=100", model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [60, 40, 40, 100] }) } catch (_) {};
-	try { doc.colors.add({ name: whiteSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 10, 10, 0] }) } catch (_) {};
-	try { doc.colors.add({ name: uvSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 10, 70, 0] }) } catch (_) {};
-	try { doc.colors.add({ name: cutSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
-	try { doc.colors.add({ name: foldSwatchName, model: ColorModel.SPOT, space: ColorSpace.CMYK, colorValue: [100, 0, 0, 0] }) } catch (_) {};
-	try { doc.colors.add({ name: saSwatchName, model: ColorModel.PROCESS, space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
-})();
+app.doScript(
+function() {
+	try { doc.colors.add({ name: "C=60 M=40 Y=40 K=100", model: ColorModel.PROCESS,
+		space: ColorSpace.CMYK, colorValue: [60, 40, 40, 100] }) } catch (_) {};
+	try { doc.colors.add({ name: whiteSwatchName, model: ColorModel.SPOT,
+		space: ColorSpace.CMYK, colorValue: [0, 10, 10, 0] }) } catch (_) {};
+	try { doc.colors.add({ name: uvSwatchName, model: ColorModel.SPOT,
+		space: ColorSpace.CMYK, colorValue: [0, 10, 70, 0] }) } catch (_) {};
+	try { doc.colors.add({ name: cutSwatchName, model: ColorModel.SPOT,
+		space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
+	try { doc.colors.add({ name: foldSwatchName, model: ColorModel.SPOT,
+		space: ColorSpace.CMYK, colorValue: [100, 0, 0, 0] }) } catch (_) {};
+	try { doc.colors.add({ name: saSwatchName, model: ColorModel.PROCESS,
+		space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] }) } catch (_) {};
+},
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Add default swatches");
 
-// Step 2. Make default layers (and merge with similar)
-(function() {
+// Step 2. Make default layers
+function MakeDefaultLayers() {
 	var tmpLayer = doc.layers.item(tmpLayerName);
 	var bgLayer = doc.layers.item(bgLayerName);
 	var artLayer = doc.layers.item(artLayerName);
@@ -356,20 +369,21 @@ const saSwatchName = "Safe area";
 		tmpLayer.visible = false;
 	}
 	tmpLayer.move(LocationOptions.after, bgLayer);
-})();
+};
+app.doScript(MakeDefaultLayers,
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Make default layers");
 
 // Step 3. Replace fonts
-(function() {
-	try {
-		app.doScript(File(app.activeScript.path + "/CleanupFonts.jsx"), 
-		ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Replace fonts");
-	} catch (_) {};
-})();
+try {
+	app.doScript(File(app.activeScript.path + "/CleanupFonts.jsx"), 
+	ScriptLanguage.javascript, undefined,
+	UndoModes.ENTIRE_SCRIPT, "Replace fonts");
+} catch (_) {};
 
 // Step 4. Sets page dimensions from filename
-(function() {
-	try {
-		app.doScript(File(app.activeScript.path + "/../geometry/PageSizeFromFilename.jsx"), 
-		ScriptLanguage.javascript, null, UndoModes.FAST_ENTIRE_SCRIPT, "Set page dimensions");
-	} catch (_) {};
-})();
+try {
+	app.doScript(File(app.activeScript.path + "/../geometry/PageSizeFromFilename.jsx"), 
+	ScriptLanguage.javascript, undefined,
+	UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
+} catch (_) {};
