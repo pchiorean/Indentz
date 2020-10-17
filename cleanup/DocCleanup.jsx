@@ -1,6 +1,6 @@
 ﻿/*
-	Doc cleanup v1.8.9
-	© September 2020, Paul Chiorean
+	Doc cleanup v2.0.0
+	© October 2020, Paul Chiorean
 	Changes some settings, cleans up swatches/layers/pages/guides and resets scaling.
 */
 
@@ -8,7 +8,8 @@ if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
 // Step 0. Initialisation
-(function() {
+app.doScript(
+function() {
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 	app.scriptPreferences.enableRedraw = false;
 	doc.zeroPoint = [0, 0];
@@ -44,52 +45,73 @@ var doc = app.activeDocument;
 	doc.pageItemDefaults.transparencySettings.blendingSettings.blendMode = BlendMode.NORMAL;
 	doc.pageItemDefaults.properties = { fillColor: "None", strokeColor: "None" };
 	doc.selection = [];
-})();
+},
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Initialisation");
 
 // Step 1. Delete unused swatches
-(function() {
+app.doScript(
+function() {
 	var swa = doc.unusedSwatches;
 	for (var i = 0; i < swa.length; i++) if (swa[i].name != "") swa[i].remove();
-})();
+},
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
 
 // Step 2. Turn off 'AutoUpdateURLStatus' from 'Hyperlinks' panel
-(function() {
+app.doScript(
+function() {
 	var set_AUU = app.menuActions.itemByName("$ID/AutoUpdateURLStatus");
 	var hyperLinksPanel = app.panels.itemByName("$ID/Hyperlinks");
 	var flag_HLP = hyperLinksPanel.visible;
 	if (!flag_HLP) hyperLinksPanel.visible = true;
 	if (set_AUU.checked) set_AUU.invoke();
 	hyperLinksPanel.visible = flag_HLP;
-})();
+},
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Turn off 'AutoUpdateURLStatus'");
 
 // Step 3. Show 'guides' layer
-(function() {
+app.doScript(
+function() {
 	try { doc.layers.item("guides").visible = true } catch (_) {
 		try { doc.layers.item("Guides").visible = true } catch (_) {};
 	}
-})();
+},
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Show 'guides' layer");
 
 // Step 4. Delete guides
-// (function() {
+// app.doScript(
+// function() {
 // 	var g = doc.guides.everyItem().getElements();
 // 	for (var i = 0; i < g.length; i++) if (g[i].label != "HW") g[i].remove();
-// })();
+// },
+// ScriptLanguage.javascript, undefined,
+// UndoModes.ENTIRE_SCRIPT, "Delete guides");
 
 // Step 5. Delete unused layers
-(function() {
+app.doScript(
+function() {
 	try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (_) {};
-})();
+},
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Delete unused layers");
 
 // Step 6. Delete empty spreads
-(function() {
+app.doScript(
+function() {
 	var s = doc.spreads;
 	for (var i = 0; i < s.length; i++) {
 		if (s[i].pageItems.length == 0 && s.length > 1) { s[i].remove(); i-- }
 	}
-})();
+},
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Delete empty spreads");
 
 // Step 7. Unlock all items & redefine scaling to 100%
-(function() {
+app.doScript(
+function() {
 	for (var i = 0; i < doc.spreads.length; i++) {
 		var item, items = doc.spreads[i].allPageItems;
 		while (item = items.shift()) {
@@ -97,4 +119,6 @@ var doc = app.activeDocument;
 			item.redefineScaling();
 		}
 	}
-})();
+},
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Unlock all items & redefine scaling to 100%");
