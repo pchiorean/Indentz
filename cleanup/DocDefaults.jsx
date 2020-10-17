@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v2.0.0
+	Default layers and more v2.0.1
 	© October 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -94,7 +94,8 @@ ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Add default swatches");
 
 // Step 2. Make default layers
-function MakeDefaultLayers() {
+app.doScript(
+function() {
 	var tmpLayer = doc.layers.item(tmpLayerName);
 	var bgLayer = doc.layers.item(bgLayerName);
 	var artLayer = doc.layers.item(artLayerName);
@@ -369,8 +370,7 @@ function MakeDefaultLayers() {
 		tmpLayer.visible = false;
 	}
 	tmpLayer.move(LocationOptions.after, bgLayer);
-};
-app.doScript(MakeDefaultLayers,
+},
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Make default layers");
 
