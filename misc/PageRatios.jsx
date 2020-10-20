@@ -1,6 +1,6 @@
 /*
-	Page ratios v1.2.0
-	© September 2020, Paul Chiorean
+	Page ratios v1.2.1
+	© October 2020, Paul Chiorean
 	Calculates the ratio of each page and displays it in the upper left corner.
 */
 
@@ -21,7 +21,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 	for (var j = 0; j < page.pageItems.length; j++) if (page.pageItems.item(j).label == "ratio") page.pageItems.item(j).remove();
 	var infoFrame = page.textFrames.add({ itemLayer: infoLayer.name, contents: ratio, label: "ratio", fillColor: "Black", nonprinting: true });
 	infoFrame.paragraphs.everyItem().properties = {
-		appliedFont: app.fonts.item("Verdana\tBold"), pointSize: 32, fillColor: "Paper" };
+		appliedFont: app.fonts.item("Verdana\tBold"), pointSize: 22, fillColor: "Paper" };
 	infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
 	infoFrame.textFramePreferences.properties = {
 		verticalJustification: VerticalJustification.CENTER_ALIGN,
