@@ -1,60 +1,55 @@
 /*
-	Safe area v1.6.5
-	© September 2020, Paul Chiorean
+	Safe area v1.7.0
+	© October 2020, Paul Chiorean
 	Creates a "safe area" frame, on every page/spread for which margins are defined.
 */
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
-// Defaults
 var scope = doc.pages; // doc.pages or doc.spreads
 var saLayerName = ["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"];
 var dieLayerName = ["dielines", "diecut", "die cut", "Die Cut", "cut", "Cut", "cut lines", "stanze", "Stanze", "Stanz", "decoupe"];
-const saSwatchName = "Safe area";
-const saFrameP = {
-	name: "<safe area>", label: "safe area",
-	contentType: ContentType.UNASSIGNED,
-	fillColor: "None", strokeColor: saSwatchName,
-	strokeWeight: "0.5pt",
-	strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
-	strokeType: "$ID/Canned Dashed 3x2",
-	overprintStroke: false
-}
+var saSwatchName = "Safe area";
 
-// Create 'safe area' layer
-var saLayer, dieLayer;
-if (saLayer = FindLayer(saLayerName)) {
-	saLayer.layerColor = UIColors.YELLOW;
-	saLayer.visible = true; saLayer.locked = false;
-	if (dieLayer = FindLayer(dieLayerName)) { // move it above 'dielines' layer
-		saLayer.move(LocationOptions.before, dieLayer);
+app.doScript(main, ScriptLanguage.javascript, undefined,
+	UndoModes.ENTIRE_SCRIPT, "Safe area");
+
+
+function main() {
+	if (!doc.colors.itemByName(saSwatchName).isValid)
+		doc.colors.add({ name: saSwatchName, model: ColorModel.PROCESS,
+		space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
+	var saLayer, dieLayer;
+	if (saLayer = FindLayer(saLayerName)) {
+		saLayer.properties = { layerColor: UIColors.YELLOW, visible: true, locked: false }
+		if (dieLayer = FindLayer(dieLayerName)) saLayer.move(LocationOptions.before, dieLayer);
+	} else {
+		saLayerName = saLayerName[0];
+		saLayer = doc.layers.add({ name: saLayerName,
+			layerColor: UIColors.YELLOW, visible: true, locked: false });
+		if (dieLayer = FindLayer(dieLayerName)) {
+			saLayer.move(LocationOptions.before, dieLayer);
+		} else saLayer.move(LocationOptions.AT_BEGINNING);
 	}
-} else {
-	saLayerName = saLayerName[0];
-	saLayer = doc.layers.add({ name: saLayerName, layerColor: UIColors.YELLOW,
-	visible: true, locked: false });
-	if (dieLayer = FindLayer(dieLayerName)) { // move it below 'dielines' layer, or 1st
-		saLayer.move(LocationOptions.before, dieLayer);
-	} else saLayer.move(LocationOptions.AT_BEGINNING);
+	for (var i = 0; i < scope.length; i++) {
+		var saBounds = SafeArea(scope[i]);
+		if (saBounds == false) continue; // No margins; skip
+		if (HasItems(scope[i])) continue; // Frame already exists
+		scope[i].rectangles.add({
+			name: "<safe area>", label: "safe area",
+			contentType: ContentType.UNASSIGNED,
+			fillColor: "None", strokeColor: saSwatchName,
+			strokeWeight: "0.5pt",
+			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
+			strokeType: "$ID/Canned Dashed 3x2",
+			overprintStroke: false,
+			geometricBounds: saBounds,
+			itemLayer: saLayer.name
+		});
+	}
+	saLayer.locked = true;
 }
-// Create 'Safe area' color
-try { doc.colors.add({ name: saSwatchName, model: ColorModel.PROCESS,
-	space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] })
-} catch (_) {};
-
-// Draw frames
-var saBounds, saFrame;
-for (var i = 0; i < scope.length; i++) {
-	saBounds = SafeArea(scope[i]);
-	if (saBounds == false) continue; // No margins; skip
-	if (HasItems(scope[i])) continue; // Frame already exists
-	saFrame = scope[i].rectangles.add(saFrameP);
-	saFrame.geometricBounds = saBounds;
-	saFrame.itemLayer = saLayer.name;
-}
-try { saLayer.locked = true } catch (_) {};
-
 
 function SafeArea(scope) { // Return safe area bounds
 	switch (scope.constructor.name) {
@@ -89,7 +84,7 @@ function SafeArea(scope) { // Return safe area bounds
 				// Reverse left and right margins if left-hand page
 				if (fPg.side == PageSideOptions.LEFT_HAND) {
 					mgSp.left = fPg.marginPreferences.right;
-					mgSp.right =  fPg.marginPreferences.left;
+					mgSp.right = fPg.marginPreferences.left;
 				}
 			} else { // Spread is multiple pages
 				sizeSp = [fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3]];
