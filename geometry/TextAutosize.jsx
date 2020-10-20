@@ -1,6 +1,6 @@
 /*
-	Fit frame to text v1.7.0
-	© August 2020, Paul Chiorean
+	Fit frame to text v1.8.0
+	© October 2020, Paul Chiorean
 	Auto-sizes the text frame to the content. 1st paragraph's justification sets
 	horizontal alignment; vertical justification sets vertical alignment.
 */
@@ -9,9 +9,15 @@ if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 if (doc.selection.length == 0) { exit() } else { var sel = doc.selection };
 
-if (sel[0].hasOwnProperty("parentTextFrames")) var sel = sel[0].parentTextFrames;
-for (var i = 0; i < sel.length; i++) {
-	var obj = sel[i]; if (obj.constructor.name == "TextFrame") FitFrame2Text(obj);
+app.doScript(main, ScriptLanguage.javascript, sel,
+	UndoModes.ENTIRE_SCRIPT, "Fit frame to text");
+
+
+function main(sel) {
+	if (sel[0].hasOwnProperty("parentTextFrames")) var sel = sel[0].parentTextFrames;
+	for (var i = 0; i < sel.length; i++) {
+		var obj = sel[i]; if (obj.constructor.name == "TextFrame") FitFrame2Text(obj);
+	}
 }
 
 function FitFrame2Text(sel) {
@@ -41,26 +47,26 @@ function FitFrame2Text(sel) {
 	// Set auto-size reference point
 	switch (set_oldVJ) {
 		case VerticalJustification.TOP_ALIGN:
-			sel.textFramePreferences.autoSizingReferencePoint = 
+			sel.textFramePreferences.autoSizingReferencePoint =
 				AutoSizingReferenceEnum.TOP_CENTER_POINT; break;
 		case VerticalJustification.CENTER_ALIGN:
-			sel.textFramePreferences.autoSizingReferencePoint = 
+			sel.textFramePreferences.autoSizingReferencePoint =
 				AutoSizingReferenceEnum.CENTER_POINT; break;
 		case VerticalJustification.BOTTOM_ALIGN:
-			sel.textFramePreferences.autoSizingReferencePoint = 
+			sel.textFramePreferences.autoSizingReferencePoint =
 				AutoSizingReferenceEnum.BOTTOM_CENTER_POINT; break;
 	}
 	// Resize frame
 	sel.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
 	switch (align) {
 		case "center":
-			sel.textFramePreferences.autoSizingReferencePoint = 
+			sel.textFramePreferences.autoSizingReferencePoint =
 				AutoSizingReferenceEnum.BOTTOM_CENTER_POINT; break;
 		case "left":
-			sel.textFramePreferences.autoSizingReferencePoint = 
+			sel.textFramePreferences.autoSizingReferencePoint =
 				AutoSizingReferenceEnum.BOTTOM_LEFT_POINT; break;
 		case "right":
-			sel.textFramePreferences.autoSizingReferencePoint = 
+			sel.textFramePreferences.autoSizingReferencePoint =
 				AutoSizingReferenceEnum.BOTTOM_RIGHT_POINT; break;
 	}
 	sel.textFramePreferences.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
@@ -78,39 +84,39 @@ function FitFrame2Text(sel) {
 		case "center":
 			switch (set_oldVJ) {
 				case VerticalJustification.TOP_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint = 
+					sel.textFramePreferences.autoSizingReferencePoint =
 						AutoSizingReferenceEnum.TOP_CENTER_POINT; break;
 				case VerticalJustification.CENTER_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint = 
+					sel.textFramePreferences.autoSizingReferencePoint =
 						AutoSizingReferenceEnum.CENTER_POINT; break;
 				case VerticalJustification.BOTTOM_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint = 
+					sel.textFramePreferences.autoSizingReferencePoint =
 						AutoSizingReferenceEnum.BOTTOM_CENTER_POINT; break;
 			}
 			break;
 		case "left":
 			switch (set_oldVJ) {
 				case VerticalJustification.TOP_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint = 
+					sel.textFramePreferences.autoSizingReferencePoint =
 						AutoSizingReferenceEnum.TOP_LEFT_POINT; break;
 				case VerticalJustification.CENTER_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint = 
+					sel.textFramePreferences.autoSizingReferencePoint =
 						AutoSizingReferenceEnum.LEFT_CENTER_POINT; break;
 				case VerticalJustification.BOTTOM_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint = 
+					sel.textFramePreferences.autoSizingReferencePoint =
 						AutoSizingReferenceEnum.BOTTOM_LEFT_POINT; break;
 			}
 			break;
 		case "right":
 			switch (set_oldVJ) {
 				case VerticalJustification.TOP_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint = 
+					sel.textFramePreferences.autoSizingReferencePoint =
 						AutoSizingReferenceEnum.TOP_RIGHT_POINT; break;
 				case VerticalJustification.CENTER_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint = 
+					sel.textFramePreferences.autoSizingReferencePoint =
 						AutoSizingReferenceEnum.RIGHT_CENTER_POINT; break;
 				case VerticalJustification.BOTTOM_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint = 
+					sel.textFramePreferences.autoSizingReferencePoint =
 						AutoSizingReferenceEnum.BOTTOM_RIGHT_POINT; break;
 			}
 			break;
