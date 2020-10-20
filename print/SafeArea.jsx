@@ -1,7 +1,7 @@
 /*
-	Safe area v1.7.0
+	Safe area v1.7.1
 	© October 2020, Paul Chiorean
-	Creates a "safe area" frame, on every page/spread for which margins are defined.
+	Creates a 'safe area' frame the size of the page margins.
 */
 
 if (app.documents.length == 0) exit();

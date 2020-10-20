@@ -57,7 +57,7 @@ Name                               |   Fn  | Description
 **`DocDefaults.jsx`**              |   ⌥F2 | Makes default swatches/layers, cleans up fonts and sets page dimensions from the filename
 **Print**                                  |
 **`PrepareForPrint.jsx`**          |       | Hides `safe area` layer and moves dielines to separate spreads
-**`SafeArea.jsx`**                 |       | Creates a `safe area` frame, on every page/spread for which margins are defined
+**`SafeArea.jsx`**                 |       | Creates a `safe area` frame the size of the page margins
 **`SafeAreaHideLayer.jsx`**        |       | Hides the `safe area` layer (or equivalents)
 **`SafeAreaShowLayer.jsx`**        |       | Shows the `safe area` layer (or equivalents)
 **Other**                                  |
