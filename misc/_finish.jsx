@@ -1,6 +1,6 @@
 /*
-	Finishing 0.4.1
-	© July 2020, Paul Chiorean
+	Finishing 0.5.0
+	© October 2020, Paul Chiorean
 	Used for quick fixes.
 */
 
@@ -8,24 +8,41 @@ if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 var page = app.activeWindow.activePage;
 
-switch (doc.selection[0].paragraphs[0].justification) {
-	case 1818584692: // Justification.LEFT_ALIGN
-		doc.selection[0].textFramePreferences.properties = {
-			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
-			verticalJustification: VerticalJustification.BOTTOM_ALIGN
-		}
-		break;
-	case 1919379572: // Justification.RIGHT_ALIGN
-		doc.selection[0].textFramePreferences.properties = {
-			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_RIGHT_POINT,
-			verticalJustification: VerticalJustification.BOTTOM_ALIGN
-		}
-		break;
-}
+app.doScript(
+	File(app.activeScript.path + "/../geometry/ScaleToPageMargins.jsx"), ScriptLanguage.javascript,
+	undefined, UndoModes.FAST_ENTIRE_SCRIPT, "Scale to page margins"
+);
+app.doScript(
+	File(app.activeScript.path + "/../align/AlignToB.jsx"), ScriptLanguage.javascript,
+	undefined, UndoModes.FAST_ENTIRE_SCRIPT, "Align to bottom"
+);
+app.doScript(
+	File(app.activeScript.path + "/../geometry/Clip.jsx"), ScriptLanguage.javascript,
+	undefined, UndoModes.FAST_ENTIRE_SCRIPT, "Clipping"
+);
+doc.selection[0].geometricBounds = [37.6223012426542,3.00000000000001,46,27];
+doc.selection[0].itemLayer = doc.layers.item("Bar Code");
+doc.layers.item("Layer 1").remove();
 
-TextBlack2Black();
+// Relink("shutterstock_525314467_sz_easyMint-Basis_HR_v3.4_600dpi_color.tif", "shutterstock_525314467_sz_easyMint-Basis_HR_v3.5_600dpi_color.tif");
+// Relink("shutterstock_525314467_sz_easyMint-Basis_HR_v3.4_600dpi_normal.tif", "shutterstock_525314467_sz_easyMint-Basis_HR_v3.5_600dpi_normal.tif");
 
-// Relink("LS_Toniq_FRONT_final_v11.png", "LS_Toniq_FRONT_final_v11_sansTONIQ.png");
+// switch (doc.selection[0].paragraphs[0].justification) {
+// 	case 1818584692: // Justification.LEFT_ALIGN
+// 		doc.selection[0].textFramePreferences.properties = {
+// 			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
+// 			verticalJustification: VerticalJustification.BOTTOM_ALIGN
+// 		}
+// 		break;
+// 	case 1919379572: // Justification.RIGHT_ALIGN
+// 		doc.selection[0].textFramePreferences.properties = {
+// 			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_RIGHT_POINT,
+// 			verticalJustification: VerticalJustification.BOTTOM_ALIGN
+// 		}
+// 		break;
+// }
+
+// TextBlack2Black();
 
 // var i, swa; for (i = (swa = doc.unusedSwatches).length; i--;
 // 	(swa[i].name != "" && swa[i].name != "C=60 M=40 Y=40 K=100") && swa[i].remove());
