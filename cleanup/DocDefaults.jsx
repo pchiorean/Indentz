@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v2.0.1
+	Default layers and more v2.0.2
 	© October 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -278,6 +278,7 @@ function() {
 			case "Stanz":
 			case "stanze":
 			case "Stanze":
+			case "stanzform":
 			case "Stanzform":
 				try { doc.layers.add({ name: dieLayerName }) } catch (_) {};
 				dieLayer.merge(docLayer); i--;
