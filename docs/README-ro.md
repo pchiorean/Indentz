@@ -11,7 +11,7 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 **`SetRefPoint...`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**.
 
-**Notă:** Ambele seturi sunt gândite să fie alocate tastaturii numerice (v. [Shortcuts](#shortcuts)).
+**Notă:** Ambele seturi ar trebui alocate tastaturii numerice (v. [Shortcuts](#shortcuts)).
 
 ---
 
@@ -210,7 +210,7 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 
 ## Shortcut‑uri
 
-Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplăcută, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu‑i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**. Configurația mea este următoarea:
+Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplăcută, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu‑i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**:
 
 | Align                   |       | Proxy                   |       | Fit/Scale                        |       | Cleanup                   |      |
 | :---------------------- | ----: | :---------------------- | ----: | :------------------------------- | ----: | :------------------------ | ---: |
@@ -238,4 +238,4 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți un e‑mail la Paul Chiorean \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 16 octombrie 2020
+README-ro.md • 24 octombrie 2020

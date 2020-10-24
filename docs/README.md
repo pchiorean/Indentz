@@ -11,7 +11,7 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 **`SetRefPoint...`** change the reference point used for transformations (like clicking the little proxy squares in the **Transform** palette).
 
-**Note:** Both sets are meant to be assigned to the numeric keypad (see [Shortcuts](#shortcuts)).
+**Note:** Both sets should be assigned to the numeric keypad (see [Shortcuts](#shortcuts)).
 
 ---
 
@@ -210,7 +210,7 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
 ## Shortcuts
 
-Running a frequently used script from the **Scripts** panel is quite annoying, since every time you have to locate it, then double-click the script. You can make the process instantaneous by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts**. My configuration is the following:
+Running a frequently used script from the **Scripts** panel is quite annoying, since every time you have to locate it, then double-click the script. You can make the process instantaneous by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts**:
 
 | Align                   |       | Proxy                   |       | Fit/Scale                        |       | Cleanup                   |      |
 | :---------------------- | ----: | :---------------------- | ----: | :------------------------------- | ----: | :------------------------ | ---: |
@@ -238,4 +238,4 @@ Running a frequently used script from the **Scripts** panel is quite annoying, s
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send an e-mail to Paul Chiorean \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • October 16, 2020
+README.md • October 24, 2020
