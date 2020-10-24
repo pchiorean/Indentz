@@ -1,5 +1,5 @@
 /*
-	Fit to... v3.2.0
+	Fit to... v3.3.0
 	© October 2020, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/bleed.
 	It's run internally by all the other FitTo scripts with the following arguments:
@@ -18,10 +18,25 @@ var DEBUG = false;
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument, sel = doc.selection;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) exit();
+
 var set_RO = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
-var obj, page; while (obj = sel.shift()) if (page = obj.parentPage) Fit(obj);
+var obj, page;
+while (obj = sel.shift()) {
+	if (page = obj.parentPage) { // Object is on page
+		Fit(obj);
+	} else if (FORCED) { // If forced fit, include objects on pasteboard
+		var pages = app.activeWindow.activeSpread.pages;
+		for (var i = 0; i < pages.length; i++) {
+			if (obj.geometricBounds[3] <= pages[0].bounds[3]) { page = pages[0]; break }
+			if (obj.geometricBounds[1] >= pages[i].bounds[1] &&
+				obj.geometricBounds[3] <= pages[i].bounds[3]) { page = pages[i]; break}
+			if (obj.geometricBounds[1] >= pages[-1].bounds[1]) { page = pages[-1]; break }
+		}
+		Fit(obj);
+	}
+}
 doc.viewPreferences.rulerOrigin = set_RO;
 
 
@@ -165,8 +180,7 @@ function Bounds(/*parent page*/page, /*'page','spread'*/scope, /*null,'bleed','m
 			switch(target) {
 				case null:
 					return page.parent.pages.length == 1 ?
-						page.parent.pages.firstItem().bounds :
-						[
+						page.parent.pages.firstItem().bounds : [
 							page.parent.pages.firstItem().bounds[0],
 							page.parent.pages.firstItem().bounds[1],
 							page.parent.pages.lastItem().bounds[2],
