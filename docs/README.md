@@ -15,6 +15,68 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 ---
 
+### **CleanupLabels**
+Sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. **`CleanupLabels.jsx`** deletes all labels from the document (if nothing is selected), or only from the selected items.
+
+### **CleanupSwatches**
+Converts RGB process swatches to CMYK, removes duplicates, renames them to "C= M= Y= K=" form, and deletes unused ones. Spot colors remain unchanged.
+
+### **DocCleanup** and **DocDefaults**
+**`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%.
+
+**`DocDefaults.jsx`** creates several swatches & layers, replaces some fonts (it runs **`ReplaceFonts.jsx`**), and sets the page size and margins (it runs **`PageSizeFromFilename.jsx`**).
+
+![Swatches](img/docdefaults-swatches.png) ![Layers](img/docdefaults-layers.png)
+
+It also merges several layers:
+
+Layer | Merged to
+:--- | :---
+rahmen, vis. area, visible, visible area, vizibil | `safe area`
+cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanzform | `dielines`
+uv, varnish | `varnish`
+info copy, ratio | `info`
+hw logo, logo hw, wh, whw | `hw`
+copy, text, textes, txt, type | `text and logos`
+tins | `products`
+artwork, aw, elemente, layout, layouts | `artwork`
+background, bg, hg, hintergrund | `bg`
+
+Both scripts change some settings according to my preferences.
+
+> <details><summary>Details</summary>
+>
+> **Rulers:** Reset Zero Point \
+> **Rulers Units:** Millimeters \
+> **View:** Show Rulers \
+> **View:** Show Frame Edges \
+> **Document Intent:** Print \
+> **Transparency Blend Space:** CMYK \
+> **CMYK Profile:** ISO Coated v2 (ECI) \
+> **RGB Profile:** sRGB IEC61966-2.1 \
+> **Grids & Guides:** Show Guides \
+> **Grids & Guides:** Unlock Guides \
+> **Guides & Pasteboard: Margins:** H 150 mm, V 25 mm \
+> **Guides & Pasteboard: Preview Background:** Light Gray \
+> **Keyboard Increments: Cursor Key:** 0.2 mm \
+> **Keyboard Increments: Size/Leading:** 0.5 pt \
+> **Keyboard Increments: Baseline Shift:** 0.1 pt \
+> **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
+> **Pages:** Allow Document Pages to Shuffle \
+> **Layers:** Ungroup Remembers Layers \
+> **Layers:** Paste Remembers Layers \
+> **Transform Reference Point:** Center \
+> **Type Options:** Use Typographer's Quotes \
+> **Type Options:** Apply Leading to Entire Paragraphs
+> </details>
+
+### **ReplaceFonts**
+Replaces fonts from a substitution list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([**`ReplaceFonts.txt`**](../cleanup/ReplaceFonts.txt)). The first line (the header) and lines beginning with ";" are ignored.
+
+You can use **`ShowFonts.jsx`** to get a tab delimited list of fonts for copy-pasting in **`ReplaceFonts.txt`**.
+
+---
+
 ### **ClipTo...**
 To manipulate some objects it can sometimes be useful to temporarily insert them into a container (clipping frame).
 
@@ -101,68 +163,6 @@ If the text has only one line, **Auto-Sizing Type** will be set to *Height and w
 
 ---
 
-### **CleanupFonts**
-Replaces fonts from a substitution list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). The first line (the header) and lines beginning with ";" are ignored.
-
-You can use **`ShowFonts.jsx`** to get a tab delimited list of fonts for copy-pasting in **`CleanupFonts.txt`**.
-
-### **CleanupLabels**
-Sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. **`CleanupLabels.jsx`** deletes all labels from the document (if nothing is selected), or only from the selected items.
-
-### **CleanupSwatches**
-Converts RGB process swatches to CMYK, removes duplicates, renames them to "C= M= Y= K=" form, and deletes unused ones. Spot colors remain unchanged.
-
-### **DocCleanup** and **DocDefaults**
-**`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%.
-
-**`DocDefaults.jsx`** creates several swatches & layers, replaces some fonts (it runs **`CleanupFonts.jsx`**), and sets the page size and margins (it runs **`PageSizeFromFilename.jsx`**).
-
-![Swatches](img/docdefaults-swatches.png) ![Layers](img/docdefaults-layers.png)
-
-It also merges several layers:
-
-Layer | Merged to
-:--- | :---
-rahmen, vis. area, visible, visible area, vizibil | `safe area`
-cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanzform | `dielines`
-uv, varnish | `varnish`
-info copy, ratio | `info`
-hw logo, logo hw, wh, whw | `hw`
-copy, text, textes, txt, type | `text and logos`
-tins | `products`
-artwork, aw, elemente, layout, layouts | `artwork`
-background, bg, hg, hintergrund | `bg`
-
-Both scripts change some settings according to my preferences.
-
-> <details><summary>Details</summary>
->
-> **Rulers:** Reset Zero Point \
-> **Rulers Units:** Millimeters \
-> **View:** Show Rulers \
-> **View:** Show Frame Edges \
-> **Document Intent:** Print \
-> **Transparency Blend Space:** CMYK \
-> **CMYK Profile:** ISO Coated v2 (ECI) \
-> **RGB Profile:** sRGB IEC61966-2.1 \
-> **Grids & Guides:** Show Guides \
-> **Grids & Guides:** Unlock Guides \
-> **Guides & Pasteboard: Margins:** H 150 mm, V 25 mm \
-> **Guides & Pasteboard: Preview Background:** Light Gray \
-> **Keyboard Increments: Cursor Key:** 0.2 mm \
-> **Keyboard Increments: Size/Leading:** 0.5 pt \
-> **Keyboard Increments: Baseline Shift:** 0.1 pt \
-> **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
-> **Pages:** Allow Document Pages to Shuffle \
-> **Layers:** Ungroup Remembers Layers \
-> **Layers:** Paste Remembers Layers \
-> **Transform Reference Point:** Center \
-> **Type Options:** Use Typographer's Quotes \
-> **Type Options:** Apply Leading to Entire Paragraphs
-> </details>
-
----
-
 ### **Print**
 Make several preparations for export; can be used with [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detect alternative layers like *visible*, *vizibil* for `safe area`, or *diecut*, *die cut*, *cut lines*, *stanze* for `dielines`.
 
@@ -202,7 +202,7 @@ Similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
 ### Miscellaneous
 **`PageRatios.jsx`** calculates the ratio of each page and displays it in the upper left corner (useful for masters).
 
-**`ShowFonts.jsx`** shows all fonts used in the current document (useful with **`CleanupFonts.jsx`**).
+**`ShowFonts.jsx`** shows all fonts used in the current document (useful with **`ReplaceFonts.jsx`**).
 
 **`ShowProfiles.jsx`** shows all color profiles available to InDesign (when you *think* you have a color profile installed).
 
@@ -238,4 +238,4 @@ Running a frequently used script from the **Scripts** panel is quite annoying, s
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send an e-mail to Paul Chiorean \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • October 24, 2020
+README.md • October 25, 2020

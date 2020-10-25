@@ -27,6 +27,96 @@
 	<p><strong><code>SetRefPoint...</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta <strong>Transform</strong>.</p>
 	<p><strong>Notă:</strong> Ambele seturi ar trebui alocate tastaturii numerice (v. <a href="#shortcuts">Shortcuts</a>).</p>
 	<hr>
+	<h3 id="cleanuplabels"><strong>CleanupLabels</strong></h3>
+	<p>Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. <strong><code>CleanupLabels.jsx</code></strong> șterge toate etichetele din document (dacă nu e selectat nimic) sau doar din elementele selectate.</p>
+
+	<h3 id="cleanupswatches"><strong>CleanupSwatches</strong></h3>
+	<p>Convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula &ldquor;C= M= Y= K=&rdquor; și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
+
+	<h3 id="doccleanup"><strong>DocCleanup</strong> and <strong>DocDefaults</strong></h3>
+	<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%.</p>
+	<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește niște fonturi (rulează <a href="#cleanupfonts"><strong><code>ReplaceFonts.jsx</code></strong></a>), stabilește dimensiunea paginii și marginile (rulează <a href="#pagesize"><strong><code>PageSizeFromFilename.jsx</code></strong></a>).</p>
+	<p><img src="img/docdefaults-swatches.png" alt="Culori"> <img src="img/docdefaults-layers.png" alt="Layere"></p>
+	<p>De asemenea, scriptul combină câteva layere:</p>
+	<p><table>
+	<thead>
+		<tr>
+			<th style="text-align:left">Layer</th>
+			<th style="text-align:left">Combinat cu</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="text-align:left">rahmen, vis. area, visible, visible area, vizibil</td>
+			<td style="text-align:left"><code>safe area</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanzform</td>
+			<td style="text-align:left"><code>dielines</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">uv, varnish</td>
+			<td style="text-align:left"><code>varnish</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">info copy, ratio</td>
+			<td style="text-align:left"><code>info</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">hw logo, logo hw, wh, whw</td>
+			<td style="text-align:left"><code>HW</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">copy, text, textes, txt, type</td>
+			<td style="text-align:left"><code>text and logos</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">tins</td>
+			<td style="text-align:left"><code>products</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">artwork, aw, elemente, layout, layouts</td>
+			<td style="text-align:left"><code>artwork</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">background, bg, hg, hintergrund</td>
+			<td style="text-align:left"><code>bg</code></td>
+		</tr>
+	</tbody>
+	</table></p>
+	<p>Ambele scripturi schimbă niște setări după preferințele mele.</p>
+	<blockquote>
+		<details>
+			<summary>Detalii</summary>
+			<p><strong>Rulers:</strong> Reset Zero Point <br>
+				<strong>Rulers Units:</strong> Millimeters <br>
+				<strong>View:</strong> Show Rulers <br>
+				<strong>View:</strong> Show Frame Edges <br>
+				<strong>Document Intent:</strong> Print <br>
+				<strong>Transparency Blend Space:</strong> CMYK <br>
+				<strong>CMYK Profile:</strong> ISO Coated v2 (ECI) <br>
+				<strong>RGB Profile:</strong> sRGB IEC61966-2.1 <br>
+				<strong>Grids &amp; Guides:</strong> Show Guides <br>
+				<strong>Grids &amp; Guides:</strong> Unlock Guides <br>
+				<strong>Guides &amp; Pasteboard: Margins:</strong> H 150 mm, V 25 mm <br>
+				<strong>Guides &amp; Pasteboard: Preview Background:</strong> Light Gray <br>
+				<strong>Keyboard Increments: Cursor Key:</strong> 0.2 mm <br>
+				<strong>Keyboard Increments: Size/Leading:</strong> 0.5 pt <br>
+				<strong>Keyboard Increments: Baseline Shift:</strong> 0.1 pt <br>
+				<strong>Keyboard Increments: Kerning/Tracking:</strong> 5/1000 em <br>
+				<strong>Pages:</strong> Allow Document Pages to Shuffle <br>
+				<strong>Layers:</strong> Ungroup Remembers Layers <br>
+				<strong>Layers:</strong> Paste Remembers Layers <br>
+				<strong>Transform Reference Point:</strong> Center <br>
+				<strong>Type Options:</strong> Use Typographer's Quotes <br>
+				<strong>Type Options:</strong> Apply Leading to Entire Paragraphs</p>
+		</details>
+	</blockquote>
+
+	<h3 id="replacefonts"><strong>ReplaceFonts</strong></h3>
+	<p>Înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV <em>(tab-separated values)</em> cu 4 coloane, cu același nume ca scriptul (<a href="../cleanup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>). Prima linie (capul de tabel) și liniile care încep cu &ldquor;&semi;&rdquor; sunt ignorate.</p>
+	<p>Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> pentru a obține o listă a fonturilor pentru copy-paste în <strong><code>ReplaceFonts.txt</code></strong>.</p>
+	<hr>
 	<h3 id="fitto"><strong>ClipTo...</strong></h3>
 	<p>Pentru a manipula unele obiecte poate fi uneori util să le inserăm temporar într‑un container (<em>clipping frame</em>).</p>
 	<p><strong><code>Clip.jsx</code></strong> inserează obiectele selectate într-un <em>clipping frame</em> sau le restaurează dacă sunt deja inserate.</p>
@@ -115,96 +205,6 @@
 	</table></p>
 	<p>Dacă textul are un singur rând, <strong>Auto-Sizing Type</strong> va fi setat <em>Height and width</em>. Dacă are mai multe rânduri, prima rulare îl va seta <em>Height only</em>, a doua <em>Height and width</em>.</p>
 	<hr>
-	<h3 id="cleanupfonts"><strong>CleanupFonts</strong></h3>
-	<p>Înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV <em>(tab-separated values)</em> cu 4 coloane, cu același nume ca scriptul (<a href="../cleanup/CleanupFonts.txt"><strong><code>CleanupFonts.txt</code></strong></a>). Prima linie (capul de tabel) și liniile care încep cu &ldquor;;" sunt ignorate.</p>
-	<p>Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> pentru a obține o listă a fonturilor pentru copy-paste în <strong><code>CleanupFonts.txt</code></strong>.</p>
-
-	<h3 id="cleanuplabels"><strong>CleanupLabels</strong></h3>
-	<p>Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. <strong><code>CleanupLabels.jsx</code></strong> șterge toate etichetele din document (dacă nu e selectat nimic) sau doar din elementele selectate.</p>
-
-	<h3 id="cleanupswatches"><strong>CleanupSwatches</strong></h3>
-	<p>Convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula &ldquor;C= M= Y= K=&rdquor; și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
-
-	<h3 id="doccleanup"><strong>DocCleanup</strong> and <strong>DocDefaults</strong></h3>
-	<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%.</p>
-	<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește niște fonturi (rulează <a href="#cleanupfonts"><strong><code>CleanupFonts.jsx</code></strong></a>), stabilește dimensiunea paginii și marginile (rulează <a href="#pagesize"><strong><code>PageSizeFromFilename.jsx</code></strong></a>).</p>
-	<p><img src="img/docdefaults-swatches.png" alt="Culori"> <img src="img/docdefaults-layers.png" alt="Layere"></p>
-	<p>De asemenea, scriptul combină câteva layere:</p>
-	<p><table>
-	<thead>
-		<tr>
-			<th style="text-align:left">Layer</th>
-			<th style="text-align:left">Combinat cu</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td style="text-align:left">rahmen, vis. area, visible, visible area, vizibil</td>
-			<td style="text-align:left"><code>safe area</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanzform</td>
-			<td style="text-align:left"><code>dielines</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">uv, varnish</td>
-			<td style="text-align:left"><code>varnish</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">info copy, ratio</td>
-			<td style="text-align:left"><code>info</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">hw logo, logo hw, wh, whw</td>
-			<td style="text-align:left"><code>HW</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">copy, text, textes, txt, type</td>
-			<td style="text-align:left"><code>text and logos</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">tins</td>
-			<td style="text-align:left"><code>products</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">artwork, aw, elemente, layout, layouts</td>
-			<td style="text-align:left"><code>artwork</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">background, bg, hg, hintergrund</td>
-			<td style="text-align:left"><code>bg</code></td>
-		</tr>
-	</tbody>
-	</table></p>
-	<p>Ambele scripturi schimbă niște setări după preferințele mele.</p>
-	<blockquote>
-		<details>
-			<summary>Detalii</summary>
-			<p><strong>Rulers:</strong> Reset Zero Point <br>
-				<strong>Rulers Units:</strong> Millimeters <br>
-				<strong>View:</strong> Show Rulers <br>
-				<strong>View:</strong> Show Frame Edges <br>
-				<strong>Document Intent:</strong> Print <br>
-				<strong>Transparency Blend Space:</strong> CMYK <br>
-				<strong>CMYK Profile:</strong> ISO Coated v2 (ECI) <br>
-				<strong>RGB Profile:</strong> sRGB IEC61966-2.1 <br>
-				<strong>Grids &amp; Guides:</strong> Show Guides <br>
-				<strong>Grids &amp; Guides:</strong> Unlock Guides <br>
-				<strong>Guides &amp; Pasteboard: Margins:</strong> H 150 mm, V 25 mm <br>
-				<strong>Guides &amp; Pasteboard: Preview Background:</strong> Light Gray <br>
-				<strong>Keyboard Increments: Cursor Key:</strong> 0.2 mm <br>
-				<strong>Keyboard Increments: Size/Leading:</strong> 0.5 pt <br>
-				<strong>Keyboard Increments: Baseline Shift:</strong> 0.1 pt <br>
-				<strong>Keyboard Increments: Kerning/Tracking:</strong> 5/1000 em <br>
-				<strong>Pages:</strong> Allow Document Pages to Shuffle <br>
-				<strong>Layers:</strong> Ungroup Remembers Layers <br>
-				<strong>Layers:</strong> Paste Remembers Layers <br>
-				<strong>Transform Reference Point:</strong> Center <br>
-				<strong>Type Options:</strong> Use Typographer's Quotes <br>
-				<strong>Type Options:</strong> Apply Leading to Entire Paragraphs</p>
-		</details>
-	</blockquote>
-	<hr>
 	<h3 id="print"><strong>Print</strong></h3>
 	<p>Fac câteva pregătiri pentru export; pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează layere alternative gen <em>visible</em>, <em>vizibil</em> pentru <code>safe area</code>, sau <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> pentru <code>dielines</code>.</p>
 	<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde layerul <code>safe area</code> și mută ștanțele și marcajele pentru alb și lac UV de pe <code>dielines</code> / <code>white</code> / <code>varnish</code> pe spreaduri separate.</p>
@@ -251,7 +251,7 @@
 	<hr>
 	<h3 id="misc">Diverse</h3>
 	<p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus (util pentru mastere).</p>
-	<p><strong><code>ShowFonts.jsx</code></strong> afișează toate fonturile utilizate în documentul curent (util pentru <strong><code>CleanupFonts.jsx</code></strong>).</p>
+	<p><strong><code>ShowFonts.jsx</code></strong> afișează toate fonturile utilizate în documentul curent (util pentru <strong><code>ReplaceFonts.jsx</code></strong>).</p>
 	<p><strong><code>ShowProfiles.jsx</code></strong> afișează toate profilele de culori disponibile (util când <em>credeți</em> că aveți instalat un profil de culoare).</p>
 	<p><strong><code>ShowProperties.jsx</code></strong> afișează proprietățile și metodele unui obiect selectat (util pentru depanare).</p>
 
@@ -378,7 +378,7 @@
 
 	<h2 id="license">Licență</h2>
 	<p>Codul este publicat sub licența MIT (<a href="../LICENSE.txt">LICENSE.txt</a>). Trimiteți un e‑mail la Paul Chiorean &lt;jpeg AT basement.ro&gt; sau <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
-	<p>README-ro.md • 24 octombrie 2020</p>
+	<p>README-ro.md • 25 octombrie 2020</p>
 
 </body>
 

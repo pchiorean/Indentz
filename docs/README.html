@@ -27,6 +27,96 @@
 	<p><strong><code>SetRefPoint...</code></strong> change the reference point used for transformations (like clicking the little proxy squares in the <strong>Transform</strong> palette).</p>
 	<p><strong>Note:</strong> Both sets should be assigned to the numeric keypad (see <a href="#shortcuts">Shortcuts</a>).</p>
 	<hr>
+	<h3 id="cleanuplabels"><strong>CleanupLabels</strong></h3>
+	<p>Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which may create problems later. <strong><code>CleanupLabels.jsx</code></strong> deletes all labels from the document (if nothing is selected), or only from the selected items.</p>
+
+	<h3 id="cleanupswatches"><strong>CleanupSwatches</strong></h3>
+	<p>Converts RGB process swatches to CMYK, removes duplicates, renames them to &quot;C= M= Y= K=&quot; form, and deletes unused ones. Spot colors remain unchanged.</p>
+
+	<h3 id="doccleanup"><strong>DocCleanup</strong> and <strong>DocDefaults</strong></h3>
+	<p><strong><code>DocCleanup.jsx</code></strong> cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%.</p>
+	<p><strong><code>DocDefaults.jsx</code></strong> creates several swatches &amp; layers, replaces some fonts (it runs <a href="#cleanupfonts"><strong><code>ReplaceFonts.jsx</code></strong></a>), and sets the page size and margins (it runs <a href="#pagesize"><strong><code>PageSizeFromFilename.jsx</code></strong></a>).</p>
+	<p><img src="img/docdefaults-swatches.png" alt="Swatches"> <img src="img/docdefaults-layers.png" alt="Layers"></p>
+	<p>It also merges several layers:</p>
+	<p><table>
+	<thead>
+		<tr>
+			<th style="text-align:left">Layer</th>
+			<th style="text-align:left">Merged to</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td style="text-align:left">rahmen, vis. area, visible, visible area, vizibil</td>
+			<td style="text-align:left"><code>safe area</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanzform</td>
+			<td style="text-align:left"><code>dielines</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">uv, varnish</td>
+			<td style="text-align:left"><code>varnish</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">info copy, ratio</td>
+			<td style="text-align:left"><code>info</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">hw logo, logo hw, wh, whw</td>
+			<td style="text-align:left"><code>HW</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">copy, text, textes, txt, type</td>
+			<td style="text-align:left"><code>text and logos</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">tins</td>
+			<td style="text-align:left"><code>products</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">artwork, aw, elemente, layout, layouts</td>
+			<td style="text-align:left"><code>artwork</code></td>
+		</tr>
+		<tr>
+			<td style="text-align:left">background, bg, hg, hintergrund</td>
+			<td style="text-align:left"><code>bg</code></td>
+		</tr>
+	</tbody>
+	</table></p>
+	<p>Both scripts change some settings according to my preferences.</p>
+	<blockquote>
+		<details>
+			<summary>Details</summary>
+			<p><strong>Rulers:</strong> Reset Zero Point <br>
+				<strong>Rulers Units:</strong> Millimeters <br>
+				<strong>View:</strong> Show Rulers <br>
+				<strong>View:</strong> Show Frame Edges <br>
+				<strong>Document Intent:</strong> Print <br>
+				<strong>Transparency Blend Space:</strong> CMYK <br>
+				<strong>CMYK Profile:</strong> ISO Coated v2 (ECI) <br>
+				<strong>RGB Profile:</strong> sRGB IEC61966-2.1 <br>
+				<strong>Grids &amp; Guides:</strong> Show Guides <br>
+				<strong>Grids &amp; Guides:</strong> Unlock Guides <br>
+				<strong>Guides &amp; Pasteboard: Margins:</strong> H 150 mm, V 25 mm <br>
+				<strong>Guides &amp; Pasteboard: Preview Background:</strong> Light Gray <br>
+				<strong>Keyboard Increments: Cursor Key:</strong> 0.2 mm <br>
+				<strong>Keyboard Increments: Size/Leading:</strong> 0.5 pt <br>
+				<strong>Keyboard Increments: Baseline Shift:</strong> 0.1 pt <br>
+				<strong>Keyboard Increments: Kerning/Tracking:</strong> 5/1000 em <br>
+				<strong>Pages:</strong> Allow Document Pages to Shuffle <br>
+				<strong>Layers:</strong> Ungroup Remembers Layers <br>
+				<strong>Layers:</strong> Paste Remembers Layers <br>
+				<strong>Transform Reference Point:</strong> Center <br>
+				<strong>Type Options:</strong> Use Typographer's Quotes <br>
+				<strong>Type Options:</strong> Apply Leading to Entire Paragraphs</p>
+		</details>
+	</blockquote>
+
+	<h3 id="replacefonts"><strong>ReplaceFonts</strong></h3>
+	<p>Replaces fonts from a substitution list. The list is a 4 column TSV <em>(tab-separated values)</em> file with the same name as the script (<a href="../cleanup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>). The first line (the header) and lines beginning with &quot;&semi;&quot; are ignored.</p>
+	<p>You can use <strong><code>ShowFonts.jsx</code></strong> to get a tab delimited list of fonts for copy-pasting in <strong><code>ReplaceFonts.txt</code></strong>.</p>
+	<hr>
 	<h3 id="fitto"><strong>ClipTo...</strong></h3>
 	<p>To manipulate some objects it can sometimes be useful to temporarily insert them into a container (clipping frame).</p>
 	<p><strong><code>Clip.jsx</code></strong> embeds selected objects in a clipping frame or restores them if already clipped.</p>
@@ -115,96 +205,6 @@
 	</table></p>
 	<p>If the text has only one line, <strong>Auto-Sizing Type</strong> will be set to <em>Height and width</em>. If it has multiple lines, the first run will set it to <em>Height only</em>, the second run to <em>Height and width</em>.</p>
 	<hr>
-	<h3 id="cleanupfonts"><strong>CleanupFonts</strong></h3>
-	<p>Replaces fonts from a substitution list. The list is a 4 column TSV <em>(tab-separated values)</em> file with the same name as the script (<a href="../cleanup/CleanupFonts.txt"><strong><code>CleanupFonts.txt</code></strong></a>). The first line (the header) and lines beginning with &quot;;&quot; are ignored.</p>
-	<p>You can use <strong><code>ShowFonts.jsx</code></strong> to get a tab delimited list of fonts for copy-pasting in <strong><code>CleanupFonts.txt</code></strong></p>
-
-	<h3 id="cleanuplabels"><strong>CleanupLabels</strong></h3>
-	<p>Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which may create problems later. <strong><code>CleanupLabels.jsx</code></strong> deletes all labels from the document (if nothing is selected), or only from the selected items.</p>
-
-	<h3 id="cleanupswatches"><strong>CleanupSwatches</strong></h3>
-	<p>Converts RGB process swatches to CMYK, removes duplicates, renames them to &quot;C= M= Y= K=&quot; form, and deletes unused ones. Spot colors remain unchanged.</p>
-
-	<h3 id="doccleanup"><strong>DocCleanup</strong> and <strong>DocDefaults</strong></h3>
-	<p><strong><code>DocCleanup.jsx</code></strong> cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100%.</p>
-	<p><strong><code>DocDefaults.jsx</code></strong> creates several swatches &amp; layers, replaces some fonts (it runs <a href="#cleanupfonts"><strong><code>CleanupFonts.jsx</code></strong></a>), and sets the page size and margins (it runs <a href="#pagesize"><strong><code>PageSizeFromFilename.jsx</code></strong></a>).</p>
-	<p><img src="img/docdefaults-swatches.png" alt="Swatches"> <img src="img/docdefaults-layers.png" alt="Layers"></p>
-	<p>It also merges several layers:</p>
-	<p><table>
-	<thead>
-		<tr>
-			<th style="text-align:left">Layer</th>
-			<th style="text-align:left">Merged to</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td style="text-align:left">rahmen, vis. area, visible, visible area, vizibil</td>
-			<td style="text-align:left"><code>safe area</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanzform</td>
-			<td style="text-align:left"><code>dielines</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">uv, varnish</td>
-			<td style="text-align:left"><code>varnish</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">info copy, ratio</td>
-			<td style="text-align:left"><code>info</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">hw logo, logo hw, wh, whw</td>
-			<td style="text-align:left"><code>HW</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">copy, text, textes, txt, type</td>
-			<td style="text-align:left"><code>text and logos</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">tins</td>
-			<td style="text-align:left"><code>products</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">artwork, aw, elemente, layout, layouts</td>
-			<td style="text-align:left"><code>artwork</code></td>
-		</tr>
-		<tr>
-			<td style="text-align:left">background, bg, hg, hintergrund</td>
-			<td style="text-align:left"><code>bg</code></td>
-		</tr>
-	</tbody>
-	</table></p>
-	<p>Both scripts change some settings according to my preferences.</p>
-	<blockquote>
-		<details>
-			<summary>Details</summary>
-			<p><strong>Rulers:</strong> Reset Zero Point <br>
-				<strong>Rulers Units:</strong> Millimeters <br>
-				<strong>View:</strong> Show Rulers <br>
-				<strong>View:</strong> Show Frame Edges <br>
-				<strong>Document Intent:</strong> Print <br>
-				<strong>Transparency Blend Space:</strong> CMYK <br>
-				<strong>CMYK Profile:</strong> ISO Coated v2 (ECI) <br>
-				<strong>RGB Profile:</strong> sRGB IEC61966-2.1 <br>
-				<strong>Grids &amp; Guides:</strong> Show Guides <br>
-				<strong>Grids &amp; Guides:</strong> Unlock Guides <br>
-				<strong>Guides &amp; Pasteboard: Margins:</strong> H 150 mm, V 25 mm <br>
-				<strong>Guides &amp; Pasteboard: Preview Background:</strong> Light Gray <br>
-				<strong>Keyboard Increments: Cursor Key:</strong> 0.2 mm <br>
-				<strong>Keyboard Increments: Size/Leading:</strong> 0.5 pt <br>
-				<strong>Keyboard Increments: Baseline Shift:</strong> 0.1 pt <br>
-				<strong>Keyboard Increments: Kerning/Tracking:</strong> 5/1000 em <br>
-				<strong>Pages:</strong> Allow Document Pages to Shuffle <br>
-				<strong>Layers:</strong> Ungroup Remembers Layers <br>
-				<strong>Layers:</strong> Paste Remembers Layers <br>
-				<strong>Transform Reference Point:</strong> Center <br>
-				<strong>Type Options:</strong> Use Typographer's Quotes <br>
-				<strong>Type Options:</strong> Apply Leading to Entire Paragraphs</p>
-		</details>
-	</blockquote>
-	<hr>
 	<h3 id="print"><strong>Print</strong></h3>
 	<p>Make several preparations for export; can be used with <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detect alternative layers like <em>visible</em>, <em>vizibil</em> for <code>safe area</code>, or <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> for <code>dielines</code>.</p>
 	<p><strong><code>PrepareForPrint.jsx</code></strong> hides the <code>safe area</code> layer and moves the dielines, white and UV markings from <code>dielines</code> / <code>white</code> / <code>varnish</code> to separate spreads.</p>
@@ -251,7 +251,7 @@
 	<hr>
 	<h3 id="misc">Miscellaneous</h3>
 	<p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and displays it in the upper left corner (useful for masters).</p>
-	<p><strong><code>ShowFonts.jsx</code></strong> shows all fonts used in the current document (useful with <strong><code>CleanupFonts.jsx</code></strong>).</p>
+	<p><strong><code>ShowFonts.jsx</code></strong> shows all fonts used in the current document (useful with <strong><code>ReplaceFonts.jsx</code></strong>).</p>
 	<p><strong><code>ShowProfiles.jsx</code></strong> shows all color profiles available to InDesign (when you <em>think</em> you have a color profile installed).</p>
 	<p><strong><code>ShowProperties.jsx</code></strong> shows properties and methods of a selected object (useful for debugging).</p>
 
@@ -378,7 +378,7 @@
 
 	<h2 id="license">License</h2>
 	<p>The code is released under the MIT License (see <a href="../LICENSE.txt">LICENSE.txt</a>). Send an e-mail to Paul Chiorean &lt;jpeg AT basement.ro&gt; or <a href="https://github.com/pchiorean/Indentz/issues">report an issue</a> on Github if you encounter problems or have any suggestions.</p>
-	<p>README.md • October 24, 2020</p>
+	<p>README.md • October 25, 2020</p>
 
 </body>
 

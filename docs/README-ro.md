@@ -15,6 +15,68 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 ---
 
+### **CleanupLabels**
+Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **`CleanupLabels.jsx`** șterge toate etichetele din document (dacă nu e selectat nimic) sau doar din elementele selectate.
+
+### **CleanupSwatches**
+Convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula „C= M= Y= K=” și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
+
+### **DocCleanup** și **DocDefaults**
+**`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%.
+
+**`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește niște fonturi (rulează **`ReplaceFonts.jsx`**), stabilește dimensiunea paginii și marginile (rulează **`PageSizeFromFilename.jsx`**).
+
+![Culori](img/docdefaults-swatches.png) ![Layere](img/docdefaults-layers.png)
+
+De asemenea, scriptul combină câteva layere:
+
+Layer | Combinat cu
+:--- | :---
+rahmen, vis. area, visible, visible area, vizibil | `safe area`
+cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanzform | `dielines`
+uv, varnish | `varnish`
+info copy, ratio | `info`
+hw logo, logo hw, wh, whw | `hw`
+copy, text, textes, txt, type | `text and logos`
+tins | `products`
+artwork, aw, elemente, layout, layouts | `artwork`
+background, bg, hg, hintergrund | `bg`
+
+Ambele scripturi schimbă niște setări după preferințele mele.
+
+> <details><summary>Detalii</summary>
+>
+> **Rulers:** Reset Zero Point \
+> **Rulers Units:** Millimeters \
+> **View:** Show Rulers \
+> **View:** Show Frame Edges \
+> **Document Intent:** Print \
+> **Transparency Blend Space:** CMYK \
+> **CMYK Profile:** ISO Coated v2 (ECI) \
+> **RGB Profile:** sRGB IEC61966-2.1 \
+> **Grids & Guides:** Show Guides \
+> **Grids & Guides:** Unlock Guides \
+> **Guides & Pasteboard: Margins:** H 150 mm, V 25 mm \
+> **Guides & Pasteboard: Preview Background:** Light Gray \
+> **Keyboard Increments: Cursor Key:** 0.2 mm \
+> **Keyboard Increments: Size/Leading:** 0.5 pt \
+> **Keyboard Increments: Baseline Shift:** 0.1 pt \
+> **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
+> **Pages:** Allow Document Pages to Shuffle \
+> **Layers:** Ungroup Remembers Layers \
+> **Layers:** Paste Remembers Layers \
+> **Transform Reference Point:** Center \
+> **Type Options:** Use Typographer's Quotes \
+> **Type Options:** Apply Leading to Entire Paragraphs
+> </details>
+
+### **ReplaceFonts**
+Înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`ReplaceFonts.txt`**](../cleanup/ReplaceFonts.txt)). Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate.
+
+Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă a fonturilor pentru copy-paste în **`ReplaceFonts.txt`**.
+
+---
+
 ### **ClipTo...**
 Pentru a manipula unele obiecte poate fi uneori util să le inserăm temporar într‑un container (*clipping frame*).
 
@@ -101,68 +163,6 @@ Dacă textul are un singur rând, **Auto-Sizing Type** va fi setat *Height and w
 
 ---
 
-### **CleanupFonts**
-Înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`CleanupFonts.txt`**](../cleanup/CleanupFonts.txt)). Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate.
-
-Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă a fonturilor pentru copy-paste în **`CleanupFonts.txt`**.
-
-### **CleanupLabels**
-Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **`CleanupLabels.jsx`** șterge toate etichetele din document (dacă nu e selectat nimic) sau doar din elementele selectate.
-
-### **CleanupSwatches**
-Convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula „C= M= Y= K=” și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
-
-### **DocCleanup** și **DocDefaults**
-**`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%.
-
-**`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește niște fonturi (rulează **`CleanupFonts.jsx`**), stabilește dimensiunea paginii și marginile (rulează **`PageSizeFromFilename.jsx`**).
-
-![Culori](img/docdefaults-swatches.png) ![Layere](img/docdefaults-layers.png)
-
-De asemenea, scriptul combină câteva layere:
-
-Layer | Combinat cu
-:--- | :---
-rahmen, vis. area, visible, visible area, vizibil | `safe area`
-cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanzform | `dielines`
-uv, varnish | `varnish`
-info copy, ratio | `info`
-hw logo, logo hw, wh, whw | `hw`
-copy, text, textes, txt, type | `text and logos`
-tins | `products`
-artwork, aw, elemente, layout, layouts | `artwork`
-background, bg, hg, hintergrund | `bg`
-
-Ambele scripturi schimbă niște setări după preferințele mele.
-
-> <details><summary>Detalii</summary>
->
-> **Rulers:** Reset Zero Point \
-> **Rulers Units:** Millimeters \
-> **View:** Show Rulers \
-> **View:** Show Frame Edges \
-> **Document Intent:** Print \
-> **Transparency Blend Space:** CMYK \
-> **CMYK Profile:** ISO Coated v2 (ECI) \
-> **RGB Profile:** sRGB IEC61966-2.1 \
-> **Grids & Guides:** Show Guides \
-> **Grids & Guides:** Unlock Guides \
-> **Guides & Pasteboard: Margins:** H 150 mm, V 25 mm \
-> **Guides & Pasteboard: Preview Background:** Light Gray \
-> **Keyboard Increments: Cursor Key:** 0.2 mm \
-> **Keyboard Increments: Size/Leading:** 0.5 pt \
-> **Keyboard Increments: Baseline Shift:** 0.1 pt \
-> **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
-> **Pages:** Allow Document Pages to Shuffle \
-> **Layers:** Ungroup Remembers Layers \
-> **Layers:** Paste Remembers Layers \
-> **Transform Reference Point:** Center \
-> **Type Options:** Use Typographer's Quotes \
-> **Type Options:** Apply Leading to Entire Paragraphs
-> </details>
-
----
-
 ### **Print**
 Fac câteva pregătiri pentru export; pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează layere alternative gen *visible*, *vizibil* pentru `safe area`, sau *diecut*, *die cut*, *cut lines*, *stanze* pentru `dielines`.
 
@@ -202,7 +202,7 @@ Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunăt�
 ### Diverse
 **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus (util pentru mastere).
 
-**`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`CleanupFonts.jsx`**).
+**`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`ReplaceFonts.jsx`**).
 
 **`ShowProfiles.jsx`** afișează toate profilele de culori disponibile (util când *credeți* că aveți instalat un profil de culoare).
 
@@ -238,4 +238,4 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți un e‑mail la Paul Chiorean \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 24 octombrie 2020
+README-ro.md • 25 octombrie 2020
