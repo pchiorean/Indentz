@@ -1,5 +1,5 @@
 ﻿/*
-	Cleanup fonts 1.2.0
+	Replace fonts 1.2.0
 	© September 2020, Paul Chiorean
 	Replaces missing or unwanted fonts with equivalents from a list.
 	The list is a TSV file with the same name as the script, with the 

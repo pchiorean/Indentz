@@ -50,7 +50,7 @@ Name                               |   Fn  | Description
 **`PageMarginsFromSelection.jsx`** |       | Sets the page margins to the selected objects bounds
 **`TextAutosize.jsx`**             |    F6 | Auto-sizes the text frame to the content
 **Cleanup**                                |
-**`CleanupFonts.jsx`**             |       | Replaces missing or unwanted fonts with equivalents from a list
+**`ReplaceFonts.jsx`**             |       | Replaces missing or unwanted fonts with equivalents from a list
 **`CleanupLabels.jsx`**            |       | Removes all labels from the document
 **`CleanupSwatches.jsx`**          |   ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 **`DocCleanup.jsx`**               |    F2 | Changes some settings, cleans up swatches/layers/pages/guides and resets scaling
