@@ -36,18 +36,16 @@ function MkGuide(page) { // Add 10% bottom guides
 	page.guides.add(undefined, {
 		itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
 		orientation: HorizontalOrVertical.horizontal,
-		location: szPg * 0.9
-	});
+		location: szPg * 0.9 });
 	if (szMg != szPg) {
 		page.guides.add(undefined, {
 			itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
 			orientation: HorizontalOrVertical.horizontal,
-			location: page.marginPreferences.top + szMg * 0.9
-		});
+			location: page.marginPreferences.top + szMg * 0.9 });
 	}
 }
 
-function FindLayer(names) { // Find first layer from a list of names
+function FindLayer(names) { // Find first valid layer from a list of names
 	for (var i = 0; i < names.length; i++) {
 		var layer = doc.layers.item(names[i]);
 		if (layer.isValid) return names[i];
