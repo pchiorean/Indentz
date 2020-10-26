@@ -1,6 +1,7 @@
 /*
-	Align to left v2.3.0
+	Align to left v2.3.1
 	© October 2020, Paul Chiorean
+	Aligns the selected objects to the left of the 'Align To' setting.
 */
 
 if (app.documents.length == 0) exit();

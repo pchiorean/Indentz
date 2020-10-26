@@ -1,6 +1,7 @@
 /*
-	Reset 'Align To' v1.1.0
+	Reset 'Align To' v1.1.1
 	© August 2020, Paul Chiorean
+	Resets the 'Align To' setting to default.
 */
 
 if (app.documents.length == 0) exit();

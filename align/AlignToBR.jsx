@@ -1,6 +1,7 @@
 /*
-	Align to bottom-right v2.3.0
+	Align to bottom-right v2.3.1
 	© October 2020, Paul Chiorean
+	Aligns the selected objects to the bottom-right of the 'Align To' setting.
 */
 
 if (app.documents.length == 0) exit();

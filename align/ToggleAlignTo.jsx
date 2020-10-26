@@ -1,6 +1,7 @@
 /*
-	Toggle 'Align To' v1.0.0
+	Toggle 'Align To' v1.0.1
 	© August 2020, Paul Chiorean
+	Toggles the 'Align To' setting.
 */
 
 if (app.documents.length == 0) exit();
