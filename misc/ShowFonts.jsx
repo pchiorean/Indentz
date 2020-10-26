@@ -1,5 +1,5 @@
 /*
-	Show Used fonts 1.1.3
+	Show used fonts 1.1.3
 	© July 2020, Paul Chiorean
 	Shows all fonts used in the current document.
 */

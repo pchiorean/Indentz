@@ -117,7 +117,7 @@ function main() {
 		saLayerFrame.properties = { itemLayer: saLayerName, geometricBounds: mgBounds }
 	}
 
-	function FindLayer(names) { // Find first layer from a list of names
+	function FindLayer(names) { // Find first valid layer from a list of names
 		for (var i = 0; i < names.length; i++) {
 			var layer = doc.layers.item(names[i]);
 			if (layer.isValid) return names[i];

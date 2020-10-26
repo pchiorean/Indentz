@@ -10,8 +10,8 @@ Name                               |   Fn  | Description
 **`AlignToTL.jsx`**                |  Num7 | Aligns the selected objects to the top-left of the **Align To** setting
 **`AlignToT.jsx`**                 |  Num8 | Aligns the selected objects to the top of the **Align To** setting
 **`AlignToTR.jsx`**                |  Num9 | Aligns the selected objects to the top-right of the **Align To** setting
-**`ResetAlignTo.jsx`**             | ⌃Num0 | Resets **Align To** setting to default
-**`ToggleAlignTo.jsx`**            |  Num0 | Toggles **Align To** setting
+**`ResetAlignTo.jsx`**             | ⌃Num0 | Resets the **Align To** setting to default
+**`ToggleAlignTo.jsx`**            |  Num0 | Toggles the **Align To** setting
 **Proxy**                                  |
 **`SetRefPointToBL.jsx`**          | ⌃Num1 | Sets **Transform Reference Point** to bottom-left
 **`SetRefPointToB.jsx`**           | ⌃Num2 | Sets **Transform Reference Point** to bottom
@@ -23,6 +23,8 @@ Name                               |   Fn  | Description
 **`SetRefPointToT.jsx`**           | ⌃Num8 | Sets **Transform Reference Point** to top
 **`SetRefPointToTR.jsx`**          | ⌃Num9 | Sets **Transform Reference Point** to top-right
 **Geometry**                               |
+**`Clip.jsx`**                     |  Num* | Clip selected objects in a '\<clip frame\>', or restores them
+**`ClipUndo.jsx`**                 |       | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
 **`FitTo.jsx`**                    |       | It's run internally by all the other 'FitTo' scripts
 **`FitToPage.jsx`**                |   F11 | Resizes the selected objects to the page size
 **`FitToPageBleed.jsx`**           |  ⇧F11 | Resizes the selected objects to the page bleed size
@@ -36,18 +38,16 @@ Name                               |   Fn  | Description
 **`FitToSpreadForced.jsx`**        |  ⌘F12 | Resizes the selected objects to the spread size, forced
 **`FitToSpreadBleedForced.jsx`**   | ⇧⌘F12 | Resizes the selected objects to the spread bleed size, forced
 **`FitToSpreadMarginsForced.jsx`** | ⌥⌘F12 | Resizes the selected objects to the spread margins, forced
-**`Clip.jsx`**                     |  Num* | Clip selected objects in a '\<clip frame\>', or restores them
-**`ClipUndo.jsx`**                 |       | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
 **`ScaleToPageMargins.jsx`**       |   ⌥F5 | Scales the selected objects to the page margins
 **`ScaleToPageMarginsH.jsx`**      |       | Scales the selected objects to the page top/bottom margins
 **`ScaleToPageMarginsW.jsx`**      |       | Scales the selected objects to the page left/right margins
 **`ScaleToPageSize.jsx`**          |    F5 | Scales the selected objects to the page size
 **`ScaleToPageSizeH.jsx`**         |       | Scales the selected objects to the page top/bottom size
 **`ScaleToPageSizeW.jsx`**         |       | Scales the selected objects to the page left/right size
+**`PageMarginsFromSelection.jsx`** |       | Sets the page margins to the selected objects bounds
 **`PageSizeFromFilename.jsx`**     |       | Sets every page size and margins according to the filename
 **`PageSizeFromMargins.jsx`**      |       | Sets the page size to the page margins
 **`PageSizeFromSelection.jsx`**    |       | Sets the page size to the selected objects bounds
-**`PageMarginsFromSelection.jsx`** |       | Sets the page margins to the selected objects bounds
 **`TextAutosize.jsx`**             |    F6 | Auto-sizes the text frame to the content
 **Cleanup**                                |
 **`ReplaceFonts.jsx`**             |       | Replaces missing or unwanted fonts with equivalents from a list

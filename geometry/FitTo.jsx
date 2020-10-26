@@ -1,5 +1,5 @@
 /*
-	Fit to... v3.3.0
+	Fit to... v3.3.1
 	© October 2020, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/bleed.
 	It's run internally by all the other FitTo scripts with the following arguments:
@@ -179,12 +179,11 @@ function Bounds(/*parent page*/page, /*'page','spread'*/scope, /*null,'bleed','m
 		case "spread":
 			switch(target) {
 				case null:
-					return page.parent.pages.length == 1 ?
-						page.parent.pages.firstItem().bounds : [
-							page.parent.pages.firstItem().bounds[0],
-							page.parent.pages.firstItem().bounds[1],
-							page.parent.pages.lastItem().bounds[2],
-							page.parent.pages.lastItem().bounds[3]
+					return [
+						page.parent.pages.firstItem().bounds[0],
+						page.parent.pages.firstItem().bounds[1],
+						page.parent.pages.lastItem().bounds[2],
+						page.parent.pages.lastItem().bounds[3]
 					];
 				case "bleed":
 					return [
