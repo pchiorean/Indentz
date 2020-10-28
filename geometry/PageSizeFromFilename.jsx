@@ -1,5 +1,5 @@
 /*
-	Page size from filename v1.7.0
+	Page size from filename v1.8.0
 	© October 2020, Paul Chiorean
 	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -101,9 +101,11 @@ function main() {
 			bottom: (szPg.height - szMg.height) / 2,
 			right: (szPg.width - szMg.width) / 2
 		}
-		if (mgPg.top + mgPg.left + mgPg.bottom + mgPg.right == 0) return;
+		if (mgPg == null) return;
 		mgBounds = [mgPg.top, mgPg.left, szMg.height + mgPg.top, szMg.width + mgPg.left];
 		page.marginPreferences.properties = mgPg;
+		page.marginPreferences.columnCount = 1;
+		page.marginPreferences.columnGutter = 0;
 		saLayerFrame = page.rectangles.add({
 			label: "safe area",
 			contentType: ContentType.UNASSIGNED,
@@ -115,6 +117,7 @@ function main() {
 			overprintStroke: false
 		});
 		saLayerFrame.properties = { itemLayer: saLayerName, geometricBounds: mgBounds }
+		saLayer.locked = true;
 	}
 
 	function FindLayer(names) { // Find first valid layer from a list of names
