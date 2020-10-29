@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v2.0.2
+	Default layers and more v2.0.3
 	© October 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -377,7 +377,7 @@ UndoModes.ENTIRE_SCRIPT, "Make default layers");
 
 // Step 3. Replace fonts
 try {
-	app.doScript(File(app.activeScript.path + "/CleanupFonts.jsx"), 
+	app.doScript(File(app.activeScript.path + "/ReplaceFonts.jsx"), 
 	ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Replace fonts");
 } catch (_) {};
