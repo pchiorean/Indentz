@@ -1,8 +1,10 @@
 /*
-	QR code v2.1.0
+	QR code v2.1.1
 	© October 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If "QR.txt" is found, batch process it.
+	The list is a TSV file with the following format: <QR Filename>\t<QR Code>
+	(the first line is considered header and is ignored).
 */
 
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
