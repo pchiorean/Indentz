@@ -1,6 +1,6 @@
 /*
-	Cleanup swatches v1.2.2
-	July 2020, Paul Chiorean
+	Cleanup swatches v1.3.0
+	October 2020, Paul Chiorean
 	Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused.
 	
 	NormalizeCMYK written by Marc Autret:
@@ -10,9 +10,12 @@
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
-RGB2CMYK(doc); // Convert RGB process colors to CMYK
-NormalizeCMYK(doc); // Normalize similar CMYK swatches
-DeleteUnused(doc); // Delete unused swatches
+app.doScript(RGB2CMYK, ScriptLanguage.javascript, doc,
+	UndoModes.ENTIRE_SCRIPT, "Convert RGB process colors to CMYK");
+app.doScript(NormalizeCMYK, ScriptLanguage.javascript, doc,
+	UndoModes.ENTIRE_SCRIPT, "Normalize similar CMYK swatches");
+app.doScript(DeleteUnused, ScriptLanguage.javascript, doc,
+	UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
 
 
 function RGB2CMYK(/*Document*/doc, c, i, j, k) {
