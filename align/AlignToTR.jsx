@@ -1,5 +1,5 @@
 /*
-	Align to top-right v2.3.1
+	Align to top-right v2.3.2
 	© October 2020, Paul Chiorean
 	Aligns the selected objects to the top-right of the 'Align To' setting.
 */
@@ -7,6 +7,7 @@
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
+app.scriptPreferences.enableRedraw = false;
 var sel = doc.selection, selBAK = sel, obj;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit() }
