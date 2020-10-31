@@ -1,5 +1,5 @@
 /*
-	QR code v2.0.0
+	QR code v2.1.0
 	© October 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If "QR.txt" is found, batch process it.
@@ -9,17 +9,20 @@ app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.enableRedraw = false;
 
 var doc, docPath;
-try { doc = app.activeDocument, docPath = doc.filePath;
-} catch(_) { doc = app.documents.add(); ManuallyQR(); exit() }
+if (app.documents.length == 0) {
+	doc = app.documents.add();
+} else {
+	doc = app.activeDocument;
+	if (doc.saved) { // Look for 'QR.txt'
+		docPath = doc.filePath;
+		var infoFile = File(docPath + "/QR.txt");
+		if (infoFile.open("r") && confirm("Found \'QR.txt\', do you want to process it?")) { BatchQR(); exit() }
+	}
+}
+app.doScript(ManuallyQR, ScriptLanguage.javascript, undefined, UndoModes.ENTIRE_SCRIPT, "QR code");
 
-// Look for "QR.txt" and select operating mode
-var infoFile = File(docPath + "/QR.txt");
-if (infoFile.open("r")) {
-	if (confirm("Found \'QR.txt\', do you want to process it?")) { BatchQR() } else { ManuallyQR() }
-} else { ManuallyQR() }
 
-
-function BatchQR() { // Noninteractive: batch process "QR.txt"
+function BatchQR() { // Noninteractive: batch process 'QR.txt'
 	var line = 0, fn = [], qr = [], width = 100;
 	var header = infoFile.readln().split("\t");
 	while (!infoFile.eof) {
@@ -32,7 +35,8 @@ function BatchQR() { // Noninteractive: batch process "QR.txt"
 		infoLine[0] = infoLine[0].match(/\.indd$/g) ? infoLine[0] : infoLine[0] + '.indd';
 		infoLine[0] = infoLine[0].match(/_QR\.indd$/g) ? infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
 		fn[line-1] = infoLine[0];
-		qr[line-1] = infoLine[1]; width = (qr[line-1] > width) ? qr[line-1] : width;
+		qr[line-1] = infoLine[1];
+		width = (qr[line-1] > width) ? qr[line-1] : width;
 	}
 	infoFile.close(); doc.close();
 	if (line < 1) { alert("Not enough records."); exit() }
@@ -73,13 +77,14 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 		buttons.alignChildren = ["fill","top"];
 	var onpage = buttons.add("button", undefined, "On page", {name: "ok"});
 	var onfile = buttons.add("button", undefined, "On file", {name: "onfile"});
+	if (!docPath) onfile.enabled = false;
 	onpage.onClick = function() { flg_onfile = false; w.close() }
 	onfile.onClick = function() { flg_onfile = true; w.close() }
 	buttons.add("button", undefined, "Cancel", {name: "cancel"});
 	var result = w.show();
 	if (!label.text || result == 2) { exit() }
 	var QRLabel = label.text;
-	var flg_manual = /\|/g.test(QRLabel); // If "|" found, set forcedLineBreak flag
+	var flg_manual = /\|/g.test(QRLabel); // If '|' found, set forcedLineBreak flag
 	switch (flg_onfile) {
 		case false: QROnPage(QRLabel, flg_manual, flg_white.value); break;
 		case true: QROnFile(QRLabel); break;
@@ -87,9 +92,9 @@ function ManuallyQR() { // Interactive: ask for QR text and destination
 }
 
 function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
-	QRLabel = QRLabel.toUpperCase(); // Make label uppercase
-	QRLabel = QRLabel.replace(/_/g, "_\u200B"); // Add discretionaryLineBreak after "_"
-	QRLabel = QRLabel.replace(/\|/g, "\u000A"); // Replace "|" with forcedLineBreak
+	QRLabel = QRLabel.toUpperCase();
+	QRLabel = QRLabel.replace(/_/g, "_\u200B"); // Add discretionaryLineBreak after '_'
+	QRLabel = QRLabel.replace(/\|/g, "\u000A"); // Replace '|' with forcedLineBreak
 	var infoLayer = MakeInfoLayer(doc);
 	doc.activeLayer = infoLayer;
 	for (var i = 0; i < doc.pages.length; i++) {
@@ -170,9 +175,9 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 }
 
 function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
-	QRLabel = QRLabel.toUpperCase(); // Make label uppercase
-	QRLabel = QRLabel.replace(/_/g, "_\u200B"); // Add discretionaryLineBreak after "_"
-	QRLabel = QRLabel.replace(/\|/g, "\u200B"); // Replace "|" with discretionaryLineBreak
+	QRLabel = QRLabel.toUpperCase();
+	QRLabel = QRLabel.replace(/_/g, "_\u200B"); // Add discretionaryLineBreak after '_'
+	QRLabel = QRLabel.replace(/\|/g, "\u200B"); // Replace '|' with discretionaryLineBreak
 	if (!fn) var fn = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd";
 	var target = app.documents.add();
 	var page = target.pages[0];
@@ -262,7 +267,7 @@ function ProgressBar(width) {
 	}
 	this.update = function(val, code) {
 		w.pb.value = val;
-		w.st.text = "Processing code '" + code + "' (" + val + " of " + w.pb.maxvalue + ")";
+		w.st.text = "Processing '" + code + "' (" + val + " of " + w.pb.maxvalue + ")";
 		w.show(); w.update();
 	}
 	this.hide = function() { w.hide() }
