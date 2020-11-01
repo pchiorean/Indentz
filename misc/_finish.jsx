@@ -1,5 +1,5 @@
 /*
-	Finishing 0.5.0
+	Finishing 0.5.1
 	© October 2020, Paul Chiorean
 	Used for quick fixes.
 */
@@ -9,15 +9,15 @@ var doc = app.activeDocument;
 var page = app.activeWindow.activePage;
 
 app.doScript(
-	File(app.activeScript.path + "/../geometry/ScaleToPageMargins.jsx"), ScriptLanguage.javascript,
+	File(app.activeScript.path + "/../scaling/ScaleToPageMargins.jsx"), ScriptLanguage.javascript,
 	undefined, UndoModes.FAST_ENTIRE_SCRIPT, "Scale to page margins"
 );
 app.doScript(
-	File(app.activeScript.path + "/../align/AlignToB.jsx"), ScriptLanguage.javascript,
+	File(app.activeScript.path + "/../alignment/AlignToB.jsx"), ScriptLanguage.javascript,
 	undefined, UndoModes.FAST_ENTIRE_SCRIPT, "Align to bottom"
 );
 app.doScript(
-	File(app.activeScript.path + "/../geometry/Clip.jsx"), ScriptLanguage.javascript,
+	File(app.activeScript.path + "/../misc/Clip.jsx"), ScriptLanguage.javascript,
 	undefined, UndoModes.FAST_ENTIRE_SCRIPT, "Clipping"
 );
 doc.selection[0].geometricBounds = [37.6223012426542,3.00000000000001,46,27];

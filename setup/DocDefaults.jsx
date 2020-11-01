@@ -1,5 +1,5 @@
 ﻿/*
-	Default layers and more v2.0.3
+	Default layers and more v2.0.4
 	© October 2020, Paul Chiorean
 	Changes some settings, makes default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
@@ -384,7 +384,7 @@ try {
 
 // Step 4. Sets page dimensions from filename
 try {
-	app.doScript(File(app.activeScript.path + "/../geometry/PageSizeFromFilename.jsx"), 
+	app.doScript(File(app.activeScript.path + "/PageSizeFromFilename.jsx"), 
 	ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
 } catch (_) {};
