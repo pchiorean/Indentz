@@ -4,27 +4,59 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 ## Descriere
 
-### **AlignTo...** și **SetRefPointTo...**
-![Align Panel](img/alignto.png) ![Transform Panel](img/setrefpoint.png)
+### **Alignment / Proxy**
 
-**`AlignTo...`** aliniază obiectul selectat la referința definită de opțiunea **Align To**. **`ToggleAlignTo.jsx`** schimbă alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). **`ResetAlignTo.jsx`** o resetează la **Align to Selection**.
+**`AlignTo`** aliniază obiectul selectat la referința definită de opțiunea **Align To**:
 
-**`SetRefPoint...`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**.
+![Align Panel](img/alignto.png)
+
+**`ToggleAlignTo.jsx`** schimbă alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). **`ResetAlignTo.jsx`** o resetează la **Align to Selection**.
+
+**`SetRefPoint`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**:
+
+![Transform Panel](img/setrefpoint.png)
 
 **Notă:** Ambele seturi ar trebui alocate tastaturii numerice (v. [Shortcuts](#shortcuts)).
 
----
+### **Fitting**
 
-### **CleanupLabels**
-Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **`CleanupLabels.jsx`** șterge toate etichetele din document (dacă nu e selectat nimic) sau doar din elementele selectate.
+**`FitToPage`** redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 5%, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un *clipping frame* și acesta e redimensionat. **`FitToSpread`** fac același lucru pentru paginile grupate într‑un spread.
 
-### **CleanupSwatches**
-Convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula „C= M= Y= K=” și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
+**`FitTo...Forced.jsx`** redimensionează exact la dimensiunile respective.
 
-### **DocCleanup** și **DocDefaults**
+**Notă:** **`FitTo.jsx`** nu e gândit a fi rulat direct, ci e apelat intern de celelalte scripturi din serie.
+
+**`TextAutosize.jsx`** „strânge” chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
+
+| | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
+:---: | :---: | :---: | :---:
+![Vertical Justification Top](img/verticaljustification-T.png) | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
+![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
+![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
+
+Dacă textul are un singur rând, **Auto-Sizing Type** va fi setat *Height and width*. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width*.
+
+### **Scaling**
+
+Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar.
+
+**`ScaleToPageSize.jsx`** și **`ScaleToPageMargins.jsx`** scalează la dimensiunile paginii sau marginii. Variantele **`H`** (height) și **`W`** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
+
+### **Print**
+
+Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează layere alternative gen *visible*, *vizibil* pentru `safe area`, sau *diecut*, *die cut*, *cut lines*, *stanze* pentru `dielines`.
+
+**`PrepareForPrint.jsx`** ascunde layerul `safe area` și mută ștanțele și marcajele pentru alb și lac UV de pe `dielines` / `white` / `varnish` pe spreaduri separate.
+
+**`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Folosește swatch‑ul `Safe area`, care dacă nu există va fi creat cu valoarea „C=0 M=100 Y=0 K=0”.
+
+**`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează `safe area`.
+
+### **Setup**
+
 **`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%.
 
-**`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește niște fonturi (rulează **`ReplaceFonts.jsx`**), stabilește dimensiunea paginii și marginile (rulează **`PageSizeFromFilename.jsx`**).
+**`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește niște fonturi (rulează **`ReplaceFonts.jsx`**, vedeți mai jos), stabilește dimensiunea paginii și marginile (rulează **`PageSizeFromFilename.jsx`**).
 
 ![Culori](img/docdefaults-swatches.png) ![Layere](img/docdefaults-layers.png)
 
@@ -70,35 +102,12 @@ Ambele scripturi schimbă niște setări după preferințele mele.
 > **Type Options:** Apply Leading to Entire Paragraphs
 > </details>
 
-### **ReplaceFonts**
-Înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`ReplaceFonts.txt`**](../cleanup/ReplaceFonts.txt)). Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate.
+**`CleanupSwatches.jsx`** convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula „C= M= Y= K=” și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
-Puteți utiliza **`ShowFonts.jsx`** pentru a obține o listă a fonturilor pentru copy-paste în **`ReplaceFonts.txt`**.
+**`ReplaceFonts.jsx`** înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`ReplaceFonts.txt`**](../cleanup/ReplaceFonts.txt)). Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate. Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy-paste în **`ReplaceFonts.txt`**.
 
----
+**`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
-### **ClipTo...**
-Pentru a manipula unele obiecte poate fi uneori util să le inserăm temporar într‑un container (*clipping frame*).
-
-**`Clip.jsx`** inserează obiectele selectate într‑un *clipping frame* sau le restaurează dacă sunt deja inserate.
-
-**`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
-
-### **FitTo...**
-**`FitToPage...`** redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă „snap”, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un *clipping frame* și acesta e redimensionat. **`FitToSpread...`** fac același lucru pentru paginile grupate într‑un spread.
-
-**`FitTo...Forced.jsx`** redimensionează exact la dimensiunile respective.
-
-**Notă:** **`FitTo.jsx`** nu e gândit a fi rulat direct, ci e apelat intern de celelalte scripturi din serie.
-
-### **ScaleTo...**
-Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează proporțional, ca un bloc unitar.
-
-**`ScaleToPageSize.jsx`** și **`ScaleToPageMargins.jsx`** scalează la dimensiunile paginii sau marginii.
-
-Variantele **`H`** (height) și **`W`** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
-
-### **PageSize...**
 **`PageSizeFromFilename.jsx`** redimensionează paginile documentului în funcție de numele fișierului:
 
 Fișier | Dimensiune | Safe area | Bleed
@@ -115,67 +124,15 @@ Fișier | Dimensiune | Safe area | Bleed
 
 **`PageSizeFromSelection.jsx`** redimensionează pagina curentă la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
 
-**`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
+### **Misc**
 
-### **TextAutosize**
-„Strânge” chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
+**`CleanupLabels.jsx`**: uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. **`CleanupLabels.jsx`** șterge toate etichetele din document (dacă nu e selectat nimic) sau doar din elementele selectate.
 
-<!--
-| | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
-:---: | :---: | :---: | :---:
-![Vertical Justification Top](img/verticaljustification-T.png) | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
-![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
-![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
--->
+**`Clip.jsx`**: Pentru a manipula unele obiecte poate fi uneori util să le inserăm temporar într‑un container (*clipping frame*). **`Clip.jsx`** inserează obiectele selectate într‑un *clipping frame* sau le restaurează dacă sunt deja inserate. **`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
-<table>
-<thead>
-	<tr>
-		<th style="text-align:center"></th>
-		<th style="text-align:center"><img src="img/paragraphalign-L.png" alt="¶ Align left"></th>
-		<th style="text-align:center"><img src="img/paragraphalign-C.png" alt="¶ Align center"></th>
-		<th style="text-align:center"><img src="img/paragraphalign-R.png" alt="¶ Align right"></th>
-	</tr>
-</thead>
-<tbody>
-	<tr>
-		<th style="text-align:center"><img src="img/verticaljustification-T.png" alt="Vertical Justification Top"></th>
-		<td style="text-align:center"><img src="img/textautosize-TL.png" alt="top-left"></td>
-		<td style="text-align:center"><img src="img/textautosize-TC.png" alt="top-center"></td>
-		<td style="text-align:center"><img src="img/textautosize-TR.png" alt="top-right"></td>
-	</tr>
-	<tr>
-		<th style="text-align:center"><img src="img/verticaljustification-C.png" alt="Vertical Justification Center"></th>
-		<td style="text-align:center"><img src="img/textautosize-CL.png" alt="center-left"></td>
-		<td style="text-align:center"><img src="img/textautosize-C.png" alt="center"></td>
-		<td style="text-align:center"><img src="img/textautosize-CR.png" alt="center-right"></td>
-	</tr>
-	<tr>
-		<th style="text-align:center"><img src="img/verticaljustification-B.png" alt="Vertical Justification Bottom"></th>
-		<td style="text-align:center"><img src="img/textautosize-BL.png" alt="bottom-left"></td>
-		<td style="text-align:center"><img src="img/textautosize-BC.png" alt="bottom-center"></td>
-		<td style="text-align:center"><img src="img/textautosize-BR.png" alt="bottom-right"></td>
-	</tr>
-</tbody>
-</table>
+**`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus (util pentru mastere).
 
-Dacă textul are un singur rând, **Auto-Sizing Type** va fi setat *Height and width*. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width*.
-
----
-
-### **Print**
-Fac câteva pregătiri pentru export; pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează layere alternative gen *visible*, *vizibil* pentru `safe area`, sau *diecut*, *die cut*, *cut lines*, *stanze* pentru `dielines`.
-
-**`PrepareForPrint.jsx`** ascunde layerul `safe area` și mută ștanțele și marcajele pentru alb și lac UV de pe `dielines` / `white` / `varnish` pe spreaduri separate.
-
-**`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Folosește swatch‑ul `Safe area`, care dacă nu există va fi creat cu valoarea „C=0 M=100 Y=0 K=0”.
-
-**`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează `safe area`.
-
----
-
-### **QR**
-Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într‑un fișier separat. Are două moduri de operare:
+**`QR.jsx`** adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într‑un fișier separat. Are două moduri de operare:
 
 * **Manual:** Solicită codul și îl adaugă pe pagină (sau într‑un fișier separat).
 
@@ -188,37 +145,29 @@ Adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvea
 
 Puteți insera „|” pentru împărțirea manuală a textului în mai multe rânduri.
 
----
-
-### **ZoomToSelection**
-Asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
-
-* aduce selecția puțin mai aproape;
-* dacă cursorul e în text, face zoom la întreg cadrul;
-* fără nimic selectat face vizibil întreg spreadul.
-
----
-
-### Diverse
-**`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus (util pentru mastere).
-
 **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`ReplaceFonts.jsx`**).
 
 **`ShowProfiles.jsx`** afișează toate profilele de culori disponibile (util când *credeți* că aveți instalat un profil de culoare).
 
 **`ShowProperties.jsx`** afișează proprietățile și metodele unui obiect selectat (util pentru depanare).
 
+**`ZoomToSelection.jsx`** e asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
+
+* aduce selecția puțin mai aproape;
+* dacă cursorul e în text, face zoom la întreg cadrul;
+* fără nimic selectat face vizibil întreg spreadul.
+
 ## Shortcut‑uri
 
 Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplăcută, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu‑i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**:
 
-| Align                   |       | Proxy                   |       | Fit/Scale                        |       | Cleanup                   |      |
+| Alignment               |       | Proxy                   |       | Fitting/Scale                    |       | Setup                     |      |
 | :---------------------- | ----: | :---------------------- | ----: | :------------------------------- | ----: | :------------------------ | ---: |
 | **`AlignToTL.jsx`**     |  Num7 | **`SetRefPointTL.jsx`** | ⌃Num7 | **`FitToPage.jsx`**              |   F11 | **`DocCleanup.jsx`**      |   F2 |
 | **`AlignToL.jsx`**      |  Num4 | **`SetRefPointL.jsx`**  | ⌃Num4 | **`FitToPageMargins.jsx`**       |  ⌥F11 | **`DocDefaults.jsx`**     |  ⌥F2 |
 | **`AlignToBL.jsx`**     |  Num1 | **`SetRefPointBL.jsx`** | ⌃Num1 | **`FitToPageBleed.jsx`**         |  ⇧F11 | **`CleanupSwatches.jsx`** |  ⇧F2 |
 | **`AlignToT.jsx`**      |  Num8 | **`SetRefPointT.jsx`**  | ⌃Num8 | **`FitToPageBleedForced.jsx`**   | ⇧⌘F11 |                           |
-| **`AlignToC.jsx`**      |  Num5 | **`SetRefPointC.jsx`**  | ⌃Num5 | **`FitToSpread.jsx`**            |   F12 | **Other**                 |
+| **`AlignToC.jsx`**      |  Num5 | **`SetRefPointC.jsx`**  | ⌃Num5 | **`FitToSpread.jsx`**            |   F12 | **Misc**                  |
 | **`AlignToB.jsx`**      |  Num2 | **`SetRefPointB.jsx`**  | ⌃Num2 | **`FitToSpreadMargins.jsx`**     |  ⌥F12 | **`Clip.jsx`**            | Num* |
 | **`AlignToTR.jsx`**     |  Num9 | **`SetRefPointTR.jsx`** | ⌃Num9 | **`FitToSpreadBleed.jsx`**       |  ⇧F12 | **`QR.jsx`**              |   F9 |
 | **`AlignToR.jsx`**      |  Num6 | **`SetRefPointR.jsx`**  | ⌃Num6 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12 | **`ZoomToSelection.jsx`** |   F4 |
@@ -238,4 +187,4 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți un e‑mail la Paul Chiorean \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 25 octombrie 2020
+README-ro.md • 1 noiembrie 2020
