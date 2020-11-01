@@ -4,7 +4,7 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 ## Descriere
 
-### **Alignment / Proxy**
+### **Alignment/Proxy**
 
 **`AlignTo`** aliniază obiectul selectat la referința definită de opțiunea **Align To**:
 
@@ -46,7 +46,7 @@ Acestea lucrează, de asemenea, cu unul sau mai multe obiecte, dar le scalează 
 
 Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează layere alternative gen *visible*, *vizibil* pentru `safe area`, sau *diecut*, *die cut*, *cut lines*, *stanze* pentru `dielines`.
 
-**`PrepareForPrint.jsx`** ascunde layerul `safe area` și mută ștanțele și marcajele pentru alb și lac UV de pe `dielines` / `white` / `varnish` pe spreaduri separate.
+**`PrepareForPrint.jsx`** ascunde layerul `safe area` și mută ștanțele și marcajele pentru alb și lac UV de pe `dielines`/`white`/`varnish` pe spreaduri separate.
 
 **`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Folosește swatch‑ul `Safe area`, care dacă nu există va fi creat cu valoarea „C=0 M=100 Y=0 K=0”.
 
@@ -104,7 +104,7 @@ Ambele scripturi schimbă niște setări după preferințele mele.
 
 **`CleanupSwatches.jsx`** convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula „C= M= Y= K=” și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
-**`ReplaceFonts.jsx`** înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`ReplaceFonts.txt`**](../cleanup/ReplaceFonts.txt)). Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate. Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy-paste în **`ReplaceFonts.txt`**.
+**`ReplaceFonts.jsx`** înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`ReplaceFonts.txt`**](../setup/ReplaceFonts.txt)). Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate. Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy-paste în **`ReplaceFonts.txt`**.
 
 **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
@@ -136,7 +136,7 @@ Fișier | Dimensiune | Safe area | Bleed
 
 * **Manual:** Solicită codul și îl adaugă pe pagină (sau într‑un fișier separat).
 
-* **Batch:** Dacă în același folder există un fișier numit **`QR.txt`**, scriptul va genera fișiere QR cu numele și codurile din acesta. Trebuie să fie un TSV *(tab-separated values)*; prima coloană e numele fișierului QR, a doua codul. Prima linie (antetul) e ignorată:
+* **Batch:** Dacă în același folder există un fișier numit **`QR.txt`**, scriptul va genera fișiere QR cu numele și codurile din acesta. Trebuie să fie un TSV *(tab-separated values)*; prima coloană e numele fișierului QR, a doua codul. Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate:
 
   Fișier QR | Cod QR
   :--- | :---

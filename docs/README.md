@@ -4,7 +4,7 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 ## Description
 
-### **Alignment / Proxy**
+### **Alignment/Proxy**
 
 **`AlignTo`** scripts align the selected object(s) to the reference defined by the **Align To** option:
 
@@ -46,7 +46,7 @@ These also work with one or more objects, but scale them proportionally, as a bl
 
 Make several preparations for export and can be used with [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). The scripts detect alternative layers like *visible*, *vizibil* for `safe area`, or *diecut*, *die cut*, *cut lines*, *stanze* for `dielines`.
 
-**`PrepareForPrint.jsx`** hides the `safe area` layer and moves the dielines, white and UV markings from `dielines` / `white` / `varnish` to separate spreads.
+**`PrepareForPrint.jsx`** hides the `safe area` layer and moves the dielines, white and UV markings from `dielines`/`white`/`varnish` to separate spreads.
 
 **`SafeArea.jsx`** creates a frame the size of the page margins on the `safe area` layer. It uses the `Safe area` swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
 
@@ -104,7 +104,7 @@ Both scripts change some settings according to my preferences.
 
 **`CleanupSwatches.jsx`** converts RGB process swatches to CMYK, removes duplicates, renames them to "C= M= Y= K=" form, and deletes unused ones. Spot colors remain unchanged.
 
-**`ReplaceFonts.jsx`** replaces fonts from a substitution list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([**`ReplaceFonts.txt`**](../cleanup/ReplaceFonts.txt)). The first line (the header) and lines beginning with ";" are ignored. You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy-pasting in **`ReplaceFonts.txt`**.
+**`ReplaceFonts.jsx`** replaces fonts from a substitution list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([**`ReplaceFonts.txt`**](../setup/ReplaceFonts.txt)). The first line (the header) and lines beginning with ";" are ignored. You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy-pasting in **`ReplaceFonts.txt`**.
 
 **`PageMarginsFromSelection.jsx`** sets the page margins to the selected objects.
 
@@ -126,7 +126,7 @@ Filename | Total size | Safe area | Bleed
 
 ### **Misc**
 
-**`CleanupLabels.jsx`**: sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. **`CleanupLabels.jsx`** deletes all labels from the document (if nothing is selected), or only from the selected items.
+**`CleanupLabels.jsx`**: sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. **`CleanupLabels.jsx`** deletes all labels from the document (if nothing is selected), or from the selected items.
 
 **`Clip.jsx`**: To manipulate some objects it can sometimes be useful to temporarily insert them into a container (clipping frame). **`Clip.jsx`** embeds selected objects in a clipping frame or restores them if already clipped. **`ClipUndo.jsx`** restores one or several clipped objects at once.
 
@@ -136,7 +136,7 @@ Filename | Total size | Safe area | Bleed
 
 * **Manually:** It prompts for the QR text and adds the code on the page (or in a separate file).
 
-* **Batch:** If a file named **`QR.txt`** is found in the same folder, the script will generate QR files with the names and codes from it. This must be a 2 column TSV *(tab-separated values)* file; the first column is the QR filename, the second the code. The first line (the header) is ignored:
+* **Batch:** If a file named **`QR.txt`** is found in the same folder, the script will generate QR files with the names and codes from it. This must be a 2 column TSV *(tab-separated values)* file; the first column is the QR filename, the second the code. The first line (the header) and lines beginning with ";" are ignored:
 
   QR Filename | QR Code
   :--- | :---

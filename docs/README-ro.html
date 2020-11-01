@@ -26,7 +26,7 @@ line-height: 1.6;
 <h1 id="indentz">Indentz</h1>
 <p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (o sugestie de configurare găsiți în secțiunea <a href="#shortcuts">Shortcuts</a>). Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
 <h2 id="descriere">Descriere</h2>
-<h3 id="alignment"><strong>Alignment / Proxy</strong></h3>
+<h3 id="alignment"><strong>Alignment/Proxy</strong></h3>
 <p><strong><code>AlignTo</code></strong> aliniază obiectul selectat la referința definită de opțiunea <strong>Align To</strong>:</p>
 <p><img src="img/alignto.png" alt="Align Panel"></p>
 <p><strong><code>ToggleAlignTo.jsx</code></strong> schimbă alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). <strong><code>ResetAlignTo.jsx</code></strong> o resetează la <strong>Align to Selection</strong>.</p>
@@ -34,10 +34,10 @@ line-height: 1.6;
 <p><img src="img/setrefpoint.png" alt="Transform Panel"></p>
 <p><strong>Notă:</strong> Ambele seturi ar trebui alocate tastaturii numerice (v. <a href="#shortcuts">Shortcuts</a>).</p>
 <h3 id="fitting"><strong>Fitting</strong></h3>
-<p><strong><code>FitToPage</code></strong> redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 5%, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un <em>clipping frame</em> și acesta e redimensionat. <strong><code>FitToSpread</code></strong> fac același lucru pentru paginile grupate într‑un spread.</p>
+<p><strong><code>FitToPage</code></strong> redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă &ldquor;snap&rdquor; de 5%, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un <em>clipping frame</em> și acesta e redimensionat. <strong><code>FitToSpread</code></strong> fac același lucru pentru paginile grupate într‑un spread.</p>
 <p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la dimensiunile respective.</p>
 <p><strong>Notă:</strong> <strong><code>FitTo.jsx</code></strong> nu e gândit a fi rulat direct, ci e apelat intern de celelalte scripturi din serie.</p>
-<p><strong><code>TextAutosize.jsx</code></strong> „strânge” chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând <strong>Paragraph Alignment</strong> pentru axa orizontală și <strong>Text Frame Options &gt; Vertical Justification</strong> pentru axa verticală:</p>
+<p><strong><code>TextAutosize.jsx</code></strong> &ldquor;strânge&rdquor; chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând <strong>Paragraph Alignment</strong> pentru axa orizontală și <strong>Text Frame Options &gt; Vertical Justification</strong> pentru axa verticală:</p>
 <table>
 <thead>
 <tr>
@@ -74,8 +74,8 @@ line-height: 1.6;
 <p><strong><code>ScaleToPageSize.jsx</code></strong> și <strong><code>ScaleToPageMargins.jsx</code></strong> scalează la dimensiunile paginii sau marginii. Variantele <strong><code>H</code></strong> (height) și <strong><code>W</code></strong> (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.</p>
 <h3 id="print"><strong>Print</strong></h3>
 <p>Fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează layere alternative gen <em>visible</em>, <em>vizibil</em> pentru <code>safe area</code>, sau <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> pentru <code>dielines</code>.</p>
-<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde layerul <code>safe area</code> și mută ștanțele și marcajele pentru alb și lac UV de pe <code>dielines</code> / <code>white</code> / <code>varnish</code> pe spreaduri separate.</p>
-<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe layerul <code>safe area</code>. Folosește swatch‑ul <code>Safe area</code>, care dacă nu există va fi creat cu valoarea „C=0 M=100 Y=0 K=0”.</p>
+<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde layerul <code>safe area</code> și mută ștanțele și marcajele pentru alb și lac UV de pe <code>dielines</code>/<code>white</code>/<code>varnish</code> pe spreaduri separate.</p>
+<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe layerul <code>safe area</code>. Folosește swatch‑ul <code>Safe area</code>, care dacă nu există va fi creat cu valoarea &ldquor;C=0 M=100 Y=0 K=0&rdquor;.</p>
 <p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <code>safe area</code>.</p>
 <h3 id="setup"><strong>Setup</strong></h3>
 <p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%.</p>
@@ -155,8 +155,8 @@ line-height: 1.6;
 <strong>Type Options:</strong> Apply Leading to Entire Paragraphs</p>
 </details>
 </blockquote>
-<p><strong><code>CleanupSwatches.jsx</code></strong> convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula „C= M= Y= K=” și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
-<p><strong><code>ReplaceFonts.jsx</code></strong> înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV <em>(tab-separated values)</em> cu 4 coloane, cu același nume ca scriptul (<a href="../cleanup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>). Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate. Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy-paste în <strong><code>ReplaceFonts.txt</code></strong>.</p>
+<p><strong><code>CleanupSwatches.jsx</code></strong> convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula &ldquor;C= M= Y= K=&rdquor; și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV <em>(tab-separated values)</em> cu 4 coloane, cu același nume ca scriptul (<a href="../setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>). Prima linie (capul de tabel) și liniile care încep cu &ldquor;;&rdquor; sunt ignorate. Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy-paste în <strong><code>ReplaceFonts.txt</code></strong>.</p>
 <p><strong><code>PageMarginsFromSelection.jsx</code></strong> setează marginile paginii la dimensiunile selecției.</p>
 <p><strong><code>PageSizeFromFilename.jsx</code></strong> redimensionează paginile documentului în funcție de numele fișierului:</p>
 <table>
@@ -185,7 +185,7 @@ line-height: 1.6;
 </table>
 <blockquote>
 <details><summary>Detalii</summary>
-<p>Caută în numele fișierului perechi de numere de genul „000x000” (unde „000” înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de „mm” sau „cm”). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. „000x000_000x000”), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.</p>
+<p>Caută în numele fișierului perechi de numere de genul &ldquor;000x000&rdquor; (unde &ldquor;000&rdquor; înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de &ldquor;mm&rdquor; sau &ldquor;cm&rdquor;). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. &ldquor;000x000_000x000&rdquor;), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.</p>
 </details>
 </blockquote>
 <p><strong><code>PageSizeFromMargins.jsx</code></strong> redimensionează fiecare pagină la marginile acesteia.</p>
@@ -200,7 +200,7 @@ line-height: 1.6;
 <p><strong>Manual:</strong> Solicită codul și îl adaugă pe pagină (sau într‑un fișier separat).</p>
 </li>
 <li>
-<p><strong>Batch:</strong> Dacă în același folder există un fișier numit <strong><code>QR.txt</code></strong>, scriptul va genera fișiere QR cu numele și codurile din acesta. Trebuie să fie un TSV <em>(tab-separated values)</em>; prima coloană e numele fișierului QR, a doua codul. Prima linie (antetul) e ignorată:</p>
+<p><strong>Batch:</strong> Dacă în același folder există un fișier numit <strong><code>QR.txt</code></strong>, scriptul va genera fișiere QR cu numele și codurile din acesta. Trebuie să fie un TSV <em>(tab-separated values)</em>; prima coloană e numele fișierului QR, a doua codul. Prima linie (capul de tabel) și liniile care încep cu &ldquor;;&rdquor; sunt ignorate:</p>
 <table>
 <thead>
 <tr>
@@ -221,7 +221,7 @@ line-height: 1.6;
 </table>
 </li>
 </ul>
-<p>Puteți insera „|” pentru împărțirea manuală a textului în mai multe rânduri.</p>
+<p>Puteți insera &ldquor;|&rdquor; pentru împărțirea manuală a textului în mai multe rânduri.</p>
 <p><strong><code>ShowFonts.jsx</code></strong> afișează toate fonturile utilizate în documentul curent (util pentru <strong><code>ReplaceFonts.jsx</code></strong>).</p>
 <p><strong><code>ShowProfiles.jsx</code></strong> afișează toate profilele de culori disponibile (util când <em>credeți</em> că aveți instalat un profil de culoare).</p>
 <p><strong><code>ShowProperties.jsx</code></strong> afișează proprietățile și metodele unui obiect selectat (util pentru depanare).</p>
