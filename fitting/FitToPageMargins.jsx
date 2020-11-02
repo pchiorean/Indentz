@@ -1,13 +1,16 @@
 /*
-	Fit to page margins stub v1.0.0
-	© October 2020, Paul Chiorean
+	Fit to page margins stub v1.1.0
+	© November 2020, Paul Chiorean
 	Resizes the selected objects to the page margins.
 */
 
-try {
-	app.doScript(
-		File(app.activeScript.path + "/FitTo.jsx"), ScriptLanguage.javascript,
-		["page", "margins", false], // Arguments: SCOPE, TARGET, FORCED
-		UndoModes.FAST_ENTIRE_SCRIPT, "Resize to page margins"
-	);
-} catch (_) {};
+//@include "FitTo.jsxinc";
+
+var SCOPE = "page";
+var TARGET = "margins";
+var FORCED = false;
+
+app.doScript(
+	main, ScriptLanguage.javascript, undefined,
+	UndoModes.ENTIRE_SCRIPT, "Resize to page margins"
+);

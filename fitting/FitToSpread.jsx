@@ -1,13 +1,16 @@
 /*
-	Fit to spread stub v1.0.0
-	© October 2020, Paul Chiorean
+	Fit to spread stub v1.1.0
+	© November 2020, Paul Chiorean
 	Resizes the selected objects to the spread size.
 */
 
-try {
-	app.doScript(
-		File(app.activeScript.path + "/FitTo.jsx"), ScriptLanguage.javascript,
-		["spread", null, false], // Arguments: SCOPE, TARGET, FORCED
-		UndoModes.FAST_ENTIRE_SCRIPT, "Resize to spread"
-	);
-} catch (_) {};
+//@include "FitTo.jsxinc";
+
+var SCOPE = "spread";
+var TARGET = null;
+var FORCED = false;
+
+app.doScript(
+	main, ScriptLanguage.javascript, undefined,
+	UndoModes.ENTIRE_SCRIPT, "Resize to spread"
+);
