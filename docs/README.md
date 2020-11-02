@@ -6,11 +6,11 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 ### **Alignment/Proxy**
 
-**`AlignTo`** scripts align the selected object(s) to the reference defined by the **Align To** option:
+**`AlignTo`** scripts align the selected object(s) to the **Align To** setting:
 
 ![Align Panel](img/alignto.png)
 
-**`ToggleAlignTo.jsx`** toggles the alignment to the item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to **Align to Selection**.
+**`ToggleAlignTo.jsx`** toggles the alignment between item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to **Align to Selection**.
 
 **`SetRefPoint`** scripts change the reference point used for transformations (like clicking the little proxy squares in the **Transform** palette):
 
@@ -23,8 +23,6 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 **`FitToPage`** scripts resize the selected object(s), without scaling them: if the object is larger than the page/margins/bleed, it will be reduced; if it is smaller but inside a 5% "snap" area, it will be enlarged. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. **`FitToSpread`** do the same for pages grouped in a spread.
 
 **`FitTo...Forced.jsx`** resize exactly to the named dimensions.
-
-**Note:** **`FitTo.jsx`** is not meant to be run directly, but it's called internally by the other scripts in the series.
 
 **`TextAutosize.jsx`** fits the frame to the text and sets it to auto-size. You control the auto-sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
 
@@ -130,28 +128,28 @@ Filename | Total size | Safe area | Bleed
 
 **`Clip.jsx`**: To manipulate some objects it can sometimes be useful to temporarily insert them into a container (clipping frame). **`Clip.jsx`** embeds selected objects in a clipping frame or restores them if already clipped. **`ClipUndo.jsx`** restores one or several clipped objects at once.
 
-**`PageRatios.jsx`** calculates the ratio of each page and displays it in the upper left corner (useful for masters).
+**`PageRatios.jsx`** calculates the ratio of each page and displays it in the upper left corner.
 
 **`QR.jsx`** adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes:
 
 * **Manually:** It prompts for the QR text and adds the code on the page (or in a separate file).
 
-* **Batch:** If a file named **`QR.txt`** is found in the same folder, the script will generate QR files with the names and codes from it. This must be a 2 column TSV *(tab-separated values)* file; the first column is the QR filename, the second the code. The first line (the header) and lines beginning with ";" are ignored:
+* **Batch:** If a file named **`QR.txt`** is found in the same folder, the script will generate QR files with the data from it. This must be a 2 column TSV *(tab-separated values)* file; the first column is the QR filename, the second the code. The first line (the header) and lines beginning with ";" are ignored:
 
   QR Filename | QR Code
   :--- | :---
   **Filename1_1400x400_700x137_10mm_QR.indd** | FILE1 1400x400_700x137
   **Filename2_597x517_577x500.5_3mm V4_QR.indd** | FILE2 597x517_577x500.5 V4
 
-You can use "|" for manually splitting the text into several lines.
+**Note:** You can use "|" for manually splitting the text into several lines.
 
 **`ShowFonts.jsx`** shows all fonts used in the current document (useful with **`ReplaceFonts.jsx`**).
 
-**`ShowProfiles.jsx`** shows all color profiles available to InDesign (when you *think* you have a color profile installed).
+**`ShowProfiles.jsx`** shows all color profiles available to InDesign (for when you *think* you have a color profile installed).
 
 **`ShowProperties.jsx`** shows properties and methods of a selected object (useful for debugging).
 
-**`ZoomToSelection.jsx`** is similar to **Fit Selection in Window** (⌥⌘=), but with some improvements:
+**`ZoomToSelection.jsx`** resembles **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
 * brings the selection a little closer;
 * if the cursor is in the text, zooms on the whole frame;
@@ -159,7 +157,7 @@ You can use "|" for manually splitting the text into several lines.
 
 ## Shortcuts
 
-Running a frequently used script from the **Scripts** panel is quite annoying, since every time you have to locate it, then double-click the script. You can make the process instantaneous by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts**:
+Running a frequently used script from the **Scripts** panel is quite annoying. You can make the process instantaneous by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts**:
 
 | Alignment               |       | Proxy                   |       | Fitting/Scale                    |       | Setup                     |      |
 | :---------------------- | ----: | :---------------------- | ----: | :------------------------------- | ----: | :------------------------ | ---: |
@@ -187,4 +185,4 @@ Running a frequently used script from the **Scripts** panel is quite annoying, s
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send an e-mail to Paul Chiorean \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • November 1, 2020
+README.md • November 2, 2020

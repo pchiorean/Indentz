@@ -27,16 +27,15 @@ line-height: 1.6;
 <p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (o sugestie de configurare găsiți în secțiunea <a href="#shortcuts">Shortcuts</a>). Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
 <h2 id="descriere">Descriere</h2>
 <h3 id="alignment"><strong>Alignment/Proxy</strong></h3>
-<p><strong><code>AlignTo</code></strong> aliniază obiectul selectat la referința definită de opțiunea <strong>Align To</strong>:</p>
+<p><strong><code>AlignTo</code></strong> aliniază obiectele selectate la referința setării <strong>Align To</strong>:</p>
 <p><img src="img/alignto.png" alt="Align Panel"></p>
-<p><strong><code>ToggleAlignTo.jsx</code></strong> schimbă alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). <strong><code>ResetAlignTo.jsx</code></strong> o resetează la <strong>Align to Selection</strong>.</p>
+<p><strong><code>ToggleAlignTo.jsx</code></strong> comută alinierea între obiect, margini, pagină sau spread (rulați scriptul în mod repetat). <strong><code>ResetAlignTo.jsx</code></strong> o resetează la <strong>Align to Selection</strong>.</p>
 <p><strong><code>SetRefPoint</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta <strong>Transform</strong>:</p>
 <p><img src="img/setrefpoint.png" alt="Transform Panel"></p>
 <p><strong>Notă:</strong> Ambele seturi ar trebui alocate tastaturii numerice (v. <a href="#shortcuts">Shortcuts</a>).</p>
 <h3 id="fitting"><strong>Fitting</strong></h3>
 <p><strong><code>FitToPage</code></strong> redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă &ldquor;snap&rdquor; de 5%, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un <em>clipping frame</em> și acesta e redimensionat. <strong><code>FitToSpread</code></strong> fac același lucru pentru paginile grupate într‑un spread.</p>
 <p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la dimensiunile respective.</p>
-<p><strong>Notă:</strong> <strong><code>FitTo.jsx</code></strong> nu e gândit a fi rulat direct, ci e apelat intern de celelalte scripturi din serie.</p>
 <p><strong><code>TextAutosize.jsx</code></strong> &ldquor;strânge&rdquor; chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând <strong>Paragraph Alignment</strong> pentru axa orizontală și <strong>Text Frame Options &gt; Vertical Justification</strong> pentru axa verticală:</p>
 <table>
 <thead>
@@ -193,14 +192,14 @@ line-height: 1.6;
 <h3 id="misc"><strong>Misc</strong></h3>
 <p><strong><code>CleanupLabels.jsx</code></strong>: uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. <strong><code>CleanupLabels.jsx</code></strong> șterge toate etichetele din document (dacă nu e selectat nimic) sau doar din elementele selectate.</p>
 <p><strong><code>Clip.jsx</code></strong>: Pentru a manipula unele obiecte poate fi uneori util să le inserăm temporar într‑un container (<em>clipping frame</em>). <strong><code>Clip.jsx</code></strong> inserează obiectele selectate într‑un <em>clipping frame</em> sau le restaurează dacă sunt deja inserate. <strong><code>ClipUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
-<p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus (util pentru mastere).</p>
+<p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus.</p>
 <p><strong><code>QR.jsx</code></strong> adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într‑un fișier separat. Are două moduri de operare:</p>
 <ul>
 <li>
 <p><strong>Manual:</strong> Solicită codul și îl adaugă pe pagină (sau într‑un fișier separat).</p>
 </li>
 <li>
-<p><strong>Batch:</strong> Dacă în același folder există un fișier numit <strong><code>QR.txt</code></strong>, scriptul va genera fișiere QR cu numele și codurile din acesta. Trebuie să fie un TSV <em>(tab-separated values)</em>; prima coloană e numele fișierului QR, a doua codul. Prima linie (capul de tabel) și liniile care încep cu &ldquor;;&rdquor; sunt ignorate:</p>
+<p><strong>Batch:</strong> Dacă în același folder există un fișier numit <strong><code>QR.txt</code></strong>, scriptul va genera fișiere QR cu datele din acesta. Trebuie să fie un TSV <em>(tab-separated values)</em>; prima coloană e numele fișierului QR, a doua codul. Prima linie (capul de tabel) și liniile care încep cu &ldquor;;&rdquor; sunt ignorate:</p>
 <table>
 <thead>
 <tr>
@@ -221,7 +220,7 @@ line-height: 1.6;
 </table>
 </li>
 </ul>
-<p>Puteți insera &ldquor;|&rdquor; pentru împărțirea manuală a textului în mai multe rânduri.</p>
+<p><strong>Notă:</strong> Puteți insera &ldquor;|&rdquor; pentru împărțirea manuală a textului în mai multe rânduri.</p>
 <p><strong><code>ShowFonts.jsx</code></strong> afișează toate fonturile utilizate în documentul curent (util pentru <strong><code>ReplaceFonts.jsx</code></strong>).</p>
 <p><strong><code>ShowProfiles.jsx</code></strong> afișează toate profilele de culori disponibile (util când <em>credeți</em> că aveți instalat un profil de culoare).</p>
 <p><strong><code>ShowProperties.jsx</code></strong> afișează proprietățile și metodele unui obiect selectat (util pentru depanare).</p>
@@ -232,7 +231,7 @@ line-height: 1.6;
 <li>fără nimic selectat face vizibil întreg spreadul.</li>
 </ul>
 <h2 id="shortcuturi">Shortcut‑uri</h2>
-<p>Rularea unui script folosit frecvent din panoul <strong>Scripts</strong> este destul de neplăcută, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu‑i o scurtătură din <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>:</p>
+<p>Rularea unui script folosit frecvent din panoul <strong>Scripts</strong> este destul de neplăcută. Puteți face asta instantaneu, atribuindu‑i o scurtătură din <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>:</p>
 <table>
 <thead>
 <tr>
@@ -368,7 +367,7 @@ line-height: 1.6;
 <h2 id="licență">Licență</h2>
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington și alții. -->
 <p>Codul este publicat sub licența MIT (<a href="../LICENSE.txt">LICENSE.txt</a>). Trimiteți un e‑mail la Paul Chiorean &lt;jpeg AT basement.ro&gt; sau <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
-<p>README-ro.md • 1 noiembrie 2020</p>
+<p>README-ro.md • 2 noiembrie 2020</p>
 
 </body>
 </html>

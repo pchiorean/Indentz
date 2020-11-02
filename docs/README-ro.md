@@ -6,11 +6,11 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 ### **Alignment/Proxy**
 
-**`AlignTo`** aliniază obiectul selectat la referința definită de opțiunea **Align To**:
+**`AlignTo`** aliniază obiectele selectate la referința setării **Align To**:
 
 ![Align Panel](img/alignto.png)
 
-**`ToggleAlignTo.jsx`** schimbă alinierea la obiect, margini, pagină sau spread (rulați scriptul în mod repetat). **`ResetAlignTo.jsx`** o resetează la **Align to Selection**.
+**`ToggleAlignTo.jsx`** comută alinierea între obiect, margini, pagină sau spread (rulați scriptul în mod repetat). **`ResetAlignTo.jsx`** o resetează la **Align to Selection**.
 
 **`SetRefPoint`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**:
 
@@ -23,8 +23,6 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 **`FitToPage`** redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 5%, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un *clipping frame* și acesta e redimensionat. **`FitToSpread`** fac același lucru pentru paginile grupate într‑un spread.
 
 **`FitTo...Forced.jsx`** redimensionează exact la dimensiunile respective.
-
-**Notă:** **`FitTo.jsx`** nu e gândit a fi rulat direct, ci e apelat intern de celelalte scripturi din serie.
 
 **`TextAutosize.jsx`** „strânge” chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
 
@@ -130,20 +128,20 @@ Fișier | Dimensiune | Safe area | Bleed
 
 **`Clip.jsx`**: Pentru a manipula unele obiecte poate fi uneori util să le inserăm temporar într‑un container (*clipping frame*). **`Clip.jsx`** inserează obiectele selectate într‑un *clipping frame* sau le restaurează dacă sunt deja inserate. **`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
-**`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus (util pentru mastere).
+**`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus.
 
 **`QR.jsx`** adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într‑un fișier separat. Are două moduri de operare:
 
 * **Manual:** Solicită codul și îl adaugă pe pagină (sau într‑un fișier separat).
 
-* **Batch:** Dacă în același folder există un fișier numit **`QR.txt`**, scriptul va genera fișiere QR cu numele și codurile din acesta. Trebuie să fie un TSV *(tab-separated values)*; prima coloană e numele fișierului QR, a doua codul. Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate:
+* **Batch:** Dacă în același folder există un fișier numit **`QR.txt`**, scriptul va genera fișiere QR cu datele din acesta. Trebuie să fie un TSV *(tab-separated values)*; prima coloană e numele fișierului QR, a doua codul. Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate:
 
   Fișier QR | Cod QR
   :--- | :---
   **Filename1_1400x400_700x137_10mm_QR.indd** | FILE1 1400x400_700x137
   **Filename2_597x517_577x500.5_3mm V4_QR.indd** | FILE2 597x517_577x500.5 V4
 
-Puteți insera „|” pentru împărțirea manuală a textului în mai multe rânduri.
+**Notă:** Puteți insera „|” pentru împărțirea manuală a textului în mai multe rânduri.
 
 **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`ReplaceFonts.jsx`**).
 
@@ -159,7 +157,7 @@ Puteți insera „|” pentru împărțirea manuală a textului în mai multe r�
 
 ## Shortcut‑uri
 
-Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplăcută, deoarece trebuie de fiecare dată să îl găsiți, apoi să faceți dublu clic pe el. Puteți face asta instantaneu, atribuindu‑i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**:
+Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplăcută. Puteți face asta instantaneu, atribuindu‑i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**:
 
 | Alignment               |       | Proxy                   |       | Fitting/Scale                    |       | Setup                     |      |
 | :---------------------- | ----: | :---------------------- | ----: | :------------------------------- | ----: | :------------------------ | ---: |
@@ -187,4 +185,4 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți un e‑mail la Paul Chiorean \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 1 noiembrie 2020
+README-ro.md • 2 noiembrie 2020
