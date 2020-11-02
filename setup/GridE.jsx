@@ -1,6 +1,6 @@
 /*
-	E grid 1.4.0
-	© October 2020, Paul Chiorean
+	E grid 1.5.0
+	© November 2020, Paul Chiorean
 */
 
 if (app.documents.length == 0) exit();
@@ -11,6 +11,11 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 
 
 function main() {
+	doc.activeLayer = doc.layers.item(0);
+	try { doc.layers.add({ name: "guides", layerColor: UIColors.MAGENTA }) } catch (_) {};
+	try { doc.layers.itemByName("guides").visible = true } catch (_) {};
+	try { doc.layers.itemByName("guides").locked = false } catch (_) {};
+
 	for (var i = 0; i < doc.pages.length; i++) {
 		if ((doc.pages[i].marginPreferences.columnCount == 6 ||
 			doc.pages[i].marginPreferences.columnCount == 12) &&
@@ -38,6 +43,12 @@ function main() {
 				// Half margins for XL formats
 				var kTB = (size.width / size.height >= 2.5) ? 0.5 : 1;
 				var kLR = 1;
+				// Add a horizontal middle guide
+				doc.pages[i].guides.add(undefined, {
+					itemLayer: "guides", guideColor: UIColors.GREEN,
+					orientation: HorizontalOrVertical.horizontal,
+					location: (doc.pages[i].bounds[2] - 
+					doc.pages[i].bounds[0]) * 0.9 / 2 });
 				break;
 		}
 		// Set margins
