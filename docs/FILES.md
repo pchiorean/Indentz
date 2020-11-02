@@ -60,7 +60,7 @@ Name                               |   Fn  | Description
 **`PageSizeFromSelection.jsx`**    |       | Sets the page size to the selected objects bounds
 **Miscellaneous**                          |
 **`Clip.jsx`**                     |  Num* | Clip selected objects in a '\<clip frame\>', or restores them
-**`ClipUndo.jsx`**                 |       | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
+**`ClipUndo.jsx`**                 | ⌃Num* | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
 **`CleanupLabels.jsx`**            |       | Removes all labels from the document
 **`PageRatios.jsx`**               |       | Calculates the ratio of each page and displays it in the upper left corner
 **`QR.jsx`**                       |    F9 | Adds a QR code to the current document or to a separate file
