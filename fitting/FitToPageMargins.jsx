@@ -1,14 +1,15 @@
 /*
-	Fit to page margins stub v1.1.0
+	Fit to page margins stub v1.1.1
 	© November 2020, Paul Chiorean
 	Resizes the selected objects to the page margins.
 */
 
 //@include "FitTo.jsxinc";
 
-var SCOPE = "page";
-var TARGET = "margins";
-var FORCED = false;
+// We use global variables instead of passing arguments to doScript
+var SCOPE = "page"; // "page" or "spread"
+var TARGET = "margins"; // null or "bleed" or "margins"
+var FORCED = false; // false or true
 
 app.doScript(
 	main, ScriptLanguage.javascript, undefined,
