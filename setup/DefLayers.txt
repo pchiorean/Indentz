@@ -1,0 +1,14 @@
+Name	Color	Visible	Printable	Order	Variants
+safe area	Yellow	FALSE	TRUE	top	rahmen, vis. area, visible area, visible, vizibil
+dielines	Red	FALSE	TRUE	top	cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanze 1, stanzform
+varnish	Yellow	FALSE	TRUE	top	uv
+white	Cute Teal	FALSE	TRUE	top	
+guides	Magenta	FALSE	FALSE	top	
+info	Cyan	FALSE	TRUE	top	info copy, ratio
+HW	Light Gray	FALSE	TRUE	top	hw logo, logo hw, wh, whw
+disclaimer	Gray	FALSE	TRUE	top	
+text and logos	Green	FALSE	TRUE	top	copy, text, textes, txt, type
+products	Blue	FALSE	TRUE	top	product, tins
+artwork	Light Blue	FALSE	TRUE	top	aw, elemente, layout, layouts
+bg	Red	FALSE	TRUE	bottom	background, hg, hintergrund
+.template	Black	FALSE	FALSE	bottom	template
