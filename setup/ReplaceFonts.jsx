@@ -5,8 +5,8 @@
 
 	The list is a 4-column TSV file with the same name as the script
 	and the following format:
-	Old Name<tab>Style<tab>New Name<tab>Style (header)
-	Arial<tab>Regular<tab>Helvetica Neue<tab>Regular
+	Old Name | Style | New Name | Style (header, ignored)
+	Arial | Regular | Helvetica Neue | Regular
 	...
 	You can use ShowFonts.jsx to get a tab delimited list of fonts.
 */
