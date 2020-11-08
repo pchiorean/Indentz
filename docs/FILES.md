@@ -23,7 +23,6 @@ Name                               |   Fn  | Description
 **`SetRefPointToT.jsx`**           | ⌃Num8 | Sets **Transform Reference Point** to top
 **`SetRefPointToTR.jsx`**          | ⌃Num9 | Sets **Transform Reference Point** to top-right
 **Fitting**                                |
-**`FitTo.jsx`**                    |       | It's run internally by all the other 'FitTo' scripts
 **`FitToPage.jsx`**                |   F11 | Resizes the selected objects to the page size
 **`FitToPageBleed.jsx`**           |  ⇧F11 | Resizes the selected objects to the page bleed size
 **`FitToPageMargins.jsx`**         |  ⌥F11 | Resizes the selected objects to the page margins
@@ -51,7 +50,9 @@ Name                               |   Fn  | Description
 **`SafeAreaShowLayer.jsx`**        |       | Shows the `safe area` layer (or equivalents)
 **Setup**                                  |
 **`DocCleanup.jsx`**               |    F2 | Changes some settings, cleans up swatches/layers/pages/guides and resets scaling
-**`DocDefaults.jsx`**              |   ⌥F2 | Makes default swatches/layers, cleans up fonts and sets page dimensions from the filename
+**`DocDefaults.jsx`**              |   ⌥F2 | Adds default swatches/layers, cleans up fonts and sets page dimensions from the filename
+**`DefLayers.jsx`**                |       | Adds default layers and merges equivalents, from a list
+**`DefSwatches.jsx`**              |       | Adds default swatches from a list
 **`CleanupSwatches.jsx`**          |   ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 **`ReplaceFonts.jsx`**             |       | Replaces missing or unwanted fonts with equivalents from a list
 **`PageMarginsFromSelection.jsx`** |       | Sets the page margins to the selected objects bounds
