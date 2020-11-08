@@ -1,6 +1,6 @@
 /*
-	Align to bottom-right v2.3.2
-	© October 2020, Paul Chiorean
+	Align to bottom-right v2.4.0
+	© November 2020, Paul Chiorean
 	Aligns the selected objects to the bottom-right of the 'Align To' setting.
 */
 
@@ -34,15 +34,16 @@ function main(sel) {
 	if (sel.length > 1) {
 		var objArray = [];
 		for (var i = 0; i < sel.length; i++) {
-			if (sel[i].locked) { alert("Locked objects will remain in place."); continue }
+			if (sel[i].locked) continue;
 			objArray.push(sel[i]);
 		}
 		obj = doc.groups.add(objArray);
 		obj.name = "<align group>";
 	} else obj = sel[0];
 	// Align, ungroup and restore initial selection (sans key object)
-	if (set_ADB == AlignDistributeBounds.ITEM_BOUNDS) {
-		alert("Align to what?") } else Align(obj);
+	if (set_ADB == AlignDistributeBounds.ITEM_BOUNDS)
+		set_ADB = AlignDistributeBounds.PAGE_BOUNDS;
+	Align(obj);
 	if (obj.name == "<align group>") obj.ungroup();
 	app.select(selBAK);
 	// Restore layer grouping settings
