@@ -1,16 +1,15 @@
 ﻿/*
-	Doc cleanup v2.0.0
-	© October 2020, Paul Chiorean
+	Doc cleanup v2.0.1
+	© November 2020, Paul Chiorean
 	Changes some settings, cleans up swatches/layers/pages/guides and resets scaling.
 */
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
-// Step 0. Initialisation
+// Step 0. Set preferences
 app.doScript(
 function() {
-	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 	app.scriptPreferences.enableRedraw = false;
 	doc.zeroPoint = [0, 0];
 	try { doc.cmykProfile = "ISO Coated v2 (ECI)" } catch (_) { doc.cmykProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
@@ -47,7 +46,7 @@ function() {
 	doc.selection = [];
 },
 ScriptLanguage.javascript, undefined,
-UndoModes.ENTIRE_SCRIPT, "Initialisation");
+UndoModes.ENTIRE_SCRIPT, "Set preferences");
 
 // Step 1. Delete unused swatches
 app.doScript(

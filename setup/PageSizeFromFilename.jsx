@@ -1,6 +1,6 @@
 /*
-	Page size from filename v1.8.0
-	© October 2020, Paul Chiorean
+	Page size from filename v1.8.1
+	© November 2020, Paul Chiorean
 	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 */
@@ -9,7 +9,7 @@ if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
-	UndoModes.ENTIRE_SCRIPT, "Page size from filename");
+	UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
 
 
 function main() {

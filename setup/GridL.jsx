@@ -1,6 +1,6 @@
 /*
-	L grid 1.2.0
-	© October 2020, Paul Chiorean
+	L grid 1.2.1
+	© November 2020, Paul Chiorean
 */
 
 if (app.documents.length == 0) exit();
@@ -12,7 +12,6 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 
 
 function main() {
-	doc.activeLayer = doc.layers.item(0);
 	try { doc.layers.add({ name: "guides", layerColor: UIColors.MAGENTA }) } catch (_) {};
 	try { doc.layers.itemByName("guides").visible = true } catch (_) {};
 	try { doc.layers.itemByName("guides").locked = false } catch (_) {};

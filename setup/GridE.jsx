@@ -1,5 +1,5 @@
 /*
-	E grid 1.5.0
+	E grid 1.5.1
 	© November 2020, Paul Chiorean
 */
 
@@ -11,7 +11,6 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 
 
 function main() {
-	doc.activeLayer = doc.layers.item(0);
 	try { doc.layers.add({ name: "guides", layerColor: UIColors.MAGENTA }) } catch (_) {};
 	try { doc.layers.itemByName("guides").visible = true } catch (_) {};
 	try { doc.layers.itemByName("guides").locked = false } catch (_) {};
