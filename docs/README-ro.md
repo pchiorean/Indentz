@@ -72,9 +72,7 @@ tins | `products`
 artwork, aw, elemente, layout, layouts | `artwork`
 background, bg, hg, hintergrund | `bg`
 
-Ambele scripturi schimbă niște setări după preferințele mele.
-
-> <details><summary>Detalii</summary>
+> <details><summary><b>Ambele scripturi setează niște preferințe</b> (click pentru detalii)</summary>
 >
 > **Rulers:** Reset Zero Point \
 > **Rulers Units:** Millimeters \
@@ -113,7 +111,7 @@ Fișier | Dimensiune | Safe area | Bleed
 **Filename1\_`1400x400`\_`700x137`\_`10`mm\_QR.indd** | 1400x400 | 700x137 | 10
 **Filename2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd** | 597x517 | 577x500.5 | 3
 
-> <details><summary>Detalii</summary>
+> <details><summary><b>Detalii</b></summary>
 >
 > Caută în numele fișierului perechi de numere de genul „000x000” (unde „000” înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de „mm” sau „cm”). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. „000x000_000x000”), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
 > </details>
@@ -185,4 +183,4 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți un e‑mail la Paul Chiorean \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 2 noiembrie 2020
+README-ro.md • 6 noiembrie 2020

@@ -72,9 +72,7 @@ tins | `products`
 artwork, aw, elemente, layout, layouts | `artwork`
 background, bg, hg, hintergrund | `bg`
 
-Both scripts change some settings according to my preferences.
-
-> <details><summary>Details</summary>
+> <details><summary><b>Both scripts set some preferences</b> (click to expand)</summary>
 >
 > **Rulers:** Reset Zero Point \
 > **Rulers Units:** Millimeters \
@@ -113,7 +111,7 @@ Filename | Total size | Safe area | Bleed
 **Filename1\_`1400x400`\_`700x137`\_`10`mm\_QR.indd** | 1400x400 | 700x137 | 10
 **Filename2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd** | 597x517 | 577x500.5 | 3
 
-> <details><summary>Details</summary>
+> <details><summary><b>Details</b></summary>
 >
 > It searches for pairs of numbers like "000x000" (where "000" means a group of at least one digit, followed or not by decimals, and optionally by "mm" or "cm"). If only one pair is found, it will be the size of the page. If two are found (e.g., "000x000_000x000"), the larger pair will be the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this is considered bleed.
 > </details>
@@ -185,4 +183,4 @@ Running a frequently used script from the **Scripts** panel is quite annoying. Y
 
 The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send an e-mail to Paul Chiorean \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • November 2, 2020
+README.md • November 6, 2020
