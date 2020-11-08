@@ -8,13 +8,13 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 **`AlignTo`** aliniază obiectele selectate la referința setării **Align To**:
 
-![Align Panel](img/alignto.png)
+![Align Panel](.img/alignto.png)
 
 **`ToggleAlignTo.jsx`** comută alinierea între obiect, margini, pagină sau spread (rulați scriptul în mod repetat). **`ResetAlignTo.jsx`** o resetează la **Align to Selection**.
 
 **`SetRefPoint`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**:
 
-![Transform Panel](img/setrefpoint.png)
+![Transform Panel](.img/setrefpoint.png)
 
 **Notă:** Ambele seturi ar trebui alocate tastaturii numerice (v. [Shortcuts](#shortcuts)).
 
@@ -26,11 +26,11 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 **`TextAutosize.jsx`** „strânge” chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
 
-| | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
+| | ![¶ Align left](.img/paragraphalign-L.png) | ![¶ Align center](.img/paragraphalign-C.png) | ![¶ Align right](.img/paragraphalign-R.png)
 :---: | :---: | :---: | :---:
-![Vertical Justification Top](img/verticaljustification-T.png) | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
-![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
-![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
+![Vertical Justification Top](.img/verticaljustification-T.png) | ![top-left](.img/textautosize-TL.png) | ![top-center](.img/textautosize-TC.png) | ![top-right](.img/textautosize-TR.png)
+![Vertical Justification Center](.img/verticaljustification-C.png) | ![center-left](.img/textautosize-CL.png) | ![center](.img/textautosize-C.png) | ![center-right](.img/textautosize-CR.png)
+![Vertical Justification Bottom](.img/verticaljustification-B.png) | ![bottom-left](.img/textautosize-BL.png) | ![bottom-center](.img/textautosize-BC.png) | ![bottom-right](.img/textautosize-BR.png)
 
 Dacă textul are un singur rând, **Auto-Sizing Type** va fi setat *Height and width*. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width*.
 
@@ -56,7 +56,7 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
 
 **`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește niște fonturi (rulează **`ReplaceFonts.jsx`**, vedeți mai jos), stabilește dimensiunea paginii și marginile (rulează **`PageSizeFromFilename.jsx`**).
 
-![Culori](img/docdefaults-swatches.png) ![Layere](img/docdefaults-layers.png)
+![Culori](.img/docdefaults-swatches.png) ![Layere](.img/docdefaults-layers.png)
 
 De asemenea, scriptul combină câteva layere:
 
@@ -100,7 +100,7 @@ background, bg, hg, hintergrund | `bg`
 
 **`CleanupSwatches.jsx`** convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula „C= M= Y= K=” și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
-**`ReplaceFonts.jsx`** înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`ReplaceFonts.txt`**](../setup/ReplaceFonts.txt)). Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate. Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy-paste în **`ReplaceFonts.txt`**.
+**`ReplaceFonts.jsx`** înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV *(tab-separated values)* cu 4 coloane, cu același nume ca scriptul ([**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt)). Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate. Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy-paste în **`ReplaceFonts.txt`**.
 
 **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
@@ -181,6 +181,6 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington și alții. -->
 
-Codul este publicat sub licența MIT ([LICENSE.txt](../LICENSE.txt)). Trimiteți un e‑mail la Paul Chiorean \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
+Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)). Trimiteți un e‑mail la Paul Chiorean \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
 
-README-ro.md • 6 noiembrie 2020
+README-ro.md • 8 noiembrie 2020

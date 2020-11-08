@@ -8,13 +8,13 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 **`AlignTo`** scripts align the selected object(s) to the **Align To** setting:
 
-![Align Panel](img/alignto.png)
+![Align Panel](.img/alignto.png)
 
 **`ToggleAlignTo.jsx`** toggles the alignment between item, margins, page or spread (just run it repeatedly). **`ResetAlignTo.jsx`** resets the setting to **Align to Selection**.
 
 **`SetRefPoint`** scripts change the reference point used for transformations (like clicking the little proxy squares in the **Transform** palette):
 
-![Transform Panel](img/setrefpoint.png)
+![Transform Panel](.img/setrefpoint.png)
 
 **Note:** Both sets should be assigned to the numeric keypad (see [Shortcuts](#shortcuts)).
 
@@ -26,11 +26,11 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 **`TextAutosize.jsx`** fits the frame to the text and sets it to auto-size. You control the auto-sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
 
-| | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
+| | ![¶ Align left](.img/paragraphalign-L.png) | ![¶ Align center](.img/paragraphalign-C.png) | ![¶ Align right](.img/paragraphalign-R.png)
 :---: | :---: | :---: | :---:
-![Vertical Justification Top](img/verticaljustification-T.png) | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
-![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
-![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
+![Vertical Justification Top](.img/verticaljustification-T.png) | ![top-left](.img/textautosize-TL.png) | ![top-center](.img/textautosize-TC.png) | ![top-right](.img/textautosize-TR.png)
+![Vertical Justification Center](.img/verticaljustification-C.png) | ![center-left](.img/textautosize-CL.png) | ![center](.img/textautosize-C.png) | ![center-right](.img/textautosize-CR.png)
+![Vertical Justification Bottom](.img/verticaljustification-B.png) | ![bottom-left](.img/textautosize-BL.png) | ![bottom-center](.img/textautosize-BC.png) | ![bottom-right](.img/textautosize-BR.png)
 
 If the text has only one line, **Auto-Sizing Type** will be set to *Height and width*. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width*.
 
@@ -56,7 +56,7 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 
 **`DocDefaults.jsx`** creates several swatches & layers, replaces some fonts (it runs **`ReplaceFonts.jsx`**, see below), and sets the page size and margins (it runs **`PageSizeFromFilename.jsx`**).
 
-![Swatches](img/docdefaults-swatches.png) ![Layers](img/docdefaults-layers.png)
+![Swatches](.img/docdefaults-swatches.png) ![Layers](.img/docdefaults-layers.png)
 
 It also merges several layers:
 
@@ -100,7 +100,7 @@ background, bg, hg, hintergrund | `bg`
 
 **`CleanupSwatches.jsx`** converts RGB process swatches to CMYK, removes duplicates, renames them to "C= M= Y= K=" form, and deletes unused ones. Spot colors remain unchanged.
 
-**`ReplaceFonts.jsx`** replaces fonts from a substitution list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([**`ReplaceFonts.txt`**](../setup/ReplaceFonts.txt)). The first line (the header) and lines beginning with ";" are ignored. You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy-pasting in **`ReplaceFonts.txt`**.
+**`ReplaceFonts.jsx`** replaces fonts from a substitution list. The list is a 4 column TSV *(tab-separated values)* file with the same name as the script ([**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt)). The first line (the header) and lines beginning with ";" are ignored. You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy-pasting in **`ReplaceFonts.txt`**.
 
 **`PageMarginsFromSelection.jsx`** sets the page margins to the selected objects.
 
@@ -181,6 +181,6 @@ Running a frequently used script from the **Scripts** panel is quite annoying. Y
 
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
 
-The code is released under the MIT License (see [LICENSE.txt](../LICENSE.txt)). Send an e-mail to Paul Chiorean \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
+The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)). Send an e-mail to Paul Chiorean \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • November 6, 2020
+README.md • November 8, 2020

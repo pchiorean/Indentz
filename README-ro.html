@@ -28,10 +28,10 @@ line-height: 1.6;
 <h2 id="descriere">Descriere</h2>
 <h3 id="alignment"><strong>Alignment/Proxy</strong></h3>
 <p><strong><code>AlignTo</code></strong> aliniază obiectele selectate la referința setării <strong>Align To</strong>:</p>
-<p><img src="img/alignto.png" alt="Align Panel"></p>
+<p><img src=".img/alignto.png" alt="Align Panel"></p>
 <p><strong><code>ToggleAlignTo.jsx</code></strong> comută alinierea între obiect, margini, pagină sau spread (rulați scriptul în mod repetat). <strong><code>ResetAlignTo.jsx</code></strong> o resetează la <strong>Align to Selection</strong>.</p>
 <p><strong><code>SetRefPoint</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta <strong>Transform</strong>:</p>
-<p><img src="img/setrefpoint.png" alt="Transform Panel"></p>
+<p><img src=".img/setrefpoint.png" alt="Transform Panel"></p>
 <p><strong>Notă:</strong> Ambele seturi ar trebui alocate tastaturii numerice (v. <a href="#shortcuts">Shortcuts</a>).</p>
 <h3 id="fitting"><strong>Fitting</strong></h3>
 <p><strong><code>FitToPage</code></strong> redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă &ldquor;snap&rdquor; de 5%, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un <em>clipping frame</em> și acesta e redimensionat. <strong><code>FitToSpread</code></strong> fac același lucru pentru paginile grupate într‑un spread.</p>
@@ -41,29 +41,29 @@ line-height: 1.6;
 <thead>
 <tr>
 <th style="text-align:center"></th>
-<th style="text-align:center"><img src="img/paragraphalign-L.png" alt="¶ Align left"></th>
-<th style="text-align:center"><img src="img/paragraphalign-C.png" alt="¶ Align center"></th>
-<th style="text-align:center"><img src="img/paragraphalign-R.png" alt="¶ Align right"></th>
+<th style="text-align:center"><img src=".img/paragraphalign-L.png" alt="¶ Align left"></th>
+<th style="text-align:center"><img src=".img/paragraphalign-C.png" alt="¶ Align center"></th>
+<th style="text-align:center"><img src=".img/paragraphalign-R.png" alt="¶ Align right"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><img src="img/verticaljustification-T.png" alt="Vertical Justification Top"></td>
-<td style="text-align:center"><img src="img/textautosize-TL.png" alt="top-left"></td>
-<td style="text-align:center"><img src="img/textautosize-TC.png" alt="top-center"></td>
-<td style="text-align:center"><img src="img/textautosize-TR.png" alt="top-right"></td>
+<td style="text-align:center"><img src=".img/verticaljustification-T.png" alt="Vertical Justification Top"></td>
+<td style="text-align:center"><img src=".img/textautosize-TL.png" alt="top-left"></td>
+<td style="text-align:center"><img src=".img/textautosize-TC.png" alt="top-center"></td>
+<td style="text-align:center"><img src=".img/textautosize-TR.png" alt="top-right"></td>
 </tr>
 <tr>
-<td style="text-align:center"><img src="img/verticaljustification-C.png" alt="Vertical Justification Center"></td>
-<td style="text-align:center"><img src="img/textautosize-CL.png" alt="center-left"></td>
-<td style="text-align:center"><img src="img/textautosize-C.png" alt="center"></td>
-<td style="text-align:center"><img src="img/textautosize-CR.png" alt="center-right"></td>
+<td style="text-align:center"><img src=".img/verticaljustification-C.png" alt="Vertical Justification Center"></td>
+<td style="text-align:center"><img src=".img/textautosize-CL.png" alt="center-left"></td>
+<td style="text-align:center"><img src=".img/textautosize-C.png" alt="center"></td>
+<td style="text-align:center"><img src=".img/textautosize-CR.png" alt="center-right"></td>
 </tr>
 <tr>
-<td style="text-align:center"><img src="img/verticaljustification-B.png" alt="Vertical Justification Bottom"></td>
-<td style="text-align:center"><img src="img/textautosize-BL.png" alt="bottom-left"></td>
-<td style="text-align:center"><img src="img/textautosize-BC.png" alt="bottom-center"></td>
-<td style="text-align:center"><img src="img/textautosize-BR.png" alt="bottom-right"></td>
+<td style="text-align:center"><img src=".img/verticaljustification-B.png" alt="Vertical Justification Bottom"></td>
+<td style="text-align:center"><img src=".img/textautosize-BL.png" alt="bottom-left"></td>
+<td style="text-align:center"><img src=".img/textautosize-BC.png" alt="bottom-center"></td>
+<td style="text-align:center"><img src=".img/textautosize-BR.png" alt="bottom-right"></td>
 </tr>
 </tbody>
 </table>
@@ -79,7 +79,7 @@ line-height: 1.6;
 <h3 id="setup"><strong>Setup</strong></h3>
 <p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100%.</p>
 <p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește niște fonturi (rulează <strong><code>ReplaceFonts.jsx</code></strong>, vedeți mai jos), stabilește dimensiunea paginii și marginile (rulează <strong><code>PageSizeFromFilename.jsx</code></strong>).</p>
-<p><img src="img/docdefaults-swatches.png" alt="Culori"> <img src="img/docdefaults-layers.png" alt="Layere"></p>
+<p><img src=".img/docdefaults-swatches.png" alt="Culori"> <img src=".img/docdefaults-layers.png" alt="Layere"></p>
 <p>De asemenea, scriptul combină câteva layere:</p>
 <table>
 <thead>
@@ -154,7 +154,7 @@ line-height: 1.6;
 </details>
 </blockquote>
 <p><strong><code>CleanupSwatches.jsx</code></strong> convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula &ldquor;C= M= Y= K=&rdquor; și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
-<p><strong><code>ReplaceFonts.jsx</code></strong> înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV <em>(tab-separated values)</em> cu 4 coloane, cu același nume ca scriptul (<a href="../setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>). Prima linie (capul de tabel) și liniile care încep cu &ldquor;;&rdquor; sunt ignorate. Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy-paste în <strong><code>ReplaceFonts.txt</code></strong>.</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> înlocuiește fonturi pe baza unei liste de substituție. Lista este un fișier TSV <em>(tab-separated values)</em> cu 4 coloane, cu același nume ca scriptul (<a href="setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>). Prima linie (capul de tabel) și liniile care încep cu &ldquor;;&rdquor; sunt ignorate. Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy-paste în <strong><code>ReplaceFonts.txt</code></strong>.</p>
 <p><strong><code>PageMarginsFromSelection.jsx</code></strong> setează marginile paginii la dimensiunile selecției.</p>
 <p><strong><code>PageSizeFromFilename.jsx</code></strong> redimensionează paginile documentului în funcție de numele fișierului:</p>
 <table>
@@ -365,8 +365,8 @@ line-height: 1.6;
 </ol>
 <h2 id="licență">Licență</h2>
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington și alții. -->
-<p>Codul este publicat sub licența MIT (<a href="../LICENSE.txt">LICENSE.txt</a>). Trimiteți un e‑mail la Paul Chiorean &lt;jpeg AT basement.ro&gt; sau <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
-<p>README-ro.md • 6 noiembrie 2020</p>
+<p>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>). Trimiteți un e‑mail la Paul Chiorean &lt;jpeg AT basement.ro&gt; sau <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
+<p>README-ro.md • 8 noiembrie 2020</p>
 
 </body>
 </html>
