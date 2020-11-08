@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for print v1.9.0
+	Prepare for print v1.10.0
 	© November 2020, Paul Chiorean
 	Hides "safe area" layer and moves white, varnish & dielines to separate spreads.
 */
@@ -12,6 +12,7 @@ var saLayer = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil"
 var dieLayer = FindLayer(["dielines", "cut lines", "Cut lines", "cut", "Cut", "CUT", "decoupe", "Decoupe", "die cut", "Die Cut", "Die", "diecut", "Diecut", "stanz", "Stanz", "stanze", "Stanze", "stanzform", "Stanzform"]);
 var whiteLayer = FindLayer(["white", "White", "WHITE"]);
 var uvLayer = FindLayer(["varnish", "Varnish", "UV"]);
+var guidesLayer = FindLayer(["guides", "Guides"]);
 var infoLayer = doc.layers.item("info");
 if (!infoLayer.isValid) doc.layers.add({ name: "info", layerColor: UIColors.CYAN });
 infoLayer.move(LocationOptions.AT_BEGINNING);
@@ -21,6 +22,7 @@ try { saLayer.visible = false } catch (_) {};
 try { dieLayer.visible = true } catch (_) {};
 try { whiteLayer.visible = true } catch (_) {};
 try { uvLayer.visible = true } catch (_) {};
+try { guidesLayer.visible = false } catch (_) {};
 try { infoLayer.visible = true } catch (_) {};
 
 if (dieLayer != null) {
