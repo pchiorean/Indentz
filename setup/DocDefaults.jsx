@@ -58,7 +58,7 @@ app.doScript(File(app.activeScript.path + "/DefSwatches.jsx"),
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Default swatches");
 
-// Make default layers
+// Add default layers
 app.doScript(File(app.activeScript.path + "/DefLayers.jsx"), 
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Default layers");
