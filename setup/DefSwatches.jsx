@@ -1,7 +1,7 @@
 /*
 	Make default swatches v1.0.0
 	© November 2020, Paul Chiorean
-	Makes default swatches from a list.
+	Adds default swatches from a list.
 
 	The list is a 3-column TSV file with the same name as the script
 	and the following format:

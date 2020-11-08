@@ -1,7 +1,7 @@
 /*
 	Make default layers v1.0.0
 	© November 2020, Paul Chiorean
-	Makes default layers and merges equivalents, from a list.
+	Adds default layers and merges equivalents, from a list.
 
 	The list is a 6-column TSV file with the same name as the script
 	and the following format:

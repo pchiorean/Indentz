@@ -1,7 +1,7 @@
 ﻿/*
 	Default layers and more v3.0.0
 	© November 2020, Paul Chiorean
-	Changes some settings, makes default swatches/layers, merges similar layers, 
+	Changes some settings, adds default swatches/layers, merges similar layers, 
 	cleans up fonts and sets page dimensions from the filename.
 */
 
