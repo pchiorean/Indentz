@@ -86,23 +86,21 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
   Nume | Culoare | Vizibil | Printabil | Ordine | Variante
   :--- | :---: | :---: | :---: | :---: | :---
   dielines | Magenta | TRUE | TRUE | top | cut, cut lines, decoupe, die, die cut, stanze
-  text and logos | Green | TRUE | TRUE | top | copy, text, textes, txt, type
-  artwork | Light Blue | TRUE | TRUE | top | aw, elemente, layout, layouts
-  bg | Red | TRUE | TRUE | bottom | background, hg, hintergrund
+  template | Gray | FALSE | FALSE | bottom
   ... |
 
-  > **`Nume`**: numele layerului \
-  > **`Culoare`**: culoarea layerului (v. [**`UIColors.txt`**](setup/UIColors.txt)) \
-  > **`Vizibil`**: `TRUE` sau `FALSE` \
-  > **`Printabil`**: `TRUE` sau `FALSE` \
-  > **`Ordine`**: `top` sau `bottom` (deasupra sau sub layerele existente) \
-  > **`Variante`**: o listă de layere care vor fi combinate cu layerul de bază (case insensitive)
+  > **Nume**: numele layerului \
+  > **Culoare**: culoarea layerului (v. [**`UIColors.txt`**](setup/UIColors.txt)) \
+  > **Vizibil**: `TRUE` sau `FALSE` \
+  > **Printabil**: `TRUE` sau `FALSE` \
+  > **Ordine**: `top` sau `bottom` (deasupra sau sub layerele existente) \
+  > **Variante**: o listă de layere care vor fi combinate cu layerul de bază (case insensitive)
 
   **`DefLayers.xlsx`** vă va ajuta la generarea fișierului TSV.
 
   **Note:** Prima linie (capul de tabel) și liniile care încep cu `;` sunt ignorate.
 
-* **`DefSwatches.jsx`** creează un set de swatch‑uri din [**`DefSwatches.txt`**](setup/DefSwatches.txt), un fișier TSV cu 3 coloane cu următorul format:
+* **`DefSwatches.jsx`** creează un set de swatch‑uri definite în [**`DefSwatches.txt`**](setup/DefSwatches.txt), un fișier TSV cu 3 coloane cu următorul format:
 
   Name | Model | Values
   :--- | :--- | :---
@@ -110,21 +108,21 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
   Cut | spot | 0, 100, 0, 0
   ... |
 
-  > **`Name`**: numele swatch‑ului \
-  > **`Model`**: color model: `process` or `spot` \
-  > **`Values`**: o listă de 3 (RGB) sau 4 (CMYK) valori
+  > **Name**: numele swatch‑ului \
+  > **Model**: color model: `process` or `spot` \
+  > **Values**: o listă de 3 (RGB) sau 4 (CMYK) valori
 
 * **`CleanupSwatches.jsx`** convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula `C= M= Y= K=` și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
-* **`ReplaceFonts.jsx`** înlocuiește fonturi din [**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt), un fișier TSV cu 4 coloane cu următorul format:
+* **`ReplaceFonts.jsx`** înlocuiește fonturi utilizând o listă de substituție, [**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt), care este un fișier TSV cu 4 coloane cu următorul format:
 
-  Nume vechi | Stil | Nume nou | Stil
+  Font vechi | Stil | Font nou | Stil
   :--- | :--- | :--- | :---
   Arial | Regular | Helvetica Neue | Regular
   Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy-paste.
+  **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
 
 * **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
@@ -132,8 +130,8 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
 
   Fișier | Dimensiune | Safe area | Bleed
   :--- | :---: | :---: | :---:
-  **Filename1\_`1400x400`\_`700x137`\_`10`mm\_QR.indd** | 1400x400 | 700x137 | 10
-  **Filename2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd** | 597x517 | 577x500.5 | 3
+  **File1\_`1400x400`\_`700x137`\_`10`mm\_QR.indd** | 1400x400 | 700x137 | 10
+  **File2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd** | 597x517 | 577x500.5 | 3
 
   > Caută în numele fișierului perechi de numere de genul `000x000` (unde `000` înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de `mm` sau `cm`). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. `000x000_000x000`), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
 
@@ -157,8 +155,8 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
 
   Fișier | Cod
   :--- | :---
-  Filename1 | CODE 1
-  Filename2 | CODE 2
+  File 1 | CODE 1
+  File 2 | CODE 2
   ... |
 
   Dacă nu‑l găsește, solicită codul și îl adaugă pe fiecare pagină în colțul din stânga jos, sau îl salvează într‑un fișier cu numele documentului activ și `_QR` adăugat la coadă:

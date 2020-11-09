@@ -36,7 +36,7 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 ### **Scaling**
 
-These resize the selected object(s) proportionally, as a block.
+These scale the selected object(s) proportionally, as a block.
 
 * **`ScaleToPageSize.jsx`** and **`ScaleToPageMargins.jsx`** scale to the page size or page margins.
 
@@ -86,23 +86,21 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
   Name | Color | Visible | Printable | Order | Variants
   :--- | :---: | :---: | :---: | :---: | :---
   dielines | Magenta | TRUE | TRUE | top | cut, cut lines, decoupe, die, die cut, stanze
-  text and logos | Green | TRUE | TRUE | top | copy, text, textes, txt, type
-  artwork | Light Blue | TRUE | TRUE | top | aw, elemente, layout, layouts
-  bg | Red | TRUE | TRUE | bottom | background, hg, hintergrund
+  template | Gray | FALSE | FALSE | bottom
   ... |
 
-  > **`Name`**: layer name \
-  > **`Color`**: layer color (see [**`UIColors.txt`**](setup/UIColors.txt)) \
-  > **`Visible`**: `TRUE` or `FALSE` \
-  > **`Printable`**: `TRUE` or `FALSE` \
-  > **`Order`**: `top` or `bottom` (above or below existing layers) \
-  > **`Variants`**: a list of layers which will be merged with the base layer (case insensitive)
+  > **Name**: layer name \
+  > **Color**: layer color (see [**`UIColors.txt`**](setup/UIColors.txt)) \
+  > **Visible**: `TRUE` or `FALSE` \
+  > **Printable**: `TRUE` or `FALSE` \
+  > **Order**: `top` or `bottom` (above or below existing layers) \
+  > **Variants**: a list of layers which will be merged with the base layer (case insensitive)
 
   **`DefLayers.xlsx`** will help to generate the TSV file.
 
   **Note:** The first line (the header) and lines beginning with `;` are ignored.
 
-* **`DefSwatches.jsx`** adds a set of swatches from [**`DefSwatches.txt`**](setup/DefSwatches.txt), a 3‑column TSV file with the following format:
+* **`DefSwatches.jsx`** adds a set of swatches defined in [**`DefSwatches.txt`**](setup/DefSwatches.txt), a 3‑column TSV file with the following format:
 
   Name | Model | Values
   :--- | :--- | :---
@@ -110,21 +108,21 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
   Cut | spot | 0, 100, 0, 0
   ... |
 
-  > **`Name`**: swatch name \
-  > **`Model`**: color model: `process` or `spot` \
-  > **`Values`**: a list of 3 (RGB) or 4 (CMYK) color values
+  > **Name**: swatch name \
+  > **Model**: color model: `process` or `spot` \
+  > **Values**: a list of 3 (RGB) or 4 (CMYK) color values
 
 * **`CleanupSwatches.jsx`** converts RGB process swatches to CMYK, removes duplicates, renames them to `C= M= Y= K=` form, and deletes unused ones. Spot colors are not changed.
 
-* **`ReplaceFonts.jsx`** replaces fonts from [**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt), a 4‑column TSV file with the following format:
+* **`ReplaceFonts.jsx`** replaces fonts from a substitution list, [**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt), a 4‑column TSV file with the following format:
 
-  Old Name | Style | New Name | Style
+  Old font | Style | New font | Style
   :--- | :--- | :--- | :---
   Arial | Regular | Helvetica Neue | Regular
   Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  **Note:** You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy-pasting.
+  **Note:** You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy‑pasting.
 
 * **`PageMarginsFromSelection.jsx`** sets the page margins to the selected objects.
 
@@ -132,8 +130,8 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 
   Filename | Total size | Safe area | Bleed
   :--- | :---: | :---: | :---:
-  **Filename1\_`1400x400`\_`700x137`\_`10`mm\_QR.indd** | 1400x400 | 700x137 | 10
-  **Filename2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd** | 597x517 | 577x500.5 | 3
+  **File1\_`1400x400`\_`700x137`\_`10`mm\_QR.indd** | 1400x400 | 700x137 | 10
+  **File2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd** | 597x517 | 577x500.5 | 3
 
   > It searches for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it's the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair it's the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this becomes bleed.
 
@@ -157,8 +155,8 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 
   Filename | Code
   :--- | :---
-  Filename1 | CODE 1
-  Filename2 | CODE 2
+  File 1 | CODE 1
+  File 2 | CODE 2
   ... |
 
   If it's not found, it prompts for the code and adds it on each page on the bottom left corner, or it saves it to a file with the name of the active document and `_QR` added to the end:

@@ -162,28 +162,12 @@ line-height: 1.6;
 <td style="text-align:left">cut, cut lines, decoupe, die, die cut, stanze</td>
 </tr>
 <tr>
-<td style="text-align:left">text and logos</td>
-<td style="text-align:center">Green</td>
-<td style="text-align:center">TRUE</td>
-<td style="text-align:center">TRUE</td>
-<td style="text-align:center">top</td>
-<td style="text-align:left">copy, text, textes, txt, type</td>
-</tr>
-<tr>
-<td style="text-align:left">artwork</td>
-<td style="text-align:center">Light Blue</td>
-<td style="text-align:center">TRUE</td>
-<td style="text-align:center">TRUE</td>
-<td style="text-align:center">top</td>
-<td style="text-align:left">aw, elemente, layout, layouts</td>
-</tr>
-<tr>
-<td style="text-align:left">bg</td>
-<td style="text-align:center">Red</td>
-<td style="text-align:center">TRUE</td>
-<td style="text-align:center">TRUE</td>
+<td style="text-align:left">template</td>
+<td style="text-align:center">Gray</td>
+<td style="text-align:center">FALSE</td>
+<td style="text-align:center">FALSE</td>
 <td style="text-align:center">bottom</td>
-<td style="text-align:left">background, hg, hintergrund</td>
+<td style="text-align:left"></td>
 </tr>
 <tr>
 <td style="text-align:left">...</td>
@@ -207,7 +191,7 @@ line-height: 1.6;
 <p><strong>Note:</strong> Prima linie (capul de tabel) și liniile care încep cu <code>;</code> sunt ignorate.</p>
 </li>
 <li>
-<p><strong><code>DefSwatches.jsx</code></strong> creează un set de swatch‑uri din <a href="setup/DefSwatches.txt"><strong><code>DefSwatches.txt</code></strong></a>, un fișier TSV cu 3 coloane cu următorul format:</p>
+<p><strong><code>DefSwatches.jsx</code></strong> creează un set de swatch‑uri definite în <a href="setup/DefSwatches.txt"><strong><code>DefSwatches.txt</code></strong></a>, un fișier TSV cu 3 coloane cu următorul format:</p>
 <table>
 <thead>
 <tr>
@@ -244,13 +228,13 @@ line-height: 1.6;
 <p><strong><code>CleanupSwatches.jsx</code></strong> convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula <code>C= M= Y= K=</code> și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> înlocuiește fonturi din <a href="setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>, un fișier TSV cu 4 coloane cu următorul format:</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> înlocuiește fonturi utilizând o listă de substituție, <a href="setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>, care este un fișier TSV cu 4 coloane cu următorul format:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Nume vechi</th>
+<th style="text-align:left">Font vechi</th>
 <th style="text-align:left">Stil</th>
-<th style="text-align:left">Nume nou</th>
+<th style="text-align:left">Font nou</th>
 <th style="text-align:left">Stil</th>
 </tr>
 </thead>
@@ -275,7 +259,7 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-<p><strong>Notă:</strong> Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy-paste.</p>
+<p><strong>Notă:</strong> Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy‑paste.</p>
 </li>
 <li>
 <p><strong><code>PageMarginsFromSelection.jsx</code></strong> setează marginile paginii la dimensiunile selecției.</p>
@@ -293,13 +277,13 @@ line-height: 1.6;
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><strong>Filename1_<code>1400x400</code>_<code>700x137</code>_<code>10</code>mm_QR.indd</strong></td>
+<td style="text-align:left"><strong>File1_<code>1400x400</code>_<code>700x137</code>_<code>10</code>mm_QR.indd</strong></td>
 <td style="text-align:center">1400x400</td>
 <td style="text-align:center">700x137</td>
 <td style="text-align:center">10</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong>Filename2_<code>597x517</code>_<code>577x500.5</code>_<code>3</code>mm V4_QR.indd</strong></td>
+<td style="text-align:left"><strong>File2_<code>597x517</code>_<code>577x500.5</code>_<code>3</code>mm V4_QR.indd</strong></td>
 <td style="text-align:center">597x517</td>
 <td style="text-align:center">577x500.5</td>
 <td style="text-align:center">3</td>
@@ -341,11 +325,11 @@ line-height: 1.6;
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">Filename1</td>
+<td style="text-align:left">File 1</td>
 <td style="text-align:left">CODE 1</td>
 </tr>
 <tr>
-<td style="text-align:left">Filename2</td>
+<td style="text-align:left">File 2</td>
 <td style="text-align:left">CODE 2</td>
 </tr>
 <tr>

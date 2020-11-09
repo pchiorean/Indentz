@@ -85,7 +85,7 @@ line-height: 1.6;
 </li>
 </ul>
 <h3 id="scaling"><strong>Scaling</strong></h3>
-<p>These resize the selected object(s) proportionally, as a block.</p>
+<p>These scale the selected object(s) proportionally, as a block.</p>
 <ul>
 <li>
 <p><strong><code>ScaleToPageSize.jsx</code></strong> and <strong><code>ScaleToPageMargins.jsx</code></strong> scale to the page size or page margins.</p>
@@ -162,52 +162,28 @@ line-height: 1.6;
 <td style="text-align:left">cut, cut lines, decoupe, die, die cut, stanze</td>
 </tr>
 <tr>
-<td style="text-align:left">text and logos</td>
-<td style="text-align:center">Green</td>
-<td style="text-align:center">TRUE</td>
-<td style="text-align:center">TRUE</td>
-<td style="text-align:center">top</td>
-<td style="text-align:left">copy, text, textes, txt, type</td>
-</tr>
-<tr>
-<td style="text-align:left">artwork</td>
-<td style="text-align:center">Light Blue</td>
-<td style="text-align:center">TRUE</td>
-<td style="text-align:center">TRUE</td>
-<td style="text-align:center">top</td>
-<td style="text-align:left">aw, elemente, layout, layouts</td>
-</tr>
-<tr>
-<td style="text-align:left">bg</td>
-<td style="text-align:center">Red</td>
-<td style="text-align:center">TRUE</td>
-<td style="text-align:center">TRUE</td>
+<td style="text-align:left">template</td>
+<td style="text-align:center">Gray</td>
+<td style="text-align:center">FALSE</td>
+<td style="text-align:center">FALSE</td>
 <td style="text-align:center">bottom</td>
-<td style="text-align:left">background, hg, hintergrund</td>
-</tr>
-<tr>
-<td style="text-align:left">...</td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
-<td style="text-align:center"></td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p><strong><code>Name</code></strong>: layer name <br>
-<strong><code>Color</code></strong>: layer color (see <a href="setup/UIColors.txt"><strong><code>UIColors.txt</code></strong></a>) <br>
-<strong><code>Visible</code></strong>: <code>TRUE</code> or <code>FALSE</code> <br>
-<strong><code>Printable</code></strong>: <code>TRUE</code> or <code>FALSE</code> <br>
-<strong><code>Order</code></strong>: <code>top</code> or <code>bottom</code> (above or below existing layers) <br>
-<strong><code>Variants</code></strong>: a list of layers which will be merged with the base layer (case insensitive)</p>
+<p><strong>Name</strong>: layer name <br>
+<strong>Color</strong>: layer color (see <a href="setup/UIColors.txt"><strong><code>UIColors.txt</code></strong></a>) <br>
+<strong>Visible</strong>: <code>TRUE</code> or <code>FALSE</code> <br>
+<strong>Printable</strong>: <code>TRUE</code> or <code>FALSE</code> <br>
+<strong>Order</strong>: <code>top</code> or <code>bottom</code> (above or below existing layers) <br>
+<strong>Variants</strong>: a list of layers which will be merged with the base layer (case insensitive)</p>
 </blockquote>
 <p><strong><code>DefLayers.xlsx</code></strong> will help to generate the TSV file.</p>
 <p><strong>Note:</strong> The first line (the header) and lines beginning with <code>;</code> are ignored.</p>
 </li>
 <li>
-<p><strong><code>DefSwatches.jsx</code></strong> adds a set of swatches from <a href="setup/DefSwatches.txt"><strong><code>DefSwatches.txt</code></strong></a>, a 3‑column TSV file with the following format:</p>
+<p><strong><code>DefSwatches.jsx</code></strong> adds a set of swatches defined in <a href="setup/DefSwatches.txt"><strong><code>DefSwatches.txt</code></strong></a>, a 3‑column TSV file with the following format:</p>
 <table>
 <thead>
 <tr>
@@ -235,22 +211,22 @@ line-height: 1.6;
 </tbody>
 </table>
 <blockquote>
-<p><strong><code>Name</code></strong>: swatch name <br>
-<strong><code>Model</code></strong>: color model: <code>process</code> or <code>spot</code> <br>
-<strong><code>Values</code></strong>: a list of 3 (RGB) or 4 (CMYK) color values</p>
+<p><strong>Name</strong>: swatch name <br>
+<strong>Model</strong>: color model: <code>process</code> or <code>spot</code> <br>
+<strong>Values</strong>: a list of 3 (RGB) or 4 (CMYK) color values</p>
 </blockquote>
 </li>
 <li>
 <p><strong><code>CleanupSwatches.jsx</code></strong> converts RGB process swatches to CMYK, removes duplicates, renames them to <code>C= M= Y= K=</code> form, and deletes unused ones. Spot colors are not changed.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> replaces fonts from <a href="setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>, a 4‑column TSV file with the following format:</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> replaces fonts from a substitution list, <a href="setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>, a 4‑column TSV file with the following format:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Old Name</th>
+<th style="text-align:left">Old font</th>
 <th style="text-align:left">Style</th>
-<th style="text-align:left">New Name</th>
+<th style="text-align:left">New font</th>
 <th style="text-align:left">Style</th>
 </tr>
 </thead>
@@ -275,7 +251,7 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Misc</strong> to get a tab delimited list of fonts for copy-pasting.</p>
+<p><strong>Note:</strong> You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Misc</strong> to get a tab delimited list of fonts for copy‑pasting.</p>
 </li>
 <li>
 <p><strong><code>PageMarginsFromSelection.jsx</code></strong> sets the page margins to the selected objects.</p>
@@ -293,13 +269,13 @@ line-height: 1.6;
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><strong>Filename1_<code>1400x400</code>_<code>700x137</code>_<code>10</code>mm_QR.indd</strong></td>
+<td style="text-align:left"><strong>File1_<code>1400x400</code>_<code>700x137</code>_<code>10</code>mm_QR.indd</strong></td>
 <td style="text-align:center">1400x400</td>
 <td style="text-align:center">700x137</td>
 <td style="text-align:center">10</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong>Filename2_<code>597x517</code>_<code>577x500.5</code>_<code>3</code>mm V4_QR.indd</strong></td>
+<td style="text-align:left"><strong>File2_<code>597x517</code>_<code>577x500.5</code>_<code>3</code>mm V4_QR.indd</strong></td>
 <td style="text-align:center">597x517</td>
 <td style="text-align:center">577x500.5</td>
 <td style="text-align:center">3</td>
@@ -341,11 +317,11 @@ line-height: 1.6;
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">Filename1</td>
+<td style="text-align:left">File 1</td>
 <td style="text-align:left">CODE 1</td>
 </tr>
 <tr>
-<td style="text-align:left">Filename2</td>
+<td style="text-align:left">File 2</td>
 <td style="text-align:left">CODE 2</td>
 </tr>
 <tr>
