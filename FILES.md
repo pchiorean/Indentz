@@ -56,9 +56,9 @@ Name                               |   Fn  | Description
 **`CleanupSwatches.jsx`**          |   ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 **`ReplaceFonts.jsx`**             |       | Replaces missing or unwanted fonts with equivalents from a list
 **`PageMarginsFromSelection.jsx`** |       | Sets the page margins to the selected objects bounds
-**`PageSizeFromFilename.jsx`**     |       | Sets every page size and margins according to the filename
-**`PageSizeFromMargins.jsx`**      |       | Sets the page size to the page margins
-**`PageSizeFromSelection.jsx`**    |       | Sets the page size to the selected objects bounds
+**`PageSizeFromFilename.jsx`**     |    F3 | Sets every page size and margins according to the filename
+**`PageSizeFromMargins.jsx`**      |   ⌥F3 | Sets the page size to the page margins
+**`PageSizeFromSelection.jsx`**    |   ⇧F3 | Sets the page size to the selected objects bounds
 **Miscellaneous**                          |
 **`Clip.jsx`**                     |  Num* | Clip selected objects in a '\<clip frame\>', or restores them
 **`ClipUndo.jsx`**                 | ⌃Num* | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
