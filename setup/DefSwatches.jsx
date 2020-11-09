@@ -1,16 +1,17 @@
 /*
-	Make default swatches v1.0.0
+	Make default swatches v1.0.1
 	© November 2020, Paul Chiorean
 	Adds default swatches from a list.
-
 	The list is a 3-column TSV file with the same name as the script
 	and the following format:
+
 	Name | Model | Values (header, ignored)
 	Rich Black | process | 60, 40, 40, 100
+	Cut | spot | 0, 100, 0, 0
 	...
-	1. <Name>: string,
-	2. <Model>: "process" or "spot",
-	3. <Values>: CSV list of 3 (RGB) or 4 (CMYK) color values
+	1. <Name>: swatch name,
+	2. <Model>: color model: "process" or "spot",
+	3. <Values>: a list of 3 (RGB) or 4 (CMYK) color values.
 */
 
 if (app.documents.length == 0) exit();

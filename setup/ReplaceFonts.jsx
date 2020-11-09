@@ -1,14 +1,14 @@
 ﻿/*
-	Replace fonts 1.3.1
+	Replace fonts 1.3.2
 	© November 2020, Paul Chiorean
 	Replaces missing or unwanted fonts with equivalents from a list.
-
 	The list is a 4-column TSV file with the same name as the script
 	and the following format:
-	Old Name | Style | New Name | Style (header, ignored)
+
+	Old font | Style | New font | Style (header, ignored)
 	Arial | Regular | Helvetica Neue | Regular
+	Arial | Bold | Helvetica Neue | Bold
 	...
-	You can use ShowFonts.jsx to get a tab delimited list of fonts.
 */
 
 if (app.documents.length == 0) exit();

@@ -1,10 +1,14 @@
 /*
-	QR code v2.1.1
-	© October 2020, Paul Chiorean
+	QR code v2.1.2
+	© November 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
-	If "QR.txt" is found, batch process it.
-	The list is a TSV file with the following format: <QR Filename>\t<QR Code>
-	(the first line is considered header and is ignored).
+	If found, batch process "QR.txt". The list is a 2-column TSV
+	file with the the following format:
+
+	Filename | Code (header, ignored)
+	File 1 | CODE 1
+	File 2 | CODE 2
+	...
 */
 
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
@@ -44,8 +48,8 @@ function BatchQR() { // Noninteractive: batch process 'QR.txt'
 	if (line < 1) { alert("Not enough records."); exit() }
 	var progressBar = new ProgressBar(width); progressBar.reset(line);
 	for (var i = 0, err = 0; i < line; i++) {
-		if (QROnFile(qr[i], fn[i])) err++; // Count files with errors (text overflow)
 		progressBar.update(i+1, qr[i]);
+		if (QROnFile(qr[i], fn[i])) err++; // Count files with errors (text overflow)
 	}
 	progressBar.close();
 	if (err != 0) {

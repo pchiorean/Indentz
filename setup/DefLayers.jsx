@@ -1,20 +1,20 @@
 /*
-	Make default layers v1.0.0
+	Make default layers v1.0.1
 	© November 2020, Paul Chiorean
 	Adds default layers and merges equivalents, from a list.
-
 	The list is a 6-column TSV file with the same name as the script
 	and the following format:
+
 	Name | Color | Visible | Printable | Order | Variants (header, ignored)
-	dielines | Red | FALSE | TRUE | top | cut, cut lines, decoupe, die, die cut, diecut, stanze
+	dielines | Magenta | TRUE | TRUE | top | cut, cut lines, decoupe, die, die cut, stanze
+	template | Gray | FALSE | FALSE | bottom
 	...
-	1. <Name>: string,
-	2. <Color>: UIColor (friendly) name (see the XLSX),
-	3. <Visible>: boolean (TRUE or FALSE),
-	4. <Printable>: boolean (TRUE or FALSE),
+	1. <Name>: layer name,
+	2. <Color>: layer color (see UIColors.txt),
+	3. <Visible>: TRUE or FALSE,
+	4. <Printable>: TRUE or FALSE,
 	5. <Order>: "top" or "bottom" (above or below existing layers),
-	6. <Variants>: CSV list of alternative names.
-	The XLSX template may be used for generating the TSV file.
+	6. <Variants>: a list of layers which will be merged with the base layer (case insensitive).
 */
 
 if (app.documents.length == 0) exit();
