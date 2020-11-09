@@ -1,6 +1,6 @@
 # Indentz
 
-Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (o sugestie de configurare găsiți în secțiunea [Shortcut‑uri](#shortcuturi)). Câteva pot fi rulate în scriptul [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
+Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (sugestii sub fiecare secțiune). Câteva pot fi rulate în scriptul [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
 
 ## Descriere
 
@@ -16,7 +16,23 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 * **`SetRefPoint`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**.
 
-**Notă:** Ambele seturi ar trebui alocate tastaturii numerice (v. [Shortcut‑uri](#shortcuturi)).
+**Notă:** Ambele seturi ar trebui alocate tastaturii numerice.
+
+<details><summary><strong>Shortcut‑uri</strong></summary>
+
+Alignment | | | | | | | |
+:- | -: | :- | -: | :- | -: | :- | -:
+**`AlignToTL.jsx`** | Num7 | **`AlignToT.jsx`** | Num8 | **`AlignToTR.jsx`** | Num9 | **`ToggleAlignTo.jsx`** |  Num0
+**`AlignToL.jsx`** | Num4 | **`AlignToC.jsx`** | Num5 | **`AlignToR.jsx`**  | Num6 | **`ResetAlignTo.jsx`**  | ⌃Num0
+**`AlignToBL.jsx`** | Num1 | **`AlignToB.jsx`** | Num2 | **`AlignToBR.jsx`** | Num3
+
+Proxy | | | | | |
+:- | -: | :- | -: | :- | -:
+**`SetRefPointTL.jsx`** | ⌃Num7 | **`SetRefPointT.jsx`** | ⌃Num8 | **`SetRefPointTR.jsx`** | ⌃Num9
+**`SetRefPointL.jsx`** | ⌃Num4 | **`SetRefPointC.jsx`** | ⌃Num5 | **`SetRefPointR.jsx`** | ⌃Num6
+**`SetRefPointBL.jsx`** | ⌃Num1 | **`SetRefPointB.jsx`** | ⌃Num2 | **`SetRefPointBR.jsx`** | ⌃Num3
+
+</details>
 
 ### **Fitting**
 
@@ -27,12 +43,23 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 * **`TextAutosize.jsx`** „strânge” chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
 
   | | ![¶ Align left](.img/paragraphalign-L.png) | ![¶ Align center](.img/paragraphalign-C.png) | ![¶ Align right](.img/paragraphalign-R.png)
-  :---: | :---: | :---: | :---:
+  :-: | :-: | :-: | :-:
   ![Vertical Justification Top](.img/verticaljustification-T.png) | ![top-left](.img/textautosize-TL.png) | ![top-center](.img/textautosize-TC.png) | ![top-right](.img/textautosize-TR.png)
   ![Vertical Justification Center](.img/verticaljustification-C.png) | ![center-left](.img/textautosize-CL.png) | ![center](.img/textautosize-C.png) | ![center-right](.img/textautosize-CR.png)
   ![Vertical Justification Bottom](.img/verticaljustification-B.png) | ![bottom-left](.img/textautosize-BL.png) | ![bottom-center](.img/textautosize-BC.png) | ![bottom-right](.img/textautosize-BR.png)
 
   Dacă textul are un singur rând, **Auto-Sizing Type** va fi setat *Height and width*. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width*.
+
+<details><summary><strong>Shortcut‑uri</strong></summary>
+
+FitToPage | | FitToSpread | | TextAutosize | |
+:- | -: | :- | -: | :- | -:
+**`FitToPage.jsx`** | F11 | **`FitToSpread.jsx`** | F12 | **`TextAutosize.jsx`** | F6
+**`FitToPageMargins.jsx`** | ⌥F11 | **`FitToSpreadMargins.jsx`** | ⌥F12
+**`FitToPageBleed.jsx`** | ⇧F11 | **`FitToSpreadBleed.jsx`** | ⇧F12
+**`FitToPageBleedForced.jsx`** | ⇧⌘F11 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12
+
+</details>
 
 ### **Scaling**
 
@@ -41,6 +68,15 @@ Acestea scalează proporțional unul sau mai multe obiecte selectate, ca un bloc
 * **`ScaleToPageSize.jsx`** și **`ScaleToPageMargins.jsx`** scalează la dimensiunile paginii sau marginii.
 
 * Variantele **`H`** (height) și **`W`** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
+
+<details><summary><strong>Shortcut‑uri</strong></summary>
+
+Scale | |
+:- | -:
+**`ScaleToPageSize.jsx`** | F5
+**`ScaleToPageMargins.jsx`** | ⌥F5
+
+</details>
 
 ### **Print**
 
@@ -84,7 +120,7 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
 * **`DefLayers.jsx`** creează un set de layere, preluându‑le proprietățile din [**`DefLayers.txt`**](setup/DefLayers.txt), care este un fișier TSV *(tab-separated values)* cu 6 coloane cu următorul format:
 
   Nume | Culoare | Vizibil | Printabil | Ordine | Variante
-  :--- | :---: | :---: | :---: | :---: | :---
+  :- | :-: | :-: | :-: | :-: | :-
   dielines | Magenta | TRUE | TRUE | top | cut, cut lines, decoupe, die, die cut, stanze
   template | Gray | FALSE | FALSE | bottom
   ... |
@@ -103,7 +139,7 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
 * **`DefSwatches.jsx`** creează un set de swatch‑uri definite în [**`DefSwatches.txt`**](setup/DefSwatches.txt), un fișier TSV cu 3 coloane cu următorul format:
 
   Name | Model | Values
-  :--- | :--- | :---
+  :- | :- | :-
   Rich Black | process | 60, 40, 40, 100
   Cut | spot | 0, 100, 0, 0
   ... |
@@ -117,7 +153,7 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
 * **`ReplaceFonts.jsx`** înlocuiește fonturi utilizând o listă de substituție, [**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt), care este un fișier TSV cu 4 coloane cu următorul format:
 
   Font vechi | Stil | Font nou | Stil
-  :--- | :--- | :--- | :---
+  :- | :- | :- | :-
   Arial | Regular | Helvetica Neue | Regular
   Arial | Bold | Helvetica Neue | Bold
   ... |
@@ -129,15 +165,25 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
 * **`PageSizeFromFilename.jsx`** setează dimensiunea și marginile paginii preluând informațiile din numele fișierului:
 
   Fișier | Dimensiune | Safe area | Bleed
-  :--- | :---: | :---: | :---:
-  **File1\_`1400x400`\_`700x137`\_`10`mm\_QR.indd** | 1400x400 | 700x137 | 10
-  **File2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd** | 597x517 | 577x500.5 | 3
+  :- | :-: | :-: | :-:
+  File1\_`1400x400`\_`700x137`\_`5`mm\_QR.indd | 1400x400 | 700x137 | 5
+  File2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd | 597x517 | 577x500.5 | 3
 
   > Caută în numele fișierului perechi de numere de genul `000x000` (unde `000` înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de `mm` sau `cm`). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. `000x000_000x000`), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
 
 * **`PageSizeFromMargins.jsx`** redimensionează fiecare pagină la marginile acesteia.
 
 * **`PageSizeFromSelection.jsx`** redimensionează pagina curentă la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
+
+<details><summary><strong>Shortcut‑uri</strong></summary>
+
+Setup | | | |
+:- | -: | :- | -:
+**`DocCleanup.jsx`** | F2 | **`PageSizeFromFilename.jsx`** | F3
+**`DocDefaults.jsx`** | ⌥F2 | **`PageSizeFromMargins.jsx`** | ⌥F3
+**`CleanupSwatches.jsx`** | ⇧F2 | **`PageSizeFromSelection.jsx`** | ⇧F3
+
+</details>
 
 ### **Misc**
 
@@ -153,8 +199,8 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
 
   Mai întâi caută în folderul curent un document TSV cu 2 coloane numit **`QR.txt`**, din care preia o listă de coduri și fișierele corespunzătoare:
 
-  Fișier | Cod
-  :--- | :---
+  Filename | Code
+  :- | :-
   File 1 | CODE 1
   File 2 | CODE 2
   ... |
@@ -177,23 +223,14 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
   * dacă cursorul e în text, face zoom la întreg cadrul;
   * fără nimic selectat face vizibil întreg spreadul.
 
-## Shortcut‑uri
+<details><summary><strong>Shortcut‑uri</strong></summary>
 
-Rularea unui script folosit frecvent din panoul **Scripts** este destul de neplăcută. Dar puteți face asta instantaneu, atribuindu‑i o scurtătură din **Edit > Keyboard Shortcuts... > Product Area > Scripts**:
+Misc | | | |
+:- | -: | :- | -:
+**`Clip.jsx`** | Num* | **`QR.jsx`** | F9
+**`ClipUndo.jsx`** | ⌃Num* | **`ZoomToSelection.jsx`** | F4
 
-| Alignment               |       | Proxy                   |       | Fitting/Scale                    |       | Setup                     |      |
-| :---------------------- | ----: | :---------------------- | ----: | :------------------------------- | ----: | :------------------------ | ----: |
-| **`AlignToTL.jsx`**     |  Num7 | **`SetRefPointTL.jsx`** | ⌃Num7 | **`FitToPage.jsx`**              |   F11 | **`DocCleanup.jsx`**      |    F2 |
-| **`AlignToL.jsx`**      |  Num4 | **`SetRefPointL.jsx`**  | ⌃Num4 | **`FitToPageMargins.jsx`**       |  ⌥F11 | **`DocDefaults.jsx`**     |   ⌥F2 |
-| **`AlignToBL.jsx`**     |  Num1 | **`SetRefPointBL.jsx`** | ⌃Num1 | **`FitToPageBleed.jsx`**         |  ⇧F11 | **`CleanupSwatches.jsx`** |   ⇧F2 |
-| **`AlignToT.jsx`**      |  Num8 | **`SetRefPointT.jsx`**  | ⌃Num8 | **`FitToPageBleedForced.jsx`**   | ⇧⌘F11 |                           |
-| **`AlignToC.jsx`**      |  Num5 | **`SetRefPointC.jsx`**  | ⌃Num5 | **`FitToSpread.jsx`**            |   F12 | **Misc**                  |
-| **`AlignToB.jsx`**      |  Num2 | **`SetRefPointB.jsx`**  | ⌃Num2 | **`FitToSpreadMargins.jsx`**     |  ⌥F12 | **`Clip.jsx`**            |  Num* |
-| **`AlignToTR.jsx`**     |  Num9 | **`SetRefPointTR.jsx`** | ⌃Num9 | **`FitToSpreadBleed.jsx`**       |  ⇧F12 | **`ClipUndo.jsx`**        | ⌃Num* |
-| **`AlignToR.jsx`**      |  Num6 | **`SetRefPointR.jsx`**  | ⌃Num6 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12 | **`QR.jsx`**              |    F9 |
-| **`AlignToBR.jsx`**     |  Num3 | **`SetRefPointBR.jsx`** | ⌃Num3 | **`ScaleToPageSize.jsx`**        |    F5 | **`ZoomToSelection.jsx`** |    F4 |
-| **`ToggleAlignTo.jsx`** |  Num0 |                         |       | **`ScaleToPageMargins.jsx`**     |   ⌥F5 |                           |
-| **`ResetAlignTo.jsx`**  | ⌃Num0 |                         |       | **`TextAutosize.jsx`**           |    F6 |                           |
+</details>
 
 ## Instalare
 
@@ -205,6 +242,7 @@ Rularea unui script folosit frecvent din panoul **Scripts** este destul de nepl�
 
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington și alții. -->
 
-Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)). Trimiteți un e‑mail la Paul Chiorean \<jpeg AT basement.ro\> sau [raportați o problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați probleme sau aveți sugestii.
+Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)). \
+Raportați o [problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați dificultăți sau aveți sugestii.
 
 README-ro.md • 9 noiembrie 2020

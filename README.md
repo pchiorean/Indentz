@@ -1,6 +1,6 @@
 # Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run through a shortcut (you can found a configuration suggestion in the [Shortcuts](#shortcuts) section). Some are intended to be run in the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
+Collection of InDesign scripts for simple and repetitive tasks. Many of them are designed to be run by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts** (suggestions below each section). Some can be run in the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
 
 ## Description
 
@@ -16,7 +16,23 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 
 * **`SetRefPoint`** scripts change the reference point used for transformations (like clicking the little proxy squares in the **Transform** palette).
 
-**Note:** Both sets should be assigned to the numeric keypad (see [Shortcuts](#shortcuts)).
+**Note:** Both sets should be assigned to the numeric keypad.
+
+<details><summary><strong>Shortcuts</strong></summary>
+
+Alignment | | | | | | | |
+:- | -: | :- | -: | :- | -: | :- | -:
+**`AlignToTL.jsx`** | Num7 | **`AlignToT.jsx`** | Num8 | **`AlignToTR.jsx`** | Num9 | **`ToggleAlignTo.jsx`** |  Num0
+**`AlignToL.jsx`** | Num4 | **`AlignToC.jsx`** | Num5 | **`AlignToR.jsx`**  | Num6 | **`ResetAlignTo.jsx`**  | ⌃Num0
+**`AlignToBL.jsx`** | Num1 | **`AlignToB.jsx`** | Num2 | **`AlignToBR.jsx`** | Num3
+
+Proxy | | | | | |
+:- | -: | :- | -: | :- | -:
+**`SetRefPointTL.jsx`** | ⌃Num7 | **`SetRefPointT.jsx`** | ⌃Num8 | **`SetRefPointTR.jsx`** | ⌃Num9
+**`SetRefPointL.jsx`** | ⌃Num4 | **`SetRefPointC.jsx`** | ⌃Num5 | **`SetRefPointR.jsx`** | ⌃Num6
+**`SetRefPointBL.jsx`** | ⌃Num1 | **`SetRefPointB.jsx`** | ⌃Num2 | **`SetRefPointBR.jsx`** | ⌃Num3
+
+</details>
 
 ### **Fitting**
 
@@ -27,12 +43,23 @@ Collection of InDesign scripts for simple and repetitive tasks. Many are designe
 * **`TextAutosize.jsx`** fits the frame to the text and sets it to auto-size. You control the auto-sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
 
   | | ![¶ Align left](.img/paragraphalign-L.png) | ![¶ Align center](.img/paragraphalign-C.png) | ![¶ Align right](.img/paragraphalign-R.png)
-  :---: | :---: | :---: | :---:
+  :-: | :-: | :-: | :-:
   ![Vertical Justification Top](.img/verticaljustification-T.png) | ![top-left](.img/textautosize-TL.png) | ![top-center](.img/textautosize-TC.png) | ![top-right](.img/textautosize-TR.png)
   ![Vertical Justification Center](.img/verticaljustification-C.png) | ![center-left](.img/textautosize-CL.png) | ![center](.img/textautosize-C.png) | ![center-right](.img/textautosize-CR.png)
   ![Vertical Justification Bottom](.img/verticaljustification-B.png) | ![bottom-left](.img/textautosize-BL.png) | ![bottom-center](.img/textautosize-BC.png) | ![bottom-right](.img/textautosize-BR.png)
 
   If the text has only one line, **Auto-Sizing Type** will be set to *Height and width*. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width*.
+
+<details><summary><strong>Shortcuts</strong></summary>
+
+FitToPage | | FitToSpread | | TextAutosize | |
+:- | -: | :- | -: | :- | -:
+**`FitToPage.jsx`** | F11 | **`FitToSpread.jsx`** | F12 | **`TextAutosize.jsx`** | F6
+**`FitToPageMargins.jsx`** | ⌥F11 | **`FitToSpreadMargins.jsx`** | ⌥F12
+**`FitToPageBleed.jsx`** | ⇧F11 | **`FitToSpreadBleed.jsx`** | ⇧F12
+**`FitToPageBleedForced.jsx`** | ⇧⌘F11 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12
+
+</details>
 
 ### **Scaling**
 
@@ -41,6 +68,15 @@ These scale the selected object(s) proportionally, as a block.
 * **`ScaleToPageSize.jsx`** and **`ScaleToPageMargins.jsx`** scale to the page size or page margins.
 
 * The **`H`** (height) and **`W`** (width) variants scale to the height or width of the page or page margins.
+
+<details><summary><strong>Shortcuts</strong></summary>
+
+Scale | |
+:- | -:
+**`ScaleToPageSize.jsx`** | F5
+**`ScaleToPageMargins.jsx`** | ⌥F5
+
+</details>
 
 ### **Print**
 
@@ -84,7 +120,7 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 * **`DefLayers.jsx`** adds a set of layers, reading their properties from [**`DefLayers.txt`**](setup/DefLayers.txt), which is a 6‑column TSV *(tab-separated values)* file with the following format:
 
   Name | Color | Visible | Printable | Order | Variants
-  :--- | :---: | :---: | :---: | :---: | :---
+  :- | :-: | :-: | :-: | :-: | :-
   dielines | Magenta | TRUE | TRUE | top | cut, cut lines, decoupe, die, die cut, stanze
   template | Gray | FALSE | FALSE | bottom
   ... |
@@ -103,7 +139,7 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 * **`DefSwatches.jsx`** adds a set of swatches defined in [**`DefSwatches.txt`**](setup/DefSwatches.txt), a 3‑column TSV file with the following format:
 
   Name | Model | Values
-  :--- | :--- | :---
+  :- | :- | :-
   Rich Black | process | 60, 40, 40, 100
   Cut | spot | 0, 100, 0, 0
   ... |
@@ -117,7 +153,7 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 * **`ReplaceFonts.jsx`** replaces fonts from a substitution list, [**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt), a 4‑column TSV file with the following format:
 
   Old font | Style | New font | Style
-  :--- | :--- | :--- | :---
+  :- | :- | :- | :-
   Arial | Regular | Helvetica Neue | Regular
   Arial | Bold | Helvetica Neue | Bold
   ... |
@@ -129,15 +165,25 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 * **`PageSizeFromFilename.jsx`** sets the page size and margins by retrieving the information from the filename:
 
   Filename | Total size | Safe area | Bleed
-  :--- | :---: | :---: | :---:
-  **File1\_`1400x400`\_`700x137`\_`10`mm\_QR.indd** | 1400x400 | 700x137 | 10
-  **File2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd** | 597x517 | 577x500.5 | 3
+  :- | :-: | :-: | :-:
+  File1\_`1400x400`\_`700x137`\_`5`mm\_QR.indd | 1400x400 | 700x137 | 5
+  File2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd | 597x517 | 577x500.5 | 3
 
   > It searches for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it's the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair it's the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this becomes bleed.
 
 * **`PageSizeFromMargins.jsx`** resizes each page to its margins.
 
 * **`PageSizeFromSelection.jsx`** resizes the current page to the selected objects (similar to **Artboards > Fit to Selected Art** in Illustrator).
+
+<details><summary><strong>Shortcuts</strong></summary>
+
+Setup | | | |
+:- | -: | :- | -:
+**`DocCleanup.jsx`** | F2 | **`PageSizeFromFilename.jsx`** | F3
+**`DocDefaults.jsx`** | ⌥F2 | **`PageSizeFromMargins.jsx`** | ⌥F3
+**`CleanupSwatches.jsx`** | ⇧F2 | **`PageSizeFromSelection.jsx`** | ⇧F3
+
+</details>
 
 ### **Misc**
 
@@ -154,7 +200,7 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
   First, it looks in the current folder for a 2‑column TSV document named **`QR.txt`** from which it takes a list of codes and the corresponding files:
 
   Filename | Code
-  :--- | :---
+  :- | :-
   File 1 | CODE 1
   File 2 | CODE 2
   ... |
@@ -177,23 +223,14 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
   * if the cursor is in the text, zooms on the whole frame;
   * without anything selected zooms on the spread.
 
-## Shortcuts
+<details><summary><strong>Shortcuts</strong></summary>
 
-Running a frequently used script from the **Scripts** panel is quite annoying. But you can make the process instantaneous by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts**:
+Misc | | | |
+:- | -: | :- | -:
+**`Clip.jsx`** | Num* | **`QR.jsx`** | F9
+**`ClipUndo.jsx`** | ⌃Num* | **`ZoomToSelection.jsx`** | F4
 
-| Alignment               |       | Proxy                   |       | Fitting/Scale                    |       | Setup                     |       |
-| :---------------------- | ----: | :---------------------- | ----: | :------------------------------- | ----: | :------------------------ | ----: |
-| **`AlignToTL.jsx`**     |  Num7 | **`SetRefPointTL.jsx`** | ⌃Num7 | **`FitToPage.jsx`**              |   F11 | **`DocCleanup.jsx`**      |    F2 |
-| **`AlignToL.jsx`**      |  Num4 | **`SetRefPointL.jsx`**  | ⌃Num4 | **`FitToPageMargins.jsx`**       |  ⌥F11 | **`DocDefaults.jsx`**     |   ⌥F2 |
-| **`AlignToBL.jsx`**     |  Num1 | **`SetRefPointBL.jsx`** | ⌃Num1 | **`FitToPageBleed.jsx`**         |  ⇧F11 | **`CleanupSwatches.jsx`** |   ⇧F2 |
-| **`AlignToT.jsx`**      |  Num8 | **`SetRefPointT.jsx`**  | ⌃Num8 | **`FitToPageBleedForced.jsx`**   | ⇧⌘F11 |                           |
-| **`AlignToC.jsx`**      |  Num5 | **`SetRefPointC.jsx`**  | ⌃Num5 | **`FitToSpread.jsx`**            |   F12 | **Misc**                  |
-| **`AlignToB.jsx`**      |  Num2 | **`SetRefPointB.jsx`**  | ⌃Num2 | **`FitToSpreadMargins.jsx`**     |  ⌥F12 | **`Clip.jsx`**            |  Num* |
-| **`AlignToTR.jsx`**     |  Num9 | **`SetRefPointTR.jsx`** | ⌃Num9 | **`FitToSpreadBleed.jsx`**       |  ⇧F12 | **`ClipUndo.jsx`**        | ⌃Num* |
-| **`AlignToR.jsx`**      |  Num6 | **`SetRefPointR.jsx`**  | ⌃Num6 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12 | **`QR.jsx`**              |    F9 |
-| **`AlignToBR.jsx`**     |  Num3 | **`SetRefPointBR.jsx`** | ⌃Num3 | **`ScaleToPageSize.jsx`**        |    F5 | **`ZoomToSelection.jsx`** |    F4 |
-| **`ToggleAlignTo.jsx`** |  Num0 |                         |       | **`ScaleToPageMargins.jsx`**     |   ⌥F5 |                           |
-| **`ResetAlignTo.jsx`**  | ⌃Num0 |                         |       | **`TextAutosize.jsx`**           |    F6 |                           |
+</details>
 
 ## Installation
 
@@ -205,6 +242,7 @@ Running a frequently used script from the **Scripts** panel is quite annoying. B
 
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
 
-The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)). Send an e-mail to Paul Chiorean \<jpeg AT basement.ro\> or [report an issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
+The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)). \
+Open an [issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
 README.md • November 9, 2020

@@ -24,7 +24,7 @@ line-height: 1.6;
 </head>
 <body class="vscode-light">
 <h1 id="indentz">Indentz</h1>
-<p>Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run through a shortcut (you can found a configuration suggestion in the <a href="#shortcuts">Shortcuts</a> section). Some are intended to be run in the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
+<p>Collection of InDesign scripts for simple and repetitive tasks. Many of them are designed to be run by assigning keyboard shortcuts from <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong> (suggestions below each section). Some can be run in the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
 <h2 id="description">Description</h2>
 <h3 id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
 <ul>
@@ -42,7 +42,93 @@ line-height: 1.6;
 <p><strong><code>SetRefPoint</code></strong> scripts change the reference point used for transformations (like clicking the little proxy squares in the <strong>Transform</strong> palette).</p>
 </li>
 </ul>
-<p><strong>Note:</strong> Both sets should be assigned to the numeric keypad (see <a href="#shortcuts">Shortcuts</a>).</p>
+<p><strong>Note:</strong> Both sets should be assigned to the numeric keypad.</p>
+<details><summary><strong>Shortcuts</strong></summary>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Alignment</th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong><code>AlignToTL.jsx</code></strong></td>
+<td style="text-align:right">Num7</td>
+<td style="text-align:left"><strong><code>AlignToT.jsx</code></strong></td>
+<td style="text-align:right">Num8</td>
+<td style="text-align:left"><strong><code>AlignToTR.jsx</code></strong></td>
+<td style="text-align:right">Num9</td>
+<td style="text-align:left"><strong><code>ToggleAlignTo.jsx</code></strong></td>
+<td style="text-align:right">Num0</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>AlignToL.jsx</code></strong></td>
+<td style="text-align:right">Num4</td>
+<td style="text-align:left"><strong><code>AlignToC.jsx</code></strong></td>
+<td style="text-align:right">Num5</td>
+<td style="text-align:left"><strong><code>AlignToR.jsx</code></strong></td>
+<td style="text-align:right">Num6</td>
+<td style="text-align:left"><strong><code>ResetAlignTo.jsx</code></strong></td>
+<td style="text-align:right">⌃Num0</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>AlignToBL.jsx</code></strong></td>
+<td style="text-align:right">Num1</td>
+<td style="text-align:left"><strong><code>AlignToB.jsx</code></strong></td>
+<td style="text-align:right">Num2</td>
+<td style="text-align:left"><strong><code>AlignToBR.jsx</code></strong></td>
+<td style="text-align:right">Num3</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Proxy</th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong><code>SetRefPointTL.jsx</code></strong></td>
+<td style="text-align:right">⌃Num7</td>
+<td style="text-align:left"><strong><code>SetRefPointT.jsx</code></strong></td>
+<td style="text-align:right">⌃Num8</td>
+<td style="text-align:left"><strong><code>SetRefPointTR.jsx</code></strong></td>
+<td style="text-align:right">⌃Num9</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>SetRefPointL.jsx</code></strong></td>
+<td style="text-align:right">⌃Num4</td>
+<td style="text-align:left"><strong><code>SetRefPointC.jsx</code></strong></td>
+<td style="text-align:right">⌃Num5</td>
+<td style="text-align:left"><strong><code>SetRefPointR.jsx</code></strong></td>
+<td style="text-align:right">⌃Num6</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>SetRefPointBL.jsx</code></strong></td>
+<td style="text-align:right">⌃Num1</td>
+<td style="text-align:left"><strong><code>SetRefPointB.jsx</code></strong></td>
+<td style="text-align:right">⌃Num2</td>
+<td style="text-align:left"><strong><code>SetRefPointBR.jsx</code></strong></td>
+<td style="text-align:right">⌃Num3</td>
+</tr>
+</tbody>
+</table>
+</details>
 <h3 id="fitting"><strong>Fitting</strong></h3>
 <ul>
 <li>
@@ -84,6 +170,54 @@ line-height: 1.6;
 <p>If the text has only one line, <strong>Auto-Sizing Type</strong> will be set to <em>Height and width</em>. If it has multiple lines, the first run will set it to <em>Height only</em>, the second run to <em>Height and width</em>.</p>
 </li>
 </ul>
+<details><summary><strong>Shortcuts</strong></summary>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">FitToPage</th>
+<th style="text-align:right"></th>
+<th style="text-align:left">FitToSpread</th>
+<th style="text-align:right"></th>
+<th style="text-align:left">TextAutosize</th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong><code>FitToPage.jsx</code></strong></td>
+<td style="text-align:right">F11</td>
+<td style="text-align:left"><strong><code>FitToSpread.jsx</code></strong></td>
+<td style="text-align:right">F12</td>
+<td style="text-align:left"><strong><code>TextAutosize.jsx</code></strong></td>
+<td style="text-align:right">F6</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>FitToPageMargins.jsx</code></strong></td>
+<td style="text-align:right">⌥F11</td>
+<td style="text-align:left"><strong><code>FitToSpreadMargins.jsx</code></strong></td>
+<td style="text-align:right">⌥F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>FitToPageBleed.jsx</code></strong></td>
+<td style="text-align:right">⇧F11</td>
+<td style="text-align:left"><strong><code>FitToSpreadBleed.jsx</code></strong></td>
+<td style="text-align:right">⇧F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>FitToPageBleedForced.jsx</code></strong></td>
+<td style="text-align:right">⇧⌘F11</td>
+<td style="text-align:left"><strong><code>FitToSpreadBleedForced.jsx</code></strong></td>
+<td style="text-align:right">⇧⌘F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+</details>
 <h3 id="scaling"><strong>Scaling</strong></h3>
 <p>These scale the selected object(s) proportionally, as a block.</p>
 <ul>
@@ -94,6 +228,26 @@ line-height: 1.6;
 <p>The <strong><code>H</code></strong> (height) and <strong><code>W</code></strong> (width) variants scale to the height or width of the page or page margins.</p>
 </li>
 </ul>
+<details><summary><strong>Shortcuts</strong></summary>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Scale</th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong><code>ScaleToPageSize.jsx</code></strong></td>
+<td style="text-align:right">F5</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>ScaleToPageMargins.jsx</code></strong></td>
+<td style="text-align:right">⌥F5</td>
+</tr>
+</tbody>
+</table>
+</details>
 <h3 id="print"><strong>Print</strong></h3>
 <p>Make several preparations for export and can be used with <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. The scripts detect alternative layers like <em>visible</em>, <em>vizibil</em> for <code>safe area</code>, or <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> for <code>dielines</code>.</p>
 <ul>
@@ -167,6 +321,14 @@ line-height: 1.6;
 <td style="text-align:center">FALSE</td>
 <td style="text-align:center">FALSE</td>
 <td style="text-align:center">bottom</td>
+<td style="text-align:left"></td>
+</tr>
+<tr>
+<td style="text-align:left">...</td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
@@ -269,13 +431,13 @@ line-height: 1.6;
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><strong>File1_<code>1400x400</code>_<code>700x137</code>_<code>10</code>mm_QR.indd</strong></td>
+<td style="text-align:left">File1_<code>1400x400</code>_<code>700x137</code>_<code>5</code>mm_QR.indd</td>
 <td style="text-align:center">1400x400</td>
 <td style="text-align:center">700x137</td>
-<td style="text-align:center">10</td>
+<td style="text-align:center">5</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong>File2_<code>597x517</code>_<code>577x500.5</code>_<code>3</code>mm V4_QR.indd</strong></td>
+<td style="text-align:left">File2_<code>597x517</code>_<code>577x500.5</code>_<code>3</code>mm V4_QR.indd</td>
 <td style="text-align:center">597x517</td>
 <td style="text-align:center">577x500.5</td>
 <td style="text-align:center">3</td>
@@ -293,6 +455,38 @@ line-height: 1.6;
 <p><strong><code>PageSizeFromSelection.jsx</code></strong> resizes the current page to the selected objects (similar to <strong>Artboards &gt; Fit to Selected Art</strong> in Illustrator).</p>
 </li>
 </ul>
+<details><summary><strong>Shortcuts</strong></summary>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Setup</th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong><code>DocCleanup.jsx</code></strong></td>
+<td style="text-align:right">F2</td>
+<td style="text-align:left"><strong><code>PageSizeFromFilename.jsx</code></strong></td>
+<td style="text-align:right">F3</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>DocDefaults.jsx</code></strong></td>
+<td style="text-align:right">⌥F2</td>
+<td style="text-align:left"><strong><code>PageSizeFromMargins.jsx</code></strong></td>
+<td style="text-align:right">⌥F3</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>CleanupSwatches.jsx</code></strong></td>
+<td style="text-align:right">⇧F2</td>
+<td style="text-align:left"><strong><code>PageSizeFromSelection.jsx</code></strong></td>
+<td style="text-align:right">⇧F3</td>
+</tr>
+</tbody>
+</table>
+</details>
 <h3 id="misc"><strong>Misc</strong></h3>
 <ul>
 <li>
@@ -352,134 +546,32 @@ line-height: 1.6;
 </ul>
 </li>
 </ul>
-<h2 id="shortcuts">Shortcuts</h2>
-<p>Running a frequently used script from the <strong>Scripts</strong> panel is quite annoying. But you can make the process instantaneous by assigning keyboard shortcuts from <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>:</p>
+<details><summary><strong>Shortcuts</strong></summary>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Alignment</th>
+<th style="text-align:left">Misc</th>
 <th style="text-align:right"></th>
-<th style="text-align:left">Proxy</th>
-<th style="text-align:right"></th>
-<th style="text-align:left">Fitting/Scale</th>
-<th style="text-align:right"></th>
-<th style="text-align:left">Setup</th>
+<th style="text-align:left"></th>
 <th style="text-align:right"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><strong><code>AlignToTL.jsx</code></strong></td>
-<td style="text-align:right">Num7</td>
-<td style="text-align:left"><strong><code>SetRefPointTL.jsx</code></strong></td>
-<td style="text-align:right">⌃Num7</td>
-<td style="text-align:left"><strong><code>FitToPage.jsx</code></strong></td>
-<td style="text-align:right">F11</td>
-<td style="text-align:left"><strong><code>DocCleanup.jsx</code></strong></td>
-<td style="text-align:right">F2</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToL.jsx</code></strong></td>
-<td style="text-align:right">Num4</td>
-<td style="text-align:left"><strong><code>SetRefPointL.jsx</code></strong></td>
-<td style="text-align:right">⌃Num4</td>
-<td style="text-align:left"><strong><code>FitToPageMargins.jsx</code></strong></td>
-<td style="text-align:right">⌥F11</td>
-<td style="text-align:left"><strong><code>DocDefaults.jsx</code></strong></td>
-<td style="text-align:right">⌥F2</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToBL.jsx</code></strong></td>
-<td style="text-align:right">Num1</td>
-<td style="text-align:left"><strong><code>SetRefPointBL.jsx</code></strong></td>
-<td style="text-align:right">⌃Num1</td>
-<td style="text-align:left"><strong><code>FitToPageBleed.jsx</code></strong></td>
-<td style="text-align:right">⇧F11</td>
-<td style="text-align:left"><strong><code>CleanupSwatches.jsx</code></strong></td>
-<td style="text-align:right">⇧F2</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToT.jsx</code></strong></td>
-<td style="text-align:right">Num8</td>
-<td style="text-align:left"><strong><code>SetRefPointT.jsx</code></strong></td>
-<td style="text-align:right">⌃Num8</td>
-<td style="text-align:left"><strong><code>FitToPageBleedForced.jsx</code></strong></td>
-<td style="text-align:right">⇧⌘F11</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToC.jsx</code></strong></td>
-<td style="text-align:right">Num5</td>
-<td style="text-align:left"><strong><code>SetRefPointC.jsx</code></strong></td>
-<td style="text-align:right">⌃Num5</td>
-<td style="text-align:left"><strong><code>FitToSpread.jsx</code></strong></td>
-<td style="text-align:right">F12</td>
-<td style="text-align:left"><strong>Misc</strong></td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToB.jsx</code></strong></td>
-<td style="text-align:right">Num2</td>
-<td style="text-align:left"><strong><code>SetRefPointB.jsx</code></strong></td>
-<td style="text-align:right">⌃Num2</td>
-<td style="text-align:left"><strong><code>FitToSpreadMargins.jsx</code></strong></td>
-<td style="text-align:right">⌥F12</td>
 <td style="text-align:left"><strong><code>Clip.jsx</code></strong></td>
 <td style="text-align:right">Num*</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToTR.jsx</code></strong></td>
-<td style="text-align:right">Num9</td>
-<td style="text-align:left"><strong><code>SetRefPointTR.jsx</code></strong></td>
-<td style="text-align:right">⌃Num9</td>
-<td style="text-align:left"><strong><code>FitToSpreadBleed.jsx</code></strong></td>
-<td style="text-align:right">⇧F12</td>
-<td style="text-align:left"><strong><code>ClipUndo.jsx</code></strong></td>
-<td style="text-align:right">⌃Num*</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToR.jsx</code></strong></td>
-<td style="text-align:right">Num6</td>
-<td style="text-align:left"><strong><code>SetRefPointR.jsx</code></strong></td>
-<td style="text-align:right">⌃Num6</td>
-<td style="text-align:left"><strong><code>FitToSpreadBleedForced.jsx</code></strong></td>
-<td style="text-align:right">⇧⌘F12</td>
 <td style="text-align:left"><strong><code>QR.jsx</code></strong></td>
 <td style="text-align:right">F9</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong><code>AlignToBR.jsx</code></strong></td>
-<td style="text-align:right">Num3</td>
-<td style="text-align:left"><strong><code>SetRefPointBR.jsx</code></strong></td>
-<td style="text-align:right">⌃Num3</td>
-<td style="text-align:left"><strong><code>ScaleToPageSize.jsx</code></strong></td>
-<td style="text-align:right">F5</td>
+<td style="text-align:left"><strong><code>ClipUndo.jsx</code></strong></td>
+<td style="text-align:right">⌃Num*</td>
 <td style="text-align:left"><strong><code>ZoomToSelection.jsx</code></strong></td>
 <td style="text-align:right">F4</td>
 </tr>
-<tr>
-<td style="text-align:left"><strong><code>ToggleAlignTo.jsx</code></strong></td>
-<td style="text-align:right">Num0</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-<td style="text-align:left"><strong><code>ScaleToPageMargins.jsx</code></strong></td>
-<td style="text-align:right">⌥F5</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>ResetAlignTo.jsx</code></strong></td>
-<td style="text-align:right">⌃Num0</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-<td style="text-align:left"><strong><code>TextAutosize.jsx</code></strong></td>
-<td style="text-align:right">F6</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-</tr>
 </tbody>
 </table>
+</details>
 <h2 id="installation">Installation</h2>
 <ol>
 <li>Open <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
@@ -488,8 +580,8 @@ line-height: 1.6;
 </ol>
 <h2 id="license">License</h2>
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
-<p>The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>). Send an e-mail to Paul Chiorean &lt;jpeg AT basement.ro&gt; or <a href="https://github.com/pchiorean/Indentz/issues">report an issue</a> on Github if you encounter problems or have any suggestions.</p>
-<p>README.md • November 9, 2020</p>
+<p>The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).<br>Open an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> on Github if you encounter problems or have any suggestions.</p>
+<p><a href="http://README.html">README.md</a> • November 9, 2020</p>
 
 </body>
 </html>

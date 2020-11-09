@@ -24,7 +24,7 @@ line-height: 1.6;
 </head>
 <body class="vscode-light">
 <h1 id="indentz">Indentz</h1>
-<p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (o sugestie de configurare găsiți în secțiunea <a href="#shortcuturi">Shortcut‑uri</a>). Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
+<p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (sugestii sub fiecare secțiune). Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
 <h2 id="descriere">Descriere</h2>
 <h3 id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
 <ul>
@@ -42,7 +42,93 @@ line-height: 1.6;
 <p><strong><code>SetRefPoint</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta <strong>Transform</strong>.</p>
 </li>
 </ul>
-<p><strong>Notă:</strong> Ambele seturi ar trebui alocate tastaturii numerice (v. <a href="#shortcuturi">Shortcut‑uri</a>).</p>
+<p><strong>Notă:</strong> Ambele seturi ar trebui alocate tastaturii numerice.</p>
+<details><summary><strong>Shortcut‑uri</strong></summary>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Alignment</th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong><code>AlignToTL.jsx</code></strong></td>
+<td style="text-align:right">Num7</td>
+<td style="text-align:left"><strong><code>AlignToT.jsx</code></strong></td>
+<td style="text-align:right">Num8</td>
+<td style="text-align:left"><strong><code>AlignToTR.jsx</code></strong></td>
+<td style="text-align:right">Num9</td>
+<td style="text-align:left"><strong><code>ToggleAlignTo.jsx</code></strong></td>
+<td style="text-align:right">Num0</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>AlignToL.jsx</code></strong></td>
+<td style="text-align:right">Num4</td>
+<td style="text-align:left"><strong><code>AlignToC.jsx</code></strong></td>
+<td style="text-align:right">Num5</td>
+<td style="text-align:left"><strong><code>AlignToR.jsx</code></strong></td>
+<td style="text-align:right">Num6</td>
+<td style="text-align:left"><strong><code>ResetAlignTo.jsx</code></strong></td>
+<td style="text-align:right">⌃Num0</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>AlignToBL.jsx</code></strong></td>
+<td style="text-align:right">Num1</td>
+<td style="text-align:left"><strong><code>AlignToB.jsx</code></strong></td>
+<td style="text-align:right">Num2</td>
+<td style="text-align:left"><strong><code>AlignToBR.jsx</code></strong></td>
+<td style="text-align:right">Num3</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Proxy</th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong><code>SetRefPointTL.jsx</code></strong></td>
+<td style="text-align:right">⌃Num7</td>
+<td style="text-align:left"><strong><code>SetRefPointT.jsx</code></strong></td>
+<td style="text-align:right">⌃Num8</td>
+<td style="text-align:left"><strong><code>SetRefPointTR.jsx</code></strong></td>
+<td style="text-align:right">⌃Num9</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>SetRefPointL.jsx</code></strong></td>
+<td style="text-align:right">⌃Num4</td>
+<td style="text-align:left"><strong><code>SetRefPointC.jsx</code></strong></td>
+<td style="text-align:right">⌃Num5</td>
+<td style="text-align:left"><strong><code>SetRefPointR.jsx</code></strong></td>
+<td style="text-align:right">⌃Num6</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>SetRefPointBL.jsx</code></strong></td>
+<td style="text-align:right">⌃Num1</td>
+<td style="text-align:left"><strong><code>SetRefPointB.jsx</code></strong></td>
+<td style="text-align:right">⌃Num2</td>
+<td style="text-align:left"><strong><code>SetRefPointBR.jsx</code></strong></td>
+<td style="text-align:right">⌃Num3</td>
+</tr>
+</tbody>
+</table>
+</details>
 <h3 id="fitting"><strong>Fitting</strong></h3>
 <ul>
 <li>
@@ -84,6 +170,54 @@ line-height: 1.6;
 <p>Dacă textul are un singur rând, <strong>Auto-Sizing Type</strong> va fi setat <em>Height and width</em>. Dacă are mai multe rânduri, prima rulare îl va seta <em>Height only</em>, a doua <em>Height and width</em>.</p>
 </li>
 </ul>
+<details><summary><strong>Shortcut‑uri</strong></summary>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">FitToPage</th>
+<th style="text-align:right"></th>
+<th style="text-align:left">FitToSpread</th>
+<th style="text-align:right"></th>
+<th style="text-align:left">TextAutosize</th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong><code>FitToPage.jsx</code></strong></td>
+<td style="text-align:right">F11</td>
+<td style="text-align:left"><strong><code>FitToSpread.jsx</code></strong></td>
+<td style="text-align:right">F12</td>
+<td style="text-align:left"><strong><code>TextAutosize.jsx</code></strong></td>
+<td style="text-align:right">F6</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>FitToPageMargins.jsx</code></strong></td>
+<td style="text-align:right">⌥F11</td>
+<td style="text-align:left"><strong><code>FitToSpreadMargins.jsx</code></strong></td>
+<td style="text-align:right">⌥F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>FitToPageBleed.jsx</code></strong></td>
+<td style="text-align:right">⇧F11</td>
+<td style="text-align:left"><strong><code>FitToSpreadBleed.jsx</code></strong></td>
+<td style="text-align:right">⇧F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>FitToPageBleedForced.jsx</code></strong></td>
+<td style="text-align:right">⇧⌘F11</td>
+<td style="text-align:left"><strong><code>FitToSpreadBleedForced.jsx</code></strong></td>
+<td style="text-align:right">⇧⌘F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+</tbody>
+</table>
+</details>
 <h3 id="scaling"><strong>Scaling</strong></h3>
 <p>Acestea scalează proporțional unul sau mai multe obiecte selectate, ca un bloc unitar.</p>
 <ul>
@@ -94,6 +228,26 @@ line-height: 1.6;
 <p>Variantele <strong><code>H</code></strong> (height) și <strong><code>W</code></strong> (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.</p>
 </li>
 </ul>
+<details><summary><strong>Shortcut‑uri</strong></summary>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Scale</th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong><code>ScaleToPageSize.jsx</code></strong></td>
+<td style="text-align:right">F5</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>ScaleToPageMargins.jsx</code></strong></td>
+<td style="text-align:right">⌥F5</td>
+</tr>
+</tbody>
+</table>
+</details>
 <h3 id="print"><strong>Print</strong></h3>
 <p>Fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează layere alternative gen <em>visible</em>, <em>vizibil</em> pentru <code>safe area</code>, sau <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> pentru <code>dielines</code>.</p>
 <ul>
@@ -180,12 +334,12 @@ line-height: 1.6;
 </tbody>
 </table>
 <blockquote>
-<p><strong><code>Nume</code></strong>: numele layerului <br>
-<strong><code>Culoare</code></strong>: culoarea layerului (v. <a href="setup/UIColors.txt"><strong><code>UIColors.txt</code></strong></a>) <br>
-<strong><code>Vizibil</code></strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
-<strong><code>Printabil</code></strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
-<strong><code>Ordine</code></strong>: <code>top</code> sau <code>bottom</code> (deasupra sau sub layerele existente) <br>
-<strong><code>Variante</code></strong>: o listă de layere care vor fi combinate cu layerul de bază (case insensitive)</p>
+<p><strong>Nume</strong>: numele layerului <br>
+<strong>Culoare</strong>: culoarea layerului (v. <a href="setup/UIColors.txt"><strong><code>UIColors.txt</code></strong></a>) <br>
+<strong>Vizibil</strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
+<strong>Printabil</strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
+<strong>Ordine</strong>: <code>top</code> sau <code>bottom</code> (deasupra sau sub layerele existente) <br>
+<strong>Variante</strong>: o listă de layere care vor fi combinate cu layerul de bază (case insensitive)</p>
 </blockquote>
 <p><strong><code>DefLayers.xlsx</code></strong> vă va ajuta la generarea fișierului TSV.</p>
 <p><strong>Note:</strong> Prima linie (capul de tabel) și liniile care încep cu <code>;</code> sunt ignorate.</p>
@@ -219,9 +373,9 @@ line-height: 1.6;
 </tbody>
 </table>
 <blockquote>
-<p><strong><code>Name</code></strong>: numele swatch‑ului <br>
-<strong><code>Model</code></strong>: color model: <code>process</code> or <code>spot</code> <br>
-<strong><code>Values</code></strong>: o listă de 3 (RGB) sau 4 (CMYK) valori</p>
+<p><strong>Name</strong>: numele swatch‑ului <br>
+<strong>Model</strong>: color model: <code>process</code> or <code>spot</code> <br>
+<strong>Values</strong>: o listă de 3 (RGB) sau 4 (CMYK) valori</p>
 </blockquote>
 </li>
 <li>
@@ -277,13 +431,13 @@ line-height: 1.6;
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><strong>File1_<code>1400x400</code>_<code>700x137</code>_<code>10</code>mm_QR.indd</strong></td>
+<td style="text-align:left">File1_<code>1400x400</code>_<code>700x137</code>_<code>5</code>mm_QR.indd</td>
 <td style="text-align:center">1400x400</td>
 <td style="text-align:center">700x137</td>
-<td style="text-align:center">10</td>
+<td style="text-align:center">5</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong>File2_<code>597x517</code>_<code>577x500.5</code>_<code>3</code>mm V4_QR.indd</strong></td>
+<td style="text-align:left">File2_<code>597x517</code>_<code>577x500.5</code>_<code>3</code>mm V4_QR.indd</td>
 <td style="text-align:center">597x517</td>
 <td style="text-align:center">577x500.5</td>
 <td style="text-align:center">3</td>
@@ -301,6 +455,38 @@ line-height: 1.6;
 <p><strong><code>PageSizeFromSelection.jsx</code></strong> redimensionează pagina curentă la obiectele selectate (similar cu <strong>Artboards &gt; Fit to Selected Art</strong> din Illustrator).</p>
 </li>
 </ul>
+<details><summary><strong>Shortcut‑uri</strong></summary>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Setup</th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong><code>DocCleanup.jsx</code></strong></td>
+<td style="text-align:right">F2</td>
+<td style="text-align:left"><strong><code>PageSizeFromFilename.jsx</code></strong></td>
+<td style="text-align:right">F3</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>DocDefaults.jsx</code></strong></td>
+<td style="text-align:right">⌥F2</td>
+<td style="text-align:left"><strong><code>PageSizeFromMargins.jsx</code></strong></td>
+<td style="text-align:right">⌥F3</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong><code>CleanupSwatches.jsx</code></strong></td>
+<td style="text-align:right">⇧F2</td>
+<td style="text-align:left"><strong><code>PageSizeFromSelection.jsx</code></strong></td>
+<td style="text-align:right">⇧F3</td>
+</tr>
+</tbody>
+</table>
+</details>
 <h3 id="misc"><strong>Misc</strong></h3>
 <ul>
 <li>
@@ -319,8 +505,8 @@ line-height: 1.6;
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Fișier</th>
-<th style="text-align:left">Cod</th>
+<th style="text-align:left">Filename</th>
+<th style="text-align:left">Code</th>
 </tr>
 </thead>
 <tbody>
@@ -360,134 +546,32 @@ line-height: 1.6;
 </ul>
 </li>
 </ul>
-<h2 id="shortcuturi">Shortcut‑uri</h2>
-<p>Rularea unui script folosit frecvent din panoul <strong>Scripts</strong> este destul de neplăcută. Dar puteți face asta instantaneu, atribuindu‑i o scurtătură din <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>:</p>
+<details><summary><strong>Shortcut‑uri</strong></summary>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Alignment</th>
+<th style="text-align:left">Misc</th>
 <th style="text-align:right"></th>
-<th style="text-align:left">Proxy</th>
-<th style="text-align:right"></th>
-<th style="text-align:left">Fitting/Scale</th>
-<th style="text-align:right"></th>
-<th style="text-align:left">Setup</th>
+<th style="text-align:left"></th>
 <th style="text-align:right"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><strong><code>AlignToTL.jsx</code></strong></td>
-<td style="text-align:right">Num7</td>
-<td style="text-align:left"><strong><code>SetRefPointTL.jsx</code></strong></td>
-<td style="text-align:right">⌃Num7</td>
-<td style="text-align:left"><strong><code>FitToPage.jsx</code></strong></td>
-<td style="text-align:right">F11</td>
-<td style="text-align:left"><strong><code>DocCleanup.jsx</code></strong></td>
-<td style="text-align:right">F2</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToL.jsx</code></strong></td>
-<td style="text-align:right">Num4</td>
-<td style="text-align:left"><strong><code>SetRefPointL.jsx</code></strong></td>
-<td style="text-align:right">⌃Num4</td>
-<td style="text-align:left"><strong><code>FitToPageMargins.jsx</code></strong></td>
-<td style="text-align:right">⌥F11</td>
-<td style="text-align:left"><strong><code>DocDefaults.jsx</code></strong></td>
-<td style="text-align:right">⌥F2</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToBL.jsx</code></strong></td>
-<td style="text-align:right">Num1</td>
-<td style="text-align:left"><strong><code>SetRefPointBL.jsx</code></strong></td>
-<td style="text-align:right">⌃Num1</td>
-<td style="text-align:left"><strong><code>FitToPageBleed.jsx</code></strong></td>
-<td style="text-align:right">⇧F11</td>
-<td style="text-align:left"><strong><code>CleanupSwatches.jsx</code></strong></td>
-<td style="text-align:right">⇧F2</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToT.jsx</code></strong></td>
-<td style="text-align:right">Num8</td>
-<td style="text-align:left"><strong><code>SetRefPointT.jsx</code></strong></td>
-<td style="text-align:right">⌃Num8</td>
-<td style="text-align:left"><strong><code>FitToPageBleedForced.jsx</code></strong></td>
-<td style="text-align:right">⇧⌘F11</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToC.jsx</code></strong></td>
-<td style="text-align:right">Num5</td>
-<td style="text-align:left"><strong><code>SetRefPointC.jsx</code></strong></td>
-<td style="text-align:right">⌃Num5</td>
-<td style="text-align:left"><strong><code>FitToSpread.jsx</code></strong></td>
-<td style="text-align:right">F12</td>
-<td style="text-align:left"><strong>Misc</strong></td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToB.jsx</code></strong></td>
-<td style="text-align:right">Num2</td>
-<td style="text-align:left"><strong><code>SetRefPointB.jsx</code></strong></td>
-<td style="text-align:right">⌃Num2</td>
-<td style="text-align:left"><strong><code>FitToSpreadMargins.jsx</code></strong></td>
-<td style="text-align:right">⌥F12</td>
 <td style="text-align:left"><strong><code>Clip.jsx</code></strong></td>
 <td style="text-align:right">Num*</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToTR.jsx</code></strong></td>
-<td style="text-align:right">Num9</td>
-<td style="text-align:left"><strong><code>SetRefPointTR.jsx</code></strong></td>
-<td style="text-align:right">⌃Num9</td>
-<td style="text-align:left"><strong><code>FitToSpreadBleed.jsx</code></strong></td>
-<td style="text-align:right">⇧F12</td>
-<td style="text-align:left"><strong><code>ClipUndo.jsx</code></strong></td>
-<td style="text-align:right">⌃Num*</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>AlignToR.jsx</code></strong></td>
-<td style="text-align:right">Num6</td>
-<td style="text-align:left"><strong><code>SetRefPointR.jsx</code></strong></td>
-<td style="text-align:right">⌃Num6</td>
-<td style="text-align:left"><strong><code>FitToSpreadBleedForced.jsx</code></strong></td>
-<td style="text-align:right">⇧⌘F12</td>
 <td style="text-align:left"><strong><code>QR.jsx</code></strong></td>
 <td style="text-align:right">F9</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong><code>AlignToBR.jsx</code></strong></td>
-<td style="text-align:right">Num3</td>
-<td style="text-align:left"><strong><code>SetRefPointBR.jsx</code></strong></td>
-<td style="text-align:right">⌃Num3</td>
-<td style="text-align:left"><strong><code>ScaleToPageSize.jsx</code></strong></td>
-<td style="text-align:right">F5</td>
+<td style="text-align:left"><strong><code>ClipUndo.jsx</code></strong></td>
+<td style="text-align:right">⌃Num*</td>
 <td style="text-align:left"><strong><code>ZoomToSelection.jsx</code></strong></td>
 <td style="text-align:right">F4</td>
 </tr>
-<tr>
-<td style="text-align:left"><strong><code>ToggleAlignTo.jsx</code></strong></td>
-<td style="text-align:right">Num0</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-<td style="text-align:left"><strong><code>ScaleToPageMargins.jsx</code></strong></td>
-<td style="text-align:right">⌥F5</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-</tr>
-<tr>
-<td style="text-align:left"><strong><code>ResetAlignTo.jsx</code></strong></td>
-<td style="text-align:right">⌃Num0</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-<td style="text-align:left"><strong><code>TextAutosize.jsx</code></strong></td>
-<td style="text-align:right">F6</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
-</tr>
 </tbody>
 </table>
+</details>
 <h2 id="instalare">Instalare</h2>
 <ol>
 <li>Deschideți <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
@@ -496,8 +580,8 @@ line-height: 1.6;
 </ol>
 <h2 id="licență">Licență</h2>
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington și alții. -->
-<p>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>). Trimiteți un e‑mail la Paul Chiorean &lt;jpeg AT basement.ro&gt; sau <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
-<p>README-ro.md • 9 noiembrie 2020</p>
+<p>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).<br>Raportați o <a href="https://github.com/pchiorean/Indentz/issues">problemă</a> pe Github dacă întâmpinați dificultăți sau aveți sugestii.</p>
+<p><a href="http://README-ro.html">README-ro.md</a> • 9 noiembrie 2020</p>
 
 </body>
 </html>
