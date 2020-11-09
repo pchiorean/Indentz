@@ -24,8 +24,8 @@ line-height: 1.6;
 </head>
 <body class="vscode-light">
 <h1 id="indentz">Indentz</h1>
-<p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (o sugestie de configurare găsiți în secțiunea <a href="#shortcuts">Shortcuts</a>). Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
-<h2 id="description">Descriere</h2>
+<p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (o sugestie de configurare găsiți în secțiunea <a href="#shortcuturi">Shortcut‑uri</a>). Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
+<h2 id="descriere">Descriere</h2>
 <h3 id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
 <ul>
 <li>
@@ -42,11 +42,11 @@ line-height: 1.6;
 <p><strong><code>SetRefPoint</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta <strong>Transform</strong>.</p>
 </li>
 </ul>
-<p><strong>Notă:</strong> Ambele seturi ar trebui alocate tastaturii numerice (v. <a href="#shortcuts">Shortcuts</a>).</p>
+<p><strong>Notă:</strong> Ambele seturi ar trebui alocate tastaturii numerice (v. <a href="#shortcuturi">Shortcut‑uri</a>).</p>
 <h3 id="fitting"><strong>Fitting</strong></h3>
 <ul>
 <li>
-<p><strong><code>FitToPage</code></strong> redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 5%, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un <em>clipping frame</em> și acesta e redimensionat. <strong><code>FitToSpread</code></strong> fac același lucru pentru paginile grupate într‑un spread.</p>
+<p><strong><code>FitToPage</code></strong> redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 5%, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container <em>(clipping frame)</em> și acesta e redimensionat. <strong><code>FitToSpread</code></strong> fac același lucru pentru paginile grupate într‑un spread.</p>
 <p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la dimensiunile respective.</p>
 </li>
 <li>
@@ -98,10 +98,10 @@ line-height: 1.6;
 <p>Fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează layere alternative gen <em>visible</em>, <em>vizibil</em> pentru <code>safe area</code>, sau <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> pentru <code>dielines</code>.</p>
 <ul>
 <li>
-<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde layerul <code>safe area</code> și mută ștanțele și marcajele pentru alb și lac UV de pe <code>dielines</code>/<code>white</code>/<code>varnish</code> pe spreaduri separate.</p>
+<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde layerul <code>safe area</code> și mută ștanțele și marcajele pentru alb și lac UV de pe <code>dielines</code> / <code>white</code> / <code>varnish</code> pe spreaduri separate.</p>
 </li>
 <li>
-<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe layerul <code>safe area</code>. Folosește swatch‑ul <code>Safe area</code>, care dacă nu există va fi creat cu valoarea „C=0 M=100 Y=0 K=0”.</p>
+<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe layerul <code>safe area</code>. Folosește swatch‑ul <code>Safe area</code>, care dacă nu există va fi creat cu valoarea <code>C=0 M=100 Y=0 K=0</code>.</p>
 </li>
 <li>
 <p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <code>safe area</code>.</p>
@@ -110,7 +110,7 @@ line-height: 1.6;
 <h3 id="setup"><strong>Setup</strong></h3>
 <ul>
 <li>
-<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și setează niște preferințe:</p>
+<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și setează câteva preferințe:</p>
 <blockquote>
 <p><strong>Rulers:</strong> Reset Zero Point <br>
 <strong>Rulers Units:</strong> Millimeters <br>
@@ -137,60 +137,60 @@ line-height: 1.6;
 </blockquote>
 </li>
 <li>
-<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește niște fonturi și stabilește dimensiunea paginii și marginile. De fapt rulează unele dintre scripturile de mai jos și setează preferințele la fel ca <strong><code>DocCleanup.jsx</code></strong>.</p>
+<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește niște fonturi și setează dimensiunea și marginile paginii din numele fișierului. De fapt rulează unele dintre scripturile de mai jos și setează preferințele la fel ca <strong><code>DocCleanup.jsx</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>DefLayers.jsx</code></strong> creează un set de layere, preluându‑le proprietățile dintr‑un fișier TSV <em>(tab-separated values)</em> cu 6 coloane, <a href="setup/DefLayers.txt"><strong><code>DefLayers.txt</code></strong></a>, cu următorul format:</p>
+<p><strong><code>DefLayers.jsx</code></strong> creează un set de layere, preluându‑le proprietățile din <a href="setup/DefLayers.txt"><strong><code>DefLayers.txt</code></strong></a>, care este un fișier TSV <em>(tab-separated values)</em> cu 6 coloane cu următorul format:</p>
 <table>
 <thead>
 <tr>
 <th style="text-align:left">Nume</th>
-<th style="text-align:left">Culoare</th>
+<th style="text-align:center">Culoare</th>
 <th style="text-align:center">Vizibil</th>
 <th style="text-align:center">Printabil</th>
-<th style="text-align:left">Ordine</th>
+<th style="text-align:center">Ordine</th>
 <th style="text-align:left">Variante</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left">dielines</td>
-<td style="text-align:left">Magenta</td>
+<td style="text-align:center">Magenta</td>
 <td style="text-align:center">TRUE</td>
 <td style="text-align:center">TRUE</td>
-<td style="text-align:left">top</td>
-<td style="text-align:left">cut, cut lines, decoupe, die, die cut, diecut, stanze</td>
+<td style="text-align:center">top</td>
+<td style="text-align:left">cut, cut lines, decoupe, die, die cut, stanze</td>
 </tr>
 <tr>
 <td style="text-align:left">text and logos</td>
-<td style="text-align:left">Green</td>
+<td style="text-align:center">Green</td>
 <td style="text-align:center">TRUE</td>
 <td style="text-align:center">TRUE</td>
-<td style="text-align:left">top</td>
+<td style="text-align:center">top</td>
 <td style="text-align:left">copy, text, textes, txt, type</td>
 </tr>
 <tr>
 <td style="text-align:left">artwork</td>
-<td style="text-align:left">Light Blue</td>
+<td style="text-align:center">Light Blue</td>
 <td style="text-align:center">TRUE</td>
 <td style="text-align:center">TRUE</td>
-<td style="text-align:left">top</td>
+<td style="text-align:center">top</td>
 <td style="text-align:left">aw, elemente, layout, layouts</td>
 </tr>
 <tr>
 <td style="text-align:left">bg</td>
-<td style="text-align:left">Red</td>
+<td style="text-align:center">Red</td>
 <td style="text-align:center">TRUE</td>
 <td style="text-align:center">TRUE</td>
-<td style="text-align:left">bottom</td>
+<td style="text-align:center">bottom</td>
 <td style="text-align:left">background, hg, hintergrund</td>
 </tr>
 <tr>
 <td style="text-align:left">...</td>
-<td style="text-align:left"></td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
-<td style="text-align:left"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
@@ -201,13 +201,13 @@ line-height: 1.6;
 <strong><code>Vizibil</code></strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
 <strong><code>Printabil</code></strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
 <strong><code>Ordine</code></strong>: <code>top</code> sau <code>bottom</code> (deasupra sau sub layerele existente) <br>
-<strong><code>Variante</code></strong>: o listă CSV de layere care vor fi combinate cu layerul de bază (case insensitive)</p>
+<strong><code>Variante</code></strong>: o listă de layere care vor fi combinate cu layerul de bază (case insensitive)</p>
 </blockquote>
-<p><strong><code>DefLayers.xlsx</code></strong> va ajuta la generarea fișierului TSV.</p>
-<p><strong>Note:</strong> Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate.</p>
+<p><strong><code>DefLayers.xlsx</code></strong> vă va ajuta la generarea fișierului TSV.</p>
+<p><strong>Note:</strong> Prima linie (capul de tabel) și liniile care încep cu <code>;</code> sunt ignorate.</p>
 </li>
 <li>
-<p><strong><code>DefSwatches.jsx</code></strong> creează un set de swatch‑uri dintr‑un fișier TSV cu 3 coloane, <a href="setup/DefSwatches.txt"><strong><code>DefSwatches.txt</code></strong></a>, cu următorul format:</p>
+<p><strong><code>DefSwatches.jsx</code></strong> creează un set de swatch‑uri din <a href="setup/DefSwatches.txt"><strong><code>DefSwatches.txt</code></strong></a>, un fișier TSV cu 3 coloane cu următorul format:</p>
 <table>
 <thead>
 <tr>
@@ -237,14 +237,14 @@ line-height: 1.6;
 <blockquote>
 <p><strong><code>Name</code></strong>: numele swatch‑ului <br>
 <strong><code>Model</code></strong>: color model: <code>process</code> or <code>spot</code> <br>
-<strong><code>Values</code></strong>: o listă CSV de 3 (RGB) sau 4 (CMYK) valori</p>
+<strong><code>Values</code></strong>: o listă de 3 (RGB) sau 4 (CMYK) valori</p>
 </blockquote>
 </li>
 <li>
-<p><strong><code>CleanupSwatches.jsx</code></strong> convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula „C= M= Y= K=” și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
+<p><strong><code>CleanupSwatches.jsx</code></strong> convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula <code>C= M= Y= K=</code> și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> înlocuiește fonturi dintr‑un fișier TSV cu 4 coloane, <a href="setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>, cu următorul format:</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> înlocuiește fonturi din <a href="setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>, un fișier TSV cu 4 coloane cu următorul format:</p>
 <table>
 <thead>
 <tr>
@@ -262,9 +262,9 @@ line-height: 1.6;
 <td style="text-align:left">Regular</td>
 </tr>
 <tr>
-<td style="text-align:left">Akzidenz Grotesk</td>
+<td style="text-align:left">Arial</td>
 <td style="text-align:left">Bold</td>
-<td style="text-align:left">AkzidenzGrotesk</td>
+<td style="text-align:left">Helvetica Neue</td>
 <td style="text-align:left">Bold</td>
 </tr>
 <tr>
@@ -275,13 +275,13 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-<p>Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy-paste în <strong><code>ReplaceFonts.txt</code></strong>.</p>
+<p><strong>Notă:</strong> Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy-paste.</p>
 </li>
 <li>
 <p><strong><code>PageMarginsFromSelection.jsx</code></strong> setează marginile paginii la dimensiunile selecției.</p>
 </li>
 <li>
-<p><strong><code>PageSizeFromFilename.jsx</code></strong> redimensionează paginile documentului în funcție de numele fișierului:</p>
+<p><strong><code>PageSizeFromFilename.jsx</code></strong> setează dimensiunea și marginile paginii preluând informațiile din numele fișierului:</p>
 <table>
 <thead>
 <tr>
@@ -307,7 +307,7 @@ line-height: 1.6;
 </tbody>
 </table>
 <blockquote>
-<p>Caută în numele fișierului perechi de numere de genul „000x000” (unde „000” înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de „mm” sau „cm”). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. „000x000_000x000”), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.</p>
+<p>Caută în numele fișierului perechi de numere de genul <code>000x000</code> (unde <code>000</code> înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de <code>mm</code> sau <code>cm</code>). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. <code>000x000_000x000</code>), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.</p>
 </blockquote>
 </li>
 <li>
@@ -320,38 +320,33 @@ line-height: 1.6;
 <h3 id="misc"><strong>Misc</strong></h3>
 <ul>
 <li>
-<p><strong><code>CleanupLabels.jsx</code></strong>: uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. Scriptul șterge toate etichetele din document (dacă nu e selectat nimic) sau doar din elementele selectate.</p>
+<p><strong><code>CleanupLabels.jsx</code></strong>: uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. Scriptul șterge toate etichetele obiectelor selectate sau din întregul document dacă nu e selectat nimic.</p>
 </li>
 <li>
-<p><strong><code>Clip.jsx</code></strong>: Pentru a manipula unele obiecte poate fi uneori util să le inserăm temporar într‑un container (<em>clipping frame</em>). Scriptul inserează obiectele selectate într‑un <em>clipping frame</em> sau le restaurează dacă sunt deja inserate. <br>
-<strong><code>ClipUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
+<p><strong><code>Clip.jsx</code></strong>: Pentru a manipula unele obiecte poate fi uneori util să le inserăm temporar într‑un container <em>(clipping frame)</em>. Scriptul inserează obiectele selectate într‑un container sau le restaurează dacă sunt deja inserate.</p>
+<p><strong><code>ClipUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
 </li>
 <li>
-<p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus.</p>
+<p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe layerul <code>info</code>.</p>
 </li>
 <li>
-<p><strong><code>QR.jsx</code></strong> adaugă un cod QR în colțul din stânga jos al fiecărei pagini sau îl salvează într‑un fișier separat. Are două moduri de operare:</p>
-<ul>
-<li>
-<p><strong>Manual:</strong> Solicită codul și îl adaugă pe pagină (sau într‑un fișier separat).</p>
-</li>
-<li>
-<p><strong>Batch:</strong> Dacă în același folder există un fișier numit <strong><code>QR.txt</code></strong>, scriptul va genera fișiere QR cu datele din acesta. Trebuie să fie un TSV <em>(tab-separated values)</em>; prima coloană e numele fișierului QR, a doua codul. Prima linie (capul de tabel) și liniile care încep cu „;” sunt ignorate:</p>
+<p><strong><code>QR.jsx</code></strong> adaugă coduri QR în documentul activ sau creează fișiere separate într-un subfolder numit <code>QR Codes</code>.</p>
+<p>Mai întâi caută în folderul curent un document TSV cu 2 coloane numit <strong><code>QR.txt</code></strong>, din care preia o listă de coduri și fișierele corespunzătoare:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Fișier QR</th>
-<th style="text-align:left">Cod QR</th>
+<th style="text-align:left">Fișier</th>
+<th style="text-align:left">Cod</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><strong>Filename1_1400x400_700x137_10mm_QR.indd</strong></td>
-<td style="text-align:left">FILE1 1400x400_700x137</td>
+<td style="text-align:left">Filename1</td>
+<td style="text-align:left">CODE 1</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong>Filename2_597x517_577x500.5_3mm V4_QR.indd</strong></td>
-<td style="text-align:left">FILE2 597x517_577x500.5 V4</td>
+<td style="text-align:left">Filename2</td>
+<td style="text-align:left">CODE 2</td>
 </tr>
 <tr>
 <td style="text-align:left">...</td>
@@ -359,9 +354,9 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
-<p><strong>Notă:</strong> Puteți insera „|” pentru împărțirea manuală a textului în mai multe rânduri.</p>
+<p>Dacă nu‑l găsește, solicită codul și îl adaugă pe fiecare pagină în colțul din stânga jos, sau îl salvează într‑un fișier cu numele documentului activ și <code>_QR</code> adăugat la coadă:</p>
+<p><img src=".img/qr.png" alt=""></p>
+<p><strong>Notă:</strong> Puteți insera <code>|</code> pentru împărțirea manuală a legendei în mai multe rânduri.</p>
 </li>
 <li>
 <p><strong><code>ShowFonts.jsx</code></strong> afișează toate fonturile utilizate în documentul curent (util pentru <strong><code>ReplaceFonts.jsx</code></strong>).</p>
@@ -381,8 +376,8 @@ line-height: 1.6;
 </ul>
 </li>
 </ul>
-<h2 id="shortcuts">Shortcut‑uri</h2>
-<p>Rularea unui script folosit frecvent din panoul <strong>Scripts</strong> este destul de neplăcută. Puteți face asta instantaneu, atribuindu‑i o scurtătură din <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>:</p>
+<h2 id="shortcuturi">Shortcut‑uri</h2>
+<p>Rularea unui script folosit frecvent din panoul <strong>Scripts</strong> este destul de neplăcută. Dar puteți face asta instantaneu, atribuindu‑i o scurtătură din <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>:</p>
 <table>
 <thead>
 <tr>
@@ -509,13 +504,13 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-<h2 id="installation">Instalare</h2>
+<h2 id="instalare">Instalare</h2>
 <ol>
 <li>Deschideți <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
 <li>Faceți clic dreapta pe folderul <strong>User</strong> și selectați <strong>Reveal in Finder/Explorer</strong>.</li>
 <li>Copiați fișierele în acest folder.</li>
 </ol>
-<h2 id="license">Licență</h2>
+<h2 id="licență">Licență</h2>
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington și alții. -->
 <p>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>). Trimiteți un e‑mail la Paul Chiorean &lt;jpeg AT basement.ro&gt; sau <a href="https://github.com/pchiorean/Indentz/issues">raportați o problemă</a> pe Github dacă întâmpinați probleme sau aveți sugestii.</p>
 <p>README-ro.md • 9 noiembrie 2020</p>

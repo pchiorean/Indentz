@@ -46,9 +46,9 @@ These resize the selected object(s) proportionally, as a block.
 
 Make several preparations for export and can be used with [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). The scripts detect alternative layers like *visible*, *vizibil* for `safe area`, or *diecut*, *die cut*, *cut lines*, *stanze* for `dielines`.
 
-* **`PrepareForPrint.jsx`** hides the `safe area` layer and moves the dielines, white and UV markings from `dielines`/`white`/`varnish` to separate spreads.
+* **`PrepareForPrint.jsx`** hides the `safe area` layer and moves the dielines, white and UV markings from `dielines` / `white` / `varnish` to separate spreads.
 
-* **`SafeArea.jsx`** creates a frame the size of the page margins on the `safe area` layer. It uses the `Safe area` swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
+* **`SafeArea.jsx`** creates a frame the size of the page margins on the `safe area` layer. It uses the `Safe area` swatch, which if it does not exist will be created with the value `C=0 M=100 Y=0 K=0`.
 
 * **`SafeAreaHideLayer.jsx`** and **`SafeAreaShowLayer.jsx`** hide or show `safe area`.
 
@@ -81,11 +81,11 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 
 * **`DocDefaults.jsx`** adds default swatches/layers, cleans up fonts and sets page dimensions from the filename. In fact it runs some of the scripts below and set the preferences like **`DocCleanup.jsx`**.
 
-* **`DefLayers.jsx`** adds a set of layers, reading their properties from a 6-column TSV *(tab-separated values)* file, [**`DefLayers.txt`**](setup/DefLayers.txt), with the following format:
+* **`DefLayers.jsx`** adds a set of layers, reading their properties from [**`DefLayers.txt`**](setup/DefLayers.txt), which is a 6‑column TSV *(tab-separated values)* file with the following format:
 
   Name | Color | Visible | Printable | Order | Variants
-  :--- | :--- | :---: | :---: | :--- | :---
-  dielines | Magenta | TRUE | TRUE | top | cut, cut lines, decoupe, die, die cut, diecut, stanze
+  :--- | :---: | :---: | :---: | :---: | :---
+  dielines | Magenta | TRUE | TRUE | top | cut, cut lines, decoupe, die, die cut, stanze
   text and logos | Green | TRUE | TRUE | top | copy, text, textes, txt, type
   artwork | Light Blue | TRUE | TRUE | top | aw, elemente, layout, layouts
   bg | Red | TRUE | TRUE | bottom | background, hg, hintergrund
@@ -96,13 +96,13 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
   > **`Visible`**: `TRUE` or `FALSE` \
   > **`Printable`**: `TRUE` or `FALSE` \
   > **`Order`**: `top` or `bottom` (above or below existing layers) \
-  > **`Variants`**: a CSV list of layers which will be merged with the base layer (case insensitive)
+  > **`Variants`**: a list of layers which will be merged with the base layer (case insensitive)
 
   **`DefLayers.xlsx`** will help to generate the TSV file.
 
-  **Note:** The first line (the header) and lines beginning with ";" are ignored.
+  **Note:** The first line (the header) and lines beginning with `;` are ignored.
 
-* **`DefSwatches.jsx`** adds a set of swatches from a 3-column TSV file, [**`DefSwatches.txt`**](setup/DefSwatches.txt), with the following format:
+* **`DefSwatches.jsx`** adds a set of swatches from [**`DefSwatches.txt`**](setup/DefSwatches.txt), a 3‑column TSV file with the following format:
 
   Name | Model | Values
   :--- | :--- | :---
@@ -112,30 +112,30 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 
   > **`Name`**: swatch name \
   > **`Model`**: color model: `process` or `spot` \
-  > **`Values`**: a CSV list of 3 (RGB) or 4 (CMYK) color values
+  > **`Values`**: a list of 3 (RGB) or 4 (CMYK) color values
 
-* **`CleanupSwatches.jsx`** converts RGB process swatches to CMYK, removes duplicates, renames them to "C= M= Y= K=" form, and deletes unused ones. Spot colors remain unchanged.
+* **`CleanupSwatches.jsx`** converts RGB process swatches to CMYK, removes duplicates, renames them to `C= M= Y= K=` form, and deletes unused ones. Spot colors are not changed.
 
-* **`ReplaceFonts.jsx`** replaces fonts from a 4-column TSV file, [**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt), with the following format:
+* **`ReplaceFonts.jsx`** replaces fonts from [**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt), a 4‑column TSV file with the following format:
 
   Old Name | Style | New Name | Style
   :--- | :--- | :--- | :---
   Arial | Regular | Helvetica Neue | Regular
-  Akzidenz Grotesk | Bold | AkzidenzGrotesk | Bold
+  Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy-pasting in **`ReplaceFonts.txt`**.
+  **Note:** You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy-pasting.
 
 * **`PageMarginsFromSelection.jsx`** sets the page margins to the selected objects.
 
-* **`PageSizeFromFilename.jsx`** resizes the pages of the document according to the file name:
+* **`PageSizeFromFilename.jsx`** sets the page size and margins by retrieving the information from the filename:
 
   Filename | Total size | Safe area | Bleed
   :--- | :---: | :---: | :---:
   **Filename1\_`1400x400`\_`700x137`\_`10`mm\_QR.indd** | 1400x400 | 700x137 | 10
   **Filename2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd** | 597x517 | 577x500.5 | 3
 
-  > It searches for pairs of numbers like "000x000" (where "000" means a group of at least one digit, followed or not by decimals, and optionally by "mm" or "cm"). If only one pair is found, it will be the size of the page. If two are found (e.g., "000x000_000x000"), the larger pair will be the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this is considered bleed.
+  > It searches for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it's the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair it's the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this becomes bleed.
 
 * **`PageSizeFromMargins.jsx`** resizes each page to its margins.
 
@@ -143,26 +143,29 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 
 ### **Misc**
 
-* **`CleanupLabels.jsx`**: sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. The script deletes all labels from the document (if nothing is selected), or from the selected items.
+* **`CleanupLabels.jsx`**: sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. The script deletes all labels of selected items or the entire document if nothing is selected.
 
-* **`Clip.jsx`**: To manipulate some objects it can sometimes be useful to temporarily insert them into a container (clipping frame). The script embeds selected objects in a clipping frame or restores them if already clipped. \
+* **`Clip.jsx`**: To manipulate some objects it can sometimes be useful to temporarily insert them into a container *(clipping frame)*. The script embeds selected objects in a clipping frame or restores them if already clipped.
+
   **`ClipUndo.jsx`** restores one or several clipped objects at once.
 
-* **`PageRatios.jsx`** calculates the ratio of each page and displays it in the upper left corner.
+* **`PageRatios.jsx`** calculates the ratio of each page and puts it in the upper left corner, on the `info` layer.
 
-* **`QR.jsx`** adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes:
+* **`QR.jsx`** adds QR codes in the active document or creates separate files in a subfolder named `QR Codes`.
 
-  * **Manually:** It prompts for the QR text and adds the code on the page (or in a separate file).
+  First, it looks in the current folder for a 2‑column TSV document named **`QR.txt`** from which it takes a list of codes and the corresponding files:
 
-  * **Batch:** If a file named **`QR.txt`** is found in the same folder, the script will generate QR files with the data from it. This must be a 2 column TSV *(tab-separated values)* file; the first column is the QR filename, the second the code:
+  Filename | Code
+  :--- | :---
+  Filename1 | CODE 1
+  Filename2 | CODE 2
+  ... |
 
-    QR Filename | QR Code
-    :--- | :---
-    **Filename1_1400x400_700x137_10mm_QR.indd** | FILE1 1400x400_700x137
-    **Filename2_597x517_577x500.5_3mm V4_QR.indd** | FILE2 597x517_577x500.5 V4
-    ... |
+  If it's not found, it prompts for the code and adds it on each page on the bottom left corner, or it saves it to a file with the name of the active document and `_QR` added to the end:
 
-  **Note:** You can use "|" for manually splitting the text into several lines.
+  ![](.img/qr.png)
+
+  **Note:** You can insert `|` for manually splitting the legend into several lines.
 
 * **`ShowFonts.jsx`** shows all fonts used in the current document (useful with **`ReplaceFonts.jsx`**).
 
@@ -178,7 +181,7 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 
 ## Shortcuts
 
-Running a frequently used script from the **Scripts** panel is quite annoying. You can make the process instantaneous by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts**:
+Running a frequently used script from the **Scripts** panel is quite annoying. But you can make the process instantaneous by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts**:
 
 | Alignment               |       | Proxy                   |       | Fitting/Scale                    |       | Setup                     |       |
 | :---------------------- | ----: | :---------------------- | ----: | :------------------------------- | ----: | :------------------------ | ----: |

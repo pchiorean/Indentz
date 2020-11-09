@@ -98,10 +98,10 @@ line-height: 1.6;
 <p>Make several preparations for export and can be used with <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. The scripts detect alternative layers like <em>visible</em>, <em>vizibil</em> for <code>safe area</code>, or <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> for <code>dielines</code>.</p>
 <ul>
 <li>
-<p><strong><code>PrepareForPrint.jsx</code></strong> hides the <code>safe area</code> layer and moves the dielines, white and UV markings from <code>dielines</code>/<code>white</code>/<code>varnish</code> to separate spreads.</p>
+<p><strong><code>PrepareForPrint.jsx</code></strong> hides the <code>safe area</code> layer and moves the dielines, white and UV markings from <code>dielines</code> / <code>white</code> / <code>varnish</code> to separate spreads.</p>
 </li>
 <li>
-<p><strong><code>SafeArea.jsx</code></strong> creates a frame the size of the page margins on the <code>safe area</code> layer. It uses the <code>Safe area</code> swatch, which if it does not exist will be created with the value &quot;C=0 M=100 Y=0 K=0&quot;.</p>
+<p><strong><code>SafeArea.jsx</code></strong> creates a frame the size of the page margins on the <code>safe area</code> layer. It uses the <code>Safe area</code> swatch, which if it does not exist will be created with the value <code>C=0 M=100 Y=0 K=0</code>.</p>
 </li>
 <li>
 <p><strong><code>SafeAreaHideLayer.jsx</code></strong> and <strong><code>SafeAreaShowLayer.jsx</code></strong> hide or show <code>safe area</code>.</p>
@@ -140,57 +140,57 @@ line-height: 1.6;
 <p><strong><code>DocDefaults.jsx</code></strong> adds default swatches/layers, cleans up fonts and sets page dimensions from the filename. In fact it runs some of the scripts below and set the preferences like <strong><code>DocCleanup.jsx</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>DefLayers.jsx</code></strong> adds a set of layers, reading their properties from a 6-column TSV <em>(tab-separated values)</em> file, <a href="setup/DefLayers.txt"><strong><code>DefLayers.txt</code></strong></a>, with the following format:</p>
+<p><strong><code>DefLayers.jsx</code></strong> adds a set of layers, reading their properties from <a href="setup/DefLayers.txt"><strong><code>DefLayers.txt</code></strong></a>, which is a 6‑column TSV <em>(tab-separated values)</em> file with the following format:</p>
 <table>
 <thead>
 <tr>
 <th style="text-align:left">Name</th>
-<th style="text-align:left">Color</th>
+<th style="text-align:center">Color</th>
 <th style="text-align:center">Visible</th>
 <th style="text-align:center">Printable</th>
-<th style="text-align:left">Order</th>
+<th style="text-align:center">Order</th>
 <th style="text-align:left">Variants</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left">dielines</td>
-<td style="text-align:left">Magenta</td>
+<td style="text-align:center">Magenta</td>
 <td style="text-align:center">TRUE</td>
 <td style="text-align:center">TRUE</td>
-<td style="text-align:left">top</td>
-<td style="text-align:left">cut, cut lines, decoupe, die, die cut, diecut, stanze</td>
+<td style="text-align:center">top</td>
+<td style="text-align:left">cut, cut lines, decoupe, die, die cut, stanze</td>
 </tr>
 <tr>
 <td style="text-align:left">text and logos</td>
-<td style="text-align:left">Green</td>
+<td style="text-align:center">Green</td>
 <td style="text-align:center">TRUE</td>
 <td style="text-align:center">TRUE</td>
-<td style="text-align:left">top</td>
+<td style="text-align:center">top</td>
 <td style="text-align:left">copy, text, textes, txt, type</td>
 </tr>
 <tr>
 <td style="text-align:left">artwork</td>
-<td style="text-align:left">Light Blue</td>
+<td style="text-align:center">Light Blue</td>
 <td style="text-align:center">TRUE</td>
 <td style="text-align:center">TRUE</td>
-<td style="text-align:left">top</td>
+<td style="text-align:center">top</td>
 <td style="text-align:left">aw, elemente, layout, layouts</td>
 </tr>
 <tr>
 <td style="text-align:left">bg</td>
-<td style="text-align:left">Red</td>
+<td style="text-align:center">Red</td>
 <td style="text-align:center">TRUE</td>
 <td style="text-align:center">TRUE</td>
-<td style="text-align:left">bottom</td>
+<td style="text-align:center">bottom</td>
 <td style="text-align:left">background, hg, hintergrund</td>
 </tr>
 <tr>
 <td style="text-align:left">...</td>
-<td style="text-align:left"></td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
-<td style="text-align:left"></td>
+<td style="text-align:center"></td>
+<td style="text-align:center"></td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
@@ -201,13 +201,13 @@ line-height: 1.6;
 <strong><code>Visible</code></strong>: <code>TRUE</code> or <code>FALSE</code> <br>
 <strong><code>Printable</code></strong>: <code>TRUE</code> or <code>FALSE</code> <br>
 <strong><code>Order</code></strong>: <code>top</code> or <code>bottom</code> (above or below existing layers) <br>
-<strong><code>Variants</code></strong>: a CSV list of layers which will be merged with the base layer (case insensitive)</p>
+<strong><code>Variants</code></strong>: a list of layers which will be merged with the base layer (case insensitive)</p>
 </blockquote>
 <p><strong><code>DefLayers.xlsx</code></strong> will help to generate the TSV file.</p>
-<p><strong>Note:</strong> The first line (the header) and lines beginning with &quot;;&quot; are ignored.</p>
+<p><strong>Note:</strong> The first line (the header) and lines beginning with <code>;</code> are ignored.</p>
 </li>
 <li>
-<p><strong><code>DefSwatches.jsx</code></strong> adds a set of swatches from a 3-column TSV file, <a href="setup/DefSwatches.txt"><strong><code>DefSwatches.txt</code></strong></a>, with the following format:</p>
+<p><strong><code>DefSwatches.jsx</code></strong> adds a set of swatches from <a href="setup/DefSwatches.txt"><strong><code>DefSwatches.txt</code></strong></a>, a 3‑column TSV file with the following format:</p>
 <table>
 <thead>
 <tr>
@@ -237,14 +237,14 @@ line-height: 1.6;
 <blockquote>
 <p><strong><code>Name</code></strong>: swatch name <br>
 <strong><code>Model</code></strong>: color model: <code>process</code> or <code>spot</code> <br>
-<strong><code>Values</code></strong>: a CSV list of 3 (RGB) or 4 (CMYK) color values</p>
+<strong><code>Values</code></strong>: a list of 3 (RGB) or 4 (CMYK) color values</p>
 </blockquote>
 </li>
 <li>
-<p><strong><code>CleanupSwatches.jsx</code></strong> converts RGB process swatches to CMYK, removes duplicates, renames them to &quot;C= M= Y= K=&quot; form, and deletes unused ones. Spot colors remain unchanged.</p>
+<p><strong><code>CleanupSwatches.jsx</code></strong> converts RGB process swatches to CMYK, removes duplicates, renames them to <code>C= M= Y= K=</code> form, and deletes unused ones. Spot colors are not changed.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> replaces fonts from a 4-column TSV file, <a href="setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>, with the following format:</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> replaces fonts from <a href="setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>, a 4‑column TSV file with the following format:</p>
 <table>
 <thead>
 <tr>
@@ -262,9 +262,9 @@ line-height: 1.6;
 <td style="text-align:left">Regular</td>
 </tr>
 <tr>
-<td style="text-align:left">Akzidenz Grotesk</td>
+<td style="text-align:left">Arial</td>
 <td style="text-align:left">Bold</td>
-<td style="text-align:left">AkzidenzGrotesk</td>
+<td style="text-align:left">Helvetica Neue</td>
 <td style="text-align:left">Bold</td>
 </tr>
 <tr>
@@ -275,13 +275,13 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-<p>You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Misc</strong> to get a tab delimited list of fonts for copy-pasting in <strong><code>ReplaceFonts.txt</code></strong>.</p>
+<p><strong>Note:</strong> You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Misc</strong> to get a tab delimited list of fonts for copy-pasting.</p>
 </li>
 <li>
 <p><strong><code>PageMarginsFromSelection.jsx</code></strong> sets the page margins to the selected objects.</p>
 </li>
 <li>
-<p><strong><code>PageSizeFromFilename.jsx</code></strong> resizes the pages of the document according to the file name:</p>
+<p><strong><code>PageSizeFromFilename.jsx</code></strong> sets the page size and margins by retrieving the information from the filename:</p>
 <table>
 <thead>
 <tr>
@@ -307,7 +307,7 @@ line-height: 1.6;
 </tbody>
 </table>
 <blockquote>
-<p>It searches for pairs of numbers like &quot;000x000&quot; (where &quot;000&quot; means a group of at least one digit, followed or not by decimals, and optionally by &quot;mm&quot; or &quot;cm&quot;). If only one pair is found, it will be the size of the page. If two are found (e.g., &quot;000x000_000x000&quot;), the larger pair will be the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this is considered bleed.</p>
+<p>It searches for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it's the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair it's the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this becomes bleed.</p>
 </blockquote>
 </li>
 <li>
@@ -320,38 +320,33 @@ line-height: 1.6;
 <h3 id="misc"><strong>Misc</strong></h3>
 <ul>
 <li>
-<p><strong><code>CleanupLabels.jsx</code></strong>: sometimes objects that have a label attached <em>(Script Label)</em> are reused, which may create problems later. The script deletes all labels from the document (if nothing is selected), or from the selected items.</p>
+<p><strong><code>CleanupLabels.jsx</code></strong>: sometimes objects that have a label attached <em>(Script Label)</em> are reused, which may create problems later. The script deletes all labels of selected items or the entire document if nothing is selected.</p>
 </li>
 <li>
-<p><strong><code>Clip.jsx</code></strong>: To manipulate some objects it can sometimes be useful to temporarily insert them into a container (clipping frame). The script embeds selected objects in a clipping frame or restores them if already clipped. <br>
-<strong><code>ClipUndo.jsx</code></strong> restores one or several clipped objects at once.</p>
+<p><strong><code>Clip.jsx</code></strong>: To manipulate some objects it can sometimes be useful to temporarily insert them into a container <em>(clipping frame)</em>. The script embeds selected objects in a clipping frame or restores them if already clipped.</p>
+<p><strong><code>ClipUndo.jsx</code></strong> restores one or several clipped objects at once.</p>
 </li>
 <li>
-<p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and displays it in the upper left corner.</p>
+<p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and puts it in the upper left corner, on the <code>info</code> layer.</p>
 </li>
 <li>
-<p><strong><code>QR.jsx</code></strong> adds a QR code on the bottom left corner of each page, or saves it in a separate file. It has two operating modes:</p>
-<ul>
-<li>
-<p><strong>Manually:</strong> It prompts for the QR text and adds the code on the page (or in a separate file).</p>
-</li>
-<li>
-<p><strong>Batch:</strong> If a file named <strong><code>QR.txt</code></strong> is found in the same folder, the script will generate QR files with the data from it. This must be a 2 column TSV <em>(tab-separated values)</em> file; the first column is the QR filename, the second the code:</p>
+<p><strong><code>QR.jsx</code></strong> adds QR codes in the active document or creates separate files in a subfolder named <code>QR Codes</code>.</p>
+<p>First, it looks in the current folder for a 2‑column TSV document named <strong><code>QR.txt</code></strong> from which it takes a list of codes and the corresponding files:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">QR Filename</th>
-<th style="text-align:left">QR Code</th>
+<th style="text-align:left">Filename</th>
+<th style="text-align:left">Code</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left"><strong>Filename1_1400x400_700x137_10mm_QR.indd</strong></td>
-<td style="text-align:left">FILE1 1400x400_700x137</td>
+<td style="text-align:left">Filename1</td>
+<td style="text-align:left">CODE 1</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong>Filename2_597x517_577x500.5_3mm V4_QR.indd</strong></td>
-<td style="text-align:left">FILE2 597x517_577x500.5 V4</td>
+<td style="text-align:left">Filename2</td>
+<td style="text-align:left">CODE 2</td>
 </tr>
 <tr>
 <td style="text-align:left">...</td>
@@ -359,9 +354,9 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
-<p><strong>Note:</strong> You can use &quot;|&quot; for manually splitting the text into several lines.</p>
+<p>If it's not found, it prompts for the code and adds it on each page on the bottom left corner, or it saves it to a file with the name of the active document and <code>_QR</code> added to the end:</p>
+<p><img src=".img/qr.png" alt=""></p>
+<p><strong>Note:</strong> You can insert <code>|</code> for manually splitting the legend into several lines.</p>
 </li>
 <li>
 <p><strong><code>ShowFonts.jsx</code></strong> shows all fonts used in the current document (useful with <strong><code>ReplaceFonts.jsx</code></strong>).</p>
@@ -382,7 +377,7 @@ line-height: 1.6;
 </li>
 </ul>
 <h2 id="shortcuts">Shortcuts</h2>
-<p>Running a frequently used script from the <strong>Scripts</strong> panel is quite annoying. You can make the process instantaneous by assigning keyboard shortcuts from <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>:</p>
+<p>Running a frequently used script from the <strong>Scripts</strong> panel is quite annoying. But you can make the process instantaneous by assigning keyboard shortcuts from <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>:</p>
 <table>
 <thead>
 <tr>
@@ -517,7 +512,7 @@ line-height: 1.6;
 </ol>
 <h2 id="license">License</h2>
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
-<p>The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>). Send an e-mail to Paul Chiorean &lt;jpeg AT basement.ro<&gt; or <a href="https://github.com/pchiorean/Indentz/issues">report an issue</a> on Github if you encounter problems or have any suggestions.</p>
+<p>The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>). Send an e-mail to Paul Chiorean &lt;jpeg AT basement.ro&gt; or <a href="https://github.com/pchiorean/Indentz/issues">report an issue</a> on Github if you encounter problems or have any suggestions.</p>
 <p>README.md • November 9, 2020</p>
 
 </body>
