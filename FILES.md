@@ -49,12 +49,13 @@ Name                               |   Fn  | Description
 **`SafeAreaHideLayer.jsx`**        |       | Hides the `safe area` layer (or equivalents)
 **`SafeAreaShowLayer.jsx`**        |       | Shows the `safe area` layer (or equivalents)
 **Setup**                                  |
-**`DocCleanup.jsx`**               |    F2 | Changes some settings, cleans up swatches/layers/pages/guides and resets scaling
-**`DocDefaults.jsx`**              |   ⌥F2 | Adds default swatches/layers, cleans up fonts and sets page dimensions from the filename
-**`DefLayers.jsx`**                |       | Adds default layers and merges equivalents, from a list
-**`DefSwatches.jsx`**              |       | Adds default swatches from a list
+**`DefPrefs.jsx`**                 |       | Sets default preferences
+**`DefLayers.jsx`**                |       | Adds/merges layers from a list
+**`DefSwatches.jsx`**              |       | Adds swatches from a list
 **`CleanupSwatches.jsx`**          |   ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 **`ReplaceFonts.jsx`**             |       | Replaces missing or unwanted fonts with equivalents from a list
+**`DocCleanup.jsx`**               |    F2 | Changes some settings, cleans up swatches/layers/pages/guides and resets scaling
+**`DocDefaults.jsx`**              |   ⌥F2 | Adds swatches/layers, cleans up fonts and sets page dimensions from the filename
 **`PageMarginsFromSelection.jsx`** |       | Sets the page margins to the selected objects bounds
 **`PageSizeFromFilename.jsx`**     |    F3 | Sets every page size and margins according to the filename
 **`PageSizeFromMargins.jsx`**      |   ⌥F3 | Sets the page size to the page margins
