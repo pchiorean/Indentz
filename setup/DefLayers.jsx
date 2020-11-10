@@ -1,9 +1,8 @@
 /*
-	Make default layers v1.0.1
+	Add default layers v1.0.1
 	© November 2020, Paul Chiorean
-	Adds default layers and merges equivalents, from a list.
-	The list is a 6-column TSV file with the same name as the script
-	and the following format:
+	Adds/merges layers from a list. The list is a 6-column TSV file
+	with the same name as the script and the following format:
 
 	Name | Color | Visible | Printable | Order | Variants (header, ignored)
 	dielines | Magenta | TRUE | TRUE | top | cut, cut lines, decoupe, die, die cut, stanze
