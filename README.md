@@ -24,15 +24,15 @@ Make it easier to align objects or set the reference point for transformations u
 
 Alignment | | | | | | | |
 :- | -: | :- | -: | :- | -: | :- | -:
-**`AlignToTL.jsx`** | Num7 | **`AlignToT.jsx`** | Num8 | **`AlignToTR.jsx`** | Num9 | **`ToggleAlignTo.jsx`** |  Num0
-**`AlignToL.jsx`** | Num4 | **`AlignToC.jsx`** | Num5 | **`AlignToR.jsx`**  | Num6 | **`ResetAlignTo.jsx`**  | ⌃Num0
-**`AlignToBL.jsx`** | Num1 | **`AlignToB.jsx`** | Num2 | **`AlignToBR.jsx`** | Num3
+**AlignToTL.jsx** | Num7 | **AlignToT.jsx** | Num8 | **AlignToTR.jsx** | Num9 | **ToggleAlignTo.jsx** | Num0
+**AlignToL.jsx** | Num4 | **AlignToC.jsx** | Num5 | **AlignToR.jsx**  | Num6 | **ResetAlignTo.jsx** | ⌃Num0
+**AlignToBL.jsx** | Num1 | **AlignToB.jsx** | Num2 | **AlignToBR.jsx** | Num3
 
 Proxy | | | | | |
 :- | -: | :- | -: | :- | -:
-**`SetRefPointTL.jsx`** | ⌃Num7 | **`SetRefPointT.jsx`** | ⌃Num8 | **`SetRefPointTR.jsx`** | ⌃Num9
-**`SetRefPointL.jsx`** | ⌃Num4 | **`SetRefPointC.jsx`** | ⌃Num5 | **`SetRefPointR.jsx`** | ⌃Num6
-**`SetRefPointBL.jsx`** | ⌃Num1 | **`SetRefPointB.jsx`** | ⌃Num2 | **`SetRefPointBR.jsx`** | ⌃Num3
+**SetRefPointTL.jsx** | ⌃Num7 | **SetRefPointT.jsx** | ⌃Num8 | **SetRefPointTR.jsx** | ⌃Num9
+**SetRefPointL.jsx** | ⌃Num4 | **SetRefPointC.jsx** | ⌃Num5 | **SetRefPointR.jsx** | ⌃Num6
+**SetRefPointBL.jsx** | ⌃Num1 | **SetRefPointB.jsx** | ⌃Num2 | **SetRefPointBR.jsx** | ⌃Num3
 
 </details>
 
@@ -58,10 +58,10 @@ Resize the selected objects, without scaling. Rectangular frames are simply resi
 
 FitToPage | | FitToSpread | | TextAutosize | |
 :- | -: | :- | -: | :- | -:
-**`FitToPage.jsx`** | F11 | **`FitToSpread.jsx`** | F12 | **`TextAutosize.jsx`** | F6
-**`FitToPageMargins.jsx`** | ⌥F11 | **`FitToSpreadMargins.jsx`** | ⌥F12
-**`FitToPageBleed.jsx`** | ⇧F11 | **`FitToSpreadBleed.jsx`** | ⇧F12
-**`FitToPageBleedForced.jsx`** | ⇧⌘F11 | **`FitToSpreadBleedForced.jsx`** | ⇧⌘F12
+**FitToPage.jsx** | F11 | **FitToSpread.jsx** | F12 | **TextAutosize.jsx** | F6
+**FitToPageMargins.jsx** | ⌥F11 | **FitToSpreadMargins.jsx** | ⌥F12
+**FitToPageBleed.jsx** | ⇧F11 | **FitToSpreadBleed.jsx** | ⇧F12
+**FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
 
 </details>
 
@@ -77,8 +77,8 @@ Scale the selected objects proportionally, as a block.
 
 Scale | |
 :- | -:
-**`ScaleToPageSize.jsx`** | F5
-**`ScaleToPageMargins.jsx`** | ⌥F5
+**ScaleToPageSize.jsx** | F5
+**ScaleToPageMargins.jsx** | ⌥F5
 
 </details>
 
@@ -190,9 +190,9 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 Setup | | | |
 :- | -: | :- | -:
-**`DocCleanup.jsx`** | F2 | **`PageSizeFromFilename.jsx`** | F3
-**`DocDefaults.jsx`** | ⌥F2 | **`PageSizeFromMargins.jsx`** | ⌥F3
-**`CleanupSwatches.jsx`** | ⇧F2 | **`PageSizeFromSelection.jsx`** | ⇧F3
+**DocCleanup.jsx** | F2 | **PageSizeFromFilename.jsx** | F3
+**DocDefaults.jsx** | ⌥F2 | **PageSizeFromMargins.jsx** | ⌥F3
+**CleanupSwatches.jsx** | ⇧F2 | **PageSizeFromSelection.jsx** | ⇧F3
 
 </details>
 
@@ -238,8 +238,8 @@ Setup | | | |
 
 Misc | | | |
 :- | -: | :- | -:
-**`Clip.jsx`** | Num* | **`QR.jsx`** | F9
-**`ClipUndo.jsx`** | ⌃Num* | **`ZoomToSelection.jsx`** | F4
+**Clip.jsx** | Num* | **QR.jsx** | F9
+**ClipUndo.jsx** | ⌃Num* | **ZoomToSelection.jsx** | F4
 
 </details>
 
