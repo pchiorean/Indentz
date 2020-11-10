@@ -6,6 +6,8 @@ Collection of InDesign scripts for simple and repetitive tasks. Many of them are
 
 ### **Alignment/Proxy**
 
+Make it easier to align objects or set the reference point for transformations using shortcuts.
+
 * **`AlignTo`** scripts align the selected object(s) to the **Align To** setting:
 
   ![Align Panel](.img/alignto.png)
@@ -36,11 +38,13 @@ Proxy | | | | | |
 
 ### **Fitting**
 
-* **`FitToPage`** scripts resize the selected object(s), without scaling them: if the object is larger than the page/margins/bleed, it will be reduced; if it is smaller but inside a 5% "snap" area, it will be enlarged. Ordinary frames are simply resized. In order not to deform them, rotated objects, ovals, groups, etc. are clipped in a frame which is resized. **`FitToSpread`** do the same for pages grouped in a spread.
+Resize the selected objects, without scaling. Rectangular frames are simply resized; rotated objects, ovals, groups, etc. are inserted in a clipping frame which is resized.
+
+* **`FitToPage`** and **`FitToSpread`**: if the selected object is larger than the page/spread/margins/bleed, it will be reduced; if it is smaller but inside a 5% "snap" area, it will be enlarged.
 
   **`FitTo...Forced.jsx`** resize exactly to the named dimensions.
 
-* **`TextAutosize.jsx`** fits the frame to the text and sets it to auto-size. You control the auto-sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
+* **`TextAutosize.jsx`** fits the text frame to the text and sets it to auto-size. You control the auto-sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
 
   | | ![¶ Align left](.img/paragraphalign-L.png) | ![¶ Align center](.img/paragraphalign-C.png) | ![¶ Align right](.img/paragraphalign-R.png)
   :-: | :-: | :-: | :-:
@@ -63,7 +67,7 @@ FitToPage | | FitToSpread | | TextAutosize | |
 
 ### **Scaling**
 
-These scale the selected object(s) proportionally, as a block.
+Scale the selected objects proportionally, as a block.
 
 * **`ScaleToPageSize.jsx`** and **`ScaleToPageMargins.jsx`** scale to the page size or page margins.
 
@@ -90,7 +94,11 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 
 ### **Setup**
 
-* **`DocCleanup.jsx`** cleans up unused swatches/layers/pages, unlocks all items, resets their scaling to 100% and sets several preferences:
+There are two sets: one related to document preferences, layers, swatches and fonts, and the other to page size and margins.
+
+#### **Document**
+
+* **`DefPrefs.jsx`** sets the following preferences:
 
   > **Rulers:** Reset Zero Point \
   > **Rulers Units:** Millimeters \
@@ -115,8 +123,6 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DocDefaults.jsx`** adds default swatches/layers, cleans up fonts and sets page dimensions from the filename. In fact it runs some of the scripts below and set the preferences like **`DocCleanup.jsx`**.
-
 * **`DefLayers.jsx`** adds a set of layers, reading their properties from [**`DefLayers.txt`**](setup/DefLayers.txt), which is a 6‑column TSV *(tab-separated values)* file with the following format:
 
   Name | Color | Visible | Printable | Order | Variants
@@ -132,9 +138,8 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
   > **Order**: `top` or `bottom` (above or below existing layers) \
   > **Variants**: a list of layers which will be merged with the base layer (case insensitive)
 
-  **`DefLayers.xlsx`** will help to generate the TSV file.
-
-  **Note:** The first line (the header) and lines beginning with `;` are ignored.
+  **Note:** The first line (the header) and lines beginning with `;` are ignored. \
+  **`DefLayers.xlsx`** can be used to generate the TSV file.
 
 * **`DefSwatches.jsx`** adds a set of swatches defined in [**`DefSwatches.txt`**](setup/DefSwatches.txt), a 3‑column TSV file with the following format:
 
@@ -160,6 +165,12 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 
   **Note:** You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy‑pasting.
 
+* **`DocCleanup.jsx`** sets preferences (it runs **`DefPrefs.jsx`**), cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%.
+
+* **`DocDefaults.jsx`** just runs **`DefPrefs.jsx`**, **`DefSwatches.jsx`**, **`DefLayers.jsx`**, **`ReplaceFonts.jsx`** and **`PageSizeFromFilename.jsx`**.
+
+#### **Layout**
+
 * **`PageMarginsFromSelection.jsx`** sets the page margins to the selected objects.
 
 * **`PageSizeFromFilename.jsx`** sets the page size and margins by retrieving the information from the filename:
@@ -169,7 +180,7 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
   File1\_`1400x400`\_`700x137`\_`5`mm\_QR.indd | 1400x400 | 700x137 | 5
   File2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd | 597x517 | 577x500.5 | 3
 
-  > It searches for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it's the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair it's the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this becomes bleed.
+  > It searches for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it's the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair it's the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this will be bleed.
 
 * **`PageSizeFromMargins.jsx`** resizes each page to its margins.
 
@@ -187,9 +198,9 @@ Setup | | | |
 
 ### **Misc**
 
-* **`CleanupLabels.jsx`**: sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. The script deletes all labels of selected items or the entire document if nothing is selected.
+* **`CleanupLabels.jsx`**: sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
 
-* **`Clip.jsx`**: To manipulate some objects it can sometimes be useful to temporarily insert them into a container *(clipping frame)*. The script embeds selected objects in a clipping frame or restores them if already clipped.
+* **`Clip.jsx`**: To handle some objects it is sometimes useful to temporarily insert them into a container *(clipping frame)*. The script inserts selected objects in a clipping frame or restores them if already clipped.
 
   **`ClipUndo.jsx`** restores one or several clipped objects at once.
 
@@ -197,7 +208,7 @@ Setup | | | |
 
 * **`QR.jsx`** adds QR codes in the active document or creates separate files in a subfolder named `QR Codes`.
 
-  First, it looks in the current folder for a 2‑column TSV document named **`QR.txt`** from which it takes a list of codes and the corresponding files:
+  First, it looks in the current folder for a 2‑column TSV document named **`QR.txt`** from which it takes a list of codes and the corresponding filenames:
 
   Filename | Code
   :- | :-
@@ -245,4 +256,4 @@ Misc | | | |
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)). \
 Open an [issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • November 9, 2020
+README.md • November 10, 2020

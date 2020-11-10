@@ -6,6 +6,8 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 ### **Alignment/Proxy**
 
+Facilitează alinierea obiectelor sau setarea punctului de referință pentru transformări folosind shortcuturi.
+
 * **`AlignTo`** aliniază obiectele selectate la referința setării **Align To**:
 
   ![Align Panel](.img/alignto.png)
@@ -18,7 +20,7 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. O bună 
 
 **Notă:** Ambele seturi ar trebui alocate tastaturii numerice.
 
-<details><summary><strong>Shortcut‑uri</strong></summary>
+<details><summary><strong>Shortcuturi</strong></summary>
 
 Alignment | | | | | | | |
 :- | -: | :- | -: | :- | -: | :- | -:
@@ -36,7 +38,9 @@ Proxy | | | | | |
 
 ### **Fitting**
 
-* **`FitToPage`** redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 5%, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container *(clipping frame)* și acesta e redimensionat. **`FitToSpread`** fac același lucru pentru paginile grupate într‑un spread.
+Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container *(clipping frame)* și acesta e redimensionat.
+
+* **`FitToPage`** și **`FitToSpread`**: dacă obiectul este mai mare decât pagina/spreadul/marginile/bleedul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 5%, va fi mărit.
 
   **`FitTo...Forced.jsx`** redimensionează exact la dimensiunile respective.
 
@@ -50,7 +54,7 @@ Proxy | | | | | |
 
   Dacă textul are un singur rând, **Auto-Sizing Type** va fi setat *Height and width*. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width*.
 
-<details><summary><strong>Shortcut‑uri</strong></summary>
+<details><summary><strong>Shortcuturi</strong></summary>
 
 FitToPage | | FitToSpread | | TextAutosize | |
 :- | -: | :- | -: | :- | -:
@@ -63,13 +67,13 @@ FitToPage | | FitToSpread | | TextAutosize | |
 
 ### **Scaling**
 
-Acestea scalează proporțional unul sau mai multe obiecte selectate, ca un bloc unitar.
+Scalează proporțional obiectele selectate, ca un bloc unitar.
 
 * **`ScaleToPageSize.jsx`** și **`ScaleToPageMargins.jsx`** scalează la dimensiunile paginii sau marginii.
 
 * Variantele **`H`** (height) și **`W`** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
 
-<details><summary><strong>Shortcut‑uri</strong></summary>
+<details><summary><strong>Shortcuturi</strong></summary>
 
 Scale | |
 :- | -:
@@ -80,17 +84,21 @@ Scale | |
 
 ### **Print**
 
-Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează layere alternative gen *visible*, *vizibil* pentru `safe area`, sau *diecut*, *die cut*, *cut lines*, *stanze* pentru `dielines`.
+Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează straturi cu denumiri similare gen *visible*, *vizibil* pentru `safe area`, sau *diecut*, *die cut*, *cut lines*, *stanze* pentru `dielines`.
 
-* **`PrepareForPrint.jsx`** ascunde layerul `safe area` și mută ștanțele și marcajele pentru alb și lac UV de pe `dielines` / `white` / `varnish` pe spreaduri separate.
+* **`PrepareForPrint.jsx`** ascunde stratul `safe area` și mută ștanțele și marcajele pentru alb și lac UV de pe `dielines` / `white` / `varnish` pe spreaduri separate.
 
-* **`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe layerul `safe area`. Folosește swatch‑ul `Safe area`, care dacă nu există va fi creat cu valoarea `C=0 M=100 Y=0 K=0`.
+* **`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe stratul `safe area`. Folosește culoarea `Safe area`, care dacă nu există va fi creată cu valoarea `C=0 M=100 Y=0 K=0`.
 
 * **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează `safe area`.
 
 ### **Setup**
 
-* **`DocCleanup.jsx`** șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și setează câteva preferințe:
+Sunt două seturi: unul legat de preferințele documentului, straturi, culori și fonturi, iar celălalt de dimensiunea și marginile paginii.
+
+#### **Document**
+
+* **`DefPrefs.jsx`** setează următoarele preferințe:
 
   > **Rulers:** Reset Zero Point \
   > **Rulers Units:** Millimeters \
@@ -115,9 +123,7 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DocDefaults.jsx`** creează câteva culori speciale și layere, înlocuiește niște fonturi și setează dimensiunea și marginile paginii din numele fișierului. De fapt rulează unele dintre scripturile de mai jos și setează preferințele la fel ca **`DocCleanup.jsx`**.
-
-* **`DefLayers.jsx`** creează un set de layere, preluându‑le proprietățile din [**`DefLayers.txt`**](setup/DefLayers.txt), care este un fișier TSV *(tab-separated values)* cu 6 coloane cu următorul format:
+* **`DefLayers.jsx`** creează un set de straturi, preluându‑le proprietățile din [**`DefLayers.txt`**](setup/DefLayers.txt), care este un fișier TSV *(tab-separated values)* cu 6 coloane cu următorul format:
 
   Nume | Culoare | Vizibil | Printabil | Ordine | Variante
   :- | :-: | :-: | :-: | :-: | :-
@@ -125,18 +131,17 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
   template | Gray | FALSE | FALSE | bottom
   ... |
 
-  > **Nume**: numele layerului \
-  > **Culoare**: culoarea layerului (v. [**`UIColors.txt`**](setup/UIColors.txt)) \
+  > **Nume**: numele stratului \
+  > **Culoare**: culoarea stratului (v. [**`UIColors.txt`**](setup/UIColors.txt)) \
   > **Vizibil**: `TRUE` sau `FALSE` \
   > **Printabil**: `TRUE` sau `FALSE` \
-  > **Ordine**: `top` sau `bottom` (deasupra sau sub layerele existente) \
-  > **Variante**: o listă de layere care vor fi combinate cu layerul de bază (case insensitive)
+  > **Ordine**: `top` sau `bottom` (deasupra sau sub straturile existente) \
+  > **Variante**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)
 
-  **`DefLayers.xlsx`** vă va ajuta la generarea fișierului TSV.
+  **Note:** Prima linie (capul de tabel) și liniile care încep cu `;` sunt ignorate. \
+  **`DefLayers.xlsx`** poate fi folosit pentru generarea fișierului TSV.
 
-  **Note:** Prima linie (capul de tabel) și liniile care încep cu `;` sunt ignorate.
-
-* **`DefSwatches.jsx`** creează un set de swatch‑uri definite în [**`DefSwatches.txt`**](setup/DefSwatches.txt), un fișier TSV cu 3 coloane cu următorul format:
+* **`DefSwatches.jsx`** creează un set de culori definite în [**`DefSwatches.txt`**](setup/DefSwatches.txt), un fișier TSV cu 3 coloane cu următorul format:
 
   Name | Model | Values
   :- | :- | :-
@@ -144,11 +149,11 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
   Cut | spot | 0, 100, 0, 0
   ... |
 
-  > **Name**: numele swatch‑ului \
-  > **Model**: color model: `process` or `spot` \
+  > **Name**: numele culorii \
+  > **Model**: tipul culorii: `process` or `spot` \
   > **Values**: o listă de 3 (RGB) sau 4 (CMYK) valori
 
-* **`CleanupSwatches.jsx`** convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula `C= M= Y= K=` și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
+* **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, elimină duplicatele, le redenumește după formula `C= M= Y= K=` și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
 * **`ReplaceFonts.jsx`** înlocuiește fonturi utilizând o listă de substituție, [**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt), care este un fișier TSV cu 4 coloane cu următorul format:
 
@@ -160,6 +165,12 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
 
   **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
 
+* **`DocCleanup.jsx`** setează preferințe (rulează **`DefPrefs.jsx`**), șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%.
+
+* **`DocDefaults.jsx`** doar rulează **`DefPrefs.jsx`**, **`DefSwatches.jsx`**, **`DefLayers.jsx`**, **`ReplaceFonts.jsx`** și **`PageSizeFromFilename.jsx`**.
+
+#### **Layout**
+
 * **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
 * **`PageSizeFromFilename.jsx`** setează dimensiunea și marginile paginii preluând informațiile din numele fișierului:
@@ -169,13 +180,13 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
   File1\_`1400x400`\_`700x137`\_`5`mm\_QR.indd | 1400x400 | 700x137 | 5
   File2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd | 597x517 | 577x500.5 | 3
 
-  > Caută în numele fișierului perechi de numere de genul `000x000` (unde `000` înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de `mm` sau `cm`). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. `000x000_000x000`), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.
+  > Caută în numele fișierului perechi de numere de genul `000x000` (unde `000` înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de `mm` sau `cm`). Dacă găsește doar o pereche, e dimensiunea paginii. Dacă găsește două (de ex. `000x000_000x000`), perechea mai mare e dimensiunea paginii, perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta va fi bleed.
 
 * **`PageSizeFromMargins.jsx`** redimensionează fiecare pagină la marginile acesteia.
 
 * **`PageSizeFromSelection.jsx`** redimensionează pagina curentă la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
 
-<details><summary><strong>Shortcut‑uri</strong></summary>
+<details><summary><strong>Shortcuturi</strong></summary>
 
 Setup | | | |
 :- | -: | :- | -:
@@ -187,17 +198,17 @@ Setup | | | |
 
 ### **Misc**
 
-* **`CleanupLabels.jsx`**: uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. Scriptul șterge toate etichetele obiectelor selectate sau din întregul document dacă nu e selectat nimic.
+* **`CleanupLabels.jsx`**: uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. Scriptul șterge etichetele obiectelor selectate sau ale tuturor obiectelor din document dacă nu e selectat nimic.
 
-* **`Clip.jsx`**: Pentru a manipula unele obiecte poate fi uneori util să le inserăm temporar într‑un container *(clipping frame)*. Scriptul inserează obiectele selectate într‑un container sau le restaurează dacă sunt deja inserate.
+* **`Clip.jsx`**: Pentru a manipula unele obiecte uneori e util să le inserăm temporar într‑un container *(clipping frame)*. Scriptul inserează obiectele selectate într‑un container sau le restaurează dacă sunt deja inserate.
 
   **`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
-* **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe layerul `info`.
+* **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul `info`.
 
 * **`QR.jsx`** adaugă coduri QR în documentul activ sau creează fișiere separate într-un subfolder numit `QR Codes`.
 
-  Mai întâi caută în folderul curent un document TSV cu 2 coloane numit **`QR.txt`**, din care preia o listă de coduri și fișierele corespunzătoare:
+  Mai întâi caută în folderul curent un document TSV cu 2 coloane numit **`QR.txt`**, din care preia o listă de coduri și numele de fișiere corespunzătoare:
 
   Filename | Code
   :- | :-
@@ -223,7 +234,7 @@ Setup | | | |
   * dacă cursorul e în text, face zoom la întreg cadrul;
   * fără nimic selectat face vizibil întreg spreadul.
 
-<details><summary><strong>Shortcut‑uri</strong></summary>
+<details><summary><strong>Shortcuturi</strong></summary>
 
 Misc | | | |
 :- | -: | :- | -:
@@ -245,4 +256,4 @@ Misc | | | |
 Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)). \
 Raportați o [problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați dificultăți sau aveți sugestii.
 
-README-ro.md • 9 noiembrie 2020
+README-ro.md • 10 noiembrie 2020

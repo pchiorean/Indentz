@@ -27,6 +27,7 @@ line-height: 1.6;
 <p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (sugestii sub fiecare secțiune). Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
 <h2 id="descriere">Descriere</h2>
 <h3 id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
+<p>Facilitează alinierea obiectelor sau setarea punctului de referință pentru transformări folosind shortcuturi.</p>
 <ul>
 <li>
 <p><strong><code>AlignTo</code></strong> aliniază obiectele selectate la referința setării <strong>Align To</strong>:</p>
@@ -43,7 +44,7 @@ line-height: 1.6;
 </li>
 </ul>
 <p><strong>Notă:</strong> Ambele seturi ar trebui alocate tastaturii numerice.</p>
-<details><summary><strong>Shortcut‑uri</strong></summary>
+<details><summary><strong>Shortcuturi</strong></summary>
 <table>
 <thead>
 <tr>
@@ -130,9 +131,10 @@ line-height: 1.6;
 </table>
 </details>
 <h3 id="fitting"><strong>Fitting</strong></h3>
+<p>Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container <em>(clipping frame)</em> și acesta e redimensionat.</p>
 <ul>
 <li>
-<p><strong><code>FitToPage</code></strong> redimensionează unul sau mai multe obiecte selectate, fără să le scaleze: dacă obiectul este mai mare decât pagina/marginile/bleed‑ul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 5%, va fi mărit. Frame‑urile obișnuite sunt redimensionate pur și simplu. Pentru a nu le deforma, obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container <em>(clipping frame)</em> și acesta e redimensionat. <strong><code>FitToSpread</code></strong> fac același lucru pentru paginile grupate într‑un spread.</p>
+<p><strong><code>FitToPage</code></strong> și <strong><code>FitToSpread</code></strong>: dacă obiectul este mai mare decât pagina/spreadul/marginile/bleedul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 5%, va fi mărit.</p>
 <p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la dimensiunile respective.</p>
 </li>
 <li>
@@ -170,7 +172,7 @@ line-height: 1.6;
 <p>Dacă textul are un singur rând, <strong>Auto-Sizing Type</strong> va fi setat <em>Height and width</em>. Dacă are mai multe rânduri, prima rulare îl va seta <em>Height only</em>, a doua <em>Height and width</em>.</p>
 </li>
 </ul>
-<details><summary><strong>Shortcut‑uri</strong></summary>
+<details><summary><strong>Shortcuturi</strong></summary>
 <table>
 <thead>
 <tr>
@@ -219,7 +221,7 @@ line-height: 1.6;
 </table>
 </details>
 <h3 id="scaling"><strong>Scaling</strong></h3>
-<p>Acestea scalează proporțional unul sau mai multe obiecte selectate, ca un bloc unitar.</p>
+<p>Scalează proporțional obiectele selectate, ca un bloc unitar.</p>
 <ul>
 <li>
 <p><strong><code>ScaleToPageSize.jsx</code></strong> și <strong><code>ScaleToPageMargins.jsx</code></strong> scalează la dimensiunile paginii sau marginii.</p>
@@ -228,7 +230,7 @@ line-height: 1.6;
 <p>Variantele <strong><code>H</code></strong> (height) și <strong><code>W</code></strong> (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.</p>
 </li>
 </ul>
-<details><summary><strong>Shortcut‑uri</strong></summary>
+<details><summary><strong>Shortcuturi</strong></summary>
 <table>
 <thead>
 <tr>
@@ -249,22 +251,24 @@ line-height: 1.6;
 </table>
 </details>
 <h3 id="print"><strong>Print</strong></h3>
-<p>Fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează layere alternative gen <em>visible</em>, <em>vizibil</em> pentru <code>safe area</code>, sau <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> pentru <code>dielines</code>.</p>
+<p>Fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează straturi cu denumiri similare gen <em>visible</em>, <em>vizibil</em> pentru <code>safe area</code>, sau <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> pentru <code>dielines</code>.</p>
 <ul>
 <li>
-<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde layerul <code>safe area</code> și mută ștanțele și marcajele pentru alb și lac UV de pe <code>dielines</code> / <code>white</code> / <code>varnish</code> pe spreaduri separate.</p>
+<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde stratul <code>safe area</code> și mută ștanțele și marcajele pentru alb și lac UV de pe <code>dielines</code> / <code>white</code> / <code>varnish</code> pe spreaduri separate.</p>
 </li>
 <li>
-<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe layerul <code>safe area</code>. Folosește swatch‑ul <code>Safe area</code>, care dacă nu există va fi creat cu valoarea <code>C=0 M=100 Y=0 K=0</code>.</p>
+<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe stratul <code>safe area</code>. Folosește culoarea <code>Safe area</code>, care dacă nu există va fi creată cu valoarea <code>C=0 M=100 Y=0 K=0</code>.</p>
 </li>
 <li>
 <p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <code>safe area</code>.</p>
 </li>
 </ul>
 <h3 id="setup"><strong>Setup</strong></h3>
+<p>Sunt două seturi: unul legat de preferințele documentului, straturi, culori și fonturi, iar celălalt de dimensiunea și marginile paginii.</p>
+<h4 id="document"><strong>Document</strong></h4>
 <ul>
 <li>
-<p><strong><code>DocCleanup.jsx</code></strong> șterge culorile, layerele și paginile neutilizate, deblochează toate elementele, le resetează scalarea la 100% și setează câteva preferințe:</p>
+<p><strong><code>DefPrefs.jsx</code></strong> setează următoarele preferințe:</p>
 <blockquote>
 <p><strong>Rulers:</strong> Reset Zero Point <br>
 <strong>Rulers Units:</strong> Millimeters <br>
@@ -291,10 +295,7 @@ line-height: 1.6;
 </blockquote>
 </li>
 <li>
-<p><strong><code>DocDefaults.jsx</code></strong> creează câteva culori speciale și layere, înlocuiește niște fonturi și setează dimensiunea și marginile paginii din numele fișierului. De fapt rulează unele dintre scripturile de mai jos și setează preferințele la fel ca <strong><code>DocCleanup.jsx</code></strong>.</p>
-</li>
-<li>
-<p><strong><code>DefLayers.jsx</code></strong> creează un set de layere, preluându‑le proprietățile din <a href="setup/DefLayers.txt"><strong><code>DefLayers.txt</code></strong></a>, care este un fișier TSV <em>(tab-separated values)</em> cu 6 coloane cu următorul format:</p>
+<p><strong><code>DefLayers.jsx</code></strong> creează un set de straturi, preluându‑le proprietățile din <a href="setup/DefLayers.txt"><strong><code>DefLayers.txt</code></strong></a>, care este un fișier TSV <em>(tab-separated values)</em> cu 6 coloane cu următorul format:</p>
 <table>
 <thead>
 <tr>
@@ -334,18 +335,18 @@ line-height: 1.6;
 </tbody>
 </table>
 <blockquote>
-<p><strong>Nume</strong>: numele layerului <br>
-<strong>Culoare</strong>: culoarea layerului (v. <a href="setup/UIColors.txt"><strong><code>UIColors.txt</code></strong></a>) <br>
+<p><strong>Nume</strong>: numele stratului <br>
+<strong>Culoare</strong>: culoarea stratului (v. <a href="setup/UIColors.txt"><strong><code>UIColors.txt</code></strong></a>) <br>
 <strong>Vizibil</strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
 <strong>Printabil</strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
-<strong>Ordine</strong>: <code>top</code> sau <code>bottom</code> (deasupra sau sub layerele existente) <br>
-<strong>Variante</strong>: o listă de layere care vor fi combinate cu layerul de bază (case insensitive)</p>
+<strong>Ordine</strong>: <code>top</code> sau <code>bottom</code> (deasupra sau sub straturile existente) <br>
+<strong>Variante</strong>: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)</p>
 </blockquote>
-<p><strong><code>DefLayers.xlsx</code></strong> vă va ajuta la generarea fișierului TSV.</p>
-<p><strong>Note:</strong> Prima linie (capul de tabel) și liniile care încep cu <code>;</code> sunt ignorate.</p>
+<p><strong>Note:</strong> Prima linie (capul de tabel) și liniile care încep cu <code>;</code> sunt ignorate. <br>
+<strong><code>DefLayers.xlsx</code></strong> poate fi folosit pentru generarea fișierului TSV.</p>
 </li>
 <li>
-<p><strong><code>DefSwatches.jsx</code></strong> creează un set de swatch‑uri definite în <a href="setup/DefSwatches.txt"><strong><code>DefSwatches.txt</code></strong></a>, un fișier TSV cu 3 coloane cu următorul format:</p>
+<p><strong><code>DefSwatches.jsx</code></strong> creează un set de culori definite în <a href="setup/DefSwatches.txt"><strong><code>DefSwatches.txt</code></strong></a>, un fișier TSV cu 3 coloane cu următorul format:</p>
 <table>
 <thead>
 <tr>
@@ -373,13 +374,13 @@ line-height: 1.6;
 </tbody>
 </table>
 <blockquote>
-<p><strong>Name</strong>: numele swatch‑ului <br>
-<strong>Model</strong>: color model: <code>process</code> or <code>spot</code> <br>
+<p><strong>Name</strong>: numele culorii <br>
+<strong>Model</strong>: tipul culorii: <code>process</code> or <code>spot</code> <br>
 <strong>Values</strong>: o listă de 3 (RGB) sau 4 (CMYK) valori</p>
 </blockquote>
 </li>
 <li>
-<p><strong><code>CleanupSwatches.jsx</code></strong> convertește swatch‑urile RGB la CMYK, elimină duplicatele, le redenumește după formula <code>C= M= Y= K=</code> și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
+<p><strong><code>CleanupSwatches.jsx</code></strong> convertește culorile RGB la CMYK, elimină duplicatele, le redenumește după formula <code>C= M= Y= K=</code> și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
 </li>
 <li>
 <p><strong><code>ReplaceFonts.jsx</code></strong> înlocuiește fonturi utilizând o listă de substituție, <a href="setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>, care este un fișier TSV cu 4 coloane cu următorul format:</p>
@@ -416,6 +417,15 @@ line-height: 1.6;
 <p><strong>Notă:</strong> Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy‑paste.</p>
 </li>
 <li>
+<p><strong><code>DocCleanup.jsx</code></strong> setează preferințe (rulează <strong><code>DefPrefs.jsx</code></strong>), șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%.</p>
+</li>
+<li>
+<p><strong><code>DocDefaults.jsx</code></strong> doar rulează <strong><code>DefPrefs.jsx</code></strong>, <strong><code>DefSwatches.jsx</code></strong>, <strong><code>DefLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong> și <strong><code>PageSizeFromFilename.jsx</code></strong>.</p>
+</li>
+</ul>
+<h4 id="layout"><strong>Layout</strong></h4>
+<ul>
+<li>
 <p><strong><code>PageMarginsFromSelection.jsx</code></strong> setează marginile paginii la dimensiunile selecției.</p>
 </li>
 <li>
@@ -445,7 +455,7 @@ line-height: 1.6;
 </tbody>
 </table>
 <blockquote>
-<p>Caută în numele fișierului perechi de numere de genul <code>000x000</code> (unde <code>000</code> înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de <code>mm</code> sau <code>cm</code>). Dacă găsește doar o pereche, aceasta va fi dimensiunea paginii. Dacă găsește două (de ex. <code>000x000_000x000</code>), perechea mai mare va fi dimensiunea paginii, iar perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta e considerată bleed.</p>
+<p>Caută în numele fișierului perechi de numere de genul <code>000x000</code> (unde <code>000</code> înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de <code>mm</code> sau <code>cm</code>). Dacă găsește doar o pereche, e dimensiunea paginii. Dacă găsește două (de ex. <code>000x000_000x000</code>), perechea mai mare e dimensiunea paginii, perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta va fi bleed.</p>
 </blockquote>
 </li>
 <li>
@@ -455,7 +465,7 @@ line-height: 1.6;
 <p><strong><code>PageSizeFromSelection.jsx</code></strong> redimensionează pagina curentă la obiectele selectate (similar cu <strong>Artboards &gt; Fit to Selected Art</strong> din Illustrator).</p>
 </li>
 </ul>
-<details><summary><strong>Shortcut‑uri</strong></summary>
+<details><summary><strong>Shortcuturi</strong></summary>
 <table>
 <thead>
 <tr>
@@ -490,18 +500,18 @@ line-height: 1.6;
 <h3 id="misc"><strong>Misc</strong></h3>
 <ul>
 <li>
-<p><strong><code>CleanupLabels.jsx</code></strong>: uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. Scriptul șterge toate etichetele obiectelor selectate sau din întregul document dacă nu e selectat nimic.</p>
+<p><strong><code>CleanupLabels.jsx</code></strong>: uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. Scriptul șterge etichetele obiectelor selectate sau ale tuturor obiectelor din document dacă nu e selectat nimic.</p>
 </li>
 <li>
-<p><strong><code>Clip.jsx</code></strong>: Pentru a manipula unele obiecte poate fi uneori util să le inserăm temporar într‑un container <em>(clipping frame)</em>. Scriptul inserează obiectele selectate într‑un container sau le restaurează dacă sunt deja inserate.</p>
+<p><strong><code>Clip.jsx</code></strong>: Pentru a manipula unele obiecte uneori e util să le inserăm temporar într‑un container <em>(clipping frame)</em>. Scriptul inserează obiectele selectate într‑un container sau le restaurează dacă sunt deja inserate.</p>
 <p><strong><code>ClipUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
 </li>
 <li>
-<p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe layerul <code>info</code>.</p>
+<p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul <code>info</code>.</p>
 </li>
 <li>
 <p><strong><code>QR.jsx</code></strong> adaugă coduri QR în documentul activ sau creează fișiere separate într-un subfolder numit <code>QR Codes</code>.</p>
-<p>Mai întâi caută în folderul curent un document TSV cu 2 coloane numit <strong><code>QR.txt</code></strong>, din care preia o listă de coduri și fișierele corespunzătoare:</p>
+<p>Mai întâi caută în folderul curent un document TSV cu 2 coloane numit <strong><code>QR.txt</code></strong>, din care preia o listă de coduri și numele de fișiere corespunzătoare:</p>
 <table>
 <thead>
 <tr>
@@ -546,7 +556,7 @@ line-height: 1.6;
 </ul>
 </li>
 </ul>
-<details><summary><strong>Shortcut‑uri</strong></summary>
+<details><summary><strong>Shortcuturi</strong></summary>
 <table>
 <thead>
 <tr>
@@ -580,8 +590,9 @@ line-height: 1.6;
 </ol>
 <h2 id="licență">Licență</h2>
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington și alții. -->
-<p>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).<br>Raportați o <a href="https://github.com/pchiorean/Indentz/issues">problemă</a> pe Github dacă întâmpinați dificultăți sau aveți sugestii.</p>
-<p><a href="http://README-ro.html">README-ro.md</a> • 9 noiembrie 2020</p>
+<p>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>). <br>
+Raportați o <a href="https://github.com/pchiorean/Indentz/issues">problemă</a> pe Github dacă întâmpinați dificultăți sau aveți sugestii.</p>
+<p>README-ro.md • 10 noiembrie 2020</p>
 
 </body>
 </html>
