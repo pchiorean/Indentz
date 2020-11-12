@@ -1,5 +1,5 @@
 /*
-	Add default layers v1.0.1
+	Add default layers v1.1.0
 	© November 2020, Paul Chiorean
 	Adds/merges layers from a list. The list is a 6-column TSV file
 	with the same name as the script and the following format:
@@ -39,28 +39,29 @@ infoFile.close();
 
 doc.layers.everyItem().locked = false;
 doc.layers.everyItem().layerColor = [215, 215, 215]; // Mark existing layers light gray
+var set_AL = doc.activeLayer; // Save active layer
 // Top layers
 for (var i = layerData.length - 1; i >= 1 ; i--) {
 	var name, color, isVisible, isPrintable, isBottom, variants = [], v, vv;
 	name = layerData[i][0];
 	color = getUIColor(layerData[i][1]);
-	isVisible = (layerData[i][2].toLowerCase() === "true");
-	isPrintable = (layerData[i][3].toLowerCase() === "true");
-	isBottom = (layerData[i][4].toLowerCase() === "bottom");
+	isVisible = (layerData[i][2].toLowerCase() == "true");
+	isPrintable = (layerData[i][3].toLowerCase() == "true");
+	isBottom = (layerData[i][4].toLowerCase() == "bottom");
 	if (isBottom) continue;
 	variants.push(trim(layerData[i][0]));
 	vv = layerData[i][5].split(",");
 	while (v = vv.shift()) variants.push(trim(v));
-	makeLayer(name, color, isVisible, isPrintable, variants);
+	var layer = makeLayer(name, color, isVisible, isPrintable, variants);
 }
 // Bottom layers
 for (var i = 1; i < layerData.length; i++) {
 	var name, color, isVisible, isPrintable, isBottom, variants = [], v, vv;
 	name = layerData[i][0];
 	color = getUIColor(layerData[i][1]);
-	isVisible = (layerData[i][2].toLowerCase() === "true");
-	isPrintable = (layerData[i][3].toLowerCase() === "true");
-	isBottom = (layerData[i][4].toLowerCase() === "bottom");
+	isVisible = (layerData[i][2].toLowerCase() == "true");
+	isPrintable = (layerData[i][3].toLowerCase() == "true");
+	isBottom = (layerData[i][4].toLowerCase() == "bottom");
 	if (!isBottom) continue;
 	variants.push(trim(layerData[i][0]));
 	vv = layerData[i][5].split(",");
@@ -68,6 +69,7 @@ for (var i = 1; i < layerData.length; i++) {
 	var layer = makeLayer(name, color, isVisible, isPrintable, variants);
 	if (isBottom) layer.move(LocationOptions.AT_END);
 }
+doc.activeLayer = set_AL; // Restore active layer
 
 
 function makeLayer(name, color, isVisible, isPrintable, variants) {
@@ -75,6 +77,7 @@ function makeLayer(name, color, isVisible, isPrintable, variants) {
 	var layer = doc.layers.item(name);
 	if (layer.isValid) {
 		layer.layerColor = color;
+		// layer.visible = isVisible;
 		layer.printable = isPrintable }
 	else {
 		doc.layers.add({
@@ -84,7 +87,13 @@ function makeLayer(name, color, isVisible, isPrintable, variants) {
 			printable: isPrintable });
 	}
 	var l, layers = doc.layers.everyItem().getElements();
-	while (l = layers.shift()) if(isIn(l.name, variants, false)) layer.merge(l);
+	while (l = layers.shift())
+		if(isIn(l.name, variants, false)) {
+			var set_LV = l.visible;
+			if (l == set_AL) set_AL = layer;
+			layer.merge(l);
+			layer.visible = set_LV;
+		};
 	return layer;
 }
 
@@ -105,7 +114,7 @@ function getUIColor(color) {
 		UIColors.TAN, UIColors.TEAL, UIColors.VIOLET, UIColors.WHITE, UIColors.YELLOW]
 	];
 	for (var i = 0; i < UICOLS[0].length; i++)
-		if (color === UICOLS[0][i]) return UICOLS[1][i];
+		if (color.toLowerCase() == UICOLS[0][i].toLowerCase()) return UICOLS[1][i];
 	return UIColors.LIGHT_BLUE;
 }
 
