@@ -1,14 +1,13 @@
 /*
-	Default preferences v1.0.0
+	Default preferences v1.0.1
 	© November 2020, Paul Chiorean
 */
 
-// if (app.documents.length == 0) exit();
+if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
 
 app.doScript(
 function() {
-	app.scriptPreferences.enableRedraw = false;
 	doc.zeroPoint = [0, 0];
 	try { doc.cmykProfile = "ISO Coated v2 (ECI)" } catch (_) {
 		doc.cmykProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
