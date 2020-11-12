@@ -1,5 +1,5 @@
 /*
-	Page size from filename v1.8.1
+	Page size from filename v1.9.0
 	© November 2020, Paul Chiorean
 	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -93,6 +93,11 @@ function main() {
 		var saLayer = doc.layers.item(saLayerName);
 		if (!saLayer.isValid) doc.layers.add({ name: saLayerName, layerColor: UIColors.YELLOW });
 		saLayer.locked = false;
+		var item, items = page.allPageItems;
+		while (item = items.shift())
+			if (item.label == "safe area" &&
+				item.itemLayer == saLayer &&
+				item.locked == false) item.remove();
 
 		var mgPg, mgBounds, saLayerFrame;
 		mgPg = {
