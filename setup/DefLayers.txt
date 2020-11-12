@@ -1,9 +1,9 @@
 Name	Color	Visible	Printable	Order	Variants
-safe area	Yellow	FALSE	TRUE	top	rahmen, vis. area, visible area, visible, vizibil
-dielines	Red	FALSE	TRUE	top	cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanze 1, stanzform
+safe area	Yellow	TRUE	TRUE	top	rahmen, vis. area, visible area, visible, vizibil
+dielines	Red	TRUE	TRUE	top	cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanze 1, stanzform
 varnish	Yellow	FALSE	TRUE	top	uv
 white	Cute Teal	FALSE	TRUE	top	
-guides	Magenta	FALSE	FALSE	top	
+guides	Magenta	TRUE	FALSE	top	
 info	Cyan	FALSE	TRUE	top	info copy, ratio
 HW	Light Gray	FALSE	TRUE	top	hw logo, logo hw, wh, whw
 disclaimer	Gray	FALSE	TRUE	top	
