@@ -54,7 +54,7 @@ Name                               |   Fn  | Description
 **`DefSwatches.jsx`**              |       | Adds swatches from a list
 **`CleanupSwatches.jsx`**          |   ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 **`ReplaceFonts.jsx`**             |       | Replaces missing or unwanted fonts with equivalents from a list
-**`DocCleanup.jsx`**               |    F2 | Changes some settings, cleans up swatches/layers/pages/guides and resets scaling
+**`DocCleanup.jsx`**               |    F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling
 **`DocDefaults.jsx`**              |   ⌥F2 | Adds swatches/layers, cleans up fonts and sets page dimensions from the filename
 **`PageMarginsFromSelection.jsx`** |       | Sets the page margins to the selected objects bounds
 **`PageSizeFromFilename.jsx`**     |    F3 | Sets every page size and margins according to the filename

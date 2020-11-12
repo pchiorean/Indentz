@@ -1,5 +1,5 @@
 /*
-	QR code v2.1.2
+	QR code v2.1.3
 	© November 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -48,21 +48,17 @@ function BatchQR() { // Noninteractive: batch process 'QR.txt'
 	if (line < 1) { alert("Not enough records."); exit() }
 	var progressBar = new ProgressBar(width); progressBar.reset(line);
 	for (var i = 0, err = 0; i < line; i++) {
-		progressBar.update(i+1, qr[i]);
+		progressBar.update(i + 1, qr[i]);
 		if (QROnFile(qr[i], fn[i])) err++; // Count files with errors (text overflow)
 	}
 	progressBar.close();
 	if (err != 0) {
-		var msg = (err == 1) ?"One file needs attention." : err + " files need attention.";
+		var msg = (err == 1) ? "One file needs attention." : err + " files need attention.";
 		alert(msg);
 	}
 }
 
 function ManuallyQR() { // Interactive: ask for QR text and destination
-/*
-	Backup JSON code for https://scriptui.joonas.me:
-	{"activeId":7,"items":{"item-0":{"id":0,"type":"Dialog","parentId":false,"style":{"enabled":true,"varName":"w","windowType":"Dialog","creationProps":{"su1PanelCoordinates":false,"maximizeButton":false,"minimizeButton":false,"independent":false,"closeButton":true,"borderless":false,"resizeable":false},"text":"Generate QR Code","preferredSize":[0,0],"margins":16,"orientation":"row","spacing":10,"alignChildren":["left","top"]}},"item-2":{"id":2,"type":"EditText","parentId":8,"style":{"enabled":true,"varName":"label","creationProps":{"noecho":false,"readonly":false,"multiline":false,"scrollable":false,"borderless":false,"enterKeySignalsOnChange":true},"softWrap":true,"text":"","justify":"left","preferredSize":[430,0],"alignment":null,"helpTip":"Use '|' for manual line breaks"}},"item-4":{"id":4,"type":"Group","parentId":0,"style":{"enabled":true,"varName":"buttons","preferredSize":[0,0],"margins":0,"orientation":"column","spacing":10,"alignChildren":["fill","top"],"alignment":null}},"item-5":{"id":5,"type":"Button","parentId":4,"style":{"enabled":true,"varName":"ok","text":"On page","justify":"center","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-6":{"id":6,"type":"Button","parentId":4,"style":{"enabled":true,"varName":"cancel","text":"Cancel","justify":"center","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-7":{"id":7,"type":"Checkbox","parentId":8,"style":{"enabled":true,"varName":"flg_white","text":"White label text","preferredSize":[0,0],"alignment":null,"helpTip":"Ignored when saving on separate file"}},"item-8":{"id":8,"type":"Panel","parentId":0,"style":{"enabled":true,"varName":"qpanel","creationProps":{"borderStyle":"etched","su1PanelCoordinates":false},"text":"","preferredSize":[0,0],"margins":10,"orientation":"column","spacing":10,"alignChildren":["left","top"],"alignment":null}},"item-9":{"id":9,"type":"StaticText","parentId":8,"style":{"enabled":true,"varName":"st","creationProps":{"truncate":"none","multiline":false,"scrolling":false},"softWrap":false,"text":"Enter QR code text:","justify":"left","preferredSize":[0,0],"alignment":null,"helpTip":null}},"item-10":{"id":10,"type":"Button","parentId":4,"style":{"enabled":true,"varName":"onfile","text":"On file","justify":"center","preferredSize":[0,0],"alignment":null,"helpTip":null}}},"order":[0,8,9,2,7,4,5,10,6],"settings":{"importJSON":true,"indentSize":false,"cepExport":false,"includeCSSJS":true,"showDialog":false,"functionWrapper":false,"afterEffectsDockable":false,"itemReferenceList":"None"}}
-	*/
 	var flg_onfile;
 	var w = new Window("dialog");
 		w.text = "Generate QR Code";
@@ -121,7 +117,7 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 			horizontalScale: 92,
 			tracking: -15,
 			hyphenation: false,
-			fillColor: flg_white ? "Paper" : "Black",
+			fillColor: flg_white ? "Paper" : "Black", // White text
 			strokeColor: "None"
 		}
 		label.geometricBounds = [0, page.bounds[1], 24.9085829084314, page.bounds[1] + 61.0988746102401];

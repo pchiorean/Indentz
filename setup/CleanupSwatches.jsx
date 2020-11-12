@@ -1,5 +1,5 @@
 /*
-	Cleanup swatches v1.3.0
+	Cleanup swatches v1.3.1
 	October 2020, Paul Chiorean
 	Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused.
 	
@@ -18,7 +18,7 @@ app.doScript(DeleteUnused, ScriptLanguage.javascript, doc,
 	UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
 
 
-function RGB2CMYK(/*Document*/doc, c, i, j, k) {
+function RGB2CMYK(doc, c, i, j, k) {
 	for (i = 0; i < doc.colors.length; i++) {
 		c = doc.colors[i];
 		if (c.model == ColorModel.PROCESS && c.space == ColorSpace.RGB) {
@@ -31,7 +31,7 @@ function RGB2CMYK(/*Document*/doc, c, i, j, k) {
 	}
 }
 
-function NormalizeCMYK(/*Document*/doc, swa, a, r, o, t, k, i) {
+function NormalizeCMYK(doc, swa, a, r, o, t, k, i) {
 	const __ = $.global.localize;
 	const CM_PROCESS = +ColorModel.PROCESS;
 	const CS_CMYK = +ColorSpace.CMYK;
@@ -57,7 +57,7 @@ function NormalizeCMYK(/*Document*/doc, swa, a, r, o, t, k, i) {
 	}
 }
 
-function DeleteUnused(/*Document*/doc, swa, i) {
+function DeleteUnused(doc, swa, i) {
 	swa = doc.unusedSwatches;
 	for (i = 0; i < swa.length; i++) if (swa[i].name != "") swa[i].remove();
 }

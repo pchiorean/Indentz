@@ -1,7 +1,7 @@
 ﻿/*
-	Doc cleanup v2.1.0
+	Doc cleanup v2.1.1
 	© November 2020, Paul Chiorean
-	Changes some settings, cleans up swatches/layers/pages/guides and resets scaling.
+	Changes some settings, cleans up swatches/layers/pages and resets scaling.
 */
 
 if (app.documents.length == 0) exit();
