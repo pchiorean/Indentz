@@ -38,7 +38,7 @@ Proxy | | | | | |
 
 ### **Fitting**
 
-Resize the selected objects, without scaling. Rectangular frames are simply resized; rotated objects, ovals, groups, etc. are inserted in a clipping frame which is resized.
+Resize the selected objects, without scaling. Rectangular frames are simply resized; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is resized.
 
 * **`FitToPage`** and **`FitToSpread`**: if the selected object is larger than the page/spread/margins/bleed, it will be reduced; if it is smaller but inside a 5% "snap" area, it will be enlarged.
 
@@ -94,7 +94,7 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 
 ### **Setup**
 
-There are two sets: one related to document preferences, layers, swatches and fonts, and the other to page size and margins.
+There are two sets: one related to document preferences, layers, swatches and fonts, the other to page size and margins.
 
 #### **Document**
 
@@ -132,11 +132,11 @@ There are two sets: one related to document preferences, layers, swatches and fo
   ... |
 
   > **Name**: layer name \
-  > **Color**: layer color (see [**`UIColors.txt`**](setup/UIColors.txt)) \
+  > **Color**: layer color <!-- (see [**`UIColors.txt`**](setup/UIColors.txt)) --> \
   > **Visible**: `TRUE` or `FALSE` \
   > **Printable**: `TRUE` or `FALSE` \
   > **Order**: `top` or `bottom` (above or below existing layers) \
-  > **Variants**: a list of layers which will be merged with the base layer (case insensitive)
+  > **Variants**: a list of layers that will be merged with the base layer (case insensitive)
 
   **Note:** The first line (the header) and lines beginning with `;` are ignored. \
   **`DefLayers.xlsx`** can be used to generate the TSV file.
@@ -218,7 +218,7 @@ Setup | | | |
 
   If it's not found, it prompts for the code and adds it on each page on the bottom left corner, or it saves it to a file with the name of the active document and `_QR` added to the end:
 
-  ![](.img/qr.png)
+  ![Generate QR Code](.img/qr.png)
 
   **Note:** You can insert `|` for manually splitting the legend into several lines.
 
@@ -228,6 +228,8 @@ Setup | | | |
 
 * **`ShowProperties.jsx`** shows properties and methods of a selected object (useful for debugging).
 
+* **`TileAll.jsx`** invokes **Window > Arrange > Tile All Vertically** or **Tile All Horizontally**, depending on the current page orientation.
+
 * **`ZoomToSelection.jsx`** resembles **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
   * brings the selection a little closer;
@@ -236,9 +238,9 @@ Setup | | | |
 
 <details><summary><strong>Shortcuts</strong></summary>
 
-Misc | | | |
-:- | -: | :- | -:
-**Clip.jsx** | Num* | **QR.jsx** | F9
+Misc | | | | | |
+:- | -: | :- | -: | :- | -:
+**Clip.jsx** | Num* | **TileAll.jsx** | ⇧F4 | **QR.jsx** | F9
 **ClipUndo.jsx** | ⌃Num* | **ZoomToSelection.jsx** | F4
 
 </details>
@@ -256,4 +258,4 @@ Misc | | | |
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)). \
 Open an [issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • November 10, 2020
+README.md • November 12, 2020

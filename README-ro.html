@@ -336,7 +336,7 @@ line-height: 1.6;
 </table>
 <blockquote>
 <p><strong>Nume</strong>: numele stratului <br>
-<strong>Culoare</strong>: culoarea stratului (v. <a href="setup/UIColors.txt"><strong><code>UIColors.txt</code></strong></a>) <br>
+<strong>Culoare</strong>: culoarea stratului <!-- (v. <a href="setup/UIColors.txt"><strong><code>UIColors.txt</code></strong></a>) --> <br>
 <strong>Vizibil</strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
 <strong>Printabil</strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
 <strong>Ordine</strong>: <code>top</code> sau <code>bottom</code> (deasupra sau sub straturile existente) <br>
@@ -535,7 +535,7 @@ line-height: 1.6;
 </tbody>
 </table>
 <p>Dacă nu‑l găsește, solicită codul și îl adaugă pe fiecare pagină în colțul din stânga jos, sau îl salvează într‑un fișier cu numele documentului activ și <code>_QR</code> adăugat la coadă:</p>
-<p><img src=".img/qr.png" alt=""></p>
+<p><img src=".img/qr.png" alt="Generate QR Code"></p>
 <p><strong>Notă:</strong> Puteți insera <code>|</code> pentru împărțirea manuală a legendei în mai multe rânduri.</p>
 </li>
 <li>
@@ -546,6 +546,9 @@ line-height: 1.6;
 </li>
 <li>
 <p><strong><code>ShowProperties.jsx</code></strong> afișează proprietățile și metodele unui obiect selectat (util pentru depanare).</p>
+</li>
+<li>
+<p><strong><code>TileAll.jsx</code></strong> invocă <strong>Window &gt; Arrange &gt; Tile All Vertically</strong> sau <strong>Tile All Horizontally</strong>, în funcție de orientarea paginii curente.</p>
 </li>
 <li>
 <p><strong><code>ZoomToSelection.jsx</code></strong> e asemănător cu <strong>Fit Selection in Window</strong> (⌥⌘=), dar cu câteva îmbunătățiri:</p>
@@ -564,12 +567,16 @@ line-height: 1.6;
 <th style="text-align:right"></th>
 <th style="text-align:left"></th>
 <th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left"><strong>Clip.jsx</strong></td>
 <td style="text-align:right">Num*</td>
+<td style="text-align:left"><strong>TileAll.jsx</strong></td>
+<td style="text-align:right">⇧F4</td>
 <td style="text-align:left"><strong>QR.jsx</strong></td>
 <td style="text-align:right">F9</td>
 </tr>
@@ -578,6 +585,8 @@ line-height: 1.6;
 <td style="text-align:right">⌃Num*</td>
 <td style="text-align:left"><strong>ZoomToSelection.jsx</strong></td>
 <td style="text-align:right">F4</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
 </tr>
 </tbody>
 </table>
@@ -592,7 +601,7 @@ line-height: 1.6;
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington și alții. -->
 <p>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>). <br>
 Raportați o <a href="https://github.com/pchiorean/Indentz/issues">problemă</a> pe Github dacă întâmpinați dificultăți sau aveți sugestii.</p>
-<p>README-ro.md • 10 noiembrie 2020</p>
+<p>README-ro.md • 12 noiembrie 2020</p>
 
 </body>
 </html>

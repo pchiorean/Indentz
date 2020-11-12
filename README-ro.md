@@ -132,7 +132,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   ... |
 
   > **Nume**: numele stratului \
-  > **Culoare**: culoarea stratului (v. [**`UIColors.txt`**](setup/UIColors.txt)) \
+  > **Culoare**: culoarea stratului <!-- (v. [**`UIColors.txt`**](setup/UIColors.txt)) --> \
   > **Vizibil**: `TRUE` sau `FALSE` \
   > **Printabil**: `TRUE` sau `FALSE` \
   > **Ordine**: `top` sau `bottom` (deasupra sau sub straturile existente) \
@@ -218,7 +218,7 @@ Setup | | | |
 
   Dacă nu‑l găsește, solicită codul și îl adaugă pe fiecare pagină în colțul din stânga jos, sau îl salvează într‑un fișier cu numele documentului activ și `_QR` adăugat la coadă:
 
-  ![](.img/qr.png)
+  ![Generate QR Code](.img/qr.png)
 
   **Notă:** Puteți insera `|` pentru împărțirea manuală a legendei în mai multe rânduri.
 
@@ -228,6 +228,8 @@ Setup | | | |
 
 * **`ShowProperties.jsx`** afișează proprietățile și metodele unui obiect selectat (util pentru depanare).
 
+* **`TileAll.jsx`** invocă **Window > Arrange > Tile All Vertically** sau **Tile All Horizontally**, în funcție de orientarea paginii curente.
+
 * **`ZoomToSelection.jsx`** e asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
 
   * aduce selecția puțin mai aproape;
@@ -236,9 +238,9 @@ Setup | | | |
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
-Misc | | | |
-:- | -: | :- | -:
-**Clip.jsx** | Num* | **QR.jsx** | F9
+Misc | | | | | |
+:- | -: | :- | -: | :- | -:
+**Clip.jsx** | Num* | **TileAll.jsx** | ⇧F4 | **QR.jsx** | F9
 **ClipUndo.jsx** | ⌃Num* | **ZoomToSelection.jsx** | F4
 
 </details>
@@ -256,4 +258,4 @@ Misc | | | |
 Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)). \
 Raportați o [problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați dificultăți sau aveți sugestii.
 
-README-ro.md • 10 noiembrie 2020
+README-ro.md • 12 noiembrie 2020
