@@ -1,5 +1,5 @@
 /*
-	Fit to... v3.4.1
+	Fit to... v3.5.0
 	© November 2020, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/bleed.
 	It's run internally by all the other FitTo scripts.
@@ -112,7 +112,7 @@ function Fit(obj) {
 	// Case 3: Text frames
 	if (obj.constructor.name == "TextFrame" &&
 		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
-			obj.geometricBounds = FORCED ? tg : fitE; return;
+			obj.geometricBounds = FORCED ? tg : fitR; return;
 	}
 	// Case 4: Orthogonal lines
 	if (obj.constructor.name == "GraphicLine" &&
