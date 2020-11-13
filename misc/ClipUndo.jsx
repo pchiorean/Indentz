@@ -1,6 +1,6 @@
 /*
-	Undo clipping v1.6.0
-	© October 2020, Paul Chiorean
+	Undo clipping v1.6.1
+	© November 2020, Paul Chiorean
 	Restores objects clipped in a "<clip frame>" by the "FitTo" scripts.
 */
 
@@ -10,7 +10,7 @@ var items = doc.selection.length == 0 ?
 	doc.pageItems.everyItem().getElements() : doc.selection;
 
 app.doScript(main, ScriptLanguage.javascript, items,
-	UndoModes.FAST_ENTIRE_SCRIPT, "Unclipping");
+	UndoModes.ENTIRE_SCRIPT, "Unclipping");
 
 
 function main(items) {

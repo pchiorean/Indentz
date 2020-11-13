@@ -1,6 +1,6 @@
 /*
-	Clip v1.7.0
-	© October 2020, Paul Chiorean
+	Clip v1.7.1
+	© November 2020, Paul Chiorean
 	Clip selected objects in a "<clip frame>", or restores them
 */
 
@@ -12,7 +12,7 @@ if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 }
 
 app.doScript(main, ScriptLanguage.javascript, sel,
-	UndoModes.FAST_ENTIRE_SCRIPT, "Clipping");
+	UndoModes.ENTIRE_SCRIPT, "Clipping");
 
 
 function main(sel) {

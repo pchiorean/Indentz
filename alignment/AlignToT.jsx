@@ -1,5 +1,5 @@
 /*
-	Align to top v2.4.0
+	Align to top v2.4.1
 	© November 2020, Paul Chiorean
 	Aligns the selected objects to the top of the 'Align To' setting.
 */
@@ -14,7 +14,7 @@ if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 if (sel.length == 1 && sel[0].locked) { alert("This object is locked."); exit() }
 
 app.doScript(main, ScriptLanguage.javascript, sel,
-	UndoModes.FAST_ENTIRE_SCRIPT, "Align to top");
+	UndoModes.ENTIRE_SCRIPT, "Align to top");
 
 
 function main(sel) {
