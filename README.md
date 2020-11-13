@@ -138,7 +138,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Order**: `top` or `bottom` (above or below existing layers) \
   > **Variants**: a list of layers that will be merged with the base layer (case insensitive)
 
-  **Note:** The first line (the header) and lines beginning with `;` are ignored. \
+  **Note:** The first line (the header) and lines beginning with `#` are ignored. \
   **`DefLayers.xlsx`** can be used to generate the TSV file.
 
 * **`DefSwatches.jsx`** adds a set of swatches defined in [**`DefSwatches.txt`**](setup/DefSwatches.txt), a 3‑column TSV file with the following format:
@@ -258,4 +258,4 @@ Misc | | | | | |
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)). \
 Open an [issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • November 12, 2020
+README.md • November 13, 2020

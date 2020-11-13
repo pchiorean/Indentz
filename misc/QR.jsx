@@ -1,5 +1,5 @@
 /*
-	QR code v2.1.3
+	QR code v2.2.0
 	© November 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -33,7 +33,8 @@ function BatchQR() { // Noninteractive: batch process 'QR.txt'
 	var header = infoFile.readln().split("\t");
 	while (!infoFile.eof) {
 		var infoLine = infoFile.readln().split("\t");
-		if (infoLine[0].toString().slice(0,1) == "\u003B") continue; // Skip ';' commented lines
+		if (infoLine[0].toString().slice(0,1) == "\u0023") continue; // Skip ';' commented lines
+		if (infoLine[0] == "") continue; // Skip empty lines
 		if (!infoLine[0] && !infoLine[1]) continue;
 		line++;
 		if (!infoLine[0]) { alert ("Missing " + header[0] + " in record " + line + "."); exit() }

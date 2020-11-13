@@ -138,7 +138,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Ordine**: `top` sau `bottom` (deasupra sau sub straturile existente) \
   > **Variante**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)
 
-  **Note:** Prima linie (capul de tabel) și liniile care încep cu `;` sunt ignorate. \
+  **Note:** Prima linie (capul de tabel) și liniile care încep cu `#` sunt ignorate. \
   **`DefLayers.xlsx`** poate fi folosit pentru generarea fișierului TSV.
 
 * **`DefSwatches.jsx`** creează un set de culori definite în [**`DefSwatches.txt`**](setup/DefSwatches.txt), un fișier TSV cu 3 coloane cu următorul format:
@@ -258,4 +258,4 @@ Misc | | | | | |
 Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)). \
 Raportați o [problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați dificultăți sau aveți sugestii.
 
-README-ro.md • 12 noiembrie 2020
+README-ro.md • 13 noiembrie 2020
