@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 1.4.0
+	Replace fonts 1.4.1
 	© November 2020, Paul Chiorean
 	Replaces missing or unwanted fonts with equivalents from a list.
 	The list is a 4-column TSV file with the same name as the script
@@ -25,7 +25,7 @@ function main() {
 	var fontList = [], line = 0;
 	while (!infoFile.eof) {
 		var infoLine = infoFile.readln().split("\t"); line++;
-		if (infoLine[0].toString().slice(0,1) == "\u0023") continue; // Skip ';' commented lines
+		if (infoLine[0].toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
 		if (infoLine[0] == "") continue; // Skip empty lines
 		if (!infoLine[0] || !infoLine[1] || !infoLine[2] || !infoLine[3]) {
 			alert ("Missing data in record " + line + "."); exit();

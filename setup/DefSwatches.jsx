@@ -1,5 +1,5 @@
 /*
-	Add default swatches v1.1.0
+	Add default swatches v1.1.1
 	© November 2020, Paul Chiorean
 	Adds swatches from a list. The list is a 3-column TSV file
 	with the same name as the script and the following format:
@@ -27,7 +27,7 @@ if (!infoFile.open("r")) { alert("File '" + infoFile.name + "' not found."); exi
 var colorData = [], line = 0;
 while (!infoFile.eof) {
 	var infoLine = infoFile.readln().split("\t"); line++;
-	if (infoLine[0].toString().slice(0,1) == "\u0023") continue; // Skip ';' commented lines
+	if (infoLine[0].toString().slice(0,1) == "\u0023") continue; // Skip '#' commented lines
 	if (infoLine[0] == "") continue; // Skip empty lines
 	if (!infoLine[0] || !infoLine[1] || !infoLine[2]) {
 		alert ("Missing data in record " + line + "."); exit() }
