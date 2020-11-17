@@ -44,7 +44,7 @@ Resize the selected objects, without scaling. Rectangular frames are simply resi
 
   **`FitTo...Forced.jsx`** resize exactly to the named dimensions.
 
-* **`TextAutosize.jsx`** fits the text frame to the text and sets it to auto-size. You control the auto-sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
+* **`TextAutosize.jsx`** fits the text frame to the text and sets it to auto‑size. You control the auto‑sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
 
   | | ![¶ Align left](.img/paragraphalign-L.png) | ![¶ Align center](.img/paragraphalign-C.png) | ![¶ Align right](.img/paragraphalign-R.png)
   :-: | :-: | :-: | :-:
@@ -52,7 +52,7 @@ Resize the selected objects, without scaling. Rectangular frames are simply resi
   ![Vertical Justification Center](.img/verticaljustification-C.png) | ![center-left](.img/textautosize-CL.png) | ![center](.img/textautosize-C.png) | ![center-right](.img/textautosize-CR.png)
   ![Vertical Justification Bottom](.img/verticaljustification-B.png) | ![bottom-left](.img/textautosize-BL.png) | ![bottom-center](.img/textautosize-BC.png) | ![bottom-right](.img/textautosize-BR.png)
 
-  If the text has only one line, **Auto-Sizing Type** will be set to *Height and width*. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width*.
+  If the text has only one line, **Auto‑Sizing Type** will be set to *Height and width*. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width*.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -123,7 +123,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefLayers.jsx`** adds a set of layers, reading their properties from [**`DefLayers.txt`**](setup/DefLayers.txt), which is a 6‑column TSV *(tab-separated values)* file with the following format:
+* **`DefLayers.jsx`** adds a set of layers, reading their properties from [**`DefLayers.txt`**](setup/DefLayers.txt), which is a 6‑column TSV *(tab‑separated values)* file with the following format:
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
@@ -180,7 +180,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   File1\_`1400x400`\_`700x137`\_`5`mm\_QR.indd | 1400x400 | 700x137 | 5
   File2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd | 597x517 | 577x500.5 | 3
 
-  > It searches for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it's the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair it's the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this will be bleed.
+  > It searches for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it's the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair it's the page size, the smaller pair the visible/safe area size. If followed by a one- or two‑digit sequence, this will be bleed.
 
 * **`PageSizeFromMargins.jsx`** resizes each page to its margins.
 
@@ -206,21 +206,23 @@ Setup | | | |
 
 * **`PageRatios.jsx`** calculates the ratio of each page and puts it in the upper left corner, on the `info` layer.
 
-* **`QR.jsx`** adds QR codes in the active document or creates separate files in a subfolder named `QR Codes`.
-
-  First, it looks in the current folder for a 2‑column TSV document named **`QR.txt`** from which it takes a list of codes and the corresponding filenames:
-
-  Filename | Code
-  :- | :-
-  File 1 | CODE 1
-  File 2 | CODE 2
-  ... |
-
-  If it's not found, it prompts for the code and adds it on each page on the bottom left corner, or it saves it to a file with the name of the active document and `_QR` added to the end:
+* **`QR.jsx`** adds QR codes in the active document or creates separate files in a subfolder named `QR Codes`:
 
   ![Generate QR Code](.img/qr.png)
 
-  **Note:** You can insert `|` for manually splitting the legend into several lines.
+  * **On page** adds the code on each page, on the bottom left corner.
+
+  * **On file** saves it in a file with the name of the active document and `_QR` added to the end.
+
+  * **Batch** creates multiple files from a 2‑column TSV list named **QR.txt**, if found in the active document folder:
+
+    Filename | Code
+    :- | :-
+    File 1 | CODE 1
+    File 2 | CODE 2
+    ... |
+
+  **Note:** You can insert `|` for manually splitting the text into several lines.
 
 * **`ShowFonts.jsx`** shows all fonts used in the current document (useful with **`ReplaceFonts.jsx`**).
 
@@ -248,7 +250,7 @@ Misc | | | | | |
 ## Installation
 
 1. Open **Window > Utilities > Scripts**.
-2. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
+2. Right‑click on folder **User** and select **Reveal in Finder/Explorer**.
 3. Copy files to this folder.
 
 ## License
@@ -258,4 +260,4 @@ Misc | | | | | |
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)). \
 Open an [issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • November 13, 2020
+README.md • November 18, 2020

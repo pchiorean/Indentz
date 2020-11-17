@@ -40,7 +40,7 @@ Proxy | | | | | |
 
 Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container *(clipping frame)* și acesta e redimensionat.
 
-* **`FitToPage`** și **`FitToSpread`**: dacă obiectul este mai mare decât pagina/spreadul/marginile/bleedul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 5%, va fi mărit.
+* **`FitToPage`** și **`FitToSpread`**: dacă obiectul este mai mare decât pagina/spreadul/marginile/bleedul, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 5%, va fi mărit.
 
   **`FitTo...Forced.jsx`** redimensionează exact la dimensiunile respective.
 
@@ -52,7 +52,7 @@ Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuit
   ![Vertical Justification Center](.img/verticaljustification-C.png) | ![center-left](.img/textautosize-CL.png) | ![center](.img/textautosize-C.png) | ![center-right](.img/textautosize-CR.png)
   ![Vertical Justification Bottom](.img/verticaljustification-B.png) | ![bottom-left](.img/textautosize-BL.png) | ![bottom-center](.img/textautosize-BC.png) | ![bottom-right](.img/textautosize-BR.png)
 
-  Dacă textul are un singur rând, **Auto-Sizing Type** va fi setat *Height and width*. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width*.
+  Dacă textul are un singur rând, **Auto‑Sizing Type** va fi setat *Height and width*. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width*.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -123,7 +123,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefLayers.jsx`** creează un set de straturi, preluându‑le proprietățile din [**`DefLayers.txt`**](setup/DefLayers.txt), care este un fișier TSV *(tab-separated values)* cu 6 coloane cu următorul format:
+* **`DefLayers.jsx`** creează un set de straturi, preluându‑le proprietățile din [**`DefLayers.txt`**](setup/DefLayers.txt), care este un fișier TSV *(tab‑separated values)* cu 6 coloane cu următorul format:
 
   Nume | Culoare | Vizibil | Printabil | Ordine | Variante
   :- | :-: | :-: | :-: | :-: | :-
@@ -206,21 +206,23 @@ Setup | | | |
 
 * **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul `info`.
 
-* **`QR.jsx`** adaugă coduri QR în documentul activ sau creează fișiere separate într-un subfolder numit `QR Codes`.
-
-  Mai întâi caută în folderul curent un document TSV cu 2 coloane numit **`QR.txt`**, din care preia o listă de coduri și numele de fișiere corespunzătoare:
-
-  Filename | Code
-  :- | :-
-  File 1 | CODE 1
-  File 2 | CODE 2
-  ... |
-
-  Dacă nu‑l găsește, solicită codul și îl adaugă pe fiecare pagină în colțul din stânga jos, sau îl salvează într‑un fișier cu numele documentului activ și `_QR` adăugat la coadă:
+* **`QR.jsx`** adaugă coduri QR în documentul activ sau creează fișiere separate într‑un subfolder numit `QR Codes`:
 
   ![Generate QR Code](.img/qr.png)
 
-  **Notă:** Puteți insera `|` pentru împărțirea manuală a legendei în mai multe rânduri.
+  * **On page** adaugă codul pe fiecare pagină, în colțul din stânga jos.
+
+  * **On file** îl salvează într‑un fișier cu numele documentului activ și `_QR` adăugat la coadă.
+
+  * **Batch** creează mai multe fișiere dintr‑un document TSV cu 2 coloane numit **`QR.txt`**, dacă e găsit în folderul documentului activ:
+
+    Filename | Code
+    :- | :-
+    File 1 | CODE 1
+    File 2 | CODE 2
+    ... |
+
+  **Notă:** Puteți insera `|` pentru împărțirea manuală a textului în mai multe rânduri.
 
 * **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`ReplaceFonts.jsx`**).
 
@@ -258,4 +260,4 @@ Misc | | | | | |
 Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)). \
 Raportați o [problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați dificultăți sau aveți sugestii.
 
-README-ro.md • 13 noiembrie 2020
+README-ro.md • 18 noiembrie 2020

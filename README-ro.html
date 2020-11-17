@@ -510,8 +510,17 @@ line-height: 1.6;
 <p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul <code>info</code>.</p>
 </li>
 <li>
-<p><strong><code>QR.jsx</code></strong> adaugă coduri QR în documentul activ sau creează fișiere separate într-un subfolder numit <code>QR Codes</code>.</p>
-<p>Mai întâi caută în folderul curent un document TSV cu 2 coloane numit <strong><code>QR.txt</code></strong>, din care preia o listă de coduri și numele de fișiere corespunzătoare:</p>
+<p><strong><code>QR.jsx</code></strong> adaugă coduri QR în documentul activ sau creează fișiere separate într‑un subfolder numit <code>QR Codes</code>:</p>
+<p><img src=".img/qr.png" alt="Generate QR Code"></p>
+<ul>
+<li>
+<p><strong>On page</strong> adaugă codul pe fiecare pagină, în colțul din stânga jos.</p>
+</li>
+<li>
+<p><strong>On file</strong> îl salvează într‑un fișier cu numele documentului activ și <code>_QR</code> adăugat la coadă.</p>
+</li>
+<li>
+<p><strong>Batch</strong> creează mai multe fișiere dintr‑un document TSV cu 2 coloane numit <strong><code>QR.txt</code></strong>, dacă e găsit în folderul documentului activ:</p>
 <table>
 <thead>
 <tr>
@@ -534,9 +543,9 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-<p>Dacă nu‑l găsește, solicită codul și îl adaugă pe fiecare pagină în colțul din stânga jos, sau îl salvează într‑un fișier cu numele documentului activ și <code>_QR</code> adăugat la coadă:</p>
-<p><img src=".img/qr.png" alt="Generate QR Code"></p>
-<p><strong>Notă:</strong> Puteți insera <code>|</code> pentru împărțirea manuală a legendei în mai multe rânduri.</p>
+</li>
+</ul>
+<p><strong>Notă:</strong> Puteți insera <code>|</code> pentru împărțirea manuală a textului în mai multe rânduri.</p>
 </li>
 <li>
 <p><strong><code>ShowFonts.jsx</code></strong> afișează toate fonturile utilizate în documentul curent (util pentru <strong><code>ReplaceFonts.jsx</code></strong>).</p>
@@ -601,7 +610,7 @@ line-height: 1.6;
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington și alții. -->
 <p>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>). <br>
 Raportați o <a href="https://github.com/pchiorean/Indentz/issues">problemă</a> pe Github dacă întâmpinați dificultăți sau aveți sugestii.</p>
-<p>README-ro.md • 13 noiembrie 2020</p>
+<p>README-ro.md • 18 noiembrie 2020</p>
 
 </body>
 </html>
