@@ -13,44 +13,85 @@
 
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.enableRedraw = false;
+var doc, docPath, infoFile, flg_batch = false;
+doc = app.documents.length == 0 ? app.documents.add() : app.activeDocument;
+if (doc.saved) {
+	docPath = doc.filePath;
+	infoFile = File(docPath + "/QR.txt");
+	if (infoFile.exists) flg_batch = true;
+}
+app.doScript(main, ScriptLanguage.javascript, undefined, UndoModes.ENTIRE_SCRIPT, "QR code");
 
-var doc, docPath;
-if (app.documents.length == 0) {
-	doc = app.documents.add();
-} else {
-	doc = app.activeDocument;
-	if (doc.saved) { // Look for 'QR.txt'
-		docPath = doc.filePath;
-		var infoFile = File(docPath + "/QR.txt");
-		if (infoFile.open("r") && confirm("Found \'QR.txt\', do you want to process it?")) { BatchQR(); exit() }
+
+function main() {
+	var flg_onfile, do_batch;
+	var w = new Window("dialog");
+		w.text = "Generate QR Code";
+		w.orientation = "row";
+		w.alignChildren = ["left", "fill"];
+	var qpanel = w.add("panel", undefined, undefined, { name: "qpanel" });
+		qpanel.orientation = "column";
+		qpanel.alignChildren = ["left", "top"];
+		qpanel.add("statictext", undefined, "Enter QR code text:", { name: "st" });
+	var label = qpanel.add('edittext { properties: { name: "label", enterKeySignalsOnChange: true } }');
+		// label.text = "Use '|' for manual line breaks";
+		label.helpTip = "Use '|' for manual line breaks";
+		label.characters = 56;
+		label.active = true;
+	var flg_white = qpanel.add("checkbox", undefined, "White text", { name: "flg_white" });
+		flg_white.helpTip = "Make text white for dark backgrounds (ignored when saving on file)";
+	var buttons = w.add("group", undefined, { name: "buttons" });
+		buttons.orientation = "column";
+		buttons.alignChildren = ["fill", "top"];
+	var onpage = buttons.add("button", undefined, "On page", { name: "ok" });
+		onpage.helpTip = "Put code on bottom-left corner";
+	var onfile = buttons.add("button", undefined, "On file", { name: "onfile" });
+		onfile.helpTip = !!docPath ?
+			"Save as 'QR Codes/" + doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd'" :
+			"Where? Document has no path";
+	var batch = buttons.add("button", undefined, "Batch", { name: "batch" });
+		batch.helpTip = flg_batch ? "Batch process codes from 'QR.txt'" : "'QR.txt' file not found in current folder";
+	onfile.enabled = !!docPath;
+	batch.visible = flg_batch;
+	batch.onClick = function() { do_batch = true; w.close() }
+	onpage.onClick = function() { flg_onfile = false; w.close() }
+	onfile.onClick = function() { flg_onfile = true; w.close() }
+	// buttons.add("button", undefined, "Cancel", { name: "cancel" });
+	var result = w.show();
+	if (result == 2) { exit() }
+	if (do_batch) { BatchQR(); exit() }
+	var QRLabel = trim(label.text);
+	if (!QRLabel) { alert("No text, no code!"); exit() }
+	switch (flg_onfile) {
+		case false: QROnPage(QRLabel, flg_white.value); exit();
+		case true: QROnFile(QRLabel); exit();
 	}
 }
-app.doScript(ManuallyQR, ScriptLanguage.javascript, undefined, UndoModes.ENTIRE_SCRIPT, "QR code");
 
-
-function BatchQR() { // Noninteractive: batch process 'QR.txt'
+function BatchQR() { // Batch process 'QR.txt'
+	infoFile.open("r");
 	var line = 0, fn = [], qr = [], width = 100;
 	var header = infoFile.readln().split("\t");
 	while (!infoFile.eof) {
 		var infoLine = infoFile.readln().split("\t");
-		if (infoLine[0].toString().slice(0,1) == "\u0023") continue; // Skip ';' commented lines
-		if (infoLine[0] == "") continue; // Skip empty lines
-		if (!infoLine[0] && !infoLine[1]) continue;
+		if (infoLine[0].toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
+		if (!infoLine[0] && !infoLine[1]) continue; // Skip empty lines
 		line++;
 		if (!infoLine[0]) { alert ("Missing " + header[0] + " in record " + line + "."); exit() }
 		if (!infoLine[1]) { alert ("Missing " + header[1] + " in record " + line + "."); exit() }
-		infoLine[0] = infoLine[0].match(/\.indd$/g) ? infoLine[0] : infoLine[0] + '.indd';
-		infoLine[0] = infoLine[0].match(/_QR\.indd$/g) ? infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
-		fn[line-1] = infoLine[0];
-		qr[line-1] = infoLine[1];
+		infoLine[0] = trim(infoLine[0]);
+		if (!infoLine[0].match(/\.indd$/g)) infoLine[0] += '.indd';
+		fn[line-1] = infoLine[0].match(/_QR\.indd$/g) ? infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
+		qr[line-1] = trim(infoLine[1]);
 		width = (qr[line-1] > width) ? qr[line-1] : width;
 	}
-	infoFile.close(); doc.close();
+	infoFile.close(); //doc.close();
 	if (line < 1) { alert("Not enough records."); exit() }
 	var progressBar = new ProgressBar(width); progressBar.reset(line);
 	for (var i = 0, err = 0; i < line; i++) {
-		progressBar.update(i + 1, qr[i]);
-		if (QROnFile(qr[i], fn[i])) err++; // Count files with errors (text overflow)
+		var QRLabel = qr[i];
+		progressBar.update(i + 1, QRLabel.replace(/[|\u000A\u200B]/g, ""));
+		if (QROnFile(QRLabel, fn[i])) err++; // Count files with errors (text overflow)
 	}
 	progressBar.close();
 	if (err != 0) {
@@ -59,53 +100,21 @@ function BatchQR() { // Noninteractive: batch process 'QR.txt'
 	}
 }
 
-function ManuallyQR() { // Interactive: ask for QR text and destination
-	var flg_onfile;
-	var w = new Window("dialog");
-		w.text = "Generate QR Code";
-		w.orientation = "row";
-		w.alignChildren = ["left","top"];
-	var qpanel = w.add("panel", undefined, undefined, {name: "qpanel"});
-		qpanel.orientation = "column";
-		qpanel.alignChildren = ["left","top"];
-		qpanel.add("statictext", undefined, "Enter QR code text:", {name: "st"});
-	var label = qpanel.add('edittext {properties: {name: "label", enterKeySignalsOnChange: true}}');
-		label.helpTip = "Use '|' for manual line breaks";
-		label.characters = 56;
-		label.active = true;
-	var flg_white = qpanel.add("checkbox", undefined, "White text", {name: "flg_white"});
-		flg_white.helpTip = "Ignored when saving on separate file";
-	var buttons = w.add("group", undefined, {name: "buttons"});
-		buttons.orientation = "column";
-		buttons.alignChildren = ["fill","top"];
-	var onpage = buttons.add("button", undefined, "On page", {name: "ok"});
-	var onfile = buttons.add("button", undefined, "On file", {name: "onfile"});
-	if (!docPath) onfile.enabled = false;
-	onpage.onClick = function() { flg_onfile = false; w.close() }
-	onfile.onClick = function() { flg_onfile = true; w.close() }
-	buttons.add("button", undefined, "Cancel", {name: "cancel"});
-	var result = w.show();
-	if (!label.text || result == 2) { exit() }
-	var QRLabel = label.text;
-	var flg_manual = /\|/g.test(QRLabel); // If '|' found, set forcedLineBreak flag
-	switch (flg_onfile) {
-		case false: QROnPage(QRLabel, flg_manual, flg_white.value); break;
-		case true: QROnFile(QRLabel); break;
-	}
-}
-
-function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
+function QROnPage(QRLabel, flg_white) {
+	var flg_manual = /\|/g.test(QRLabel); // If '|' found, set manual LB flag
 	QRLabel = QRLabel.toUpperCase();
-	QRLabel = QRLabel.replace(/_/g, "_\u200B"); // Add discretionaryLineBreak after '_'
-	QRLabel = QRLabel.replace(/\|/g, "\u000A"); // Replace '|' with forcedLineBreak
-	var infoLayer = MakeInfoLayer(doc);
-	doc.activeLayer = infoLayer;
+	// Add SpecialCharacters.DISCRETIONARY_LINE_BREAK after '_'
+	QRLabel = QRLabel.replace(/([A-Za-z0-9)-]{3,})_([A-Za-z0-9(]{3,})/g, "$1_\u200B$2");
+	// Replace '|' with SpecialCharacters.FORCED_LINE_BREAK
+	QRLabel = QRLabel.replace(/\|/g, "\u000A");
+	var idLayer = MakeIDLayer(doc);
+	doc.activeLayer = idLayer;
 	for (var i = 0; i < doc.pages.length; i++) {
 		var page = doc.pages.item(i);
-		for (var j = 0; j < page.pageItems.length; j++)
+		for (var j = 0; j < page.pageItems.length; j++) // Remove old codes
 			if (page.pageItems.item(j).label == "QR") { page.pageItems.item(j).remove(); j-- }
 		var label = page.textFrames.add({
-			itemLayer: infoLayer.name,
+			itemLayer: idLayer.name,
 			contents: QRLabel,
 			label: "QR",
 			fillColor: "None",
@@ -118,6 +127,7 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 			horizontalScale: 92,
 			tracking: -15,
 			hyphenation: false,
+			balanceRaggedLines: BalanceLinesStyle.FULLY_BALANCED,
 			fillColor: flg_white ? "Paper" : "Black", // White text
 			strokeColor: "None"
 		}
@@ -125,15 +135,17 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 		label.textFramePreferences.properties = {
 			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
+			useNoLineBreaksForAutoSizing: (flg_manual || (label.lines.length == 1 && label.lines[0].characters.length <= 18)),
+			insetSpacing: [UnitValue("3mm").as('pt'), UnitValue("2.5mm").as('pt'), UnitValue("1mm").as('pt'), 0]
+		}
+		label.textFramePreferences.properties = {
 			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
-			autoSizingType: (flg_manual || label.lines.length == 1) ? // If manual LB, set auto
-				AutoSizingTypeEnum.HEIGHT_AND_WIDTH :
-				AutoSizingTypeEnum.HEIGHT_ONLY,
-			useNoLineBreaksForAutoSizing: flg_manual,
-			insetSpacing: [8.50393700787402, 7.08661417322835, 2.83464566929134, 0]
+			// autoSizingType: (flg_manual || label.lines.length == 1) ?
+			// 	AutoSizingTypeEnum.HEIGHT_AND_WIDTH : AutoSizingTypeEnum.HEIGHT_ONLY
+			autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH
 		}
 		var code = page.rectangles.add({
-			itemLayer: infoLayer.name,
+			itemLayer: idLayer.name,
 			label: "QR",
 			fillColor: "Paper",
 			strokeColor: "None"
@@ -143,7 +155,7 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 			24.9085829084314, page.bounds[1] + 6.51968503937007,
 			58.3574018060656, page.bounds[1] + 39.9685039370045
 		];
-	code.createPlainTextQRCode(QRLabel.replace(/[|\u000A\u200B]/g, ""));
+		code.createPlainTextQRCode(QRLabel.replace(/[|\u000A\u200B]/g, "")); // Cleanup code text
 		code.frameFittingOptions.properties = {
 			fittingAlignment: AnchorPoint.CENTER_ANCHOR,
 			fittingOnEmptyFrame: EmptyFrameFittingOptions.PROPORTIONALLY,
@@ -155,7 +167,7 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 		code.epss[0].localDisplaySetting = ViewDisplaySettings.HIGH_QUALITY;
 		var QR = page.groups.add([label, code]);
 		QR.absoluteRotationAngle = 90;
-		// Check and, if possible, put QR outside safe area
+		// If possible, put QR outside safe area
 		var mgs = Margins(page);
 		var szLabel = {
 			width: label.geometricBounds[3] - label.geometricBounds[1],
@@ -177,16 +189,18 @@ function QROnPage(QRLabel, flg_manual, flg_white) { // Put QR on each page
 	}
 }
 
-function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
+function QROnFile(QRLabel, fn) {
 	QRLabel = QRLabel.toUpperCase();
-	QRLabel = QRLabel.replace(/_/g, "_\u200B"); // Add discretionaryLineBreak after '_'
-	QRLabel = QRLabel.replace(/\|/g, "\u200B"); // Replace '|' with discretionaryLineBreak
+	// Add SpecialCharacters.DISCRETIONARY_LINE_BREAK after '_'
+	QRLabel = QRLabel.replace(/([A-Za-z0-9)-]{3,})_([A-Za-z0-9(]{3,})/g, "$1_\u200B$2");
+	// Replace '|' with SpecialCharacters.FORCED_LINE_BREAK
+	QRLabel = QRLabel.replace(/\|/g, "\u000A");
 	if (!fn) var fn = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd";
 	var target = app.documents.add();
 	var page = target.pages[0];
-	var infoLayer = MakeInfoLayer(target);
+	var idLayer = MakeIDLayer(target);
 	var label = page.textFrames.add({
-		itemLayer: infoLayer.name,
+		itemLayer: idLayer.name,
 		contents: QRLabel,
 		label: "QR",
 		fillColor: "None",
@@ -200,6 +214,7 @@ function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
 		tracking: -15,
 		capitalization: Capitalization.ALL_CAPS,
 		hyphenation: false,
+		balanceRaggedLines: BalanceLinesStyle.FULLY_BALANCED,
 		fillColor: "Black"
 	}
 	label.geometricBounds = [0, 0, 16.4046459005573, 56.6929133858268];
@@ -208,12 +223,12 @@ function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
 		firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 		autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
 		autoSizingType: AutoSizingTypeEnum.HEIGHT_ONLY,
-		insetSpacing: [2.83464566929134, 2.83464566929134, 0, 1.41732283464567]
+		insetSpacing: [UnitValue("1mm").as('pt'), UnitValue("1mm").as('pt'), 0, UnitValue("0.5mm").as('pt')]
 	}
-	var code = page.rectangles.add({ itemLayer: infoLayer.name, label: "QR" });
+	var code = page.rectangles.add({ itemLayer: idLayer.name, label: "QR" });
 	code.absoluteRotationAngle = -90;
 	code.geometricBounds = [16.4046459005572, 0, 73.7007874015747, 56.6929133858268];
-	code.createPlainTextQRCode(QRLabel.replace(/[|\u000A\u200B]/g, ""));
+	code.createPlainTextQRCode(QRLabel.replace(/[|\u000A\u200B]/g, "")); // Cleanup code text
 	code.frameFittingOptions.properties = {
 		fittingAlignment: AnchorPoint.CENTER_ANCHOR,
 		fittingOnEmptyFrame: EmptyFrameFittingOptions.PROPORTIONALLY,
@@ -238,30 +253,32 @@ function QROnFile(QRLabel, fn) { // Put QR on 'fn' file
 	targetFolder.create();
 	target.save(File(targetFolder + "/" + fn));
 	// Keep file opened if text overflows
-	if (label.overflows) { return true } else { target.close() }
+	if (label.overflows) {
+		target.textPreferences.showInvisibles = true;
+		return true;
+	} else { target.close() }
 }
 
-function MakeInfoLayer(doc) {
-	var idLayerName = "id", idLayer = doc.layers.item(idLayerName);
+function MakeIDLayer(doc) {
+	var idLayerName = "ID", idLayer = doc.layers.item(idLayerName);
 	var hwLayerName = "HW", hwLayer = doc.layers.item(hwLayerName);
-	var infoLayerName = "info", infoLayer = doc.layers.item(infoLayerName);
-	if (!infoLayer.isValid) doc.layers.add({ name: infoLayerName });
-	infoLayer.properties = {
+	if (!idLayer.isValid) doc.layers.add({
+		name: idLayerName,
 		layerColor: UIColors.CYAN,
 		visible: true,
 		locked: false,
 		printable: true
-	}
-	if (idLayer.isValid) { infoLayer.move(LocationOptions.after, idLayer);
-		} else if (hwLayer.isValid) { infoLayer.move(LocationOptions.before, hwLayer);
-		} else infoLayer.move(LocationOptions.AT_BEGINNING);
-	return infoLayer;
+	});
+	if (hwLayer.isValid)
+		idLayer.move(LocationOptions.BEFORE, hwLayer)
+		else idLayer.move(LocationOptions.AT_BEGINNING);
+	return idLayer;
 }
 
 function ProgressBar(width) {
 	var w = new Window("palette", "Batch Resize: " + decodeURI(infoFile.name));
-	w.pb = w.add("progressbar", [12, 12, (width*5), 24], 0, undefined);
-	w.st = w.add("statictext", [0, 0, (width*5-20), 20], undefined, { truncate: "middle" });
+	w.pb = w.add("progressbar", [12, 12, (width * 5), 24], 0, undefined);
+	w.st = w.add("statictext", [0, 0, (width * 5 - 20), 20], undefined, { truncate: "middle" });
 	this.reset = function(max) {
 		w.pb.value = 0;
 		w.pb.maxvalue = max || 0;
@@ -286,4 +303,12 @@ function Margins(page) { // Return page margins
 		right: (page.side == PageSideOptions.LEFT_HAND) ?
 			page.marginPreferences.left : page.marginPreferences.right
 	}
+}
+
+// ES3/5 Compatibility shims and other utilities for older browsers
+// https://github.com/SheetJS/sheetjs/blob/master/dist/xlsx.extendscript.js
+function trim(string) {
+	var s = string.replace(/^\s+/, '');
+	for(var i = s.length - 1; i >= 0; --i) if(!s.charAt(i).match(/^\s/)) return s.slice(0, i + 1);
+	return "";
 }
