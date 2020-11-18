@@ -1,5 +1,5 @@
 /*
-	Add default swatches v1.1.1
+	Add default swatches v1.2.0
 	© November 2020, Paul Chiorean
 	Adds swatches from a list. The list is a 3-column TSV file
 	with the same name as the script and the following format:
@@ -12,6 +12,9 @@
 	2. <Model>: color model: "process" or "spot",
 	3. <Values>: a list of 3 (RGB) or 4 (CMYK) color values.
 */
+
+// Add ECMA262-5 string trim method
+String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
@@ -37,10 +40,10 @@ infoFile.close();
 
 for (var i = 1; i < colorData.length; i++) {
 	var colorName, colorModel, colorValue = [], c, cc;
-	colorName = colorData[i][0];
-	colorModel = getColorModel(colorData[i][1]);
+	colorName = colorData[i][0].trim();
+	colorModel = getColorModel(colorData[i][1].trim());
 	cc = colorData[i][2].split(",");
-	while (c = cc.shift()) colorValue.push(Number(trim(c)));
+	while (c = cc.shift()) colorValue.push(Number(c.trim()));
 	colorAdd(doc, colorName, colorModel, colorValue);
 }
 
@@ -52,14 +55,6 @@ function getColorModel(color) {
 	];
 	for (var i = 0; i < CM[0].length; i++)
 		if (color === CM[0][i]) return CM[1][i];
-}
-
-// ES3/5 Compatibility shims and other utilities for older browsers
-// https://github.com/SheetJS/sheetjs/blob/master/dist/xlsx.extendscript.js
-function trim(string) {
-	var s = string.replace(/^\s+/, '');
-	for(var i = s.length - 1; i >= 0; --i) if(!s.charAt(i).match(/^\s/)) return s.slice(0, i + 1);
-	return "";
 }
 
 // Add Custom (CMYK/RGB/HEX) Colors to Document, by Marijan Tompa (tomaxxi)

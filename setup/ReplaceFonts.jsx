@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 1.4.1
+	Replace fonts 1.5.0
 	© November 2020, Paul Chiorean
 	Replaces missing or unwanted fonts with equivalents from a list.
 	The list is a 4-column TSV file with the same name as the script
@@ -10,6 +10,9 @@
 	Arial | Bold | Helvetica Neue | Bold
 	...
 */
+
+// Add ECMA262-5 string trim method
+String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
@@ -31,8 +34,8 @@ function main() {
 			alert ("Missing data in record " + line + "."); exit();
 		}
 		fontList.push([
-			infoLine[0] + "\t" + infoLine[1],
-			infoLine[2] + "\t" + infoLine[3]
+			infoLine[0].trim() + "\t" + infoLine[1].trim(),
+			infoLine[2].trim() + "\t" + infoLine[3].trim()
 		]);
 	}
 	infoFile.close();

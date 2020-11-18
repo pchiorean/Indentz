@@ -1,5 +1,5 @@
 /*
-	QR code v2.2.0
+	QR code v2.3.0
 	© November 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -11,6 +11,9 @@
 	...
 */
 
+// Add ECMA262-5 string trim method
+String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
+
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.enableRedraw = false;
 var doc, docPath, infoFile, flg_batch = false;
@@ -20,6 +23,7 @@ if (doc.saved) {
 	infoFile = File(docPath + "/QR.txt");
 	if (infoFile.exists) flg_batch = true;
 }
+
 app.doScript(main, ScriptLanguage.javascript, undefined, UndoModes.ENTIRE_SCRIPT, "QR code");
 
 
@@ -60,7 +64,7 @@ function main() {
 	var result = w.show();
 	if (result == 2) { exit() }
 	if (do_batch) { BatchQR(); exit() }
-	var QRLabel = trim(label.text);
+	var QRLabel = label.text.trim();
 	if (!QRLabel) { alert("No text, no code!"); exit() }
 	switch (flg_onfile) {
 		case false: QROnPage(QRLabel, flg_white.value); exit();
@@ -79,10 +83,10 @@ function BatchQR() { // Batch process 'QR.txt'
 		line++;
 		if (!infoLine[0]) { alert ("Missing " + header[0] + " in record " + line + "."); exit() }
 		if (!infoLine[1]) { alert ("Missing " + header[1] + " in record " + line + "."); exit() }
-		infoLine[0] = trim(infoLine[0]);
+		infoLine[0] = infoLine[0].trim();
 		if (!infoLine[0].match(/\.indd$/g)) infoLine[0] += '.indd';
 		fn[line-1] = infoLine[0].match(/_QR\.indd$/g) ? infoLine[0] : infoLine[0].replace(/\.indd$/g, '_QR.indd');
-		qr[line-1] = trim(infoLine[1]);
+		qr[line-1] = infoLine[1].trim();
 		width = (qr[line-1] > width) ? qr[line-1] : width;
 	}
 	infoFile.close(); //doc.close();
@@ -303,12 +307,4 @@ function Margins(page) { // Return page margins
 		right: (page.side == PageSideOptions.LEFT_HAND) ?
 			page.marginPreferences.left : page.marginPreferences.right
 	}
-}
-
-// ES3/5 Compatibility shims and other utilities for older browsers
-// https://github.com/SheetJS/sheetjs/blob/master/dist/xlsx.extendscript.js
-function trim(string) {
-	var s = string.replace(/^\s+/, '');
-	for(var i = s.length - 1; i >= 0; --i) if(!s.charAt(i).match(/^\s/)) return s.slice(0, i + 1);
-	return "";
 }

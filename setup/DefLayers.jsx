@@ -1,5 +1,5 @@
 /*
-	Add default layers v1.2.1
+	Add default layers v1.3.0
 	© November 2020, Paul Chiorean
 	Adds/merges layers from a list. The list is a 6-column TSV file
 	with the same name as the script and the following format:
@@ -15,6 +15,9 @@
 	5. <Order>: "top" or "bottom" (above or below existing layers),
 	6. <Variants>: a list of layers which will be merged with the base layer (case insensitive).
 */
+
+// Add ECMA262-5 string trim method
+String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
@@ -46,29 +49,29 @@ var set_AL = doc.activeLayer; // Save active layer
 // Top layers
 for (var i = layerData.length - 1; i >= 1 ; i--) {
 	var name, color, isVisible, isPrintable, isBottom, variants = [], v, vv;
-	name = layerData[i][0];
-	color = getUIColor(layerData[i][1]);
+	name = layerData[i][0].trim();
+	color = getUIColor(layerData[i][1].trim());
 	isVisible = (layerData[i][2].toLowerCase() == "true");
 	isPrintable = (layerData[i][3].toLowerCase() == "true");
 	isBottom = (layerData[i][4].toLowerCase() == "bottom");
 	if (isBottom) continue;
-	variants.push(trim(layerData[i][0]));
+	variants.push(name);
 	vv = layerData[i][5].split(",");
-	while (v = vv.shift()) variants.push(trim(v));
+	while (v = vv.shift()) variants.push(v.trim());
 	var layer = makeLayer(name, color, isVisible, isPrintable, variants);
 }
 // Bottom layers
 for (var i = 1; i < layerData.length; i++) {
 	var name, color, isVisible, isPrintable, isBottom, variants = [], v, vv;
-	name = layerData[i][0];
-	color = getUIColor(layerData[i][1]);
+	name = layerData[i][0].trim();
+	color = getUIColor(layerData[i][1].trim());
 	isVisible = (layerData[i][2].toLowerCase() == "true");
 	isPrintable = (layerData[i][3].toLowerCase() == "true");
 	isBottom = (layerData[i][4].toLowerCase() == "bottom");
 	if (!isBottom) continue;
-	variants.push(trim(layerData[i][0]));
+	variants.push(name);
 	vv = layerData[i][5].split(",");
-	while (v = vv.shift()) variants.push(trim(v));
+	while (v = vv.shift()) variants.push(v.trim());
 	var layer = makeLayer(name, color, isVisible, isPrintable, variants);
 	if (isBottom) layer.move(LocationOptions.AT_END);
 }
@@ -132,14 +135,6 @@ function isIn(searchValue, array, caseSensitive) {
 		if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
 		if (item === searchValue) return true;
 	}
-}
-
-// ES3/5 Compatibility shims and other utilities for older browsers
-// https://github.com/SheetJS/sheetjs/blob/master/dist/xlsx.extendscript.js
-function trim(string) {
-	var s = string.replace(/^\s+/, '');
-	for(var i = s.length - 1; i >= 0; --i) if(!s.charAt(i).match(/^\s/)) return s.slice(0, i + 1);
-	return "";
 }
 
 } // End main()
