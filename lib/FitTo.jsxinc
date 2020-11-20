@@ -1,5 +1,5 @@
 /*
-	Fit to... v3.5.0
+	Fit to... v3.6.0
 	© November 2020, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/bleed.
 	It's run internally by all the other FitTo scripts.
@@ -19,10 +19,10 @@ if (sel.length == 0 || (sel[0].constructor.name == "Guide")) exit();
 var set_RO = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
-var obj, page;
+var obj, page, f, selBAK = [];
 while (obj = sel.shift()) {
 	if (page = obj.parentPage) { // Object is on page
-		Fit(obj);
+		if ((f = Fit(obj)) != undefined) selBAK.push(f);
 	} else if (FORCED) { // If forced fit, include objects on pasteboard
 		var pages = app.activeWindow.activeSpread.pages;
 		for (var i = 0; i < pages.length; i++) {
@@ -31,9 +31,10 @@ while (obj = sel.shift()) {
 				obj.geometricBounds[3] <= pages[i].bounds[3]) { page = pages[i]; break}
 			if (obj.geometricBounds[1] >= pages[-1].bounds[1]) { page = pages[-1]; break }
 		}
-		Fit(obj);
+		if ((f = Fit(obj)) != undefined) selBAK.push(f);
 	}
 }
+app.select(selBAK);
 doc.viewPreferences.rulerOrigin = set_RO;
 
 function Fit(obj) {
@@ -96,42 +97,44 @@ function Fit(obj) {
 		if (obj.constructor.name == "TextFrame")
 			obj.textFramePreferences.insetSpacing = [0, 0, TARGET == "bleed" ?
 				doc.documentPreferences.properties.documentBleedBottomOffset : 0, 0];
-		return;
+		return obj;
 	}
 	// Case 2: Already clipped
 	if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
-		obj.geometricBounds = FORCED ? tg : fitE; return;
+		obj.geometricBounds = FORCED ? tg : fitE; return obj;
 	}
 	// Case 2: Simple rectangles or containers
 	if (obj.constructor.name == "Rectangle" &&
 		obj.pageItems.length <= 1 &&
 		(obj.strokeWeight == 0 || obj.strokeAlignment == StrokeAlignment.INSIDE_ALIGNMENT) &&
 		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
-			obj.geometricBounds = FORCED ? tg : fitE; return;
+			obj.geometricBounds = FORCED ? tg : fitE; return obj;
 	}
 	// Case 3: Text frames
 	if (obj.constructor.name == "TextFrame" &&
 		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
-			obj.geometricBounds = FORCED ? tg : fitR; return;
+			obj.geometricBounds = FORCED ? tg : fitR; return obj;
 	}
 	// Case 4: Orthogonal lines
 	if (obj.constructor.name == "GraphicLine" &&
 		(objG[0] == objG[2]) || (objG[1] == objG[3])) {
-		return; // ***TODO***
+		return obj; // ***TODO***
 	}
 	// Case 5: Groups
-	if (obj.constructor.name == "Group") { Clip(FORCED ? tg : fitR); return; }
+	if (obj.constructor.name == "Group") { return Clip(obj, FORCED ? tg : fitR); }
 	// Other cases: Clip
-	Clip(FORCED ? tg : fitE);
+	return Clip(obj, FORCED ? tg : fitE);
 
-	function Clip(fit) {
+	function Clip(obj, fit) {
 		if (objV[0] >= tg[0] && objV[1] >= tg[1] && objV[2] <= tg[2] && objV[3] <= tg[3]) return;
 		var frame = doc.rectangles.add(
 			obj.itemLayer, LocationOptions.AFTER, obj,
 			{ name: "<clip frame>", label: obj.label,
 			fillColor: "None", strokeColor: "None",
 			geometricBounds: fit });
-		frame.sendToBack(obj); app.select(obj); app.cut(); app.select(frame); app.pasteInto();
+		frame.sendToBack(obj);
+		app.select(obj); app.cut(); app.select(frame); app.pasteInto();
+		return frame;
 	}
 }
 
