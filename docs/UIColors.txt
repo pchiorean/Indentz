@@ -1,4 +1,4 @@
-Color       | UIColor equivalent
+Name        | UIColor
 ----------- | --------------------
 Blue        | UIColors.BLUE
 Black       | UIColors.BLACK

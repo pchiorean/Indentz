@@ -31,7 +31,7 @@ line-height: 1.6;
 <ul>
 <li>
 <p><strong><code>AlignTo</code></strong> scripts align the selected object(s) to the <strong>Align To</strong> setting:</p>
-<p><img src=".img/alignto.png" alt="Align Panel"></p>
+<p><img src="img/alignto.png" alt="Align Panel"></p>
 </li>
 <li>
 <p><strong><code>ToggleAlignTo.jsx</code></strong> toggles the alignment between item, margins, page or spread (just run it repeatedly).</p>
@@ -143,29 +143,29 @@ line-height: 1.6;
 <thead>
 <tr>
 <th style="text-align:center"></th>
-<th style="text-align:center"><img src=".img/paragraphalign-L.png" alt="¶ Align left"></th>
-<th style="text-align:center"><img src=".img/paragraphalign-C.png" alt="¶ Align center"></th>
-<th style="text-align:center"><img src=".img/paragraphalign-R.png" alt="¶ Align right"></th>
+<th style="text-align:center"><img src="img/paragraphalign-L.png" alt="¶ Align left"></th>
+<th style="text-align:center"><img src="img/paragraphalign-C.png" alt="¶ Align center"></th>
+<th style="text-align:center"><img src="img/paragraphalign-R.png" alt="¶ Align right"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center"><img src=".img/verticaljustification-T.png" alt="Vertical Justification Top"></td>
-<td style="text-align:center"><img src=".img/textautosize-TL.png" alt="top-left"></td>
-<td style="text-align:center"><img src=".img/textautosize-TC.png" alt="top-center"></td>
-<td style="text-align:center"><img src=".img/textautosize-TR.png" alt="top-right"></td>
+<td style="text-align:center"><img src="img/verticaljustification-T.png" alt="Vertical Justification Top"></td>
+<td style="text-align:center"><img src="img/textautosize-TL.png" alt="top-left"></td>
+<td style="text-align:center"><img src="img/textautosize-TC.png" alt="top-center"></td>
+<td style="text-align:center"><img src="img/textautosize-TR.png" alt="top-right"></td>
 </tr>
 <tr>
-<td style="text-align:center"><img src=".img/verticaljustification-C.png" alt="Vertical Justification Center"></td>
-<td style="text-align:center"><img src=".img/textautosize-CL.png" alt="center-left"></td>
-<td style="text-align:center"><img src=".img/textautosize-C.png" alt="center"></td>
-<td style="text-align:center"><img src=".img/textautosize-CR.png" alt="center-right"></td>
+<td style="text-align:center"><img src="img/verticaljustification-C.png" alt="Vertical Justification Center"></td>
+<td style="text-align:center"><img src="img/textautosize-CL.png" alt="center-left"></td>
+<td style="text-align:center"><img src="img/textautosize-C.png" alt="center"></td>
+<td style="text-align:center"><img src="img/textautosize-CR.png" alt="center-right"></td>
 </tr>
 <tr>
-<td style="text-align:center"><img src=".img/verticaljustification-B.png" alt="Vertical Justification Bottom"></td>
-<td style="text-align:center"><img src=".img/textautosize-BL.png" alt="bottom-left"></td>
-<td style="text-align:center"><img src=".img/textautosize-BC.png" alt="bottom-center"></td>
-<td style="text-align:center"><img src=".img/textautosize-BR.png" alt="bottom-right"></td>
+<td style="text-align:center"><img src="img/verticaljustification-B.png" alt="Vertical Justification Bottom"></td>
+<td style="text-align:center"><img src="img/textautosize-BL.png" alt="bottom-left"></td>
+<td style="text-align:center"><img src="img/textautosize-BC.png" alt="bottom-center"></td>
+<td style="text-align:center"><img src="img/textautosize-BR.png" alt="bottom-right"></td>
 </tr>
 </tbody>
 </table>
@@ -295,7 +295,7 @@ line-height: 1.6;
 </blockquote>
 </li>
 <li>
-<p><strong><code>DefLayers.jsx</code></strong> adds a set of layers, reading their properties from <a href="setup/DefLayers.txt"><strong><code>DefLayers.txt</code></strong></a>, which is a 6‑column TSV <em>(tab-separated values)</em> file with the following format:</p>
+<p><strong><code>DefLayers.jsx</code></strong> adds a set of layers, reading their properties from <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>, a 6‑column TSV <em>(tab-separated values)</em> file with the following format:</p>
 <table>
 <thead>
 <tr>
@@ -336,7 +336,7 @@ line-height: 1.6;
 </table>
 <blockquote>
 <p><strong>Name</strong>: layer name <br>
-<strong>Color</strong>: layer color <!-- (see <a href="setup/UIColors.txt"><strong><code>UIColors.txt</code></strong></a>) --> <br>
+<strong>Color</strong>: layer color (see <a href="UIColors.txt"><strong><code>UIColors.txt</code></strong></a>) <br>
 <strong>Visible</strong>: <code>TRUE</code> or <code>FALSE</code> <br>
 <strong>Printable</strong>: <code>TRUE</code> or <code>FALSE</code> <br>
 <strong>Order</strong>: <code>top</code> or <code>bottom</code> (above or below existing layers) <br>
@@ -346,29 +346,29 @@ line-height: 1.6;
 <strong><code>DefLayers.xlsx</code></strong> can be used to generate the TSV file.</p>
 </li>
 <li>
-<p><strong><code>DefSwatches.jsx</code></strong> adds a set of swatches defined in <a href="setup/DefSwatches.txt"><strong><code>DefSwatches.txt</code></strong></a>, a 3‑column TSV file with the following format:</p>
+<p><strong><code>DefSwatches.jsx</code></strong> adds a set of swatches defined in <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>, a 3‑column TSV file with the following format:</p>
 <table>
 <thead>
 <tr>
 <th style="text-align:left">Name</th>
-<th style="text-align:left">Model</th>
+<th style="text-align:center">Model</th>
 <th style="text-align:left">Values</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left">Rich Black</td>
-<td style="text-align:left">process</td>
+<td style="text-align:center">process</td>
 <td style="text-align:left">60, 40, 40, 100</td>
 </tr>
 <tr>
 <td style="text-align:left">Cut</td>
-<td style="text-align:left">spot</td>
+<td style="text-align:center">spot</td>
 <td style="text-align:left">0, 100, 0, 0</td>
 </tr>
 <tr>
 <td style="text-align:left">...</td>
-<td style="text-align:left"></td>
+<td style="text-align:center"></td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
@@ -383,7 +383,7 @@ line-height: 1.6;
 <p><strong><code>CleanupSwatches.jsx</code></strong> converts RGB process swatches to CMYK, removes duplicates, renames them to <code>C= M= Y= K=</code> form, and deletes unused ones. Spot colors are not changed.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> replaces fonts from a substitution list, <a href="setup/ReplaceFonts.txt"><strong><code>ReplaceFonts.txt</code></strong></a>, a 4‑column TSV file with the following format:</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> replaces fonts from a substitution list, <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>, a 4‑column TSV file with the following format:</p>
 <table>
 <thead>
 <tr>
@@ -511,7 +511,7 @@ line-height: 1.6;
 </li>
 <li>
 <p><strong><code>QR.jsx</code></strong> adds QR codes in the active document or creates separate files in a subfolder named <code>QR Codes</code>:</p>
-<p><img src=".img/qr.png" alt="Generate QR Code"></p>
+<p><img src="img/qr.png" alt="Generate QR Code"></p>
 <ul>
 <li>
 <p><strong>On page</strong> adds the code on each page, on the bottom left corner.</p>
@@ -610,7 +610,7 @@ line-height: 1.6;
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
 <p>The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>). <br>
 Open an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> on Github if you encounter problems or have any suggestions.</p>
-<p>README.md • November 18, 2020</p>
+<p>README.md • November 22, 2020</p>
 
 </body>
 </html>

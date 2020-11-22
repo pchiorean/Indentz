@@ -10,7 +10,7 @@ Make it easier to align objects or set the reference point for transformations u
 
 * **`AlignTo`** scripts align the selected object(s) to the **Align To** setting:
 
-  ![Align Panel](.img/alignto.png)
+  ![Align Panel](img/alignto.png)
 
 * **`ToggleAlignTo.jsx`** toggles the alignment between item, margins, page or spread (just run it repeatedly).
 
@@ -46,11 +46,11 @@ Resize the selected objects, without scaling. Rectangular frames are simply resi
 
 * **`TextAutosize.jsx`** fits the text frame to the text and sets it to auto‑size. You control the auto‑sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
 
-  | | ![¶ Align left](.img/paragraphalign-L.png) | ![¶ Align center](.img/paragraphalign-C.png) | ![¶ Align right](.img/paragraphalign-R.png)
+  | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
   :-: | :-: | :-: | :-:
-  ![Vertical Justification Top](.img/verticaljustification-T.png) | ![top-left](.img/textautosize-TL.png) | ![top-center](.img/textautosize-TC.png) | ![top-right](.img/textautosize-TR.png)
-  ![Vertical Justification Center](.img/verticaljustification-C.png) | ![center-left](.img/textautosize-CL.png) | ![center](.img/textautosize-C.png) | ![center-right](.img/textautosize-CR.png)
-  ![Vertical Justification Bottom](.img/verticaljustification-B.png) | ![bottom-left](.img/textautosize-BL.png) | ![bottom-center](.img/textautosize-BC.png) | ![bottom-right](.img/textautosize-BR.png)
+  ![Vertical Justification Top](img/verticaljustification-T.png) | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
+  ![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
+  ![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
 
   If the text has only one line, **Auto‑Sizing Type** will be set to *Height and width*. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width*.
 
@@ -123,7 +123,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefLayers.jsx`** adds a set of layers, reading their properties from [**`DefLayers.txt`**](setup/DefLayers.txt), which is a 6‑column TSV *(tab‑separated values)* file with the following format:
+* **`DefLayers.jsx`** adds a set of layers, reading their properties from [**`layers.txt`**](../layers.txt), a 6‑column TSV *(tab‑separated values)* file with the following format:
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
@@ -132,7 +132,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   ... |
 
   > **Name**: layer name \
-  > **Color**: layer color <!-- (see [**`UIColors.txt`**](setup/UIColors.txt)) --> \
+  > **Color**: layer color (see [**`UIColors.txt`**](UIColors.txt)) \
   > **Visible**: `TRUE` or `FALSE` \
   > **Printable**: `TRUE` or `FALSE` \
   > **Order**: `top` or `bottom` (above or below existing layers) \
@@ -141,10 +141,10 @@ There are two sets: one related to document preferences, layers, swatches and fo
   **Note:** The first line (the header) and lines beginning with `#` are ignored. \
   **`DefLayers.xlsx`** can be used to generate the TSV file.
 
-* **`DefSwatches.jsx`** adds a set of swatches defined in [**`DefSwatches.txt`**](setup/DefSwatches.txt), a 3‑column TSV file with the following format:
+* **`DefSwatches.jsx`** adds a set of swatches defined in [**`swatches.txt`**](../swatches.txt), a 3‑column TSV file with the following format:
 
   Name | Model | Values
-  :- | :- | :-
+  :- | :-: | :-
   Rich Black | process | 60, 40, 40, 100
   Cut | spot | 0, 100, 0, 0
   ... |
@@ -155,7 +155,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`CleanupSwatches.jsx`** converts RGB process swatches to CMYK, removes duplicates, renames them to `C= M= Y= K=` form, and deletes unused ones. Spot colors are not changed.
 
-* **`ReplaceFonts.jsx`** replaces fonts from a substitution list, [**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt), a 4‑column TSV file with the following format:
+* **`ReplaceFonts.jsx`** replaces fonts from a substitution list, [**`fonts.txt`**](../fonts.txt), a 4‑column TSV file with the following format:
 
   Old font | Style | New font | Style
   :- | :- | :- | :-
@@ -208,7 +208,7 @@ Setup | | | |
 
 * **`QR.jsx`** adds QR codes in the active document or creates separate files in a subfolder named `QR Codes`:
 
-  ![Generate QR Code](.img/qr.png)
+  ![Generate QR Code](img/qr.png)
 
   * **On page** adds the code on each page, on the bottom left corner.
 
@@ -260,4 +260,4 @@ Misc | | | | | |
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)). \
 Open an [issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • November 18, 2020
+README.md • November 22, 2020

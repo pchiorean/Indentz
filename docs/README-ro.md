@@ -10,7 +10,7 @@ Facilitează alinierea obiectelor sau setarea punctului de referință pentru tr
 
 * **`AlignTo`** aliniază obiectele selectate la referința setării **Align To**:
 
-  ![Align Panel](.img/alignto.png)
+  ![Align Panel](img/alignto.png)
 
 * **`ToggleAlignTo.jsx`** comută alinierea între obiect, margini, pagină sau spread (rulați scriptul în mod repetat).
 
@@ -46,11 +46,11 @@ Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuit
 
 * **`TextAutosize.jsx`** „strânge” chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
 
-  | | ![¶ Align left](.img/paragraphalign-L.png) | ![¶ Align center](.img/paragraphalign-C.png) | ![¶ Align right](.img/paragraphalign-R.png)
+  | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
   :-: | :-: | :-: | :-:
-  ![Vertical Justification Top](.img/verticaljustification-T.png) | ![top-left](.img/textautosize-TL.png) | ![top-center](.img/textautosize-TC.png) | ![top-right](.img/textautosize-TR.png)
-  ![Vertical Justification Center](.img/verticaljustification-C.png) | ![center-left](.img/textautosize-CL.png) | ![center](.img/textautosize-C.png) | ![center-right](.img/textautosize-CR.png)
-  ![Vertical Justification Bottom](.img/verticaljustification-B.png) | ![bottom-left](.img/textautosize-BL.png) | ![bottom-center](.img/textautosize-BC.png) | ![bottom-right](.img/textautosize-BR.png)
+  ![Vertical Justification Top](img/verticaljustification-T.png) | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
+  ![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
+  ![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
 
   Dacă textul are un singur rând, **Auto‑Sizing Type** va fi setat *Height and width*. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width*.
 
@@ -123,7 +123,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefLayers.jsx`** creează un set de straturi, preluându‑le proprietățile din [**`DefLayers.txt`**](setup/DefLayers.txt), care este un fișier TSV *(tab‑separated values)* cu 6 coloane cu următorul format:
+* **`DefLayers.jsx`** creează un set de straturi, preluându‑le proprietățile din [**`layers.txt`**](../layers.txt), un fișier TSV *(tab‑separated values)* cu 6 coloane cu următorul format:
 
   Nume | Culoare | Vizibil | Printabil | Ordine | Variante
   :- | :-: | :-: | :-: | :-: | :-
@@ -132,7 +132,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   ... |
 
   > **Nume**: numele stratului \
-  > **Culoare**: culoarea stratului <!-- (v. [**`UIColors.txt`**](setup/UIColors.txt)) --> \
+  > **Culoare**: culoarea stratului (v. [**`UIColors.txt`**](UIColors.txt)) \
   > **Vizibil**: `TRUE` sau `FALSE` \
   > **Printabil**: `TRUE` sau `FALSE` \
   > **Ordine**: `top` sau `bottom` (deasupra sau sub straturile existente) \
@@ -141,21 +141,21 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   **Note:** Prima linie (capul de tabel) și liniile care încep cu `#` sunt ignorate. \
   **`DefLayers.xlsx`** poate fi folosit pentru generarea fișierului TSV.
 
-* **`DefSwatches.jsx`** creează un set de culori definite în [**`DefSwatches.txt`**](setup/DefSwatches.txt), un fișier TSV cu 3 coloane cu următorul format:
+* **`DefSwatches.jsx`** creează un set de culori definite în [**`swatches.txt`**](../swatches.txt), un fișier TSV cu 3 coloane cu următorul format:
 
   Name | Model | Values
-  :- | :- | :-
+  :- | :-: | :-
   Rich Black | process | 60, 40, 40, 100
   Cut | spot | 0, 100, 0, 0
   ... |
 
   > **Name**: numele culorii \
-  > **Model**: tipul culorii: `process` or `spot` \
+  > **Model**: tipul culorii: `process` sau `spot` \
   > **Values**: o listă de 3 (RGB) sau 4 (CMYK) valori
 
 * **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, elimină duplicatele, le redenumește după formula `C= M= Y= K=` și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
-* **`ReplaceFonts.jsx`** înlocuiește fonturi utilizând o listă de substituție, [**`ReplaceFonts.txt`**](setup/ReplaceFonts.txt), care este un fișier TSV cu 4 coloane cu următorul format:
+* **`ReplaceFonts.jsx`** înlocuiește fonturi utilizând o listă de substituție, [**`fonts.txt`**](../fonts.txt), un fișier TSV cu 4 coloane cu următorul format:
 
   Font vechi | Stil | Font nou | Stil
   :- | :- | :- | :-
@@ -208,7 +208,7 @@ Setup | | | |
 
 * **`QR.jsx`** adaugă coduri QR în documentul activ sau creează fișiere separate într‑un subfolder numit `QR Codes`:
 
-  ![Generate QR Code](.img/qr.png)
+  ![Generate QR Code](img/qr.png)
 
   * **On page** adaugă codul pe fiecare pagină, în colțul din stânga jos.
 
@@ -260,4 +260,4 @@ Misc | | | | | |
 Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)). \
 Raportați o [problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați dificultăți sau aveți sugestii.
 
-README-ro.md • 18 noiembrie 2020
+README-ro.md • 22 noiembrie 2020

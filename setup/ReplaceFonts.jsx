@@ -1,9 +1,8 @@
 ﻿/*
-	Replace fonts 1.5.0
+	Replace fonts 1.6.0
 	© November 2020, Paul Chiorean
-	Replaces missing or unwanted fonts with equivalents from a list.
-	The list is a 4-column TSV file with the same name as the script
-	and the following format:
+	Replaces fonts from a substitution list. The list is a 4-column TSV file
+	with the same name as the script and the following format:
 
 	Old font | Style | New font | Style (header, ignored)
 	Arial | Regular | Helvetica Neue | Regular
@@ -16,15 +15,16 @@ String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
-var infoFile = File(app.activeScript.path + "/" + app.activeScript.name.replace(/jsx/g, "txt"));
+var infoFile = File(app.activeScript.path + "/fonts.txt");
+if(!infoFile.exists) infoFile = File(app.activeScript.path + "/../fonts.txt");
+if(!infoFile.exists) { alert("File '" + infoFile.name + "' not found."); exit() }
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Replace fonts");
 
 
 function main() {
-	if (!infoFile.open("r")) { alert("File " + infoFile.name + " not found."); exit() };
-
+	infoFile.open("r");
 	var fontList = [], line = 0;
 	while (!infoFile.eof) {
 		var infoLine = infoFile.readln().split("\t"); line++;

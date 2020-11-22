@@ -1,5 +1,5 @@
 /*
-	Add default layers v1.3.0
+	Add default layers v1.4.0
 	© November 2020, Paul Chiorean
 	Adds/merges layers from a list. The list is a 6-column TSV file
 	with the same name as the script and the following format:
@@ -21,86 +21,87 @@ String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s
 
 if (app.documents.length == 0) exit();
 var doc = app.activeDocument;
-var infoFile = File(app.activeScript.path + "/" + app.activeScript.name.replace(/jsx/g, "txt"));
+var infoFile = File(app.activeScript.path + "/layers.txt");
+if(!infoFile.exists) infoFile = File(app.activeScript.path + "/../layers.txt");
+if(!infoFile.exists) { alert("File '" + infoFile.name + "' not found."); exit() }
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Default layers");
 
 
 function main() {
-
-if (!infoFile.open("r")) { alert("File '" + infoFile.name + "' not found."); exit() };
-var layerData = [], line = 0;
-while (!infoFile.eof) {
-	var infoLine = infoFile.readln().split("\t"); line++;
-	if (infoLine[0].toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-	if (infoLine[0] == "") continue; // Skip empty lines
-	if (!infoLine[0] || !infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4]) {
-		alert ("Missing data in record " + line + "."); exit() }
-	layerData.push(infoLine);
-}
-infoFile.close();
-
-doc.layers.everyItem().properties = {
-	locked: false,
-	layerColor: [215, 215, 215] // Mark existing layers light gray
-} 
-var set_AL = doc.activeLayer; // Save active layer
-// Top layers
-for (var i = layerData.length - 1; i >= 1 ; i--) {
-	var name, color, isVisible, isPrintable, isBottom, variants = [], v, vv;
-	name = layerData[i][0].trim();
-	color = getUIColor(layerData[i][1].trim());
-	isVisible = (layerData[i][2].toLowerCase() == "true");
-	isPrintable = (layerData[i][3].toLowerCase() == "true");
-	isBottom = (layerData[i][4].toLowerCase() == "bottom");
-	if (isBottom) continue;
-	variants.push(name);
-	vv = layerData[i][5].split(",");
-	while (v = vv.shift()) variants.push(v.trim());
-	var layer = makeLayer(name, color, isVisible, isPrintable, variants);
-}
-// Bottom layers
-for (var i = 1; i < layerData.length; i++) {
-	var name, color, isVisible, isPrintable, isBottom, variants = [], v, vv;
-	name = layerData[i][0].trim();
-	color = getUIColor(layerData[i][1].trim());
-	isVisible = (layerData[i][2].toLowerCase() == "true");
-	isPrintable = (layerData[i][3].toLowerCase() == "true");
-	isBottom = (layerData[i][4].toLowerCase() == "bottom");
-	if (!isBottom) continue;
-	variants.push(name);
-	vv = layerData[i][5].split(",");
-	while (v = vv.shift()) variants.push(v.trim());
-	var layer = makeLayer(name, color, isVisible, isPrintable, variants);
-	if (isBottom) layer.move(LocationOptions.AT_END);
-}
-doc.activeLayer = set_AL; // Restore active layer
-
-
-function makeLayer(name, color, isVisible, isPrintable, variants) {
-	doc.activeLayer = doc.layers.firstItem();
-	var layer = doc.layers.item(name);
-	if (layer.isValid) layer.properties = {
-		layerColor: color,
-		// visible:= isVisible,
-		printable: isPrintable }
-	else {
-		doc.layers.add({
-			name: name,
-			layerColor: color,
-			visible: isVisible,
-			printable: isPrintable });
+	var layerData = [], line = 0;
+	infoFile.open("r");
+	while (!infoFile.eof) {
+		var infoLine = infoFile.readln().split("\t"); line++;
+		if (infoLine[0].toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
+		if (infoLine[0] == "") continue; // Skip empty lines
+		if (!infoLine[0] || !infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4]) {
+			alert ("Missing data in record " + line + "."); exit() }
+		layerData.push(infoLine);
 	}
-	var l, layers = doc.layers.everyItem().getElements();
-	while (l = layers.shift())
-		if(isIn(l.name, variants, false)) {
-			var set_LV = l.visible;
-			if (l == set_AL) set_AL = layer;
-			layer.merge(l);
-			layer.visible = set_LV;
-		};
-	return layer;
+	infoFile.close();
+
+	doc.layers.everyItem().properties = {
+		locked: false,
+		layerColor: [215, 215, 215] // Mark existing layers light gray
+	} 
+	var set_AL = doc.activeLayer; // Save active layer
+	// Top layers
+	for (var i = layerData.length - 1; i >= 1 ; i--) {
+		var name, color, isVisible, isPrintable, isBottom, variants = [], v, vv;
+		name = layerData[i][0].trim();
+		color = getUIColor(layerData[i][1].trim());
+		isVisible = (layerData[i][2].toLowerCase() == "true");
+		isPrintable = (layerData[i][3].toLowerCase() == "true");
+		isBottom = (layerData[i][4].toLowerCase() == "bottom");
+		if (isBottom) continue;
+		variants.push(name);
+		vv = layerData[i][5].split(",");
+		while (v = vv.shift()) variants.push(v.trim());
+		var layer = makeLayer(name, color, isVisible, isPrintable, variants);
+	}
+	// Bottom layers
+	for (var i = 1; i < layerData.length; i++) {
+		var name, color, isVisible, isPrintable, isBottom, variants = [], v, vv;
+		name = layerData[i][0].trim();
+		color = getUIColor(layerData[i][1].trim());
+		isVisible = (layerData[i][2].toLowerCase() == "true");
+		isPrintable = (layerData[i][3].toLowerCase() == "true");
+		isBottom = (layerData[i][4].toLowerCase() == "bottom");
+		if (!isBottom) continue;
+		variants.push(name);
+		vv = layerData[i][5].split(",");
+		while (v = vv.shift()) variants.push(v.trim());
+		var layer = makeLayer(name, color, isVisible, isPrintable, variants);
+		if (isBottom) layer.move(LocationOptions.AT_END);
+	}
+	doc.activeLayer = set_AL; // Restore active layer
+
+	function makeLayer(name, color, isVisible, isPrintable, variants) {
+		doc.activeLayer = doc.layers.firstItem();
+		var layer = doc.layers.item(name);
+		if (layer.isValid) layer.properties = {
+			layerColor: color,
+			// visible:= isVisible,
+			printable: isPrintable }
+		else {
+			doc.layers.add({
+				name: name,
+				layerColor: color,
+				visible: isVisible,
+				printable: isPrintable });
+		}
+		var l, layers = doc.layers.everyItem().getElements();
+		while (l = layers.shift())
+			if(isIn(l.name, variants, false)) {
+				var set_LV = l.visible;
+				if (l == set_AL) set_AL = layer;
+				layer.merge(l);
+				layer.visible = set_LV;
+			};
+		return layer;
+	}
 }
 
 function getUIColor(color) {
@@ -136,5 +137,3 @@ function isIn(searchValue, array, caseSensitive) {
 		if (item === searchValue) return true;
 	}
 }
-
-} // End main()

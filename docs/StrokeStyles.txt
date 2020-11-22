@@ -1,0 +1,20 @@
+UI name          | Locale independent name
+---------------- | -----------------------
+Solid            | $ID/Solid
+Thick Thick      | $ID/ThickThick
+Thick Thin       | $ID/ThickThin
+Thick Thin Thick | $ID/ThickThinThick
+Thin Thick       | $ID/ThinThick
+Thin Thick Thin  | $ID/ThinThickThin
+Thin Thin        | $ID/ThinThin
+Triple           | $ID/Triple_Stroke
+White Diamond    | $ID/White Diamond
+Japanese Dots    | $ID/Japanese Dots
+Dashed (3 and 2) | $ID/Canned Dashed 3x2
+Dashed (4 and 4) | $ID/Canned Dashed 4x4
+Left Slant Hash  | $ID/Left Slant Hash
+Straight Hash    | $ID/Straight Hash
+Dotted           | $ID/Canned Dotted
+Dashed           | $ID/Dashed
+Wavy             | $ID/Wavy
+Right Slant Hash | $ID/Right Slant Hash
