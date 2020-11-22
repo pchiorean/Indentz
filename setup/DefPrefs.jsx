@@ -1,6 +1,7 @@
 /*
 	Default preferences v1.0.1
 	© November 2020, Paul Chiorean
+	Sets default preferences.
 */
 
 if (app.documents.length == 0) exit();
