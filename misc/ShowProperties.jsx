@@ -1,8 +1,11 @@
 /*
-	Show properties 1.2.3
-	© July 2020, Paul Chiorean
+	Show properties 1.2.4
+	July 2020, Paul Chiorean
 	Shows all properties and methods of a selected object.
-*/
+
+	Modified from https://github.com/grefel/indesignjs/blob/version2/Allgemeine_Skripte/
+	EigenschaftenAnzeigen.jsx by Gregor Fellenz (grefel).
+	*/
 
 if (app.documents.length > 0 && app.selection.length > 0) {
 	obj = app.selection[0];
@@ -43,7 +46,7 @@ function ShowProps(obj) {
 
 // Scrollable alert function by Peter Kahrel
 // http://forums.adobe.com/message/2869250#2869250
-// Modified for failsafe alert height.
+// Added failsafe alert height.
 function AlertScroll(title, input) {
 	if (input instanceof Array) input = input.join("\r");
 	var w = new Window("dialog", title);
