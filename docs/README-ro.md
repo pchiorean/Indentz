@@ -153,7 +153,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Model**: tipul culorii: `process` sau `spot` \
   > **Values**: o listă de 3 (RGB) sau 4 (CMYK) valori
 
-* **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, elimină duplicatele, le redenumește după formula `C= M= Y= K=` și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
+* **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, le redenumește după formula `C= M= Y= K=`, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
 * **`ReplaceFonts.jsx`** înlocuiește fonturi utilizând o listă de substituție, [**`fonts.txt`**](../fonts.txt), un fișier TSV cu 4 coloane cu următorul format:
 
