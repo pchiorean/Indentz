@@ -24,40 +24,6 @@ doc.selection[0].geometricBounds = [37.6223012426542,3.00000000000001,46,27];
 doc.selection[0].itemLayer = doc.layers.item("Bar Code");
 doc.layers.item("Layer 1").remove();
 
-// Relink("shutterstock_525314467_sz_easyMint-Basis_HR_v3.4_600dpi_color.tif", "shutterstock_525314467_sz_easyMint-Basis_HR_v3.5_600dpi_color.tif");
-// Relink("shutterstock_525314467_sz_easyMint-Basis_HR_v3.4_600dpi_normal.tif", "shutterstock_525314467_sz_easyMint-Basis_HR_v3.5_600dpi_normal.tif");
-
-// switch (doc.selection[0].paragraphs[0].justification) {
-// 	case 1818584692: // Justification.LEFT_ALIGN
-// 		doc.selection[0].textFramePreferences.properties = {
-// 			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
-// 			verticalJustification: VerticalJustification.BOTTOM_ALIGN
-// 		}
-// 		break;
-// 	case 1919379572: // Justification.RIGHT_ALIGN
-// 		doc.selection[0].textFramePreferences.properties = {
-// 			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_RIGHT_POINT,
-// 			verticalJustification: VerticalJustification.BOTTOM_ALIGN
-// 		}
-// 		break;
-// }
-
-// TextBlack2Black();
-
-// var i, swa; for (i = (swa = doc.unusedSwatches).length; i--;
-// 	(swa[i].name != "" && swa[i].name != "C=60 M=40 Y=40 K=100") && swa[i].remove());
-// try { doc.swatches.itemByName("SPOT LIGHT BLUE").remove() } catch (_) {};
-// try { doc.swatches.itemByName("Safe area").colorValue = [100, 0, 0, 0] } catch (_) {};
-
-// try { doc.layers.itemByName("visible area").name = "safe area" } catch (_) {};
-// try { doc.layers.itemByName("die cut").name = "dielines" } catch (_) {};
-// try { doc.layers.itemByName("diecut").name = "dielines" } catch (_) {};
-// try { doc.layers.itemByName("id").visible = true } catch (_) {};
-// try { doc.layers.itemByName("guides").visible = false } catch (_) {};
-// try { doc.layers.itemByName("safe area").visible = true } catch (_) {};
-// try { doc.layers.itemByName("HW").properties = { visible: true, locked: true } } catch (_) {};
-// try { doc.layers.itemByName("bg").properties = { visible: true, locked: true } } catch (_) {};
-
 
 function ExpandItems() {
 	var bleed = Bounds(page);
@@ -71,13 +37,12 @@ function ExpandItems() {
 			case "fit":
 			case "expand":
 			case "aw":
-				// item.fit(FitOptions.FRAME_TO_CONTENT);
 				FitLax(item); break;
 		}
 	}
 }
 
-function TextReg2CMYK(){ // Converts text with "Registration" to CMYK
+function TextReg2CMYK(){
 	try { doc.colors.add({
 		name: "Reg. black",
 		model: ColorModel.PROCESS,
@@ -122,14 +87,12 @@ function Relink(oldLink, newLink) {
 	for (var i = 0; i < doc.links.length; i++) {
 		var link = doc.links[i];
 		if (link.name == oldLink) link.relink(File(doc.filePath + "/Links/" + newLink));
-		// if (link.name == oldLink) link.relink(File(File(link.filePath).path + "/" + newLink));
 	}
 }
 
 function FitLax(obj) {
 	// Undo if already clipped
-	if ((obj.label == "<clip frame>" || obj.name == "<clip frame>") &&
-		obj.pageItems.length == 0 ) { obj.label = ""; obj.name = "" };
+	if ((obj.label == "<clip frame>") && obj.pageItems.length == 0 ) obj.label = "";
 	if (obj.label == "<clip frame>" && obj.pageItems[0].isValid) {
 		var objD = obj.pageItems[0].duplicate();
 		objD.sendToBack(obj); obj.remove(); app.select(objD);
