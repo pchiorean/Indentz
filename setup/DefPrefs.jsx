@@ -1,11 +1,10 @@
 /*
-	Default preferences v1.0.1
+	Default preferences v1.0.2
 	© November 2020, Paul Chiorean
 	Sets default preferences.
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 
 app.doScript(
 function() {

@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 1.6.0
+	Replace fonts 1.6.1
 	© November 2020, Paul Chiorean
 	Replaces fonts from a substitution list. The list is a 4-column TSV file
 	with the same name as the script and the following format:
@@ -13,11 +13,10 @@
 // Add ECMA262-5 string trim method
 String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 var infoFile = File(app.activeScript.path + "/fonts.txt");
-if(!infoFile.exists) infoFile = File(app.activeScript.path + "/../fonts.txt");
-if(!infoFile.exists) { alert("File '" + infoFile.name + "' not found."); exit() }
+if (!infoFile.exists) infoFile = File(app.activeScript.path + "/../fonts.txt");
+if (!infoFile.exists) { alert("File '" + infoFile.name + "' not found."); exit() }
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Replace fonts");

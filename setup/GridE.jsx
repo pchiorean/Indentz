@@ -1,10 +1,9 @@
 /*
-	E grid 1.5.1
+	E grid 1.5.2
 	© November 2020, Paul Chiorean
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "E grid");

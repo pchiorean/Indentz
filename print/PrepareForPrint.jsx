@@ -1,12 +1,11 @@
 ﻿/*
-	Prepare for print v1.10.0
+	Prepare for print v1.10.1
 	© November 2020, Paul Chiorean
 	Hides "safe area" layer and moves white, varnish & dielines to separate spreads.
 */
 
-if (app.documents.length == 0) exit();
+if (!(doc = app.activeDocument)) exit();
 app.scriptPreferences.enableRedraw = false;
-var doc = app.activeDocument;
 
 var saLayer = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil"]);
 var dieLayer = FindLayer(["dielines", "cut lines", "Cut lines", "cut", "Cut", "CUT", "decoupe", "Decoupe", "die cut", "Die Cut", "Die", "diecut", "Diecut", "stanz", "Stanz", "stanze", "Stanze", "stanzform", "Stanzform"]);

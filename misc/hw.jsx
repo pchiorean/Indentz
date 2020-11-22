@@ -1,10 +1,9 @@
 /*
-	HW 0.5.0
-	© August 2020, Paul Chiorean
+	HW 0.5.1
+	© November 2020, Paul Chiorean
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 
 // Make layer
 var hwLayerName = FindLayer(["HW", "Hw Logo", "HW Logo", "hw", "Logo HW", "wh", "WH", "WHW"]);

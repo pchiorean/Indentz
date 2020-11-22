@@ -1,10 +1,9 @@
 /*
-	L grid 1.2.1
+	L grid 1.2.2
 	© November 2020, Paul Chiorean
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 
 app.doScript(main, ScriptLanguage.javascript, undefined,

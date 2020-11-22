@@ -1,12 +1,10 @@
 /*
-	Safe area v1.8.0
-	© October 2020, Paul Chiorean
+	Safe area v1.8.1
+	© November 2020, Paul Chiorean
 	Creates a 'safe area' frame the size of the page margins.
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
-
+if (!(doc = app.activeDocument)) exit();
 var saLayerName = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"]);
 var dieLayerName = FindLayer(["dielines", "diecut", "die cut", "Die Cut", "cut", "Cut", "cut lines", "stanze", "Stanze", "Stanz", "decoupe"]);
 var saSwatchName = "Safe area";

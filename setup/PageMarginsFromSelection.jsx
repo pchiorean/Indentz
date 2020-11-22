@@ -1,11 +1,10 @@
 /*
-	Page margins from selection v1.3.0
-	© October 2020, Paul Chiorean
+	Page margins from selection v1.3.1
+	© November 2020, Paul Chiorean
 	Sets the page margins to the selected objects bounds.
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 var sel = doc.selection;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit();

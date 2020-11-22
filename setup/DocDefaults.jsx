@@ -1,13 +1,11 @@
 ﻿/*
-	Default layers and more v3.1.0
+	Default layers and more v3.1.1
 	© November 2020, Paul Chiorean
 	Changes some settings, adds swatches, adds/merges layers,
 	cleans up fonts and sets page dimensions from the filename.
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
-
+if (!(doc = app.activeDocument)) exit();
 
 // Set preferences
 app.doScript(File(app.activeScript.path + "/DefPrefs.jsx"), 

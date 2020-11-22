@@ -1,14 +1,10 @@
 /*
-	Cleanup swatches v1.3.1
-	October 2020, Paul Chiorean
+	Cleanup swatches v1.3.2
+	November 2020, Paul Chiorean
 	Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused.
-	
-	NormalizeCMYK written by Marc Autret:
-	https://www.indiscripts.com/post/2018/06/indesign-scripting-forum-roundup-12
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 
 app.doScript(RGB2CMYK, ScriptLanguage.javascript, doc,
 	UndoModes.ENTIRE_SCRIPT, "Convert RGB process colors to CMYK");
@@ -31,6 +27,8 @@ function RGB2CMYK(doc, c, i, j, k) {
 	}
 }
 
+// NormalizeCMYK by Marc Autret
+// https://www.indiscripts.com/post/2018/06/indesign-scripting-forum-roundup-12
 function NormalizeCMYK(doc, swa, a, r, o, t, k, i) {
 	const __ = $.global.localize;
 	const CM_PROCESS = +ColorModel.PROCESS;

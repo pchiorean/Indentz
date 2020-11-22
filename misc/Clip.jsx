@@ -4,8 +4,7 @@
 	Clip selected objects in a "<clip frame>", or restores them
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 var sel = doc.selection;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit();
@@ -48,10 +47,19 @@ function main(sel) {
 		//Clip!
 		var size = obj.visibleBounds;
 		var frame = doc.rectangles.add(
-			obj.itemLayer, LocationOptions.AFTER, obj,
-			{ name: "<clip frame>", label: obj.label,
-			fillColor: "None", strokeColor: "None",
-			geometricBounds: size });
+			obj.itemLayer,
+			LocationOptions.AFTER,
+			obj,
+			{
+				name: "<clip frame>",
+				label: obj.label,
+				fillColor: "None",
+				strokeColor: "Magenta",
+				strokeWeight: "0.5pt",
+				strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
+				strokeType: "$ID/Canned Dashed 3x2",
+				geometricBounds: size
+			});
 		frame.sendToBack(obj); app.select(obj); app.cut(); app.select(frame); app.pasteInto();
 		obj = frame; return obj;
 	}

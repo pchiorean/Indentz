@@ -1,11 +1,10 @@
 /*
-	Page ratios v1.3.0
-	© October 2020, Paul Chiorean
+	Page ratios v1.3.1
+	© November 2020, Paul Chiorean
 	Calculates the ratio of each page and displays it in the upper left corner.
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 var idLayerName = "id", idLayer = doc.layers.item(idLayerName);
 var infoLayerName = "info", infoLayer = doc.layers.item(infoLayerName);
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;

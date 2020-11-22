@@ -1,11 +1,10 @@
 /*
-	Page size from selection v1.7.0
-	© October 2020, Paul Chiorean
+	Page size from selection v1.7.1
+	© November 2020, Paul Chiorean
 	Sets the page size to the selected objects bounds.
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 var sel = doc.selection;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit();

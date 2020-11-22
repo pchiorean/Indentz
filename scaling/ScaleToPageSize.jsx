@@ -1,12 +1,10 @@
 /*
-	Scale to page v1.1.0
-	© October 2020, Paul Chiorean
+	Scale to page v1.1.1
+	© November 2020, Paul Chiorean
 	Scales the selected objects to the page size.
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
-
+if (!(doc = app.activeDocument)) exit();
 var sel = doc.selection, sel_BAK = sel;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit();

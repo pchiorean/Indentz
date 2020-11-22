@@ -1,11 +1,10 @@
 ﻿/*
-	Doc cleanup v2.1.1
+	Doc cleanup v2.1.2
 	© November 2020, Paul Chiorean
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 
 // Set preferences
 app.doScript(File(app.activeScript.path + "/DefPrefs.jsx"), 

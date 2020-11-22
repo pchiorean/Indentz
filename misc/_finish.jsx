@@ -1,11 +1,10 @@
 /*
-	Finishing 0.5.2
+	Finishing 0.5.3
 	© November 2020, Paul Chiorean
 	Used for quick fixes.
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 var page = app.activeWindow.activePage;
 
 app.doScript(

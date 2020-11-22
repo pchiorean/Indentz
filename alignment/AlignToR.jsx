@@ -1,12 +1,10 @@
 /*
-	Align to right v2.4.1
+	Align to right v2.4.2
 	© November 2020, Paul Chiorean
 	Aligns the selected objects to the right of the 'Align To' setting.
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
-
+if (!(doc = app.activeDocument)) exit();
 app.scriptPreferences.enableRedraw = false;
 var sel = doc.selection, selBAK = sel, obj;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {

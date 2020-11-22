@@ -1,11 +1,10 @@
 /*
-	Zoom to selection v1.8.3
-	© July 2020, Paul Chiorean
+	Zoom to selection v1.8.4
+	© November 2020, Paul Chiorean
 	Zooms to the selected objects or, if nothing is selected, to the current spread.
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 var window = app.activeWindow;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
