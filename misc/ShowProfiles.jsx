@@ -5,10 +5,8 @@
 */
 
 if (app.documents.length == 0) exit();
-
 var profilesCMYK = app.activeDocument.cmykProfileList;
 var profilesRGB = app.activeDocument.rgbProfileList;
-
 var resultArray = [];
 resultArray.push('\rCMYK Profiles:\r');
 resultArray.push(profilesCMYK.join("\r"));
