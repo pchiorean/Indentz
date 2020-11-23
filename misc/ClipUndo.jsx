@@ -1,5 +1,5 @@
 /*
-	Undo clipping v1.7.0
+	Undo clipping v2.0.0
 	© November 2020, Paul Chiorean
 	Restores objects clipped in a "<clip frame>" by the "FitTo" scripts.
 */
@@ -23,17 +23,22 @@ function main(items) {
 	// Restore layer grouping settings
 	app.generalPreferences.ungroupRemembersLayers = set_URL;
 	app.clipboardPreferences.pasteRemembersLayers = set_PRL;
+}
 
-	function UndoClip(obj) {
-		if ((obj.name == "<clip frame>" || obj.name == "<auto clip frame>") &&
-		obj.pageItems[0].isValid) {
-			var objD = obj.pageItems[0].duplicate();
-			objD.label = obj.label;
-			objD.sendToBack(obj); obj.remove(); obj = objD; app.select(obj);
-			if (obj.name == "<clip group>") {
-				var sel_BAK = obj.pageItems.everyItem().getElements();
-				obj.ungroup(); app.select(sel_BAK);
-			}
+function UndoClip(obj) {
+	if ((obj.name == "<clip frame>" || obj.name == "<auto clip frame>") &&
+	obj.pageItems[0].isValid) {
+		var o = obj.pageItems[0].duplicate();
+		o.label = obj.label;
+		o.sendToBack(obj);
+		obj.remove();
+		obj = o;
+		app.select(obj);
+		if (obj.name == "<clip group>") {
+			try { obj.pageItems.item("<temp frame>").remove() } catch (_) {};
+			var sel_BAK = obj.pageItems.everyItem().getElements();
+			obj.ungroup();
+			app.select(sel_BAK);
 		}
 	}
 }
