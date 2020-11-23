@@ -1,5 +1,5 @@
 /*
-	Clip v1.7.1
+	Clip v1.8.0
 	© November 2020, Paul Chiorean
 	Clip selected objects in a "<clip frame>", or restores them
 */
@@ -34,7 +34,8 @@ function main(sel) {
 
 	function Clip(obj) {
 		// Undo if already clipped
-		if (obj.name == "<clip frame>" && obj.pageItems[0].isValid) {
+		if ((obj.name == "<clip frame>" || obj.name == "<auto clip frame>") &&
+		obj.pageItems[0].isValid) {
 			var objD = obj.pageItems[0].duplicate();
 			objD.label = obj.label;
 			objD.sendToBack(obj); obj.remove(); obj = objD; app.select(obj);
