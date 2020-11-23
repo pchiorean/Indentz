@@ -3,7 +3,7 @@ safe area	Yellow	TRUE	TRUE	top	rahmen, vis. area, visible area, visible, vizibil
 dielines	Red	TRUE	TRUE	top	cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanze 1, stanzform
 varnish	Yellow	FALSE	TRUE	top	uv
 white	Cute Teal	FALSE	TRUE	top	
-guides	Magenta	TRUE	FALSE	top	
+guides	Magenta	TRUE	FALSE	top	grid
 info	Cyan	FALSE	TRUE	top	info copy, ratio
 HW	Light Gray	FALSE	TRUE	top	hw logo, logo hw, wh, whw
 disclaimer	Gray	FALSE	TRUE	top	
