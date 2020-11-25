@@ -1,12 +1,11 @@
 /*
-	Fit frame to text v1.8.0
-	© October 2020, Paul Chiorean
+	Fit frame to text v1.8.1
+	© November 2020, Paul Chiorean
 	Auto-sizes the text frame to the content. 1st paragraph's justification sets
 	horizontal alignment; vertical justification sets vertical alignment.
 */
 
-if (app.documents.length == 0) exit();
-var doc = app.activeDocument;
+if (!(doc = app.activeDocument)) exit();
 if (doc.selection.length == 0) { exit() } else { var sel = doc.selection };
 
 app.doScript(main, ScriptLanguage.javascript, sel,
