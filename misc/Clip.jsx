@@ -1,5 +1,5 @@
 /*
-	Clip v2.0.0
+	Clip v2.0.1
 	© November 2020, Paul Chiorean
 	Clip selected objects in a "<clip frame>", or restores them
 */
@@ -25,26 +25,24 @@ app.clipboardPreferences.pasteRemembersLayers = set_PRL;
 
 function Clip(items) {
 	// Undo if already clipped
-	if (items.length == 1 &&
-		(items[0].name == "<clip frame>" || items[0].name == "<auto clip frame>") &&
-		items[0].pageItems[0].isValid) {
-			UndoClip(items[0]);
-			exit()
-	}
+	if (items.length == 1
+		&& (items[0].name == "<clip frame>" || items[0].name == "<auto clip frame>")
+		&& items[0].pageItems[0].isValid) { UndoClip(items[0]); exit() }
 	// Filter selection and get a single object
-	if (items.length == 1 && items[0].constructor.name == "TextFrame") {
+	if (items.length == 1
+		&& (items[0].constructor.name == "TextFrame"
+		|| (items[0].constructor.name != "Group" && items[0].pageItems[0].isValid))) {
 		var obj = doc.groups.add([
 			items[0],
 			doc.rectangles.add(
 				items[0].itemLayer,
 				LocationOptions.BEFORE, items[0],
-				{
-					name: "<temp frame>",
-					fillColor: "None", strokeColor: "None",
-					geometricBounds: items[0].visibleBounds
-				})
+				{ name: "<temp frame>",
+				fillColor: "None", strokeColor: "None",
+				geometricBounds: items[0].visibleBounds })
 			],
 			{ name: "<clip group>" });
+		obj.pageItems.item("<temp frame>").remove();
 	} else if (items.length > 1) {
 		var selArray = [];
 		for (var i = 0; i < items.length; i++) if (!items[i].locked) selArray.push(items[i]);
@@ -56,38 +54,28 @@ function Clip(items) {
 		sizeBAK = obj.geometricBounds;
 	var frame = doc.rectangles.add(
 		obj.itemLayer,
-		LocationOptions.AFTER,
-		obj,
-		{
-			name: "<clip frame>",
-			label: obj.label,
-			fillColor: "None",
-			strokeColor: "Magenta",
-			strokeWeight: "0.5pt",
-			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
-			strokeType: "$ID/Canned Dashed 3x2",
-			geometricBounds: size
-		});
+		LocationOptions.AFTER, obj,
+		{ name: "<clip frame>", label: obj.label,
+		fillColor: "None", strokeColor: "None",
+		// strokeColor: "Yellow", strokeWeight: "0.5pt",
+		// strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
+		// strokeType: "$ID/Canned Dashed 3x2",
+		geometricBounds: size });
 	frame.contentPlace(obj);
-	obj.remove();
-	obj = frame;
+	obj.remove(); obj = frame;
 	obj.pageItems[0].geometricBounds = sizeBAK;
 	app.select(obj);
-	return obj;
 }
 
 function UndoClip(obj) {
 	var o = obj.pageItems[0].duplicate();
-	o.label = obj.label;
 	o.sendToBack(obj);
-	obj.remove();
-	obj = o;
+	obj.remove(); obj = o;
 	app.select(obj);
 	if (obj.name == "<clip group>") {
-		try { obj.pageItems.item("<temp frame>").remove() } catch (_) {};
 		var sel_BAK = obj.pageItems.everyItem().getElements();
 		obj.ungroup();
 		app.select(sel_BAK);
 	}
-	return obj;
+	return;
 }
