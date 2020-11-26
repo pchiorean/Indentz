@@ -1,5 +1,5 @@
 /*
-	Undo clipping v2.0.0
+	Undo clipping v2.1.0
 	© November 2020, Paul Chiorean
 	Restores objects clipped in a "<clip frame>" by the "FitTo" scripts.
 */
@@ -29,15 +29,13 @@ function UndoClip(obj) {
 	if ((obj.name == "<clip frame>" || obj.name == "<auto clip frame>") &&
 	obj.pageItems[0].isValid) {
 		var o = obj.pageItems[0].duplicate();
-		o.label = obj.label;
 		o.sendToBack(obj);
 		obj.remove();
-		obj = o;
-		app.select(obj);
-		if (obj.name == "<clip group>") {
-			try { obj.pageItems.item("<temp frame>").remove() } catch (_) {};
-			var sel_BAK = obj.pageItems.everyItem().getElements();
-			obj.ungroup();
+		app.select(o);
+		if (o.name == "<clip group>") {
+			try { o.pageItems.item("<temp frame>").remove() } catch (_) {};
+			var sel_BAK = o.pageItems.everyItem().getElements();
+			o.ungroup();
 			app.select(sel_BAK);
 		}
 	}

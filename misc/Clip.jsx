@@ -1,5 +1,5 @@
 /*
-	Clip v2.0.1
+	Clip v2.1.0
 	© November 2020, Paul Chiorean
 	Clip selected objects in a "<clip frame>", or restores them
 */
@@ -50,8 +50,6 @@ function Clip(items) {
 		obj.name = "<clip group>";
 	} else var obj = items[0];
 	// Clip!
-	var size = obj.visibleBounds,
-		sizeBAK = obj.geometricBounds;
 	var frame = doc.rectangles.add(
 		obj.itemLayer,
 		LocationOptions.AFTER, obj,
@@ -60,22 +58,28 @@ function Clip(items) {
 		// strokeColor: "Yellow", strokeWeight: "0.5pt",
 		// strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 		// strokeType: "$ID/Canned Dashed 3x2",
-		geometricBounds: size });
-	frame.contentPlace(obj);
-	obj.remove(); obj = frame;
-	obj.pageItems[0].geometricBounds = sizeBAK;
-	app.select(obj);
+		geometricBounds: obj.visibleBounds });
+	var objCenterBefore = obj.resolve(
+		[[0.5, 0.5], BoundingBoxLimits.OUTER_STROKE_BOUNDS],
+		CoordinateSpaces.SPREAD_COORDINATES)[0];
+	frame.contentPlace(obj); obj.remove();
+	var objCenterAfter = frame.pageItems[0].resolve(
+		[[0.5, 0.5], BoundingBoxLimits.OUTER_STROKE_BOUNDS],
+		CoordinateSpaces.SPREAD_COORDINATES)[0];
+	frame.pageItems[0].move(undefined,[
+		objCenterBefore[0] - objCenterAfter[0],
+		objCenterBefore[1] - objCenterAfter[1]]);
+	app.select(frame);
 }
 
 function UndoClip(obj) {
 	var o = obj.pageItems[0].duplicate();
 	o.sendToBack(obj);
-	obj.remove(); obj = o;
-	app.select(obj);
-	if (obj.name == "<clip group>") {
-		var sel_BAK = obj.pageItems.everyItem().getElements();
-		obj.ungroup();
+	obj.remove();
+	app.select(o);
+	if (o.name == "<clip group>") {
+		var sel_BAK = o.pageItems.everyItem().getElements();
+		o.ungroup();
 		app.select(sel_BAK);
 	}
-	return;
 }
