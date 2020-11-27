@@ -1,5 +1,5 @@
 /*
-	Clip v2.1.0
+	Clip v2.2.0
 	© November 2020, Paul Chiorean
 	Clip selected objects in a "<clip frame>", or restores them
 */
@@ -41,13 +41,13 @@ function Clip(items) {
 				fillColor: "None", strokeColor: "None",
 				geometricBounds: items[0].visibleBounds })
 			],
-			{ name: "<clip group>" });
+			{ name: "<auto clip group>" });
 		obj.pageItems.item("<temp frame>").remove();
 	} else if (items.length > 1) {
 		var selArray = [];
 		for (var i = 0; i < items.length; i++) if (!items[i].locked) selArray.push(items[i]);
 		var obj = doc.groups.add(selArray);
-		obj.name = "<clip group>";
+		obj.name = "<auto clip group>";
 	} else var obj = items[0];
 	// Clip!
 	var frame = doc.rectangles.add(
@@ -77,7 +77,7 @@ function UndoClip(obj) {
 	o.sendToBack(obj);
 	obj.remove();
 	app.select(o);
-	if (o.name == "<clip group>") {
+	if (o.name == "<clip group>" || o.name == "<auto clip group>") {
 		var sel_BAK = o.pageItems.everyItem().getElements();
 		o.ungroup();
 		app.select(sel_BAK);
