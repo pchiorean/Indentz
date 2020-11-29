@@ -1,5 +1,5 @@
 /*
-	Undo clipping v2.2.0
+	Undo clipping v2.3.0
 	© November 2020, Paul Chiorean
 	Restores objects clipped in a "<clip frame>" by the "FitTo" scripts.
 */
@@ -19,24 +19,26 @@ function main(items) {
 	app.generalPreferences.ungroupRemembersLayers = true;
 	app.clipboardPreferences.pasteRemembersLayers = true;
 	// Undo clip!
-	var obj; while (obj = items.shift()) UndoClip(obj);
+	var item; while (item = items.shift()) UndoClip(item);
 	// Restore layer grouping settings
 	app.generalPreferences.ungroupRemembersLayers = set_URL;
 	app.clipboardPreferences.pasteRemembersLayers = set_PRL;
 }
 
-function UndoClip(obj) {
-	if ((obj.name == "<clip frame>" || obj.name == "<auto clip frame>") &&
-	obj.pageItems[0].isValid) {
-		var o = obj.pageItems[0].duplicate();
-		o.sendToBack(obj);
-		obj.remove();
-		app.select(o);
-		if (o.name == "<clip group>" || o.name == "<auto clip group>") {
-			try { o.pageItems.item("<temp frame>").remove() } catch (_) {};
-			var sel_BAK = o.pageItems.everyItem().getElements();
-			o.ungroup();
-			app.select(sel_BAK);
-		}
+function UndoClip(item) {
+	if ( // it's a clip frame
+		((item.name == "<clip frame>" || item.name == "<auto clip frame>")
+		&& item.pageItems[0].isValid)
+		|| // it's a generic container
+		((item.graphics.length == 1 || item.groups.length == 1))
+		&& item.pageItems.length == 1) {
+			var child = item.pageItems[0].duplicate();
+			child.sendToBack(item); item.remove();
+			app.select(child);
+			if (child.name == "<clip group>" || child.name == "<auto clip group>") {
+				var sel_BAK = child.pageItems.everyItem().getElements();
+				child.ungroup();
+				app.select(sel_BAK);
+			}
 	}
 }
