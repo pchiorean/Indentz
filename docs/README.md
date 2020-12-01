@@ -206,6 +206,8 @@ Setup | | | |
 
 * **`PageRatios.jsx`** calculates the ratio of each page and puts it in the upper left corner, on the `info` layer.
 
+* **`PagesToFiles.jsx`** saves the pages of the active document in separate files, with a user configurable suffix.
+
 * **`QR.jsx`** adds QR codes in the active document or creates separate files in a subfolder named `QR Codes`:
 
   ![Generate QR Code](img/qr.png)
@@ -260,4 +262,4 @@ Misc | | | | | |
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)). \
 Open an [issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • November 22, 2020
+README.md • December 1, 2020

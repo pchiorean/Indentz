@@ -65,6 +65,7 @@ Name                             |   Fn  | Description
 **ClipUndo.jsx**                 | ⌃Num* | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
 **CleanupLabels.jsx**            |       | Removes all labels from the document
 **PageRatios.jsx**               |       | Calculates the ratio of each page and displays it in the upper left corner
+**PagesToFiles.jsx**             |       | Saves the pages of the active document in separate files
 **QR.jsx**                       |    F9 | Adds a QR code to the current document or to a separate file
 **TileAll.jsx**                  |   ⇧F4 | Invokes 'Tile All Vertically/Horizontally', depending on current page orientation
 **ZoomToSelection.jsx**          |    F4 | Zooms to the selected objects or, if nothing is selected, to the current spread
