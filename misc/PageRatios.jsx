@@ -1,5 +1,5 @@
 /*
-	Page ratios v1.3.1
+	Page ratios v1.3.2
 	© November 2020, Paul Chiorean
 	Calculates the ratio of each page and displays it in the upper left corner.
 */
@@ -45,7 +45,7 @@ function main() {
 			autoSizingReferencePoint: AutoSizingReferenceEnum.TOP_LEFT_POINT,
 			autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
 			useNoLineBreaksForAutoSizing: true,
-			insetSpacing: 4.25196850393701 // 1.5 mm
+			insetSpacing: UnitValue("1.5mm").as('pt')
 		}
 		doc.align(infoFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
 		doc.align(infoFrame, AlignOptions.TOP_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
