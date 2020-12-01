@@ -67,7 +67,7 @@ Name                             |   Fn  | Description
 **PageRatios.jsx**               |       | Calculates the ratio of each page and displays it in the upper left corner
 **PagesToFiles.jsx**             |       | Saves the pages of the active document in separate files
 **QR.jsx**                       |    F9 | Adds a QR code to the current document or to a separate file
-**TileAll.jsx**                  |   ⇧F4 | Invokes 'Tile All Vertically/Horizontally', depending on current page orientation
+**TileAll.jsx**                  |   ⇧F4 | Invokes 'Tile All Vertically/Horizontally', depending on current spread orientation
 **ZoomToSelection.jsx**          |    F4 | Zooms to the selected objects or, if nothing is selected, to the current spread
 **ShowFonts.jsx**                |       | Shows all fonts used in the current document
 **ShowProfiles.jsx**             |       | Shows all color profiles available to the document

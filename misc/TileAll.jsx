@@ -1,16 +1,16 @@
 /*
-	Tile all v1.0.0
+	Tile all v1.1.0
 	© November 2020, Paul Chiorean
 	Invokes 'Tile All Vertically' or 'Tile All Horizontally',
-	depending on current page orientation.
+	depending on current spread orientation.
 */
 
 if (app.documents.length < 2) exit();
-var page = app.activeWindow.activePage;
 
+var page = app.activeWindow.activePage;
 var size = {
-	width: page.bounds[3] - page.bounds[1],
-	height: page.bounds[2] - page.bounds[0]
+	width: page.parent.pages.lastItem().bounds[3] - page.parent.pages.firstItem().bounds[1],
+	height: page.parent.pages.lastItem().bounds[2] - page.parent.pages.firstItem().bounds[0]
 }
 switch (size.width / size.height <= 1) {
 	case true: app.menuActions.item("$ID/Tile All Vertically").invoke(); break;
