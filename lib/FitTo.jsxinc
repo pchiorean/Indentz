@@ -1,14 +1,14 @@
 /*
-	Fit to... v3.7.0
-	© November 2020, Paul Chiorean
+	Fit to... v3.8.0
+	© December 2020, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/bleed.
 	It's run internally by all the other FitTo scripts.
 */
 
+var DEBUG = false;
 // var SCOPE = "page"; // "page" or "spread"
 // var TARGET = null; // null or "bleed" or "margins"
 // var FORCED = false; // false or true
-var DEBUG = false;
 
 function main() {
 
@@ -53,6 +53,17 @@ function Fit(obj) {
 		{ contents: "snap zone", fillColor: "None", strokeColor: "Cyan",
 		nonprinting: true, geometricBounds: TARGET == "margins" ? tgZ : pgZ });
 
+	// Special case: Objects labeled 'HW'
+	if (obj.label == "HW") {
+		obj.geometricBounds = TARGET == "margins" ?
+			[tg[0] + (tg[2] - tg[0]) * 0.9, tg[1], tg[2], tg[3]] :
+			[(pg[2] - pg[0]) * 0.9, tg[1], tg[2], tg[3]];
+		if (obj.constructor.name == "TextFrame")
+			obj.textFramePreferences.insetSpacing = [0, 0, TARGET == "bleed" ?
+				doc.documentPreferences.properties.documentBleedBottomOffset : 0, 0];
+		return obj;
+	}
+
 	if (!FORCED) {
 		// Check if obj is outside bounds / inside bounds but not in the snap zone
 		if (objV[2] <= tg[0] || objV[3] <= tg[1] || objV[0] >= tg[2] || objV[1] >= tg[3]) return;
@@ -89,17 +100,7 @@ function Fit(obj) {
 			nonprinting: true, geometricBounds: fitE });
 	}
 
-	// Case 1: Objects labeled 'HW'
-	if (obj.label == "HW") {
-		obj.geometricBounds = TARGET == "margins" ?
-			[tg[0] + (tg[2] - tg[0]) * 0.9, tg[1], tg[2], tg[3]] :
-			[(pg[2] - pg[0]) * 0.9, tg[1], tg[2], tg[3]];
-		if (obj.constructor.name == "TextFrame")
-			obj.textFramePreferences.insetSpacing = [0, 0, TARGET == "bleed" ?
-				doc.documentPreferences.properties.documentBleedBottomOffset : 0, 0];
-		return obj;
-	}
-	// Case 2: Already clipped
+	// Case 1: Already clipped
 	if ((obj.name == "<clip frame>" || obj.name == "<auto clip frame>") && obj.pageItems[0].isValid) {
 		obj.geometricBounds = FORCED ? tg : fitE; return obj;
 	}
