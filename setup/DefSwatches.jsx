@@ -1,8 +1,7 @@
 /*
-	Add default swatches v1.3.1
+	Default swatches v1.3.2
 	© November 2020, Paul Chiorean
-	Adds swatches from a list. The list is a 3-column TSV file
-	with the same name as the script and the following format:
+	Adds swatches from a 3-column TSV file:
 
 	Name | Model | Values (header, ignored)
 	Rich Black | process | 60, 40, 40, 100

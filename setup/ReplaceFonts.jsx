@@ -1,8 +1,7 @@
 ﻿/*
-	Replace fonts 1.6.1
+	Replace fonts 1.6.2
 	© November 2020, Paul Chiorean
-	Replaces fonts from a substitution list. The list is a 4-column TSV file
-	with the same name as the script and the following format:
+	Replaces fonts from a 4-column TSV file:
 
 	Old font | Style | New font | Style (header, ignored)
 	Arial | Regular | Helvetica Neue | Regular
