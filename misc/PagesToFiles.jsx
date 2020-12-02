@@ -1,6 +1,6 @@
 /*
 	PagesToFiles v1.0.0
-	© November 2020, Paul Chiorean
+	© December 2020, Paul Chiorean
 	Saves the pages of the active document in separate files.
 */
 
