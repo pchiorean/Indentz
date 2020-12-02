@@ -7,7 +7,7 @@ guides	Magenta	TRUE	FALSE	top	grid
 info	Cyan	FALSE	TRUE	top	info copy, ratio
 HW	Light Gray	FALSE	TRUE	top	hw logo, logo hw, wh, whw
 disclaimer	Gray	FALSE	TRUE	top	
-text and logos	Green	FALSE	TRUE	top	copy, text, textes, txt, type
+text and logos	Green	FALSE	TRUE	top	copy, text, textes, txt, type, typo
 EANs	Grid Green	FALSE	TRUE	top	barcode, barcodes, code
 products	Blue	FALSE	TRUE	top	product, tins
 artwork	Light Blue	FALSE	TRUE	top	aw, elemente, layout, layouts
