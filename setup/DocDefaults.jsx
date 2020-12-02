@@ -1,6 +1,6 @@
 ﻿/*
-	Default layers and more v3.1.1
-	© November 2020, Paul Chiorean
+	Default layers and more v3.1.2
+	© December 2020, Paul Chiorean
 	Changes some settings, adds swatches, adds/merges layers,
 	cleans up fonts and sets page dimensions from the filename.
 */
@@ -8,17 +8,17 @@
 if (!(doc = app.activeDocument)) exit();
 
 // Set preferences
-app.doScript(File(app.activeScript.path + "/DefPrefs.jsx"), 
+app.doScript(File(app.activeScript.path + "/DefaultPrefs.jsx"), 
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Set preferences");
 
 // Add default swatches
-app.doScript(File(app.activeScript.path + "/DefSwatches.jsx"), 
+app.doScript(File(app.activeScript.path + "/DefaultSwatches.jsx"), 
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Default swatches");
 
 // Add default layers
-app.doScript(File(app.activeScript.path + "/DefLayers.jsx"), 
+app.doScript(File(app.activeScript.path + "/DefaultLayers.jsx"), 
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Default layers");
 
