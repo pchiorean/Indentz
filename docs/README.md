@@ -98,7 +98,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 #### **Document**
 
-* **`DefPrefs.jsx`** sets the following preferences:
+* **`DefaultPrefs.jsx`** sets the following preferences:
 
   > **Rulers:** Reset Zero Point \
   > **Rulers Units:** Millimeters \
@@ -123,7 +123,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefLayers.jsx`** adds a set of layers, reading their properties from [**`layers.txt`**](../layers.txt), a 6‑column TSV *(tab‑separated values)* file with the following format:
+* **`DefaultLayers.jsx`** adds a set of layers, reading their properties from [**`layers.txt`**](../layers.txt), a 6‑column TSV *(tab‑separated values)* file with the following format:
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
@@ -139,9 +139,9 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Variants**: a list of layers that will be merged with the base layer (case insensitive)
 
   **Note:** The first line (the header) and lines beginning with `#` are ignored. \
-  **`DefLayers.xlsx`** can be used to generate the TSV file.
+  **`layers.xlsx`** can be used to generate the TSV file.
 
-* **`DefSwatches.jsx`** adds a set of swatches defined in [**`swatches.txt`**](../swatches.txt), a 3‑column TSV file with the following format:
+* **`DefaultSwatches.jsx`** adds a set of swatches defined in [**`swatches.txt`**](../swatches.txt), a 3‑column TSV file with the following format:
 
   Name | Model | Values
   :- | :-: | :-
@@ -165,9 +165,9 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   **Note:** You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy‑pasting.
 
-* **`DocCleanup.jsx`** sets preferences (it runs **`DefPrefs.jsx`**), cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%.
+* **`DocCleanup.jsx`** sets preferences (it runs **`DefaultPrefs.jsx`**), cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%.
 
-* **`DocDefaults.jsx`** just runs **`DefPrefs.jsx`**, **`DefSwatches.jsx`**, **`DefLayers.jsx`**, **`ReplaceFonts.jsx`** and **`PageSizeFromFilename.jsx`**.
+* **`DocDefaults.jsx`** just runs **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`** and **`PageSizeFromFilename.jsx`**.
 
 #### **Layout**
 
@@ -262,4 +262,4 @@ Misc | | | | | |
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)). \
 Open an [issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • December 1, 2020
+README.md • December 2, 2020

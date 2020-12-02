@@ -98,7 +98,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 #### **Document**
 
-* **`DefPrefs.jsx`** setează următoarele preferințe:
+* **`DefaultPrefs.jsx`** setează următoarele preferințe:
 
   > **Rulers:** Reset Zero Point \
   > **Rulers Units:** Millimeters \
@@ -123,7 +123,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefLayers.jsx`** creează un set de straturi, preluându‑le proprietățile din [**`layers.txt`**](../layers.txt), un fișier TSV *(tab‑separated values)* cu 6 coloane cu următorul format:
+* **`DefaultLayers.jsx`** creează un set de straturi, preluându‑le proprietățile din [**`layers.txt`**](../layers.txt), un fișier TSV *(tab‑separated values)* cu 6 coloane cu următorul format:
 
   Nume | Culoare | Vizibil | Printabil | Ordine | Variante
   :- | :-: | :-: | :-: | :-: | :-
@@ -139,9 +139,9 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Variante**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)
 
   **Note:** Prima linie (capul de tabel) și liniile care încep cu `#` sunt ignorate. \
-  **`DefLayers.xlsx`** poate fi folosit pentru generarea fișierului TSV.
+  **`layers.xlsx`** poate fi folosit pentru generarea fișierului TSV.
 
-* **`DefSwatches.jsx`** creează un set de culori definite în [**`swatches.txt`**](../swatches.txt), un fișier TSV cu 3 coloane cu următorul format:
+* **`DefaultSwatches.jsx`** creează un set de culori definite în [**`swatches.txt`**](../swatches.txt), un fișier TSV cu 3 coloane cu următorul format:
 
   Name | Model | Values
   :- | :-: | :-
@@ -165,9 +165,9 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
 
-* **`DocCleanup.jsx`** setează preferințe (rulează **`DefPrefs.jsx`**), șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%.
+* **`DocCleanup.jsx`** setează preferințe (rulează **`DefaultPrefs.jsx`**), șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%.
 
-* **`DocDefaults.jsx`** doar rulează **`DefPrefs.jsx`**, **`DefSwatches.jsx`**, **`DefLayers.jsx`**, **`ReplaceFonts.jsx`** și **`PageSizeFromFilename.jsx`**.
+* **`DocDefaults.jsx`** doar rulează **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`** și **`PageSizeFromFilename.jsx`**.
 
 #### **Layout**
 
@@ -262,4 +262,4 @@ Misc | | | | | |
 Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)). \
 Raportați o [problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați dificultăți sau aveți sugestii.
 
-README-ro.md • 1 decembrie 2020
+README-ro.md • 2 decembrie 2020

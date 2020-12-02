@@ -49,9 +49,9 @@ Name                             |   Fn  | Description
 **SafeAreaHideLayer.jsx**        |       | Hides the safe area layer (or equivalents)
 **SafeAreaShowLayer.jsx**        |       | Shows the safe area layer (or equivalents)
 **[ Setup ]**                            |
-**DefPrefs.jsx**                 |       | Sets default preferences
-**DefLayers.jsx**                |       | Adds/merges layers from a list
-**DefSwatches.jsx**              |       | Adds swatches from a list
+**DefaultPrefs.jsx**             |       | Sets default preferences
+**DefaultLayers.jsx**            |       | Adds/merges layers from a list
+**DefaultSwatches.jsx**          |       | Adds swatches from a list
 **CleanupSwatches.jsx**          |   ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 **ReplaceFonts.jsx**             |       | Replaces fonts from a substitution list
 **DocCleanup.jsx**               |    F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling

@@ -268,7 +268,7 @@ line-height: 1.6;
 <h4 id="document"><strong>Document</strong></h4>
 <ul>
 <li>
-<p><strong><code>DefPrefs.jsx</code></strong> setează următoarele preferințe:</p>
+<p><strong><code>DefaultPrefs.jsx</code></strong> setează următoarele preferințe:</p>
 <blockquote>
 <p><strong>Rulers:</strong> Reset Zero Point <br>
 <strong>Rulers Units:</strong> Millimeters <br>
@@ -295,7 +295,7 @@ line-height: 1.6;
 </blockquote>
 </li>
 <li>
-<p><strong><code>DefLayers.jsx</code></strong> creează un set de straturi, preluându‑le proprietățile din <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>, un fișier TSV <em>(tab-separated values)</em> cu 6 coloane cu următorul format:</p>
+<p><strong><code>DefaultLayers.jsx</code></strong> creează un set de straturi, preluându‑le proprietățile din <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>, un fișier TSV <em>(tab-separated values)</em> cu 6 coloane cu următorul format:</p>
 <table>
 <thead>
 <tr>
@@ -343,10 +343,10 @@ line-height: 1.6;
 <strong>Variante</strong>: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)</p>
 </blockquote>
 <p><strong>Note:</strong> Prima linie (capul de tabel) și liniile care încep cu <code>&num;</code> sunt ignorate. <br>
-<strong><code>DefLayers.xlsx</code></strong> poate fi folosit pentru generarea fișierului TSV.</p>
+<strong><code>layers.xlsx</code></strong> poate fi folosit pentru generarea fișierului TSV.</p>
 </li>
 <li>
-<p><strong><code>DefSwatches.jsx</code></strong> creează un set de culori definite în <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>, un fișier TSV cu 3 coloane cu următorul format:</p>
+<p><strong><code>DefaultSwatches.jsx</code></strong> creează un set de culori definite în <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>, un fișier TSV cu 3 coloane cu următorul format:</p>
 <table>
 <thead>
 <tr>
@@ -417,10 +417,10 @@ line-height: 1.6;
 <p><strong>Notă:</strong> Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy‑paste.</p>
 </li>
 <li>
-<p><strong><code>DocCleanup.jsx</code></strong> setează preferințe (rulează <strong><code>DefPrefs.jsx</code></strong>), șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%.</p>
+<p><strong><code>DocCleanup.jsx</code></strong> setează preferințe (rulează <strong><code>DefaultPrefs.jsx</code></strong>), șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%.</p>
 </li>
 <li>
-<p><strong><code>DocDefaults.jsx</code></strong> doar rulează <strong><code>DefPrefs.jsx</code></strong>, <strong><code>DefSwatches.jsx</code></strong>, <strong><code>DefLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong> și <strong><code>PageSizeFromFilename.jsx</code></strong>.</p>
+<p><strong><code>DocDefaults.jsx</code></strong> doar rulează <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong> și <strong><code>PageSizeFromFilename.jsx</code></strong>.</p>
 </li>
 </ul>
 <h4 id="layout"><strong>Layout</strong></h4>
@@ -613,7 +613,7 @@ line-height: 1.6;
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington și alții. -->
 <p>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>). <br>
 Raportați o <a href="https://github.com/pchiorean/Indentz/issues">problemă</a> pe Github dacă întâmpinați dificultăți sau aveți sugestii.</p>
-<p>README-ro.md • 1 decembrie 2020</p>
+<p>README-ro.md • 2 decembrie 2020</p>
 
 </body>
 </html>
