@@ -1,5 +1,5 @@
 /*
-	PagesToFiles v1.2.0
+	PagesToFiles v1.3.0
 	© December 2020, Paul Chiorean
 	Saves the pages of the active document in separate files.
 */
@@ -23,10 +23,17 @@ var progressBar = new ProgressBar(dName.length + 60);
 progressBar.reset(doc.spreads.length);
 for (var i = 0; i < doc.spreads.length; i++) {
 	// Filter out current spread
-	var r = []; for (var j = 0; j < doc.spreads.length; j++) if (j != i) r.push(j);
+	var r = [];
+	for (var j = 0; j < doc.spreads.length; j++) if (j != i) r.push(j);
 	// Disable user interaction and open a copy
 	if (sufx == fileSufx) dName = dName.replace(fileSufx, "");
-	var dFile = File(dPath + "/" + dName + sufx[0] + sufx[i + 1] + ".indd");
+	// var dFile = File(dPath + "/" + dName + sufx[0] + sufx[i + 1] + ".indd");
+	var inc = 0;
+	do { var dFile = File(dPath + "/" + dName + sufx[0] + sufx[i + 1]
+	+ (inc > 1 ? " copy " + inc : (inc == 0 ? "" : " copy"))
+	+ ".indd");
+	inc++;
+	} while (dFile.exists);
 	progressBar.update(i + 1, dFile.name);
 	doc.saveACopy(dFile);
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
