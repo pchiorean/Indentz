@@ -1,6 +1,6 @@
 /*
-	Safe area v1.8.1
-	© November 2020, Paul Chiorean
+	Safe area v1.8.2
+	© December 2020, Paul Chiorean
 	Creates a 'safe area' frame the size of the page margins.
 */
 
@@ -40,7 +40,7 @@ function main() {
 		page.rectangles.add({
 			name: "<safe area>", label: "safe area",
 			contentType: ContentType.UNASSIGNED,
-			fillColor: saSwatchName, strokeColor: saSwatchName,
+			fillColor: "None", strokeColor: saSwatchName,
 			strokeWeight: "0.5pt",
 			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 			strokeType: "$ID/Canned Dashed 3x2",
