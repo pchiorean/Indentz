@@ -1,6 +1,6 @@
 ﻿/*
-	Doc cleanup v2.1.3
-	© November 2020, Paul Chiorean
+	Doc cleanup v2.2.0
+	© December 2020, Paul Chiorean
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
 */
 
@@ -36,9 +36,9 @@ UndoModes.ENTIRE_SCRIPT, "Turn off 'AutoUpdateURLStatus'");
 // Show 'guides' layer
 app.doScript(
 function() {
-	try { doc.layers.item("guides").visible = true } catch (_) {
-		try { doc.layers.item("Guides").visible = true } catch (_) {};
-	}
+	var layer;
+	if ((layer = doc.layers.item("guides")).isValid) layer.visible = true;
+	if ((layer = doc.layers.item("Guides")).isValid) layer.visible = true;
 },
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Show 'guides' layer");
@@ -55,7 +55,7 @@ UndoModes.ENTIRE_SCRIPT, "Show 'guides' layer");
 // Delete unused layers
 app.doScript(
 function() {
-	try { app.menuActions.item("$ID/Delete Unused Layers").invoke() } catch (_) {};
+	if ((menu_DUL = app.menuActions.item("$ID/Delete Unused Layers")).enabled) menu_DUL.invoke();
 },
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Delete unused layers");
@@ -77,7 +77,7 @@ function() {
 	for (var i = 0; i < doc.spreads.length; i++) {
 		var item, items = doc.spreads[i].allPageItems;
 		while (item = items.shift()) {
-			try { item.locked = false } catch (_) {};
+			if (item.locked == true) item.locked = false;
 			item.redefineScaling();
 		}
 	}
