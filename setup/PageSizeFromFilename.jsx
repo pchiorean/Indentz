@@ -1,5 +1,5 @@
 /*
-	Page size from filename v1.9.1
+	Page size from filename v1.9.2
 	© November 2020, Paul Chiorean
 	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -38,10 +38,10 @@ function main() {
 	}
 	// Check number of pairs and set page size and, if defined, page margins
 	var page, szPg, szMg, mgs;
-	var dimA = szArr[0].split("x"); // First pair
+	var dimA = szArr[0].split(/x/ig); // First pair
 	szPg = { width: Number(dimA[0]), height: Number(dimA[1]) }
 	if (szArr.length == 2) { // If 2 pairs (page size & page margins), page size is the largest
-		var dimB = szArr[1].split("x"); // Second pair
+		var dimB = szArr[1].split(/x/ig); // Second pair
 		szPg = { // Choose the largest
 			width: Math.max(Number(dimA[0]), Number(dimB[0])),
 			height: Math.max(Number(dimA[1]), Number(dimB[1])) }
