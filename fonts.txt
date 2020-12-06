@@ -2,14 +2,14 @@ Old font	Style	New font	Style
 Akzidenz Grotesk	Bold	AkzidenzGrotesk	Bold
 Arial	Regular	Helvetica Neue	Regular
 Arial	Bold	Helvetica Neue	Medium
-FoundryGridnik	Regular	Foundry Gridnik	Regular
-FoundryGridnik	Medium	Foundry Gridnik	Medium
-FoundryGridnik	Bold	Foundry Gridnik	Bold
+#FoundryGridnik	Regular	Foundry Gridnik	Regular
+#FoundryGridnik	Medium	Foundry Gridnik	Medium
+#FoundryGridnik	Bold	Foundry Gridnik	Bold
 Gotham Light	Regular	Gotham	Light
 Gotham Book	Regular	Gotham	Book
-# Gotham Medium	Regular	Gotham	Medium
+#Gotham Medium	Regular	Gotham	Medium
 Gotham Bold	Regular	Gotham	Bold
-# Gotham Black	Regular	Gotham	Black
+#Gotham Black	Regular	Gotham	Black
 Helvetica	Regular	Helvetica Neue	Regular
 Helvetica	Medium	Helvetica Neue	Medium
 Helvetica	Bold	Helvetica Neue	Bold
