@@ -123,7 +123,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefaultLayers.jsx`** creează un set de straturi, preluându‑le proprietățile din [**`layers.txt`**](../layers.txt), un fișier TSV *(tab‑separated values)* cu 6 coloane cu următorul format:
+* **`DefaultLayers.jsx`** creează un set de straturi, preluându‑le proprietățile din [**`layers.txt`**](../layers.txt), un fișier TSV *(tab‑separated values)* cu 6 coloane formatat în genul următor:
 
   Nume | Culoare | Vizibil | Printabil | Ordine | Variante
   :- | :-: | :-: | :-: | :-: | :-
@@ -138,10 +138,11 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Ordine**: `top` sau `bottom` (deasupra sau sub straturile existente) \
   > **Variante**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)
 
-  **Note:** Prima linie (capul de tabel) și liniile care încep cu `#` sunt ignorate. \
-  **`layers.xlsx`** poate fi folosit pentru generarea fișierului TSV.
+  <p>Prima linie (capul de tabel) și liniile care încep cu <code>&num;</code> sunt ignorate. <br>Dacă salvați o versiune a fișierului în directorul curent, acesta va avea prioritate față de cel standard.</p>
 
-* **`DefaultSwatches.jsx`** creează un set de culori definite în [**`swatches.txt`**](../swatches.txt), un fișier TSV cu 3 coloane cu următorul format:
+  **Note:** **`layers.xlsx`** poate fi folosit pentru generarea fișierului TSV.
+
+* **`DefaultSwatches.jsx`** creează un set de culori definite în [**`swatches.txt`**](../swatches.txt), un fișier TSV cu 3 coloane formatat în genul următor:
 
   Name | Model | Values
   :- | :-: | :-
@@ -153,15 +154,19 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Model**: tipul culorii: `process` sau `spot` \
   > **Values**: o listă de 3 (RGB) sau 4 (CMYK) valori
 
+  <p>Prima linie (capul de tabel) și liniile care încep cu <code>&num;</code> sunt ignorate. <br>Dacă salvați o versiune a fișierului în directorul curent, acesta va avea prioritate față de cel standard.</p>
+
 * **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, le redenumește după formula `C= M= Y= K=`, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
-* **`ReplaceFonts.jsx`** înlocuiește fonturi utilizând o listă de substituție, [**`fonts.txt`**](../fonts.txt), un fișier TSV cu 4 coloane cu următorul format:
+* **`ReplaceFonts.jsx`** înlocuiește fonturi utilizând o listă de substituție, [**`fonts.txt`**](../fonts.txt), un fișier TSV cu 4 coloane formatat în genul următor:
 
   Font vechi | Stil | Font nou | Stil
   :- | :- | :- | :-
   Arial | Regular | Helvetica Neue | Regular
   Arial | Bold | Helvetica Neue | Bold
   ... |
+
+  <p>Prima linie (capul de tabel) și liniile care încep cu <code>&num;</code> sunt ignorate. <br>Dacă salvați o versiune a fișierului în directorul curent, acesta va avea prioritate față de cel standard.</p>
 
   **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
 
@@ -262,4 +267,4 @@ Misc | | | | | |
 Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)). \
 Raportați o [problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați dificultăți sau aveți sugestii.
 
-README-ro.md • 2 decembrie 2020
+README-ro.md • 6 decembrie 2020

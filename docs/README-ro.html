@@ -295,7 +295,7 @@ line-height: 1.6;
 </blockquote>
 </li>
 <li>
-<p><strong><code>DefaultLayers.jsx</code></strong> creează un set de straturi, preluându‑le proprietățile din <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>, un fișier TSV <em>(tab-separated values)</em> cu 6 coloane cu următorul format:</p>
+<p><strong><code>DefaultLayers.jsx</code></strong> creează un set de straturi, preluându‑le proprietățile din <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>, un fișier TSV <em>(tab-separated values)</em> cu 6 coloane formatat în genul următor:</p>
 <table>
 <thead>
 <tr>
@@ -342,11 +342,11 @@ line-height: 1.6;
 <strong>Ordine</strong>: <code>top</code> sau <code>bottom</code> (deasupra sau sub straturile existente) <br>
 <strong>Variante</strong>: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)</p>
 </blockquote>
-<p><strong>Note:</strong> Prima linie (capul de tabel) și liniile care încep cu <code>&num;</code> sunt ignorate. <br>
-<strong><code>layers.xlsx</code></strong> poate fi folosit pentru generarea fișierului TSV.</p>
+<p>Prima linie (capul de tabel) și liniile care încep cu <code>&num;</code> sunt ignorate. <br>Dacă salvați o versiune a fișierului în directorul curent, acesta va avea prioritate față de cel standard.</p>
+<p><strong>Note:</strong> <strong><code>layers.xlsx</code></strong> poate fi folosit pentru generarea fișierului TSV.</p>
 </li>
 <li>
-<p><strong><code>DefaultSwatches.jsx</code></strong> creează un set de culori definite în <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>, un fișier TSV cu 3 coloane cu următorul format:</p>
+<p><strong><code>DefaultSwatches.jsx</code></strong> creează un set de culori definite în <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>, un fișier TSV cu 3 coloane formatat în genul următor:</p>
 <table>
 <thead>
 <tr>
@@ -378,12 +378,13 @@ line-height: 1.6;
 <strong>Model</strong>: tipul culorii: <code>process</code> sau <code>spot</code> <br>
 <strong>Values</strong>: o listă de 3 (RGB) sau 4 (CMYK) valori</p>
 </blockquote>
+<p>Prima linie (capul de tabel) și liniile care încep cu <code>&num;</code> sunt ignorate. <br>Dacă salvați o versiune a fișierului în directorul curent, acesta va avea prioritate față de cel standard.</p>
 </li>
 <li>
 <p><strong><code>CleanupSwatches.jsx</code></strong> convertește culorile RGB la CMYK, le redenumește după formula <code>C= M= Y= K=</code>, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> înlocuiește fonturi utilizând o listă de substituție, <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>, un fișier TSV cu 4 coloane cu următorul format:</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> înlocuiește fonturi utilizând o listă de substituție, <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>, un fișier TSV cu 4 coloane formatat în genul următor:</p>
 <table>
 <thead>
 <tr>
@@ -414,6 +415,7 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
+<p>Prima linie (capul de tabel) și liniile care încep cu <code>&num;</code> sunt ignorate. <br>Dacă salvați o versiune a fișierului în directorul curent, acesta va avea prioritate față de cel standard.</p>
 <p><strong>Notă:</strong> Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy‑paste.</p>
 </li>
 <li>
@@ -613,7 +615,7 @@ line-height: 1.6;
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington și alții. -->
 <p>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>). <br>
 Raportați o <a href="https://github.com/pchiorean/Indentz/issues">problemă</a> pe Github dacă întâmpinați dificultăți sau aveți sugestii.</p>
-<p>README-ro.md • 2 decembrie 2020</p>
+<p>README-ro.md • 6 decembrie 2020</p>
 
 </body>
 </html>

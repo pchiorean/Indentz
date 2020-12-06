@@ -123,7 +123,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefaultLayers.jsx`** adds a set of layers, reading their properties from [**`layers.txt`**](../layers.txt), a 6‑column TSV *(tab‑separated values)* file with the following format:
+* **`DefaultLayers.jsx`** adds a set of layers, reading their properties from [**`layers.txt`**](../layers.txt), a 6‑column TSV *(tab‑separated values)* file formatted as follows:
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
@@ -138,10 +138,12 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Order**: `top` or `bottom` (above or below existing layers) \
   > **Variants**: a list of layers that will be merged with the base layer (case insensitive)
 
-  **Note:** The first line (the header) and lines beginning with `#` are ignored. \
-  **`layers.xlsx`** can be used to generate the TSV file.
+  The first line (the header) and lines beginning with `#` are ignored. \
+  If you save a version of the file to the current directory, it will take precedence over the standard one.
 
-* **`DefaultSwatches.jsx`** adds a set of swatches defined in [**`swatches.txt`**](../swatches.txt), a 3‑column TSV file with the following format:
+  **Note:** **`layers.xlsx`** can be used to generate the TSV file.
+
+* **`DefaultSwatches.jsx`** adds a set of swatches defined in [**`swatches.txt`**](../swatches.txt), a 3‑column TSV file formatted as follows:
 
   Name | Model | Values
   :- | :-: | :-
@@ -153,15 +155,21 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Model**: color model: `process` or `spot` \
   > **Values**: a list of 3 (RGB) or 4 (CMYK) color values
 
+  The first line (the header) and lines beginning with `#` are ignored. \
+  If you save a version of the file to the current directory, it will take precedence over the standard one.
+
 * **`CleanupSwatches.jsx`** converts process RGB swatches to CMYK, renames them to `C= M= Y= K=` form, removes duplicates and deletes unused. Spot colors are not changed.
 
-* **`ReplaceFonts.jsx`** replaces fonts from a substitution list, [**`fonts.txt`**](../fonts.txt), a 4‑column TSV file with the following format:
+* **`ReplaceFonts.jsx`** replaces fonts from a substitution list, [**`fonts.txt`**](../fonts.txt), a 4‑column TSV file formatted as follows:
 
   Old font | Style | New font | Style
   :- | :- | :- | :-
   Arial | Regular | Helvetica Neue | Regular
   Arial | Bold | Helvetica Neue | Bold
   ... |
+
+  The first line (the header) and lines beginning with `#` are ignored. \
+  If you save a version of the file to the current directory, it will take precedence over the standard one.
 
   **Note:** You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy‑pasting.
 
@@ -262,4 +270,4 @@ Misc | | | | | |
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)). \
 Open an [issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
 
-README.md • December 2, 2020
+README.md • December 6, 2020
