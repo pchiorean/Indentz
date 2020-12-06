@@ -1,6 +1,6 @@
 /*
-	Default layers v1.4.2
-	© November 2020, Paul Chiorean
+	Default layers v1.5.0
+	© December 2020, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
 	Name | Color | Visible | Printable | Order | Variants (header, ignored)
@@ -19,7 +19,8 @@
 String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
 if (!(doc = app.activeDocument)) exit();
-var infoFile = File(app.activeScript.path + "/layers.txt");
+var infoFile = File(app.activeDocument.filePath + "/layers.txt");
+if (!infoFile.exists) infoFile = File(app.activeScript.path + "/layers.txt");
 if (!infoFile.exists) infoFile = File(app.activeScript.path + "/../layers.txt");
 if (!infoFile.exists) { alert("File '" + infoFile.name + "' not found."); exit() }
 
