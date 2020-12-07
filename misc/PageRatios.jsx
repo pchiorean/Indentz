@@ -1,6 +1,6 @@
 /*
-	Page ratios v1.3.2
-	© November 2020, Paul Chiorean
+	Page ratios v1.4.0
+	© December 2020, Paul Chiorean
 	Calculates the ratio of each page and displays it in the upper left corner.
 */
 
@@ -49,6 +49,13 @@ function main() {
 		}
 		doc.align(infoFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
 		doc.align(infoFrame, AlignOptions.TOP_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		// Outline text
+		var infoOutlines = infoFrame.createOutlines(false);
+		infoFrame.contents = "";
+		infoFrame.contentType = ContentType.UNASSIGNED;
+		infoFrame.contentPlace(infoOutlines);
+		infoOutlines[0].remove();
+		infoFrame.fit(FitOptions.CENTER_CONTENT);
 	}
 	infoLayer.locked = true;
 }
