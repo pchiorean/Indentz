@@ -8,8 +8,8 @@ info	Cyan	FALSE	TRUE	top	info copy, ratio
 HW	Light Gray	FALSE	TRUE	top	hw logo, logo hw, wh, whw
 disclaimer	Gray	FALSE	TRUE	top	
 text and logos	Green	FALSE	TRUE	top	copy, text, textes, txt, type, typo
-EANs	Grid Green	FALSE	TRUE	top	barcode, barcodes, code
-products	Blue	FALSE	TRUE	top	product, tins
+codes	Grid Green	FALSE	TRUE	top	barcode, barcodes, code
+products	Blue	FALSE	TRUE	top	product, tins, packshots
 artwork	Light Blue	FALSE	TRUE	top	aw, elemente, layout, layouts
 bg	Red	FALSE	TRUE	bottom	background, hg, hintergrund
 .template	Black	FALSE	FALSE	bottom	template
