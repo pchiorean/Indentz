@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 1.8.0
+	Replace fonts 1.8.1
 	© December 2020, Paul Chiorean
 	Replaces fonts from a 4-column TSV file:
 
