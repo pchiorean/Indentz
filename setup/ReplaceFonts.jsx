@@ -28,9 +28,10 @@ function main() {
 	infoFile.open("r");
 	var fontList = [], line = 0;
 	while (!infoFile.eof) {
-		var infoLine = infoFile.readln().split("\t"); line++;
-		if (infoLine[0].toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-		if (infoLine[0] == "") continue; // Skip empty lines
+		var infoLine = infoFile.readln();
+		if (infoLine == "") continue; // Skip empty lines
+		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
+		infoLine = infoLine.split("\t"); line++;
 		if (!infoLine[0] || !infoLine[1] || !infoLine[2] || !infoLine[3]) {
 			alert ("Missing data in record " + line + "."); exit();
 		}
