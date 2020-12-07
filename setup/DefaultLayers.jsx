@@ -1,5 +1,5 @@
 /*
-	Default layers v1.6.0
+	Default layers v1.7.0
 	© December 2020, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -34,48 +34,56 @@ function main() {
 	var layerData = [], line = 0;
 	infoFile.open("r");
 	while (!infoFile.eof) {
-		var infoLine = infoFile.readln().split("\t"); line++;
-		if (infoLine[0].toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-		if (infoLine[0] == "") continue; // Skip empty lines
-		if (!infoLine[0] || !infoLine[1] || !infoLine[2] || !infoLine[3] || !infoLine[4]) {
-			alert ("Missing data in record " + line + "."); exit() }
-		layerData.push(infoLine);
+		var infoLine = infoFile.readln();
+		if (infoLine == "") continue; // Skip empty lines
+		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
+		infoLine = infoLine.split("\t"); line++;
+		if (!infoLine[0]) { alert ("Missing data in record " + line + "."); exit() }
+		var info = {
+			name: infoLine[0].trim(),
+			color: getUIColor(infoLine[1].trim()) || UIColors.LIGHT_BLUE,
+			isVisible: !!infoLine[2] ? (infoLine[2].toLowerCase() == "true") : true,
+			isPrintable: !!infoLine[3] ? (infoLine[3].toLowerCase() == "true") : true,
+			isBottom: !!infoLine[4] ? (infoLine[4].toLowerCase() == "bottom") : false,
+			variants: infoLine[5] || ""
+		}
+		layerData.push(info);
 	}
 	infoFile.close();
 
-	doc.layers.everyItem().properties = {
+	doc.layers.everyItem().properties = { // Prepare existing layers
 		locked: false,
-		layerColor: [215, 215, 215] // Mark existing layers light gray
-	} 
+		layerColor: UIColors.LIGHT_GRAY
+	}
 	var set_AL = doc.activeLayer; // Save active layer
 	// Top layers
 	for (var i = layerData.length - 1; i >= 1 ; i--) {
-		var name, color, isVisible, isPrintable, isBottom, variants = [], v, vv;
-		name = layerData[i][0].trim();
-		color = getUIColor(layerData[i][1].trim());
-		isVisible = (layerData[i][2].toLowerCase() == "true");
-		isPrintable = (layerData[i][3].toLowerCase() == "true");
-		isBottom = (layerData[i][4].toLowerCase() == "bottom");
-		if (isBottom) continue;
-		variants.push(name);
-		vv = layerData[i][5].split(",");
+		var variants = [], v, vv;
+		if (layerData[i].isBottom) continue;
+		variants.push(layerData[i].name);
+		vv = layerData[i].variants.split(",");
 		while (v = vv.shift()) variants.push(v.trim());
-		var layer = makeLayer(name, color, isVisible, isPrintable, variants);
+		var layer = makeLayer(
+			layerData[i].name,
+			layerData[i].color,
+			layerData[i].isVisible,
+			layerData[i].isPrintable,
+			variants);
 	}
 	// Bottom layers
 	for (var i = 1; i < layerData.length; i++) {
-		var name, color, isVisible, isPrintable, isBottom, variants = [], v, vv;
-		name = layerData[i][0].trim();
-		color = getUIColor(layerData[i][1].trim());
-		isVisible = (layerData[i][2].toLowerCase() == "true");
-		isPrintable = (layerData[i][3].toLowerCase() == "true");
-		isBottom = (layerData[i][4].toLowerCase() == "bottom");
-		if (!isBottom) continue;
-		variants.push(name);
-		vv = layerData[i][5].split(",");
+		var variants = [], v, vv;
+		if (!layerData[i].isBottom) continue;
+		variants.push(layerData[i].name);
+		vv = layerData[i].variants.split(",");
 		while (v = vv.shift()) variants.push(v.trim());
-		var layer = makeLayer(name, color, isVisible, isPrintable, variants);
-		if (isBottom) layer.move(LocationOptions.AT_END);
+		var layer = makeLayer(
+			layerData[i].name,
+			layerData[i].color,
+			layerData[i].isVisible,
+			layerData[i].isPrintable,
+			variants);
+		if (layerData[i].isBottom) layer.move(LocationOptions.AT_END);
 	}
 	doc.activeLayer = set_AL; // Restore active layer
 
@@ -123,7 +131,7 @@ function getUIColor(color) {
 	];
 	for (var i = 0; i < UICOLS[0].length; i++)
 		if (color.toLowerCase() == UICOLS[0][i].toLowerCase()) return UICOLS[1][i];
-	return UIColors.LIGHT_BLUE;
+	return false;
 }
 
 // FORWARD.Util functions, by Richard Harrington
