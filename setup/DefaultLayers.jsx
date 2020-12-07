@@ -1,5 +1,5 @@
 /*
-	Default layers v1.5.0
+	Default layers v1.6.0
 	© December 2020, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -19,6 +19,8 @@
 String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
 if (!(doc = app.activeDocument)) exit();
+if (!doc.saved) { alert("Document is not saved."); exit() }
+
 var infoFile = File(app.activeDocument.filePath + "/layers.txt");
 if (!infoFile.exists) infoFile = File(app.activeScript.path + "/layers.txt");
 if (!infoFile.exists) infoFile = File(app.activeScript.path + "/../layers.txt");

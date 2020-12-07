@@ -1,5 +1,5 @@
 /*
-	Default swatches v1.4.0
+	Default swatches v1.5.0
 	© December 2020, Paul Chiorean
 	Adds swatches from a 3-column TSV file:
 
@@ -16,6 +16,8 @@
 String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
 if (!(doc = app.activeDocument)) exit();
+if (!doc.saved) { alert("Document is not saved."); exit() }
+
 var infoFile = File(app.activeDocument.filePath + "/swatches.txt");
 if (!infoFile.exists) infoFile = File(app.activeScript.path + "/swatches.txt");
 if (!infoFile.exists) infoFile = File(app.activeScript.path + "/../swatches.txt");

@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 1.7.0
+	Replace fonts 1.8.0
 	© December 2020, Paul Chiorean
 	Replaces fonts from a 4-column TSV file:
 
@@ -13,6 +13,8 @@
 String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
 if (!(doc = app.activeDocument)) exit();
+if (!doc.saved) { alert("Document is not saved."); exit() }
+
 var infoFile = File(app.activeDocument.filePath + "/fonts.txt");
 if (!infoFile.exists) infoFile = File(app.activeScript.path + "/fonts.txt");
 if (!infoFile.exists) infoFile = File(app.activeScript.path + "/../fonts.txt");
