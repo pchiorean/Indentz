@@ -30,9 +30,9 @@ for (var i = 0; i < doc.spreads.length; i++) {
 	// var dFile = File(dPath + "/" + dName + sufx[0] + sufx[i + 1] + ".indd");
 	var inc = 0;
 	do { var dFile = File(dPath + "/" + dName + sufx[0] + sufx[i + 1]
-	+ (inc > 1 ? " copy " + inc : (inc == 0 ? "" : " copy"))
-	+ ".indd");
-	inc++;
+		+ (inc > 1 ? " copy " + inc : (inc == 0 ? "" : " copy"))
+		+ ".indd");
+		inc++;
 	} while (dFile.exists);
 	progressBar.update(i + 1, dFile.name);
 	doc.saveACopy(dFile);
