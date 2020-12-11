@@ -1,5 +1,5 @@
 /*
-	PagesToFiles v1.3.0
+	PagesToFiles v1.4.0
 	© December 2020, Paul Chiorean
 	Saves the pages of the active document in separate files.
 */
@@ -19,7 +19,7 @@ var sufx = GetSuffix();
 
 var set_UIL = app.scriptPreferences.userInteractionLevel;
 var count = 0;
-var progressBar = new ProgressBar(dName.length + 60);
+var progressBar = new ProgressBar(dName.length + 12);
 progressBar.reset(doc.spreads.length);
 for (var i = 0; i < doc.spreads.length; i++) {
 	// Filter out current spread
@@ -27,7 +27,6 @@ for (var i = 0; i < doc.spreads.length; i++) {
 	for (var j = 0; j < doc.spreads.length; j++) if (j != i) r.push(j);
 	// Disable user interaction and open a copy
 	if (sufx == fileSufx) dName = dName.replace(fileSufx, "");
-	// var dFile = File(dPath + "/" + dName + sufx[0] + sufx[i + 1] + ".indd");
 	var inc = 0;
 	do { var dFile = File(dPath + "/" + dName + sufx[0] + sufx[i + 1]
 		+ (inc > 1 ? " copy " + inc : (inc == 0 ? "" : " copy"))
@@ -73,8 +72,8 @@ function GetSuffix(sufx) {
 
 function ProgressBar(width) {
 	var w = new Window("palette", "PagesToFiles");
-	w.pb = w.add("progressbar", [12, 12, (width * 5), 24], 0, undefined);
-	w.st = w.add("statictext", [0, 0, (width * 5 - 20), 20], undefined, { truncate: "middle" });
+	w.pb = w.add("progressbar", [12, 12, ((width + 20) * 6.5), 24], 0, undefined);
+	w.st = w.add("statictext", [0, 0, ((width + 20) * 6.5 - 20), 20], undefined, { truncate: "middle" });
 	this.reset = function(max) {
 		w.pb.value = 0;
 		w.pb.maxvalue = max || 0;
@@ -83,7 +82,7 @@ function ProgressBar(width) {
 	}
 	this.update = function(val, file) {
 		w.pb.value = val;
-		w.st.text = "Saving '" + decodeURI(file) + "' (" + val + " of " + w.pb.maxvalue + ")";
+		w.st.text = "Saving: " + decodeURI(file) + " (" + val + " of " + w.pb.maxvalue + ")";
 		w.show(); w.update();
 	}
 	this.hide = function() { w.hide() }

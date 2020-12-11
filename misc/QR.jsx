@@ -1,5 +1,5 @@
 /*
-	QR code v2.3.1
+	QR code v2.4.0
 	© November 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -74,7 +74,7 @@ function main() {
 
 function BatchQR() { // Batch process 'QR.txt'
 	infoFile.open("r");
-	var line = 0, fn = [], qr = [], width = 100;
+	var line = 0, fn = [], qr = [], width = 1;
 	var header = infoFile.readln().split("\t");
 	while (!infoFile.eof) {
 		var infoLine = infoFile.readln().split("\t");
@@ -87,7 +87,7 @@ function BatchQR() { // Batch process 'QR.txt'
 		if (!infoLine[0].match(/\.indd$/ig)) infoLine[0] += '.indd';
 		fn[line-1] = infoLine[0].match(/_QR\.indd$/ig) ? infoLine[0] : infoLine[0].replace(/\.indd$/ig, '_QR.indd');
 		qr[line-1] = infoLine[1].trim();
-		width = (qr[line-1] > width) ? qr[line-1] : width;
+		width = Math.max(width, qr[line-1].length);
 	}
 	infoFile.close(); //doc.close();
 	if (line < 1) { alert("Not enough records."); exit() }
@@ -281,8 +281,8 @@ function MakeIDLayer(doc) {
 
 function ProgressBar(width) {
 	var w = new Window("palette", "Batch Resize: " + decodeURI(infoFile.name));
-	w.pb = w.add("progressbar", [12, 12, (width * 5), 24], 0, undefined);
-	w.st = w.add("statictext", [0, 0, (width * 5 - 20), 20], undefined, { truncate: "middle" });
+	w.pb = w.add("progressbar", [12, 12, ((width + 25) * 6.5), 24], 0, undefined);
+	w.st = w.add("statictext", [0, 0, ((width + 25) * 6.5 - 20), 20], undefined, { truncate: "middle" });
 	this.reset = function(max) {
 		w.pb.value = 0;
 		w.pb.maxvalue = max || 0;
@@ -291,7 +291,7 @@ function ProgressBar(width) {
 	}
 	this.update = function(val, code) {
 		w.pb.value = val;
-		w.st.text = "Processing '" + code + "' (" + val + " of " + w.pb.maxvalue + ")";
+		w.st.text = "Processing: " + code + " (" + val + " of " + w.pb.maxvalue + ")";
 		w.show(); w.update();
 	}
 	this.hide = function() { w.hide() }
