@@ -240,7 +240,7 @@ Setup | | | |
 
 * **`ShowProperties.jsx`** shows properties and methods of a selected object (useful for debugging).
 
-* **`TileAll.jsx`** invokes **Window > Arrange > Tile All Vertically** or **Tile All Horizontally**, depending on the current page orientation.
+* **`TileAll.jsx`** invokes **Window > Arrange > Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
 
 * **`ZoomToSelection.jsx`** resembles **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
@@ -270,4 +270,4 @@ Open an [issue](https://github.com/pchiorean/Indentz/issues) on Github if you en
 
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
 
-README.md • December 8, 2020
+README.md • December 13, 2020
