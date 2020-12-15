@@ -1,5 +1,5 @@
 /*
-	Default swatches v1.7.0
+	Default swatches v1.8.0
 	© December 2020, Paul Chiorean
 	Adds swatches from a 3-column TSV file:
 
@@ -16,42 +16,49 @@
 String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
 if (!(doc = app.activeDocument)) exit();
-if (doc.saved) var infoFile = File(app.activeDocument.filePath + "/swatches.txt")
-	else var infoFile = File(app.activeScript.path + "/swatches.txt");
-if (!infoFile.exists) infoFile = File(app.activeScript.path + "/swatches.txt");
-if (!infoFile.exists) infoFile = File(app.activeScript.path + "/../swatches.txt");
-if (!infoFile.exists) { alert("File '" + infoFile.name + "' not found."); exit() }
+if (!(infoFile = TSVFile("swatches.txt"))) { alert("File 'swatches.txt' not found."); exit() }
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Default swatches");
 
 
 function main() {
-	var colorData = [], line = 0;
+	var infoLine, header, colorData = [];
+	var line = 0, flg_H = false;
+	var errfn = infoFile.fullName + "\n";
 	infoFile.open("r");
 	while (!infoFile.eof) {
-		var infoLine = infoFile.readln();
+		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
-		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip '#' commented lines
-		infoLine = infoLine.split("\t"); line++;
-		if (!infoLine[0] || !infoLine[2]) {
-			alert ("Missing data in record " + line + "."); exit() }
-		var info = {
+		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
+		infoLine = infoLine.split("\t");
+		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
+		if (!infoLine[0]) {
+			alert(errfn + "Missing swatch name in line " + line + "."); exit() }
+		colorData.push({
 			name: infoLine[0].trim(),
 			model: GetColorModel(infoLine[1].trim()),
-			values: GetColorValues(infoLine[2])
-		}
-		colorData.push(info);
+			values: GetColorValues(infoLine[2].split(","))
+		});
 	}
-	infoFile.close();
+	infoFile.close(); infoLine = "";
+	if (colorData.length < 1) { alert(errfn + "Not enough records."); exit() }
 
-	for (var i = 1; i < colorData.length; i++) {
+	for (var i = 0; i < colorData.length; i++) {
 		ColorAdd(doc,
 			colorData[i].name,
 			colorData[i].model,
 			colorData[i].values
 		);
 	}
+}
+
+function TSVFile(fn) {
+	var file = "";
+	if (doc.saved && (file = File(app.activeDocument.filePath + "/" + fn)) && file.exists) return file;
+	if ((file = File(Folder.desktop + "/" + fn)) && file.exists) return file;
+	if ((file = File(app.activeScript.path + "/" + fn)) && file.exists) return file;
+	if ((file = File(app.activeScript.path + "/../" + fn)) && file.exists) return file;
 }
 
 function GetColorModel(color) {
@@ -65,9 +72,8 @@ function GetColorModel(color) {
 }
 
 function GetColorValues(array) {
-	var values = [], c, cc;
-	cc = array.split(",");
-	while (c = cc.shift()) values.push(Number(c.trim()));
+	var values = [], c;
+	while (c = array.shift()) values.push(Number(c.trim()));
 	return values;
 }
 

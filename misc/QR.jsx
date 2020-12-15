@@ -1,6 +1,6 @@
 /*
-	QR code v2.4.0
-	© November 2020, Paul Chiorean
+	QR code v2.5.0
+	© December 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
 	file with the the following format:
@@ -24,7 +24,8 @@ if (doc.saved) {
 	if (infoFile.exists) flg_batch = true;
 }
 
-app.doScript(main, ScriptLanguage.javascript, undefined, UndoModes.ENTIRE_SCRIPT, "QR code");
+app.doScript(main, ScriptLanguage.javascript, undefined,
+	UndoModes.ENTIRE_SCRIPT, "QR code");
 
 
 function main() {
@@ -73,29 +74,33 @@ function main() {
 }
 
 function BatchQR() { // Batch process 'QR.txt'
+	var infoLine, header, qrData = [];
+	var line = 0, flg_H = false, width = 1;
+	var errfn = infoFile.fullName + "\n";
 	infoFile.open("r");
-	var line = 0, fn = [], qr = [], width = 1;
-	var header = infoFile.readln().split("\t");
 	while (!infoFile.eof) {
-		var infoLine = infoFile.readln().split("\t");
-		if (infoLine[0].toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-		if (!infoLine[0] && !infoLine[1]) continue; // Skip empty lines
-		line++;
-		if (!infoLine[0]) { alert ("Missing " + header[0] + " in record " + line + "."); exit() }
-		if (!infoLine[1]) { alert ("Missing " + header[1] + " in record " + line + "."); exit() }
+		infoLine = infoFile.readln(); line++;
+		if (infoLine == "") continue; // Skip empty lines
+		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
+		infoLine = infoLine.split("\t");
+		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
+		if (!infoLine[0]) { alert(errfn + "Missing filename in line " + line + "."); exit() }
+		if (!infoLine[1]) { alert(errfn + "Missing code in line " + line + "."); exit() }
 		infoLine[0] = infoLine[0].trim();
-		if (!infoLine[0].match(/\.indd$/ig)) infoLine[0] += '.indd';
-		fn[line-1] = infoLine[0].match(/_QR\.indd$/ig) ? infoLine[0] : infoLine[0].replace(/\.indd$/ig, '_QR.indd');
-		qr[line-1] = infoLine[1].trim();
-		width = Math.max(width, qr[line-1].length);
+		if (!infoLine[0].match(/\.indd$/ig)) infoLine[0] += ".indd";
+		if (!infoLine[0].match(/_QR\.indd$/ig)) infoLine[0] = infoLine[0].replace(/\.indd$/ig, "_QR.indd");
+		infoLine[1] = infoLine[1].trim().toUpperCase()
+		width = Math.max(width, infoLine[1].length);
+		qrData.push({ fn: infoLine[0], qr: infoLine[1] });
 	}
-	infoFile.close(); //doc.close();
-	if (line < 1) { alert("Not enough records."); exit() }
-	var progressBar = new ProgressBar(width); progressBar.reset(line);
-	for (var i = 0, err = 0; i < line; i++) {
-		var QRLabel = qr[i];
-		progressBar.update(i + 1, QRLabel.replace(/[|\u000A\u200B]/g, ""));
-		if (QROnFile(QRLabel, fn[i])) err++; // Count files with errors (text overflow)
+	infoFile.close(); infoLine = "";
+	if (qrData.length < 1) { alert(errfn + "Not enough records."); exit() }
+
+	var progressBar = new ProgressBar(width);
+	progressBar.reset(qrData.length);
+	for (var i = 0, err = 0; i < qrData.length; i++) {
+		progressBar.update(i + 1, qrData[i].fn);
+		if (QROnFile(qrData[i].qr, qrData[i].fn)) err++; // Count files with errors (text overflow)
 	}
 	progressBar.close();
 	if (err != 0) {
@@ -106,7 +111,6 @@ function BatchQR() { // Batch process 'QR.txt'
 
 function QROnPage(QRLabel, flg_white) {
 	var flg_manual = /\|/g.test(QRLabel); // If '|' found, set manual LB flag
-	QRLabel = QRLabel.toUpperCase();
 	// Add SpecialCharacters.DISCRETIONARY_LINE_BREAK after '_'
 	QRLabel = QRLabel.replace(/([A-Za-z0-9)-]{3,})_([A-Za-z0-9(]{3,})/g, "$1_\u200B$2");
 	// Replace '|' with SpecialCharacters.FORCED_LINE_BREAK
@@ -140,7 +144,7 @@ function QROnPage(QRLabel, flg_white) {
 			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 			useNoLineBreaksForAutoSizing: (flg_manual || (label.lines.length == 1 && label.lines[0].characters.length <= 18)),
-			insetSpacing: [UnitValue("3mm").as('pt'), UnitValue("2.5mm").as('pt'), UnitValue("1mm").as('pt'), 0]
+			insetSpacing: [UnitValue("3mm").as("pt"), UnitValue("2.5mm").as("pt"), UnitValue("1mm").as("pt"), 0]
 		}
 		label.textFramePreferences.properties = {
 			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
@@ -194,7 +198,6 @@ function QROnPage(QRLabel, flg_white) {
 }
 
 function QROnFile(QRLabel, fn) {
-	QRLabel = QRLabel.toUpperCase();
 	// Add SpecialCharacters.DISCRETIONARY_LINE_BREAK after '_'
 	QRLabel = QRLabel.replace(/([A-Za-z0-9)-]{3,})_([A-Za-z0-9(]{3,})/g, "$1_\u200B$2");
 	// Replace '|' with SpecialCharacters.FORCED_LINE_BREAK
@@ -227,7 +230,7 @@ function QROnFile(QRLabel, fn) {
 		firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 		autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
 		autoSizingType: AutoSizingTypeEnum.HEIGHT_ONLY,
-		insetSpacing: [UnitValue("1mm").as('pt'), UnitValue("1mm").as('pt'), 0, UnitValue("0.5mm").as('pt')]
+		insetSpacing: [UnitValue("1mm").as("pt"), UnitValue("1mm").as("pt"), 0, UnitValue("0.5mm").as("pt")]
 	}
 	var code = page.rectangles.add({ itemLayer: idLayer.name, label: "QR" });
 	code.absoluteRotationAngle = -90;
@@ -280,7 +283,8 @@ function MakeIDLayer(doc) {
 }
 
 function ProgressBar(width) {
-	var w = new Window("palette", "Batch Resize: " + decodeURI(infoFile.name));
+	width = Math.max(width, 50);
+	var w = new Window("palette", "Batch QR");
 	w.pb = w.add("progressbar", [12, 12, ((width + 25) * 6.5), 24], 0, undefined);
 	w.st = w.add("statictext", [0, 0, ((width + 25) * 6.5 - 20), 20], undefined, { truncate: "middle" });
 	this.reset = function(max) {
@@ -289,9 +293,9 @@ function ProgressBar(width) {
 		w.pb.visible = !!max;
 		w.show();
 	}
-	this.update = function(val, code) {
+	this.update = function(val, file) {
 		w.pb.value = val;
-		w.st.text = "Processing: " + code + " (" + val + " of " + w.pb.maxvalue + ")";
+		w.st.text = "Saving: " + decodeURI(file) + " (" + val + " of " + w.pb.maxvalue + ")";
 		w.show(); w.update();
 	}
 	this.hide = function() { w.hide() }

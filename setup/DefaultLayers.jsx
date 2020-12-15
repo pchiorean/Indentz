@@ -1,5 +1,5 @@
 /*
-	Default layers v1.8.0
+	Default layers v1.9.0
 	© December 2020, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -19,36 +19,37 @@
 String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
 if (!(doc = app.activeDocument)) exit();
-if (doc.saved) var infoFile = File(app.activeDocument.filePath + "/layers.txt")
-	else var infoFile = File(app.activeScript.path + "/layers.txt");
-if (!infoFile.exists) infoFile = File(app.activeScript.path + "/layers.txt");
-if (!infoFile.exists) infoFile = File(app.activeScript.path + "/../layers.txt");
-if (!infoFile.exists) { alert("File '" + infoFile.name + "' not found."); exit() }
+if (!(infoFile = TSVFile("layers.txt"))) { alert("File 'layers.txt' not found."); exit() }
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Default layers");
 
 
 function main() {
-	var layerData = [], line = 0;
+	var infoLine, header, layerData = [];
+	var line = 0, flg_H = false;
+	var errfn = infoFile.fullName + "\n";
 	infoFile.open("r");
 	while (!infoFile.eof) {
-		var infoLine = infoFile.readln();
+		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-		infoLine = infoLine.split("\t"); line++;
-		if (!infoLine[0]) { alert ("Missing data in record " + line + "."); exit() }
-		var info = {
-			name: infoLine[0].trim(),
-			color: getUIColor(infoLine[1].trim()) || UIColors.LIGHT_BLUE,
+		infoLine = infoLine.split("\t");
+		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
+		infoLine[0] = infoLine[0].trim();
+		if (!infoLine[0]) {
+			alert(errfn + "Missing layer name in line " + line + "."); exit() }
+		layerData.push({
+			name: infoLine[0],
+			color: !!infoLine[1] ? GetUIColor(infoLine[1].trim()) : UIColors.LIGHT_BLUE,
 			isVisible: !!infoLine[2] ? (infoLine[2].toLowerCase() == "true") : true,
 			isPrintable: !!infoLine[3] ? (infoLine[3].toLowerCase() == "true") : true,
 			isBottom: !!infoLine[4] ? (infoLine[4].toLowerCase() == "bottom") : false,
-			variants: infoLine[5] || ""
-		}
-		layerData.push(info);
+			variants: !!infoLine[5] ? GetVariants(infoLine[0], infoLine[5].split(",")) : ""
+		});
 	}
-	infoFile.close();
+	infoFile.close(); infoLine = "";
+	if (layerData.length < 1) { alert(errfn + "Not enough records."); exit() }
 
 	doc.layers.everyItem().properties = { // Prepare existing layers
 		locked: false,
@@ -56,42 +57,33 @@ function main() {
 	}
 	var set_AL = doc.activeLayer; // Save active layer
 	// Top layers
-	for (var i = layerData.length - 1; i >= 1 ; i--) {
-		var variants = [], v, vv;
+	for (var i = layerData.length - 1; i >= 0 ; i--) {
 		if (layerData[i].isBottom) continue;
-		variants.push(layerData[i].name);
-		vv = layerData[i].variants.split(",");
-		while (v = vv.shift()) variants.push(v.trim());
-		var layer = makeLayer(
+		MakeLayer(
 			layerData[i].name,
 			layerData[i].color,
 			layerData[i].isVisible,
 			layerData[i].isPrintable,
-			variants);
+			layerData[i].variants);
 	}
 	// Bottom layers
-	for (var i = 1; i < layerData.length; i++) {
-		var variants = [], v, vv;
+	for (var i = 0; i < layerData.length; i++) {
 		if (!layerData[i].isBottom) continue;
-		variants.push(layerData[i].name);
-		vv = layerData[i].variants.split(",");
-		while (v = vv.shift()) variants.push(v.trim());
-		var layer = makeLayer(
+		MakeLayer(
 			layerData[i].name,
 			layerData[i].color,
 			layerData[i].isVisible,
 			layerData[i].isPrintable,
-			variants);
-		if (layerData[i].isBottom) layer.move(LocationOptions.AT_END);
+			layerData[i].variants)
+		.move(LocationOptions.AT_END);
 	}
 	doc.activeLayer = set_AL; // Restore active layer
 
-	function makeLayer(name, color, isVisible, isPrintable, variants) {
+	function MakeLayer(name, color, isVisible, isPrintable, variants) {
 		doc.activeLayer = doc.layers.firstItem();
 		var layer = doc.layers.item(name);
 		if (layer.isValid) layer.properties = {
 			layerColor: color,
-			// visible:= isVisible,
 			printable: isPrintable }
 		else {
 			doc.layers.add({
@@ -112,7 +104,15 @@ function main() {
 	}
 }
 
-function getUIColor(color) {
+function TSVFile(fn) {
+	var file = "";
+	if (doc.saved && (file = File(app.activeDocument.filePath + "/" + fn)) && file.exists) return file;
+	if ((file = File(Folder.desktop + "/" + fn)) && file.exists) return file;
+	if ((file = File(app.activeScript.path + "/" + fn)) && file.exists) return file;
+	if ((file = File(app.activeScript.path + "/../" + fn)) && file.exists) return file;
+}
+
+function GetUIColor(color) {
 	const UICOLS = [
 		["Blue", "Black", "Brick Red", "Brown", "Burgundy", "Charcoal", "Cute Teal", "Cyan",
 		"Dark Blue", "Dark Green", "Fiesta", "Gold", "Grass Green", "Gray", "Green", "Grid Blue",
@@ -130,7 +130,14 @@ function getUIColor(color) {
 	];
 	for (var i = 0; i < UICOLS[0].length; i++)
 		if (color.toLowerCase() == UICOLS[0][i].toLowerCase()) return UICOLS[1][i];
-	return false;
+	return UIColors.LIGHT_BLUE;
+}
+
+function GetVariants(base, variants) {
+	var v, vv = [];
+	vv.push(base);
+	while (v = variants.shift()) vv.push(v.trim());
+	return vv;
 }
 
 // FORWARD.Util functions, by Richard Harrington
