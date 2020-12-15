@@ -1,5 +1,5 @@
 /*
-	PagesToFiles v1.4.0
+	PagesToFiles v1.4.1
 	© December 2020, Paul Chiorean
 	Saves the pages of the active document in separate files.
 */
@@ -7,6 +7,8 @@
 if (!(doc = app.activeDocument)) exit();
 if (!doc.saved) { alert("Document is not saved."); exit() }
 if (doc.spreads.length == 1) { alert("Document has only one spread."); exit() }
+
+var set_UIL = app.scriptPreferences.userInteractionLevel;
 
 var dPath = doc.filePath;
 var dName = doc.name.substr(0, doc.name.lastIndexOf("."));
@@ -17,8 +19,6 @@ if (/\d\s*x\s*\d/i.test(fileSufx)) fileSufx = null; // Exclude '0x0' suffixes
 // User provided suffix
 var sufx = GetSuffix();
 
-var set_UIL = app.scriptPreferences.userInteractionLevel;
-var count = 0;
 var progressBar = new ProgressBar(dName.length + 12);
 progressBar.reset(doc.spreads.length);
 for (var i = 0; i < doc.spreads.length; i++) {
@@ -41,7 +41,6 @@ for (var i = 0; i < doc.spreads.length; i++) {
 	// Remove other spreads from copy
 	for (var j = r.length - 1; j >= 0; j--) dCopy.spreads[r[j]].remove();
 	dCopy.save(dFile); dCopy.close();
-	count++;
 }
 progressBar.close();
 
@@ -71,7 +70,8 @@ function GetSuffix(sufx) {
 }
 
 function ProgressBar(width) {
-	var w = new Window("palette", "PagesToFiles");
+	width = Math.max(width, 50);
+	var w = new Window("palette", "Pages to Files");
 	w.pb = w.add("progressbar", [12, 12, ((width + 20) * 6.5), 24], 0, undefined);
 	w.st = w.add("statictext", [0, 0, ((width + 20) * 6.5 - 20), 20], undefined, { truncate: "middle" });
 	this.reset = function(max) {
