@@ -295,7 +295,7 @@ line-height: 1.6;
 </blockquote>
 </li>
 <li>
-<p><strong><code>DefaultLayers.jsx</code></strong> adds a set of layers, reading their properties from <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>, a 6‑column TSV <em>(tab-separated values)</em> file formatted as follows:</p>
+<p><strong><code>DefaultLayers.jsx</code></strong> adds a set of layers, reading their properties from <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>, a 6‑column TSV <em>(tab-separated values)</em> file formatted as follows (empty lines and lines beginning with <code>&num;</code> are ignored):</p>
 <table>
 <thead>
 <tr>
@@ -342,11 +342,11 @@ line-height: 1.6;
 <strong>Order</strong>: <code>top</code> or <code>bottom</code> (above or below existing layers) <br>
 <strong>Variants</strong>: a list of layers that will be merged with the base layer (case insensitive)</p>
 </blockquote>
-<p>The first line (the header) and lines beginning with <code>&num;</code> are ignored. <br>If you save a version of the file to the current directory, it will take precedence over the standard one.</p>
+<p>The file is searched in several places: in the current directory, on the desktop, and next to the script.</p>
 <p><strong>Note:</strong> <strong><code>layers.xlsx</code></strong> can be used to generate the TSV file.</p>
 </li>
 <li>
-<p><strong><code>DefaultSwatches.jsx</code></strong> adds a set of swatches defined in <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>, a 3‑column TSV file formatted as follows:</p>
+<p><strong><code>DefaultSwatches.jsx</code></strong> adds a set of swatches defined in <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>, a 3‑column TSV file formatted as follows (empty lines and lines beginning with <code>&num;</code> are ignored):</p>
 <table>
 <thead>
 <tr>
@@ -378,13 +378,13 @@ line-height: 1.6;
 <strong>Model</strong>: color model: <code>process</code> or <code>spot</code> <br>
 <strong>Values</strong>: a list of 3 (RGB) or 4 (CMYK) color values</p>
 </blockquote>
-<p>The first line (the header) and lines beginning with <code>&num;</code> are ignored. <br>If you save a version of the file to the current directory, it will take precedence over the standard one.</p>
+<p>The file is searched in several places: in the current directory, on the desktop, and next to the script.</p>
 </li>
 <li>
 <p><strong><code>CleanupSwatches.jsx</code></strong> converts process RGB swatches to CMYK, renames them to <code>C= M= Y= K=</code> form, removes duplicates and deletes unused. Spot colors are not changed.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> replaces fonts from a substitution list, <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>, a 4‑column TSV file formatted as follows:</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> replaces fonts from a substitution list, <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>, a 4‑column TSV file formatted as follows (empty lines and lines beginning with <code>&num;</code> are ignored):</p>
 <table>
 <thead>
 <tr>
@@ -415,7 +415,7 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-<p>The first line (the header) and lines beginning with <code>&num;</code> are ignored. <br>If you save a version of the file to the current directory, it will take precedence over the standard one.</p>
+<p>The file is searched in several places: in the current directory, on the desktop, and next to the script.</p>
 <p><strong>Note:</strong> You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Misc</strong> to get a tab delimited list of fonts for copy‑pasting.</p>
 </li>
 <li>
@@ -525,7 +525,7 @@ line-height: 1.6;
 <p><strong>On file</strong> saves it in a file with the name of the active document and <code>_QR</code> added to the end.</p>
 </li>
 <li>
-<p><strong>Batch</strong> creates multiple files from a 2‑column TSV list named <strong><code>QR.txt</code></strong>, if found in the active document folder:</p>
+<p><strong>Batch</strong> creates multiple files from a 2‑column TSV list named <strong><code>QR.txt</code></strong>, if it's found in the current directory (empty lines and lines beginning with <code>&num;</code> are ignored):</p>
 <table>
 <thead>
 <tr>
@@ -612,10 +612,9 @@ line-height: 1.6;
 <li>Copy files to this folder.</li>
 </ol>
 <h2 id="license">License</h2>
-<p>© 2020 Paul Chiorean &lt;jpeg AT basement.ro&gt;. The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>). <br>
-Open an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> on Github if you encounter problems or have any suggestions.</p>
+<p>© 2020 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <!-- Some of the code is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Richard Harrington and others. -->
-<p>README.md • December 13, 2020</p>
+<p>README.md • December 16, 2020</p>
 
 </body>
 </html>

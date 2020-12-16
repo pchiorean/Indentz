@@ -123,7 +123,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefaultLayers.jsx`** creează un set de straturi, preluându‑le proprietățile din [**`layers.txt`**](../layers.txt), un fișier TSV *(tab‑separated values)* cu 6 coloane formatat în genul următor:
+* **`DefaultLayers.jsx`** creează un set de straturi, preluându‑le proprietățile din [**`layers.txt`**](../layers.txt), un fișier TSV *(tab‑separated values)* cu 6 coloane formatat în genul următor (liniile goale și liniile care încep cu `#` sunt ignorate):
 
   Nume | Culoare | Vizibil | Printabil | Ordine | Variante
   :- | :-: | :-: | :-: | :-: | :-
@@ -138,11 +138,11 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Ordine**: `top` sau `bottom` (deasupra sau sub straturile existente) \
   > **Variante**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)
 
-  <p>Prima linie (capul de tabel) și liniile care încep cu <code>&num;</code> sunt ignorate. <br>Dacă salvați o versiune a fișierului în directorul curent, acesta va avea prioritate față de cel standard.</p>
+  Fișierul este căutat în câteva locuri: în folderul curent, pe desktop și lângă script.
 
   **Note:** **`layers.xlsx`** poate fi folosit pentru generarea fișierului TSV.
 
-* **`DefaultSwatches.jsx`** creează un set de culori definite în [**`swatches.txt`**](../swatches.txt), un fișier TSV cu 3 coloane formatat în genul următor:
+* **`DefaultSwatches.jsx`** creează un set de culori definite în [**`swatches.txt`**](../swatches.txt), un fișier TSV cu 3 coloane formatat în genul următor (liniile goale și liniile care încep cu `#` sunt ignorate):
 
   Name | Model | Values
   :- | :-: | :-
@@ -154,11 +154,11 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Model**: tipul culorii: `process` sau `spot` \
   > **Values**: o listă de 3 (RGB) sau 4 (CMYK) valori
 
-  <p>Prima linie (capul de tabel) și liniile care încep cu <code>&num;</code> sunt ignorate. <br>Dacă salvați o versiune a fișierului în directorul curent, acesta va avea prioritate față de cel standard.</p>
+  Fișierul este căutat în câteva locuri: în folderul curent, pe desktop și lângă script.
 
 * **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, le redenumește după formula `C= M= Y= K=`, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
-* **`ReplaceFonts.jsx`** înlocuiește fonturi utilizând o listă de substituție, [**`fonts.txt`**](../fonts.txt), un fișier TSV cu 4 coloane formatat în genul următor:
+* **`ReplaceFonts.jsx`** înlocuiește fonturi utilizând o listă de substituție, [**`fonts.txt`**](../fonts.txt), un fișier TSV cu 4 coloane formatat în genul următor (liniile goale și liniile care încep cu `#` sunt ignorate):
 
   Font vechi | Stil | Font nou | Stil
   :- | :- | :- | :-
@@ -166,7 +166,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  <p>Prima linie (capul de tabel) și liniile care încep cu <code>&num;</code> sunt ignorate. <br>Dacă salvați o versiune a fișierului în directorul curent, acesta va avea prioritate față de cel standard.</p>
+  Fișierul este căutat în câteva locuri: în folderul curent, pe desktop și lângă script.
 
   **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
 
@@ -221,7 +221,7 @@ Setup | | | |
 
   * **On file** îl salvează într‑un fișier cu numele documentului activ și `_QR` adăugat la coadă.
 
-  * **Batch** creează mai multe fișiere dintr‑un document TSV cu 2 coloane numit **`QR.txt`**, dacă e găsit în folderul documentului activ:
+  * **Batch** creează mai multe fișiere dintr‑un document TSV cu 2 coloane numit **`QR.txt`**, dacă e găsit în folderul curent (liniile goale și liniile care încep cu `#` sunt ignorate):
 
     Filename | Code
     :- | :-
@@ -262,9 +262,9 @@ Misc | | | | | |
 
 ## Licență
 
-© 2020 Paul Chiorean \<jpeg AT basement.ro\>. Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)). \
-Raportați o [problemă](https://github.com/pchiorean/Indentz/issues) pe Github dacă întâmpinați dificultăți sau aveți sugestii.
+© 2020 Paul Chiorean \<jpeg AT basement.ro\>. \
+Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
 
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Richard Harrington și alții. -->
 
-README-ro.md • 13 decembrie 2020
+README-ro.md • 16 decembrie 2020

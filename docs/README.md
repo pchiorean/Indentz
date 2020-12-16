@@ -123,7 +123,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefaultLayers.jsx`** adds a set of layers, reading their properties from [**`layers.txt`**](../layers.txt), a 6‑column TSV *(tab‑separated values)* file formatted as follows:
+* **`DefaultLayers.jsx`** adds a set of layers, reading their properties from [**`layers.txt`**](../layers.txt), a 6‑column TSV *(tab‑separated values)* file formatted as follows (empty lines and lines beginning with `#` are ignored):
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
@@ -138,12 +138,11 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Order**: `top` or `bottom` (above or below existing layers) \
   > **Variants**: a list of layers that will be merged with the base layer (case insensitive)
 
-  The first line (the header) and lines beginning with `#` are ignored. \
-  If you save a version of the file to the current directory, it will take precedence over the standard one.
+  The file is searched in several places: in the current directory, on the desktop, and next to the script.
 
   **Note:** **`layers.xlsx`** can be used to generate the TSV file.
 
-* **`DefaultSwatches.jsx`** adds a set of swatches defined in [**`swatches.txt`**](../swatches.txt), a 3‑column TSV file formatted as follows:
+* **`DefaultSwatches.jsx`** adds a set of swatches defined in [**`swatches.txt`**](../swatches.txt), a 3‑column TSV file formatted as follows (empty lines and lines beginning with `#` are ignored):
 
   Name | Model | Values
   :- | :-: | :-
@@ -155,12 +154,11 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Model**: color model: `process` or `spot` \
   > **Values**: a list of 3 (RGB) or 4 (CMYK) color values
 
-  The first line (the header) and lines beginning with `#` are ignored. \
-  If you save a version of the file to the current directory, it will take precedence over the standard one.
+  The file is searched in several places: in the current directory, on the desktop, and next to the script.
 
 * **`CleanupSwatches.jsx`** converts process RGB swatches to CMYK, renames them to `C= M= Y= K=` form, removes duplicates and deletes unused. Spot colors are not changed.
 
-* **`ReplaceFonts.jsx`** replaces fonts from a substitution list, [**`fonts.txt`**](../fonts.txt), a 4‑column TSV file formatted as follows:
+* **`ReplaceFonts.jsx`** replaces fonts from a substitution list, [**`fonts.txt`**](../fonts.txt), a 4‑column TSV file formatted as follows (empty lines and lines beginning with `#` are ignored):
 
   Old font | Style | New font | Style
   :- | :- | :- | :-
@@ -168,8 +166,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  The first line (the header) and lines beginning with `#` are ignored. \
-  If you save a version of the file to the current directory, it will take precedence over the standard one.
+  The file is searched in several places: in the current directory, on the desktop, and next to the script.
 
   **Note:** You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy‑pasting.
 
@@ -224,7 +221,7 @@ Setup | | | |
 
   * **On file** saves it in a file with the name of the active document and `_QR` added to the end.
 
-  * **Batch** creates multiple files from a 2‑column TSV list named **QR.txt**, if found in the active document folder:
+  * **Batch** creates multiple files from a 2‑column TSV list named **QR.txt**, if it's found in the current directory (empty lines and lines beginning with `#` are ignored):
 
     Filename | Code
     :- | :-
@@ -265,9 +262,9 @@ Misc | | | | | |
 
 ## License
 
-© 2020 Paul Chiorean \<jpeg AT basement.ro\>. The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)). \
-Open an [issue](https://github.com/pchiorean/Indentz/issues) on Github if you encounter problems or have any suggestions.
+© 2020 Paul Chiorean \<jpeg AT basement.ro\>. \
+The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
 
-README.md • December 13, 2020
+README.md • December 16, 2020
