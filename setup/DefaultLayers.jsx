@@ -1,5 +1,5 @@
 /*
-	Default layers v1.9.0
+	Default layers v1.10.0
 	© December 2020, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -49,7 +49,7 @@ function main() {
 		});
 	}
 	infoFile.close(); infoLine = "";
-	if (layerData.length < 1) { alert(errfn + "Not enough records."); exit() }
+	if (layerData.length < 1) { /* alert(errfn + "Not enough records."); */ exit() }
 
 	doc.layers.everyItem().properties = { // Prepare existing layers
 		locked: false,
@@ -106,6 +106,7 @@ function main() {
 
 function TSVFile(fn) {
 	var file = "";
+	if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + fn)) && file.exists) return file;
 	if (doc.saved && (file = File(app.activeDocument.filePath + "/" + fn)) && file.exists) return file;
 	if ((file = File(Folder.desktop + "/" + fn)) && file.exists) return file;
 	if ((file = File(app.activeScript.path + "/" + fn)) && file.exists) return file;

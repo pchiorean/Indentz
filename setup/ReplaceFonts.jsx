@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 1.10.0
+	Replace fonts 1.11.0
 	© December 2020, Paul Chiorean
 	Replaces fonts from a 4-column TSV file:
 
@@ -40,7 +40,7 @@ function main() {
 		]);
 	}
 	infoFile.close(); infoLine = "";
-	if (fontList.length < 1) { alert(errfn + "Not enough records."); exit() }
+	if (fontList.length < 1) { /* alert(errfn + "Not enough records."); */ exit() }
 
 	for (var i = 0; i < fontList.length; i++) {
 		app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
@@ -57,6 +57,7 @@ function main() {
 
 function TSVFile(fn) {
 	var file = "";
+	if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + fn)) && file.exists) return file;
 	if (doc.saved && (file = File(app.activeDocument.filePath + "/" + fn)) && file.exists) return file;
 	if ((file = File(Folder.desktop + "/" + fn)) && file.exists) return file;
 	if ((file = File(app.activeScript.path + "/" + fn)) && file.exists) return file;

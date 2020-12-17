@@ -1,5 +1,5 @@
 /*
-	Default swatches v1.8.0
+	Default swatches v1.9.0
 	© December 2020, Paul Chiorean
 	Adds swatches from a 3-column TSV file:
 
@@ -42,7 +42,7 @@ function main() {
 		});
 	}
 	infoFile.close(); infoLine = "";
-	if (colorData.length < 1) { alert(errfn + "Not enough records."); exit() }
+	if (colorData.length < 1) { /* alert(errfn + "Not enough records."); */ exit() }
 
 	for (var i = 0; i < colorData.length; i++) {
 		ColorAdd(doc,
@@ -55,6 +55,7 @@ function main() {
 
 function TSVFile(fn) {
 	var file = "";
+	if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + fn)) && file.exists) return file;
 	if (doc.saved && (file = File(app.activeDocument.filePath + "/" + fn)) && file.exists) return file;
 	if ((file = File(Folder.desktop + "/" + fn)) && file.exists) return file;
 	if ((file = File(app.activeScript.path + "/" + fn)) && file.exists) return file;
