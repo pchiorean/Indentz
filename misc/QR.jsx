@@ -1,5 +1,5 @@
 /*
-	QR code v2.5.0
+	QR code v2.5.1
 	© December 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -123,7 +123,7 @@ function QROnPage(QRLabel, flg_white) {
 			if (page.pageItems.item(j).label == "QR") { page.pageItems.item(j).remove(); j-- }
 		var label = page.textFrames.add({
 			itemLayer: idLayer.name,
-			contents: QRLabel,
+			contents: QRLabel.toUpperCase(),
 			label: "QR",
 			fillColor: "None",
 			strokeColor: "None"
@@ -143,6 +143,17 @@ function QROnPage(QRLabel, flg_white) {
 		label.textFramePreferences.properties = {
 			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
+			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
+			autoSizingType: (flg_manual || label.lines.length == 1) ? // If manual LB, set auto
+				AutoSizingTypeEnum.HEIGHT_AND_WIDTH :
+				AutoSizingTypeEnum.HEIGHT_ONLY,
+			useNoLineBreaksForAutoSizing: flg_manual,
+			insetSpacing: [UnitValue("3mm").as("pt"), UnitValue("2.5mm").as("pt"), UnitValue("1mm").as("pt"), 0]
+		}
+/*
+		label.textFramePreferences.properties = {
+			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
+			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 			useNoLineBreaksForAutoSizing: (flg_manual || (label.lines.length == 1 && label.lines[0].characters.length <= 18)),
 			insetSpacing: [UnitValue("3mm").as("pt"), UnitValue("2.5mm").as("pt"), UnitValue("1mm").as("pt"), 0]
 		}
@@ -152,6 +163,7 @@ function QROnPage(QRLabel, flg_white) {
 			// 	AutoSizingTypeEnum.HEIGHT_AND_WIDTH : AutoSizingTypeEnum.HEIGHT_ONLY
 			autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH
 		}
+*/
 		var code = page.rectangles.add({
 			itemLayer: idLayer.name,
 			label: "QR",
