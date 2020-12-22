@@ -1,6 +1,6 @@
 # Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks. Many of them are designed to be run by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts** (suggestions below each section). Some can be run in the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
+Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts** (suggestions below each section). Some can be run in the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
 
 ## Description
 
@@ -267,4 +267,4 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
 
-README.md • December 16, 2020
+README.md • December 19, 2020
