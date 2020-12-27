@@ -138,7 +138,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Ordine**: `top` sau `bottom` (deasupra sau sub straturile existente) \
   > **Variante**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)
 
-  Fișierul este căutat în câteva locuri: în folderul curent, pe desktop și lângă script.
+  Puteți pune fișierul în folderul curent, pe desktop sau lângă script.
 
   **Note:** **`layers.xlsx`** poate fi folosit pentru generarea fișierului TSV.
 
@@ -154,7 +154,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Model**: tipul culorii: `process` sau `spot` \
   > **Values**: o listă de 3 (RGB) sau 4 (CMYK) valori
 
-  Fișierul este căutat în câteva locuri: în folderul curent, pe desktop și lângă script.
+  Puteți pune fișierul în folderul curent, pe desktop sau lângă script.
 
 * **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, le redenumește după formula `C= M= Y= K=`, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
@@ -166,7 +166,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  Fișierul este căutat în câteva locuri: în folderul curent, pe desktop și lângă script.
+  Puteți pune fișierul în folderul curent, pe desktop sau lângă script.
 
   **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
 
@@ -267,4 +267,4 @@ Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
 
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Richard Harrington și alții. -->
 
-README-ro.md • 16 decembrie 2020
+README-ro.md • 27 decembrie 2020

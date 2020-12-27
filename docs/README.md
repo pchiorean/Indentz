@@ -138,7 +138,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Order**: `top` or `bottom` (above or below existing layers) \
   > **Variants**: a list of layers that will be merged with the base layer (case insensitive)
 
-  The file is searched in several places: in the current directory, on the desktop, and next to the script.
+  You can put the file in the current directory, on the desktop, or next to the script.
 
   **Note:** **`layers.xlsx`** can be used to generate the TSV file.
 
@@ -154,7 +154,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Model**: color model: `process` or `spot` \
   > **Values**: a list of 3 (RGB) or 4 (CMYK) color values
 
-  The file is searched in several places: in the current directory, on the desktop, and next to the script.
+  You can put the file in the current directory, on the desktop, or next to the script.
 
 * **`CleanupSwatches.jsx`** converts process RGB swatches to CMYK, renames them to `C= M= Y= K=` form, removes duplicates and deletes unused. Spot colors are not changed.
 
@@ -166,7 +166,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  The file is searched in several places: in the current directory, on the desktop, and next to the script.
+  You can put the file in the current directory, on the desktop, or next to the script.
 
   **Note:** You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy‑pasting.
 
@@ -267,4 +267,4 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
 
-README.md • December 19, 2020
+README.md • December 27, 2020
