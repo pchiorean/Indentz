@@ -1,5 +1,5 @@
 /*
-	Default layers v1.10.0
+	Default layers v1.10.1
 	© December 2020, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -16,7 +16,7 @@
 */
 
 // Add ECMA262-5 string trim method
-String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
+String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') }
 
 if (!(doc = app.activeDocument)) exit();
 if (!(infoFile = TSVFile("layers.txt"))) { alert("File 'layers.txt' not found."); exit() }
@@ -26,9 +26,9 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 
 
 function main() {
-	var infoLine, header, layerData = [];
-	var line = 0, flg_H = false;
-	var errfn = infoFile.fullName + "\n";
+	var infoLine, header, layerData = [],
+		line = 0, flg_H = false,
+		errfn = infoFile.fullName + "\n";
 	infoFile.open("r");
 	while (!infoFile.eof) {
 		infoLine = infoFile.readln(); line++;
@@ -55,26 +55,17 @@ function main() {
 		locked: false,
 		layerColor: UIColors.LIGHT_GRAY
 	}
-	var set_AL = doc.activeLayer; // Save active layer
+	var layer,
+		set_AL = doc.activeLayer; // Save active layer
 	// Top layers
-	for (var i = layerData.length - 1; i >= 0 ; i--) {
-		if (layerData[i].isBottom) continue;
-		MakeLayer(
-			layerData[i].name,
-			layerData[i].color,
-			layerData[i].isVisible,
-			layerData[i].isPrintable,
-			layerData[i].variants);
+	while (layer = layerData.pop()) {
+		if (layer.isBottom) continue;
+		MakeLayer(layer.name, layer.color, layer.isVisible, layer.isPrintable, layer.variants);
 	}
 	// Bottom layers
-	for (var i = 0; i < layerData.length; i++) {
-		if (!layerData[i].isBottom) continue;
-		MakeLayer(
-			layerData[i].name,
-			layerData[i].color,
-			layerData[i].isVisible,
-			layerData[i].isPrintable,
-			layerData[i].variants)
+	while (layer = layerData.shift()) {
+		if (!layer.isBottom) continue;
+		MakeLayer(layer.name, layer.color, layer.isVisible, layer.isPrintable, layer.variants)
 		.move(LocationOptions.AT_END);
 	}
 	doc.activeLayer = set_AL; // Restore active layer
@@ -121,7 +112,7 @@ function GetUIColor(color) {
 		"Lipstick", "Magenta", "Ochre", "Olive Green", "Orange", "Peach", "Pink", "Purple", "Red",
 		"Sulphur", "Tan", "Teal", "Violet", "White", "Yellow"],
 		[UIColors.BLUE, UIColors.BLACK, UIColors.BRICK_RED, UIColors.BROWN, UIColors.BURGUNDY,
-		UIColors.CHARCOAL, UIColors.CUTE_TEAL, UIColors.CYAN, UIColors.DARK_BLUE, 
+		UIColors.CHARCOAL, UIColors.CUTE_TEAL, UIColors.CYAN, UIColors.DARK_BLUE,
 		UIColors.DARK_GREEN, UIColors.FIESTA, UIColors.GOLD, UIColors.GRASS_GREEN, UIColors.GRAY,
 		UIColors.GREEN, UIColors.GRID_BLUE, UIColors.GRID_GREEN, UIColors.GRID_ORANGE,
 		UIColors.LAVENDER, UIColors.LIGHT_BLUE, UIColors.LIGHT_GRAY, UIColors.LIGHT_OLIVE,
