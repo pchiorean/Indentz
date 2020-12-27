@@ -1,5 +1,5 @@
 /*
-	Default layers v1.10.1
+	Default layers v1.10.2
 	© December 2020, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -55,17 +55,26 @@ function main() {
 		locked: false,
 		layerColor: UIColors.LIGHT_GRAY
 	}
-	var layer,
-		set_AL = doc.activeLayer; // Save active layer
+	var set_AL = doc.activeLayer; // Save active layer
 	// Top layers
-	while (layer = layerData.pop()) {
-		if (layer.isBottom) continue;
-		MakeLayer(layer.name, layer.color, layer.isVisible, layer.isPrintable, layer.variants);
+	for (var i = layerData.length - 1; i >= 0 ; i--) {
+		if (layerData[i].isBottom) continue;
+		MakeLayer(
+			layerData[i].name,
+			layerData[i].color,
+			layerData[i].isVisible,
+			layerData[i].isPrintable,
+			layerData[i].variants);
 	}
 	// Bottom layers
-	while (layer = layerData.shift()) {
-		if (!layer.isBottom) continue;
-		MakeLayer(layer.name, layer.color, layer.isVisible, layer.isPrintable, layer.variants)
+	for (var i = 0; i < layerData.length; i++) {
+		if (!layerData[i].isBottom) continue;
+		MakeLayer(
+			layerData[i].name,
+			layerData[i].color,
+			layerData[i].isVisible,
+			layerData[i].isPrintable,
+			layerData[i].variants)
 		.move(LocationOptions.AT_END);
 	}
 	doc.activeLayer = set_AL; // Restore active layer
