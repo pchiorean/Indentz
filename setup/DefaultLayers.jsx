@@ -94,7 +94,7 @@ function main() {
 		}
 		var l, layers = doc.layers.everyItem().getElements();
 		while (l = layers.shift())
-			if(isIn(l.name, variants, false)) {
+			if (isIn(l.name, variants, false)) {
 				var set_LV = l.visible;
 				if (l == set_AL) set_AL = layer;
 				layer.merge(l);
