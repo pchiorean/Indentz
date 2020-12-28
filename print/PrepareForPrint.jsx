@@ -1,6 +1,6 @@
 ﻿/*
-	Prepare for print v1.10.1
-	© November 2020, Paul Chiorean
+	Prepare for print v1.11.0
+	© December 2020, Paul Chiorean
 	Hides "safe area" layer and moves white, varnish & dielines to separate spreads.
 */
 
@@ -24,15 +24,15 @@ try { uvLayer.visible = true } catch (_) {};
 try { guidesLayer.visible = false } catch (_) {};
 try { infoLayer.visible = true } catch (_) {};
 
-if (dieLayer != null) {
-	app.doScript(main, ScriptLanguage.JAVASCRIPT, [dieLayer, false],
-	UndoModes.ENTIRE_SCRIPT, dieLayer.name) };
-if (whiteLayer != null) {
-	app.doScript(main, ScriptLanguage.JAVASCRIPT, [whiteLayer, true],
-	UndoModes.ENTIRE_SCRIPT, whiteLayer.name) };
 if (uvLayer != null) {
 	app.doScript(main, ScriptLanguage.JAVASCRIPT, [uvLayer, true],
 	UndoModes.ENTIRE_SCRIPT, uvLayer.name) };
+if (whiteLayer != null) {
+	app.doScript(main, ScriptLanguage.JAVASCRIPT, [whiteLayer, true],
+		UndoModes.ENTIRE_SCRIPT, whiteLayer.name) };
+if (dieLayer != null) {
+	app.doScript(main, ScriptLanguage.JAVASCRIPT, [dieLayer, false],
+	UndoModes.ENTIRE_SCRIPT, dieLayer.name) };
 
 
 function main(args) { // Move items on 'layer' to separate spread(s)
@@ -86,10 +86,7 @@ function main(args) { // Move items on 'layer' to separate spread(s)
 		infoText.properties = {
 			appliedFont: app.fonts.item("Helvetica\tRegular"),
 			pointSize: 6,
-			fillColor: /* spread.pages[0].pageItems[0].fillColor.name == "None" ?
-			(spread.pages[0].pageItems[0].strokeColor.name == "None" ?
-			"Registration" : spread.pages[0].pageItems[0].strokeColor) :
-			spread.pages[0].pageItems[0].fillColor */ "Registration",
+			fillColor: "Registration",
 			capitalization: Capitalization.ALL_CAPS
 		}
 		infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
