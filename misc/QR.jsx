@@ -1,5 +1,5 @@
 /*
-	QR code v2.5.1
+	QR code v2.5.2
 	© December 2020, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -130,7 +130,7 @@ function QROnPage(QRLabel, flg_white) {
 		});
 		label.paragraphs.everyItem().properties = {
 			appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
-			pointSize: 5,
+			pointSize: "5 pt",
 			autoLeading: 100,
 			horizontalScale: 92,
 			tracking: -15,
@@ -148,14 +148,14 @@ function QROnPage(QRLabel, flg_white) {
 				AutoSizingTypeEnum.HEIGHT_AND_WIDTH :
 				AutoSizingTypeEnum.HEIGHT_ONLY,
 			useNoLineBreaksForAutoSizing: flg_manual,
-			insetSpacing: [UnitValue("3mm").as("pt"), UnitValue("2.5mm").as("pt"), UnitValue("1mm").as("pt"), 0]
+			insetSpacing: [UnitValue("3 mm").as("pt"), UnitValue("2.5 mm").as("pt"), UnitValue("1 mm").as("pt"), 0]
 		}
 /*
 		label.textFramePreferences.properties = {
 			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 			useNoLineBreaksForAutoSizing: (flg_manual || (label.lines.length == 1 && label.lines[0].characters.length <= 18)),
-			insetSpacing: [UnitValue("3mm").as("pt"), UnitValue("2.5mm").as("pt"), UnitValue("1mm").as("pt"), 0]
+			insetSpacing: [UnitValue("3 mm").as("pt"), UnitValue("2.5 mm").as("pt"), UnitValue("1 mm").as("pt"), 0]
 		}
 		label.textFramePreferences.properties = {
 			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
@@ -227,7 +227,7 @@ function QROnFile(QRLabel, fn) {
 	});
 	label.paragraphs.everyItem().properties = {
 		appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
-		pointSize: 5,
+		pointSize: "5 pt",
 		autoLeading: 100,
 		horizontalScale: 92,
 		tracking: -15,
@@ -242,7 +242,7 @@ function QROnFile(QRLabel, fn) {
 		firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 		autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
 		autoSizingType: AutoSizingTypeEnum.HEIGHT_ONLY,
-		insetSpacing: [UnitValue("1mm").as("pt"), UnitValue("1mm").as("pt"), 0, UnitValue("0.5mm").as("pt")]
+		insetSpacing: [UnitValue("1 mm").as("pt"), UnitValue("1 mm").as("pt"), 0, UnitValue("0.5 mm").as("pt")]
 	}
 	var code = page.rectangles.add({ itemLayer: idLayer.name, label: "QR" });
 	code.absoluteRotationAngle = -90;

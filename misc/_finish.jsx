@@ -41,7 +41,7 @@ function ExpandItems() {
 	}
 }
 
-function TextReg2CMYK(){
+function TextReg2CMYK() {
 	try { doc.colors.add({
 		name: "Reg. black",
 		model: ColorModel.PROCESS,
@@ -59,7 +59,7 @@ function TextReg2CMYK(){
 	app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
 }
 
-function TextBlack2Black(){
+function TextBlack2Black() {
 	try { doc.colors.add({
 		name: "C=60 M=40 Y=40 K=100",
 		model: ColorModel.PROCESS,
