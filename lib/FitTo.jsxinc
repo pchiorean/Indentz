@@ -1,14 +1,16 @@
 /*
-	Fit to... v3.8.0
+	Fit to... v3.9.0
 	© December 2020, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/bleed.
 	It's run internally by all the other FitTo scripts.
+
+	SCOPE: "page" | "spread"
+	TARGET: null | "bleed" | "margins"
+	FORCED_FIT: false | true
 */
 
 var DEBUG = false;
-// var SCOPE = "page"; // "page" or "spread"
-// var TARGET = null; // null or "bleed" or "margins"
-// var FORCED = false; // false or true
+var SNAP_PCT = 1; // Snap distance (percent of target)
 
 function main() {
 
@@ -21,9 +23,9 @@ doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 var obj, page, f, selBAK = [];
 while (obj = sel.shift()) {
-	if (page = obj.parentPage) { // Object is on page
-		if ((f = Fit(obj)) != undefined) selBAK.push(f);
-	} else if (FORCED) { // If forced fit, include objects on pasteboard
+	if (page = obj.parentPage) {
+		if ((f = Fit2Bounds(obj)) != undefined) { selBAK.push(f) } else { selBAK.push(obj) }
+	} else if (FORCED_FIT) { // If forced fit, include objects on pasteboard
 		var pages = app.activeWindow.activeSpread.pages;
 		for (var i = 0; i < pages.length; i++) {
 			if (obj.geometricBounds[3] <= pages[0].bounds[3]) { page = pages[0]; break }
@@ -31,27 +33,24 @@ while (obj = sel.shift()) {
 				obj.geometricBounds[3] <= pages[i].bounds[3]) { page = pages[i]; break}
 			if (obj.geometricBounds[1] >= pages[-1].bounds[1]) { page = pages[-1]; break }
 		}
-		if ((f = Fit(obj)) != undefined) selBAK.push(f);
+		if ((f = Fit2Bounds(obj)) != undefined) { selBAK.push(f) } else { selBAK.push(obj) }
 	}
 }
-app.select(selBAK);
+if (selBAK.length > 0) app.select(selBAK);
 doc.viewPreferences.rulerOrigin = set_RO;
 
-function Fit(obj) {
+function Fit2Bounds(obj) {
 	var pg = Bounds(page, SCOPE, null);
 	var tg = Bounds(page, SCOPE, TARGET);
-	var SNAP_ZONE = TARGET == "margins" ?
-		Math.min(tg[2] - tg[0], tg[3] - tg[1]) * 0.05 :
-		Math.min(pg[2] - pg[0], pg[3] - pg[1]) * 0.05;
-	var pgZ = [pg[0] + SNAP_ZONE, pg[1] + SNAP_ZONE, pg[2] - SNAP_ZONE, pg[3] - SNAP_ZONE];
-	var tgZ = [tg[0] + SNAP_ZONE, tg[1] + SNAP_ZONE, tg[2] - SNAP_ZONE, tg[3] - SNAP_ZONE];
-	var zone = TARGET == "margins" ? tgZ : pgZ;
+	var snapDist = TARGET == "margins" ?
+		Math.min(tg[2] - tg[0], tg[3] - tg[1]) * SNAP_PCT/100 :
+		Math.min(pg[2] - pg[0], pg[3] - pg[1]) * SNAP_PCT/100;
+	var zone = TARGET == "margins" ?
+		[tg[0] + snapDist, tg[1] + snapDist, tg[2] - snapDist, tg[3] - snapDist] :
+		[pg[0] + snapDist, pg[1] + snapDist, pg[2] - snapDist, pg[3] - snapDist];
 	var objG = obj.geometricBounds;
 	var objV = obj.visibleBounds;
 	var objRA = obj.absoluteRotationAngle;
-	if (DEBUG) doc.textFrames.add(obj.itemLayer, LocationOptions.BEFORE, obj,
-		{ contents: "snap zone", fillColor: "None", strokeColor: "Cyan",
-		nonprinting: true, geometricBounds: TARGET == "margins" ? tgZ : pgZ });
 
 	// Special case: Objects labeled 'HW'
 	if (obj.label == "HW") {
@@ -64,7 +63,7 @@ function Fit(obj) {
 		return obj;
 	}
 
-	if (!FORCED) {
+	if (!FORCED_FIT) {
 		// Check if obj is outside bounds / inside bounds but not in the snap zone
 		if (objV[2] <= tg[0] || objV[3] <= tg[1] || objV[0] >= tg[2] || objV[1] >= tg[3]) return;
 		if (objV[0] >= zone[0] && objV[1] >= zone[1] && objV[2] <= zone[2] && objV[3] <= zone[3]) return;
@@ -76,46 +75,38 @@ function Fit(obj) {
 			objG[1] < tg[3] ? Math.min(objV[3], tg[3]) : objG[3]
 		];
 		if (obj.pageItems.length == 1) { // Child dimensions
-			var objC = obj.pageItems[0].visibleBounds; objC = [
+			var objC = obj.pageItems[0].visibleBounds;
+			objC = [
 				objC[0] < zone[0] ? tg[0] : Math.min(objC[0], fitR[0]),
 				objC[1] < zone[1] ? tg[1] : Math.min(objC[1], fitR[1]),
 				objC[2] > zone[2] ? tg[2] : Math.max(objC[2], fitR[2]),
 				objC[3] > zone[3] ? tg[3] : Math.max(objC[3], fitR[3])
 			];
 		} else { var objC = fitR }
-		if (DEBUG) doc.textFrames.add(obj.itemLayer, LocationOptions.BEFORE, obj,
-			{ contents: "objC", fillColor: "Magenta", strokeColor: "None",
-			nonprinting: true, geometricBounds: objC });
 		var fitE = [ // If smaller, expand to bounds if inside snap zone
 			fitR[0] < zone[0] ? Math.min(objC[0], tg[0]) : fitR[0],
 			fitR[1] < zone[1] ? Math.min(objC[1], tg[1]) : fitR[1],
 			fitR[2] > zone[2] ? Math.max(objC[2], tg[2]) : fitR[2],
 			fitR[3] > zone[3] ? Math.max(objC[3], tg[3]) : fitR[3]
 		];
-		if (DEBUG) doc.textFrames.add(obj.itemLayer, LocationOptions.BEFORE, obj,
-			{ contents: "fitR", fillColor: "Yellow", strokeColor: "None",
-			nonprinting: true, geometricBounds: fitR });
-		if (DEBUG) doc.textFrames.add(obj.itemLayer, LocationOptions.BEFORE, obj,
-			{ contents: "fitE", fillColor: "Cyan", strokeColor: "None",
-			nonprinting: true, geometricBounds: fitE });
+		if (DEBUG) DBGFrames(zone, objC, fitR, fitE);
 	}
 
 	// Case 1: Already clipped
 	if ((obj.name == "<clip frame>" || obj.name == "<auto clip frame>") && obj.pageItems[0].isValid) {
-		obj.geometricBounds = FORCED ? tg : fitE; return obj;
+		obj.geometricBounds = FORCED_FIT ? tg : fitE; return obj;
 	}
-	// Case 2: Simple rectangles or containers
+	// Case 2: Simple rectangles and containers
 	if (obj.constructor.name == "Rectangle" &&
-		(obj.pageItems.length == 0 ||
-		(obj.pageItems.length == 1 && (obj.graphics.length == 1 || obj.groups.length == 1))) &&
+		(obj.pageItems.length == 0 || obj.pageItems.length == 1) &&
 		(obj.strokeWeight == 0 || obj.strokeAlignment == StrokeAlignment.INSIDE_ALIGNMENT) &&
 		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
-			obj.geometricBounds = FORCED ? tg : fitE; return obj;
+			obj.geometricBounds = FORCED_FIT ? tg : fitE; return obj;
 	}
 	// Case 3: Text frames
 	if (obj.constructor.name == "TextFrame" &&
 		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
-			obj.geometricBounds = FORCED ? tg : fitR; return obj;
+			obj.geometricBounds = FORCED_FIT ? tg : fitR; return obj;
 	}
 	// Case 4: Orthogonal lines
 	if (obj.constructor.name == "GraphicLine" &&
@@ -123,9 +114,10 @@ function Fit(obj) {
 		return obj; // ***TODO***
 	}
 	// Case 5: Groups
-	if (obj.constructor.name == "Group") { return Clip(obj, FORCED ? tg : fitR); }
+	if (obj.constructor.name == "Group")
+		return Clip(obj, FORCED_FIT ? tg : fitR);
 	// Other cases: Clip
-	return Clip(obj, FORCED ? tg : fitE);
+	return Clip(obj, FORCED_FIT ? tg : fitE);
 
 	function Clip(obj, fit) {
 		if (objV[0] >= tg[0] && objV[1] >= tg[1] && objV[2] <= tg[2] && objV[3] <= tg[3]) return;
@@ -209,6 +201,36 @@ function Bounds(/*parent page*/page, /*'page','spread'*/scope, /*null,'bleed','m
 							lPg.marginPreferences.right)
 					];
 			}
+	}
+}
+
+function DBGFrames(zone, objC, fitR, fitE) {
+	var layer = doc.layers.item(".debug");
+	if (!layer.isValid) { doc.layers.add({
+		name: ".debug", layerColor: UIColors.BLACK,
+		visible: true, locked: false, printable: false })
+	} else layer.locked = false;
+
+	dbgFrame("zone", "Black", true, zone);
+	dbgFrame("objC", "Magenta", false, objC);
+	dbgFrame("fitR", "Yellow", false, fitR);
+	dbgFrame("fitE", "Cyan", false, fitE);
+
+	layer.locked = true;
+
+	function dbgFrame(text, color, /*bool*/dashed, bounds) {
+		var frame = doc.textFrames.add(
+			layer,
+			{ contents: text, fillColor: "None",
+			strokeColor: color, strokeWeight: "0.5 pt",
+			strokeType: dashed ? "$ID/Canned Dashed 3x2" : "$ID/Solid",
+			geometricBounds: bounds, nonprinting: true });
+		frame.textFramePreferences.properties = {
+			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
+			insetSpacing: UnitValue("0.25 mm").as('pt') }
+		frame.paragraphs.everyItem().properties = {
+			appliedFont: app.fonts.item("Helvetica Neue\tBold"),
+			pointSize: "10 pt", fillColor: frame.strokeColor }
 	}
 }
 
