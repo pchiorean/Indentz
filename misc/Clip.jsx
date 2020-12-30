@@ -1,6 +1,6 @@
 /*
-	Clip v2.3.0
-	© November 2020, Paul Chiorean
+	Clip v2.4.0
+	© December 2020, Paul Chiorean
 	Clip selected objects in a "<clip frame>", or restores them
 */
 
@@ -25,9 +25,8 @@ app.clipboardPreferences.pasteRemembersLayers = set_PRL;
 
 function Clip(items) {
 	// Undo if already clipped
-	if (items.length == 1
-		&& (items[0].name == "<clip frame>" || items[0].name == "<auto clip frame>")
-		&& items[0].pageItems[0].isValid) { UndoClip(items[0]); exit() }
+	if (items.length == 1 && (items[0].name == "<clip frame>" || items[0].name == "<auto clip frame>")) {
+		UndoClip(items[0]); exit() }
 	// Filter selection and get a single object
 	if (items.length > 1) {
 		var selArray = [];
@@ -35,15 +34,12 @@ function Clip(items) {
 		var obj = doc.groups.add(selArray);
 		obj.name = "<auto clip group>";
 	} else var obj = items[0];
-	// Clip!
+	// Clip
 	var clipFrame = doc.rectangles.add(
 		obj.itemLayer,
 		LocationOptions.AFTER, obj,
 		{ name: "<clip frame>", label: obj.label,
 		fillColor: "None", strokeColor: "None",
-		// strokeColor: "Yellow", strokeWeight: "0.5pt",
-		// strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
-		// strokeType: "$ID/Canned Dashed 3x2",
 		geometricBounds: obj.visibleBounds });
 	clipFrame.sendToBack(obj);
 	app.select(obj); app.cut(); app.select(clipFrame); app.pasteInto();
