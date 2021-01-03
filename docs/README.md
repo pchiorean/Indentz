@@ -40,7 +40,7 @@ Proxy | | | | | |
 
 Resize the selected objects, without scaling. Rectangular frames are simply resized; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is resized.
 
-* **`FitToPage`** and **`FitToSpread`**: if the selected object is larger than the page/spread/margins/bleed, it will be reduced; if it is smaller but inside a 5% "snap" area, it will be enlarged.
+* **`FitToPage`** and **`FitToSpread`**: if the selected object is larger than the page/spread/margins/bleed, it will be reduced; if it is smaller but inside a 1% "snap" area, it will be enlarged.
 
   **`FitTo...Forced.jsx`** resize exactly to the named dimensions.
 
@@ -262,9 +262,9 @@ Misc | | | | | |
 
 ## License
 
-© 2020 Paul Chiorean \<jpeg AT basement.ro\>. \
+© 2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
 
-README.md • December 27, 2020
+README.md • January 3, 2021

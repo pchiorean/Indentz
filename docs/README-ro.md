@@ -40,7 +40,7 @@ Proxy | | | | | |
 
 Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container *(clipping frame)* și acesta e redimensionat.
 
-* **`FitToPage`** și **`FitToSpread`**: dacă obiectul este mai mare decât pagina/spreadul/marginile/bleedul, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 5%, va fi mărit.
+* **`FitToPage`** și **`FitToSpread`**: dacă obiectul este mai mare decât pagina/spreadul/marginile/bleedul, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.
 
   **`FitTo...Forced.jsx`** redimensionează exact la dimensiunile respective.
 
@@ -88,7 +88,7 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
 
 * **`PrepareForPrint.jsx`** ascunde stratul `safe area` și mută ștanțele și marcajele pentru alb și lac UV de pe `dielines` / `white` / `varnish` pe spreaduri separate.
 
-* **`SafeArea.jsx`** creează un frame de dimensiunea marginilor paginii pe stratul `safe area`. Folosește culoarea `Safe area`, care dacă nu există va fi creată cu valoarea `C=0 M=100 Y=0 K=0`.
+* **`SafeArea.jsx`** creează un chenar de dimensiunea marginilor paginii pe stratul `safe area`. Folosește culoarea `Safe area`, care dacă nu există va fi creată cu valoarea `C=0 M=100 Y=0 K=0`.
 
 * **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează `safe area`.
 
@@ -262,9 +262,9 @@ Misc | | | | | |
 
 ## Licență
 
-© 2020 Paul Chiorean \<jpeg AT basement.ro\>. \
+© 2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
 
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Richard Harrington și alții. -->
 
-README-ro.md • 27 decembrie 2020
+README-ro.md • 3 ianuarie 2021

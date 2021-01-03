@@ -134,7 +134,7 @@ line-height: 1.6;
 <p>Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container <em>(clipping frame)</em> și acesta e redimensionat.</p>
 <ul>
 <li>
-<p><strong><code>FitToPage</code></strong> și <strong><code>FitToSpread</code></strong>: dacă obiectul este mai mare decât pagina/spreadul/marginile/bleedul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 5%, va fi mărit.</p>
+<p><strong><code>FitToPage</code></strong> și <strong><code>FitToSpread</code></strong>: dacă obiectul este mai mare decât pagina/spreadul/marginile/bleedul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 1%, va fi mărit.</p>
 <p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la dimensiunile respective.</p>
 </li>
 <li>
@@ -257,7 +257,7 @@ line-height: 1.6;
 <p><strong><code>PrepareForPrint.jsx</code></strong> ascunde stratul <code>safe area</code> și mută ștanțele și marcajele pentru alb și lac UV de pe <code>dielines</code> / <code>white</code> / <code>varnish</code> pe spreaduri separate.</p>
 </li>
 <li>
-<p><strong><code>SafeArea.jsx</code></strong> creează un frame de dimensiunea marginilor paginii pe stratul <code>safe area</code>. Folosește culoarea <code>Safe area</code>, care dacă nu există va fi creată cu valoarea <code>C=0 M=100 Y=0 K=0</code>.</p>
+<p><strong><code>SafeArea.jsx</code></strong> creează un chenar de dimensiunea marginilor paginii pe stratul <code>safe area</code>. Folosește culoarea <code>Safe area</code>, care dacă nu există va fi creată cu valoarea <code>C=0 M=100 Y=0 K=0</code>.</p>
 </li>
 <li>
 <p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <code>safe area</code>.</p>
@@ -612,9 +612,9 @@ line-height: 1.6;
 <li>Copiați fișierele în acest folder.</li>
 </ol>
 <h2 id="licență">Licență</h2>
-<p>© 2020 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
+<p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <!-- Părți din cod se bazează pe postări de pe bloguri, forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Richard Harrington și alții. -->
-<p>README-ro.md • 27 decembrie 2020</p>
+<p>README-ro.md • 3 ianuarie 2021</p>
 
 </body>
 </html>
