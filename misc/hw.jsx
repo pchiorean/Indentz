@@ -1,31 +1,27 @@
 /*
-	HW 0.5.1
-	© November 2020, Paul Chiorean
+	HW 0.6.0
+	© January 2021, Paul Chiorean
+	Label 'HW' selected objects; w/o selection, add a 10% bottom guide.
 */
 
 if (!(doc = app.activeDocument)) exit();
+var page = app.activeWindow.activePage;
 
-// Make layer
-var hwLayerName = FindLayer(["HW", "Hw Logo", "HW Logo", "hw", "Logo HW", "wh", "WH", "WHW"]);
+var hwLayerName = "HW";
 var hwLayer = doc.layers.item(hwLayerName);
 if (!hwLayer.isValid) {
 	doc.layers.add({ name: hwLayerName, layerColor: UIColors.LIGHT_GRAY });
 	hwLayer.move(LocationOptions.AT_BEGINNING) }
 hwLayer.locked = false;
-// If a rectangle is selected, label it "HW" and make it white
+
 var sel = doc.selection;
 if (sel.length >= 1) {
 	for (var i = 0; i < sel.length; i++) {
-		if (sel[i].constructor.name == "Rectangle" || sel[i].constructor.name == "TextFrame") {
-			sel[i].label = "HW"; sel[i].fillColor = "Paper" }
+		sel[i].label = "HW";
+		if (sel[i].constructor.name == "Rectangle" || sel[i].constructor.name == "TextFrame")
+			sel[i].fillColor = "Paper";
 	}
-	MkGuide(sel[0].parentPage); // Add a 10% bottom guide on this page
-} else { // Add a 10% bottom guide on all pages
-	for (var i = 0; i < doc.pages.length; i++) MkGuide(doc.pages[i]);
-}
-
-
-function MkGuide(page) { // Add 10% bottom guides
+} else {
 	var szPg = page.bounds[2];
 	var szMg = szPg - (page.marginPreferences.top + page.marginPreferences.bottom);
 	var j, guide;
@@ -42,12 +38,4 @@ function MkGuide(page) { // Add 10% bottom guides
 			orientation: HorizontalOrVertical.horizontal,
 			location: page.marginPreferences.top + szMg * 0.9 });
 	}
-}
-
-function FindLayer(names) { // Find first valid layer from a list of names
-	for (var i = 0; i < names.length; i++) {
-		var layer = doc.layers.item(names[i]);
-		if (layer.isValid) return names[i];
-	}
-	return names[0]; // Nothing found, return first name
 }
