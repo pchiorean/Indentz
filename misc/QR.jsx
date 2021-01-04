@@ -1,5 +1,5 @@
 /*
-	QR code v2.6.0
+	QR code v2.7.0
 	© January 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -16,12 +16,12 @@ String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s
 
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.enableRedraw = false;
-var doc, docPath, infoFile, flg_batch = false;
+var doc, docPath, infoFile = "", flg_batch = false;
 doc = app.documents.length == 0 ? app.documents.add() : app.activeDocument;
 if (doc.saved) {
 	docPath = doc.filePath;
-	infoFile = File(docPath + "/QR.txt");
-	if (infoFile.exists) flg_batch = true;
+	if ((infoFile = File(docPath + "/_QR.txt")) && infoFile.exists) flg_batch = true
+	else if ((infoFile = File(docPath + "/QR.txt")) && infoFile.exists) flg_batch = true;
 }
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
@@ -55,7 +55,9 @@ function main() {
 			"Save as 'QR Codes/" + doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd'" :
 			"Where? Document has no path";
 	var batch = buttons.add("button", undefined, "Batch", { name: "batch" });
-		batch.helpTip = flg_batch ? "Batch process codes from 'QR.txt'" : "'QR.txt' file not found in current folder";
+		batch.helpTip = flg_batch ?
+			"Batch process codes from '" + infoFile.name + "'" :
+			"'QR.txt' file not found in the current folder";
 	onfile.enabled = !!docPath;
 	batch.visible = flg_batch;
 	batch.onClick = function() { do_batch = true; w.close() }
