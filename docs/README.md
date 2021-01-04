@@ -1,6 +1,6 @@
 # Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run by assigning keyboard shortcuts from **Edit > Keyboard Shortcuts... > Product Area > Scripts** (suggestions below each section). Some can be run in the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
+Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run by a keyboard shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; suggestions below each section). Some can be run by the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
 
 ## Description
 
@@ -18,7 +18,7 @@ Make it easier to align objects or set the reference point for transformations u
 
 * **`SetRefPoint`** scripts change the reference point used for transformations (like clicking the little proxy squares in the **Transform** palette).
 
-**Note:** Both sets should be assigned to the numeric keypad.
+**Note:** These two sets don't make much sense if they're not associated with the numeric keypad.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -84,13 +84,13 @@ Scale | |
 
 ### **Print**
 
-Make several preparations for export and can be used with [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). The scripts detect alternative layers like *visible*, *vizibil* for `safe area`, or *diecut*, *die cut*, *cut lines*, *stanze* for `dielines`.
+Make several preparations for export and can be used with [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). The scripts detect alternative layers like **visible**, **vizibil** for **safe area**, or **diecut**, **die cut**, **cut lines**, **stanze** for **dielines**.
 
-* **`PrepareForPrint.jsx`** hides the `safe area` layer and moves the dielines, white and UV markings from `dielines` / `white` / `varnish` to separate spreads.
+* **`PrepareForPrint.jsx`** hides the **safe area** layer and moves the dielines, white and UV markings from **dielines** / **white** / **varnish** to separate spreads.
 
-* **`SafeArea.jsx`** creates a frame the size of the page margins on the `safe area` layer. It uses the `Safe area` swatch, which if it does not exist will be created with the value `C=0 M=100 Y=0 K=0`.
+* **`SafeArea.jsx`** creates a frame the size of the page margins on the **safe area** layer. It uses the **Safe area** swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
 
-* **`SafeAreaHideLayer.jsx`** and **`SafeAreaShowLayer.jsx`** hide or show `safe area`.
+* **`SafeAreaHideLayer.jsx`** and **`SafeAreaShowLayer.jsx`** hide or show **safe area**.
 
 ### **Setup**
 
@@ -123,7 +123,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefaultLayers.jsx`** adds a set of layers, reading their properties from [**`layers.txt`**](../layers.txt), a 6‑column TSV *(tab‑separated values)* file formatted as follows (empty lines and lines beginning with `#` are ignored):
+* **`DefaultLayers.jsx`** adds a set of layers defined in a TSV *(tab‑separated values)* list, [**`layers.txt`**](../layers.txt):
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
@@ -138,11 +138,11 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Order**: `top` or `bottom` (above or below existing layers) \
   > **Variants**: a list of layers that will be merged with the base layer (case insensitive)
 
-  You can put the file in the current directory, on the desktop, or next to the script.
+  The file can be saved in the current folder, on the desktop, or next to the script (the first one found will be used). Empty lines and lines beginning with "#" are ignored. This also applies to the next lists.
 
-  **Note:** **`layers.xlsx`** can be used to generate the TSV file.
+  **Note:** **`layers.xlsx`** can be used to generate the list.
 
-* **`DefaultSwatches.jsx`** adds a set of swatches defined in [**`swatches.txt`**](../swatches.txt), a 3‑column TSV file formatted as follows (empty lines and lines beginning with `#` are ignored):
+* **`DefaultSwatches.jsx`** adds a set of swatches defined in [**`swatches.txt`**](../swatches.txt):
 
   Name | Model | Values
   :- | :-: | :-
@@ -154,19 +154,15 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Model**: color model: `process` or `spot` \
   > **Values**: a list of 3 (RGB) or 4 (CMYK) color values
 
-  You can put the file in the current directory, on the desktop, or next to the script.
+* **`CleanupSwatches.jsx`** converts process RGB swatches to CMYK, renames them to "C= M= Y= K=" form, removes duplicates and deletes unused. Spot colors are not changed.
 
-* **`CleanupSwatches.jsx`** converts process RGB swatches to CMYK, renames them to `C= M= Y= K=` form, removes duplicates and deletes unused. Spot colors are not changed.
-
-* **`ReplaceFonts.jsx`** replaces fonts from a substitution list, [**`fonts.txt`**](../fonts.txt), a 4‑column TSV file formatted as follows (empty lines and lines beginning with `#` are ignored):
+* **`ReplaceFonts.jsx`** substitute fonts from a list defined in [**`fonts.txt`**](../fonts.txt):
 
   Old font | Style | New font | Style
   :- | :- | :- | :-
   Arial | Regular | Helvetica Neue | Regular
   Arial | Bold | Helvetica Neue | Bold
   ... |
-
-  You can put the file in the current directory, on the desktop, or next to the script.
 
   **Note:** You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy‑pasting.
 
@@ -209,19 +205,19 @@ Setup | | | |
 
   **`ClipUndo.jsx`** restores one or several clipped objects at once.
 
-* **`PageRatios.jsx`** calculates the ratio of each page and puts it in the upper left corner, on the `info` layer.
+* **`PageRatios.jsx`** calculates the ratio of each page and puts it in the upper left corner, on the **info** layer.
 
 * **`PagesToFiles.jsx`** saves the pages of the active document in separate files, with a user configurable suffix.
 
-* **`QR.jsx`** adds QR codes in the active document or creates separate files in a subfolder named `QR Codes`:
+* **`QR.jsx`** adds a QR code in the active document, in a file, or creates multiple codes in separate files:
 
   ![Generate QR Code](img/qr.png)
 
   * **On page** adds the code on each page, on the bottom left corner.
 
-  * **On file** saves it in a file with the name of the active document and `_QR` added to the end.
+  * **On file** saves it in a file with the name of the active document and "_QR" added to the end.
 
-  * **Batch** creates multiple files from a 2‑column TSV list named **QR.txt**, if it's found in the current directory (empty lines and lines beginning with `#` are ignored):
+  * **Batch** it's enabled only if a TSV file, **QR.txt**, containing a list of codes and filenames, is found in the current folder:
 
     Filename | Code
     :- | :-
@@ -229,11 +225,11 @@ Setup | | | |
     File 2 | CODE 2
     ... |
 
-  **Note:** You can insert `|` for manually splitting the text into several lines.
+  **Note:** You can insert "|" for manually splitting the text into several lines.
 
 * **`ShowFonts.jsx`** shows all fonts used in the current document (useful with **`ReplaceFonts.jsx`**).
 
-* **`ShowProfiles.jsx`** shows all color profiles available to InDesign (for when you *think* you have a color profile installed).
+* **`ShowProfiles.jsx`** shows all color profiles available to InDesign.
 
 * **`ShowProperties.jsx`** shows properties and methods of a selected object (useful for debugging).
 
@@ -267,4 +263,4 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
 
-README.md • January 3, 2021
+README.md • January 4, 2021

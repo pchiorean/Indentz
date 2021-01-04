@@ -3,28 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Indentz</title>
-<style>
-</style>
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
 <style>
 body {
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
-font-size: 14px;
-line-height: 1.6;
-}
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif; font-size: 14px; line-height: 1.6; }
+.task-list-item { list-style-type: none; }
+.task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
 </style>
-<style>
-.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
-</style>
-
-
-
 </head>
-<body class="vscode-light">
+
+<body class="vscode-body vscode-light">
 <h1 id="indentz">Indentz</h1>
-<p>Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run by assigning keyboard shortcuts from <strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong> (suggestions below each section). Some can be run in the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
+<p>Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run by a keyboard shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; suggestions below each section). Some can be run by the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
 <h2 id="description">Description</h2>
 <h3 id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
 <p>Make it easier to align objects or set the reference point for transformations using shortcuts.</p>
@@ -43,7 +34,7 @@ line-height: 1.6;
 <p><strong><code>SetRefPoint</code></strong> scripts change the reference point used for transformations (like clicking the little proxy squares in the <strong>Transform</strong> palette).</p>
 </li>
 </ul>
-<p><strong>Note:</strong> Both sets should be assigned to the numeric keypad.</p>
+<p><strong>Note:</strong> These two sets don't make much sense if they're not associated with the numeric keypad.</p>
 <details><summary><strong>Shortcuts</strong></summary>
 <table>
 <thead>
@@ -138,7 +129,7 @@ line-height: 1.6;
 <p><strong><code>FitTo...Forced.jsx</code></strong> resize exactly to the named dimensions.</p>
 </li>
 <li>
-<p><strong><code>TextAutosize.jsx</code></strong> fits the text frame to the text and sets it to auto-size. You control the auto-sizing reference point by setting <strong>Paragraph Alignment</strong> for the horizontal axis, and <strong>Text Frame Options &gt; Vertical Justification</strong> for the vertical axis:</p>
+<p><strong><code>TextAutosize.jsx</code></strong> fits the text frame to the text and sets it to auto‑size. You control the auto‑sizing reference point by setting <strong>Paragraph Alignment</strong> for the horizontal axis, and <strong>Text Frame Options &gt; Vertical Justification</strong> for the vertical axis:</p>
 <table>
 <thead>
 <tr>
@@ -169,7 +160,7 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-<p>If the text has only one line, <strong>Auto-Sizing Type</strong> will be set to <em>Height and width</em>. If it has multiple lines, the first run will set it to <em>Height only</em>, the second run to <em>Height and width</em>.</p>
+<p>If the text has only one line, <strong>Auto‑Sizing Type</strong> will be set to <em>Height and width</em>. If it has multiple lines, the first run will set it to <em>Height only</em>, the second run to <em>Height and width</em>.</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuts</strong></summary>
@@ -251,16 +242,16 @@ line-height: 1.6;
 </table>
 </details>
 <h3 id="print"><strong>Print</strong></h3>
-<p>Make several preparations for export and can be used with <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. The scripts detect alternative layers like <em>visible</em>, <em>vizibil</em> for <code>safe area</code>, or <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> for <code>dielines</code>.</p>
+<p>Make several preparations for export and can be used with <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. The scripts detect alternative layers like <strong>visible</strong>, <strong>vizibil</strong> for <strong>safe area</strong>, or <strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong> for <strong>dielines</strong>.</p>
 <ul>
 <li>
-<p><strong><code>PrepareForPrint.jsx</code></strong> hides the <code>safe area</code> layer and moves the dielines, white and UV markings from <code>dielines</code> / <code>white</code> / <code>varnish</code> to separate spreads.</p>
+<p><strong><code>PrepareForPrint.jsx</code></strong> hides the <strong>safe area</strong> layer and moves the dielines, white and UV markings from <strong>dielines</strong> / <strong>white</strong> / <strong>varnish</strong> to separate spreads.</p>
 </li>
 <li>
-<p><strong><code>SafeArea.jsx</code></strong> creates a frame the size of the page margins on the <code>safe area</code> layer. It uses the <code>Safe area</code> swatch, which if it does not exist will be created with the value <code>C=0 M=100 Y=0 K=0</code>.</p>
+<p><strong><code>SafeArea.jsx</code></strong> creates a frame the size of the page margins on the <strong>safe area</strong> layer. It uses the <strong>Safe area</strong> swatch, which if it does not exist will be created with the value &quot;C=0 M=100 Y=0 K=0&quot;.</p>
 </li>
 <li>
-<p><strong><code>SafeAreaHideLayer.jsx</code></strong> and <strong><code>SafeAreaShowLayer.jsx</code></strong> hide or show <code>safe area</code>.</p>
+<p><strong><code>SafeAreaHideLayer.jsx</code></strong> and <strong><code>SafeAreaShowLayer.jsx</code></strong> hide or show <strong>safe area</strong>.</p>
 </li>
 </ul>
 <h3 id="setup"><strong>Setup</strong></h3>
@@ -295,7 +286,7 @@ line-height: 1.6;
 </blockquote>
 </li>
 <li>
-<p><strong><code>DefaultLayers.jsx</code></strong> adds a set of layers, reading their properties from <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>, a 6‑column TSV <em>(tab-separated values)</em> file formatted as follows (empty lines and lines beginning with <code>&num;</code> are ignored):</p>
+<p><strong><code>DefaultLayers.jsx</code></strong> adds a set of layers defined in a TSV <em>(tab‑separated values)</em> list, <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -342,11 +333,11 @@ line-height: 1.6;
 <strong>Order</strong>: <code>top</code> or <code>bottom</code> (above or below existing layers) <br>
 <strong>Variants</strong>: a list of layers that will be merged with the base layer (case insensitive)</p>
 </blockquote>
-<p>You can put the file in the current directory, on the desktop, or next to the script.</p>
-<p><strong>Note:</strong> <strong><code>layers.xlsx</code></strong> can be used to generate the TSV file.</p>
+<p>The file can be saved in the current folder, on the desktop, or next to the script (the first one found will be used). Empty lines and lines beginning with &quot;#&quot; are ignored. This also applies to the next lists.</p>
+<p><strong>Note:</strong> <strong><code>layers.xlsx</code></strong> can be used to generate the list.</p>
 </li>
 <li>
-<p><strong><code>DefaultSwatches.jsx</code></strong> adds a set of swatches defined in <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>, a 3‑column TSV file formatted as follows (empty lines and lines beginning with <code>&num;</code> are ignored):</p>
+<p><strong><code>DefaultSwatches.jsx</code></strong> adds a set of swatches defined in <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -378,13 +369,12 @@ line-height: 1.6;
 <strong>Model</strong>: color model: <code>process</code> or <code>spot</code> <br>
 <strong>Values</strong>: a list of 3 (RGB) or 4 (CMYK) color values</p>
 </blockquote>
-<p>You can put the file in the current directory, on the desktop, or next to the script.</p>
 </li>
 <li>
-<p><strong><code>CleanupSwatches.jsx</code></strong> converts process RGB swatches to CMYK, renames them to <code>C= M= Y= K=</code> form, removes duplicates and deletes unused. Spot colors are not changed.</p>
+<p><strong><code>CleanupSwatches.jsx</code></strong> converts process RGB swatches to CMYK, renames them to &quot;C= M= Y= K=&quot; form, removes duplicates and deletes unused. Spot colors are not changed.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> replaces fonts from a substitution list, <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>, a 4‑column TSV file formatted as follows (empty lines and lines beginning with <code>&num;</code> are ignored):</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> substitute fonts from a list defined in <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -415,7 +405,6 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-<p>You can put the file in the current directory, on the desktop, or next to the script.</p>
 <p><strong>Note:</strong> You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Misc</strong> to get a tab delimited list of fonts for copy‑pasting.</p>
 </li>
 <li>
@@ -457,7 +446,7 @@ line-height: 1.6;
 </tbody>
 </table>
 <blockquote>
-<p>It searches for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it's the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair it's the page size, the smaller pair the visible/safe area size. If followed by a one- or two-digit sequence, this will be bleed.</p>
+<p>It searches for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it's the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair it's the page size, the smaller pair the visible/safe area size. If followed by a one- or two‑digit sequence, this will be bleed.</p>
 </blockquote>
 </li>
 <li>
@@ -509,23 +498,23 @@ line-height: 1.6;
 <p><strong><code>ClipUndo.jsx</code></strong> restores one or several clipped objects at once.</p>
 </li>
 <li>
-<p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and puts it in the upper left corner, on the <code>info</code> layer.</p>
+<p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and puts it in the upper left corner, on the <strong>info</strong> layer.</p>
 </li>
 <li>
 <p><strong><code>PagesToFiles.jsx</code></strong> saves the pages of the active document in separate files, with a user configurable suffix.</p>
 </li>
 <li>
-<p><strong><code>QR.jsx</code></strong> adds QR codes in the active document or creates separate files in a subfolder named <code>QR Codes</code>:</p>
+<p><strong><code>QR.jsx</code></strong> adds a QR code in the active document, in a file, or creates multiple codes in separate files:</p>
 <p><img src="img/qr.png" alt="Generate QR Code"></p>
 <ul>
 <li>
 <p><strong>On page</strong> adds the code on each page, on the bottom left corner.</p>
 </li>
 <li>
-<p><strong>On file</strong> saves it in a file with the name of the active document and <code>_QR</code> added to the end.</p>
+<p><strong>On file</strong> saves it in a file with the name of the active document and &quot;_QR&quot; added to the end.</p>
 </li>
 <li>
-<p><strong>Batch</strong> creates multiple files from a 2‑column TSV list named <strong><code>QR.txt</code></strong>, if it's found in the current directory (empty lines and lines beginning with <code>&num;</code> are ignored):</p>
+<p><strong>Batch</strong> it's enabled only if a TSV file, <strong>QR.txt</strong>, containing a list of codes and filenames, is found in the current folder:</p>
 <table>
 <thead>
 <tr>
@@ -550,13 +539,13 @@ line-height: 1.6;
 </table>
 </li>
 </ul>
-<p><strong>Note:</strong> You can insert <code>|</code> for manually splitting the text into several lines.</p>
+<p><strong>Note:</strong> You can insert &quot;|&quot; for manually splitting the text into several lines.</p>
 </li>
 <li>
 <p><strong><code>ShowFonts.jsx</code></strong> shows all fonts used in the current document (useful with <strong><code>ReplaceFonts.jsx</code></strong>).</p>
 </li>
 <li>
-<p><strong><code>ShowProfiles.jsx</code></strong> shows all color profiles available to InDesign (for when you <em>think</em> you have a color profile installed).</p>
+<p><strong><code>ShowProfiles.jsx</code></strong> shows all color profiles available to InDesign.</p>
 </li>
 <li>
 <p><strong><code>ShowProperties.jsx</code></strong> shows properties and methods of a selected object (useful for debugging).</p>
@@ -608,13 +597,12 @@ line-height: 1.6;
 <h2 id="installation">Installation</h2>
 <ol>
 <li>Open <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
-<li>Right-click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
+<li>Right‑click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
 <li>Copy files to this folder.</li>
 </ol>
 <h2 id="license">License</h2>
-<p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<!-- Some of the code is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Richard Harrington and others. -->
-<p>README.md • January 3, 2021</p>
-
+<p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
+The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
+<p>README.md • January 4, 2021</p>
 </body>
 </html>

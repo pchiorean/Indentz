@@ -1,6 +1,6 @@
 # Indentz
 
-Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (sugestii sub fiecare secțiune). Câteva pot fi rulate în scriptul [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
+Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte sunt gândite să fie rulate printr‑un shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
 
 ## Descriere
 
@@ -18,7 +18,7 @@ Facilitează alinierea obiectelor sau setarea punctului de referință pentru tr
 
 * **`SetRefPoint`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**.
 
-**Notă:** Ambele seturi ar trebui alocate tastaturii numerice.
+**Notă:** Aceste două seturi nu prea au sens dacă nu sunt asociate tastaturii numerice.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -84,13 +84,13 @@ Scale | |
 
 ### **Print**
 
-Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează straturi cu denumiri similare gen *visible*, *vizibil* pentru `safe area`, sau *diecut*, *die cut*, *cut lines*, *stanze* pentru `dielines`.
+Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează straturi cu denumiri similare gen **visible**, **vizibil** pentru **safe area**, sau **diecut**, **die cut**, **cut lines**, **stanze** pentru **dielines**.
 
-* **`PrepareForPrint.jsx`** ascunde stratul `safe area` și mută ștanțele și marcajele pentru alb și lac UV de pe `dielines` / `white` / `varnish` pe spreaduri separate.
+* **`PrepareForPrint.jsx`** ascunde stratul **safe area** și mută ștanțele și marcajele pentru alb și lac UV de pe **dielines** / **white** / **varnish** pe spreaduri separate.
 
-* **`SafeArea.jsx`** creează un chenar de dimensiunea marginilor paginii pe stratul `safe area`. Folosește culoarea `Safe area`, care dacă nu există va fi creată cu valoarea `C=0 M=100 Y=0 K=0`.
+* **`SafeArea.jsx`** creează un chenar de dimensiunea marginilor paginii pe stratul **safe area**. Folosește culoarea **Safe area**, care dacă nu există va fi creată cu valoarea "C=0 M=100 Y=0 K=0".
 
-* **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează `safe area`.
+* **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează **safe area**.
 
 ### **Setup**
 
@@ -123,26 +123,26 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefaultLayers.jsx`** creează un set de straturi, preluându‑le proprietățile din [**`layers.txt`**](../layers.txt), un fișier TSV *(tab‑separated values)* cu 6 coloane formatat în genul următor (liniile goale și liniile care încep cu `#` sunt ignorate):
+* **`DefaultLayers.jsx`** creează un set de straturi definite într‑un fișier TSV *(tab‑separated values)*, [**`layers.txt`**](../layers.txt):
 
-  Nume | Culoare | Vizibil | Printabil | Ordine | Variante
+  Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
   dielines | Magenta | TRUE | TRUE | top | cut, cut lines, decoupe, die, die cut, stanze
   template | Gray | FALSE | FALSE | bottom
   ... |
 
-  > **Nume**: numele stratului \
-  > **Culoare**: culoarea stratului (v. [**`UIColors.txt`**](UIColors.txt)) \
-  > **Vizibil**: `TRUE` sau `FALSE` \
-  > **Printabil**: `TRUE` sau `FALSE` \
-  > **Ordine**: `top` sau `bottom` (deasupra sau sub straturile existente) \
-  > **Variante**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)
+  > **Name**: numele stratului \
+  > **Color**: culoarea stratului (v. [**`UIColors.txt`**](UIColors.txt)) \
+  > **Visible**: `TRUE` sau `FALSE` \
+  > **Printable**: `TRUE` sau `FALSE` \
+  > **Order**: `top` sau `bottom` (deasupra sau sub straturile existente) \
+  > **Variants**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)
 
-  Puteți pune fișierul în folderul curent, pe desktop sau lângă script.
+  Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script (va fi folosit primul găsit). Liniile goale și liniile care încep cu "#" sunt ignorate. Aceste lucruri sunt valabile și pentru următoarele liste.
 
-  **Note:** **`layers.xlsx`** poate fi folosit pentru generarea fișierului TSV.
+  **Note:** **`layers.xlsx`** poate fi folosit pentru a genera lista.
 
-* **`DefaultSwatches.jsx`** creează un set de culori definite în [**`swatches.txt`**](../swatches.txt), un fișier TSV cu 3 coloane formatat în genul următor (liniile goale și liniile care încep cu `#` sunt ignorate):
+* **`DefaultSwatches.jsx`** creează un set de culori definite în [**`swatches.txt`**](../swatches.txt):
 
   Name | Model | Values
   :- | :-: | :-
@@ -154,19 +154,15 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Model**: tipul culorii: `process` sau `spot` \
   > **Values**: o listă de 3 (RGB) sau 4 (CMYK) valori
 
-  Puteți pune fișierul în folderul curent, pe desktop sau lângă script.
+* **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, le redenumește după formula "C= M= Y= K=", elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
-* **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, le redenumește după formula `C= M= Y= K=`, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
+* **`ReplaceFonts.jsx`** substituie fonturi dintr‑o listă definită în [**`fonts.txt`**](../fonts.txt):
 
-* **`ReplaceFonts.jsx`** înlocuiește fonturi utilizând o listă de substituție, [**`fonts.txt`**](../fonts.txt), un fișier TSV cu 4 coloane formatat în genul următor (liniile goale și liniile care încep cu `#` sunt ignorate):
-
-  Font vechi | Stil | Font nou | Stil
+  Old font | Style | New font | Style
   :- | :- | :- | :-
   Arial | Regular | Helvetica Neue | Regular
   Arial | Bold | Helvetica Neue | Bold
   ... |
-
-  Puteți pune fișierul în folderul curent, pe desktop sau lângă script.
 
   **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
 
@@ -180,7 +176,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`PageSizeFromFilename.jsx`** setează dimensiunea și marginile paginii preluând informațiile din numele fișierului:
 
-  Fișier | Dimensiune | Safe area | Bleed
+  Filename | Total size | Safe area | Bleed
   :- | :-: | :-: | :-:
   File1\_`1400x400`\_`700x137`\_`5`mm\_QR.indd | 1400x400 | 700x137 | 5
   File2\_`597x517`\_`577x500.5`\_`3`mm V4\_QR.indd | 597x517 | 577x500.5 | 3
@@ -209,19 +205,19 @@ Setup | | | |
 
   **`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
-* **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul `info`.
+* **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul **info**.
 
 * **`PagesToFiles.jsx`** salvează paginile documentului activ în fișiere separate, cu un sufix configurabil.
 
-* **`QR.jsx`** adaugă coduri QR în documentul activ sau creează fișiere separate într‑un subfolder numit `QR Codes`:
+* **`QR.jsx`** adaugă un cod QR în documentul activ, într-un fișier, sau creează mai multe coduri în fișiere separate:
 
   ![Generate QR Code](img/qr.png)
 
   * **On page** adaugă codul pe fiecare pagină, în colțul din stânga jos.
 
-  * **On file** îl salvează într‑un fișier cu numele documentului activ și `_QR` adăugat la coadă.
+  * **On file** îl salvează într‑un fișier cu numele documentului activ și "_QR" adăugat la coadă.
 
-  * **Batch** creează mai multe fișiere dintr‑un document TSV cu 2 coloane numit **`QR.txt`**, dacă e găsit în folderul curent (liniile goale și liniile care încep cu `#` sunt ignorate):
+  * **Batch** e activat doar dacă în folderul curent e găsit un fișier TSV, **`QR.txt`**, conținând o listă de coduri și nume de fișiere:
 
     Filename | Code
     :- | :-
@@ -229,11 +225,11 @@ Setup | | | |
     File 2 | CODE 2
     ... |
 
-  **Notă:** Puteți insera `|` pentru împărțirea manuală a textului în mai multe rânduri.
+  **Notă:** Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
 
 * **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`ReplaceFonts.jsx`**).
 
-* **`ShowProfiles.jsx`** afișează toate profilele de culori disponibile (util când *credeți* că aveți instalat un profil de culoare).
+* **`ShowProfiles.jsx`** afișează toate profilele de culori disponibile.
 
 * **`ShowProperties.jsx`** afișează proprietățile și metodele unui obiect selectat (util pentru depanare).
 
@@ -267,4 +263,4 @@ Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
 
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Richard Harrington și alții. -->
 
-README-ro.md • 3 ianuarie 2021
+README-ro.md • 4 ianuarie 2021

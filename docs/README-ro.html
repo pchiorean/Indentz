@@ -3,28 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Indentz</title>
-<style>
-</style>
-
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
 <style>
 body {
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif;
-font-size: 14px;
-line-height: 1.6;
-}
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif; font-size: 14px; line-height: 1.6; }
+.task-list-item { list-style-type: none; }
+.task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
 </style>
-<style>
-.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
-</style>
-
-
-
 </head>
-<body class="vscode-light">
+
+<body class="vscode-body vscode-light">
 <h1 id="indentz">Indentz</h1>
-<p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte dintre ele sunt gândite să fie rulate printr‑un shortcut (sugestii sub fiecare secțiune). Câteva pot fi rulate în scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
+<p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte sunt gândite să fie rulate printr‑un shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
 <h2 id="descriere">Descriere</h2>
 <h3 id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
 <p>Facilitează alinierea obiectelor sau setarea punctului de referință pentru transformări folosind shortcuturi.</p>
@@ -43,7 +34,7 @@ line-height: 1.6;
 <p><strong><code>SetRefPoint</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta <strong>Transform</strong>.</p>
 </li>
 </ul>
-<p><strong>Notă:</strong> Ambele seturi ar trebui alocate tastaturii numerice.</p>
+<p><strong>Notă:</strong> Aceste două seturi nu prea au sens dacă nu sunt asociate tastaturii numerice.</p>
 <details><summary><strong>Shortcuturi</strong></summary>
 <table>
 <thead>
@@ -134,7 +125,7 @@ line-height: 1.6;
 <p>Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container <em>(clipping frame)</em> și acesta e redimensionat.</p>
 <ul>
 <li>
-<p><strong><code>FitToPage</code></strong> și <strong><code>FitToSpread</code></strong>: dacă obiectul este mai mare decât pagina/spreadul/marginile/bleedul, va fi redus; dacă este mai mic dar intră într-o zonă „snap” de 1%, va fi mărit.</p>
+<p><strong><code>FitToPage</code></strong> și <strong><code>FitToSpread</code></strong>: dacă obiectul este mai mare decât pagina/spreadul/marginile/bleedul, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.</p>
 <p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la dimensiunile respective.</p>
 </li>
 <li>
@@ -169,7 +160,7 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-<p>Dacă textul are un singur rând, <strong>Auto-Sizing Type</strong> va fi setat <em>Height and width</em>. Dacă are mai multe rânduri, prima rulare îl va seta <em>Height only</em>, a doua <em>Height and width</em>.</p>
+<p>Dacă textul are un singur rând, <strong>Auto‑Sizing Type</strong> va fi setat <em>Height and width</em>. Dacă are mai multe rânduri, prima rulare îl va seta <em>Height only</em>, a doua <em>Height and width</em>.</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuturi</strong></summary>
@@ -251,16 +242,16 @@ line-height: 1.6;
 </table>
 </details>
 <h3 id="print"><strong>Print</strong></h3>
-<p>Fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează straturi cu denumiri similare gen <em>visible</em>, <em>vizibil</em> pentru <code>safe area</code>, sau <em>diecut</em>, <em>die cut</em>, <em>cut lines</em>, <em>stanze</em> pentru <code>dielines</code>.</p>
+<p>Fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează straturi cu denumiri similare gen <strong>visible</strong>, <strong>vizibil</strong> pentru <strong>safe area</strong>, sau <strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong> pentru <strong>dielines</strong>.</p>
 <ul>
 <li>
-<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde stratul <code>safe area</code> și mută ștanțele și marcajele pentru alb și lac UV de pe <code>dielines</code> / <code>white</code> / <code>varnish</code> pe spreaduri separate.</p>
+<p><strong><code>PrepareForPrint.jsx</code></strong> ascunde stratul <strong>safe area</strong> și mută ștanțele și marcajele pentru alb și lac UV de pe <strong>dielines</strong> / <strong>white</strong> / <strong>varnish</strong> pe spreaduri separate.</p>
 </li>
 <li>
-<p><strong><code>SafeArea.jsx</code></strong> creează un chenar de dimensiunea marginilor paginii pe stratul <code>safe area</code>. Folosește culoarea <code>Safe area</code>, care dacă nu există va fi creată cu valoarea <code>C=0 M=100 Y=0 K=0</code>.</p>
+<p><strong><code>SafeArea.jsx</code></strong> creează un chenar de dimensiunea marginilor paginii pe stratul <strong>safe area</strong>. Folosește culoarea <strong>Safe area</strong>, care dacă nu există va fi creată cu valoarea &quot;C=0 M=100 Y=0 K=0&quot;.</p>
 </li>
 <li>
-<p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <code>safe area</code>.</p>
+<p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <strong>safe area</strong>.</p>
 </li>
 </ul>
 <h3 id="setup"><strong>Setup</strong></h3>
@@ -295,16 +286,16 @@ line-height: 1.6;
 </blockquote>
 </li>
 <li>
-<p><strong><code>DefaultLayers.jsx</code></strong> creează un set de straturi, preluându‑le proprietățile din <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>, un fișier TSV <em>(tab-separated values)</em> cu 6 coloane formatat în genul următor (liniile goale și liniile care încep cu <code>&num;</code> sunt ignorate):</p>
+<p><strong><code>DefaultLayers.jsx</code></strong> creează un set de straturi definite într‑un fișier TSV <em>(tab‑separated values)</em>, <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Nume</th>
-<th style="text-align:center">Culoare</th>
-<th style="text-align:center">Vizibil</th>
-<th style="text-align:center">Printabil</th>
-<th style="text-align:center">Ordine</th>
-<th style="text-align:left">Variante</th>
+<th style="text-align:left">Name</th>
+<th style="text-align:center">Color</th>
+<th style="text-align:center">Visible</th>
+<th style="text-align:center">Printable</th>
+<th style="text-align:center">Order</th>
+<th style="text-align:left">Variants</th>
 </tr>
 </thead>
 <tbody>
@@ -335,40 +326,40 @@ line-height: 1.6;
 </tbody>
 </table>
 <blockquote>
-<p><strong>Nume</strong>: numele stratului <br>
-<strong>Culoare</strong>: culoarea stratului (v. <a href="UIColors.txt"><strong><code>UIColors.txt</code></strong></a>) <br>
-<strong>Vizibil</strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
-<strong>Printabil</strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
-<strong>Ordine</strong>: <code>top</code> sau <code>bottom</code> (deasupra sau sub straturile existente) <br>
-<strong>Variante</strong>: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)</p>
+<p><strong>Name</strong>: numele stratului <br>
+<strong>Color</strong>: culoarea stratului (v. <a href="UIColors.txt"><strong><code>UIColors.txt</code></strong></a>) <br>
+<strong>Visible</strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
+<strong>Printable</strong>: <code>TRUE</code> sau <code>FALSE</code> <br>
+<strong>Order</strong>: <code>top</code> sau <code>bottom</code> (deasupra sau sub straturile existente) <br>
+<strong>Variants</strong>: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)</p>
 </blockquote>
-<p>Puteți pune fișierul în folderul curent, pe desktop sau lângă script.</p>
-<p><strong>Note:</strong> <strong><code>layers.xlsx</code></strong> poate fi folosit pentru generarea fișierului TSV.</p>
+<p>Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script (va fi folosit primul găsit). Liniile goale și liniile care încep cu &quot;#&quot; sunt ignorate. Aceste lucruri sunt valabile și pentru următoarele liste.</p>
+<p><strong>Note:</strong> <strong><code>layers.xlsx</code></strong> poate fi folosit pentru a genera lista.</p>
 </li>
 <li>
-<p><strong><code>DefaultSwatches.jsx</code></strong> creează un set de culori definite în <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>, un fișier TSV cu 3 coloane formatat în genul următor (liniile goale și liniile care încep cu <code>&num;</code> sunt ignorate):</p>
+<p><strong><code>DefaultSwatches.jsx</code></strong> creează un set de culori definite în <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
 <th style="text-align:left">Name</th>
-<th style="text-align:left">Model</th>
+<th style="text-align:center">Model</th>
 <th style="text-align:left">Values</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left">Rich Black</td>
-<td style="text-align:left">process</td>
+<td style="text-align:center">process</td>
 <td style="text-align:left">60, 40, 40, 100</td>
 </tr>
 <tr>
 <td style="text-align:left">Cut</td>
-<td style="text-align:left">spot</td>
+<td style="text-align:center">spot</td>
 <td style="text-align:left">0, 100, 0, 0</td>
 </tr>
 <tr>
 <td style="text-align:left">...</td>
-<td style="text-align:left"></td>
+<td style="text-align:center"></td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
@@ -378,20 +369,19 @@ line-height: 1.6;
 <strong>Model</strong>: tipul culorii: <code>process</code> sau <code>spot</code> <br>
 <strong>Values</strong>: o listă de 3 (RGB) sau 4 (CMYK) valori</p>
 </blockquote>
-<p>Puteți pune fișierul în folderul curent, pe desktop sau lângă script.</p>
 </li>
 <li>
-<p><strong><code>CleanupSwatches.jsx</code></strong> convertește culorile RGB la CMYK, le redenumește după formula <code>C= M= Y= K=</code>, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
+<p><strong><code>CleanupSwatches.jsx</code></strong> convertește culorile RGB la CMYK, le redenumește după formula &quot;C= M= Y= K=&quot;, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> înlocuiește fonturi utilizând o listă de substituție, <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>, un fișier TSV cu 4 coloane formatat în genul următor (liniile goale și liniile care încep cu <code>&num;</code> sunt ignorate):</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> substituie fonturi dintr‑o listă definită în <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Font vechi</th>
-<th style="text-align:left">Stil</th>
-<th style="text-align:left">Font nou</th>
-<th style="text-align:left">Stil</th>
+<th style="text-align:left">Old font</th>
+<th style="text-align:left">Style</th>
+<th style="text-align:left">New font</th>
+<th style="text-align:left">Style</th>
 </tr>
 </thead>
 <tbody>
@@ -415,7 +405,6 @@ line-height: 1.6;
 </tr>
 </tbody>
 </table>
-<p>Puteți pune fișierul în folderul curent, pe desktop sau lângă script.</p>
 <p><strong>Notă:</strong> Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy‑paste.</p>
 </li>
 <li>
@@ -435,8 +424,8 @@ line-height: 1.6;
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Fișier</th>
-<th style="text-align:center">Dimensiune</th>
+<th style="text-align:left">Filename</th>
+<th style="text-align:center">Total size</th>
 <th style="text-align:center">Safe area</th>
 <th style="text-align:center">Bleed</th>
 </tr>
@@ -509,23 +498,23 @@ line-height: 1.6;
 <p><strong><code>ClipUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
 </li>
 <li>
-<p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul <code>info</code>.</p>
+<p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul <strong>info</strong>.</p>
 </li>
 <li>
 <p><strong><code>PagesToFiles.jsx</code></strong> salvează paginile documentului activ în fișiere separate, cu un sufix configurabil.</p>
 </li>
 <li>
-<p><strong><code>QR.jsx</code></strong> adaugă coduri QR în documentul activ sau creează fișiere separate într‑un subfolder numit <code>QR Codes</code>:</p>
+<p><strong><code>QR.jsx</code></strong> adaugă un cod QR în documentul activ, într-un fișier, sau creează mai multe coduri în fișiere separate:</p>
 <p><img src="img/qr.png" alt="Generate QR Code"></p>
 <ul>
 <li>
 <p><strong>On page</strong> adaugă codul pe fiecare pagină, în colțul din stânga jos.</p>
 </li>
 <li>
-<p><strong>On file</strong> îl salvează într‑un fișier cu numele documentului activ și <code>_QR</code> adăugat la coadă.</p>
+<p><strong>On file</strong> îl salvează într‑un fișier cu numele documentului activ și &quot;_QR&quot; adăugat la coadă.</p>
 </li>
 <li>
-<p><strong>Batch</strong> creează mai multe fișiere dintr‑un document TSV cu 2 coloane numit <strong><code>QR.txt</code></strong>, dacă e găsit în folderul curent (liniile goale și liniile care încep cu <code>&num;</code> sunt ignorate):</p>
+<p><strong>Batch</strong> e activat doar dacă în folderul curent e găsit un fișier TSV, <strong><code>QR.txt</code></strong>, conținând o listă de coduri și nume de fișiere:</p>
 <table>
 <thead>
 <tr>
@@ -550,13 +539,13 @@ line-height: 1.6;
 </table>
 </li>
 </ul>
-<p><strong>Notă:</strong> Puteți insera <code>|</code> pentru împărțirea manuală a textului în mai multe rânduri.</p>
+<p><strong>Notă:</strong> Puteți insera &quot;|&quot; pentru împărțirea manuală a textului în mai multe rânduri.</p>
 </li>
 <li>
 <p><strong><code>ShowFonts.jsx</code></strong> afișează toate fonturile utilizate în documentul curent (util pentru <strong><code>ReplaceFonts.jsx</code></strong>).</p>
 </li>
 <li>
-<p><strong><code>ShowProfiles.jsx</code></strong> afișează toate profilele de culori disponibile (util când <em>credeți</em> că aveți instalat un profil de culoare).</p>
+<p><strong><code>ShowProfiles.jsx</code></strong> afișează toate profilele de culori disponibile.</p>
 </li>
 <li>
 <p><strong><code>ShowProperties.jsx</code></strong> afișează proprietățile și metodele unui obiect selectat (util pentru depanare).</p>
@@ -612,9 +601,8 @@ line-height: 1.6;
 <li>Copiați fișierele în acest folder.</li>
 </ol>
 <h2 id="licență">Licență</h2>
-<p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<!-- Părți din cod se bazează pe postări de pe bloguri, forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Richard Harrington și alții. -->
-<p>README-ro.md • 3 ianuarie 2021</p>
-
+<p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
+Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
+<p>README-ro.md • 4 ianuarie 2021</p>
 </body>
 </html>
