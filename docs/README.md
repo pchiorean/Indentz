@@ -127,15 +127,15 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
-  dielines | Magenta | TRUE | TRUE | top | cut, cut lines, decoupe, die, die cut, stanze
-  template | Gray | FALSE | FALSE | bottom
+  dielines | Magenta | yes | yes | top | cut, cut lines, decoupe, die, die cut, stanze
+  template | Gray | no | no | bottom
   ... |
 
   > **Name**: layer name \
-  > **Color**: layer color (see [**`UIColors.txt`**](UIColors.txt)) \
-  > **Visible**: `TRUE` or `FALSE` \
-  > **Printable**: `TRUE` or `FALSE` \
-  > **Order**: `top` or `bottom` (above or below existing layers) \
+  > **Color**: layer color (see [**`UIColors.txt`**](UIColors.txt); default `Light Blue`) \
+  > **Visible**: `yes` or `no` (default `yes`) \
+  > **Printable**: `yes` or `no` (default `yes`) \
+  > **Order**: `top` or `bottom` (above or below existing layers; default `top`) \
   > **Variants**: a list of layers that will be merged with the base layer (case insensitive)
 
   The file can be saved in the current folder, on the desktop, or next to the script (the first one found will be used). Empty lines and lines beginning with "#" are ignored. This also applies to the next lists.
@@ -151,7 +151,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   ... |
 
   > **Name**: swatch name \
-  > **Model**: color model: `process` or `spot` \
+  > **Model**: color model: `process` or `spot` (default `process`) \
   > **Values**: a list of 3 (RGB) or 4 (CMYK) color values
 
 * **`CleanupSwatches.jsx`** converts process RGB swatches to CMYK, renames them to "C= M= Y= K=" form, removes duplicates and deletes unused. Spot colors are not changed.

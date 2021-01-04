@@ -1,15 +1,15 @@
 Name	Color	Visible	Printable	Order	Variants
-safe area	Yellow	TRUE	TRUE	top	rahmen, vis. area, visible area, visible, vizibil
-dielines	Red	TRUE	TRUE	top	cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanze 1, stanzform
-varnish	Yellow	FALSE	TRUE	top	uv
-white	Cute Teal	FALSE	TRUE	top	
-guides	Magenta	TRUE	FALSE	top	grid
-info	Cyan	FALSE	TRUE	top	info copy, ratio
-HW	Light Gray	FALSE	TRUE	top	hw logo, logo hw, wh, whw
-disclaimer	Gray	FALSE	TRUE	top	
-text and logos	Green	FALSE	TRUE	top	copy, text, textes, txt, type, typo
-codes	Grid Green	FALSE	TRUE	top	barcode, barcodes, code
-products	Blue	FALSE	TRUE	top	product, tins, packshots
-artwork	Light Blue	FALSE	TRUE	top	aw, elemente, layout, layouts
-bg	Red	FALSE	TRUE	bottom	background, hg, hintergrund
-.template	Black	FALSE	FALSE	bottom	template
+safe area	Yellow	yes	yes	top	rahmen, vis. area, visible area, visible, vizibil
+dielines	Red	yes	yes	top	cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanze 1, stanzform
+varnish	Yellow	no	yes	top	uv
+white	Cute Teal	no	yes	top	
+guides	Magenta	yes	no	top	grid
+info	Cyan	no	yes	top	info copy, ratio
+HW	Light Gray	no	yes	top	hw logo, logo hw, wh, whw
+disclaimer	Gray	no	yes	top	
+text and logos	Green	no	yes	top	copy, text, textes, txt, type, typo
+codes	Grid Green	no	yes	top	barcode, barcodes, code
+products	Blue	no	yes	top	product, tins, packshots
+artwork	Light Blue	no	yes	top	aw, elemente, layout, layouts
+bg	Red	no	yes	bottom	background, hg, hintergrund
+.template	Black	no	no	bottom	template

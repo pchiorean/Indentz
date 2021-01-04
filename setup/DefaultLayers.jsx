@@ -1,16 +1,16 @@
 /*
-	Default layers v1.10.2
-	© December 2020, Paul Chiorean
+	Default layers v1.11.0
+	© January 2021, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
-	Name | Color | Visible | Printable | Order | Variants (header, ignored)
-	dielines | Magenta | TRUE | TRUE | top | cut, cut lines, decoupe, die, die cut, stanze
-	template | Gray | FALSE | FALSE | bottom
+	Name | Color | Visible | Printable | Order | Variants
+	dielines | Magenta | yes | yes | top | cut, cut lines, decoupe, die, die cut, stanze
+	template | Gray | no | no | bottom
 	...
 	1. <Name>: layer name,
 	2. <Color>: layer color (see UIColors.txt),
-	3. <Visible>: TRUE or FALSE,
-	4. <Printable>: TRUE or FALSE,
+	3. <Visible>: "yes" or "no",
+	4. <Printable>: "yes" or "no",
 	5. <Order>: "top" or "bottom" (above or below existing layers),
 	6. <Variants>: a list of layers which will be merged with the base layer (case insensitive).
 */
@@ -42,8 +42,8 @@ function main() {
 		layerData.push({
 			name: infoLine[0],
 			color: !!infoLine[1] ? GetUIColor(infoLine[1].trim()) : UIColors.LIGHT_BLUE,
-			isVisible: !!infoLine[2] ? (infoLine[2].toLowerCase() == "true") : true,
-			isPrintable: !!infoLine[3] ? (infoLine[3].toLowerCase() == "true") : true,
+			isVisible: !!infoLine[2] ? (infoLine[2].toLowerCase() == "yes") : true,
+			isPrintable: !!infoLine[3] ? (infoLine[3].toLowerCase() == "yes") : true,
 			isBottom: !!infoLine[4] ? (infoLine[4].toLowerCase() == "bottom") : false,
 			variants: !!infoLine[5] ? GetVariants(infoLine[0], infoLine[5].split(",")) : ""
 		});
