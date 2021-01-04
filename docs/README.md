@@ -127,15 +127,15 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
-  dielines | Magenta | yes | yes | top | cut, cut lines, decoupe, die, die cut, stanze
-  template | Gray | no | no | bottom
+  dielines | Magenta | yes | yes | above | cut, cut lines, decoupe, die, die cut, stanze
+  template | Gray | no | no | below
   ... |
 
   > **Name**: layer name \
   > **Color**: layer color (see [**`UIColors.txt`**](UIColors.txt); default `Light Blue`) \
   > **Visible**: `yes` or `no` (default `yes`) \
   > **Printable**: `yes` or `no` (default `yes`) \
-  > **Order**: `top` or `bottom` (above or below existing layers; default `top`) \
+  > **Order**: `above` or `below` existing layers (default `above`) \
   > **Variants**: a list of layers that will be merged with the base layer (case insensitive)
 
   The file can be saved in the current folder, on the desktop, or next to the script (the first one found will be used). Empty lines and lines beginning with "#" are ignored. This also applies to the next lists.

@@ -127,15 +127,15 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
-  dielines | Magenta | yes | yes | top | cut, cut lines, decoupe, die, die cut, stanze
-  template | Gray | no | no | bottom
+  dielines | Magenta | yes | yes | above | cut, cut lines, decoupe, die, die cut, stanze
+  template | Gray | no | no | below
   ... |
 
   > **Name**: numele stratului \
   > **Color**: culoarea stratului (v. [**`UIColors.txt`**](UIColors.txt); implicit `Light Blue`) \
   > **Visible**: `yes` sau `no` (implicit `yes`) \
   > **Printable**: `yes` sau `no` (implicit `yes`) \
-  > **Order**: `top` sau `bottom` (deasupra sau sub straturile existente; implicit `top`) \
+  > **Order**: `above` sau `below` (deasupra sau sub straturile existente; implicit `above`) \
   > **Variants**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)
 
   Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script (va fi folosit primul găsit). Liniile goale și liniile care încep cu "#" sunt ignorate. Aceste lucruri sunt valabile și pentru următoarele liste.

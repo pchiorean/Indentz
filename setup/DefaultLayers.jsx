@@ -1,5 +1,5 @@
 /*
-	Default layers v1.11.0
+	Default layers v1.12.0
 	© January 2021, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -11,7 +11,7 @@
 	2. <Color>: layer color (see UIColors.txt),
 	3. <Visible>: "yes" or "no",
 	4. <Printable>: "yes" or "no",
-	5. <Order>: "top" or "bottom" (above or below existing layers),
+	5. <Order>: "above" or "below" existing layers,
 	6. <Variants>: a list of layers which will be merged with the base layer (case insensitive).
 */
 
@@ -44,7 +44,7 @@ function main() {
 			color: !!infoLine[1] ? GetUIColor(infoLine[1].trim()) : UIColors.LIGHT_BLUE,
 			isVisible: !!infoLine[2] ? (infoLine[2].toLowerCase() == "yes") : true,
 			isPrintable: !!infoLine[3] ? (infoLine[3].toLowerCase() == "yes") : true,
-			isBottom: !!infoLine[4] ? (infoLine[4].toLowerCase() == "bottom") : false,
+			isBelow: !!infoLine[4] ? (infoLine[4].toLowerCase() == "below") : false,
 			variants: !!infoLine[5] ? GetVariants(infoLine[0], infoLine[5].split(",")) : ""
 		});
 	}
@@ -58,7 +58,7 @@ function main() {
 	var set_AL = doc.activeLayer; // Save active layer
 	// Top layers
 	for (var i = layerData.length - 1; i >= 0 ; i--) {
-		if (layerData[i].isBottom) continue;
+		if (layerData[i].isBelow) continue;
 		MakeLayer(
 			layerData[i].name,
 			layerData[i].color,
@@ -68,7 +68,7 @@ function main() {
 	}
 	// Bottom layers
 	for (var i = 0; i < layerData.length; i++) {
-		if (!layerData[i].isBottom) continue;
+		if (!layerData[i].isBelow) continue;
 		MakeLayer(
 			layerData[i].name,
 			layerData[i].color,
