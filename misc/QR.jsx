@@ -5,7 +5,7 @@
 	If found, batch process "QR.txt". The list is a 2-column TSV
 	file with the the following format:
 
-	Filename | Code (header, ignored)
+	Filename | Code
 	File 1 | CODE 1
 	File 2 | CODE 2
 	...

@@ -3,7 +3,7 @@
 	© December 2020, Paul Chiorean
 	Adds swatches from a 3-column TSV file:
 
-	Name | Model | Values (header, ignored)
+	Name | Model | Values
 	Rich Black | process | 60, 40, 40, 100
 	Cut | spot | 0, 100, 0, 0
 	...

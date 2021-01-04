@@ -3,7 +3,7 @@
 	© December 2020, Paul Chiorean
 	Replaces fonts from a 4-column TSV file:
 
-	Old font | Style | New font | Style (header, ignored)
+	Old font | Style | New font | Style
 	Arial | Regular | Helvetica Neue | Regular
 	Arial | Bold | Helvetica Neue | Bold
 	...
