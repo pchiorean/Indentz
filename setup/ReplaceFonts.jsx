@@ -1,6 +1,6 @@
 ﻿/*
-	Replace fonts 1.11.0
-	© December 2020, Paul Chiorean
+	Replace fonts 1.12.0
+	© January 2021, Paul Chiorean
 	Replaces fonts from a 4-column TSV file:
 
 	Old font | Style | New font | Style
@@ -21,35 +21,35 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 
 function main() {
 	infoFile.open("r");
-	var infoLine, header, fontList = [];
-	var line = 0, flg_H = false;
-	var errfn = infoFile.fullName + "\n";
+	var infoLine, header, data = [],
+		line = 0, flg_H = false,
+		errors = [], errln, errfn = infoFile.fullName + "\n";
 	while (!infoFile.eof) {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
 		infoLine = infoLine.split("\t");
 		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
-		if (!infoLine[0] || !infoLine[2]) {
-			alert(errfn + "Missing name in line " + line + "."); exit() }
-		if (!infoLine[1] || !infoLine[3]) {
-			alert(errfn + "Missing style in line " + line + "."); exit() }
-		fontList.push([
+		errln = "Line " + line + ": ";
+		if (!infoLine[0] || !infoLine[2]) errors.push(errln + "Missing font name.");
+		if (!infoLine[1] || !infoLine[3]) errors.push(errln + "Missing font style.");
+		if (errors.length == 0) data.push([
 			infoLine[0].trim() + "\t" + infoLine[1].trim(),
 			infoLine[2].trim() + "\t" + infoLine[3].trim()
 		]);
 	}
 	infoFile.close(); infoLine = "";
-	if (fontList.length < 1) { /* alert(errfn + "Not enough records."); */ exit() }
+	if (errors.length > 0) { alert(errfn + errors.join("\n")); exit() }
+	if (data.length < 1) exit();
 
-	for (var i = 0; i < fontList.length; i++) {
+	for (var i = 0; i < data.length; i++) {
 		app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
 		app.findChangeTextOptions.includeHiddenLayers = true;
 		app.findChangeTextOptions.includeLockedLayersForFind = true;
 		app.findChangeTextOptions.includeLockedStoriesForFind = true;
 		app.findChangeTextOptions.includeMasterPages = true;
-		app.findTextPreferences.appliedFont = fontList[i][0];
-		app.changeTextPreferences.appliedFont = fontList[i][1];
+		app.findTextPreferences.appliedFont = data[i][0];
+		app.changeTextPreferences.appliedFont = data[i][1];
 		doc.changeText();
 	}
 	app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;

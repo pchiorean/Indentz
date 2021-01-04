@@ -1,6 +1,6 @@
 /*
-	QR code v2.5.2
-	© December 2020, Paul Chiorean
+	QR code v2.6.0
+	© January 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
 	file with the the following format:
@@ -49,7 +49,7 @@ function main() {
 		buttons.orientation = "column";
 		buttons.alignChildren = ["fill", "top"];
 	var onpage = buttons.add("button", undefined, "On page", { name: "ok" });
-		onpage.helpTip = "Put code on bottom-left corner";
+		onpage.helpTip = "Put the code on the bottom-left corner of the page";
 	var onfile = buttons.add("button", undefined, "On file", { name: "onfile" });
 		onfile.helpTip = !!docPath ?
 			"Save as 'QR Codes/" + doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd'" :
@@ -74,33 +74,36 @@ function main() {
 }
 
 function BatchQR() { // Batch process 'QR.txt'
-	var infoLine, header, qrData = [];
-	var line = 0, flg_H = false, width = 1;
-	var errfn = infoFile.fullName + "\n";
 	infoFile.open("r");
+	var infoLine, header, data = [],
+		line = 0, flg_H = false, width = 1,
+		errors = [], errln, errfn = infoFile.fullName + "\r";
 	while (!infoFile.eof) {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
 		infoLine = infoLine.split("\t");
 		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
-		if (!infoLine[0]) { alert(errfn + "Missing filename in line " + line + "."); exit() }
-		if (!infoLine[1]) { alert(errfn + "Missing code in line " + line + "."); exit() }
+		errln = "Line " + line + ": ";
+		if (!infoLine[0]) errors.push(errln + "Missing filename.");
 		infoLine[0] = infoLine[0].trim();
+		if (/[\/\\?%*:|"<>]/.test(infoLine[0])) errors.push(errln + "Illegal character in the filename.");
 		if (!infoLine[0].match(/\.indd$/ig)) infoLine[0] += ".indd";
 		if (!infoLine[0].match(/_QR\.indd$/ig)) infoLine[0] = infoLine[0].replace(/\.indd$/ig, "_QR.indd");
+		if (!infoLine[1]) errors.push(errln + "Missing code.");
 		infoLine[1] = infoLine[1].trim().toUpperCase()
 		width = Math.max(width, infoLine[1].length);
-		qrData.push({ fn: infoLine[0], qr: infoLine[1] });
+		if (errors.length == 0) data.push({ fn: infoLine[0], qr: infoLine[1] });
 	}
 	infoFile.close(); infoLine = "";
-	if (qrData.length < 1) { alert(errfn + "Not enough records."); exit() }
+	if (errors.length > 0) { alert(errfn + errors.join("\n")); exit() }
+	if (data.length < 1) { alert(errfn + "Not enough records."); exit() }
 
 	var progressBar = new ProgressBar(width);
-	progressBar.reset(qrData.length);
-	for (var i = 0, err = 0; i < qrData.length; i++) {
-		progressBar.update(i + 1, qrData[i].fn);
-		if (QROnFile(qrData[i].qr, qrData[i].fn)) err++; // Count files with errors (text overflow)
+	progressBar.reset(data.length);
+	for (var i = 0, err = 0; i < data.length; i++) {
+		progressBar.update(i + 1, data[i].fn);
+		if (QROnFile(data[i].qr, data[i].fn)) err++; // Count files with errors (text overflow)
 	}
 	progressBar.close();
 	if (err != 0) {

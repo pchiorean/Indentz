@@ -1,6 +1,6 @@
 /*
-	Default swatches v1.9.0
-	© December 2020, Paul Chiorean
+	Default swatches v1.10.0
+	© January 2021, Paul Chiorean
 	Adds swatches from a 3-column TSV file:
 
 	Name | Model | Values
@@ -23,32 +23,33 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 
 
 function main() {
-	var infoLine, header, colorData = [];
-	var line = 0, flg_H = false;
-	var errfn = infoFile.fullName + "\n";
 	infoFile.open("r");
+	var infoLine, header, data = [],
+		line = 0, flg_H = false,
+		errors = [], errln, errfn = infoFile.fullName + "\n";
 	while (!infoFile.eof) {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
 		infoLine = infoLine.split("\t");
+		errln = "Line " + line + ": ";
 		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
-		if (!infoLine[0]) {
-			alert(errfn + "Missing swatch name in line " + line + "."); exit() }
-		colorData.push({
+		if (!infoLine[0]) errors.push(errln + "Missing swatch name.");
+		if (errors.length == 0) data.push({
 			name: infoLine[0].trim(),
 			model: GetColorModel(infoLine[1].trim()),
 			values: GetColorValues(infoLine[2].split(","))
 		});
 	}
 	infoFile.close(); infoLine = "";
-	if (colorData.length < 1) { /* alert(errfn + "Not enough records."); */ exit() }
+	if (errors.length > 0) { alert(errfn + errors.join("\n")); exit() }
+	if (data.length < 1) exit();
 
-	for (var i = 0; i < colorData.length; i++) {
+	for (var i = 0; i < data.length; i++) {
 		ColorAdd(doc,
-			colorData[i].name,
-			colorData[i].model,
-			colorData[i].values
+			data[i].name,
+			data[i].model,
+			data[i].values
 		);
 	}
 }

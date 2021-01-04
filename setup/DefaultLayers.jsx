@@ -1,5 +1,5 @@
 /*
-	Default layers v1.12.0
+	Default layers v1.13.0
 	© January 2021, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -26,20 +26,20 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 
 
 function main() {
-	var infoLine, header, layerData = [],
-		line = 0, flg_H = false,
-		errfn = infoFile.fullName + "\n";
 	infoFile.open("r");
+	var infoLine, header, data = [],
+		line = 0, flg_H = false,
+		errors = [], errln, errfn = infoFile.fullName + "\n";
 	while (!infoFile.eof) {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
 		infoLine = infoLine.split("\t");
 		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
+		errln = "Line " + line + ": ";
 		infoLine[0] = infoLine[0].trim();
-		if (!infoLine[0]) {
-			alert(errfn + "Missing layer name in line " + line + "."); exit() }
-		layerData.push({
+		if (!infoLine[0]) errors.push(errln + "Missing layer name.");
+		if (errors.length == 0) data.push({
 			name: infoLine[0],
 			color: !!infoLine[1] ? GetUIColor(infoLine[1].trim()) : UIColors.LIGHT_BLUE,
 			isVisible: !!infoLine[2] ? (infoLine[2].toLowerCase() == "yes") : true,
@@ -49,7 +49,8 @@ function main() {
 		});
 	}
 	infoFile.close(); infoLine = "";
-	if (layerData.length < 1) { /* alert(errfn + "Not enough records."); */ exit() }
+	if (errors.length > 0) { alert(errfn + errors.join("\n")); exit() }
+	if (data.length < 1) exit();
 
 	doc.layers.everyItem().properties = { // Prepare existing layers
 		locked: false,
@@ -57,24 +58,24 @@ function main() {
 	}
 	var set_AL = doc.activeLayer; // Save active layer
 	// Top layers
-	for (var i = layerData.length - 1; i >= 0 ; i--) {
-		if (layerData[i].isBelow) continue;
+	for (var i = data.length - 1; i >= 0 ; i--) {
+		if (data[i].isBelow) continue;
 		MakeLayer(
-			layerData[i].name,
-			layerData[i].color,
-			layerData[i].isVisible,
-			layerData[i].isPrintable,
-			layerData[i].variants);
+			data[i].name,
+			data[i].color,
+			data[i].isVisible,
+			data[i].isPrintable,
+			data[i].variants);
 	}
 	// Bottom layers
-	for (var i = 0; i < layerData.length; i++) {
-		if (!layerData[i].isBelow) continue;
+	for (var i = 0; i < data.length; i++) {
+		if (!data[i].isBelow) continue;
 		MakeLayer(
-			layerData[i].name,
-			layerData[i].color,
-			layerData[i].isVisible,
-			layerData[i].isPrintable,
-			layerData[i].variants)
+			data[i].name,
+			data[i].color,
+			data[i].isVisible,
+			data[i].isPrintable,
+			data[i].variants)
 		.move(LocationOptions.AT_END);
 	}
 	doc.activeLayer = set_AL; // Restore active layer
