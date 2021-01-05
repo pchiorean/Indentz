@@ -1,5 +1,5 @@
 /*
-	QR code v2.7.0
+	QR code v2.7.1
 	© January 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -20,8 +20,10 @@ var doc, docPath, infoFile = "", flg_batch = false;
 doc = app.documents.length == 0 ? app.documents.add() : app.activeDocument;
 if (doc.saved) {
 	docPath = doc.filePath;
-	if ((infoFile = File(docPath + "/_QR.txt")) && infoFile.exists) flg_batch = true
-	else if ((infoFile = File(docPath + "/QR.txt")) && infoFile.exists) flg_batch = true;
+	if ((infoFile = File(docPath + "/_qr.txt")) && infoFile.exists ||
+		(infoFile = File(docPath + "/_QR.txt")) && infoFile.exists ||
+		(infoFile = File(docPath + "/qr.txt")) && infoFile.exists ||
+		(infoFile = File(docPath + "/QR.txt")) && infoFile.exists) flg_batch = true
 }
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
