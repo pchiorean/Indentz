@@ -286,7 +286,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </blockquote>
 </li>
 <li>
-<p><strong><code>DefaultLayers.jsx</code></strong> adds a set of layers defined in a TSV <em>(tab‑separated values)</em> list, <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
+<p><strong><code>DefaultLayers.jsx</code></strong> adds a set of layers defined in a TSV <em>(tab‑separated values)</em> file named <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -337,7 +337,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong>Note:</strong> <strong><code>layers.xlsx</code></strong> can be used to generate the list.</p>
 </li>
 <li>
-<p><strong><code>DefaultSwatches.jsx</code></strong> adds a set of swatches defined in <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
+<p><strong><code>DefaultSwatches.jsx</code></strong> adds a set of swatches defined in a TSV file named <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -374,7 +374,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>CleanupSwatches.jsx</code></strong> converts process RGB swatches to CMYK, renames them to &quot;C= M= Y= K=&quot; form, removes duplicates and deletes unused. Spot colors are not changed.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> substitute fonts from a list defined in <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> substitute fonts from a list defined in a TSV file named <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -498,6 +498,9 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>ClipUndo.jsx</code></strong> restores one or several clipped objects at once.</p>
 </li>
 <li>
+<p><strong><code>HW.jsx</code></strong> labels selected objects with &quot;HW&quot;; if nothing is selected, it adds a 10&percnt; bottom guide on the current page.</p>
+</li>
+<li>
 <p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and puts it in the upper left corner, on the <strong>info</strong> layer.</p>
 </li>
 <li>
@@ -514,7 +517,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong>On file</strong> saves it in a file with the name of the active document and &quot;_QR&quot; added to the end.</p>
 </li>
 <li>
-<p><strong>Batch</strong> it's enabled only if a TSV file, <strong>QR.txt</strong>, containing a list of codes and filenames, is found in the current folder:</p>
+<p><strong>Batch</strong> it's enabled only if a TSV file named <strong>QR.txt</strong>, containing a list of codes and filenames, is found in the current folder:</p>
 <table>
 <thead>
 <tr>
@@ -603,6 +606,6 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <h2 id="license">License</h2>
 <p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md • January 4, 2021</p>
+<p>README.md • January 6, 2021</p>
 </body>
 </html>

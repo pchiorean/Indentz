@@ -123,7 +123,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefaultLayers.jsx`** adds a set of layers defined in a TSV *(tab‑separated values)* list, [**`layers.txt`**](../layers.txt):
+* **`DefaultLayers.jsx`** adds a set of layers defined in a TSV *(tab‑separated values)* file named [**`layers.txt`**](../layers.txt):
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
@@ -142,7 +142,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   **Note:** **`layers.xlsx`** can be used to generate the list.
 
-* **`DefaultSwatches.jsx`** adds a set of swatches defined in [**`swatches.txt`**](../swatches.txt):
+* **`DefaultSwatches.jsx`** adds a set of swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
 
   Name | Model | Values
   :- | :-: | :-
@@ -156,7 +156,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`CleanupSwatches.jsx`** converts process RGB swatches to CMYK, renames them to "C= M= Y= K=" form, removes duplicates and deletes unused. Spot colors are not changed.
 
-* **`ReplaceFonts.jsx`** substitute fonts from a list defined in [**`fonts.txt`**](../fonts.txt):
+* **`ReplaceFonts.jsx`** substitute fonts from a list defined in a TSV file named [**`fonts.txt`**](../fonts.txt):
 
   Old font | Style | New font | Style
   :- | :- | :- | :-
@@ -205,6 +205,8 @@ Setup | | | |
 
   **`ClipUndo.jsx`** restores one or several clipped objects at once.
 
+* **`HW.jsx`** labels selected objects with 'HW'; if nothing is selected, it adds a 10% bottom guide on the current page.
+
 * **`PageRatios.jsx`** calculates the ratio of each page and puts it in the upper left corner, on the **info** layer.
 
 * **`PagesToFiles.jsx`** saves the pages of the active document in separate files, with a user configurable suffix.
@@ -217,7 +219,7 @@ Setup | | | |
 
   * **On file** saves it in a file with the name of the active document and "_QR" added to the end.
 
-  * **Batch** it's enabled only if a TSV file, **QR.txt**, containing a list of codes and filenames, is found in the current folder:
+  * **Batch** it's enabled only if a TSV file named **QR.txt**, containing a list of codes and filenames, is found in the current folder:
 
     Filename | Code
     :- | :-
@@ -263,4 +265,4 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
 
-README.md • January 4, 2021
+README.md • January 6, 2021

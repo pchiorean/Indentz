@@ -286,7 +286,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </blockquote>
 </li>
 <li>
-<p><strong><code>DefaultLayers.jsx</code></strong> creează un set de straturi definite într‑un fișier TSV <em>(tab‑separated values)</em>, <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
+<p><strong><code>DefaultLayers.jsx</code></strong> creează un set de straturi definite într‑un fișier TSV <em>(tab‑separated values)</em> numit <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -337,7 +337,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong>Note:</strong> <strong><code>layers.xlsx</code></strong> poate fi folosit pentru a genera lista.</p>
 </li>
 <li>
-<p><strong><code>DefaultSwatches.jsx</code></strong> creează un set de culori definite în <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
+<p><strong><code>DefaultSwatches.jsx</code></strong> creează un set de culori definite într‑un fișier TSV numit <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -374,7 +374,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>CleanupSwatches.jsx</code></strong> convertește culorile RGB la CMYK, le redenumește după formula &quot;C= M= Y= K=&quot;, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> substituie fonturi dintr‑o listă definită în <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> substituie fonturi dintr‑o listă definită într‑un fișier TSV numit <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -498,6 +498,9 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>ClipUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
 </li>
 <li>
+<p><strong><code>HW.jsx</code></strong> etichetează obiectele selectate cu &quot;HW&quot;; dacă nu e selectat nimic, adaugă un ghid inferior de 10&percnt; pe pagina curentă.</p>
+</li>
+<li>
 <p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul <strong>info</strong>.</p>
 </li>
 <li>
@@ -514,7 +517,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong>On file</strong> îl salvează într‑un fișier cu numele documentului activ și &quot;_QR&quot; adăugat la coadă.</p>
 </li>
 <li>
-<p><strong>Batch</strong> e activat doar dacă în folderul curent e găsit un fișier TSV, <strong><code>QR.txt</code></strong>, conținând o listă de coduri și nume de fișiere:</p>
+<p><strong>Batch</strong> e activat doar dacă în folderul curent e găsit un fișier TSV numit <strong><code>QR.txt</code></strong>, conținând o listă de coduri și nume de fișiere:</p>
 <table>
 <thead>
 <tr>
@@ -603,6 +606,6 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <h2 id="licență">Licență</h2>
 <p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
 Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README-ro.md • 4 ianuarie 2021</p>
+<p>README-ro.md • 6 ianuarie 2021</p>
 </body>
 </html>

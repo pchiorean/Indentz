@@ -123,7 +123,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Type Options:** Use Typographer's Quotes \
   > **Type Options:** Apply Leading to Entire Paragraphs
 
-* **`DefaultLayers.jsx`** creează un set de straturi definite într‑un fișier TSV *(tab‑separated values)*, [**`layers.txt`**](../layers.txt):
+* **`DefaultLayers.jsx`** creează un set de straturi definite într‑un fișier TSV *(tab‑separated values)* numit [**`layers.txt`**](../layers.txt):
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
@@ -142,7 +142,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   **Note:** **`layers.xlsx`** poate fi folosit pentru a genera lista.
 
-* **`DefaultSwatches.jsx`** creează un set de culori definite în [**`swatches.txt`**](../swatches.txt):
+* **`DefaultSwatches.jsx`** creează un set de culori definite într‑un fișier TSV numit [**`swatches.txt`**](../swatches.txt):
 
   Name | Model | Values
   :- | :-: | :-
@@ -156,7 +156,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, le redenumește după formula "C= M= Y= K=", elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
-* **`ReplaceFonts.jsx`** substituie fonturi dintr‑o listă definită în [**`fonts.txt`**](../fonts.txt):
+* **`ReplaceFonts.jsx`** substituie fonturi dintr‑o listă definită într‑un fișier TSV numit [**`fonts.txt`**](../fonts.txt):
 
   Old font | Style | New font | Style
   :- | :- | :- | :-
@@ -205,6 +205,8 @@ Setup | | | |
 
   **`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
+* **`HW.jsx`** etichetează obiectele selectate cu "HW"; dacă nu e selectat nimic, adaugă un ghid inferior de 10% pe pagina curentă.
+
 * **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul **info**.
 
 * **`PagesToFiles.jsx`** salvează paginile documentului activ în fișiere separate, cu un sufix configurabil.
@@ -217,7 +219,7 @@ Setup | | | |
 
   * **On file** îl salvează într‑un fișier cu numele documentului activ și "_QR" adăugat la coadă.
 
-  * **Batch** e activat doar dacă în folderul curent e găsit un fișier TSV, **`QR.txt`**, conținând o listă de coduri și nume de fișiere:
+  * **Batch** e activat doar dacă în folderul curent e găsit un fișier TSV numit **`QR.txt`**, conținând o listă de coduri și nume de fișiere:
 
     Filename | Code
     :- | :-
@@ -263,4 +265,4 @@ Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
 
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Richard Harrington și alții. -->
 
-README-ro.md • 4 ianuarie 2021
+README-ro.md • 6 ianuarie 2021
