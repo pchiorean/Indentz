@@ -1,4 +1,4 @@
-Name        | UIColor
+Name        | Internal name
 ----------- | --------------------
 Blue        | UIColors.BLUE
 Black       | UIColors.BLACK

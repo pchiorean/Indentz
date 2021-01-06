@@ -1,5 +1,5 @@
-UI name          | Locale independent name
----------------- | -----------------------
+Name             | Internal name
+---------------- | ---------------------
 Solid            | $ID/Solid
 Thick Thick      | $ID/ThickThick
 Thick Thin       | $ID/ThickThin
