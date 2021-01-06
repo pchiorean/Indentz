@@ -1,7 +1,7 @@
 /*
 	HW 0.6.0
 	© January 2021, Paul Chiorean
-	Label 'HW' selected objects; w/o selection, add a 10% bottom guide.
+	Labels 'HW' selected objects; w/o selection, adds a 10% bottom guide.
 */
 
 if (!(doc = app.activeDocument)) exit();

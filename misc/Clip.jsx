@@ -1,7 +1,7 @@
 /*
 	Clip v2.4.0
 	© December 2020, Paul Chiorean
-	Clip selected objects in a "<clip frame>", or restores them
+	Clips selected objects in a "<clip frame>", or restores them
 */
 
 if (!(doc = app.activeDocument)) exit();
