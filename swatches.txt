@@ -1,7 +1,7 @@
 Name	Model	Values
-C=60 M=40 Y=40 K=100	process	60, 40, 40, 100
-White	spot	0, 10, 10, 0
-Varnish	spot	0, 10, 70, 0
-Cut	spot	0, 100, 0, 0
-Fold	spot	100, 0, 0, 0
-Safe area	process	0, 100, 0, 0
+C=60 M=40 Y=40 K=100	process	60|40|40|100
+White	spot	0|10|10|0
+Varnish	spot	0|10|70|0
+Cut	spot	0|100|0|0
+Fold	spot	100|0|0|0
+Safe area	process	0|100|0|0
