@@ -1,5 +1,5 @@
 /*
-	HW 0.6.0
+	HW 0.6.1
 	© January 2021, Paul Chiorean
 	Labels 'HW' selected objects; w/o selection, adds a 10% bottom guide.
 */
@@ -22,7 +22,7 @@ if (sel.length >= 1) {
 			sel[i].fillColor = "Paper";
 	}
 } else {
-	var szPg = page.bounds[2];
+	var szPg = page.bounds[2] - page.bounds[0];
 	var szMg = szPg - (page.marginPreferences.top + page.marginPreferences.bottom);
 	var j, guide;
 	for (j = (guide = page.guides.everyItem().getElements()).length; j--;
@@ -31,11 +31,11 @@ if (sel.length >= 1) {
 	page.guides.add(undefined, {
 		itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
 		orientation: HorizontalOrVertical.horizontal,
-		location: szPg * 0.9 });
+		location: page.bounds[0] + szPg * 0.9 });
 	if (szMg != szPg) {
 		page.guides.add(undefined, {
 			itemLayer: hwLayer, label: "HW", guideColor: UIColors.GREEN,
 			orientation: HorizontalOrVertical.horizontal,
-			location: page.marginPreferences.top + szMg * 0.9 });
+			location: page.bounds[0] + page.marginPreferences.top + szMg * 0.9 });
 	}
 }
