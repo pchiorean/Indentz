@@ -1,11 +1,11 @@
 /*
-	Default swatches v1.10.0
+	Default swatches v1.11.0
 	© January 2021, Paul Chiorean
 	Adds swatches from a 3-column TSV file:
 
 	Name | Model | Values
-	Rich Black | process | 60, 40, 40, 100
-	Cut | spot | 0, 100, 0, 0
+	Rich Black | process | 60|40|40|100
+	Cut | spot | 0|100|0|0
 	...
 	1. <Name>: swatch name,
 	2. <Model>: color model: "process" or "spot",
@@ -38,7 +38,7 @@ function main() {
 		if (errors.length == 0) data.push({
 			name: infoLine[0].trim(),
 			model: GetColorModel(infoLine[1].trim()),
-			values: GetColorValues(infoLine[2].split(","))
+			values: GetColorValues(infoLine[2].split("|"))
 		});
 	}
 	infoFile.close(); infoLine = "";
