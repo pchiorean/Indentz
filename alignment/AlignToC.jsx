@@ -1,10 +1,11 @@
 /*
-	Align to center v2.4.2
-	© November 2020, Paul Chiorean
+	Align to center v2.5.0
+	© January 2021, Paul Chiorean
 	Aligns the selected objects to the center of the 'Align To' setting.
 */
 
 if (!(doc = app.activeDocument)) exit();
+app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.enableRedraw = false;
 var sel = doc.selection, selBAK = sel, obj;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
@@ -56,7 +57,23 @@ function main(sel) {
 			case 1:
 				doc.align(obj, AlignOptions.VERTICAL_CENTERS, set_ADB, selKO);
 				break;
-			case 2:
+			case 2: // Ignore 10% of bottom
+				doc.align(obj, AlignOptions.VERTICAL_CENTERS, set_ADB, selKO);
+				var page = app.activeWindow.activePage;
+				switch (set_ADB) {
+					case AlignDistributeBounds.PAGE_BOUNDS:
+					case AlignDistributeBounds.SPREAD_BOUNDS:
+						obj.move(undefined,
+							[0, -(page.bounds[2] - page.bounds[0]) * 0.1 / 2]);
+						break;
+					case AlignDistributeBounds.MARGIN_BOUNDS:
+						obj.move(undefined,
+							[0, -((page.bounds[2] - page.marginPreferences.bottom) -
+							(page.bounds[0] + page.marginPreferences.top)) * 0.1 / 2]);
+						break;
+				}
+				break;
+			case 3:
 				doc.align(obj, AlignOptions.HORIZONTAL_CENTERS, set_ADB, selKO);
 				doc.align(obj, AlignOptions.VERTICAL_CENTERS, set_ADB, selKO);
 				break;
@@ -74,6 +91,7 @@ function main(sel) {
 			center.alignChildren = ["left","top"];
 			center.add("radiobutton {text: 'Horizontal'}");
 			center.add("radiobutton {text: 'Vertical'}");
+			center.add("radiobutton {text: 'Vertical (HW)'}");
 			center.add("radiobutton {text: 'Both'}");
 			center.children[0].active = center.children[0].value = true;
 		var okcancel = w.add("group", undefined, {name: "okcancel"});
