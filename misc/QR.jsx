@@ -1,5 +1,5 @@
 /*
-	QR code v2.7.1
+	QR code v2.7.2
 	© January 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -94,8 +94,8 @@ function BatchQR() { // Batch process 'QR.txt'
 		if (/[\/\\?%*:|"<>]/.test(infoLine[0])) errors.push(errln + "Illegal character in the filename.");
 		if (!infoLine[0].match(/\.indd$/ig)) infoLine[0] += ".indd";
 		if (!infoLine[0].match(/_QR\.indd$/ig)) infoLine[0] = infoLine[0].replace(/\.indd$/ig, "_QR.indd");
+		infoLine[1] = infoLine[1].trim();
 		if (!infoLine[1]) errors.push(errln + "Missing code.");
-		infoLine[1] = infoLine[1].trim().toUpperCase()
 		width = Math.max(width, infoLine[1].length);
 		if (errors.length == 0) data.push({ fn: infoLine[0], qr: infoLine[1] });
 	}
@@ -130,7 +130,7 @@ function QROnPage(QRLabel, flg_white) {
 			if (page.pageItems.item(j).label == "QR") { page.pageItems.item(j).remove(); j-- }
 		var label = page.textFrames.add({
 			itemLayer: idLayer.name,
-			contents: QRLabel.toUpperCase(),
+			contents: QRLabel,
 			label: "QR",
 			fillColor: "None",
 			strokeColor: "None"
@@ -142,6 +142,7 @@ function QROnPage(QRLabel, flg_white) {
 			horizontalScale: 92,
 			tracking: -15,
 			hyphenation: false,
+			capitalization: Capitalization.ALL_CAPS,
 			balanceRaggedLines: BalanceLinesStyle.FULLY_BALANCED,
 			fillColor: flg_white ? "Paper" : "Black", // White text
 			strokeColor: "None"
