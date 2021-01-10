@@ -146,13 +146,13 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   Name | Model | Values
   :- | :-: | :-
-  Rich Black | process | 60, 40, 40, 100
-  Cut | spot | 0, 100, 0, 0
+  Rich Black | process | 60|40|40|100
+  Cut | spot | 0|100|0|0
   ... |
 
   > **Name**: swatch name \
   > **Model**: color model: `process` or `spot` (default `process`) \
-  > **Values**: a list of 3 (RGB) or 4 (CMYK) color values
+  > **Values**: 3 values in 0–255 range (RGB) or 4 values in 0–100 range (CMYK)
 
 * **`CleanupSwatches.jsx`** converts process RGB swatches to CMYK, renames them to "C= M= Y= K=" form, removes duplicates and deletes unused. Spot colors are not changed.
 

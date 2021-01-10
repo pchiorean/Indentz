@@ -146,13 +146,13 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   Name | Model | Values
   :- | :-: | :-
-  Rich Black | process | 60, 40, 40, 100
-  Cut | spot | 0, 100, 0, 0
+  Rich Black | process | 60|40|40|100
+  Cut | spot | 0|100|0|0
   ... |
 
   > **Name**: numele culorii \
   > **Model**: tipul culorii: `process` sau `spot` \
-  > **Values**: o listă de 3 (RGB) sau 4 (CMYK) valori
+  > **Values**: 3 valori în intervalul 0–255 (RGB) sau 4 valori în intervalul 0–100 (CMYK)
 
 * **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, le redenumește după formula "C= M= Y= K=", elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
