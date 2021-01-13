@@ -1,6 +1,6 @@
 /*
-	Page size from filename v1.9.2
-	© December 2020, Paul Chiorean
+	Page size from filename v1.10.0
+	© January 2021, Paul Chiorean
 	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 */
@@ -21,13 +21,14 @@ function main() {
 
 	var docName = doc.name.substr(0, doc.name.lastIndexOf(".")); // Get name w/o extension
 	// Get '_000[.0] [mm] x 000[.0] [mm]' pairs
-	var szArr = docName.match(/[_-]\s?\d+([.,]\d+)?\s?([cm]m)?\s?x\s?\d+([.,]\d+)?\s?([cm]m)?(?!x)(?!\d)/ig);
+	var szArr = docName.match(/[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig);
 	// 1. [_-] -- '_' or '-' separator between pairs
 	// 2. \d+([.,]\d+)?([cm]m)? -- group 1: digits, optional decimals, optional cm/mm
 	// 3. x -- 'x' separator between groups
 	// 4. \d+([.,]\d+)?(cm|mm)? -- group 2
 	// 5. (?!x)(?!\d) -- discard if more groups (to avoid 000x00x00 et al)
 	if (szArr == null) exit();
+	alert(szArr);
 
 	// Sanitize dimensions array
 	for (var i = 0; i < szArr.length; i++) {
@@ -40,12 +41,13 @@ function main() {
 	var page, szPg, szMg, mgs;
 	var dimA = szArr[0].split(/x/ig); // First pair
 	szPg = { width: Number(dimA[0]), height: Number(dimA[1]) }
-	if (szArr.length == 2) { // If 2 pairs (page size & page margins), page size is the largest
+	// If 2 pairs (page size & page margins), page size is the largest
+	if (szArr.length == 2) {
 		var dimB = szArr[1].split(/x/ig); // Second pair
-		szPg = { // Choose the largest
+		szPg = {
 			width: Math.max(Number(dimA[0]), Number(dimB[0])),
 			height: Math.max(Number(dimA[1]), Number(dimB[1])) }
-		szMg = { // Choose the smallest
+		szMg = {
 			width: Math.min(Number(dimA[0]), Number(dimB[0])),
 			height: Math.min(Number(dimA[1]), Number(dimB[1])) }
 		mgs = {
@@ -57,7 +59,7 @@ function main() {
 	// Resize pages
 	for (var i = 0; i < doc.pages.length; i++) {
 		page = doc.pages[i];
-		if (page.parent.pages.length > 1) { var flag_S = true; continue } // Skip multipage spreads
+		if (page.parent.pages.length > 1) { var flag_S = true; continue } // Skip multipage spreads ***TODO***
 		// page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 } // Set margins to zero
 		page.layoutRule = LayoutRuleOptions.OFF;
 		page.resize(CoordinateSpaces.INNER_COORDINATES,
@@ -71,7 +73,7 @@ function main() {
 		doc.documentPreferences.pageWidth = szPg.width;
 		doc.documentPreferences.pageHeight = szPg.height }
 	// Check for bleed: try to match '_00 [mm]' after '0 [mm]'
-	var bleed = /\d\s?(?:[cm]m)?[_+](\d{1,2})\s?(?:[cm]m)/i.exec(docName);
+	var bleed = /\d\s*(?:[cm]m)?[_+](\d{1,2})\s*(?:[cm]m)/i.exec(docName);
 	// 1. \d(?:[cm]m)? -- 1 digit followed by optional mm/cm (non-capturing group)
 	// 2. [_+] -- '_' or '+' separator
 	// 3. (\d{1,2}) -- 1 or 2 digits (capturing group #1)
