@@ -1,5 +1,5 @@
 /*
-	Align to center v2.5.1
+	Align to center v2.5.2
 	© January 2021, Paul Chiorean
 	Aligns the selected objects to the center of the 'Align To' setting.
 */
@@ -91,7 +91,8 @@ function main(sel) {
 			center.alignChildren = ["left","top"];
 			center.add("radiobutton {text: 'Horizontal'}");
 			center.add("radiobutton {text: 'Vertical'}");
-			center.add("radiobutton {text: 'Vertical (HW)'}");
+			center.add("radiobutton {text: 'Vertical (HW)'}")
+				.enabled = !(set_ADB == AlignDistributeBounds.KEY_OBJECT);
 			center.add("radiobutton {text: 'Both'}");
 			center.children[0].active = center.children[0].value = true;
 		var okcancel = w.add("group", undefined, {name: "okcancel"});
