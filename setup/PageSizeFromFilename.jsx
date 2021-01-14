@@ -1,5 +1,5 @@
 /*
-	Page size from filename v1.10.0
+	Page size from filename v1.10.1
 	© January 2021, Paul Chiorean
 	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -21,14 +21,14 @@ function main() {
 
 	var docName = doc.name.substr(0, doc.name.lastIndexOf(".")); // Get name w/o extension
 	// Get '_000[.0] [mm] x 000[.0] [mm]' pairs
-	var szArr = docName.match(/[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig);
+	var docNameRE = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig;
+	var szArr = docName.match(docNameRE);
 	// 1. [_-] -- '_' or '-' separator between pairs
 	// 2. \d+([.,]\d+)?([cm]m)? -- group 1: digits, optional decimals, optional cm/mm
 	// 3. x -- 'x' separator between groups
 	// 4. \d+([.,]\d+)?(cm|mm)? -- group 2
 	// 5. (?!x)(?!\d) -- discard if more groups (to avoid 000x00x00 et al)
 	if (szArr == null) exit();
-	alert(szArr);
 
 	// Sanitize dimensions array
 	for (var i = 0; i < szArr.length; i++) {
@@ -73,7 +73,8 @@ function main() {
 		doc.documentPreferences.pageWidth = szPg.width;
 		doc.documentPreferences.pageHeight = szPg.height }
 	// Check for bleed: try to match '_00 [mm]' after '0 [mm]'
-	var bleed = /\d\s*(?:[cm]m)?[_+](\d{1,2})\s*(?:[cm]m)/i.exec(docName);
+	var bleedRE = /\d\s*(?:[cm]m)?[_+](\d{1,2})\s*(?:[cm]m)/i;
+	var bleed = bleedRE.exec(docName);
 	// 1. \d(?:[cm]m)? -- 1 digit followed by optional mm/cm (non-capturing group)
 	// 2. [_+] -- '_' or '+' separator
 	// 3. (\d{1,2}) -- 1 or 2 digits (capturing group #1)
