@@ -217,7 +217,7 @@ Setup | | | |
 
   * **On page** adds the code on each page, on the bottom left corner.
 
-  * **On file** saves it in a file with the name of the active document and "_QR" added to the end.
+  * **On file** saves the code in a file with the name of the active document and the suffix "_QR".
 
   * **Batch** it's enabled only if a TSV file named **QR.txt**, containing a list of codes and filenames, is found in the current folder:
 

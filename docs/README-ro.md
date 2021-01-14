@@ -217,7 +217,7 @@ Setup | | | |
 
   * **On page** adaugă codul pe fiecare pagină, în colțul din stânga jos.
 
-  * **On file** îl salvează într‑un fișier cu numele documentului activ și "_QR" adăugat la coadă.
+  * **On file** salvează codul într‑un fișier cu numele documentului activ și sufixul "_QR".
 
   * **Batch** e activat doar dacă în folderul curent e găsit un fișier TSV numit **`QR.txt`**, conținând o listă de coduri și nume de fișiere:
 
