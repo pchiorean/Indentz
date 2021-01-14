@@ -146,8 +146,8 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   Name | Model | Values
   :- | :-: | :-
-  Rich Black | process | 60|40|40|100
-  Cut | spot | 0|100|0|0
+  Rich Black | process | 60\|40\|40\|100
+  Cut | spot | 0\|100\|0\|0
   ... |
 
   > **Name**: numele culorii \
@@ -265,4 +265,4 @@ Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
 
 <!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Richard Harrington și alții. -->
 
-README-ro.md • 6 ianuarie 2021
+README-ro.md • 14 ianuarie 2021

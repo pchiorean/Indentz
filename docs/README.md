@@ -146,8 +146,8 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   Name | Model | Values
   :- | :-: | :-
-  Rich Black | process | 60|40|40|100
-  Cut | spot | 0|100|0|0
+  Rich Black | process | 60\|40\|40\|100
+  Cut | spot | 0\|100\|0\|0
   ... |
 
   > **Name**: swatch name \
@@ -265,4 +265,4 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 <!-- Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Peter Werner, Richard Harrington and others. -->
 
-README.md • January 6, 2021
+README.md • January 14, 2021
