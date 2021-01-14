@@ -1,5 +1,5 @@
 /*
-	QR code v2.7.2
+	QR code v2.7.3
 	© January 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -59,9 +59,9 @@ function main() {
 	var batch = buttons.add("button", undefined, "Batch", { name: "batch" });
 		batch.helpTip = flg_batch ?
 			"Batch process codes from '" + infoFile.name + "'" :
-			"'QR.txt' file not found in the current folder";
+			"No 'QR.txt' found in the current folder";
 	onfile.enabled = !!docPath;
-	batch.visible = flg_batch;
+	batch.enabled = flg_batch;
 	batch.onClick = function() { do_batch = true; w.close() }
 	onpage.onClick = function() { flg_onfile = false; w.close() }
 	onfile.onClick = function() { flg_onfile = true; w.close() }
