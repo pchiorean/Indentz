@@ -1,5 +1,5 @@
 /*
-	Default swatches v1.12.0
+	Default swatches v1.12.1
 	© January 2021, Paul Chiorean
 	Adds swatches from a 3-column TSV file:
 
@@ -38,7 +38,7 @@ function main() {
 		if (errors.length == 0) data.push({
 			name: infoLine[0].trim(),
 			model: GetColorModel(infoLine[1].trim()),
-			values: GetColorValues(infoLine[2].split("|"))
+			values: GetColorValues(infoLine[2])
 		});
 	}
 	infoFile.close(); infoLine = "";
@@ -75,6 +75,7 @@ function GetColorModel(color) {
 
 function GetColorValues(array) {
 	var values = [], c;
+	array = array.split("|");
 	while (c = array.shift()) values.push(Number(c.trim()));
 	return values;
 }
