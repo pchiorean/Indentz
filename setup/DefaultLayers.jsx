@@ -1,5 +1,5 @@
 /*
-	Default layers v1.13.0
+	Default layers v1.14.0
 	© January 2021, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -42,9 +42,9 @@ function main() {
 		if (errors.length == 0) data.push({
 			name: infoLine[0],
 			color: !!infoLine[1] ? GetUIColor(infoLine[1].trim()) : UIColors.LIGHT_BLUE,
-			isVisible: !!infoLine[2] ? (infoLine[2].toLowerCase() == "yes") : true,
-			isPrintable: !!infoLine[3] ? (infoLine[3].toLowerCase() == "yes") : true,
-			isBelow: !!infoLine[4] ? (infoLine[4].toLowerCase() == "below") : false,
+			isVisible: !!infoLine[2] ? (infoLine[2].toLowerCase().trim() == "yes") : true,
+			isPrintable: !!infoLine[3] ? (infoLine[3].toLowerCase().trim() == "yes") : true,
+			isBelow: !!infoLine[4] ? (infoLine[4].toLowerCase().trim() == "below") : false,
 			variants: !!infoLine[5] ? GetVariants(infoLine[0], infoLine[5].split(",")) : ""
 		});
 	}
