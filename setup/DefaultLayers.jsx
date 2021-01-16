@@ -1,5 +1,5 @@
 /*
-	Default layers v1.14.0
+	Default layers v1.15.0
 	© January 2021, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -116,22 +116,46 @@ function TSVFile(fn) {
 
 function GetUIColor(color) {
 	const UICOLS = [
-		["Blue", "Black", "Brick Red", "Brown", "Burgundy", "Charcoal", "Cute Teal", "Cyan",
-		"Dark Blue", "Dark Green", "Fiesta", "Gold", "Grass Green", "Gray", "Green", "Grid Blue",
-		"Grid Green", "Grid Orange", "Lavender", "Light Blue", "Light Gray", "Light Olive",
-		"Lipstick", "Magenta", "Ochre", "Olive Green", "Orange", "Peach", "Pink", "Purple", "Red",
-		"Sulphur", "Tan", "Teal", "Violet", "White", "Yellow"],
-		[UIColors.BLUE, UIColors.BLACK, UIColors.BRICK_RED, UIColors.BROWN, UIColors.BURGUNDY,
-		UIColors.CHARCOAL, UIColors.CUTE_TEAL, UIColors.CYAN, UIColors.DARK_BLUE,
-		UIColors.DARK_GREEN, UIColors.FIESTA, UIColors.GOLD, UIColors.GRASS_GREEN, UIColors.GRAY,
-		UIColors.GREEN, UIColors.GRID_BLUE, UIColors.GRID_GREEN, UIColors.GRID_ORANGE,
-		UIColors.LAVENDER, UIColors.LIGHT_BLUE, UIColors.LIGHT_GRAY, UIColors.LIGHT_OLIVE,
-		UIColors.LIPSTICK, UIColors.MAGENTA, UIColors.OCHRE, UIColors.OLIVE_GREEN, UIColors.ORANGE,
-		UIColors.PEACH, UIColors.PINK, UIColors.PURPLE, UIColors.RED, UIColors.SULPHUR,
-		UIColors.TAN, UIColors.TEAL, UIColors.VIOLET, UIColors.WHITE, UIColors.YELLOW]
+		["Blue", UIColors.BLUE],
+		["Black", UIColors.BLACK],
+		["Brick Red", UIColors.BRICK_RED],
+		["Brown", UIColors.BROWN],
+		["Burgundy", UIColors.BURGUNDY],
+		["Charcoal", UIColors.CHARCOAL],
+		["Cute Teal", UIColors.CUTE_TEAL],
+		["Cyan", UIColors.CYAN],
+		["Dark Blue", UIColors.DARK_BLUE],
+		["Dark Green", UIColors.DARK_GREEN],
+		["Fiesta", UIColors.FIESTA],
+		["Gold", UIColors.GOLD],
+		["Grass Green", UIColors.GRASS_GREEN],
+		["Gray", UIColors.GRAY],
+		["Green", UIColors.GREEN],
+		["Grid Blue", UIColors.GRID_BLUE],
+		["Grid Green", UIColors.GRID_GREEN],
+		["Grid Orange", UIColors.GRID_ORANGE],
+		["Lavender", UIColors.LAVENDER],
+		["Light Blue", UIColors.LIGHT_BLUE],
+		["Light Gray", UIColors.LIGHT_GRAY],
+		["Light Olive", UIColors.LIGHT_OLIVE],
+		["Lipstick", UIColors.LIPSTICK],
+		["Magenta", UIColors.MAGENTA],
+		["Ochre", UIColors.OCHRE],
+		["Olive Green", UIColors.OLIVE_GREEN],
+		["Orange", UIColors.ORANGE],
+		["Peach", UIColors.PEACH],
+		["Pink", UIColors.PINK],
+		["Purple", UIColors.PURPLE],
+		["Red", UIColors.RED],
+		["Sulphur", UIColors.SULPHUR],
+		["Tan", UIColors.TAN],
+		["Teal", UIColors.TEAL],
+		["Violet", UIColors.VIOLET],
+		["White", UIColors.WHITE],
+		["Yellow", UIColors.YELLOW]
 	];
-	for (var i = 0; i < UICOLS[0].length; i++)
-		if (color.toLowerCase() == UICOLS[0][i].toLowerCase()) return UICOLS[1][i];
+	for (var i = 0; i < UICOLS.length; i++)
+		if (color.toLowerCase() == UICOLS[i][0].toLowerCase()) return UICOLS[i][1];
 	return UIColors.LIGHT_BLUE;
 }
 

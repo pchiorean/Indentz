@@ -1,5 +1,5 @@
 /*
-	Default swatches v1.11.0
+	Default swatches v1.12.0
 	© January 2021, Paul Chiorean
 	Adds swatches from a 3-column TSV file:
 
@@ -64,12 +64,12 @@ function TSVFile(fn) {
 }
 
 function GetColorModel(color) {
-	const CM = [
-		["process", "spot"],
-		[ColorModel.PROCESS, ColorModel.SPOT]
+	const CMODEL = [
+		["process", ColorModel.PROCESS],
+		["spot", ColorModel.SPOT]
 	];
-	for (var i = 0; i < CM[0].length; i++)
-		if (color === CM[0][i]) return CM[1][i];
+	for (var i = 0; i < CMODEL.length; i++)
+		if (color === CMODEL[i][0]) return CMODEL[i][1];
 		return ColorModel.PROCESS;
 }
 
