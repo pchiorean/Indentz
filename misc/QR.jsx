@@ -1,5 +1,5 @@
 /*
-	QR code v2.8.0
+	QR code v2.8.1
 	© January 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -225,7 +225,6 @@ function QROnFile(code, fn) {
 		tracking: -15,
 		capitalization: Capitalization.ALL_CAPS,
 		hyphenation: false,
-		balanceRaggedLines: BalanceLinesStyle.FULLY_BALANCED,
 		fillColor: "Black"
 	}
 	labelFrame.geometricBounds = [
