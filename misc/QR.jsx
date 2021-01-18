@@ -1,5 +1,5 @@
 /*
-	QR code v2.7.3
+	QR code v2.8.0
 	© January 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -69,11 +69,11 @@ function main() {
 	var result = w.show();
 	if (result == 2) { exit() }
 	if (do_batch) { BatchQR(); exit() }
-	var QRLabel = label.text.trim();
-	if (!QRLabel) { alert("No text, no code!"); exit() }
+	var code = label.text.trim();
+	if (!code) { alert("No text, no code!"); exit() }
 	switch (flg_onfile) {
-		case false: QROnPage(QRLabel, flg_white.value); exit();
-		case true: QROnFile(QRLabel); exit();
+		case false: QROnPage(code, flg_white.value); exit();
+		case true: QROnFile(code); exit();
 	}
 }
 
@@ -96,7 +96,7 @@ function BatchQR() { // Batch process 'QR.txt'
 		if (!infoLine[0].match(/_QR\.indd$/ig)) infoLine[0] = infoLine[0].replace(/\.indd$/ig, "_QR.indd");
 		infoLine[1] = infoLine[1].trim();
 		if (!infoLine[1]) errors.push(errln + "Missing code.");
-		width = Math.max(width, infoLine[1].length);
+		width = Math.max(width, infoLine[0].length);
 		if (errors.length == 0) data.push({ fn: infoLine[0], qr: infoLine[1] });
 	}
 	infoFile.close(); infoLine = "";
@@ -116,26 +116,23 @@ function BatchQR() { // Batch process 'QR.txt'
 	}
 }
 
-function QROnPage(QRLabel, flg_white) {
-	var flg_manual = /\|/g.test(QRLabel); // If '|' found, set manual LB flag
-	// Add SpecialCharacters.DISCRETIONARY_LINE_BREAK after '_'
-	QRLabel = QRLabel.replace(/([A-Za-z0-9)-]{3,})_([A-Za-z0-9(]{3,})/g, "$1_\u200B$2");
-	// Replace '|' with SpecialCharacters.FORCED_LINE_BREAK
-	QRLabel = QRLabel.replace(/\|/g, "\u000A");
+function QROnPage(code, flg_white) {
 	var idLayer = MakeIDLayer(doc);
 	doc.activeLayer = idLayer;
 	for (var i = 0; i < doc.pages.length; i++) {
 		var page = doc.pages.item(i);
 		for (var j = 0; j < page.pageItems.length; j++) // Remove old codes
 			if (page.pageItems.item(j).label == "QR") { page.pageItems.item(j).remove(); j-- }
-		var label = page.textFrames.add({
-			itemLayer: idLayer.name,
-			contents: QRLabel,
+		var labelFrame = page.textFrames.add({
 			label: "QR",
+			itemLayer: idLayer.name,
 			fillColor: "None",
-			strokeColor: "None"
+			strokeColor: "None",
+			contents: /\|/g.test(code) ?        // If '|' found
+				code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
+				BalanceText(code, 20)           // else auto balance text
 		});
-		label.paragraphs.everyItem().properties = {
+		labelFrame.paragraphs.everyItem().properties = {
 			appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
 			pointSize: "5 pt",
 			autoLeading: 100,
@@ -143,97 +140,84 @@ function QROnPage(QRLabel, flg_white) {
 			tracking: -15,
 			hyphenation: false,
 			capitalization: Capitalization.ALL_CAPS,
-			balanceRaggedLines: BalanceLinesStyle.FULLY_BALANCED,
 			fillColor: flg_white ? "Paper" : "Black", // White text
 			strokeColor: "None"
 		}
-		label.geometricBounds = [0, page.bounds[1], 24.9085829084314, page.bounds[1] + 61.0988746102401];
-		label.textFramePreferences.properties = {
+		labelFrame.textFramePreferences.properties = {
 			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
-			autoSizingType: (flg_manual || label.lines.length == 1) ? // If manual LB, set auto
-				AutoSizingTypeEnum.HEIGHT_AND_WIDTH :
-				AutoSizingTypeEnum.HEIGHT_ONLY,
-			useNoLineBreaksForAutoSizing: flg_manual,
-			insetSpacing: [UnitValue("3 mm").as("pt"), UnitValue("2.5 mm").as("pt"), UnitValue("1 mm").as("pt"), 0]
+			autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
+			useNoLineBreaksForAutoSizing: true,
+			insetSpacing: [
+				UnitValue("3 mm").as("pt"), UnitValue("2.5 mm").as("pt"),
+				UnitValue("1 mm").as("pt"), 0
+			]
 		}
-/*
-		label.textFramePreferences.properties = {
-			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
-			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
-			useNoLineBreaksForAutoSizing: (flg_manual || (label.lines.length == 1 && label.lines[0].characters.length <= 18)),
-			insetSpacing: [UnitValue("3 mm").as("pt"), UnitValue("2.5 mm").as("pt"), UnitValue("1 mm").as("pt"), 0]
-		}
-		label.textFramePreferences.properties = {
-			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
-			// autoSizingType: (flg_manual || label.lines.length == 1) ?
-			// 	AutoSizingTypeEnum.HEIGHT_AND_WIDTH : AutoSizingTypeEnum.HEIGHT_ONLY
-			autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH
-		}
-*/
-		var code = page.rectangles.add({
+		doc.align(labelFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
+		doc.align(labelFrame, AlignOptions.TOP_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
+		var codeFrame = page.rectangles.add({
 			itemLayer: idLayer.name,
 			label: "QR",
 			fillColor: "Paper",
 			strokeColor: "None"
 		});
-		code.absoluteRotationAngle = -90;
-		code.geometricBounds = [
-			24.9085829084314, page.bounds[1] + 6.51968503937007,
-			58.3574018060656, page.bounds[1] + 39.9685039370045
+		codeFrame.geometricBounds = [
+			labelFrame.geometricBounds[2],
+			page.bounds[1] + UnitValue("2.3 mm").as("pt"),
+			labelFrame.geometricBounds[2] + UnitValue("11.8 mm").as("pt"),
+			page.bounds[1] + UnitValue("14.1 mm").as("pt")
 		];
-		code.createPlainTextQRCode(QRLabel.replace(/[|\u000A\u200B]/g, "")); // Cleanup code text
-		code.frameFittingOptions.properties = {
+		codeFrame.createPlainTextQRCode(code.replace(/\|/g, "")); // Remove manual LB markers
+		codeFrame.frameFittingOptions.properties = {
 			fittingAlignment: AnchorPoint.CENTER_ANCHOR,
 			fittingOnEmptyFrame: EmptyFrameFittingOptions.PROPORTIONALLY,
-			topCrop: 7.26313937552231,
-			leftCrop: 7.26313937552231,
-			bottomCrop: 7.26313937552231,
-			rightCrop: 7.26313937552231
+			topCrop: UnitValue("2.7 mm").as("pt"),
+			leftCrop: UnitValue("2.7 mm").as("pt"),
+			bottomCrop: UnitValue("2.7 mm").as("pt"),
+			rightCrop: UnitValue("2.7 mm").as("pt")
 		}
-		code.epss[0].localDisplaySetting = ViewDisplaySettings.HIGH_QUALITY;
-		var QR = page.groups.add([label, code]);
-		QR.absoluteRotationAngle = 90;
-		// If possible, put QR outside safe area
+		// codeFrame.localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
+		codeFrame.epss[0].localDisplaySetting = ViewDisplaySettings.HIGH_QUALITY;
+		var qrGroup = page.groups.add([labelFrame, codeFrame]);
+		qrGroup.absoluteRotationAngle = 90;
+		// If possible, put code outside safe area
 		var mgs = Margins(page);
 		var szLabel = {
-			width: label.geometricBounds[3] - label.geometricBounds[1],
-			height: label.geometricBounds[2] - label.geometricBounds[0]
+			width: labelFrame.geometricBounds[3] - labelFrame.geometricBounds[1],
+			height: labelFrame.geometricBounds[2] - labelFrame.geometricBounds[0]
 		}
 		var szCode = {
-			width: code.geometricBounds[3] - code.geometricBounds[1],
-			height: code.geometricBounds[2] - code.geometricBounds[0]
+			width: codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1],
+			height: codeFrame.geometricBounds[2] - codeFrame.geometricBounds[0]
 		}
 		if ((mgs.left >= szLabel.width + szCode.width - 1.45) ||
-			(mgs.bottom >= szCode.height + 6.23622047244442 - 1.45)) {
-				doc.align(QR, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
-				doc.align(QR, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
+			(mgs.bottom >= szCode.height + UnitValue("2.3 mm").as("pt") - 1.45)) {
+				doc.align(qrGroup, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
+				doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
 			} else {
-				doc.align(QR, AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-				doc.align(QR, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+				doc.align(qrGroup, AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+				doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
 		}
-		QR.ungroup();
+		qrGroup.ungroup();
 	}
 }
 
-function QROnFile(QRLabel, fn) {
-	// Add SpecialCharacters.DISCRETIONARY_LINE_BREAK after '_'
-	QRLabel = QRLabel.replace(/([A-Za-z0-9)-]{3,})_([A-Za-z0-9(]{3,})/g, "$1_\u200B$2");
-	// Replace '|' with SpecialCharacters.FORCED_LINE_BREAK
-	QRLabel = QRLabel.replace(/\|/g, "\u000A");
+function QROnFile(code, fn) {
 	if (!fn) var fn = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd";
 	var target = app.documents.add();
 	var page = target.pages[0];
 	var idLayer = MakeIDLayer(target);
-	var label = page.textFrames.add({
-		itemLayer: idLayer.name,
-		contents: QRLabel,
+	var labelFrame = page.textFrames.add({
 		label: "QR",
+		itemLayer: idLayer.name,
 		fillColor: "None",
-		strokeColor: "None"
+		strokeColor: "None",
+		contents: /\|/g.test(code) ?        // If '|' found
+			code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
+			BalanceText(code, 20)           // else auto balance text
 	});
-	label.paragraphs.everyItem().properties = {
+	labelFrame.paragraphs.everyItem().properties = {
 		appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
 		pointSize: "5 pt",
 		autoLeading: 100,
@@ -244,46 +228,93 @@ function QROnFile(QRLabel, fn) {
 		balanceRaggedLines: BalanceLinesStyle.FULLY_BALANCED,
 		fillColor: "Black"
 	}
-	label.geometricBounds = [0, 0, 16.4046459005573, 56.6929133858268];
-	label.textFramePreferences.properties = {
+	labelFrame.geometricBounds = [
+		0, 0,
+		16.4046459005573, UnitValue("20 mm").as("pt")
+	];
+	labelFrame.textFramePreferences.properties = {
 		verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 		firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
 		autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
 		autoSizingType: AutoSizingTypeEnum.HEIGHT_ONLY,
-		insetSpacing: [UnitValue("1 mm").as("pt"), UnitValue("1 mm").as("pt"), 0, UnitValue("0.5 mm").as("pt")]
+		insetSpacing: [
+			UnitValue("1 mm").as("pt"), UnitValue("1 mm").as("pt"),
+			0, UnitValue("0.5 mm").as("pt")
+		]
 	}
-	var code = page.rectangles.add({ itemLayer: idLayer.name, label: "QR" });
-	code.absoluteRotationAngle = -90;
-	code.geometricBounds = [16.4046459005572, 0, 73.7007874015747, 56.6929133858268];
-	code.createPlainTextQRCode(QRLabel.replace(/[|\u000A\u200B]/g, "")); // Cleanup code text
-	code.frameFittingOptions.properties = {
+	var codeFrame = page.rectangles.add({ itemLayer: idLayer.name, label: "QR" });
+	codeFrame.absoluteRotationAngle = -90;
+	codeFrame.geometricBounds = [
+		UnitValue("5.787 mm").as("pt"), 0,
+		UnitValue("26 mm").as("pt"), UnitValue("20 mm").as("pt")
+	];
+	codeFrame.createPlainTextQRCode(code.replace(/\|/g, "")); // Remove manual LB markers
+	codeFrame.frameFittingOptions.properties = {
 		fittingAlignment: AnchorPoint.CENTER_ANCHOR,
 		fittingOnEmptyFrame: EmptyFrameFittingOptions.PROPORTIONALLY,
-		topCrop: 4.97468772366082,
-		leftCrop: 4.57520063728848,
-		bottomCrop: 4.97468772366082,
-		rightCrop: 4.57520063728848
+		topCrop: UnitValue("1.533 mm").as("pt"),
+		leftCrop: UnitValue("1.64 mm").as("pt"),
+		bottomCrop: UnitValue("1.533 mm").as("pt"),
+		rightCrop: UnitValue("1.64 mm").as("pt")
 	}
-	code.epss[0].localDisplaySetting = ViewDisplaySettings.HIGH_QUALITY;
-	var QR = page.groups.add([label, code]);
-	QR.absoluteRotationAngle = 90;
+	// codeFrame.localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
+	codeFrame.epss[0].localDisplaySetting = ViewDisplaySettings.HIGH_QUALITY;
+	var qrGroup = page.groups.add([labelFrame, codeFrame]);
+	qrGroup.absoluteRotationAngle = 90;
 	page.layoutRule = LayoutRuleOptions.OFF;
 	page.reframe(CoordinateSpaces.SPREAD_COORDINATES, [
-		QR.resolve(AnchorPoint.TOP_LEFT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0],
-		QR.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0]
+		qrGroup.resolve(AnchorPoint.TOP_LEFT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0],
+		qrGroup.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0]
 	]);
 	target.documentPreferences.pageWidth = page.bounds[3] - page.bounds[1];
 	target.documentPreferences.pageHeight = page.bounds[2] - page.bounds[0];
-	QR.ungroup();
+	qrGroup.ungroup();
 	// Create folder and save file
 	var targetFolder = Folder(docPath + "/QR Codes");
 	targetFolder.create();
 	target.save(File(targetFolder + "/" + fn));
 	// Keep file opened if text overflows
-	if (label.overflows) {
+	if (labelFrame.overflows) {
 		target.textPreferences.showInvisibles = true;
 		return true;
 	} else { target.close() }
+}
+
+function BalanceText(txt, width) { // Balance ragged lines
+	var re = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})))|(.+)/g;
+	var wordsArray = txt.match(re); // Break text into 'words'
+	// 1st pass: roughly join words into lines
+	var linesArray = [], lineBuffer = "", word = "";
+	while (word = wordsArray.shift()) {
+		if ((lineBuffer + word).length <= width) {
+			lineBuffer += word;
+		} else {
+			if (lineBuffer != "") linesArray.push(lineBuffer);
+			lineBuffer = word;
+		}
+	}
+	if (lineBuffer != "") linesArray.push(lineBuffer);
+	// 2nd pass: balance ragged lines
+	if (linesArray.length > 1) BalanceLines();
+	return linesArray.join("\u000A");
+
+	function BalanceLines() {
+		// Move the last word on the next line and test improvement
+		for (i = 0; i < linesArray.length - 1; i++) {
+			var delta = Math.abs(linesArray[i].length - linesArray[i+1].length);
+			var line = linesArray[i].match(re);
+			var word = line.pop();
+			var newLine1 = line.join("");
+			var newLine2 = word + linesArray[i+1];
+			var newDelta = Math.abs(newLine1.length - newLine2.length);
+			// If better, save and repeat until no improvement
+			if (newDelta < delta) {
+				linesArray[i] = newLine1;
+				linesArray[i+1] = newLine2;
+				BalanceLines();
+			}
+		}
+	}
 }
 
 function MakeIDLayer(doc) {
