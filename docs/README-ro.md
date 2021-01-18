@@ -82,7 +82,7 @@ Scale | |
 
 </details>
 
-### **Print**
+### **Printing**
 
 Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează straturi cu denumiri similare gen **visible**, **vizibil** pentru **safe area**, sau **diecut**, **die cut**, **cut lines**, **stanze** pentru **dielines**.
 
@@ -263,6 +263,6 @@ Misc | | | | | |
 © 2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
 
-<!-- Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Richard Harrington și alții. -->
+Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Richard Harrington și alții.
 
-README-ro.md • 14 ianuarie 2021
+README-ro.md • 18 ianuarie 2021

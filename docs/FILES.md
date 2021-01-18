@@ -43,7 +43,7 @@ Name                             |   Fn  | Description
 **ScaleToPageSize.jsx**          |    F5 | Scales the selected objects to the page size
 **ScaleToPageSizeH.jsx**         |       | Scales the selected objects to the page top/bottom size
 **ScaleToPageSizeW.jsx**         |       | Scales the selected objects to the page left/right size
-**[ Print ]**                            |
+**[ Printing ]**                         |
 **PrepareForPrint.jsx**          |       | Hides safe area layer and moves dielines to separate spreads
 **SafeArea.jsx**                 |       | Creates a safe area frame the size of the page margins
 **SafeAreaHideLayer.jsx**        |       | Hides the safe area layer (or equivalents)
