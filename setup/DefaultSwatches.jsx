@@ -1,5 +1,5 @@
 /*
-	Default swatches v1.12.1
+	Default swatches v1.13.0
 	© January 2021, Paul Chiorean
 	Adds swatches from a 3-column TSV file:
 
@@ -11,9 +11,6 @@
 	2. <Model>: color model: "process" or "spot",
 	3. <Values>: a list of 3 (RGB) or 4 (CMYK) color values.
 */
-
-// Add ECMA262-5 string trim method
-String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
 if (!(doc = app.activeDocument)) exit();
 if (!(infoFile = TSVFile("swatches.txt"))) { alert("File 'swatches.txt' not found."); exit() }
@@ -31,13 +28,13 @@ function main() {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-		infoLine = infoLine.split("\t");
+		infoLine = infoLine.split(/\s*\t\s*/);
 		errln = "Line " + line + ": ";
 		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
 		if (!infoLine[0]) errors.push(errln + "Missing swatch name.");
 		if (errors.length == 0) data.push({
-			name: infoLine[0].trim(),
-			model: GetColorModel(infoLine[1].trim()),
+			name: infoLine[0],
+			model: GetColorModel(infoLine[1]),
 			values: GetColorValues(infoLine[2])
 		});
 	}
@@ -75,8 +72,8 @@ function GetColorModel(color) {
 
 function GetColorValues(array) {
 	var values = [], c;
-	array = array.split("|");
-	while (c = array.shift()) values.push(Number(c.trim()));
+	array = array.split(/\s*\|\s*/);
+	while (c = array.shift()) values.push(Number(c));
 	return values;
 }
 

@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 1.12.0
+	Replace fonts 1.13.0
 	© January 2021, Paul Chiorean
 	Replaces fonts from a 4-column TSV file:
 
@@ -8,9 +8,6 @@
 	Arial | Bold | Helvetica Neue | Bold
 	...
 */
-
-// Add ECMA262-5 string trim method
-String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
 if (!(doc = app.activeDocument)) exit();
 if (!(infoFile = TSVFile("fonts.txt"))) { alert("File 'fonts.txt' not found."); exit() }
@@ -28,14 +25,14 @@ function main() {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-		infoLine = infoLine.split("\t");
+		infoLine = infoLine.split(/\s*\t\s*/);
 		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
 		errln = "Line " + line + ": ";
 		if (!infoLine[0] || !infoLine[2]) errors.push(errln + "Missing font name.");
 		if (!infoLine[1] || !infoLine[3]) errors.push(errln + "Missing font style.");
 		if (errors.length == 0) data.push([
-			infoLine[0].trim() + "\t" + infoLine[1].trim(),
-			infoLine[2].trim() + "\t" + infoLine[3].trim()
+			infoLine[0] + "\t" + infoLine[1],
+			infoLine[2] + "\t" + infoLine[3]
 		]);
 	}
 	infoFile.close(); infoLine = "";

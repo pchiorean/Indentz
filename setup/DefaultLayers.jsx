@@ -1,5 +1,5 @@
 /*
-	Default layers v1.15.1
+	Default layers v1.16.0
 	© January 2021, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -14,9 +14,6 @@
 	5. <Order>: "above" or "below" existing layers,
 	6. <Variants>: a list of layers which will be merged with the base layer (case insensitive).
 */
-
-// Add ECMA262-5 string trim method
-String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') }
 
 if (!(doc = app.activeDocument)) exit();
 if (!(infoFile = TSVFile("layers.txt"))) { alert("File 'layers.txt' not found."); exit() }
@@ -34,18 +31,17 @@ function main() {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-		infoLine = infoLine.split("\t");
+		infoLine = infoLine.split(/\s*\t\s*/);
 		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
 		errln = "Line " + line + ": ";
-		infoLine[0] = infoLine[0].trim();
 		if (!infoLine[0]) errors.push(errln + "Missing layer name.");
 		if (errors.length == 0) data.push({
 			name: infoLine[0],
-			color: !!infoLine[1] ? GetUIColor(infoLine[1].trim()) : UIColors.LIGHT_BLUE,
-			isVisible: !!infoLine[2] ? (infoLine[2].toLowerCase().trim() == "yes") : true,
-			isPrintable: !!infoLine[3] ? (infoLine[3].toLowerCase().trim() == "yes") : true,
-			isBelow: !!infoLine[4] ? (infoLine[4].toLowerCase().trim() == "below") : false,
-			variants: !!infoLine[5] ? GetVariants(infoLine[0], infoLine[5]) : ""
+			color: !!infoLine[1] ? GetUIColor(infoLine[1]) : UIColors.LIGHT_BLUE,
+			isVisible: !!infoLine[2] ? (infoLine[2].toLowerCase() == "yes") : true,
+			isPrintable: !!infoLine[3] ? (infoLine[3].toLowerCase() == "yes") : true,
+			isBelow: !!infoLine[4] ? (infoLine[4].toLowerCase() == "below") : false,
+			variants: !!infoLine[5] ? infoLine[5].split(/\s*,\s*/).unshift(infoLine[0]) : ""
 		});
 	}
 	infoFile.close(); infoLine = "";
@@ -157,14 +153,6 @@ function GetUIColor(color) {
 	for (var i = 0; i < UICOLS.length; i++)
 		if (color.toLowerCase() == UICOLS[i][0].toLowerCase()) return UICOLS[i][1];
 	return UIColors.LIGHT_BLUE;
-}
-
-function GetVariants(base, variants) {
-	var v, vv = [];
-	vv.push(base);
-	variants = variants.split(",");
-	while (v = variants.shift()) vv.push(v.trim());
-	return vv;
 }
 
 // FORWARD.Util functions, by Richard Harrington

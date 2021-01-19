@@ -1,5 +1,5 @@
 /*
-	QR code v2.8.2
+	QR code v2.9.0
 	© January 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -10,9 +10,6 @@
 	File 2 | CODE 2
 	...
 */
-
-// Add ECMA262-5 string trim method
-String.prototype.trim = function() { return this.replace(/^\s+/, '').replace(/\s+$/, '') };
 
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.enableRedraw = false;
@@ -69,7 +66,7 @@ function main() {
 	var result = w.show();
 	if (result == 2) { exit() }
 	if (do_batch) { BatchQR(); exit() }
-	var code = label.text.trim();
+	var code = label.text.replace(/^\s+/, '').replace(/\s+$/, '');
 	if (!code) { alert("No text, no code!"); exit() }
 	switch (flg_onfile) {
 		case false: QROnPage(code, flg_white.value); exit();
@@ -86,15 +83,13 @@ function BatchQR() { // Batch process 'QR.txt'
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-		infoLine = infoLine.split("\t");
+		infoLine = infoLine.split(/\s*\t\s*/);
 		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
 		errln = "Line " + line + ": ";
 		if (!infoLine[0]) errors.push(errln + "Missing filename.");
-		infoLine[0] = infoLine[0].trim();
 		if (/[\/\\?%*:|"<>]/.test(infoLine[0])) errors.push(errln + "Illegal character in the filename.");
 		if (!infoLine[0].match(/\.indd$/ig)) infoLine[0] += ".indd";
 		if (!infoLine[0].match(/_QR\.indd$/ig)) infoLine[0] = infoLine[0].replace(/\.indd$/ig, "_QR.indd");
-		infoLine[1] = infoLine[1].trim();
 		if (!infoLine[1]) errors.push(errln + "Missing code.");
 		width = Math.max(width, infoLine[0].length);
 		if (errors.length == 0) data.push({ fn: infoLine[0], qr: infoLine[1] });
