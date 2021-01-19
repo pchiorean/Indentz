@@ -1,5 +1,5 @@
 /*
-	QR code v2.8.1
+	QR code v2.8.2
 	© January 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -162,6 +162,7 @@ function QROnPage(code, flg_white) {
 			fillColor: "Paper",
 			strokeColor: "None"
 		});
+		codeFrame.absoluteRotationAngle = -90;
 		codeFrame.geometricBounds = [
 			labelFrame.geometricBounds[2],
 			page.bounds[1] + UnitValue("2.3 mm").as("pt"),
@@ -215,7 +216,7 @@ function QROnFile(code, fn) {
 		strokeColor: "None",
 		contents: /\|/g.test(code) ?        // If '|' found
 			code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
-			BalanceText(code, 20)           // else auto balance text
+			BalanceText(code, 18)           // else auto balance text
 	});
 	labelFrame.paragraphs.everyItem().properties = {
 		appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
