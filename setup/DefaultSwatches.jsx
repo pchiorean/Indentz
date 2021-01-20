@@ -1,5 +1,5 @@
 /*
-	Default swatches v1.13.0
+	Default swatches v1.13.1
 	© January 2021, Paul Chiorean
 	Adds swatches from a 3-column TSV file:
 
@@ -28,7 +28,7 @@ function main() {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-		infoLine = infoLine.split(/\s*\t\s*/);
+		infoLine = infoLine.split(/ *\t */);
 		errln = "Line " + line + ": ";
 		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
 		if (!infoLine[0]) errors.push(errln + "Missing swatch name.");
@@ -72,7 +72,7 @@ function GetColorModel(color) {
 
 function GetColorValues(array) {
 	var values = [], c;
-	array = array.split(/\s*\|\s*/);
+	array = array.split(/ *\| */);
 	while (c = array.shift()) values.push(Number(c));
 	return values;
 }

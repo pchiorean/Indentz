@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 1.13.0
+	Replace fonts 1.13.1
 	© January 2021, Paul Chiorean
 	Replaces fonts from a 4-column TSV file:
 
@@ -25,7 +25,7 @@ function main() {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-		infoLine = infoLine.split(/\s*\t\s*/);
+		infoLine = infoLine.split(/ *\t */);
 		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
 		errln = "Line " + line + ": ";
 		if (!infoLine[0] || !infoLine[2]) errors.push(errln + "Missing font name.");

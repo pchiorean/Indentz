@@ -1,5 +1,5 @@
 /*
-	Default layers v1.16.0
+	Default layers v1.16.1
 	© January 2021, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -31,7 +31,7 @@ function main() {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-		infoLine = infoLine.split(/\s*\t\s*/);
+		infoLine = infoLine.split(/ *\t */);
 		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
 		errln = "Line " + line + ": ";
 		if (!infoLine[0]) errors.push(errln + "Missing layer name.");
@@ -41,7 +41,7 @@ function main() {
 			isVisible: !!infoLine[2] ? (infoLine[2].toLowerCase() == "yes") : true,
 			isPrintable: !!infoLine[3] ? (infoLine[3].toLowerCase() == "yes") : true,
 			isBelow: !!infoLine[4] ? (infoLine[4].toLowerCase() == "below") : false,
-			variants: !!infoLine[5] ? infoLine[5].split(/\s*,\s*/).unshift(infoLine[0]) : ""
+			variants: !!infoLine[5] ? (infoLine[0] + "," + infoLine[5]).split(/ *, */) : ""
 		});
 	}
 	infoFile.close(); infoLine = "";
