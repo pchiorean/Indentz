@@ -1,5 +1,5 @@
 /*
-	QR code v2.9.1
+	QR code v2.10.0
 	© January 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -183,17 +183,13 @@ function QROnPage(code, flg_white) {
 			width: labelFrame.geometricBounds[3] - labelFrame.geometricBounds[1],
 			height: labelFrame.geometricBounds[2] - labelFrame.geometricBounds[0]
 		}
-		var szCode = {
-			width: codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1],
-			height: codeFrame.geometricBounds[2] - codeFrame.geometricBounds[0]
-		}
-		if ((mgs.left >= szLabel.width + szCode.width - 1.45) ||
-			(mgs.bottom >= szCode.height + UnitValue("2.3 mm").as("pt") - 1.45)) {
-				doc.align(qrGroup, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
-				doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
-			} else {
-				doc.align(qrGroup, AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-				doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		var szCode = codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1];
+		doc.align(qrGroup, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
+		doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
+		if ((szLabel.width > mgs.left && szLabel.height > mgs.bottom) ||
+			((szLabel.width + szCode) > mgs.left && (szCode + UnitValue("2.3 mm").as("pt")) > mgs.bottom)) {
+			doc.align(qrGroup, AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+			doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
 		}
 		qrGroup.ungroup();
 	}
