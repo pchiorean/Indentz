@@ -1,5 +1,5 @@
 /*
-	QR code v2.10.0
+	QR code v2.11.0
 	© January 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -38,7 +38,7 @@ function main() {
 		qpanel.alignChildren = ["left", "top"];
 		qpanel.add("statictext", undefined, "Enter QR code text:", { name: "st" });
 	var label = qpanel.add('edittext { properties: { name: "label", enterKeySignalsOnChange: true } }');
-		// label.text = "Use '|' for manual line breaks";
+		label.text = GetTextFromClipboard();
 		label.helpTip = "Use '|' for manual line breaks";
 		label.characters = 56;
 		label.active = true;
@@ -269,6 +269,23 @@ function QROnFile(code, fn) {
 		target.textPreferences.showInvisibles = true;
 		return true;
 	} else { target.close() }
+}
+
+// Modified from 'Paste and format URL.jsx' by Keith Gilbert
+// https://creativepro.com/free-script-to-automate-adding-visible-urls/
+function GetTextFromClipboard() {
+	var tmpLayer = doc.layers.add();
+	var tmpTextFrame = doc.textFrames.add(tmpLayer);
+	tmpTextFrame.insertionPoints[-1].select();
+	try {
+		app.pasteWithoutFormatting();
+		var string = tmpTextFrame.parentStory.contents;
+	} catch (_) {
+		var string = '';
+	}
+	tmpTextFrame.remove();
+	tmpLayer.remove();
+	return string;
 }
 
 function BalanceText(txt, width) { // Balance ragged lines
