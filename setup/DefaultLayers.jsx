@@ -1,5 +1,5 @@
 /*
-	Default layers v1.16.1
+	Default layers v1.16.2
 	© January 2021, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
@@ -111,48 +111,45 @@ function TSVFile(fn) {
 }
 
 function GetUIColor(color) {
-	const UICOLS = [
-		["Blue", UIColors.BLUE],
-		["Black", UIColors.BLACK],
-		["Brick Red", UIColors.BRICK_RED],
-		["Brown", UIColors.BROWN],
-		["Burgundy", UIColors.BURGUNDY],
-		["Charcoal", UIColors.CHARCOAL],
-		["Cute Teal", UIColors.CUTE_TEAL],
-		["Cyan", UIColors.CYAN],
-		["Dark Blue", UIColors.DARK_BLUE],
-		["Dark Green", UIColors.DARK_GREEN],
-		["Fiesta", UIColors.FIESTA],
-		["Gold", UIColors.GOLD],
-		["Grass Green", UIColors.GRASS_GREEN],
-		["Gray", UIColors.GRAY],
-		["Green", UIColors.GREEN],
-		["Grid Blue", UIColors.GRID_BLUE],
-		["Grid Green", UIColors.GRID_GREEN],
-		["Grid Orange", UIColors.GRID_ORANGE],
-		["Lavender", UIColors.LAVENDER],
-		["Light Blue", UIColors.LIGHT_BLUE],
-		["Light Gray", UIColors.LIGHT_GRAY],
-		["Light Olive", UIColors.LIGHT_OLIVE],
-		["Lipstick", UIColors.LIPSTICK],
-		["Magenta", UIColors.MAGENTA],
-		["Ochre", UIColors.OCHRE],
-		["Olive Green", UIColors.OLIVE_GREEN],
-		["Orange", UIColors.ORANGE],
-		["Peach", UIColors.PEACH],
-		["Pink", UIColors.PINK],
-		["Purple", UIColors.PURPLE],
-		["Red", UIColors.RED],
-		["Sulphur", UIColors.SULPHUR],
-		["Tan", UIColors.TAN],
-		["Teal", UIColors.TEAL],
-		["Violet", UIColors.VIOLET],
-		["White", UIColors.WHITE],
-		["Yellow", UIColors.YELLOW]
-	];
-	for (var i = 0; i < UICOLS.length; i++)
-		if (color.toLowerCase() == UICOLS[i][0].toLowerCase()) return UICOLS[i][1];
-	return UIColors.LIGHT_BLUE;
+	return {
+	'Blue': UIColors.BLUE,
+	'Black': UIColors.BLACK,
+	'Brick Red': UIColors.BRICK_RED,
+	'Brown': UIColors.BROWN,
+	'Burgundy': UIColors.BURGUNDY,
+	'Charcoal': UIColors.CHARCOAL,
+	'Cute Teal': UIColors.CUTE_TEAL,
+	'Cyan': UIColors.CYAN,
+	'Dark Blue': UIColors.DARK_BLUE,
+	'Dark Green': UIColors.DARK_GREEN,
+	'Fiesta': UIColors.FIESTA,
+	'Gold': UIColors.GOLD,
+	'Grass Green': UIColors.GRASS_GREEN,
+	'Gray': UIColors.GRAY,
+	'Green': UIColors.GREEN,
+	'Grid Blue': UIColors.GRID_BLUE,
+	'Grid Green': UIColors.GRID_GREEN,
+	'Grid Orange': UIColors.GRID_ORANGE,
+	'Lavender': UIColors.LAVENDER,
+	'Light Blue': UIColors.LIGHT_BLUE,
+	'Light Gray': UIColors.LIGHT_GRAY,
+	'Light Olive': UIColors.LIGHT_OLIVE,
+	'Lipstick': UIColors.LIPSTICK,
+	'Magenta': UIColors.MAGENTA,
+	'Ochre': UIColors.OCHRE,
+	'Olive Green': UIColors.OLIVE_GREEN,
+	'Orange': UIColors.ORANGE,
+	'Peach': UIColors.PEACH,
+	'Pink': UIColors.PINK,
+	'Purple': UIColors.PURPLE,
+	'Red': UIColors.RED,
+	'Sulphur': UIColors.SULPHUR,
+	'Tan': UIColors.TAN,
+	'Teal': UIColors.TEAL,
+	'Violet': UIColors.VIOLET,
+	'White': UIColors.WHITE,
+	'Yellow': UIColors.YELLOW
+	}[color] || UIColors.LIGHT_BLUE;
 }
 
 // FORWARD.Util functions, by Richard Harrington
