@@ -1,6 +1,6 @@
 ﻿/*
-	Default layers and more v3.3.0
-	© December 2020, Paul Chiorean
+	Default layers and more v3.4.0
+	© January 2021, Paul Chiorean
 	Changes some settings, adds swatches, adds/merges layers,
 	cleans up fonts and sets page dimensions from the filename.
 */
@@ -32,3 +32,8 @@ UndoModes.ENTIRE_SCRIPT, "Replace fonts");
 app.doScript(File(app.activeScript.path + "/PageSizeFromFilename.jsx"), 
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
+
+// Sets pasteboard
+(function() {
+	doc.pasteboardPreferences.pasteboardMargins = ["150mm", "25mm"];
+})();

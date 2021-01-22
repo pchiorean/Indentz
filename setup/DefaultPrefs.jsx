@@ -1,6 +1,6 @@
 /*
-	Default preferences v1.0.2
-	© November 2020, Paul Chiorean
+	Default preferences v1.0.3
+	© January 2021, Paul Chiorean
 	Sets default preferences.
 */
 
@@ -18,7 +18,7 @@ function() {
 	doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
 	doc.viewPreferences.showFrameEdges = true;
 	doc.viewPreferences.showRulers = true;
-	doc.pasteboardPreferences.pasteboardMargins = ["150mm", "25mm"];
+	// doc.pasteboardPreferences.pasteboardMargins = ["150mm", "25mm"];
 	doc.pasteboardPreferences.previewBackgroundColor = UIColors.LIGHT_GRAY;
 	doc.viewPreferences.cursorKeyIncrement = "0.2mm";
 	doc.textPreferences.leadingKeyIncrement = "0.5pt";
