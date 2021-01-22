@@ -110,7 +110,6 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **RGB Profile:** sRGB IEC61966-2.1 \
   > **Grids & Guides:** Show Guides \
   > **Grids & Guides:** Unlock Guides \
-  > **Guides & Pasteboard: Margins:** H 150 mm, V 25 mm \
   > **Guides & Pasteboard: Preview Background:** Light Gray \
   > **Keyboard Increments: Cursor Key:** 0.2 mm \
   > **Keyboard Increments: Size/Leading:** 0.5 pt \
@@ -168,7 +167,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`DocCleanup.jsx`** sets preferences (it runs **`DefaultPrefs.jsx`**), cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%.
 
-* **`DocDefaults.jsx`** just runs **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`** and **`PageSizeFromFilename.jsx`**.
+* **`DocDefaults.jsx`** runs **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`**, **`PageSizeFromFilename.jsx`** and sets pasteboard margins to 150 mm (H) and 25 mm (V).
 
 #### **Layout**
 
@@ -260,9 +259,10 @@ Misc | | | | | |
 
 ## License
 
-© 2021 Paul Chiorean \<jpeg AT basement.ro\>. \
-The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
+© 2021 Paul Chiorean \<jpeg AT basement.ro\>. The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Richard Harrington and others.
+Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington and others.
 
-README.md • January 18, 2021
+I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.
+
+README.md • January 22, 2021

@@ -168,7 +168,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`DocCleanup.jsx`** setează preferințe (rulează **`DefaultPrefs.jsx`**), șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%.
 
-* **`DocDefaults.jsx`** doar rulează **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`** și **`PageSizeFromFilename.jsx`**.
+* **`DocDefaults.jsx`** rulează **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`**, **`PageSizeFromFilename.jsx`** și setează marginile pasteboardului la 150 mm (H) și 25 mm (V).
 
 #### **Layout**
 
@@ -260,9 +260,10 @@ Misc | | | | | |
 
 ## Licență
 
-© 2021 Paul Chiorean \<jpeg AT basement.ro\>. \
-Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
+© 2021 Paul Chiorean \<jpeg AT basement.ro\>. Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
 
-Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Richard Harrington și alții.
+Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.
 
-README-ro.md • 18 ianuarie 2021
+Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback‑ul sau sugestiile sunt binevenite.
+
+README-ro.md • 22 ianuarie 2021
