@@ -1,6 +1,6 @@
 /*
-	Fit to... v3.9.0
-	© December 2020, Paul Chiorean
+	Fit to... v3.10.0
+	© January 2021, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/bleed.
 	It's run internally by all the other FitTo scripts.
 
@@ -9,8 +9,9 @@
 	FORCED_FIT: false | true
 */
 
-var DEBUG = false;
-var SNAP_PCT = 1; // Snap distance (percent of target)
+const DEBUG = false;
+const SNAP_PCT = 1; // Snap distance: percent of target
+const HW_PCT = 10; // HW: percent of visible area
 
 function main() {
 
@@ -30,7 +31,7 @@ while (obj = sel.shift()) {
 		for (var i = 0; i < pages.length; i++) {
 			if (obj.geometricBounds[3] <= pages[0].bounds[3]) { page = pages[0]; break }
 			if (obj.geometricBounds[1] >= pages[i].bounds[1] &&
-				obj.geometricBounds[3] <= pages[i].bounds[3]) { page = pages[i]; break}
+				obj.geometricBounds[3] <= pages[i].bounds[3]) { page = pages[i]; break }
 			if (obj.geometricBounds[1] >= pages[-1].bounds[1]) { page = pages[-1]; break }
 		}
 		if ((f = Fit2Bounds(obj)) != undefined) { selBAK.push(f) } else { selBAK.push(obj) }
@@ -42,29 +43,44 @@ doc.viewPreferences.rulerOrigin = set_RO;
 function Fit2Bounds(obj) {
 	var pg = Bounds(page, SCOPE, null);
 	var tg = Bounds(page, SCOPE, TARGET);
-	var snapDist = TARGET == "margins" ?
-		Math.min(tg[2] - tg[0], tg[3] - tg[1]) * SNAP_PCT/100 :
-		Math.min(pg[2] - pg[0], pg[3] - pg[1]) * SNAP_PCT/100;
-	var zone = TARGET == "margins" ?
-		[tg[0] + snapDist, tg[1] + snapDist, tg[2] - snapDist, tg[3] - snapDist] :
-		[pg[0] + snapDist, pg[1] + snapDist, pg[2] - snapDist, pg[3] - snapDist];
+	var mgs = Bounds(page, "spread", "margins");
+	var snapDist = (TARGET == "margins") ?
+		Math.min(tg[2] - tg[0], tg[3] - tg[1]) * SNAP_PCT / 100 :
+		Math.min(pg[2] - pg[0], pg[3] - pg[1]) * SNAP_PCT / 100;
+	var zone = (TARGET == "margins") ?
+		[ tg[0] + snapDist, tg[1] + snapDist, tg[2] - snapDist, tg[3] - snapDist ] :
+		[ pg[0] + snapDist, pg[1] + snapDist, pg[2] - snapDist, pg[3] - snapDist ];
 	var objG = obj.geometricBounds;
 	var objV = obj.visibleBounds;
 	var objRA = obj.absoluteRotationAngle;
 
 	// Special case: Objects labeled 'HW'
 	if (obj.label == "HW") {
-		obj.geometricBounds = TARGET == "margins" ?
-			[tg[0] + (tg[2] - tg[0]) * 0.9, tg[1], tg[2], tg[3]] :
-			[(pg[2] - pg[0]) * 0.9, tg[1], tg[2], tg[3]];
-		if (obj.constructor.name == "TextFrame")
-			obj.textFramePreferences.insetSpacing = [0, 0, TARGET == "bleed" ?
-				doc.documentPreferences.properties.documentBleedBottomOffset : 0, 0];
+		// Check if safe area is set
+		var saFrame, frames = page.rectangles.everyItem().getElements(),
+			flg_SA = false, saG;
+		while (saFrame = frames.shift())
+			if (saFrame.label == "safe area") { flg_SA = true; saG = saFrame.geometricBounds; break }
+		// Check if E grid is set
+		var flg_E = ((page.marginPreferences.columnCount == 6 ||
+			page.marginPreferences.columnCount == 12) &&
+			page.marginPreferences.columnGutter == 0);
+		// Resolve exceptions and resize
+		var bd = mgs;
+		if (flg_SA) { bd = saG; if (TARGET == "margins") tg = saG }
+		else if (flg_E) { bd = pg; if (TARGET == "margins") tg = pg }
+		obj.geometricBounds = [ bd[2] - (bd[2] - bd[0]) * Number(HW_PCT) / 100, tg[1], tg[2], tg[3] ];
+		// Adjust inset for text frames
+		if (obj.constructor.name == "TextFrame") {
+			obj.textFramePreferences.insetSpacing = [0, 0,
+				TARGET == "bleed" ? doc.documentPreferences.properties.documentBleedBottomOffset + (pg[2] - bd[2]) :
+				(TARGET == "margins" ? 0 : (pg[2] - bd[2])), 0];
+		}
 		return obj;
 	}
 
 	if (!FORCED_FIT) {
-		// Check if obj is outside bounds / inside bounds but not in the snap zone
+		// Check if obj is outside bounds | inside bounds but not in the snap zone
 		if (objV[2] <= tg[0] || objV[3] <= tg[1] || objV[0] >= tg[2] || objV[1] >= tg[3]) return;
 		if (objV[0] >= zone[0] && objV[1] >= zone[1] && objV[2] <= zone[2] && objV[3] <= zone[3]) return;
 		// Compute target size
@@ -141,65 +157,55 @@ function Bounds(/*parent page*/page, /*'page','spread'*/scope, /*null,'bleed','m
 		bottom: doc.documentPreferences.properties.documentBleedBottomOffset,
 		right: doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
 	}
-	switch(scope) {
+	switch (scope) {
 		case "page":
-			switch(target) {
-				case null:
-					return page.bounds;
-				case "bleed":
-					return [
-						page.bounds[0] - bleed.top,
-						page.bounds[1] - (page == fPg ?
-							(fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left) :
-							0),
-						page.bounds[2] + bleed.bottom,
-						page.bounds[3] + (fPg == lPg ?
-							(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) :
-							page == lPg ? bleed.right : 0)
-					];
-				case "margins":
-					return [
-						page.bounds[0] + page.marginPreferences.top,
-						page.side == PageSideOptions.LEFT_HAND ?
-							page.bounds[1] + page.marginPreferences.right :
-							page.bounds[1] + page.marginPreferences.left,
-						page.bounds[2] - page.marginPreferences.bottom,
-						page.side == PageSideOptions.LEFT_HAND ?
-							page.bounds[3] - page.marginPreferences.left :
-							page.bounds[3] - page.marginPreferences.right
-					];
+			switch (target) {
+				case null: return page.bounds;
+				case "bleed": return [
+					page.bounds[0] - bleed.top,
+					page.bounds[1] - (page == fPg ?
+						(fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left) : 0),
+					page.bounds[2] + bleed.bottom,
+					page.bounds[3] + (fPg == lPg ?
+						(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) :
+						(page == lPg ? bleed.right : 0))
+				];
+				case "margins": return [
+					page.bounds[0] + page.marginPreferences.top,
+					page.side == PageSideOptions.LEFT_HAND ?
+						page.bounds[1] + page.marginPreferences.right :
+						page.bounds[1] + page.marginPreferences.left,
+					page.bounds[2] - page.marginPreferences.bottom,
+					page.side == PageSideOptions.LEFT_HAND ?
+						page.bounds[3] - page.marginPreferences.left :
+						page.bounds[3] - page.marginPreferences.right
+				];
 			}
 		case "spread":
-			switch(target) {
-				case null:
-					return [
-						page.parent.pages.firstItem().bounds[0],
-						page.parent.pages.firstItem().bounds[1],
-						page.parent.pages.lastItem().bounds[2],
-						page.parent.pages.lastItem().bounds[3]
-					];
-				case "bleed":
-					return [
-						fPg.bounds[0] - bleed.top,
-						fPg.bounds[1] - (fPg.side == PageSideOptions.LEFT_HAND ?
-							bleed.right : bleed.left),
-						lPg.bounds[2] + bleed.bottom,
-						lPg.bounds[3] + (fPg == lPg ?
-							(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) :
-							bleed.right)
-					];
-				case "margins":
-					return [
-						fPg.bounds[0] + fPg.marginPreferences.top,
-						fPg.bounds[1] + (fPg.side == PageSideOptions.LEFT_HAND ?
-							fPg.marginPreferences.right :
-							fPg.marginPreferences.left),
-						lPg.bounds[2] - lPg.marginPreferences.bottom,
-						lPg.bounds[3] - (fPg == lPg ?
-							(fPg.side == PageSideOptions.LEFT_HAND ?
-							fPg.marginPreferences.left : fPg.marginPreferences.right) :
-							lPg.marginPreferences.right)
-					];
+			switch (target) {
+				case null: return [
+					page.parent.pages.firstItem().bounds[0],
+					page.parent.pages.firstItem().bounds[1],
+					page.parent.pages.lastItem().bounds[2],
+					page.parent.pages.lastItem().bounds[3]
+				];
+				case "bleed": return [
+					fPg.bounds[0] - bleed.top,
+					fPg.bounds[1] - (fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left),
+					lPg.bounds[2] + bleed.bottom,
+					lPg.bounds[3] + (fPg == lPg ?
+						(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) : bleed.right)
+				];
+				case "margins": return [
+					fPg.bounds[0] + fPg.marginPreferences.top,
+					fPg.bounds[1] + (fPg.side == PageSideOptions.LEFT_HAND ?
+						fPg.marginPreferences.right : fPg.marginPreferences.left),
+					lPg.bounds[2] - lPg.marginPreferences.bottom,
+					lPg.bounds[3] - (fPg == lPg ?
+						(fPg.side == PageSideOptions.LEFT_HAND ?
+						fPg.marginPreferences.left : fPg.marginPreferences.right) :
+						lPg.marginPreferences.right)
+				];
 			}
 	}
 }
