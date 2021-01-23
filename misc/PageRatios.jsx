@@ -1,6 +1,6 @@
 /*
-	Page ratios v1.4.0
-	© December 2020, Paul Chiorean
+	Page ratios v1.4.1
+	© January 2021, Paul Chiorean
 	Calculates the ratio of each page and displays it in the upper left corner.
 */
 
@@ -23,11 +23,11 @@ function main() {
 	if (idLayer.isValid) infoLayer.move(LocationOptions.after, idLayer);
 	else infoLayer.move(LocationOptions.AT_BEGINNING);
 
+	var item, items = doc.rectangles.everyItem().getElements();
+	while (item = items.shift()) if (item.label == "ratio") item.remove();
 	for (var i = 0; i < doc.pages.length; i++) {
 		var page = doc.pages.item(i), size = Bounds(page);
 		var ratio = ((size[3] - size[1]) / (size[2] - size[0])).toFixed(3);
-		var item, items = page.allPageItems;
-		while (item = items.shift()) if (item.label == "ratio") item.remove();
 		var infoFrame = page.textFrames.add({
 			itemLayer: infoLayer.name,
 			contents: ratio,
@@ -57,7 +57,7 @@ function main() {
 		infoOutlines[0].remove();
 		infoFrame.fit(FitOptions.CENTER_CONTENT);
 	}
-	infoLayer.locked = true;
+	// infoLayer.locked = true;
 }
 
 function Bounds(page) { // Return page margins bounds

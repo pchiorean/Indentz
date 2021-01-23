@@ -1,5 +1,5 @@
 /*
-	Page size from filename v1.10.1
+	Page size from filename v1.10.2
 	© January 2021, Paul Chiorean
 	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -87,33 +87,32 @@ function main() {
 		var saSwatchName = "Safe area";
 		var saSwatch = doc.swatches.itemByName(saSwatchName);
 		if (!saSwatch.isValid) {
-			doc.colors.add({ name: saSwatchName, model: ColorModel.PROCESS, 
-			space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
+			doc.colors.add({ name: saSwatchName, model: ColorModel.PROCESS,
+				space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
 		}
 		var saLayerName = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"]);
 		doc.activeLayer = doc.layers.item(0);
 		var saLayer = doc.layers.item(saLayerName);
 		if (!saLayer.isValid) doc.layers.add({ name: saLayerName, layerColor: UIColors.YELLOW });
 		saLayer.locked = false;
-		var item, items = page.allPageItems;
-		while (item = items.shift())
-			if (item.label == "safe area" &&
-				item.itemLayer == saLayer &&
-				item.locked == false) item.remove();
+		var saFrame, frames = page.rectangles.everyItem().getElements();
+		while (saFrame = frames.shift())
+			if (saFrame.label == "safe area" &&
+				saFrame.itemLayer == saLayer &&
+				saFrame.locked == false) saFrame.remove();
 
-		var mgPg, mgBounds, saLayerFrame;
-		mgPg = {
+		var mgPg = {
 			top: (szPg.height - szMg.height) / 2,
 			left: (szPg.width - szMg.width) / 2,
 			bottom: (szPg.height - szMg.height) / 2,
 			right: (szPg.width - szMg.width) / 2
 		}
 		if (mgPg == null) return;
-		mgBounds = [mgPg.top, mgPg.left, szMg.height + mgPg.top, szMg.width + mgPg.left];
+		var mgBounds = [ mgPg.top, mgPg.left, szMg.height + mgPg.top, szMg.width + mgPg.left ];
 		page.marginPreferences.properties = mgPg;
 		page.marginPreferences.columnCount = 1;
 		page.marginPreferences.columnGutter = 0;
-		saLayerFrame = page.rectangles.add({
+		var saFrame = page.rectangles.add({
 			label: "safe area",
 			contentType: ContentType.UNASSIGNED,
 			fillColor: "None",
@@ -123,7 +122,7 @@ function main() {
 			strokeType: "$ID/Canned Dashed 3x2",
 			overprintStroke: false
 		});
-		saLayerFrame.properties = { itemLayer: saLayerName, geometricBounds: mgBounds }
+		saFrame.properties = { itemLayer: saLayerName, geometricBounds: mgBounds }
 		saLayer.locked = true;
 	}
 
