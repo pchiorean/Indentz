@@ -1,6 +1,6 @@
 /*
-	Safe area v1.8.2
-	© December 2020, Paul Chiorean
+	Safe area v1.8.3
+	© January 2021, Paul Chiorean
 	Creates a 'safe area' frame the size of the page margins.
 */
 
@@ -32,11 +32,11 @@ function main() {
 	for (var i = 0; i < doc.pages.length; i++) {
 		var page = doc.pages[i], saBounds = SafeArea(page);
 		if (!saBounds) continue;
-		var item, items = page.allPageItems;
-		while (item = items.shift())
-			if (item.label == "safe area" &&
-				item.itemLayer == saLayer &&
-				item.locked == false) item.remove();
+		var saFrame, frames = page.rectangles.everyItem().getElements();
+		while (saFrame = frames.shift())
+			if (saFrame.label == "safe area" &&
+				saFrame.itemLayer == saLayer &&
+				saFrame.locked == false) saFrame.remove();
 		page.rectangles.add({
 			name: "<safe area>", label: "safe area",
 			contentType: ContentType.UNASSIGNED,
