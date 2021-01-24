@@ -1,6 +1,6 @@
 /*
-	Clip v2.4.0
-	© December 2020, Paul Chiorean
+	Clip v2.5.0
+	© January 2021, Paul Chiorean
 	Clips selected objects in a "<clip frame>", or restores them
 */
 
@@ -27,20 +27,32 @@ function Clip(items) {
 	// Undo if already clipped
 	if (items.length == 1 && (items[0].name == "<clip frame>" || items[0].name == "<auto clip frame>")) {
 		UndoClip(items[0]); exit() }
-	// Filter selection and get a single object
+
+	var obj = items[0];
+	var size = obj.visibleBounds;
+	// If multiple objects are selected, group them
 	if (items.length > 1) {
 		var selArray = [];
 		for (var i = 0; i < items.length; i++) if (!items[i].locked) selArray.push(items[i]);
-		var obj = doc.groups.add(selArray);
+		obj = doc.groups.add(selArray);
 		obj.name = "<auto clip group>";
-	} else var obj = items[0];
-	// Clip
+		size = obj.geometricBounds;
+	}
+	// Special case: text frames
+	else if (items.length == 1 && items[0].constructor.name == "TextFrame") {
+		var outlines = items[0].createOutlines(false);
+		size = [
+			obj.geometricBounds[0], outlines[0].geometricBounds[1],
+			obj.geometricBounds[2], outlines[0].geometricBounds[3]
+		];
+		outlines[0].remove();
+	}
 	var clipFrame = doc.rectangles.add(
 		obj.itemLayer,
 		LocationOptions.AFTER, obj,
 		{ name: "<clip frame>", label: obj.label,
 		fillColor: "None", strokeColor: "None",
-		geometricBounds: obj.visibleBounds });
+		geometricBounds: size });
 	clipFrame.sendToBack(obj);
 	app.select(obj); app.cut(); app.select(clipFrame); app.pasteInto();
 }
