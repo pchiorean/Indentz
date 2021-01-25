@@ -1,5 +1,5 @@
 /*
-	Fit to... v3.10.0
+	Fit to... v3.11.0
 	© January 2021, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/bleed.
 	It's run internally by all the other FitTo scripts.
@@ -61,14 +61,10 @@ function Fit2Bounds(obj) {
 			flg_SA = false, saG;
 		while (saFrame = frames.shift())
 			if (saFrame.label == "safe area") { flg_SA = true; saG = saFrame.geometricBounds; break }
-		// Check if E grid is set
-		var flg_E = ((page.marginPreferences.columnCount == 6 ||
-			page.marginPreferences.columnCount == 12) &&
-			page.marginPreferences.columnGutter == 0);
 		// Resolve exceptions and resize
 		var bd = mgs;
 		if (flg_SA) { bd = saG; if (TARGET == "margins") tg = saG }
-		else if (flg_E) { bd = pg; if (TARGET == "margins") tg = pg }
+		else { bd = pg; if (TARGET == "margins") tg = pg }
 		obj.geometricBounds = [ bd[2] - (bd[2] - bd[0]) * Number(HW_PCT) / 100, tg[1], tg[2], tg[3] ];
 		// Adjust inset for text frames
 		if (obj.constructor.name == "TextFrame") {
