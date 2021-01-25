@@ -1,5 +1,5 @@
 /*
-	HW 2.0.0
+	HW 2.1.0
 	© January 2021, Paul Chiorean
 	Labels 'HW' selected objects and adds a HW bottom guide.
 */
@@ -28,32 +28,21 @@ function main() {
 		if (item.constructor.name == "Rectangle" || item.constructor.name == "TextFrame")
 			item.fillColor = "Paper";
 	}
-	// Remove old HW guides
-	var guide, guides = page.guides.everyItem().getElements();
-	while (guide = guides.shift())
-		if (guide.label == "HW") guide.remove();
-	// Check if safe area is set
-	var saFrame, frames = page.rectangles.everyItem().getElements(), flg_SA = false;
-	while (saFrame = frames.shift())
-		if (saFrame.label == "safe area") { flg_SA = true; break };
-	// Check if E grid is set
-	var flg_E = ((page.marginPreferences.columnCount == 6 ||
-		page.marginPreferences.columnCount == 12) &&
-		page.marginPreferences.columnGutter == 0);
-	// Add HW guide
-	if (flg_SA) { // Safe area takes priority
-		var target = { top: saFrame.geometricBounds[0], bottom: saFrame.geometricBounds[2] }
-	} else { // Page height, considering margins (not if E grid)
-		var target = {
-			top: page.bounds[0] + (flg_E ? 0 : page.marginPreferences.top),
-			bottom: page.bounds[2] - (flg_E ? 0 : page.marginPreferences.bottom)
-		}
+	// Remove old guides
+	var guide, guides = page.parent.guides.everyItem().getElements();
+	while (guide = guides.shift()) if (guide.label == "HW") guide.remove();
+	// Add guides
+	var target, pages = page.parent.pages.everyItem().getElements();
+	while (target = pages.shift()) {
+		var top = target.bounds[0], bottom = target.bounds[2];
+		var saFrame, frames = page.rectangles.everyItem().getElements();
+		while (saFrame = frames.shift()) if (saFrame.label == "safe area")
+			top = saFrame.geometricBounds[0], bottom = saFrame.geometricBounds[2];
+		target.guides.add(undefined, {
+			itemLayer: hwLayer,
+			label: "HW",
+			guideColor: UIColors.GREEN,
+			orientation: HorizontalOrVertical.horizontal,
+			location: bottom - (bottom - top) * (Number(HW_PCT) / 100) });
 	}
-	page.guides.add(undefined, {
-		itemLayer: hwLayer,
-		label: "HW",
-		guideColor: UIColors.GREEN,
-		orientation: HorizontalOrVertical.horizontal,
-		location: target.bottom - (target.bottom - target.top) * (Number(HW_PCT) / 100) }
-	);
 }
