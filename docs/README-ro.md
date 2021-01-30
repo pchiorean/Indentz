@@ -67,7 +67,7 @@ FitToPage | | FitToSpread | | TextAutosize | |
 **FitToPageSafeAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadSafeAreaForced.jsx** | ⌥⇧⌘F12
 **FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
 
-**Notă:** `F11` pagină; `F12` spread; `⌥` margini; `⇧` bleed; `⌥⇧` safe area; `⌘` forțat.
+**Notă:** `F11` pagină; `F12` spread; `⌥` margini; `⌥⇧` safe area; `⇧` bleed; `⌘` forțat.
 
 </details>
 

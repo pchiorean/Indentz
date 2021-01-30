@@ -67,7 +67,7 @@ FitToPage | | FitToSpread | | TextAutosize | |
 **FitToPageSafeAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadSafeAreaForced.jsx** | ⌥⇧⌘F12
 **FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
 
-**Note:** `F11` page; `F12` spread; `⌥` margins; `⇧` bleed; `⌥⇧` safe area; `⌘` forced.
+**Note:** `F11` page; `F12` spread; `⌥` margins; `⌥⇧` safe area; `⇧` bleed; `⌘` forced.
 
 </details>
 
