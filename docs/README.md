@@ -204,13 +204,13 @@ Setup | | | |
 
 ### **Misc**
 
-* **`CleanupLabels.jsx`**: sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
+* **`CleanupLabels.jsx`**: Sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
 
 * **`Clip.jsx`**: To handle some objects it is sometimes useful to temporarily insert them into a container *(clipping frame)*. The script inserts selected objects in a clipping frame or restores them if already clipped.
 
   **`ClipUndo.jsx`** restores one or several clipped objects at once.
 
-* **`HW.jsx`** labels selected objects with 'HW'; if nothing is selected, it adds a 10% bottom guide on the current page.
+* **`HW.jsx`** labels selected objects with 'HW'; adds a 10% bottom guide on the current page.
 
 * **`PageRatios.jsx`** calculates the ratio of each page and puts it in the upper left corner, on the **info** layer.
 

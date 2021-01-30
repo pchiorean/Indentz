@@ -205,13 +205,13 @@ Setup | | | |
 
 ### **Misc**
 
-* **`CleanupLabels.jsx`**: uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. Scriptul șterge etichetele obiectelor selectate sau ale tuturor obiectelor din document dacă nu e selectat nimic.
+* **`CleanupLabels.jsx`**: Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. Scriptul șterge etichetele obiectelor selectate sau ale tuturor obiectelor din document dacă nu e selectat nimic.
 
 * **`Clip.jsx`**: Pentru a manipula unele obiecte uneori e util să le inserăm temporar într‑un container *(clipping frame)*. Scriptul inserează obiectele selectate într‑un container sau le restaurează dacă sunt deja inserate.
 
   **`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
-* **`HW.jsx`** etichetează obiectele selectate cu "HW"; dacă nu e selectat nimic, adaugă un ghid inferior de 10% pe pagina curentă.
+* **`HW.jsx`** etichetează obiectele selectate cu "HW"; adaugă un ghid inferior de 10% pe pagina curentă.
 
 * **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul **info**.
 
