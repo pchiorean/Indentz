@@ -1,15 +1,19 @@
 /*
-	Fit to spread stub, forced v1.1.3
-	© December 2020, Paul Chiorean
+	Fit to spread, forced v1.1.4
+	© January 2021, Paul Chiorean
 	Resizes the selected objects to the spread size, forced.
+
+	SCOPE: 'page' | 'spread'
+	TARGET: null | 'margins' | 'safe area' | 'bleed'
+	FORCED_FIT: true | false
 */
 
 // @include "../lib/FitTo.jsxinc";
 
 // We use global variables instead of passing arguments to doScript
-var SCOPE = "spread"; // "page" | "spread"
-var TARGET = null; // null | "bleed" | "margins"
-var FORCED_FIT = true; // false | true
+var SCOPE = "spread";
+var TARGET = null;
+var FORCED_FIT = true;
 
 app.doScript(
 	main, ScriptLanguage.javascript, undefined,

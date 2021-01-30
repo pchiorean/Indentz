@@ -1,7 +1,7 @@
 /*
-	Fit to spread v1.1.4
+	Fit to spread safe area v1.0.0
 	© January 2021, Paul Chiorean
-	Resizes the selected objects to the spread size.
+	Resizes the selected objects to the spread safe area.
 
 	SCOPE: 'page' | 'spread'
 	TARGET: null | 'margins' | 'safe area' | 'bleed'
@@ -12,10 +12,10 @@
 
 // We use global variables instead of passing arguments to doScript
 var SCOPE = "spread";
-var TARGET = null;
+var TARGET = "safe area";
 var FORCED_FIT = false;
 
 app.doScript(
 	main, ScriptLanguage.javascript, undefined,
-	UndoModes.ENTIRE_SCRIPT, "Resize to spread"
+	UndoModes.ENTIRE_SCRIPT, "Resize to spread safe area"
 );

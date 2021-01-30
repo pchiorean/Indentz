@@ -18,14 +18,14 @@ Make it easier to align objects or set the reference point for transformations u
 
 * **`SetRefPoint`** scripts change the reference point used for transformations (like clicking the little proxy squares in the **Transform** palette).
 
-**Note:** These two sets don't make much sense if they're not associated with the numeric keypad.
+**Note:** These two sets don't make any sense if they're not associated with the numeric keypad.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
 Alignment | | | | | | | |
 :- | -: | :- | -: | :- | -: | :- | -:
 **AlignToTL.jsx** | Num7 | **AlignToT.jsx** | Num8 | **AlignToTR.jsx** | Num9 | **ToggleAlignTo.jsx** | Num0
-**AlignToL.jsx** | Num4 | **AlignToC.jsx** | Num5 | **AlignToR.jsx**  | Num6 | **ResetAlignTo.jsx** | ⌃Num0
+**AlignToL.jsx** | Num4 | **AlignToC.jsx** | Num5 | **AlignToR.jsx** | Num6 | **ResetAlignTo.jsx** | ⌃Num0
 **AlignToBL.jsx** | Num1 | **AlignToB.jsx** | Num2 | **AlignToBR.jsx** | Num3
 
 Proxy | | | | | |
@@ -40,9 +40,9 @@ Proxy | | | | | |
 
 Resize the selected objects, without scaling. Rectangular frames are simply resized; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is resized.
 
-* **`FitToPage`** and **`FitToSpread`**: if the selected object is larger than the page/spread/margins/bleed, it will be reduced; if it is smaller but inside a 1% "snap" area, it will be enlarged.
+* **`FitToPage`** and **`FitToSpread`**: if the selected object is larger than the page/spread/margins/safe area/bleed, it will be reduced; if it is smaller but inside a 1% "snap" area, it will be enlarged.
 
-  **`FitTo...Forced.jsx`** resize exactly to the named dimensions.
+  **`FitTo...Forced`** resize exactly to the named dimensions.
 
 * **`TextAutosize.jsx`** fits the text frame to the text and sets it to auto‑size. You control the auto‑sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
 
@@ -60,8 +60,14 @@ FitToPage | | FitToSpread | | TextAutosize | |
 :- | -: | :- | -: | :- | -:
 **FitToPage.jsx** | F11 | **FitToSpread.jsx** | F12 | **TextAutosize.jsx** | F6
 **FitToPageMargins.jsx** | ⌥F11 | **FitToSpreadMargins.jsx** | ⌥F12
+**FitToPageSafeArea.jsx** | ⌥⇧F11 | **FitToSpreadSafeArea.jsx** | ⌥⇧F12
 **FitToPageBleed.jsx** | ⇧F11 | **FitToSpreadBleed.jsx** | ⇧F12
+**FitToPageForced.jsx** | ⌘F11 | **FitToSpreadForced.jsx** | ⌘F12
+**FitToPageMarginsForced.jsx** | ⌥⌘F11 | **FitToSpreadMarginsForced.jsx** | ⌥⌘F12
+**FitToPageSafeAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadSafeAreaForced.jsx** | ⌥⇧⌘F12
 **FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
+
+**Note:** `F11` page; `F12` spread; `⌥` margins; `⇧` bleed; `⌥⇧` safe area; `⌘` forced.
 
 </details>
 
@@ -265,4 +271,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.
 
-README.md • January 22, 2021
+README.md • January 30, 2021

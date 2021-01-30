@@ -34,7 +34,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>SetRefPoint</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta <strong>Transform</strong>.</p>
 </li>
 </ul>
-<p><strong>Notă:</strong> Aceste două seturi nu prea au sens dacă nu sunt asociate tastaturii numerice.</p>
+<p><strong>Notă:</strong> Aceste două seturi nu au nici un sens dacă nu sunt asociate tastaturii numerice.</p>
 <details><summary><strong>Shortcuturi</strong></summary>
 <table>
 <thead>
@@ -125,8 +125,8 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p>Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container <em>(clipping frame)</em> și acesta e redimensionat.</p>
 <ul>
 <li>
-<p><strong><code>FitToPage</code></strong> și <strong><code>FitToSpread</code></strong>: dacă obiectul este mai mare decât pagina/spreadul/marginile/bleedul, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.</p>
-<p><strong><code>FitTo...Forced.jsx</code></strong> redimensionează exact la dimensiunile respective.</p>
+<p><strong><code>FitToPage</code></strong> și <strong><code>FitToSpread</code></strong>: dacă obiectul este mai mare decât pagina/spreadul/marginile/safe area/bleedul, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.</p>
+<p><strong><code>FitTo...Forced</code></strong> redimensionează exact la dimensiunile respective.</p>
 </li>
 <li>
 <p><strong><code>TextAutosize.jsx</code></strong> „strânge” chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând <strong>Paragraph Alignment</strong> pentru axa orizontală și <strong>Text Frame Options &gt; Vertical Justification</strong> pentru axa verticală:</p>
@@ -193,10 +193,42 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <td style="text-align:right"></td>
 </tr>
 <tr>
+<td style="text-align:left"><strong>FitToPageSafeArea.jsx</strong></td>
+<td style="text-align:right">⌥⇧F11</td>
+<td style="text-align:left"><strong>FitToSpreadSafeArea.jsx</strong></td>
+<td style="text-align:right">⌥⇧F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
 <td style="text-align:left"><strong>FitToPageBleed.jsx</strong></td>
 <td style="text-align:right">⇧F11</td>
 <td style="text-align:left"><strong>FitToSpreadBleed.jsx</strong></td>
 <td style="text-align:right">⇧F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>FitToPageForced.jsx</strong></td>
+<td style="text-align:right">⌘F11</td>
+<td style="text-align:left"><strong>FitToSpreadForced.jsx</strong></td>
+<td style="text-align:right">⌘F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>FitToPageMarginsForced.jsx</strong></td>
+<td style="text-align:right">⌥⌘F11</td>
+<td style="text-align:left"><strong>FitToSpreadMarginsForced.jsx</strong></td>
+<td style="text-align:right">⌥⌘F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>FitToPageSafeAreaForced.jsx</strong></td>
+<td style="text-align:right">⌥⇧⌘F11</td>
+<td style="text-align:left"><strong>FitToSpreadSafeAreaForced.jsx</strong></td>
+<td style="text-align:right">⌥⇧⌘F12</td>
 <td style="text-align:left"></td>
 <td style="text-align:right"></td>
 </tr>
@@ -210,6 +242,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tr>
 </tbody>
 </table>
+<p><strong>Notă:</strong> <code>F11</code> pagină; <code>F12</code> spread; <code>⌥</code> margini; <code>⇧</code> bleed; <code>⌥⇧</code> safe area; <code>⌘</code> forțat.</p>
 </details>
 <h3 id="scaling"><strong>Scaling</strong></h3>
 <p>Scalează proporțional obiectele selectate, ca un bloc unitar.</p>
@@ -607,6 +640,6 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.</p>
 <p>Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback‑ul sau sugestiile sunt binevenite.</p>
-<p>README-ro.md • 22 ianuarie 2021</p>
+<p>README-ro.md • 30 ianuarie 2021</p>
 </body>
 </html>

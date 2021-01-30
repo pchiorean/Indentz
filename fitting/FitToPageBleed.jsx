@@ -1,15 +1,19 @@
 /*
-	Fit to page bleed stub v1.1.3
-	© December 2020, Paul Chiorean
+	Fit to page bleed v1.1.4
+	© January 2021, Paul Chiorean
 	Resizes the selected objects to the page bleed size.
+
+	SCOPE: 'page' | 'spread'
+	TARGET: null | 'margins' | 'safe area' | 'bleed'
+	FORCED_FIT: true | false
 */
 
 // @include "../lib/FitTo.jsxinc";
 
 // We use global variables instead of passing arguments to doScript
-var SCOPE = "page"; // "page" | "spread"
-var TARGET = "bleed"; // null | "bleed" | "margins"
-var FORCED_FIT = false; // false | true
+var SCOPE = "page";
+var TARGET = "bleed";
+var FORCED_FIT = false;
 
 app.doScript(
 	main, ScriptLanguage.javascript, undefined,

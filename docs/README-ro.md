@@ -18,14 +18,14 @@ Facilitează alinierea obiectelor sau setarea punctului de referință pentru tr
 
 * **`SetRefPoint`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**.
 
-**Notă:** Aceste două seturi nu prea au sens dacă nu sunt asociate tastaturii numerice.
+**Notă:** Aceste două seturi nu au nici un sens dacă nu sunt asociate tastaturii numerice.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
 Alignment | | | | | | | |
 :- | -: | :- | -: | :- | -: | :- | -:
 **AlignToTL.jsx** | Num7 | **AlignToT.jsx** | Num8 | **AlignToTR.jsx** | Num9 | **ToggleAlignTo.jsx** | Num0
-**AlignToL.jsx** | Num4 | **AlignToC.jsx** | Num5 | **AlignToR.jsx**  | Num6 | **ResetAlignTo.jsx** | ⌃Num0
+**AlignToL.jsx** | Num4 | **AlignToC.jsx** | Num5 | **AlignToR.jsx** | Num6 | **ResetAlignTo.jsx** | ⌃Num0
 **AlignToBL.jsx** | Num1 | **AlignToB.jsx** | Num2 | **AlignToBR.jsx** | Num3
 
 Proxy | | | | | |
@@ -40,9 +40,9 @@ Proxy | | | | | |
 
 Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container *(clipping frame)* și acesta e redimensionat.
 
-* **`FitToPage`** și **`FitToSpread`**: dacă obiectul este mai mare decât pagina/spreadul/marginile/bleedul, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.
+* **`FitToPage`** și **`FitToSpread`**: dacă obiectul este mai mare decât pagina/spreadul/marginile/safe area/bleedul, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.
 
-  **`FitTo...Forced.jsx`** redimensionează exact la dimensiunile respective.
+  **`FitTo...Forced`** redimensionează exact la dimensiunile respective.
 
 * **`TextAutosize.jsx`** „strânge” chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
 
@@ -60,8 +60,14 @@ FitToPage | | FitToSpread | | TextAutosize | |
 :- | -: | :- | -: | :- | -:
 **FitToPage.jsx** | F11 | **FitToSpread.jsx** | F12 | **TextAutosize.jsx** | F6
 **FitToPageMargins.jsx** | ⌥F11 | **FitToSpreadMargins.jsx** | ⌥F12
+**FitToPageSafeArea.jsx** | ⌥⇧F11 | **FitToSpreadSafeArea.jsx** | ⌥⇧F12
 **FitToPageBleed.jsx** | ⇧F11 | **FitToSpreadBleed.jsx** | ⇧F12
+**FitToPageForced.jsx** | ⌘F11 | **FitToSpreadForced.jsx** | ⌘F12
+**FitToPageMarginsForced.jsx** | ⌥⌘F11 | **FitToSpreadMarginsForced.jsx** | ⌥⌘F12
+**FitToPageSafeAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadSafeAreaForced.jsx** | ⌥⇧⌘F12
 **FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
+
+**Notă:** `F11` pagină; `F12` spread; `⌥` margini; `⇧` bleed; `⌥⇧` safe area; `⌘` forțat.
 
 </details>
 
@@ -266,4 +272,4 @@ Părți din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback‑ul sau sugestiile sunt binevenite.
 
-README-ro.md • 22 ianuarie 2021
+README-ro.md • 30 ianuarie 2021

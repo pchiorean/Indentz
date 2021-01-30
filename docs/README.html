@@ -34,7 +34,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>SetRefPoint</code></strong> scripts change the reference point used for transformations (like clicking the little proxy squares in the <strong>Transform</strong> palette).</p>
 </li>
 </ul>
-<p><strong>Note:</strong> These two sets don't make much sense if they're not associated with the numeric keypad.</p>
+<p><strong>Note:</strong> These two sets don't make any sense if they're not associated with the numeric keypad.</p>
 <details><summary><strong>Shortcuts</strong></summary>
 <table>
 <thead>
@@ -125,8 +125,8 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p>Resize the selected objects, without scaling. Rectangular frames are simply resized; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is resized.</p>
 <ul>
 <li>
-<p><strong><code>FitToPage</code></strong> and <strong><code>FitToSpread</code></strong>: if the selected object is larger than the page/spread/margins/bleed, it will be reduced; if it is smaller but inside a 1% &quot;snap&quot; area, it will be enlarged.</p>
-<p><strong><code>FitTo...Forced.jsx</code></strong> resize exactly to the named dimensions.</p>
+<p><strong><code>FitToPage</code></strong> and <strong><code>FitToSpread</code></strong>: if the selected object is larger than the page/spread/margins/safe area/bleed, it will be reduced; if it is smaller but inside a 1% &quot;snap&quot; area, it will be enlarged.</p>
+<p><strong><code>FitTo...Forced</code></strong> resize exactly to the named dimensions.</p>
 </li>
 <li>
 <p><strong><code>TextAutosize.jsx</code></strong> fits the text frame to the text and sets it to auto‑size. You control the auto‑sizing reference point by setting <strong>Paragraph Alignment</strong> for the horizontal axis, and <strong>Text Frame Options &gt; Vertical Justification</strong> for the vertical axis:</p>
@@ -193,10 +193,42 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <td style="text-align:right"></td>
 </tr>
 <tr>
+<td style="text-align:left"><strong>FitToPageSafeArea.jsx</strong></td>
+<td style="text-align:right">⌥⇧F11</td>
+<td style="text-align:left"><strong>FitToSpreadSafeArea.jsx</strong></td>
+<td style="text-align:right">⌥⇧F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
 <td style="text-align:left"><strong>FitToPageBleed.jsx</strong></td>
 <td style="text-align:right">⇧F11</td>
 <td style="text-align:left"><strong>FitToSpreadBleed.jsx</strong></td>
 <td style="text-align:right">⇧F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>FitToPageForced.jsx</strong></td>
+<td style="text-align:right">⌘F11</td>
+<td style="text-align:left"><strong>FitToSpreadForced.jsx</strong></td>
+<td style="text-align:right">⌘F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>FitToPageMarginsForced.jsx</strong></td>
+<td style="text-align:right">⌥⌘F11</td>
+<td style="text-align:left"><strong>FitToSpreadMarginsForced.jsx</strong></td>
+<td style="text-align:right">⌥⌘F12</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>FitToPageSafeAreaForced.jsx</strong></td>
+<td style="text-align:right">⌥⇧⌘F11</td>
+<td style="text-align:left"><strong>FitToSpreadSafeAreaForced.jsx</strong></td>
+<td style="text-align:right">⌥⇧⌘F12</td>
 <td style="text-align:left"></td>
 <td style="text-align:right"></td>
 </tr>
@@ -210,6 +242,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tr>
 </tbody>
 </table>
+<p><strong>Note:</strong> <code>F11</code> page; <code>F12</code> spread; <code>⌥</code> margins; <code>⇧</code> bleed; <code>⌥⇧</code> safe area; <code>⌘</code> forced.</p>
 </details>
 <h3 id="scaling"><strong>Scaling</strong></h3>
 <p>Scale the selected objects proportionally, as a block.</p>
@@ -607,6 +640,6 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington and others.</p>
 <p>I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.</p>
-<p>README.md • January 22, 2021</p>
+<p>README.md • January 30, 2021</p>
 </body>
 </html>
