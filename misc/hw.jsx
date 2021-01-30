@@ -1,5 +1,5 @@
 /*
-	HW 2.1.0
+	HW 2.1.1
 	© January 2021, Paul Chiorean
 	Labels 'HW' selected objects and adds a HW bottom guide.
 */
@@ -35,9 +35,14 @@ function main() {
 	var target, pages = page.parent.pages.everyItem().getElements();
 	while (target = pages.shift()) {
 		var top = target.bounds[0], bottom = target.bounds[2];
-		var saFrame, frames = page.rectangles.everyItem().getElements();
-		while (saFrame = frames.shift()) if (saFrame.label == "safe area")
-			top = saFrame.geometricBounds[0], bottom = saFrame.geometricBounds[2];
+		var frame, frames = target.rectangles.everyItem().getElements();
+		while (frame = frames.shift()) {
+			if (frame.label == "safe area") {
+				top = frame.geometricBounds[0],
+				bottom = frame.geometricBounds[2];
+				break;
+			}
+		}
 		target.guides.add(undefined, {
 			itemLayer: hwLayer,
 			label: "HW",
