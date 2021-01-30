@@ -1,15 +1,15 @@
 /*
-	Fit to... v3.11.0
+	Fit to... v4.0.0-beta
 	© January 2021, Paul Chiorean
-	Resizes the selected objects to the page/spread's size/margins/bleed.
+	Resizes the selected objects to the page/spread's size/margins/safe area/bleed.
 	It's run internally by all the other FitTo scripts.
 
-	SCOPE: "page" | "spread"
-	TARGET: null | "bleed" | "margins"
-	FORCED_FIT: false | true
+	SCOPE: 'page' | 'spread'
+	TARGET: null | 'bleed' | 'margins' | 'safe area'
+	FORCED_FIT: true | false
 */
 
-const DEBUG = false;
+const DEBUG = true;
 const SNAP_PCT = 1; // Snap distance: percent of target
 const HW_PCT = 10; // HW: percent of visible area
 
@@ -43,96 +43,94 @@ doc.viewPreferences.rulerOrigin = set_RO;
 function Fit2Bounds(obj) {
 	var pg = Bounds(page, SCOPE, null);
 	var tg = Bounds(page, SCOPE, TARGET);
-	var mgs = Bounds(page, "spread", "margins");
-	var snapDist = (TARGET == "margins") ?
-		Math.min(tg[2] - tg[0], tg[3] - tg[1]) * SNAP_PCT / 100 :
-		Math.min(pg[2] - pg[0], pg[3] - pg[1]) * SNAP_PCT / 100;
-	var zone = (TARGET == "margins") ?
-		[ tg[0] + snapDist, tg[1] + snapDist, tg[2] - snapDist, tg[3] - snapDist ] :
-		[ pg[0] + snapDist, pg[1] + snapDist, pg[2] - snapDist, pg[3] - snapDist ];
+	var mg = Bounds(page, SCOPE, "margins");
+	var sa = Bounds(page, SCOPE, "safe area");
 	var objG = obj.geometricBounds;
 	var objV = obj.visibleBounds;
 	var objRA = obj.absoluteRotationAngle;
+	// Snap zones: target and safe area
+	var snapDist = (sa != undefined) ? // Safe area takes precedence
+		Math.min(sa[2] - sa[0], sa[3] - sa[1]) * SNAP_PCT / 100 :
+		(TARGET == "margins" ?
+			Math.min(tg[2] - tg[0], tg[3] - tg[1]) * SNAP_PCT / 100 :
+			Math.min(pg[2] - pg[0], pg[3] - pg[1]) * SNAP_PCT / 100);
+	var tgSZ = (TARGET == "margins") ?
+		[ tg[0] + snapDist, tg[1] + snapDist, tg[2] - snapDist, tg[3] - snapDist ] :
+		[ pg[0] + snapDist, pg[1] + snapDist, pg[2] - snapDist, pg[3] - snapDist ];
+	var saSZ = (sa != undefined) ?
+		[ sa[0] + snapDist, sa[1] + snapDist, sa[2] - snapDist, sa[3] - snapDist ] :
+		[ pg[0] + snapDist, pg[1] + snapDist, pg[2] - snapDist, pg[3] - snapDist ];
 
-	// Special case: Objects labeled 'HW'
+	// Fit: HW (dimensions are predefined, so skip the nasty stuff)
 	if (obj.label == "HW") {
-		// Check if safe area is set
-		var saFrame, frames = page.rectangles.everyItem().getElements(),
-			flg_SA = false, saG;
-		while (saFrame = frames.shift())
-			if (saFrame.label == "safe area") { flg_SA = true; saG = saFrame.geometricBounds; break }
-		// Resolve exceptions and resize
-		var bd = mgs;
-		if (flg_SA) { bd = saG; if (TARGET == "margins") tg = saG }
-		else { bd = pg; if (TARGET == "margins") tg = pg }
-		obj.geometricBounds = [ bd[2] - (bd[2] - bd[0]) * Number(HW_PCT) / 100, tg[1], tg[2], tg[3] ];
-		// Adjust inset for text frames
-		if (obj.constructor.name == "TextFrame") {
-			obj.textFramePreferences.insetSpacing = [0, 0,
-				TARGET == "bleed" ? doc.documentPreferences.properties.documentBleedBottomOffset + (pg[2] - bd[2]) :
-				(TARGET == "margins" ? 0 : (pg[2] - bd[2])), 0];
+		var hwRef = (TARGET == "margins") ? tg : pg;
+		if (sa != undefined) { hwRef = sa; if (TARGET == "margins") tg = sa }
+		if (obj.constructor.name == "TextFrame") { // Adjust inset for text frames
+			obj.textFramePreferences.insetSpacing = [ 0, hwRef[1] - tg[1], tg[2] - hwRef[2], tg[3] - hwRef[3] ];
 		}
+		obj.geometricBounds = [ hwRef[2] - (hwRef[2] - hwRef[0]) * Number(HW_PCT) / 100, tg[1], tg[2], tg[3] ];
 		return obj;
 	}
 
+	// Compute new bounds
 	if (!FORCED_FIT) {
-		// Check if obj is outside bounds | inside bounds but not in the snap zone
+		// Check which obj's sides are in the safe area's snap zone
+		var flg_sa = [
+			(objG[0] <= saSZ[0] && objG[2] >= saSZ[0] && objG[1] <= saSZ[3] && objG[3] >= saSZ[1]),
+			(objG[1] <= saSZ[1] && objG[3] >= saSZ[1] && objG[0] <= saSZ[2] && objG[2] >= saSZ[0]),
+			(objG[2] >= saSZ[2] && objG[0] <= saSZ[2] && objG[1] <= saSZ[3] && objG[3] >= saSZ[1]),
+			(objG[3] >= saSZ[3] && objG[1] <= saSZ[3] && objG[0] <= saSZ[2] && objG[2] >= saSZ[0])
+		];
+		// Check if obj is outside bounds | inside bounds but not in the target snap zone
 		if (objV[2] <= tg[0] || objV[3] <= tg[1] || objV[0] >= tg[2] || objV[1] >= tg[3]) return;
-		if (objV[0] >= zone[0] && objV[1] >= zone[1] && objV[2] <= zone[2] && objV[3] <= zone[3]) return;
-		// Compute target size
+		if (!(flg_sa[0] || flg_sa[1] || flg_sa[2] || flg_sa[3]) &&
+			(objV[0] >= tgSZ[0] && objV[1] >= tgSZ[1] && objV[2] <= tgSZ[2] && objV[3] <= tgSZ[3])) return;
+		// New target bounds --
 		var fitR = [ // If larger, reduce to bounds
 			objG[2] > tg[0] ? Math.max(objV[0], tg[0]) : objG[0],
 			objG[3] > tg[1] ? Math.max(objV[1], tg[1]) : objG[1],
 			objG[0] < tg[2] ? Math.min(objV[2], tg[2]) : objG[2],
 			objG[1] < tg[3] ? Math.min(objV[3], tg[3]) : objG[3]
 		];
-		if (obj.pageItems.length == 1) { // Child dimensions
-			var objC = obj.pageItems[0].visibleBounds;
-			objC = [
-				objC[0] < zone[0] ? tg[0] : Math.min(objC[0], fitR[0]),
-				objC[1] < zone[1] ? tg[1] : Math.min(objC[1], fitR[1]),
-				objC[2] > zone[2] ? tg[2] : Math.max(objC[2], fitR[2]),
-				objC[3] > zone[3] ? tg[3] : Math.max(objC[3], fitR[3])
-			];
-		} else { var objC = fitR }
-		var fitE = [ // If smaller, expand to bounds if inside snap zone
-			fitR[0] < zone[0] ? Math.min(objC[0], tg[0]) : fitR[0],
-			fitR[1] < zone[1] ? Math.min(objC[1], tg[1]) : fitR[1],
-			fitR[2] > zone[2] ? Math.max(objC[2], tg[2]) : fitR[2],
-			fitR[3] > zone[3] ? Math.max(objC[3], tg[3]) : fitR[3]
+		var fitE = [ // If smaller, expand to bounds if inside snap zones
+			fitR[0] < tgSZ[0] ? tg[0] : (flg_sa[0] ? tg[0] : fitR[0]),
+			fitR[1] < tgSZ[1] ? tg[1] : (flg_sa[1] ? tg[1] : fitR[1]),
+			fitR[2] > tgSZ[2] ? tg[2] : (flg_sa[2] ? tg[2] : fitR[2]),
+			fitR[3] > tgSZ[3] ? tg[3] : (flg_sa[3] ? tg[3] : fitR[3])
 		];
-		if (DEBUG) DBGFrames(zone, objC, fitR, fitE);
+		if (DEBUG) DBGFrames();
 	}
 
-	// Case 1: Already clipped
+	// Fit --
+	// Already clipped
 	if ((obj.name == "<clip frame>" || obj.name == "<auto clip frame>") && obj.pageItems[0].isValid) {
 		obj.geometricBounds = FORCED_FIT ? tg : fitE; return obj;
 	}
-	// Case 2: Simple rectangles and containers
+	// Simple rectangles and containers
 	if (obj.constructor.name == "Rectangle" &&
 		(obj.pageItems.length == 0 || obj.pageItems.length == 1) &&
 		(obj.strokeWeight == 0 || obj.strokeAlignment == StrokeAlignment.INSIDE_ALIGNMENT) &&
 		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
 			obj.geometricBounds = FORCED_FIT ? tg : fitE; return obj;
 	}
-	// Case 3: Text frames
+	// Text frames
 	if (obj.constructor.name == "TextFrame" &&
 		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
 			obj.geometricBounds = FORCED_FIT ? tg : fitR; return obj;
 	}
-	// Case 4: Orthogonal lines
+	// Orthogonal lines
 	if (obj.constructor.name == "GraphicLine" &&
 		(objG[0] == objG[2]) || (objG[1] == objG[3])) {
-		return obj; // ***TODO***
+		// ***TODO***
+		return obj;
 	}
-	// Case 5: Groups
-	if (obj.constructor.name == "Group")
-		return Clip(obj, FORCED_FIT ? tg : fitR);
-	// Other cases: Clip
+	// Groups
+	if (obj.constructor.name == "Group") return Clip(obj, FORCED_FIT ? tg : fitR);
+	// Other cases
 	return Clip(obj, FORCED_FIT ? tg : fitE);
 
 	function Clip(obj, fit) {
-		if (objV[0] >= tg[0] && objV[1] >= tg[1] && objV[2] <= tg[2] && objV[3] <= tg[3]) return;
+		if (objV[0] >= tg[0] && objV[1] >= tg[1] && objV[2] <= tg[2] && objV[3] <= tg[3]) return obj;
 		var frame = doc.rectangles.add(
 			obj.itemLayer, LocationOptions.AFTER, obj,
 			{ name: "<clip frame>", label: obj.label,
@@ -142,97 +140,124 @@ function Fit2Bounds(obj) {
 		app.select(obj); app.cut(); app.select(frame); app.pasteInto();
 		return frame;
 	}
+
+	function DBGFrames() {
+		var layer = doc.layers.item(".debug");
+		if (!layer.isValid) {
+			doc.layers.add({ name: ".debug", layerColor: UIColors.BLACK })
+			.move(LocationOptions.AT_END);
+		} else {
+			var item, items = page.parent.pageItems.everyItem().getElements();
+			while (item = items.shift()) if (item.label == "debug") item.remove();
+		}
+		// dbgFrame("Black", false, fitE);
+		// dbgFrame("Black", false, fitR);
+		debugFrame("Black", false, tg);
+		debugFrame("Cyan", true, tgSZ);
+		debugFrame("Magenta", true, saSZ);
+		debugFrame("Cyan", false, Bounds(page, "page", "margins"));
+
+		function debugFrame(color, /*bool*/SZ, bounds) {
+			var frame = page.parent.rectangles.add(layer,
+				{ label: "debug", geometricBounds: bounds, contentType: ContentType.UNASSIGNED,
+				fillColor: "None", strokeColor: color, strokeWeight: SZ ? snapDist : "2 pt",
+				strokeAlignment: SZ ? StrokeAlignment.OUTSIDE_ALIGNMENT : StrokeAlignment.INSIDE_ALIGNMENT,
+				strokeType: SZ ? "$ID/Solid" : "$ID/Canned Dashed 3x2" });
+			frame.transparencySettings.blendingSettings.opacity = SZ ? 25 : 100;
+		}
+	}
 }
 
-function Bounds(/*parent page*/page, /*'page','spread'*/scope, /*null,'bleed','margins'*/target) {
+function Bounds(page, /*'page'|'spread'*/scope, /*null|'bleed'|'margins'|'safe area'*/target) {
 	var fPg = page.parent.pages.firstItem();
 	var lPg = page.parent.pages.lastItem();
 	var bleed = {
 		top: doc.documentPreferences.properties.documentBleedTopOffset,
 		left: doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
 		bottom: doc.documentPreferences.properties.documentBleedBottomOffset,
-		right: doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
-	}
+		right: doc.documentPreferences.properties.documentBleedOutsideOrRightOffset }
+	var margins = {
+		top: page.marginPreferences.top,
+		left: page.marginPreferences.left,
+		bottom: page.marginPreferences.bottom,
+		right: page.marginPreferences.right }
 	switch (scope) {
-		case "page":
-			switch (target) {
-				case null: return page.bounds;
-				case "bleed": return [
-					page.bounds[0] - bleed.top,
-					page.bounds[1] - (page == fPg ?
-						(fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left) : 0),
-					page.bounds[2] + bleed.bottom,
-					page.bounds[3] + (fPg == lPg ?
-						(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) :
-						(page == lPg ? bleed.right : 0))
+	case "page":
+		switch (target) {
+			case "bleed": return [
+				page.bounds[0] - bleed.top,
+				page.bounds[1] - (page == fPg ?
+					(fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left) : 0),
+				page.bounds[2] + bleed.bottom,
+				page.bounds[3] + (fPg == lPg ?
+					(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) :
+					(page == lPg ? bleed.right : 0)) ];
+			case "margins": return [
+				page.bounds[0] + margins.top,
+				page.side == PageSideOptions.LEFT_HAND ?
+					page.bounds[1] + margins.right : page.bounds[1] + margins.left,
+				page.bounds[2] - margins.bottom,
+				page.side == PageSideOptions.LEFT_HAND ?
+					page.bounds[3] - margins.left : page.bounds[3] - margins.right ];
+			case "safe area":
+				var s = [], frame, frames = page.rectangles.everyItem().getElements();
+				while (frame = frames.shift()) if (frame.label == "safe area") s.push(frame);
+				if (s.length == 0) return;
+				var sa = s[0].geometricBounds;
+				for (var i = 1; i < s.length; i++) {
+					sa[0] = Math.min(s[i].geometricBounds[0], sa[0]);
+					sa[1] = Math.min(s[i].geometricBounds[1], sa[1]);
+					sa[2] = Math.max(s[i].geometricBounds[2], sa[2]);
+					sa[3] = Math.max(s[i].geometricBounds[3], sa[3]);
+				}
+				return [
+					Math.max(sa[0], page.bounds[0]),
+					Math.max(sa[1], page.bounds[1]),
+					Math.min(sa[2], page.bounds[2]),
+					Math.min(sa[3], page.bounds[3])
 				];
-				case "margins": return [
-					page.bounds[0] + page.marginPreferences.top,
-					page.side == PageSideOptions.LEFT_HAND ?
-						page.bounds[1] + page.marginPreferences.right :
-						page.bounds[1] + page.marginPreferences.left,
-					page.bounds[2] - page.marginPreferences.bottom,
-					page.side == PageSideOptions.LEFT_HAND ?
-						page.bounds[3] - page.marginPreferences.left :
-						page.bounds[3] - page.marginPreferences.right
+			default: return page.bounds;
+		}
+	case "spread":
+		switch (target) {
+			case "bleed": return [
+				fPg.bounds[0] - bleed.top,
+				fPg.bounds[1] - (fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left),
+				lPg.bounds[2] + bleed.bottom,
+				lPg.bounds[3] + (fPg == lPg ?
+					(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) : bleed.right)
 				];
-			}
-		case "spread":
-			switch (target) {
-				case null: return [
-					page.parent.pages.firstItem().bounds[0],
-					page.parent.pages.firstItem().bounds[1],
-					page.parent.pages.lastItem().bounds[2],
-					page.parent.pages.lastItem().bounds[3]
+			case "margins":
+				var fm, lm, p = page.parent.pages;
+				for (var i = 0; i < p.length; i++) { var m = p[i].marginPreferences;
+					if (m.top + m.left + m.bottom + m.right > 0) { fm = p[i]; break } }
+				for (var i = p.length - 1; i >= 0 ; i--) { var m = p[i].marginPreferences;
+					if (m.top + m.left + m.bottom + m.right > 0) { lm = p[i]; break } }
+				if (!fm && !lm) return [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ];
+				else return [
+					Math.min(fm.bounds[0] + fm.marginPreferences.top, lm.bounds[0] + lm.marginPreferences.top),
+					fm.bounds[1] + (fm.side == PageSideOptions.LEFT_HAND ?
+						fm.marginPreferences.right : fm.marginPreferences.left),
+					Math.max(lm.bounds[2] - lm.marginPreferences.bottom, fm.bounds[2] - fm.marginPreferences.bottom),
+					lm.bounds[3] - (fm == lm ?
+						(fm.side == PageSideOptions.LEFT_HAND ?
+							fm.marginPreferences.left : fm.marginPreferences.right) :
+							lm.marginPreferences.right)
 				];
-				case "bleed": return [
-					fPg.bounds[0] - bleed.top,
-					fPg.bounds[1] - (fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left),
-					lPg.bounds[2] + bleed.bottom,
-					lPg.bounds[3] + (fPg == lPg ?
-						(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) : bleed.right)
-				];
-				case "margins": return [
-					fPg.bounds[0] + fPg.marginPreferences.top,
-					fPg.bounds[1] + (fPg.side == PageSideOptions.LEFT_HAND ?
-						fPg.marginPreferences.right : fPg.marginPreferences.left),
-					lPg.bounds[2] - lPg.marginPreferences.bottom,
-					lPg.bounds[3] - (fPg == lPg ?
-						(fPg.side == PageSideOptions.LEFT_HAND ?
-						fPg.marginPreferences.left : fPg.marginPreferences.right) :
-						lPg.marginPreferences.right)
-				];
-			}
-	}
-}
-
-function DBGFrames(zone, objC, fitR, fitE) {
-	var layer = doc.layers.item(".debug");
-	if (!layer.isValid) { doc.layers.add({
-		name: ".debug", layerColor: UIColors.BLACK,
-		visible: true, locked: false, printable: false })
-	} else layer.locked = false;
-
-	dbgFrame("zone", "Black", true, zone);
-	dbgFrame("objC", "Magenta", false, objC);
-	dbgFrame("fitR", "Yellow", false, fitR);
-	dbgFrame("fitE", "Cyan", false, fitE);
-
-	layer.locked = true;
-
-	function dbgFrame(text, color, /*bool*/dashed, bounds) {
-		var frame = doc.textFrames.add(
-			layer,
-			{ contents: text, fillColor: "None",
-			strokeColor: color, strokeWeight: "0.5 pt",
-			strokeType: dashed ? "$ID/Canned Dashed 3x2" : "$ID/Solid",
-			geometricBounds: bounds, nonprinting: true });
-		frame.textFramePreferences.properties = {
-			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
-			insetSpacing: UnitValue("0.25 mm").as('pt') }
-		frame.paragraphs.everyItem().properties = {
-			appliedFont: app.fonts.item("Helvetica Neue\tBold"),
-			pointSize: "10 pt", fillColor: frame.strokeColor }
+			case "safe area":
+				var s = [], frame, frames = page.parent.rectangles.everyItem().getElements();
+				while (frame = frames.shift()) if (frame.label == "safe area") s.push(frame);
+				if (s.length == 0) return;
+				var sa = s[0].geometricBounds;
+				for (var i = 1; i < s.length; i++) {
+					sa[0] = Math.min(s[i].geometricBounds[0], sa[0]);
+					sa[1] = Math.min(s[i].geometricBounds[1], sa[1]);
+					sa[2] = Math.max(s[i].geometricBounds[2], sa[2]);
+					sa[3] = Math.max(s[i].geometricBounds[3], sa[3]);
+				}
+				return sa;
+			default: return [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ];
+		}
 	}
 }
 
