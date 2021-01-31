@@ -1,11 +1,16 @@
 /*
-	Page size from filename v1.10.2
+	Page size from filename v1.11.0
 	© January 2021, Paul Chiorean
 	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 */
 
 if (!(doc = app.activeDocument)) exit();
+var saLayerName = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil",
+	"vis. area", "Vis. area"]);
+var dieLayerName = FindLayer(["dielines", "diecut", "die cut", "Die Cut", "cut", "Cut",
+	"cut lines", "stanze", "Stanze", "Stanz", "decoupe"]);
+var saSwatchName = "Safe area";
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
@@ -38,19 +43,21 @@ function main() {
 		szArr[i] = szArr[i].replace(/,/g, "."); // Replace commas
 	}
 	// Check number of pairs and set page size and, if defined, page margins
-	var page, szPg, szMg, mgs;
-	var dimA = szArr[0].split(/x/ig); // First pair
-	szPg = { width: Number(dimA[0]), height: Number(dimA[1]) }
+	var szPg, szMg, mg;
+	var dimA = szArr[0].split(/x/ig); dimA[0] = Number(dimA[0]), dimA[1] = Number(dimA[1]);
+	szPg = { width: dimA[0], height: dimA[1] }; // First pair
 	// If 2 pairs (page size & page margins), page size is the largest
-	if (szArr.length == 2) {
-		var dimB = szArr[1].split(/x/ig); // Second pair
-		szPg = {
-			width: Math.max(Number(dimA[0]), Number(dimB[0])),
-			height: Math.max(Number(dimA[1]), Number(dimB[1])) }
-		szMg = {
-			width: Math.min(Number(dimA[0]), Number(dimB[0])),
-			height: Math.min(Number(dimA[1]), Number(dimB[1])) }
-		mgs = {
+	if (szArr.length == 2) { // Second pair
+		var dimB = szArr[1].split(/x/ig); dimB[0] = Number(dimB[0]), dimB[1] = Number(dimB[1]);
+		if (szPg.width >= dimB[0] && szPg.height >= dimB[1]) {
+			szMg = { width: dimB[0], height: dimB[1] }
+		} else if (szPg.width <= dimB[0] && szPg.height <= dimB[1]) {
+			szMg = szPg;
+			szPg = { width: dimB[0], height: dimB[1] }
+		} else {
+			alert("Dimensions are wrong."); exit();
+		}
+		mg = {
 			top: (szPg.height - szMg.height) / 2,
 			left: (szPg.width - szMg.width) / 2,
 			bottom: (szPg.height - szMg.height) / 2,
@@ -58,79 +65,89 @@ function main() {
 	}
 	// Resize pages
 	for (var i = 0; i < doc.pages.length; i++) {
-		page = doc.pages[i];
-		if (page.parent.pages.length > 1) { var flag_S = true; continue } // Skip multipage spreads ***TODO***
-		// page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 } // Set margins to zero
+		var page = doc.pages[i];
+		if (page.parent.pages.length > 1) { var flg_IsSpread = true; continue } // Skip multipage spreads
 		page.layoutRule = LayoutRuleOptions.OFF;
-		page.resize(CoordinateSpaces.INNER_COORDINATES,
-			AnchorPoint.CENTER_ANCHOR,
-			ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
-			[szPg.width / 0.352777777777778, szPg.height / 0.352777777777778]);
-		if (mgs != null) SafeArea(); // Set margins and safe area
+		try {
+			page.resize(CoordinateSpaces.INNER_COORDINATES,
+				AnchorPoint.CENTER_ANCHOR,
+				ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
+				[UnitValue(szPg.width, "mm").as('pt'), UnitValue(szPg.height, "mm").as('pt')]);
+		} catch (_) {
+			page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }
+			page.resize(CoordinateSpaces.INNER_COORDINATES,
+				AnchorPoint.CENTER_ANCHOR,
+				ResizeMethods.REPLACING_CURRENT_DIMENSIONS_WITH,
+				[UnitValue(szPg.width, "mm").as('pt'), UnitValue(szPg.height, "mm").as('pt')]);
+		}
+		if (!!mg) {
+			page.marginPreferences.properties = mg;
+			page.marginPreferences.columnCount = 1;
+			page.marginPreferences.columnGutter = 0;
+			SafeArea(page);
+		}
 	}
-	// Also set document size
-	if (!flag_S) {
+	// Set document size
+	if (!flg_IsSpread) {
 		doc.documentPreferences.pageWidth = szPg.width;
 		doc.documentPreferences.pageHeight = szPg.height }
 	// Check for bleed: try to match '_00 [mm]' after '0 [mm]'
-	var bleedRE = /\d\s*(?:[cm]m)?[_+](\d{1,2})\s*(?:[cm]m)/i;
-	var bleed = bleedRE.exec(docName);
+	var bleed = /\d\s*(?:[cm]m)?[_+](\d{1,2})\s*(?:[cm]m)/i.exec(docName);
 	// 1. \d(?:[cm]m)? -- 1 digit followed by optional mm/cm (non-capturing group)
 	// 2. [_+] -- '_' or '+' separator
 	// 3. (\d{1,2}) -- 1 or 2 digits (capturing group #1)
 	// 4. (?:[cm]m) -- mandatory mm/cm (non-capturing group)
-	if (bleed != null) {
+	if (!!bleed) {
 		doc.documentPreferences.documentBleedUniformSize = true;
 		doc.documentPreferences.documentBleedTopOffset = bleed[1] }
+}
 
-	function SafeArea() { // Draw a 'safe area' frame
-		var saSwatchName = "Safe area";
-		var saSwatch = doc.swatches.itemByName(saSwatchName);
-		if (!saSwatch.isValid) {
-			doc.colors.add({ name: saSwatchName, model: ColorModel.PROCESS,
-				space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
-		}
-		var saLayerName = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil", "vis. area", "Vis. area"]);
-		doc.activeLayer = doc.layers.item(0);
-		var saLayer = doc.layers.item(saLayerName);
-		if (!saLayer.isValid) doc.layers.add({ name: saLayerName, layerColor: UIColors.YELLOW });
-		saLayer.locked = false;
-		var saFrame, frames = page.rectangles.everyItem().getElements();
-		while (saFrame = frames.shift())
-			if (saFrame.label == "safe area" &&
-				saFrame.itemLayer == saLayer &&
-				saFrame.locked == false) saFrame.remove();
-
-		var mgPg = {
-			top: (szPg.height - szMg.height) / 2,
-			left: (szPg.width - szMg.width) / 2,
-			bottom: (szPg.height - szMg.height) / 2,
-			right: (szPg.width - szMg.width) / 2
-		}
-		if (mgPg == null) return;
-		var mgBounds = [ mgPg.top, mgPg.left, szMg.height + mgPg.top, szMg.width + mgPg.left ];
-		page.marginPreferences.properties = mgPg;
-		page.marginPreferences.columnCount = 1;
-		page.marginPreferences.columnGutter = 0;
-		var saFrame = page.rectangles.add({
-			label: "safe area",
-			contentType: ContentType.UNASSIGNED,
-			fillColor: "None",
-			strokeColor: saSwatchName,
-			strokeWeight: "0.75pt",
-			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
-			strokeType: "$ID/Canned Dashed 3x2",
-			overprintStroke: false
-		});
-		saFrame.properties = { itemLayer: saLayerName, geometricBounds: mgBounds }
-		saLayer.locked = true;
+function SafeArea(page) { // Draw a 'safe area' frame
+	if (!doc.colors.itemByName(saSwatchName).isValid)
+		doc.colors.add({ name: saSwatchName, model: ColorModel.PROCESS,
+		space: ColorSpace.CMYK, colorValue: [0, 100, 0, 0] });
+	var saLayer = doc.layers.item(saLayerName);
+	var dieLayer = doc.layers.item(dieLayerName);
+	if (saLayer.isValid) {
+		saLayer.properties = { layerColor: UIColors.YELLOW, visible: true, locked: false }
+		if (dieLayer.isValid) saLayer.move(LocationOptions.before, dieLayer);
+	} else {
+		saLayer = doc.layers.add({ name: saLayerName,
+			layerColor: UIColors.YELLOW, visible: true, locked: false });
+		if (dieLayer.isValid) {
+			saLayer.move(LocationOptions.before, dieLayer);
+		} else saLayer.move(LocationOptions.AT_BEGINNING);
 	}
 
-	function FindLayer(names) { // Find first valid layer from a list of names
-		for (var i = 0; i < names.length; i++) {
-			var layer = doc.layers.item(names[i]);
-			if (layer.isValid) return names[i];
-		}
-		return names[0]; // Nothing found, return first name
+	var frame, frames = page.rectangles.everyItem().getElements();
+	while (frame = frames.shift())
+		if (frame.label == "safe area" &&
+			frame.itemLayer == saLayer &&
+			frame.locked == false) frame.remove();
+	var mg = page.marginPreferences;
+	var frame = page.rectangles.add({
+		name: "<safe area>", label: "safe area",
+		contentType: ContentType.UNASSIGNED,
+		fillColor: "None", strokeColor: saSwatchName,
+		strokeWeight: "0.5pt",
+		strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
+		strokeType: "$ID/Canned Dashed 3x2",
+		overprintStroke: false,
+		itemLayer: saLayerName,
+		geometricBounds: [
+			page.bounds[0] + mg.top,
+			page.side == PageSideOptions.LEFT_HAND ? page.bounds[1] + mg.right : page.bounds[1] + mg.left,
+			page.bounds[2] - mg.bottom,
+			page.side == PageSideOptions.LEFT_HAND ? page.bounds[3] - mg.left : page.bounds[3] - mg.right
+		]
+	});
+	saLayer.locked = true;
+}
+
+function FindLayer(names) { // Find first valid layer from a list of names
+	for (var i = 0; i < names.length; i++) {
+		var layer = doc.layers.item(names[i]);
+		if (layer.isValid) return names[i];
 	}
+	return names[0]; // Nothing found, return first name
 }
