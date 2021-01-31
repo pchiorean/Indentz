@@ -1,5 +1,5 @@
 /*
-	Safe area v1.8.3
+	Safe area v1.8.4
 	© January 2021, Paul Chiorean
 	Creates a 'safe area' frame the size of the page margins.
 */
@@ -32,11 +32,11 @@ function main() {
 	for (var i = 0; i < doc.pages.length; i++) {
 		var page = doc.pages[i], saBounds = SafeArea(page);
 		if (!saBounds) continue;
-		var saFrame, frames = page.rectangles.everyItem().getElements();
-		while (saFrame = frames.shift())
-			if (saFrame.label == "safe area" &&
-				saFrame.itemLayer == saLayer &&
-				saFrame.locked == false) saFrame.remove();
+		var frame, frames = page.rectangles.everyItem().getElements();
+		while (frame = frames.shift())
+			if (frame.label == "safe area" &&
+				frame.itemLayer == saLayer &&
+				frame.locked == false) frame.remove();
 		page.rectangles.add({
 			name: "<safe area>", label: "safe area",
 			contentType: ContentType.UNASSIGNED,
@@ -45,8 +45,8 @@ function main() {
 			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 			strokeType: "$ID/Canned Dashed 3x2",
 			overprintStroke: false,
-			geometricBounds: saBounds,
-			itemLayer: saLayerName
+			itemLayer: saLayerName,
+			geometricBounds: saBounds
 		});
 	}
 	saLayer.locked = true;
