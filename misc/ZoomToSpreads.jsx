@@ -1,5 +1,5 @@
 /*
-	Zoom to spreads v2.0.0
+	Zoom to spreads v2.1.0
 	© February 2021, Paul Chiorean
 	Zooms to the current spread (N = 1) or the first N spreads (N > 1).
 */
@@ -10,7 +10,8 @@ var page = app.activeWindow.activePage;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 const TL = AnchorPoint.TOP_LEFT_ANCHOR, BR = AnchorPoint.BOTTOM_RIGHT_ANCHOR,
 	CS_PBRD = +CoordinateSpaces.PASTEBOARD_COORDINATES;
-const PW = 600; // Side panels width
+const SP = 600; // Side panels width
+const CP = 60; // Control panel height
 const Z = 5.856; // Voodoo zoom coeficient
 const N = 3; // Number of spreads to zoom to
 
@@ -27,8 +28,8 @@ for (var i = 0; i < doc.spreads.length && i < N && N > 1; i++) {
 }
 // Compute zoom percentage
 var zoom = Math.min(
-	(UnitValue(window.bounds[3] - window.bounds[1] - PW, "px").as('pt')) / (targetBounds[3] - targetBounds[1]),
-	(UnitValue(window.bounds[2] - window.bounds[0], "px").as('pt')) / (targetBounds[2] - targetBounds[0])
+	(UnitValue(window.bounds[3] - window.bounds[1] - SP, "px").as('pt')) / (targetBounds[3] - targetBounds[1]),
+	(UnitValue(window.bounds[2] - window.bounds[0] + CP, "px").as('pt')) / (targetBounds[2] - targetBounds[0])
 );
 zoom = Number(zoom * 10 * Z).toFixed(2);
 zoom = Math.max(5, zoom), Math.min(zoom, 4000); // Keep in 5-4000% range
