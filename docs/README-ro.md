@@ -249,7 +249,7 @@ Setup | | | |
   * dacă cursorul e în text, face zoom pe întreg cadrul;
   * fără nimic selectat face zoom pe spreadul curent.
 
-* **`ZoomToSpreads.jsx`** face zoom pe primele 3 spreaduri.
+* **`ZoomToSpreads.jsx`** face zoom pe primele 4 spreaduri.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 

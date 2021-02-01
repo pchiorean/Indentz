@@ -1,5 +1,5 @@
 /*
-	Zoom to spreads v2.1.0
+	Zoom to spreads v2.2.0
 	© February 2021, Paul Chiorean
 	Zooms to the current spread (N = 1) or the first N spreads (N > 1).
 */
@@ -13,7 +13,7 @@ const TL = AnchorPoint.TOP_LEFT_ANCHOR, BR = AnchorPoint.BOTTOM_RIGHT_ANCHOR,
 const SP = 600; // Side panels width
 const CP = 60; // Control panel height
 const Z = 5.856; // Voodoo zoom coeficient
-const N = 3; // Number of spreads to zoom to
+const N = 4; // Number of spreads to zoom to
 
 var targetBounds = [];
 targetBounds[0] = ((N == 1) ? page.parent : doc.spreads[0]).pages[0].resolve(TL, CS_PBRD)[0][1];

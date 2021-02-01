@@ -248,7 +248,7 @@ Setup | | | |
   * if the cursor is in the text, zooms on the whole frame;
   * without anything selected zooms on the current spread.
 
-* **`ZoomToSpreads.jsx`** zooms on the first 3 spreads.
+* **`ZoomToSpreads.jsx`** zooms on the first 4 spreads.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
