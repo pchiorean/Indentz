@@ -9,7 +9,7 @@
 	FORCED_FIT: true | false
 */
 
-const DEBUG = true;
+const DEBUG = false;
 const SNAP_PCT = 1; // Snap distance: percent of target
 const HW_PCT = 10; // HW: percent of visible area
 
@@ -42,7 +42,7 @@ doc.viewPreferences.rulerOrigin = set_RO;
 
 function Fit2Bounds(obj) {
 	var pg = Bounds(page, SCOPE, null);
-	var tg = Bounds(page, SCOPE, TARGET);
+	var tg = Bounds(page, SCOPE, TARGET); if (tg == undefined) return obj;
 	var mg = Bounds(page, SCOPE, "margins");
 	var sa = Bounds(page, SCOPE, "safe area");
 	var objG = obj.geometricBounds;
