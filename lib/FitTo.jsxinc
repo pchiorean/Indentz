@@ -5,9 +5,11 @@
 	It's run internally by all the other FitTo scripts.
 
 	SCOPE: 'page' | 'spread'
-	TARGET: null | 'bleed' | 'margins' | 'safe area'
+	TARGET: null | 'margins' | 'safe area' | 'bleed'
 	FORCED_FIT: true | false
 */
+
+// @include "bounds.jsxinc";
 
 const DEBUG = false;
 const SNAP_PCT = 1; // Snap distance: percent of target
@@ -164,99 +166,6 @@ function Fit2Bounds(obj) {
 				strokeAlignment: SZ ? StrokeAlignment.OUTSIDE_ALIGNMENT : StrokeAlignment.INSIDE_ALIGNMENT,
 				strokeType: SZ ? "$ID/Solid" : "$ID/Canned Dashed 3x2" });
 			frame.transparencySettings.blendingSettings.opacity = SZ ? 25 : 100;
-		}
-	}
-}
-
-function Bounds(page, /*'page'|'spread'*/scope, /*null|'bleed'|'margins'|'safe area'*/target) {
-	var fPg = page.parent.pages.firstItem();
-	var lPg = page.parent.pages.lastItem();
-	var bleed = {
-		top: doc.documentPreferences.properties.documentBleedTopOffset,
-		left: doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
-		bottom: doc.documentPreferences.properties.documentBleedBottomOffset,
-		right: doc.documentPreferences.properties.documentBleedOutsideOrRightOffset }
-	var margins = {
-		top: page.marginPreferences.top,
-		left: page.marginPreferences.left,
-		bottom: page.marginPreferences.bottom,
-		right: page.marginPreferences.right }
-	switch (scope) {
-	case "page":
-		switch (target) {
-			case "bleed": return [
-				page.bounds[0] - bleed.top,
-				page.bounds[1] - (page == fPg ?
-					(fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left) : 0),
-				page.bounds[2] + bleed.bottom,
-				page.bounds[3] + (fPg == lPg ?
-					(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) :
-					(page == lPg ? bleed.right : 0)) ];
-			case "margins": return [
-				page.bounds[0] + margins.top,
-				page.side == PageSideOptions.LEFT_HAND ?
-					page.bounds[1] + margins.right : page.bounds[1] + margins.left,
-				page.bounds[2] - margins.bottom,
-				page.side == PageSideOptions.LEFT_HAND ?
-					page.bounds[3] - margins.left : page.bounds[3] - margins.right ];
-			case "safe area":
-				var s = [], frame, frames = page.rectangles.everyItem().getElements();
-				while (frame = frames.shift()) if (frame.label == "safe area") s.push(frame);
-				if (s.length == 0) return;
-				var sa = s[0].geometricBounds;
-				for (var i = 1; i < s.length; i++) {
-					sa[0] = Math.min(s[i].geometricBounds[0], sa[0]);
-					sa[1] = Math.min(s[i].geometricBounds[1], sa[1]);
-					sa[2] = Math.max(s[i].geometricBounds[2], sa[2]);
-					sa[3] = Math.max(s[i].geometricBounds[3], sa[3]);
-				}
-				return [
-					Math.max(sa[0], page.bounds[0]),
-					Math.max(sa[1], page.bounds[1]),
-					Math.min(sa[2], page.bounds[2]),
-					Math.min(sa[3], page.bounds[3])
-				];
-			default: return page.bounds;
-		}
-	case "spread":
-		switch (target) {
-			case "bleed": return [
-				fPg.bounds[0] - bleed.top,
-				fPg.bounds[1] - (fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left),
-				lPg.bounds[2] + bleed.bottom,
-				lPg.bounds[3] + (fPg == lPg ?
-					(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) : bleed.right)
-				];
-			case "margins":
-				var fm, lm, p = page.parent.pages;
-				for (var i = 0; i < p.length; i++) { var m = p[i].marginPreferences;
-					if (m.top + m.left + m.bottom + m.right > 0) { fm = p[i]; break } }
-				for (var i = p.length - 1; i >= 0 ; i--) { var m = p[i].marginPreferences;
-					if (m.top + m.left + m.bottom + m.right > 0) { lm = p[i]; break } }
-				if (!fm && !lm) return [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ];
-				else return [
-					Math.min(fm.bounds[0] + fm.marginPreferences.top, lm.bounds[0] + lm.marginPreferences.top),
-					fm.bounds[1] + (fm.side == PageSideOptions.LEFT_HAND ?
-						fm.marginPreferences.right : fm.marginPreferences.left),
-					Math.max(lm.bounds[2] - lm.marginPreferences.bottom, fm.bounds[2] - fm.marginPreferences.bottom),
-					lm.bounds[3] - (fm == lm ?
-						(fm.side == PageSideOptions.LEFT_HAND ?
-							fm.marginPreferences.left : fm.marginPreferences.right) :
-							lm.marginPreferences.right)
-				];
-			case "safe area":
-				var s = [], frame, frames = page.parent.rectangles.everyItem().getElements();
-				while (frame = frames.shift()) if (frame.label == "safe area") s.push(frame);
-				if (s.length == 0) return;
-				var sa = s[0].geometricBounds;
-				for (var i = 1; i < s.length; i++) {
-					sa[0] = Math.min(s[i].geometricBounds[0], sa[0]);
-					sa[1] = Math.min(s[i].geometricBounds[1], sa[1]);
-					sa[2] = Math.max(s[i].geometricBounds[2], sa[2]);
-					sa[3] = Math.max(s[i].geometricBounds[3], sa[3]);
-				}
-				return sa;
-			default: return [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ];
 		}
 	}
 }
