@@ -1,6 +1,6 @@
 /*
-	Default layers v1.16.2
-	© January 2021, Paul Chiorean
+	Default layers v1.16.3
+	© February 2021, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
 	Name | Color | Visible | Printable | Order | Variants
@@ -50,7 +50,7 @@ function main() {
 
 	doc.layers.everyItem().properties = { // Prepare existing layers
 		locked: false,
-		layerColor: UIColors.LIGHT_GRAY
+		// layerColor: UIColors.LIGHT_GRAY
 	}
 	var set_AL = doc.activeLayer; // Save active layer
 	// Top layers
