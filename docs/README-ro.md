@@ -67,7 +67,7 @@ FitToPage | | FitToSpread | | TextAutosize | |
 **FitToPageSafeAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadSafeAreaForced.jsx** | ⌥⇧⌘F12
 **FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
 
-**Notă:** `F11` pagină; `F12` spread; `⌥` margini; `⌥⇧` safe area; `⇧` bleed; `⌘` forțat.
+**Notă:** `F11` pagină, `F12` spread; `⌥` margini, `⌥⇧` safe area, `⇧` bleed; `⌘` forțat.
 
 </details>
 
@@ -246,15 +246,17 @@ Setup | | | |
 * **`ZoomToSelection.jsx`** e asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
 
   * aduce selecția puțin mai aproape;
-  * dacă cursorul e în text, face zoom la întreg cadrul;
-  * fără nimic selectat face vizibil întreg spreadul.
+  * dacă cursorul e în text, face zoom pe întreg cadrul;
+  * fără nimic selectat face zoom pe spreadul curent.
+
+* **`ZoomToSpreads.jsx`** face zoom pe primele 3 spreaduri.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
 Misc | | | | | |
 :- | -: | :- | -: | :- | -:
-**Clip.jsx** | Num* | **TileAll.jsx** | ⇧F4 | **QR.jsx** | F9
-**ClipUndo.jsx** | ⌃Num* | **ZoomToSelection.jsx** | F4
+**Clip.jsx** | Num* | **ZoomToSelection.jsx** | F4 | **TileAll.jsx** | ⇧F4
+**ClipUndo.jsx** | ⌃Num* | **ZoomToSpreads.jsx** | ⌥F4 | **QR.jsx** | F9
 
 </details>
 
@@ -272,4 +274,4 @@ Părți din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback‑ul sau sugestiile sunt binevenite.
 
-README-ro.md • 30 ianuarie 2021
+README-ro.md • 1 februarie 2021

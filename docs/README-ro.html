@@ -242,7 +242,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tr>
 </tbody>
 </table>
-<p><strong>Notă:</strong> <code>F11</code> pagină; <code>F12</code> spread; <code>⌥</code> margini; <code>⌥⇧</code> safe area; <code>⇧</code> bleed; <code>⌘</code> forțat.</p>
+<p><strong>Notă:</strong> <code>F11</code> pagină, <code>F12</code> spread; <code>⌥</code> margini, <code>⌥⇧</code> safe area, <code>⇧</code> bleed; <code>⌘</code> forțat.</p>
 </details>
 <h3 id="scaling"><strong>Scaling</strong></h3>
 <p>Scalează proporțional obiectele selectate, ca un bloc unitar.</p>
@@ -593,10 +593,11 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>ZoomToSelection.jsx</code></strong> e asemănător cu <strong>Fit Selection in Window</strong> (⌥⌘=), dar cu câteva îmbunătățiri:</p>
 <ul>
 <li>aduce selecția puțin mai aproape;</li>
-<li>dacă cursorul e în text, face zoom la întreg cadrul;</li>
-<li>fără nimic selectat face vizibil întreg spreadul.</li>
+<li>dacă cursorul e în text, face zoom pe întreg cadrul;</li>
+<li>fără nimic selectat face zoom pe spreadul curent.</li>
 </ul>
 </li>
+<p><strong><code>ZoomToSpreads.jsx</code></strong> face zoom pe primele 3 spreaduri.</p>
 </ul>
 <details><summary><strong>Shortcuturi</strong></summary>
 <table>
@@ -614,21 +615,22 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <tr>
 <td style="text-align:left"><strong>Clip.jsx</strong></td>
 <td style="text-align:right">Num*</td>
+<td style="text-align:left"><strong>ZoomToSelection.jsx</strong></td>
+<td style="text-align:right">F4</td>
 <td style="text-align:left"><strong>TileAll.jsx</strong></td>
 <td style="text-align:right">⇧F4</td>
-<td style="text-align:left"><strong>QR.jsx</strong></td>
-<td style="text-align:right">F9</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>ClipUndo.jsx</strong></td>
 <td style="text-align:right">⌃Num*</td>
-<td style="text-align:left"><strong>ZoomToSelection.jsx</strong></td>
-<td style="text-align:right">F4</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
+<td style="text-align:left"><strong>ZoomToSpreads.jsx</strong></td>
+<td style="text-align:right">⌥F4</td>
+<td style="text-align:left"><strong>QR.jsx</strong></td>
+<td style="text-align:right">F9</td>
 </tr>
 </tbody>
 </table>
+</details>
 </details>
 <h2 id="instalare">Instalare</h2>
 <ol>
@@ -640,6 +642,6 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.</p>
 <p>Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback‑ul sau sugestiile sunt binevenite.</p>
-<p>README-ro.md • 30 ianuarie 2021</p>
+<p>README-ro.md • 1 februarie 2021</p>
 </body>
 </html>

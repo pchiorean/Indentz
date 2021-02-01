@@ -67,7 +67,7 @@ FitToPage | | FitToSpread | | TextAutosize | |
 **FitToPageSafeAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadSafeAreaForced.jsx** | ⌥⇧⌘F12
 **FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
 
-**Note:** `F11` page; `F12` spread; `⌥` margins; `⌥⇧` safe area; `⇧` bleed; `⌘` forced.
+**Note:** `F11` page, `F12` spread; `⌥` margins, `⌥⇧` safe area, `⇧` bleed; `⌘` forced.
 
 </details>
 
@@ -246,14 +246,16 @@ Setup | | | |
 
   * brings the selection a little closer;
   * if the cursor is in the text, zooms on the whole frame;
-  * without anything selected zooms on the spread.
+  * without anything selected zooms on the current spread.
+
+* **`ZoomToSpreads.jsx`** zooms on the first 3 spreads.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
 Misc | | | | | |
 :- | -: | :- | -: | :- | -:
-**Clip.jsx** | Num* | **TileAll.jsx** | ⇧F4 | **QR.jsx** | F9
-**ClipUndo.jsx** | ⌃Num* | **ZoomToSelection.jsx** | F4
+**Clip.jsx** | Num* | **ZoomToSelection.jsx** | F4 | **TileAll.jsx** | ⇧F4
+**ClipUndo.jsx** | ⌃Num* | **ZoomToSpreads.jsx** | ⌥F4 | **QR.jsx** | F9
 
 </details>
 
@@ -271,4 +273,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.
 
-README.md • January 30, 2021
+README.md • February 1, 2021
