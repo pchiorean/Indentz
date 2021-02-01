@@ -1,6 +1,6 @@
 /*
-	Safe area v1.8.4
-	© January 2021, Paul Chiorean
+	Safe area v1.8.5
+	© February 2021, Paul Chiorean
 	Creates a 'safe area' frame the size of the page margins.
 */
 
@@ -41,7 +41,7 @@ function main() {
 			name: "<safe area>", label: "safe area",
 			contentType: ContentType.UNASSIGNED,
 			fillColor: "None", strokeColor: saSwatchName,
-			strokeWeight: "0.5pt",
+			strokeWeight: "0.75pt",
 			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 			strokeType: "$ID/Canned Dashed 3x2",
 			overprintStroke: false,

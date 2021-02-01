@@ -1,6 +1,6 @@
 /*
-	Page size from filename v1.11.0
-	© January 2021, Paul Chiorean
+	Page size from filename v1.11.1
+	© February 2021, Paul Chiorean
 	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 */
@@ -129,7 +129,7 @@ function SafeArea(page) { // Draw a 'safe area' frame
 		name: "<safe area>", label: "safe area",
 		contentType: ContentType.UNASSIGNED,
 		fillColor: "None", strokeColor: saSwatchName,
-		strokeWeight: "0.5pt",
+		strokeWeight: "0.75pt",
 		strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 		strokeType: "$ID/Canned Dashed 3x2",
 		overprintStroke: false,
