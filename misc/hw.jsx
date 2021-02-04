@@ -1,7 +1,7 @@
 /*
-	HW 2.1.1
-	© January 2021, Paul Chiorean
-	Labels 'HW' selected objects and adds a HW bottom guide.
+	HW 2.2.0
+	© February 2021, Paul Chiorean
+	Labels 'HW' selected objects and adds a HW bottom guide on the current spread.
 */
 
 if (!(doc = app.activeDocument)) exit();
@@ -25,8 +25,19 @@ function main() {
 	var item, items = doc.selection;
 	while (item = items.shift()) {
 		item.label = "HW";
-		if (item.constructor.name == "Rectangle" || item.constructor.name == "TextFrame")
+		if (item.constructor.name == "Rectangle") item.fillColor = "Paper";
+		if (item.constructor.name == "TextFrame") {
 			item.fillColor = "Paper";
+			item.paragraphs.everyItem().justification = Justification.CENTER_ALIGN;
+			item.textFramePreferences.properties = {
+				firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
+				verticalJustification: VerticalJustification.CENTER_ALIGN,
+				autoSizingReferencePoint: AutoSizingReferenceEnum.CENTER_POINT,
+				autoSizingType: AutoSizingTypeEnum.OFF,
+				useNoLineBreaksForAutoSizing: true,
+				insetSpacing: 0
+			}
+		}
 	}
 	// Remove old guides
 	var guide, guides = page.parent.guides.everyItem().getElements();
