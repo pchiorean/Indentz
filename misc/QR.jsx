@@ -1,6 +1,6 @@
 /*
-	QR code v2.11.0
-	© January 2021, Paul Chiorean
+	QR code v2.12.0
+	© February 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
 	file with the the following format:
@@ -274,6 +274,7 @@ function QROnFile(code, fn) {
 // Modified from 'Paste and format URL.jsx' by Keith Gilbert
 // https://creativepro.com/free-script-to-automate-adding-visible-urls/
 function GetTextFromClipboard() {
+	var bak_UITool = app.toolBoxTools.currentTool;
 	var tmpLayer = doc.layers.add();
 	var tmpTextFrame = doc.textFrames.add(tmpLayer);
 	tmpTextFrame.insertionPoints[-1].select();
@@ -281,10 +282,11 @@ function GetTextFromClipboard() {
 		app.pasteWithoutFormatting();
 		var string = tmpTextFrame.parentStory.contents;
 	} catch (_) {
-		var string = '';
+		var string = "";
 	}
 	tmpTextFrame.remove();
 	tmpLayer.remove();
+	app.toolBoxTools.currentTool = bak_UITool;
 	return string;
 }
 
