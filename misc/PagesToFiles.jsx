@@ -1,5 +1,5 @@
 /*
-	PagesToFiles v1.5.0
+	PagesToFiles v1.5.1
 	© February 2021, Paul Chiorean
 	Saves the pages of the active document in separate files.
 */
@@ -17,7 +17,7 @@ var defSufx = "-123456789abcdefghijklmnopqrstuvwxyz".substr(0, doc.spreads.lengt
 var fileSufx = RegExp("[ ._-][a-zA-Z0-9]{" + doc.spreads.length + "}$", "i").exec(dName);
 if (/\d\s*x\s*\d/i.test(fileSufx)) fileSufx = null; // Exclude '0x0' suffixes
 // Only ask for a suffix if not autodetected
-var sufx = String(fileSufx) || GetSuffix();
+var sufx = fileSufx ? String(fileSufx) : GetSuffix();
 
 var progressBar = new ProgressBar(dName.length + 12);
 progressBar.reset(doc.spreads.length);
