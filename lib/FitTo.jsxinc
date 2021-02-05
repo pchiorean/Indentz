@@ -1,6 +1,6 @@
 /*
 	Fit to... v4.0.0-beta
-	© January 2021, Paul Chiorean
+	© February 2021, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/safe area/bleed.
 	It's run internally by all the other FitTo scripts.
 
@@ -100,6 +100,16 @@ function Fit2Bounds(obj) {
 			fitR[2] > tgSZ[2] ? tg[2] : (flg_sa[2] ? tg[2] : fitR[2]),
 			fitR[3] > tgSZ[3] ? tg[3] : (flg_sa[3] ? tg[3] : fitR[3])
 		];
+		// But don't expand past child's bounds
+		if (obj.pageItems.length == 1 && obj.fillColor.name == "None") {
+			var objC = obj.pageItems[0].visibleBounds;
+			fitE = [
+				objC[0] > tg[0] ? objC[0] : fitE[0],
+				objC[1] > tg[1] ? objC[1] : fitE[1],
+				objC[2] < tg[2] ? objC[2] : fitE[2],
+				objC[3] < tg[3] ? objC[3] : fitE[3]
+			];
+		}
 		if (DEBUG) DBGFrames();
 	}
 
@@ -152,8 +162,9 @@ function Fit2Bounds(obj) {
 			var item, items = page.parent.pageItems.everyItem().getElements();
 			while (item = items.shift()) if (item.label == "debug") item.remove();
 		}
-		// dbgFrame("Black", false, fitE);
-		// dbgFrame("Black", false, fitR);
+		// debugFrame("Black", false, fitE);
+		// debugFrame("Black", false, fitR);
+		objC && debugFrame("Yellow", false, objC);
 		debugFrame("Black", false, tg);
 		debugFrame("Cyan", true, tgSZ);
 		debugFrame("Magenta", true, saSZ);
