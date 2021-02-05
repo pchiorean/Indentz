@@ -1,5 +1,5 @@
 /*
-	QR code v2.12.0
+	QR code v2.12.1
 	© February 2021, Paul Chiorean
 	Adds a QR code to the current document or to a separate file.
 	If found, batch process "QR.txt". The list is a 2-column TSV
@@ -13,14 +13,14 @@
 
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.enableRedraw = false;
-var doc, docPath, infoFile = "", flg_batch = false;
+var doc, dPath, infoFile = "", flg_batch = false;
 doc = app.documents.length == 0 ? app.documents.add() : app.activeDocument;
 if (doc.saved) {
-	docPath = doc.filePath;
-	if ((infoFile = File(docPath + "/_qr.txt")) && infoFile.exists ||
-		(infoFile = File(docPath + "/_QR.txt")) && infoFile.exists ||
-		(infoFile = File(docPath + "/qr.txt")) && infoFile.exists ||
-		(infoFile = File(docPath + "/QR.txt")) && infoFile.exists) flg_batch = true
+	dPath = doc.filePath;
+	if ((infoFile = File(dPath + "/_qr.txt")) && infoFile.exists ||
+		(infoFile = File(dPath + "/_QR.txt")) && infoFile.exists ||
+		(infoFile = File(dPath + "/qr.txt")) && infoFile.exists ||
+		(infoFile = File(dPath + "/QR.txt")) && infoFile.exists) flg_batch = true
 }
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
@@ -50,14 +50,14 @@ function main() {
 	var onpage = buttons.add("button", undefined, "On page", { name: "ok" });
 		onpage.helpTip = "Put the code on the bottom-left corner of the page";
 	var onfile = buttons.add("button", undefined, "On file", { name: "onfile" });
-		onfile.helpTip = !!docPath ?
+		onfile.helpTip = !!dPath ?
 			"Save as 'QR Codes/" + doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd'" :
 			"Where? Document has no path";
 	var batch = buttons.add("button", undefined, "Batch", { name: "batch" });
 		batch.helpTip = flg_batch ?
 			"Batch process codes from '" + infoFile.name + "'" :
 			"No 'QR.txt' found in the current folder";
-	onfile.enabled = !!docPath;
+	onfile.enabled = !!dPath;
 	batch.enabled = flg_batch;
 	batch.onClick = function() { do_batch = true; w.close() }
 	onpage.onClick = function() { flg_onfile = false; w.close() }
@@ -261,7 +261,7 @@ function QROnFile(code, fn) {
 	target.documentPreferences.pageHeight = page.bounds[2] - page.bounds[0];
 	qrGroup.ungroup();
 	// Create folder and save file
-	var targetFolder = Folder(docPath + "/QR Codes");
+	var targetFolder = Folder(dPath + "/QR Codes");
 	targetFolder.create();
 	target.save(File(targetFolder + "/" + fn));
 	// Keep file opened if text overflows
