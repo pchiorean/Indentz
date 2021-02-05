@@ -1,6 +1,6 @@
 /*
-	PagesToFiles v1.4.1
-	© December 2020, Paul Chiorean
+	PagesToFiles v1.5.0
+	© February 2021, Paul Chiorean
 	Saves the pages of the active document in separate files.
 */
 
@@ -14,17 +14,16 @@ var dPath = doc.filePath;
 var dName = doc.name.substr(0, doc.name.lastIndexOf("."));
 // Default suffix
 var defSufx = "-123456789abcdefghijklmnopqrstuvwxyz".substr(0, doc.spreads.length + 1);
-var fileSufx = RegExp("[._-][a-zA-Z0-9]{" + doc.spreads.length + "}$", "i").exec(dName);
+var fileSufx = RegExp("[ ._-][a-zA-Z0-9]{" + doc.spreads.length + "}$", "i").exec(dName);
 if (/\d\s*x\s*\d/i.test(fileSufx)) fileSufx = null; // Exclude '0x0' suffixes
-// User provided suffix
-var sufx = GetSuffix();
+// Only ask for a suffix if not autodetected
+var sufx = String(fileSufx) || GetSuffix();
 
 var progressBar = new ProgressBar(dName.length + 12);
 progressBar.reset(doc.spreads.length);
 for (var i = 0; i < doc.spreads.length; i++) {
 	// Filter out current spread
-	var r = [];
-	for (var j = 0; j < doc.spreads.length; j++) if (j != i) r.push(j);
+	for (var r = [], j = 0; j < doc.spreads.length; j++) if (j != i) r.push(j);
 	// Disable user interaction and open a copy
 	if (sufx == fileSufx) dName = dName.replace(fileSufx, "");
 	var inc = 0;
@@ -43,6 +42,7 @@ for (var i = 0; i < doc.spreads.length; i++) {
 	dCopy.save(dFile); dCopy.close();
 }
 progressBar.close();
+doc.close();
 
 
 function GetSuffix(sufx) {
