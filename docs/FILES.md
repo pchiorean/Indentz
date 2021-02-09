@@ -1,5 +1,5 @@
 Name                              |    Fn  | Description
-:---                              |   ---: | :---
+:-                                |     -: | :-
 **[ Alignment ]**                          |
 **AlignToBL.jsx**                 |   Num1 | Aligns the selected objects to the bottom-left of the **Align To** setting
 **AlignToB.jsx**                  |   Num2 | Aligns the selected objects to the bottom of the **Align To** setting
@@ -22,6 +22,9 @@ Name                              |    Fn  | Description
 **SetRefPointToTL.jsx**           |  ⌃Num7 | Sets **Transform Reference Point** to top-left
 **SetRefPointToT.jsx**            |  ⌃Num8 | Sets **Transform Reference Point** to top
 **SetRefPointToTR.jsx**           |  ⌃Num9 | Sets **Transform Reference Point** to top-right
+**[ File ]**                               |
+**SpreadsToFiles.jsx**            |        | Saves the spreads of the active document in separate files
+**FilesToSpreads.jsx**            |        | Combines the open documents, sorted alphabetically
 **[ Fitting ]**                            |
 **FitToPage.jsx**                 |    F11 | Resizes the selected objects to the page size
 **FitToPageBleed.jsx**            |   ⇧F11 | Resizes the selected objects to the page bleed size
@@ -64,20 +67,19 @@ Name                              |    Fn  | Description
 **PageSizeFromFilename.jsx**      |     F3 | Sets every page size and margins according to the filename
 **PageSizeFromMargins.jsx**       |    ⌥F3 | Sets the page size to the page margins
 **PageSizeFromSelection.jsx**     |    ⇧F3 | Sets the page size to the selected objects bounds
+**[ View ]**                               |
+**TileAll.jsx**                   |    ⇧F4 | Invokes 'Tile All Vertically/Horizontally', depending on current spread orientation
+**ZoomToSelection.jsx**           |     F4 | Zooms to the selected objects. If no selection, it zooms to the current spread
+**ZoomToSpreads.jsx**             |    ⌥F4 | Zooms to the current spread or the first N spreads
 **[ Miscellaneous ]**                      |
 **Clip.jsx**                      |   Num* | Clips selected objects in a '\<clip frame\>', or restores them
 **ClipUndo.jsx**                  |  ⌃Num* | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
 **CleanupLabels.jsx**             |        | Removes all labels from the document
-**FilesToPages.jsx**              |        | Combines the open documents, sorted alphabetically
 **HW.jsx**                        |   ⇧F10 | Labels 'HW' selected objects; w/o selection, adds a 10% bottom guide
 **PageRatios.jsx**                |        | Calculates the ratio of each page and displays it in the upper left corner
-**PagesToFiles.jsx**              |        | Saves the pages of the active document in separate files
 **QR.jsx**                        |     F9 | Adds a QR code to the current document or to a separate file
 **ShowFonts.jsx**                 |        | Shows all fonts used in the current document
 **ShowProfiles.jsx**              |        | Shows all color profiles available to the document
 **ShowProperties.jsx**            |        | Shows all properties and methods of a selected object
-**TileAll.jsx**                   |    ⇧F4 | Invokes 'Tile All Vertically/Horizontally', depending on current spread orientation
-**ZoomToSelection.jsx**           |     F4 | Zooms to the selected objects. If no selection, it zooms to the current spread
-**ZoomToSpreads.jsx**             |    ⌥F4 | Zooms to the current spread or the first N spreads
 
 <!-- ⌃⌥⇧⌘ -->

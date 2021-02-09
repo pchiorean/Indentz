@@ -36,6 +36,12 @@ Proxy | | | | | |
 
 </details>
 
+### **File**
+
+* **`FilesToSpreads.jsx`** combină documentele deschise, sortate alfabetic.
+
+* **`SpreadsToFiles.jsx`** salvează spreadurile documentului activ în fișiere separate, cu un sufix configurabil.
+
 ### **Fitting**
 
 Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container *(clipping frame)* și acesta e redimensionat.
@@ -203,6 +209,28 @@ Setup | | | |
 
 </details>
 
+### **View**
+
+* **`TileAll.jsx`** invocă **Window > Arrange > Tile All Vertically** sau **Tile All Horizontally**, în funcție de orientarea spreadului curent.
+
+* **`ZoomToSelection.jsx`** e asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
+
+  * aduce selecția puțin mai aproape;
+  * dacă cursorul e în text, face zoom pe întreg cadrul;
+  * fără nimic selectat face zoom pe spreadul curent.
+
+* **`ZoomToSpreads.jsx`** face zoom pe primele 4 spreaduri.
+
+<details><summary><strong>Shortcuts</strong></summary>
+
+View | |
+:- | -:
+**TileAll.jsx** | ⇧F4
+**ZoomToSelection.jsx** | F4
+**ZoomToSpreads.jsx** | ⌥F4
+
+</details>
+
 ### **Misc**
 
 * **`CleanupLabels.jsx`**: Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. Scriptul șterge etichetele obiectelor selectate sau ale tuturor obiectelor din document dacă nu e selectat nimic.
@@ -214,10 +242,6 @@ Setup | | | |
 * **`HW.jsx`** etichetează obiectele selectate cu "HW"; adaugă un ghid inferior de 10% pe pagina curentă.
 
 * **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul **info**.
-
-* **`PagesToFiles.jsx`** salvează paginile documentului activ în fișiere separate, cu un sufix configurabil.
-
-* **`FilesToPages.jsx`** combină documentele deschise, sortate alfabetic.
 
 * **`QR.jsx`** adaugă un cod QR în documentul activ, într-un fișier, sau creează mai multe coduri în fișiere separate:
 
@@ -243,22 +267,14 @@ Setup | | | |
 
 * **`ShowProperties.jsx`** afișează proprietățile și metodele unui obiect selectat (util pentru depanare).
 
-* **`TileAll.jsx`** invocă **Window > Arrange > Tile All Vertically** sau **Tile All Horizontally**, în funcție de orientarea spreadului curent.
-
-* **`ZoomToSelection.jsx`** e asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
-
-  * aduce selecția puțin mai aproape;
-  * dacă cursorul e în text, face zoom pe întreg cadrul;
-  * fără nimic selectat face zoom pe spreadul curent.
-
-* **`ZoomToSpreads.jsx`** face zoom pe primele 4 spreaduri.
-
 <details><summary><strong>Shortcuturi</strong></summary>
 
-Misc | | | | | |
-:- | -: | :- | -: | :- | -:
-**Clip.jsx** | Num* | **ZoomToSelection.jsx** | F4 | **TileAll.jsx** | ⇧F4
-**ClipUndo.jsx** | ⌃Num* | **ZoomToSpreads.jsx** | ⌥F4 | **QR.jsx** | F9
+Misc | |
+:- | -:
+**Clip.jsx** | Num*
+**ClipUndo.jsx** | ⌃Num*
+**HW.jsx** | ⇧F10
+**QR.jsx** | F9
 
 </details>
 

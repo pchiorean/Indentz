@@ -1,7 +1,7 @@
 /*
-	PagesToFiles v1.5.1
+	SpreadsToFiles v1.5.1
 	© February 2021, Paul Chiorean
-	Saves the pages of the active document in separate files.
+	Saves the spreads of the active document in separate files.
 */
 
 if (!(doc = app.activeDocument)) exit();

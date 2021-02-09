@@ -16,7 +16,9 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <body class="vscode-body vscode-light">
 <h1 id="indentz">Indentz</h1>
 <p>Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run by a keyboard shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; suggestions below each section). Some can be run by the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
+
 <h2 id="description">Description</h2>
+
 <h3 id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
 <p>Make it easier to align objects or set the reference point for transformations using shortcuts.</p>
 <ul>
@@ -121,6 +123,17 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
+
+<h3 id="file"><strong>File</strong></h3>
+<ul>
+<li>
+<p><strong><code>FilesToSpreads.jsx</code></strong> combines the open documents, sorted alphabetically.</p>
+</li>
+<li>
+<p><strong><code>SpreadsToFiles.jsx</code></strong> saves the spreads of the active document in separate files, with a user configurable suffix.</p>
+</li>
+</ul>
+
 <h3 id="fitting"><strong>Fitting</strong></h3>
 <p>Resize the selected objects, without scaling. Rectangular frames are simply resized; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is resized.</p>
 <ul>
@@ -244,6 +257,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </table>
 <p><strong>Note:</strong> <code>F11</code> page, <code>F12</code> spread; <code>⌥</code> margins, <code>⌥⇧</code> safe area, <code>⇧</code> bleed; <code>⌘</code> forced.</p>
 </details>
+
 <h3 id="scaling"><strong>Scaling</strong></h3>
 <p>Scale the selected objects proportionally, as a block.</p>
 <ul>
@@ -274,6 +288,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
+
 <h3 id="printing"><strong>Printing</strong></h3>
 <p>Make several preparations for export and can be used with <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. The scripts detect alternative layers like <strong>visible</strong>, <strong>vizibil</strong> for <strong>safe area</strong>, or <strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong> for <strong>dielines</strong>.</p>
 <ul>
@@ -287,8 +302,10 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>SafeAreaHideLayer.jsx</code></strong> and <strong><code>SafeAreaShowLayer.jsx</code></strong> hide or show <strong>safe area</strong>.</p>
 </li>
 </ul>
+
 <h3 id="setup"><strong>Setup</strong></h3>
 <p>There are two sets: one related to document preferences, layers, swatches and fonts, the other to page size and margins.</p>
+
 <h4 id="document"><strong>Document</strong></h4>
 <ul>
 <li>
@@ -447,6 +464,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>DocDefaults.jsx</code></strong> runs <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong>, <strong><code>PageSizeFromFilename.jsx</code></strong> and sets pasteboard margins to 150 mm (H) and 25 mm (V).</p>
 </li>
 </ul>
+
 <h4 id="layout"><strong>Layout</strong></h4>
 <ul>
 <li>
@@ -521,6 +539,49 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
+
+<h3 id="view"><strong>View</strong></h3>
+<ul>
+<li>
+<p><strong><code>TileAll.jsx</code></strong> invokes <strong>Window &gt; Arrange &gt; Tile All Vertically</strong> or <strong>Tile All Horizontally</strong>, depending on the current spread orientation.</p>
+</li>
+<li>
+<p><strong><code>ZoomToSelection.jsx</code></strong> resembles <strong>Fit Selection in Window</strong> (⌥⌘=), but with some improvements:</p>
+<ul>
+<li>brings the selection a little closer;</li>
+<li>if the cursor is in the text, zooms on the whole frame;</li>
+<li>without anything selected zooms on the current spread.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>ZoomToSpreads.jsx</code></strong> zooms on the first 4 spreads.</p>
+</li>
+</ul>
+<details><summary><strong>Shortcuts</strong></summary>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">View</th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>TileAll.jsx</strong></td>
+<td style="text-align:right">⇧F4</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>ZoomToSelection.jsx</strong></td>
+<td style="text-align:right">F4</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>ZoomToSpreads.jsx</strong></td>
+<td style="text-align:right">⌥F4</td>
+</tr>
+</tbody>
+</table>
+</details>
+
 <h3 id="misc"><strong>Misc</strong></h3>
 <ul>
 <li>
@@ -535,12 +596,6 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </li>
 <li>
 <p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and puts it in the upper left corner, on the <strong>info</strong> layer.</p>
-</li>
-<li>
-<p><strong><code>PagesToFiles.jsx</code></strong> saves the pages of the active document in separate files, with a user configurable suffix.</p>
-</li>
-<li>
-<p><strong><code>FilesToPages.jsx</code></strong> combines the open documents, sorted alphabetically.</p>
 </li>
 <li>
 <p><strong><code>QR.jsx</code></strong> adds a QR code in the active document, in a file, or creates multiple codes in separate files:</p>
@@ -589,18 +644,6 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <li>
 <p><strong><code>ShowProperties.jsx</code></strong> shows properties and methods of a selected object (useful for debugging).</p>
 </li>
-<li>
-<p><strong><code>TileAll.jsx</code></strong> invokes <strong>Window &gt; Arrange &gt; Tile All Vertically</strong> or <strong>Tile All Horizontally</strong>, depending on the current spread orientation.</p>
-</li>
-<li>
-<p><strong><code>ZoomToSelection.jsx</code></strong> resembles <strong>Fit Selection in Window</strong> (⌥⌘=), but with some improvements:</p>
-<ul>
-<li>brings the selection a little closer;</li>
-<li>if the cursor is in the text, zooms on the whole frame;</li>
-<li>without anything selected zooms on the current spread.</li>
-</ul>
-</li>
-<p><strong><code>ZoomToSpreads.jsx</code></strong> zooms on the first 4 spreads.</p>
 </ul>
 <details><summary><strong>Shortcuts</strong></summary>
 <table>
@@ -608,38 +651,36 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <tr>
 <th style="text-align:left">Misc</th>
 <th style="text-align:right"></th>
-<th style="text-align:left"></th>
-<th style="text-align:right"></th>
-<th style="text-align:left"></th>
-<th style="text-align:right"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left"><strong>Clip.jsx</strong></td>
 <td style="text-align:right">Num*</td>
-<td style="text-align:left"><strong>ZoomToSelection.jsx</strong></td>
-<td style="text-align:right">F4</td>
-<td style="text-align:left"><strong>TileAll.jsx</strong></td>
-<td style="text-align:right">⇧F4</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>ClipUndo.jsx</strong></td>
 <td style="text-align:right">⌃Num*</td>
-<td style="text-align:left"><strong>ZoomToSpreads.jsx</strong></td>
-<td style="text-align:right">⌥F4</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>HW.jsx</strong></td>
+<td style="text-align:right">⇧F10</td>
+</tr>
+<tr>
 <td style="text-align:left"><strong>QR.jsx</strong></td>
 <td style="text-align:right">F9</td>
 </tr>
 </tbody>
 </table>
 </details>
+
 <h2 id="installation">Installation</h2>
 <ol>
 <li>Open <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
 <li>Right‑click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
 <li>Copy files to this folder.</li>
 </ol>
+
 <h2 id="license">License</h2>
 <p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington and others.</p>

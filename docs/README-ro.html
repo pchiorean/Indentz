@@ -16,7 +16,9 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <body class="vscode-body vscode-light">
 <h1 id="indentz">Indentz</h1>
 <p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte sunt gândite să fie rulate printr‑un shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
+
 <h2 id="descriere">Descriere</h2>
+
 <h3 id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
 <p>Facilitează alinierea obiectelor sau setarea punctului de referință pentru transformări folosind shortcuturi.</p>
 <ul>
@@ -121,6 +123,17 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
+
+<h3 id="file"><strong>File</strong></h3>
+<ul>
+<li>
+<p><strong><code>FilesToSpreads.jsx</code></strong> combină documentele deschise, sortate alfabetic.</p>
+</li>
+<li>
+<p><strong><code>SpreadsToFiles.jsx</code></strong> salvează spreadurile documentului activ în fișiere separate, cu un sufix configurabil.</p>
+</li>
+</ul>
+
 <h3 id="fitting"><strong>Fitting</strong></h3>
 <p>Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container <em>(clipping frame)</em> și acesta e redimensionat.</p>
 <ul>
@@ -244,6 +257,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </table>
 <p><strong>Notă:</strong> <code>F11</code> pagină, <code>F12</code> spread; <code>⌥</code> margini, <code>⌥⇧</code> safe area, <code>⇧</code> bleed; <code>⌘</code> forțat.</p>
 </details>
+
 <h3 id="scaling"><strong>Scaling</strong></h3>
 <p>Scalează proporțional obiectele selectate, ca un bloc unitar.</p>
 <ul>
@@ -274,6 +288,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
+
 <h3 id="print"><strong>Printing</strong></h3>
 <p>Fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează straturi cu denumiri similare gen <strong>visible</strong>, <strong>vizibil</strong> pentru <strong>safe area</strong>, sau <strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong> pentru <strong>dielines</strong>.</p>
 <ul>
@@ -287,8 +302,10 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <strong>safe area</strong>.</p>
 </li>
 </ul>
+
 <h3 id="setup"><strong>Setup</strong></h3>
 <p>Sunt două seturi: unul legat de preferințele documentului, straturi, culori și fonturi, iar celălalt de dimensiunea și marginile paginii.</p>
+
 <h4 id="document"><strong>Document</strong></h4>
 <ul>
 <li>
@@ -447,6 +464,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>DocDefaults.jsx</code></strong> rulează <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong>, <strong><code>PageSizeFromFilename.jsx</code></strong> și setează marginile pasteboardului la 150 mm (H) și 25 mm (V).</p>
 </li>
 </ul>
+
 <h4 id="layout"><strong>Layout</strong></h4>
 <ul>
 <li>
@@ -521,6 +539,49 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
+
+<h3 id="view"><strong>View</strong></h3>
+<ul>
+<li>
+<p><strong><code>TileAll.jsx</code></strong> invocă <strong>Window &gt; Arrange &gt; Tile All Vertically</strong> sau <strong>Tile All Horizontally</strong>, în funcție de orientarea spreadului curent.</p>
+</li>
+<li>
+<p><strong><code>ZoomToSelection.jsx</code></strong> e asemănător cu <strong>Fit Selection in Window</strong> (⌥⌘=), dar cu câteva îmbunătățiri:</p>
+<ul>
+<li>aduce selecția puțin mai aproape;</li>
+<li>dacă cursorul e în text, face zoom pe întreg cadrul;</li>
+<li>fără nimic selectat face zoom pe spreadul curent.</li>
+</ul>
+</li>
+<li>
+<p><strong><code>ZoomToSpreads.jsx</code></strong> face zoom pe primele 4 spreaduri.</p>
+</li>
+</ul>
+<details><summary><strong>Shortcuts</strong></summary>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">View</th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>TileAll.jsx</strong></td>
+<td style="text-align:right">⇧F4</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>ZoomToSelection.jsx</strong></td>
+<td style="text-align:right">F4</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>ZoomToSpreads.jsx</strong></td>
+<td style="text-align:right">⌥F4</td>
+</tr>
+</tbody>
+</table>
+</details>
+
 <h3 id="misc"><strong>Misc</strong></h3>
 <ul>
 <li>
@@ -535,12 +596,6 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </li>
 <li>
 <p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul <strong>info</strong>.</p>
-</li>
-<li>
-<p><strong><code>PagesToFiles.jsx</code></strong> salvează paginile documentului activ în fișiere separate, cu un sufix configurabil.</p>
-</li>
-<li>
-<p><strong><code>FilesToPages.jsx</code></strong> combină documentele deschise, sortate alfabetic.</p>
 </li>
 <li>
 <p><strong><code>QR.jsx</code></strong> adaugă un cod QR în documentul activ, într-un fișier, sau creează mai multe coduri în fișiere separate:</p>
@@ -589,18 +644,6 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <li>
 <p><strong><code>ShowProperties.jsx</code></strong> afișează proprietățile și metodele unui obiect selectat (util pentru depanare).</p>
 </li>
-<li>
-<p><strong><code>TileAll.jsx</code></strong> invocă <strong>Window &gt; Arrange &gt; Tile All Vertically</strong> sau <strong>Tile All Horizontally</strong>, în funcție de orientarea spreadului curent.</p>
-</li>
-<li>
-<p><strong><code>ZoomToSelection.jsx</code></strong> e asemănător cu <strong>Fit Selection in Window</strong> (⌥⌘=), dar cu câteva îmbunătățiri:</p>
-<ul>
-<li>aduce selecția puțin mai aproape;</li>
-<li>dacă cursorul e în text, face zoom pe întreg cadrul;</li>
-<li>fără nimic selectat face zoom pe spreadul curent.</li>
-</ul>
-</li>
-<p><strong><code>ZoomToSpreads.jsx</code></strong> face zoom pe primele 4 spreaduri.</p>
 </ul>
 <details><summary><strong>Shortcuturi</strong></summary>
 <table>
@@ -608,39 +651,36 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <tr>
 <th style="text-align:left">Misc</th>
 <th style="text-align:right"></th>
-<th style="text-align:left"></th>
-<th style="text-align:right"></th>
-<th style="text-align:left"></th>
-<th style="text-align:right"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left"><strong>Clip.jsx</strong></td>
 <td style="text-align:right">Num*</td>
-<td style="text-align:left"><strong>ZoomToSelection.jsx</strong></td>
-<td style="text-align:right">F4</td>
-<td style="text-align:left"><strong>TileAll.jsx</strong></td>
-<td style="text-align:right">⇧F4</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>ClipUndo.jsx</strong></td>
 <td style="text-align:right">⌃Num*</td>
-<td style="text-align:left"><strong>ZoomToSpreads.jsx</strong></td>
-<td style="text-align:right">⌥F4</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>HW.jsx</strong></td>
+<td style="text-align:right">⇧F10</td>
+</tr>
+<tr>
 <td style="text-align:left"><strong>QR.jsx</strong></td>
 <td style="text-align:right">F9</td>
 </tr>
 </tbody>
 </table>
 </details>
-</details>
+
 <h2 id="instalare">Instalare</h2>
 <ol>
 <li>Deschideți <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
 <li>Faceți clic dreapta pe folderul <strong>User</strong> și selectați <strong>Reveal in Finder/Explorer</strong>.</li>
 <li>Copiați fișierele în acest folder.</li>
 </ol>
+
 <h2 id="licență">Licență</h2>
 <p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.</p>

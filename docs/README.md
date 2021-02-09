@@ -36,6 +36,12 @@ Proxy | | | | | |
 
 </details>
 
+### **File**
+
+* **`FilesToSpreads.jsx`** combines the open documents, sorted alphabetically.
+
+* **`SpreadsToFiles.jsx`** saves the spreads of the active document in separate files, with a user configurable suffix.
+
 ### **Fitting**
 
 Resize the selected objects, without scaling. Rectangular frames are simply resized; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is resized.
@@ -202,6 +208,28 @@ Setup | | | |
 
 </details>
 
+### **View**
+
+* **`TileAll.jsx`** invokes **Window > Arrange > Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
+
+* **`ZoomToSelection.jsx`** resembles **Fit Selection in Window** (⌥⌘=), but with some improvements:
+
+  * brings the selection a little closer;
+  * if the cursor is in the text, zooms on the whole frame;
+  * without anything selected zooms on the current spread.
+
+* **`ZoomToSpreads.jsx`** zooms on the first 4 spreads.
+
+<details><summary><strong>Shortcuts</strong></summary>
+
+View | |
+:- | -:
+**TileAll.jsx** | ⇧F4
+**ZoomToSelection.jsx** | F4
+**ZoomToSpreads.jsx** | ⌥F4
+
+</details>
+
 ### **Misc**
 
 * **`CleanupLabels.jsx`**: Sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
@@ -213,10 +241,6 @@ Setup | | | |
 * **`HW.jsx`** labels selected objects with 'HW'; adds a 10% bottom guide on the current page.
 
 * **`PageRatios.jsx`** calculates the ratio of each page and puts it in the upper left corner, on the **info** layer.
-
-* **`PagesToFiles.jsx`** saves the pages of the active document in separate files, with a user configurable suffix.
-
-* **`FilesToPages.jsx`** combines the open documents, sorted alphabetically.
 
 * **`QR.jsx`** adds a QR code in the active document, in a file, or creates multiple codes in separate files:
 
@@ -242,22 +266,14 @@ Setup | | | |
 
 * **`ShowProperties.jsx`** shows properties and methods of a selected object (useful for debugging).
 
-* **`TileAll.jsx`** invokes **Window > Arrange > Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
-
-* **`ZoomToSelection.jsx`** resembles **Fit Selection in Window** (⌥⌘=), but with some improvements:
-
-  * brings the selection a little closer;
-  * if the cursor is in the text, zooms on the whole frame;
-  * without anything selected zooms on the current spread.
-
-* **`ZoomToSpreads.jsx`** zooms on the first 4 spreads.
-
 <details><summary><strong>Shortcuts</strong></summary>
 
-Misc | | | | | |
-:- | -: | :- | -: | :- | -:
-**Clip.jsx** | Num* | **ZoomToSelection.jsx** | F4 | **TileAll.jsx** | ⇧F4
-**ClipUndo.jsx** | ⌃Num* | **ZoomToSpreads.jsx** | ⌥F4 | **QR.jsx** | F9
+Misc | |
+:- | -:
+**Clip.jsx** | Num*
+**ClipUndo.jsx** | ⌃Num*
+**HW.jsx** | ⇧F10
+**QR.jsx** | F9
 
 </details>
 
