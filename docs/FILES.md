@@ -68,6 +68,7 @@ Name                              |    Fn  | Description
 **Clip.jsx**                      |   Num* | Clips selected objects in a '\<clip frame\>', or restores them
 **ClipUndo.jsx**                  |  ⌃Num* | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
 **CleanupLabels.jsx**             |        | Removes all labels from the document
+**FilesToPages.jsx**              |        | Combines the open documents, sorted alphabetically
 **HW.jsx**                        |   ⇧F10 | Labels 'HW' selected objects; w/o selection, adds a 10% bottom guide
 **PageRatios.jsx**                |        | Calculates the ratio of each page and displays it in the upper left corner
 **PagesToFiles.jsx**              |        | Saves the pages of the active document in separate files

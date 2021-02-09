@@ -217,6 +217,8 @@ Setup | | | |
 
 * **`PagesToFiles.jsx`** salvează paginile documentului activ în fișiere separate, cu un sufix configurabil.
 
+* **`FilesToPages.jsx`** combină documentele deschise, sortate alfabetic.
+
 * **`QR.jsx`** adaugă un cod QR în documentul activ, într-un fișier, sau creează mai multe coduri în fișiere separate:
 
   ![Generate QR Code](img/qr.png)
@@ -274,4 +276,4 @@ Părți din codul din acest repository se bazează pe postări de pe bloguri, po
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback‑ul sau sugestiile sunt binevenite.
 
-README-ro.md • 1 februarie 2021
+README-ro.md • 9 februarie 2021

@@ -216,6 +216,8 @@ Setup | | | |
 
 * **`PagesToFiles.jsx`** saves the pages of the active document in separate files, with a user configurable suffix.
 
+* **`FilesToPages.jsx`** combines the open documents, sorted alphabetically.
+
 * **`QR.jsx`** adds a QR code in the active document, in a file, or creates multiple codes in separate files:
 
   ![Generate QR Code](img/qr.png)
@@ -273,4 +275,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.
 
-README.md • February 1, 2021
+README.md • February 9, 2021
