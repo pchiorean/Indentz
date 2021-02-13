@@ -1,6 +1,6 @@
 /*
-	Align to center v2.5.2
-	© January 2021, Paul Chiorean
+	Align to center v2.5.3
+	© February 2021, Paul Chiorean
 	Aligns the selected objects to the center of the 'Align To' setting.
 */
 
@@ -18,7 +18,7 @@ app.doScript(main, ScriptLanguage.javascript, sel,
 
 function main(sel) {
 	var set_ADB = app.alignDistributePreferences.alignDistributeBounds;
-	// If we have a key object, align all to that and exit
+	// If we have a key object, align all to it and exit
 	if (doc.selectionKeyObject != undefined) {
 		set_ADB = AlignDistributeBounds.KEY_OBJECT;
 		Align(sel, doc.selectionKeyObject);
@@ -64,12 +64,12 @@ function main(sel) {
 					case AlignDistributeBounds.PAGE_BOUNDS:
 					case AlignDistributeBounds.SPREAD_BOUNDS:
 						obj.move(undefined,
-							[0, -(page.bounds[2] - page.bounds[0]) * 0.1 / 2]);
+							[ 0, -(page.bounds[2] - page.bounds[0]) * 0.1 / 2 ]);
 						break;
 					case AlignDistributeBounds.MARGIN_BOUNDS:
 						obj.move(undefined,
-							[0, -((page.bounds[2] - page.bounds[0]) -
-							(page.marginPreferences.top + page.marginPreferences.bottom)) * 0.1 / 2]);
+							[ 0, -((page.bounds[2] - page.bounds[0]) -
+							(page.marginPreferences.top + page.marginPreferences.bottom)) * 0.1 / 2 ]);
 						break;
 				}
 				break;
@@ -81,27 +81,26 @@ function main(sel) {
 	}
 
 	function SelectOption() {
-		var w = new Window("dialog", "Select alignment");
+		var w = new Window("dialog", "Center");
 			w.orientation = "row";
-			w.alignChildren = ["center","top"];
-		var center = w.add("panel {text: 'Center'}");
+			w.alignChildren = [ "center", "top" ];
+		var center = w.add("panel");
 			center.spacing = 5;
-			center.margins = [10,15,10,12];
 			center.orientation = "column";
-			center.alignChildren = ["left","top"];
-			center.add("radiobutton {text: 'Horizontal'}");
-			center.add("radiobutton {text: 'Vertical'}");
-			center.add("radiobutton {text: 'Vertical (HW)'}")
+			center.alignChildren = [ "left", "top" ];
+			center.add("radiobutton { text: 'Horizontal' }");
+			center.add("radiobutton { text: 'Vertical' }");
+			center.add("radiobutton { text: 'Vertical (HW)' }")
 				.enabled = !(set_ADB == AlignDistributeBounds.KEY_OBJECT);
-			center.add("radiobutton {text: 'Both'}");
+			center.add("radiobutton { text: 'Both' }");
 			center.children[0].active = center.children[0].value = true;
-		var okcancel = w.add("group", undefined, {name: "okcancel"});
+		var okcancel = w.add("group", undefined, { name: "okcancel" });
 			okcancel.orientation = "column";
-			okcancel.alignChildren = ["fill","top"];
-			okcancel.add("button {text: 'Ok', name: 'ok'}");
-			okcancel.add("button {text: 'Cancel', name: 'cancel'}");
+			okcancel.alignChildren = [ "fill", "top" ];
+			okcancel.add("button { text: 'Ok', name: 'ok' }");
+			okcancel.add("button { text: 'Cancel', name: 'cancel' }");
 		if (w.show() == 2) return;
-		for (i = 0; i < center.children.length; i++)
+		for (var i = 0; i < center.children.length; i++)
 			if (center.children[i].value == true) return i;
 	}
 }
