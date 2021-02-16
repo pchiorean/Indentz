@@ -1,6 +1,6 @@
 /*
-	Clip v2.5.0
-	© January 2021, Paul Chiorean
+	Clip v2.5.1
+	© February 2021, Paul Chiorean
 	Clips selected objects in a "<clip frame>", or restores them
 */
 
@@ -39,7 +39,9 @@ function Clip(items) {
 		size = obj.geometricBounds;
 	}
 	// Special case: text frames
-	else if (items.length == 1 && items[0].constructor.name == "TextFrame") {
+	else if (items.length == 1 &&
+		items[0].constructor.name == "TextFrame" &&
+		(items[0].contents.replace(/^\s+/, '').replace(/\s+$/, '')).length > 0) {
 		var outlines = items[0].createOutlines(false);
 		size = [
 			obj.geometricBounds[0], outlines[0].geometricBounds[1],
