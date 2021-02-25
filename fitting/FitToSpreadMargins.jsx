@@ -1,10 +1,10 @@
 /*
-	Fit to spread margins v1.1.4
-	© January 2021, Paul Chiorean
+	Fit to spread margins v1.2.0
+	© February 2021, Paul Chiorean
 	Resizes the selected objects to the spread margins.
 
 	SCOPE: 'page' | 'spread'
-	TARGET: null | 'margins' | 'safe area' | 'bleed'
+	TARGET: 'size' | 'margins' | 'safearea' | 'bleed'
 	FORCED_FIT: true | false
 */
 

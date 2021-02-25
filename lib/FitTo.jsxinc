@@ -5,7 +5,7 @@
 	It's run internally by all the other FitTo scripts.
 
 	SCOPE: 'page' | 'spread'
-	TARGET: null | 'margins' | 'safe area' | 'bleed'
+	TARGET: 'size' | 'margins' | 'safearea' | 'bleed'
 	FORCED_FIT: true | false
 */
 
@@ -43,10 +43,11 @@ if (selBAK.length > 0) app.select(selBAK);
 doc.viewPreferences.rulerOrigin = set_RO;
 
 function Fit2Bounds(obj) {
-	var pg = Bounds(page, SCOPE, null);
-	var tg = Bounds(page, SCOPE, TARGET); if (tg == undefined) return obj;
-	var mg = Bounds(page, SCOPE, "margins");
-	var sa = Bounds(page, SCOPE, "safe area");
+	var bounds = Bounds(page);
+	var pg = bounds[SCOPE].size;
+	var tg = bounds[SCOPE][TARGET]; if (tg == undefined) return obj;
+	var mg = bounds[SCOPE]["margins"];
+	var sa = bounds[SCOPE]["safearea"];
 	var objG = obj.geometricBounds;
 	var objV = obj.visibleBounds;
 	var objRA = obj.absoluteRotationAngle;
@@ -168,7 +169,7 @@ function Fit2Bounds(obj) {
 		debugFrame("Black", false, tg);
 		debugFrame("Cyan", true, tgSZ);
 		debugFrame("Magenta", true, saSZ);
-		debugFrame("Cyan", false, Bounds(page, "page", "margins"));
+		debugFrame("Cyan", false, bounds["page"]["margins"]);
 
 		function debugFrame(color, /*bool*/SZ, bounds) {
 			var frame = page.parent.rectangles.add(layer,
