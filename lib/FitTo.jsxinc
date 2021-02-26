@@ -15,12 +15,13 @@ const DEBUG = false;
 const SNAP_PCT = 1; // Snap distance: percent of target
 const HW_PCT = 10; // HW: percent of visible area
 
-function main() {
+function FitTo(args) {
 
 if (!(doc = app.activeDocument)) exit();
 var sel = doc.selection;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) exit();
 
+const SCOPE = "page" || args[0], TARGET = "size" || args[1], FORCED_FIT = false || args[2];
 var set_RO = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
@@ -182,4 +183,4 @@ function Fit2Bounds(obj) {
 	}
 }
 
-} // End main()
+} // End main

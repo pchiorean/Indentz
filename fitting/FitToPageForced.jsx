@@ -1,21 +1,16 @@
 /*
-	Fit to page, forced v1.2.0
+	Fit to page, forced v2.0.0
 	© February 2021, Paul Chiorean
 	Resizes the selected objects to the page size, forced.
 
-	SCOPE: 'page' | 'spread'
-	TARGET: 'size' | 'margins' | 'safearea' | 'bleed'
-	FORCED_FIT: true | false
+	Arguments are:
+	1. SCOPE: 'page' | 'spread' (default 'page')
+	2. TARGET: 'size' | 'margins' | 'safearea' | 'bleed' (default 'size')
+	3. FORCED_FIT: true | false (default 'false')
 */
 
 // @include "../lib/FitTo.jsxinc";
 
-// We use global variables instead of passing arguments to doScript
-var SCOPE = "page";
-var TARGET = "size";
-var FORCED_FIT = true;
-
-app.doScript(
-	main, ScriptLanguage.javascript, undefined,
-	UndoModes.ENTIRE_SCRIPT, "Resize to page"
-);
+app.doScript(FitTo, ScriptLanguage.javascript,
+	[ "page", "size", true ],
+	UndoModes.ENTIRE_SCRIPT, "Resize to page");
