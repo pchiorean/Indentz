@@ -21,7 +21,7 @@ if (!(doc = app.activeDocument)) exit();
 var sel = doc.selection;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) exit();
 
-const SCOPE = "page" || args[0], TARGET = "size" || args[1], FORCED_FIT = false || args[2];
+const SCOPE = args[0] || "page", TARGET = args[1] || "size", FORCED_FIT = args[2] || false;
 var set_RO = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
