@@ -1,15 +1,11 @@
 /*
-	Finishing 0.5.4
+	Finishing 0.5.5
 	© February 2021, Paul Chiorean
 	Used for quick fixes.
 */
 
 if (!(doc = app.activeDocument)) exit();
 var page = app.activeWindow.activePage;
-
-var SCOPE;
-var TARGET;
-var FORCED_FIT;
 
 // @include "../lib/FitTo.jsxinc";
 // @include "../lib/bounds.jsxinc";
@@ -46,19 +42,13 @@ function ExpandItems() {
 		item.redefineScaling();
 		switch (item.label) {
 			case "fit":
-				SCOPE = "page";
-				TARGET = null;
-				FORCED_FIT = false;
 				app.select(item);
-				app.doScript(main, ScriptLanguage.javascript, undefined,
+				app.doScript(FitTo, ScriptLanguage.javascript, [ "page", "size" ],
 				UndoModes.ENTIRE_SCRIPT, "Resize to page");
 				break;
 			case "bleed":
-				SCOPE = "spread";
-				TARGET = "bleed";
-				FORCED_FIT = true;
 				app.select(item);
-				app.doScript(main, ScriptLanguage.javascript, undefined,
+				app.doScript(FitTo, ScriptLanguage.javascript, [ "spread", "bleed", true ],
 				UndoModes.ENTIRE_SCRIPT, "Resize to spread bleed");
 				break;
 		}
