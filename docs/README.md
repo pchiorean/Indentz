@@ -317,7 +317,7 @@ Miscellaneous | |
 
 © 2021 Paul Chiorean \<jpeg AT basement.ro\>. The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington and others.
+The code in this project would not have been possible without the [JavaScript Reference Guide](http://jongware.mit.edu) by Theunis de Jong, Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington, and others.
 
 I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.
 
