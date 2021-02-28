@@ -1,6 +1,12 @@
 # Indentz
 
-Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte sunt gândite să fie rulate printr‑un shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
+Colecție de scripturi InDesign pentru operații simple și repetitive. În mod ideal, o parte din ele ar trebui invocate printr‑un shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
+
+---
+
+###### [**Description**](#descriere): [Alignment/Proxy](#alignmentproxy) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Printing](#printing) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [**Instalare**](#instalare) | [**Licență**](#licență)
+
+---
 
 ## Descriere
 
@@ -10,7 +16,7 @@ Facilitează alinierea obiectelor sau setarea punctului de referință pentru tr
 
 * **`AlignTo`** aliniază obiectele selectate la referința setării **Align To**:
 
-  ![Align Panel](img/alignto.png)
+  ![Align Panel screenshot](img/alignto.png)
 
 * **`ToggleAlignTo.jsx`** comută alinierea între obiect, margini, pagină sau spread (rulați scriptul în mod repetat).
 
@@ -18,7 +24,7 @@ Facilitează alinierea obiectelor sau setarea punctului de referință pentru tr
 
 * **`SetRefPoint`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**.
 
-**Notă:** Aceste două seturi nu au nici un sens dacă nu sunt asociate tastaturii numerice.
+> **Notă:** Aceste două seturi nu au nici un sens dacă nu sunt asociate tastaturii numerice.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -36,17 +42,21 @@ Proxy | | | | | |
 
 </details>
 
+---
+
 ### **File**
 
 * **`FilesToSpreads.jsx`** combină documentele deschise, sortate alfabetic.
 
 * **`SpreadsToFiles.jsx`** salvează spreadurile documentului activ în fișiere separate, cu un sufix configurabil.
 
+---
+
 ### **Fitting**
 
 Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container *(clipping frame)* și acesta e redimensionat.
 
-* **`FitToPage`** și **`FitToSpread`**: dacă obiectul este mai mare decât pagina/spreadul/marginile/safe area/bleedul, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.
+* **`FitToPage`** și **`FitToSpread`**: dacă obiectul este mai mare, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.
 
   **`FitTo...Forced`** redimensionează exact la dimensiunile respective.
 
@@ -62,9 +72,9 @@ Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuit
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
-FitToPage | | FitToSpread | | TextAutosize | |
-:- | -: | :- | -: | :- | -:
-**FitToPage.jsx** | F11 | **FitToSpread.jsx** | F12 | **TextAutosize.jsx** | F6
+FitToPage | | FitToSpread | |
+:- | -: | :- | -:
+**FitToPage.jsx** | F11 | **FitToSpread.jsx** | F12
 **FitToPageMargins.jsx** | ⌥F11 | **FitToSpreadMargins.jsx** | ⌥F12
 **FitToPageSafeArea.jsx** | ⌥⇧F11 | **FitToSpreadSafeArea.jsx** | ⌥⇧F12
 **FitToPageBleed.jsx** | ⇧F11 | **FitToSpreadBleed.jsx** | ⇧F12
@@ -73,9 +83,15 @@ FitToPage | | FitToSpread | | TextAutosize | |
 **FitToPageSafeAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadSafeAreaForced.jsx** | ⌥⇧⌘F12
 **FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
 
-**Notă:** `F11` pagină, `F12` spread; `⌥` margini, `⌥⇧` safe area, `⇧` bleed; `⌘` forțat.
+> **Notă:** `F11` pagină, `F12` spread; `⌥` margini, `⌥⇧` safe area, `⇧` bleed; `⌘` forțat.
+
+TextAutosize | |
+:- | -:
+**TextAutosize.jsx** | F6
 
 </details>
+
+---
 
 ### **Scaling**
 
@@ -87,12 +103,14 @@ Scalează proporțional obiectele selectate, ca un bloc unitar.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
-Scale | |
+Scaling | |
 :- | -:
 **ScaleToPageSize.jsx** | F5
 **ScaleToPageMargins.jsx** | ⌥F5
 
 </details>
+
+---
 
 ### **Printing**
 
@@ -103,6 +121,8 @@ Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx
 * **`SafeArea.jsx`** creează un chenar de dimensiunea marginilor paginii pe stratul **safe area**. Folosește culoarea **Safe area**, care dacă nu există va fi creată cu valoarea "C=0 M=100 Y=0 K=0".
 
 * **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează **safe area**.
+
+---
 
 ### **Setup**
 
@@ -152,7 +172,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script (va fi folosit primul găsit). Liniile goale și liniile care încep cu "#" sunt ignorate. Aceste lucruri sunt valabile și pentru următoarele liste.
 
-  **Note:** **`layers.xlsx`** poate fi folosit pentru a genera lista.
+  > **Note:** **`layers.xlsx`** poate fi folosit pentru a genera lista.
 
 * **`DefaultSwatches.jsx`** creează un set de culori definite într‑un fișier TSV numit [**`swatches.txt`**](../swatches.txt):
 
@@ -176,11 +196,13 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
+  > **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
 
 * **`DocCleanup.jsx`** setează preferințe (rulează **`DefaultPrefs.jsx`**), șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%.
 
 * **`DocDefaults.jsx`** rulează **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`**, **`PageSizeFromFilename.jsx`** și setează marginile pasteboardului la 150 mm (H) și 25 mm (V).
+
+---
 
 #### **Layout**
 
@@ -209,6 +231,8 @@ Setup | | | |
 
 </details>
 
+---
+
 ### **View**
 
 * **`TileAll.jsx`** invocă **Window > Arrange > Tile All Vertically** sau **Tile All Horizontally**, în funcție de orientarea spreadului curent.
@@ -231,7 +255,9 @@ View | |
 
 </details>
 
-### **Misc**
+---
+
+### **Miscellaneous**
 
 * **`CleanupLabels.jsx`**: Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. Scriptul șterge etichetele obiectelor selectate sau ale tuturor obiectelor din document dacă nu e selectat nimic.
 
@@ -245,13 +271,13 @@ View | |
 
 * **`QR.jsx`** adaugă un cod QR în documentul activ, într-un fișier, sau creează mai multe coduri în fișiere separate:
 
-  ![Generate QR Code](img/qr.png)
+  ![Generate QR Code.jsx screenshot](img/qr.png)
 
   * **On page** adaugă codul pe fiecare pagină, în colțul din stânga jos.
 
   * **On file** salvează codul într‑un fișier cu numele documentului activ și sufixul "_QR".
 
-  * **Batch** e activat doar dacă în folderul curent e găsit un fișier TSV numit **`QR.txt`**, conținând o listă de coduri și nume de fișiere:
+  * **Batch** e activat doar dacă în folderul curent e găsit un fișier TSV numit **`qr.txt`**, conținând o listă de coduri și nume de fișiere:
 
     Filename | Code
     :- | :-
@@ -259,7 +285,7 @@ View | |
     File 2 | CODE 2
     ... |
 
-  **Notă:** Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
+  > **Notă:** Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
 
 * **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`ReplaceFonts.jsx`**).
 
@@ -269,7 +295,7 @@ View | |
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
-Misc | |
+Miscellaneous | |
 :- | -:
 **Clip.jsx** | Num*
 **ClipUndo.jsx** | ⌃Num*
@@ -278,11 +304,15 @@ Misc | |
 
 </details>
 
+---
+
 ## Instalare
 
 1. Deschideți **Window > Utilities > Scripts**.
 2. Faceți clic dreapta pe folderul **User** și selectați **Reveal in Finder/Explorer**.
 3. Copiați fișierele în acest folder.
+
+---
 
 ## Licență
 
@@ -290,6 +320,6 @@ Misc | |
 
 Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.
 
-Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback‑ul sau sugestiile sunt binevenite.
+Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 9 februarie 2021
+README-ro.md • 28 februarie 2021

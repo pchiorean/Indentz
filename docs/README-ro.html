@@ -3,28 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <title>Indentz</title>
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
 <style>
-body {
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif; font-size: 14px; line-height: 1.6; }
-.task-list-item { list-style-type: none; }
-.task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif; font-size: 18px; line-height: 1.6; }
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
 </style>
 </head>
 
+</head>
 <body class="vscode-body vscode-light">
 <h1 id="indentz">Indentz</h1>
-<p>Colecție de scripturi InDesign pentru operații simple și repetitive. O bună parte sunt gândite să fie rulate printr‑un shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
-
+<p>Colecție de scripturi InDesign pentru operații simple și repetitive. În mod ideal, o parte din ele ar trebui invocate printr‑un shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
+<hr>
+<h6 id="toc"><a href="#descriere"><strong>Description</strong></a>: <a href="#alignmentproxy">Alignment/Proxy</a> | <a href="#file">File</a> | <a href="#fitting">Fitting</a> | <a href="#scaling">Scaling</a> | <a href="#printing">Printing</a> | <a href="#setup">Setup</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#instalare"><strong>Instalare</strong></a> | <a href="#licen%C8%9B%C4%83"><strong>Licență</strong></a></h6>
+<hr>
 <h2 id="descriere">Descriere</h2>
-
 <h3 id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
 <p>Facilitează alinierea obiectelor sau setarea punctului de referință pentru transformări folosind shortcuturi.</p>
 <ul>
 <li>
 <p><strong><code>AlignTo</code></strong> aliniază obiectele selectate la referința setării <strong>Align To</strong>:</p>
-<p><img src="img/alignto.png" alt="Align Panel"></p>
+<p><img src="img/alignto.png" alt="Align Panel screenshot"></p>
 </li>
 <li>
 <p><strong><code>ToggleAlignTo.jsx</code></strong> comută alinierea între obiect, margini, pagină sau spread (rulați scriptul în mod repetat).</p>
@@ -36,7 +37,9 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>SetRefPoint</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta <strong>Transform</strong>.</p>
 </li>
 </ul>
+<blockquote>
 <p><strong>Notă:</strong> Aceste două seturi nu au nici un sens dacă nu sunt asociate tastaturii numerice.</p>
+</blockquote>
 <details><summary><strong>Shortcuturi</strong></summary>
 <table>
 <thead>
@@ -123,7 +126,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
-
+<hr>
 <h3 id="file"><strong>File</strong></h3>
 <ul>
 <li>
@@ -133,12 +136,12 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>SpreadsToFiles.jsx</code></strong> salvează spreadurile documentului activ în fișiere separate, cu un sufix configurabil.</p>
 </li>
 </ul>
-
+<hr>
 <h3 id="fitting"><strong>Fitting</strong></h3>
 <p>Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container <em>(clipping frame)</em> și acesta e redimensionat.</p>
 <ul>
 <li>
-<p><strong><code>FitToPage</code></strong> și <strong><code>FitToSpread</code></strong>: dacă obiectul este mai mare decât pagina/spreadul/marginile/safe area/bleedul, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.</p>
+<p><strong><code>FitToPage</code></strong> și <strong><code>FitToSpread</code></strong>: dacă obiectul este mai mare, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.</p>
 <p><strong><code>FitTo...Forced</code></strong> redimensionează exact la dimensiunile respective.</p>
 </li>
 <li>
@@ -184,8 +187,6 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <th style="text-align:right"></th>
 <th style="text-align:left">FitToSpread</th>
 <th style="text-align:right"></th>
-<th style="text-align:left">TextAutosize</th>
-<th style="text-align:right"></th>
 </tr>
 </thead>
 <tbody>
@@ -194,70 +195,70 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <td style="text-align:right">F11</td>
 <td style="text-align:left"><strong>FitToSpread.jsx</strong></td>
 <td style="text-align:right">F12</td>
-<td style="text-align:left"><strong>TextAutosize.jsx</strong></td>
-<td style="text-align:right">F6</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageMargins.jsx</strong></td>
 <td style="text-align:right">⌥F11</td>
 <td style="text-align:left"><strong>FitToSpreadMargins.jsx</strong></td>
 <td style="text-align:right">⌥F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageSafeArea.jsx</strong></td>
 <td style="text-align:right">⌥⇧F11</td>
 <td style="text-align:left"><strong>FitToSpreadSafeArea.jsx</strong></td>
 <td style="text-align:right">⌥⇧F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageBleed.jsx</strong></td>
 <td style="text-align:right">⇧F11</td>
 <td style="text-align:left"><strong>FitToSpreadBleed.jsx</strong></td>
 <td style="text-align:right">⇧F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageForced.jsx</strong></td>
 <td style="text-align:right">⌘F11</td>
 <td style="text-align:left"><strong>FitToSpreadForced.jsx</strong></td>
 <td style="text-align:right">⌘F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageMarginsForced.jsx</strong></td>
 <td style="text-align:right">⌥⌘F11</td>
 <td style="text-align:left"><strong>FitToSpreadMarginsForced.jsx</strong></td>
 <td style="text-align:right">⌥⌘F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageSafeAreaForced.jsx</strong></td>
 <td style="text-align:right">⌥⇧⌘F11</td>
 <td style="text-align:left"><strong>FitToSpreadSafeAreaForced.jsx</strong></td>
 <td style="text-align:right">⌥⇧⌘F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageBleedForced.jsx</strong></td>
 <td style="text-align:right">⇧⌘F11</td>
 <td style="text-align:left"><strong>FitToSpreadBleedForced.jsx</strong></td>
 <td style="text-align:right">⇧⌘F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 </tbody>
 </table>
+<blockquote>
 <p><strong>Notă:</strong> <code>F11</code> pagină, <code>F12</code> spread; <code>⌥</code> margini, <code>⌥⇧</code> safe area, <code>⇧</code> bleed; <code>⌘</code> forțat.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">TextAutosize</th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>TextAutosize.jsx</strong></td>
+<td style="text-align:right">F6</td>
+</tr>
+</tbody>
+</table>
 </details>
-
+<hr>
 <h3 id="scaling"><strong>Scaling</strong></h3>
 <p>Scalează proporțional obiectele selectate, ca un bloc unitar.</p>
 <ul>
@@ -272,7 +273,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Scale</th>
+<th style="text-align:left">Scaling</th>
 <th style="text-align:right"></th>
 </tr>
 </thead>
@@ -288,8 +289,8 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
-
-<h3 id="print"><strong>Printing</strong></h3>
+<hr>
+<h3 id="printing"><strong>Printing</strong></h3>
 <p>Fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează straturi cu denumiri similare gen <strong>visible</strong>, <strong>vizibil</strong> pentru <strong>safe area</strong>, sau <strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong> pentru <strong>dielines</strong>.</p>
 <ul>
 <li>
@@ -302,10 +303,9 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <strong>safe area</strong>.</p>
 </li>
 </ul>
-
+<hr>
 <h3 id="setup"><strong>Setup</strong></h3>
 <p>Sunt două seturi: unul legat de preferințele documentului, straturi, culori și fonturi, iar celălalt de dimensiunea și marginile paginii.</p>
-
 <h4 id="document"><strong>Document</strong></h4>
 <ul>
 <li>
@@ -377,14 +377,16 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </table>
 <blockquote>
 <p><strong>Name</strong>: numele stratului <br>
-<strong>Color</strong>: culoarea stratului (v. <a href="UIColors.txt"><strong><code>UIColors.txt</code></strong></a>&semi; implicit <code>Light Blue</code>) <br>
+<strong>Color</strong>: culoarea stratului (v. <a href="UIColors.txt"><strong><code>UIColors.txt</code></strong></a>; implicit <code>Light Blue</code>) <br>
 <strong>Visible</strong>: <code>yes</code> sau <code>no</code> (implicit <code>yes</code>) <br>
 <strong>Printable</strong>: <code>yes</code> sau <code>no</code> (implicit <code>yes</code>) <br>
 <strong>Order</strong>: <code>above</code> sau <code>below</code> (deasupra sau sub straturile existente; implicit <code>above</code>) <br>
 <strong>Variants</strong>: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)</p>
 </blockquote>
 <p>Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script (va fi folosit primul găsit). Liniile goale și liniile care încep cu &quot;#&quot; sunt ignorate. Aceste lucruri sunt valabile și pentru următoarele liste.</p>
+<blockquote>
 <p><strong>Note:</strong> <strong><code>layers.xlsx</code></strong> poate fi folosit pentru a genera lista.</p>
+</blockquote>
 </li>
 <li>
 <p><strong><code>DefaultSwatches.jsx</code></strong> creează un set de culori definite într‑un fișier TSV numit <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
@@ -400,12 +402,12 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <tr>
 <td style="text-align:left">Rich Black</td>
 <td style="text-align:center">process</td>
-<td style="text-align:left">60&vert;40&vert;40&vert;100</td>
+<td style="text-align:left">60|40|40|100</td>
 </tr>
 <tr>
 <td style="text-align:left">Cut</td>
 <td style="text-align:center">spot</td>
-<td style="text-align:left">0&vert;100&vert;0&vert;0</td>
+<td style="text-align:left">0|100|0|0</td>
 </tr>
 <tr>
 <td style="text-align:left">...</td>
@@ -417,7 +419,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <blockquote>
 <p><strong>Name</strong>: numele culorii <br>
 <strong>Model</strong>: tipul culorii: <code>process</code> sau <code>spot</code> <br>
-<strong>Values</strong>: 3 valori în intervalul 0&ndash;255 (RGB) sau 4 valori în intervalul 0&ndash;100 (CMYK)</p>
+<strong>Values</strong>: 3 valori în intervalul 0–255 (RGB) sau 4 valori în intervalul 0–100 (CMYK)</p>
 </blockquote>
 </li>
 <li>
@@ -455,7 +457,9 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tr>
 </tbody>
 </table>
+<blockquote>
 <p><strong>Notă:</strong> Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy‑paste.</p>
+</blockquote>
 </li>
 <li>
 <p><strong><code>DocCleanup.jsx</code></strong> setează preferințe (rulează <strong><code>DefaultPrefs.jsx</code></strong>), șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%.</p>
@@ -464,7 +468,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>DocDefaults.jsx</code></strong> rulează <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong>, <strong><code>PageSizeFromFilename.jsx</code></strong> și setează marginile pasteboardului la 150 mm (H) și 25 mm (V).</p>
 </li>
 </ul>
-
+<hr>
 <h4 id="layout"><strong>Layout</strong></h4>
 <ul>
 <li>
@@ -539,7 +543,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
-
+<hr>
 <h3 id="view"><strong>View</strong></h3>
 <ul>
 <li>
@@ -581,8 +585,8 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
-
-<h3 id="misc"><strong>Misc</strong></h3>
+<hr>
+<h3 id="miscellaneous"><strong>Miscellaneous</strong></h3>
 <ul>
 <li>
 <p><strong><code>CleanupLabels.jsx</code></strong>: Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. Scriptul șterge etichetele obiectelor selectate sau ale tuturor obiectelor din document dacă nu e selectat nimic.</p>
@@ -592,14 +596,14 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>ClipUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
 </li>
 <li>
-<p><strong><code>HW.jsx</code></strong> etichetează obiectele selectate cu &quot;HW&quot;; adaugă un ghid inferior de 10&percnt; pe pagina curentă.</p>
+<p><strong><code>HW.jsx</code></strong> etichetează obiectele selectate cu &quot;HW&quot;; adaugă un ghid inferior de 10% pe pagina curentă.</p>
 </li>
 <li>
 <p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul <strong>info</strong>.</p>
 </li>
 <li>
 <p><strong><code>QR.jsx</code></strong> adaugă un cod QR în documentul activ, într-un fișier, sau creează mai multe coduri în fișiere separate:</p>
-<p><img src="img/qr.png" alt="Generate QR Code"></p>
+<p><img src="img/qr.png" alt="Generate QR Code.jsx screenshot"></p>
 <ul>
 <li>
 <p><strong>On page</strong> adaugă codul pe fiecare pagină, în colțul din stânga jos.</p>
@@ -608,7 +612,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong>On file</strong> salvează codul într‑un fișier cu numele documentului activ și sufixul &quot;_QR&quot;.</p>
 </li>
 <li>
-<p><strong>Batch</strong> e activat doar dacă în folderul curent e găsit un fișier TSV numit <strong><code>QR.txt</code></strong>, conținând o listă de coduri și nume de fișiere:</p>
+<p><strong>Batch</strong> e activat doar dacă în folderul curent e găsit un fișier TSV numit <strong><code>qr.txt</code></strong>, conținând o listă de coduri și nume de fișiere:</p>
 <table>
 <thead>
 <tr>
@@ -633,7 +637,9 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </table>
 </li>
 </ul>
+<blockquote>
 <p><strong>Notă:</strong> Puteți insera &quot;|&quot; pentru împărțirea manuală a textului în mai multe rânduri.</p>
+</blockquote>
 </li>
 <li>
 <p><strong><code>ShowFonts.jsx</code></strong> afișează toate fonturile utilizate în documentul curent (util pentru <strong><code>ReplaceFonts.jsx</code></strong>).</p>
@@ -649,7 +655,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Misc</th>
+<th style="text-align:left">Miscellaneous</th>
 <th style="text-align:right"></th>
 </tr>
 </thead>
@@ -673,18 +679,19 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
-
+<hr>
 <h2 id="instalare">Instalare</h2>
 <ol>
 <li>Deschideți <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
 <li>Faceți clic dreapta pe folderul <strong>User</strong> și selectați <strong>Reveal in Finder/Explorer</strong>.</li>
 <li>Copiați fișierele în acest folder.</li>
 </ol>
-
+<hr>
 <h2 id="licență">Licență</h2>
 <p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>Părți din codul din acest repository se bazează pe postări de pe bloguri, postări de pe forumuri sau din tutoriale de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.</p>
-<p>Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback‑ul sau sugestiile sunt binevenite.</p>
-<p>README-ro.md • 9 februarie 2021</p>
+<p>Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback sau sugestii sunt binevenite.</p>
+<p>README-ro.md • 28 februarie 2021</p>
+
 </body>
 </html>

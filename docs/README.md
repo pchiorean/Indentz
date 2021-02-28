@@ -1,6 +1,12 @@
 # Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run by a keyboard shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; suggestions below each section). Some can be run by the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
+Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; suggestions below each section). Some can be run by the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
+
+---
+
+###### [**Description**](#description): [Alignment/Proxy](#alignmentproxy) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Printing](#printing) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [**Installation**](#installation) | [**License**](#license)
+
+---
 
 ## Description
 
@@ -10,7 +16,7 @@ Make it easier to align objects or set the reference point for transformations u
 
 * **`AlignTo`** scripts align the selected object(s) to the **Align To** setting:
 
-  ![Align Panel](img/alignto.png)
+  ![Align Panel screenshot](img/alignto.png)
 
 * **`ToggleAlignTo.jsx`** toggles the alignment between item, margins, page or spread (just run it repeatedly).
 
@@ -18,7 +24,7 @@ Make it easier to align objects or set the reference point for transformations u
 
 * **`SetRefPoint`** scripts change the reference point used for transformations (like clicking the little proxy squares in the **Transform** palette).
 
-**Note:** These two sets don't make any sense if they're not associated with the numeric keypad.
+> **Note:** These two sets don't make any sense if not assigned to the numeric keypad.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -36,17 +42,21 @@ Proxy | | | | | |
 
 </details>
 
+---
+
 ### **File**
 
 * **`FilesToSpreads.jsx`** combines the open documents, sorted alphabetically.
 
 * **`SpreadsToFiles.jsx`** saves the spreads of the active document in separate files, with a user configurable suffix.
 
+---
+
 ### **Fitting**
 
 Resize the selected objects, without scaling. Rectangular frames are simply resized; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is resized.
 
-* **`FitToPage`** and **`FitToSpread`**: if the selected object is larger than the page/spread/margins/safe area/bleed, it will be reduced; if it is smaller but inside a 1% "snap" area, it will be enlarged.
+* **`FitToPage`** and **`FitToSpread`**: if the selected object is larger than the target, it will be reduced; if it is smaller but inside a 1% "snap" area, it will be enlarged.
 
   **`FitTo...Forced`** resize exactly to the named dimensions.
 
@@ -62,9 +72,9 @@ Resize the selected objects, without scaling. Rectangular frames are simply resi
 
 <details><summary><strong>Shortcuts</strong></summary>
 
-FitToPage | | FitToSpread | | TextAutosize | |
-:- | -: | :- | -: | :- | -:
-**FitToPage.jsx** | F11 | **FitToSpread.jsx** | F12 | **TextAutosize.jsx** | F6
+FitToPage | | FitToSpread | |
+:- | -: | :- | -:
+**FitToPage.jsx** | F11 | **FitToSpread.jsx** | F12
 **FitToPageMargins.jsx** | ⌥F11 | **FitToSpreadMargins.jsx** | ⌥F12
 **FitToPageSafeArea.jsx** | ⌥⇧F11 | **FitToSpreadSafeArea.jsx** | ⌥⇧F12
 **FitToPageBleed.jsx** | ⇧F11 | **FitToSpreadBleed.jsx** | ⇧F12
@@ -73,9 +83,15 @@ FitToPage | | FitToSpread | | TextAutosize | |
 **FitToPageSafeAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadSafeAreaForced.jsx** | ⌥⇧⌘F12
 **FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
 
-**Note:** `F11` page, `F12` spread; `⌥` margins, `⌥⇧` safe area, `⇧` bleed; `⌘` forced.
+> **Note:** `F11` page, `F12` spread; `⌥` margins, `⌥⇧` safe area, `⇧` bleed; `⌘` forced.
+
+TextAutosize | |
+:- | -:
+**TextAutosize.jsx** | F6
 
 </details>
+
+---
 
 ### **Scaling**
 
@@ -87,12 +103,14 @@ Scale the selected objects proportionally, as a block.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
-Scale | |
+Scaling | |
 :- | -:
 **ScaleToPageSize.jsx** | F5
 **ScaleToPageMargins.jsx** | ⌥F5
 
 </details>
+
+---
 
 ### **Printing**
 
@@ -103,6 +121,8 @@ Make several preparations for export and can be used with [**`batch_convert.jsx`
 * **`SafeArea.jsx`** creates a frame the size of the page margins on the **safe area** layer. It uses the **Safe area** swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
 
 * **`SafeAreaHideLayer.jsx`** and **`SafeAreaShowLayer.jsx`** hide or show **safe area**.
+
+---
 
 ### **Setup**
 
@@ -151,7 +171,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   The file can be saved in the current folder, on the desktop, or next to the script (the first one found will be used). Empty lines and lines beginning with "#" are ignored. This also applies to the next lists.
 
-  **Note:** **`layers.xlsx`** can be used to generate the list.
+  > **Note:** **`layers.xlsx`** can be used to generate the list.
 
 * **`DefaultSwatches.jsx`** adds a set of swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
 
@@ -175,11 +195,13 @@ There are two sets: one related to document preferences, layers, swatches and fo
   Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  **Note:** You can use **`ShowFonts.jsx`** from **Misc** to get a tab delimited list of fonts for copy‑pasting.
+  > **Note:** You can use **`ShowFonts.jsx`** from **Miscellaneous** to get a tab delimited list of fonts for copy‑pasting.
 
 * **`DocCleanup.jsx`** sets preferences (it runs **`DefaultPrefs.jsx`**), cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%.
 
 * **`DocDefaults.jsx`** runs **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`**, **`PageSizeFromFilename.jsx`** and sets pasteboard margins to 150 mm (H) and 25 mm (V).
+
+---
 
 #### **Layout**
 
@@ -208,6 +230,8 @@ Setup | | | |
 
 </details>
 
+---
+
 ### **View**
 
 * **`TileAll.jsx`** invokes **Window > Arrange > Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
@@ -230,7 +254,9 @@ View | |
 
 </details>
 
-### **Misc**
+---
+
+### **Miscellaneous**
 
 * **`CleanupLabels.jsx`**: Sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
 
@@ -244,13 +270,13 @@ View | |
 
 * **`QR.jsx`** adds a QR code in the active document, in a file, or creates multiple codes in separate files:
 
-  ![Generate QR Code](img/qr.png)
+  ![Generate QR Code.jsx screenshot](img/qr.png)
 
   * **On page** adds the code on each page, on the bottom left corner.
 
   * **On file** saves the code in a file with the name of the active document and the suffix "_QR".
 
-  * **Batch** it's enabled only if a TSV file named **QR.txt**, containing a list of codes and filenames, is found in the current folder:
+  * **Batch** it's enabled only if a TSV file named **qr.txt**, containing a list of codes and filenames, is found in the current folder:
 
     Filename | Code
     :- | :-
@@ -258,7 +284,7 @@ View | |
     File 2 | CODE 2
     ... |
 
-  **Note:** You can insert "|" for manually splitting the text into several lines.
+  > **Note:** You can insert "|" for manually splitting the text into several lines.
 
 * **`ShowFonts.jsx`** shows all fonts used in the current document (useful with **`ReplaceFonts.jsx`**).
 
@@ -268,7 +294,7 @@ View | |
 
 <details><summary><strong>Shortcuts</strong></summary>
 
-Misc | |
+Miscellaneous | |
 :- | -:
 **Clip.jsx** | Num*
 **ClipUndo.jsx** | ⌃Num*
@@ -277,11 +303,15 @@ Misc | |
 
 </details>
 
+---
+
 ## Installation
 
 1. Open **Window > Utilities > Scripts**.
 2. Right‑click on folder **User** and select **Reveal in Finder/Explorer**.
 3. Copy files to this folder.
+
+---
 
 ## License
 
@@ -291,4 +321,4 @@ Some of the code contained in this repository is based on blog posts, forum post
 
 I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.
 
-README.md • February 9, 2021
+README.md • February 28, 2021

@@ -3,28 +3,28 @@
 <head>
 <meta charset="UTF-8">
 <title>Indentz</title>
+
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
 <style>
-body {
-font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif; font-size: 14px; line-height: 1.6; }
-.task-list-item { list-style-type: none; }
-.task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif; font-size: 18px; line-height: 1.6; }
+.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
 </style>
 </head>
 
 <body class="vscode-body vscode-light">
 <h1 id="indentz">Indentz</h1>
-<p>Collection of InDesign scripts for simple and repetitive tasks. Many are designed to be run by a keyboard shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; suggestions below each section). Some can be run by the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
-
+<p>Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; suggestions below each section). Some can be run by the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
+<hr>
+<h6 id="toc"><a href="#description"><strong>Description</strong></a>: <a href="#alignmentproxy">Alignment/Proxy</a> | <a href="#file">File</a> | <a href="#fitting">Fitting</a> | <a href="#scaling">Scaling</a> | <a href="#printing">Printing</a> | <a href="#setup">Setup</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#installation"><strong>Installation</strong></a> | <a href="#license"><strong>License</strong></a></h6>
+<hr>
 <h2 id="description">Description</h2>
-
 <h3 id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
 <p>Make it easier to align objects or set the reference point for transformations using shortcuts.</p>
 <ul>
 <li>
 <p><strong><code>AlignTo</code></strong> scripts align the selected object(s) to the <strong>Align To</strong> setting:</p>
-<p><img src="img/alignto.png" alt="Align Panel"></p>
+<p><img src="img/alignto.png" alt="Align Panel screenshot"></p>
 </li>
 <li>
 <p><strong><code>ToggleAlignTo.jsx</code></strong> toggles the alignment between item, margins, page or spread (just run it repeatedly).</p>
@@ -36,7 +36,9 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>SetRefPoint</code></strong> scripts change the reference point used for transformations (like clicking the little proxy squares in the <strong>Transform</strong> palette).</p>
 </li>
 </ul>
-<p><strong>Note:</strong> These two sets don't make any sense if they're not associated with the numeric keypad.</p>
+<blockquote>
+<p><strong>Note:</strong> These two sets don't make any sense if not assigned to the numeric keypad.</p>
+</blockquote>
 <details><summary><strong>Shortcuts</strong></summary>
 <table>
 <thead>
@@ -123,7 +125,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
-
+<hr>
 <h3 id="file"><strong>File</strong></h3>
 <ul>
 <li>
@@ -133,12 +135,12 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>SpreadsToFiles.jsx</code></strong> saves the spreads of the active document in separate files, with a user configurable suffix.</p>
 </li>
 </ul>
-
+<hr>
 <h3 id="fitting"><strong>Fitting</strong></h3>
 <p>Resize the selected objects, without scaling. Rectangular frames are simply resized; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is resized.</p>
 <ul>
 <li>
-<p><strong><code>FitToPage</code></strong> and <strong><code>FitToSpread</code></strong>: if the selected object is larger than the page/spread/margins/safe area/bleed, it will be reduced; if it is smaller but inside a 1% &quot;snap&quot; area, it will be enlarged.</p>
+<p><strong><code>FitToPage</code></strong> and <strong><code>FitToSpread</code></strong>: if the selected object is larger than the target, it will be reduced; if it is smaller but inside a 1% &quot;snap&quot; area, it will be enlarged.</p>
 <p><strong><code>FitTo...Forced</code></strong> resize exactly to the named dimensions.</p>
 </li>
 <li>
@@ -184,8 +186,6 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <th style="text-align:right"></th>
 <th style="text-align:left">FitToSpread</th>
 <th style="text-align:right"></th>
-<th style="text-align:left">TextAutosize</th>
-<th style="text-align:right"></th>
 </tr>
 </thead>
 <tbody>
@@ -194,70 +194,70 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <td style="text-align:right">F11</td>
 <td style="text-align:left"><strong>FitToSpread.jsx</strong></td>
 <td style="text-align:right">F12</td>
-<td style="text-align:left"><strong>TextAutosize.jsx</strong></td>
-<td style="text-align:right">F6</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageMargins.jsx</strong></td>
 <td style="text-align:right">⌥F11</td>
 <td style="text-align:left"><strong>FitToSpreadMargins.jsx</strong></td>
 <td style="text-align:right">⌥F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageSafeArea.jsx</strong></td>
 <td style="text-align:right">⌥⇧F11</td>
 <td style="text-align:left"><strong>FitToSpreadSafeArea.jsx</strong></td>
 <td style="text-align:right">⌥⇧F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageBleed.jsx</strong></td>
 <td style="text-align:right">⇧F11</td>
 <td style="text-align:left"><strong>FitToSpreadBleed.jsx</strong></td>
 <td style="text-align:right">⇧F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageForced.jsx</strong></td>
 <td style="text-align:right">⌘F11</td>
 <td style="text-align:left"><strong>FitToSpreadForced.jsx</strong></td>
 <td style="text-align:right">⌘F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageMarginsForced.jsx</strong></td>
 <td style="text-align:right">⌥⌘F11</td>
 <td style="text-align:left"><strong>FitToSpreadMarginsForced.jsx</strong></td>
 <td style="text-align:right">⌥⌘F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageSafeAreaForced.jsx</strong></td>
 <td style="text-align:right">⌥⇧⌘F11</td>
 <td style="text-align:left"><strong>FitToSpreadSafeAreaForced.jsx</strong></td>
 <td style="text-align:right">⌥⇧⌘F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageBleedForced.jsx</strong></td>
 <td style="text-align:right">⇧⌘F11</td>
 <td style="text-align:left"><strong>FitToSpreadBleedForced.jsx</strong></td>
 <td style="text-align:right">⇧⌘F12</td>
-<td style="text-align:left"></td>
-<td style="text-align:right"></td>
 </tr>
 </tbody>
 </table>
+<blockquote>
 <p><strong>Note:</strong> <code>F11</code> page, <code>F12</code> spread; <code>⌥</code> margins, <code>⌥⇧</code> safe area, <code>⇧</code> bleed; <code>⌘</code> forced.</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">TextAutosize</th>
+<th style="text-align:right"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>TextAutosize.jsx</strong></td>
+<td style="text-align:right">F6</td>
+</tr>
+</tbody>
+</table>
 </details>
-
+<hr>
 <h3 id="scaling"><strong>Scaling</strong></h3>
 <p>Scale the selected objects proportionally, as a block.</p>
 <ul>
@@ -272,7 +272,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Scale</th>
+<th style="text-align:left">Scaling</th>
 <th style="text-align:right"></th>
 </tr>
 </thead>
@@ -288,7 +288,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
-
+<hr>
 <h3 id="printing"><strong>Printing</strong></h3>
 <p>Make several preparations for export and can be used with <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. The scripts detect alternative layers like <strong>visible</strong>, <strong>vizibil</strong> for <strong>safe area</strong>, or <strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong> for <strong>dielines</strong>.</p>
 <ul>
@@ -302,10 +302,9 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>SafeAreaHideLayer.jsx</code></strong> and <strong><code>SafeAreaShowLayer.jsx</code></strong> hide or show <strong>safe area</strong>.</p>
 </li>
 </ul>
-
+<hr>
 <h3 id="setup"><strong>Setup</strong></h3>
 <p>There are two sets: one related to document preferences, layers, swatches and fonts, the other to page size and margins.</p>
-
 <h4 id="document"><strong>Document</strong></h4>
 <ul>
 <li>
@@ -321,7 +320,6 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <strong>RGB Profile:</strong> sRGB IEC61966-2.1 <br>
 <strong>Grids &amp; Guides:</strong> Show Guides <br>
 <strong>Grids &amp; Guides:</strong> Unlock Guides <br>
-<strong>Guides &amp; Pasteboard: Margins:</strong> H 150 mm, V 25 mm <br>
 <strong>Guides &amp; Pasteboard: Preview Background:</strong> Light Gray <br>
 <strong>Keyboard Increments: Cursor Key:</strong> 0.2 mm <br>
 <strong>Keyboard Increments: Size/Leading:</strong> 0.5 pt <br>
@@ -377,14 +375,16 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </table>
 <blockquote>
 <p><strong>Name</strong>: layer name <br>
-<strong>Color</strong>: layer color (see <a href="UIColors.txt"><strong><code>UIColors.txt</code></strong></a>&semi; default <code>Light Blue</code>) <br>
+<strong>Color</strong>: layer color (see <a href="UIColors.txt"><strong><code>UIColors.txt</code></strong></a>; default <code>Light Blue</code>) <br>
 <strong>Visible</strong>: <code>yes</code> or <code>no</code> (default <code>yes</code>) <br>
 <strong>Printable</strong>: <code>yes</code> or <code>no</code> (default <code>yes</code>) <br>
 <strong>Order</strong>: <code>above</code> or <code>below</code> existing layers (default <code>above</code>) <br>
 <strong>Variants</strong>: a list of layers that will be merged with the base layer (case insensitive)</p>
 </blockquote>
 <p>The file can be saved in the current folder, on the desktop, or next to the script (the first one found will be used). Empty lines and lines beginning with &quot;#&quot; are ignored. This also applies to the next lists.</p>
+<blockquote>
 <p><strong>Note:</strong> <strong><code>layers.xlsx</code></strong> can be used to generate the list.</p>
+</blockquote>
 </li>
 <li>
 <p><strong><code>DefaultSwatches.jsx</code></strong> adds a set of swatches defined in a TSV file named <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
@@ -400,12 +400,12 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <tr>
 <td style="text-align:left">Rich Black</td>
 <td style="text-align:center">process</td>
-<td style="text-align:left">60&vert;40&vert;40&vert;100</td>
+<td style="text-align:left">60|40|40|100</td>
 </tr>
 <tr>
 <td style="text-align:left">Cut</td>
 <td style="text-align:center">spot</td>
-<td style="text-align:left">0&vert;100&vert;0&vert;0</td>
+<td style="text-align:left">0|100|0|0</td>
 </tr>
 <tr>
 <td style="text-align:left">...</td>
@@ -416,8 +416,8 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </table>
 <blockquote>
 <p><strong>Name</strong>: swatch name <br>
-<strong>Model</strong>: color model: <code>process</code> or <code>spot</code> <br>
-<strong>Values</strong>: 3 values in 0&ndash;255 range (RGB) or 4 values in 0&ndash;100 range (CMYK)</p>
+<strong>Model</strong>: color model: <code>process</code> or <code>spot</code> (default <code>process</code>) <br>
+<strong>Values</strong>: 3 values in 0–255 range (RGB) or 4 values in 0–100 range (CMYK)</p>
 </blockquote>
 </li>
 <li>
@@ -455,7 +455,9 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Misc</strong> to get a tab delimited list of fonts for copy‑pasting.</p>
+<blockquote>
+<p><strong>Note:</strong> You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Miscellaneous</strong> to get a tab delimited list of fonts for copy‑pasting.</p>
+</blockquote>
 </li>
 <li>
 <p><strong><code>DocCleanup.jsx</code></strong> sets preferences (it runs <strong><code>DefaultPrefs.jsx</code></strong>), cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%.</p>
@@ -464,7 +466,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>DocDefaults.jsx</code></strong> runs <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong>, <strong><code>PageSizeFromFilename.jsx</code></strong> and sets pasteboard margins to 150 mm (H) and 25 mm (V).</p>
 </li>
 </ul>
-
+<hr>
 <h4 id="layout"><strong>Layout</strong></h4>
 <ul>
 <li>
@@ -539,7 +541,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
-
+<hr>
 <h3 id="view"><strong>View</strong></h3>
 <ul>
 <li>
@@ -581,8 +583,8 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
-
-<h3 id="misc"><strong>Misc</strong></h3>
+<hr>
+<h3 id="miscellaneous"><strong>Miscellaneous</strong></h3>
 <ul>
 <li>
 <p><strong><code>CleanupLabels.jsx</code></strong>: Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.</p>
@@ -592,14 +594,14 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong><code>ClipUndo.jsx</code></strong> restores one or several clipped objects at once.</p>
 </li>
 <li>
-<p><strong><code>HW.jsx</code></strong> labels selected objects with &quot;HW&quot;; adds a 10&percnt; bottom guide on the current page.</p>
+<p><strong><code>HW.jsx</code></strong> labels selected objects with 'HW'; adds a 10% bottom guide on the current page.</p>
 </li>
 <li>
 <p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and puts it in the upper left corner, on the <strong>info</strong> layer.</p>
 </li>
 <li>
 <p><strong><code>QR.jsx</code></strong> adds a QR code in the active document, in a file, or creates multiple codes in separate files:</p>
-<p><img src="img/qr.png" alt="Generate QR Code"></p>
+<p><img src="img/qr.png" alt="Generate QR Code.jsx screenshot"></p>
 <ul>
 <li>
 <p><strong>On page</strong> adds the code on each page, on the bottom left corner.</p>
@@ -608,7 +610,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <p><strong>On file</strong> saves the code in a file with the name of the active document and the suffix &quot;_QR&quot;.</p>
 </li>
 <li>
-<p><strong>Batch</strong> it's enabled only if a TSV file named <strong>QR.txt</strong>, containing a list of codes and filenames, is found in the current folder:</p>
+<p><strong>Batch</strong> it's enabled only if a TSV file named <strong>qr.txt</strong>, containing a list of codes and filenames, is found in the current folder:</p>
 <table>
 <thead>
 <tr>
@@ -633,7 +635,9 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </table>
 </li>
 </ul>
+<blockquote>
 <p><strong>Note:</strong> You can insert &quot;|&quot; for manually splitting the text into several lines.</p>
+</blockquote>
 </li>
 <li>
 <p><strong><code>ShowFonts.jsx</code></strong> shows all fonts used in the current document (useful with <strong><code>ReplaceFonts.jsx</code></strong>).</p>
@@ -649,7 +653,7 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Misc</th>
+<th style="text-align:left">Miscellaneous</th>
 <th style="text-align:right"></th>
 </tr>
 </thead>
@@ -673,18 +677,19 @@ font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-
 </tbody>
 </table>
 </details>
-
+<hr>
 <h2 id="installation">Installation</h2>
 <ol>
 <li>Open <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
 <li>Right‑click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
 <li>Copy files to this folder.</li>
 </ol>
-
+<hr>
 <h2 id="license">License</h2>
 <p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>Some of the code contained in this repository is based on blog posts, forum posts, or tutorials by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington and others.</p>
 <p>I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.</p>
-<p>README.md • February 9, 2021</p>
+<p>README.md • February 28, 2021</p>
+
 </body>
 </html>
