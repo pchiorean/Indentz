@@ -1,6 +1,6 @@
 /*
-	SpreadsToFiles v1.5.1
-	© February 2021, Paul Chiorean
+	SpreadsToFiles v1.5.2
+	© March 2021, Paul Chiorean
 	Saves the spreads of the active document in separate files.
 */
 
@@ -71,7 +71,7 @@ function GetSuffix(sufx) {
 
 function ProgressBar(width) {
 	width = Math.max(width, 50);
-	var w = new Window("palette", "Pages to Files");
+	var w = new Window("palette", "Spreads to Files");
 	w.pb = w.add("progressbar", [12, 12, ((width + 20) * 6.5), 24], 0, undefined);
 	w.st = w.add("statictext", [0, 0, ((width + 20) * 6.5 - 20), 20], undefined, { truncate: "middle" });
 	this.reset = function(max) {
