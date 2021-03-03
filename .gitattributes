@@ -1,4 +1,4 @@
-lib/es5-array.jsxinc linguist-generated=true
-lib/underscore-min.js linguist-generated=true
-lib/underscore.html linguist-generated=true
-lib/underscore.js linguist-generated=true
+lib/es5-array.jsxinc linguist-vendored
+lib/underscore-min.js linguist-generated
+lib/underscore.html linguist-documentation
+lib/underscore.js linguist-vendored
