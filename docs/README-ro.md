@@ -208,7 +208,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
-* **`PageSizeFromFilename.jsx`** setează dimensiunea și marginile paginii preluând informațiile din numele fișierului:
+* **`PageSizeFromFilename.jsx`** setează dimensiunea și marginile paginii, preluând informațiile din numele fișierului:
 
   Filename | Total size | Safe area | Bleed
   :- | :-: | :-: | :-:
@@ -322,4 +322,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 28 februarie 2021
+README-ro.md • 4 martie 2021

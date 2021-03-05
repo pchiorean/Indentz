@@ -207,7 +207,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`PageMarginsFromSelection.jsx`** sets the page margins to the selected objects.
 
-* **`PageSizeFromFilename.jsx`** sets the page size and margins by retrieving the information from the filename:
+* **`PageSizeFromFilename.jsx`** sets the page size and margins, retrieving the information from the filename:
 
   Filename | Total size | Safe area | Bleed
   :- | :-: | :-: | :-:
@@ -321,4 +321,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.
 
-README.md • February 28, 2021
+README.md • March 4, 2021
