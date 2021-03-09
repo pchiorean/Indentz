@@ -264,7 +264,7 @@ View | |
 
   **`ClipUndo.jsx`** restores one or several clipped objects at once.
 
-* **`HW.jsx`** labels selected objects with 'HW'; adds a 10% bottom guide on the current page.
+* **`HW.jsx`** labels selected objects "HW" and adds a 10% bottom guide on the current page.
 
 * **`PageRatios.jsx`** calculates the ratio of each page and puts it in the upper left corner, on the **info** layer.
 
@@ -276,7 +276,7 @@ View | |
 
   * **On file** saves the code in a file with the name of the active document and the suffix "_QR".
 
-  * **Batch** it's enabled only if a TSV file named **qr.txt**, containing a list of codes and filenames, is found in the current folder:
+  * **Batch** it's enabled only if a TSV file named **`qr.txt`**, containing a list of codes and filenames, is found in the current folder:
 
     Filename | Code
     :- | :-
@@ -321,4 +321,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.
 
-README.md • March 4, 2021
+README.md • March 9, 2021

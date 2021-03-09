@@ -265,7 +265,7 @@ View | |
 
   **`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
-* **`HW.jsx`** etichetează obiectele selectate cu "HW"; adaugă un ghid inferior de 10% pe pagina curentă.
+* **`HW.jsx`** etichetează obiectele selectate "HW" și adaugă un ghid inferior de 10% pe pagina curentă.
 
 * **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul **info**.
 
@@ -322,4 +322,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 4 martie 2021
+README-ro.md • 9 martie 2021
