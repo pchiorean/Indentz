@@ -4,7 +4,7 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. În mod 
 
 ---
 
-###### [**Description**](#descriere): [Alignment/Proxy](#alignmentproxy) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Printing](#printing) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [**Instalare**](#instalare) | [**Licență**](#licență)
+###### [**Descriere**](#descriere): [Alignment/Proxy](#alignmentproxy) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Printing](#printing) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [**Instalare**](#instalare) | [**Licență**](#licență)
 
 ---
 
