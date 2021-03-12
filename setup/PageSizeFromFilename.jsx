@@ -1,15 +1,13 @@
 /*
-	Page size from filename v2.0.1
-	© February 2021, Paul Chiorean
+	Page size from filename v2.0.2
+	© March 2021, Paul Chiorean
 	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 */
 
 if (!(doc = app.activeDocument)) exit();
-var saLayerName = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil",
-	"vis. area", "Vis. area"]);
-var dieLayerName = FindLayer(["dielines", "diecut", "die cut", "Die Cut", "cut", "Cut",
-	"cut lines", "stanze", "Stanze", "Stanz", "decoupe"]);
+var saLayerName = FindLayer(["safe area", "visible", "Visible", "vizibil", "Vizibil"]);
+var dieLayerName = FindLayer(["dielines", "diecut", "Diecut", "die cut", "Die Cut", "Die cut"]);
 var saSwatchName = "Safe area";
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
@@ -115,7 +113,7 @@ function main() {
 	if (!!bleed) {
 		doc.documentPreferences.documentBleedUniformSize = true;
 		doc.documentPreferences.documentBleedTopOffset = bleed[1] }
-	app.activeWindow.zoom(ZoomOptions.FIT_SPREAD); app.activeWindow.zoomPercentage *= 0.9;
+	// app.activeWindow.zoom(ZoomOptions.FIT_SPREAD); app.activeWindow.zoomPercentage *= 0.9;
 }
 
 
