@@ -4,7 +4,7 @@ Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of
 
 ---
 
-###### [**Description**](#description): [Alignment/Proxy](#alignmentproxy) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Printing](#printing) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [**Installation**](#installation) | [**License**](#license)
+###### [Alignment/Proxy](#alignmentproxy) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Printing](#printing) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [Installation](#installation) | [License](#license)
 
 ---
 
@@ -169,9 +169,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Order**: `above` or `below` existing layers (default `above`) \
   > **Variants**: a list of layers that will be merged with the base layer (case insensitive)
 
-  The file can be saved in the current folder, on the desktop, or next to the script (the first one found will be used). Empty lines and lines beginning with "#" are ignored. This also applies to the next lists.
-
-  > **Note:** **`layers.xlsx`** can be used to generate the list.
+  > **Note:** The file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with "#" are ignored.
 
 * **`DefaultSwatches.jsx`** adds a set of swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
 
@@ -321,4 +319,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.
 
-README.md • March 9, 2021
+README.md • March 12, 2021

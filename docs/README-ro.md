@@ -4,7 +4,7 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. În mod 
 
 ---
 
-###### [**Descriere**](#descriere): [Alignment/Proxy](#alignmentproxy) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Printing](#printing) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [**Instalare**](#instalare) | [**Licență**](#licență)
+###### [Alignment/Proxy](#alignmentproxy) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Printing](#printing) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [Instalare](#instalare) | [Licență](#licență)
 
 ---
 
@@ -170,9 +170,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Order**: `above` sau `below` (deasupra sau sub straturile existente; implicit `above`) \
   > **Variants**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)
 
-  Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script (va fi folosit primul găsit). Liniile goale și liniile care încep cu "#" sunt ignorate. Aceste lucruri sunt valabile și pentru următoarele liste.
-
-  > **Note:** **`layers.xlsx`** poate fi folosit pentru a genera lista.
+  > **Notă:** Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu "#" sunt ignorate.
 
 * **`DefaultSwatches.jsx`** creează un set de culori definite într‑un fișier TSV numit [**`swatches.txt`**](../swatches.txt):
 
@@ -322,4 +320,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 9 martie 2021
+README-ro.md • 12 martie 2021
