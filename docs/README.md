@@ -1,6 +1,6 @@
 # Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; suggestions below each section). Some can be run by the [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
+Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; suggestions below each section). Some can be run by the [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
 
 ---
 
@@ -114,7 +114,7 @@ Scaling | |
 
 ### **Printing**
 
-Make several preparations for export and can be used with [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). The scripts detect alternative layers like **visible**, **vizibil** for **safe area**, or **diecut**, **die cut**, **cut lines**, **stanze** for **dielines**.
+Make several preparations for export and can be used with [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). The scripts detect alternative layers like **visible**, **vizibil** for **safe area**, or **diecut**, **die cut**, **cut lines**, **stanze** for **dielines**.
 
 * **`PrepareForPrint.jsx`** hides the **safe area** layer and moves the dielines, white and UV markings from **dielines** / **white** / **varnish** to separate spreads.
 
@@ -266,21 +266,19 @@ View | |
 
 * **`PageRatios.jsx`** calculates the ratio of each page and puts it in the upper left corner, on the **info** layer.
 
-* **`QR.jsx`** adds a QR code in the active document, in a file, or creates multiple codes in separate files:
+* **`QR.jsx`** adds a QR code on each page of the active document or a separate file with the same name and the suffix "_QR".
 
-  ![Generate QR Code.jsx screenshot](img/qr.png)
+  **`QRBatch.jsx`** retrieves a list of codes from a TSV file named **`qr.txt`** and adds them to existing documents or creates separate files:
 
-  * **On page** adds the code on each page, on the bottom left corner.
+  Filename | Code | On doc
+  :- | :-: | :-
+  File 1 | Code 1 | *
+  File 2 | Code 2 |
+  ... |
 
-  * **On file** saves the code in a file with the name of the active document and the suffix "_QR".
-
-  * **Batch** it's enabled only if a TSV file named **`qr.txt`**, containing a list of codes and filenames, is found in the current folder:
-
-    Filename | Code
-    :- | :-
-    File 1 | CODE 1
-    File 2 | CODE 2
-    ... |
+  > **Filename**: document name (it must be valid for *On doc*) \
+  > **Code**: any string \
+  > **On doc**: any string: on document; missing: separate file
 
   > **Note:** You can insert "|" for manually splitting the text into several lines.
 
@@ -292,12 +290,10 @@ View | |
 
 <details><summary><strong>Shortcuts</strong></summary>
 
-Miscellaneous | |
-:- | -:
-**Clip.jsx** | Num*
-**ClipUndo.jsx** | ⌃Num*
-**HW.jsx** | ⇧F10
-**QR.jsx** | F9
+Miscellaneous | | | | | |
+:- | -: | :- | -: | :- | -:
+**Clip.jsx** | Num*	| **QR.jsx** | F9 | **HW.jsx** | ⇧F10
+**ClipUndo.jsx** | ⌃Num* | **QRBatch.jsx** | ⇧F9
 
 </details>
 
@@ -319,4 +315,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Also, very limited testing was done outside my work configuration (Adobe InDesign 2020, **Application Frame** on, macOS 10.13, low-DPI display). Feedback or suggestions are welcome.
 
-README.md • March 15, 2021
+README.md • March 21, 2021

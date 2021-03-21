@@ -14,7 +14,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 
 <body class="vscode-body vscode-light">
 <h1 id="indentz">Indentz</h1>
-<p>Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; suggestions below each section). Some can be run by the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> script by Peter Kahrel.</p>
+<p>Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; suggestions below each section). Some can be run by the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong>Batch process</strong></a> script by Peter Kahrel.</p>
 <hr>
 <h6 id="toc"><a href="#alignmentproxy">Alignment/Proxy</a> | <a href="#file">File</a> | <a href="#fitting">Fitting</a> | <a href="#scaling">Scaling</a> | <a href="#printing">Printing</a> | <a href="#setup">Setup</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#installation">Installation</a> | <a href="#license">License</a></h6>
 <hr>
@@ -290,7 +290,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </details>
 <hr>
 <h3 id="printing"><strong>Printing</strong></h3>
-<p>Make several preparations for export and can be used with <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. The scripts detect alternative layers like <strong>visible</strong>, <strong>vizibil</strong> for <strong>safe area</strong>, or <strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong> for <strong>dielines</strong>.</p>
+<p>Make several preparations for export and can be used with <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong>Batch process</strong></a>. The scripts detect alternative layers like <strong>visible</strong>, <strong>vizibil</strong> for <strong>safe area</strong>, or <strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong> for <strong>dielines</strong>.</p>
 <ul>
 <li>
 <p><strong><code>PrepareForPrint.jsx</code></strong> hides the <strong>safe area</strong> layer and moves the dielines, white and UV markings from <strong>dielines</strong> / <strong>white</strong> / <strong>varnish</strong> to separate spreads.</p>
@@ -599,41 +599,39 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p><strong><code>PageRatios.jsx</code></strong> calculates the ratio of each page and puts it in the upper left corner, on the <strong>info</strong> layer.</p>
 </li>
 <li>
-<p><strong><code>QR.jsx</code></strong> adds a QR code in the active document, in a file, or creates multiple codes in separate files:</p>
-<p><img src="img/qr.png" alt="Generate QR Code.jsx screenshot"></p>
-<ul>
-<li>
-<p><strong>On page</strong> adds the code on each page, on the bottom left corner.</p>
-</li>
-<li>
-<p><strong>On file</strong> saves the code in a file with the name of the active document and the suffix &quot;_QR&quot;.</p>
-</li>
-<li>
-<p><strong>Batch</strong> it's enabled only if a TSV file named <strong><code>qr.txt</code></strong>, containing a list of codes and filenames, is found in the current folder:</p>
+<p><strong><code>QR.jsx</code></strong> adds a QR code on each page of the active document or a separate file with the same name and the suffix &quot;_QR&quot;.</p>
+<p><strong><code>QRBatch.jsx</code></strong> retrieves a list of codes from a TSV file named <strong><code>qr.txt</code></strong> and adds them to existing documents or creates separate files:</p>
 <table>
 <thead>
 <tr>
 <th style="text-align:left">Filename</th>
-<th style="text-align:left">Code</th>
+<th style="text-align:center">Code</th>
+<th style="text-align:left">On doc</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left">File 1</td>
-<td style="text-align:left">CODE 1</td>
+<td style="text-align:center">Code 1</td>
+<td style="text-align:left">*</td>
 </tr>
 <tr>
 <td style="text-align:left">File 2</td>
-<td style="text-align:left">CODE 2</td>
+<td style="text-align:center">Code 2</td>
+<td style="text-align:left"></td>
 </tr>
 <tr>
 <td style="text-align:left">...</td>
+<td style="text-align:center"></td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
+<blockquote>
+<p><strong>Filename</strong>: document name (it must be valid for <em>On doc</em>) <br>
+<strong>Code</strong>: any string <br>
+<strong>On doc</strong>: any string: on document; missing: separate file</p>
+</blockquote>
 <blockquote>
 <p><strong>Note:</strong> You can insert &quot;|&quot; for manually splitting the text into several lines.</p>
 </blockquote>
@@ -654,24 +652,28 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <tr>
 <th style="text-align:left">Miscellaneous</th>
 <th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left"><strong>Clip.jsx</strong></td>
 <td style="text-align:right">Num*</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>ClipUndo.jsx</strong></td>
-<td style="text-align:right">⌃Num*</td>
-</tr>
-<tr>
+<td style="text-align:left"><strong>QR.jsx</strong></td>
+<td style="text-align:right">F9</td>
 <td style="text-align:left"><strong>HW.jsx</strong></td>
 <td style="text-align:right">⇧F10</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong>QR.jsx</strong></td>
-<td style="text-align:right">F9</td>
+<td style="text-align:left"><strong>ClipUndo.jsx</strong></td>
+<td style="text-align:right">⌃Num*</td>
+<td style="text-align:left"><strong>QRBatch.jsx</strong></td>
+<td style="text-align:right">⇧F9</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
 </tr>
 </tbody>
 </table>
@@ -688,7 +690,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the <a href="http://jongware.mit.edu">JavaScript Reference Guide</a> by Theunis de Jong, Mozilla's <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington, and others.</p>
 <p>I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Also, very limited testing was done outside my work configuration (Adobe InDesign 2020, <strong>Application Frame</strong> on, macOS 10.13, low-DPI display). Feedback or suggestions are welcome.</p>
-<p>README.md • March 15, 2021</p>
+<p>README.md • March 21, 2021</p>
 
 </body>
 </html>

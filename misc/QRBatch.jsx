@@ -1,60 +1,151 @@
 /*
-	QR code v3.0
+	Batch QR codes v1.0
 	© March 2021, Paul Chiorean
-	Adds a QR code to the current document or to a separate file.
+	Batch processes "QR.txt" to add codes to existing documents or to separate files.
+	The list is a 3-column TSV file with the following format:
+
+	Filename | Code | On doc
+	File 1 | Code 1 | *
+	File 2 | Code 2 |
+	...
+	1. <Filename>: document name,
+	2. <Code>: any string,
+	3. <On doc>: any string: on document; empty: separate file.
 */
 
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.enableRedraw = false;
-var doc = app.documents.length == 0 ? app.documents.add() : app.activeDocument;
-if (doc.saved) var currentPath = doc.filePath;
-var errors = [];
+var doc, currentPath, errors = [];
+if (app.documents.length > 0) doc = app.activeDocument;
+if (doc && doc.saved) currentPath = doc.filePath;
 
-// app.doScript(main, ScriptLanguage.javascript, undefined,
-// 	UndoModes.ENTIRE_SCRIPT, "QR code");
 main();
+
 function main() {
-	var flg_onfile;
-	var ui = new Window("dialog");
-		ui.text = "Generate QR Code";
-		ui.orientation = "row";
-		ui.alignChildren = ["left", "fill"];
-	var qpanel = ui.add("panel", undefined, undefined);
-		qpanel.orientation = "column";
-		qpanel.alignChildren = ["left", "top"];
-		qpanel.add("statictext", undefined, "Enter QR code text:", { name: "st" });
-	var label = qpanel.add("edittext", undefined, "", { enterKeySignalsOnChange: true });
-		label.helpTip = "Use '|' for manual line breaks";
-		label.characters = 56;
-		label.active = true;
-	var white = qpanel.add("checkbox", undefined, "White text");
-		white.helpTip = "Make text white (ignored when separate)";
-	var buttons = ui.add("group", undefined);
-		buttons.orientation = "column";
-		buttons.alignChildren = ["fill", "top"];
-	var ondoc = buttons.add("button", undefined, "On doc", { name: "ok" });
-		ondoc.helpTip = "Bottom-left corner of each page";
-	var onfile = buttons.add("button", undefined, "Separate");
-		onfile.helpTip = !!currentPath ?
-			"'QR Codes/" + doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd'" :
-			"Where? Document is not saved";
-	buttons.add("button", undefined, "Cancel", { name: "cancel" });
-	onfile.enabled = !!currentPath;
-	ondoc.onClick = function() { flg_onfile = false; ui.close() }
-	onfile.onClick = function() { flg_onfile = true; ui.close() }
-	if (ui.show() == 2) exit();
-	// Processing
-	var code = label.text.replace(/^\s+/, '').replace(/\s+$/, '');
-	if (!code) { main(); exit() }
-	errors = [];
-	switch (flg_onfile) {
-		case false: MakeQROnDoc(code, white.value); break;
-		case true: MakeQROnFile(code); break;
+	const LW = 1024; // List width (pixels)
+	const LH = 25;   // List height (lines)
+	const IH = 21;   // List item height (pixels)
+	var infoFile, header = [], data = [], pbWidth;
+	// User interface
+	var ui = new Window("dialog", "Generate QR Codes");
+	ui.orientation = "column";
+	ui.alignChildren = [ "right", "center" ];
+	ui.main = ui.add("group", undefined);
+	ui.main.orientation = "column";
+	ui.main.alignChildren = [ "fill", "center" ];
+	ui.list = ui.main.add('listbox', undefined, undefined, {
+		numberOfColumns: 3,
+		showHeaders: true,
+		columnTitles: [ "Filename", "Code", "On doc" ],
+		columnWidths: [ (LW-66) * 0.6574, (LW-66) * 0.3426, 50 ],
+		multiselect: true
+	});
+	ui.list.itemSize[1] = IH;
+	ui.list.size = [ LW, (IH+1) * (LH+1) - 1 ];
+	ui.list.active = true;
+	ui.actions = ui.add("group", undefined);
+	ui.actions.orientation = "row";
+	ui.actions.alignChildren = [ "right", "center" ];
+	ui.actions.white = ui.actions.add("checkbox", undefined, "White text");
+	ui.actions.white.helpTip = "Make text white (ignored when separate)";
+	ui.actions.white.preferredSize.width = LW-492;
+	ui.actions.err = ui.actions.add("button", undefined, "Show errors");
+	ui.actions.err.visible = false;
+	ui.actions.div1 = ui.actions.add("panel", undefined, undefined);
+	ui.actions.div1.alignment = "fill";
+	ui.actions.div1.visible = false;
+	ui.actions.browse = ui.actions.add("button", undefined, "Browse");
+	ui.actions.reload = ui.actions.add("button", undefined, "Reload");
+	ui.actions.div2 = ui.actions.add("panel", undefined, undefined);
+	ui.actions.div2.alignment = "fill";
+	ui.actions.add("button", undefined, "Cancel", { name: "cancel" });
+	ui.actions.start = ui.actions.add("button", undefined, "Start", { name: "ok" });
+	// UI Functions
+	ui.actions.reload.onClick = function() {
+		ui.list.removeAll();
+		infoFile = "", header = [], data = [], errors = [], pbWidth = 1;
+		var infoLine, line = 0, flg_H = false;
+		if (!!currentPath &&
+			((infoFile = File(currentPath + "/_qr.txt")) && infoFile.exists ||
+			(infoFile = File(currentPath + "/_QR.txt")) && infoFile.exists ||
+			(infoFile = File(currentPath + "/qr.txt")) && infoFile.exists ||
+			(infoFile = File(currentPath + "/QR.txt")) && infoFile.exists)) {
+			infoFile.open("r");
+			while (!infoFile.eof) {
+				infoLine = infoFile.readln(); line++;
+				if (infoLine == "") continue; // Skip empty lines
+				if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
+				infoLine = infoLine.split(/ *\t */);
+				if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
+				if (!infoLine[0]) errors.push("Line " + line + ": Missing filename.");
+				if (/[\/\\?%*:|"<>]/.test(infoLine[0]))
+					errors.push("Line " + line + ": Illegal character in the filename.");
+				infoLine[2] = !!infoLine[2] || false;
+				if (!infoLine[0].match(/\.indd$/ig)) infoLine[0] += ".indd";
+				if (infoLine[2] && !File(currentPath + "/" + infoLine[0]).exists)
+					errors.push("Line " + line + ": File '" + infoLine[0] + "' not found.");
+				if (!infoLine[2] && !infoLine[0].match(/_QR\.indd$/ig))
+					infoLine[0] = infoLine[0].replace(/\.indd$/ig, "_QR.indd");
+				if (!infoLine[1]) errors.push("Line " + line + ": Missing code.");
+				pbWidth = Math.max(pbWidth, infoLine[0].length);
+				data.push({ fn: infoLine[0], qr: infoLine[1], pos: infoLine[2] });
+			}
+			infoFile.close(); infoLine = "";
+		}
+		if (data.length == 0) {
+			ui.text = !currentPath ? "Select a folder containing the data file" :
+				(infoFile.exists ? decodeURI(infoFile.fullName) + " – 0 records" :
+				"No data file in " + decodeURI(currentPath) + "/");
+			if (!currentPath) ui.actions.browse.notify();
+		} else {
+			for (var i = 0; i < data.length; i++) {
+				var l = ui.list.add("item", data[i].fn);
+				l.subItems[0].text = data[i].qr;
+				l.subItems[1].text = data[i].pos ? "✔︎" : "";
+			}
+			ui.text = decodeURI(infoFile.fullName) + " – " +
+				ui.list.children.length + " record" + (ui.list.children.length > 1 ? "s" : "") +
+				(errors.length > 0 ? " | " + errors.length + " error" + (errors.length > 1 ? "s" : "") : "");
+		}
+		ui.actions.start.enabled = data.length > 0 && errors.length == 0;
+		ui.actions.reload.enabled = !!currentPath;
+		ui.actions.err.visible = ui.actions.div1.visible = (errors.length > 0);
+		if (errors.length > 0) { ui.actions.err.active = true }
+		else if (data.length == 0) { ui.actions.browse.active = true }
+		else ui.list.active = true;
 	}
+	ui.list.onDoubleClick = function() { infoFile.execute() }
+	ui.actions.err.onClick = function() {
+		AlertScroll("Errors", errors.join("\n"));
+	}
+	ui.actions.browse.onClick = function() {
+		var folder = Folder.selectDialog("Select a folder containing the data file:");
+		if (!!folder && folder.fullName != currentPath) {
+			currentPath = Folder.encode(folder.fullName);
+			ui.actions.reload.onClick();
+		}
+	}
+	// Processing
+	ui.onShow = ui.actions.reload.notify();
+	if (ui.show() == 2) exit();
+	errors = [];
+	var items = ui.list.selection || data;
+	var progressBar = new ProgressBar("Processing", pbWidth);
+	progressBar.reset(items.length);
+	for (var i = 0; i < items.length; i++) {
+		var item = ui.list.selection ? data[items[i].index] : data[i];
+		progressBar.update(i+1, item.fn);
+		switch (item.pos) {
+			case true: MakeQROnDoc(item.fn, item.qr, ui.actions.white.value); break;
+			case false: MakeQROnFile(item.fn, item.qr); break;
+		}
+	}
+	progressBar.close();
 	if (errors.length > 0) AlertScroll("Errors", errors.join("\n"));
 }
 
-function MakeQROnDoc(code, /*bool*/isWhite) {
+function MakeQROnDoc(fn, code, /*bool*/isWhite) {
+	var doc = app.open(File(currentPath + "/" + fn));
 	var idLayer = MakeIDLayer(doc);
 	doc.activeLayer = idLayer;
 	for (var i = 0; i < doc.pages.length; i++) {
@@ -140,9 +231,11 @@ function MakeQROnDoc(code, /*bool*/isWhite) {
 		}
 		qrGroup.ungroup();
 	}
+	doc.save();
+	doc.close();
 }
 
-function MakeQROnFile(code) {
+function MakeQROnFile(fn, code) {
 	var target = app.documents.add();
 	var page = target.pages[0];
 	var idLayer = MakeIDLayer(target);
@@ -212,7 +305,7 @@ function MakeQROnFile(code) {
 	// Create folder and save file
 	var targetFolder = Folder(currentPath + "/QR Codes");
 	targetFolder.create();
-	var fn = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd";
+	if (!fn.match(/_QR\.indd$/ig)) fn = fn.replace(/\.indd$/ig, "_QR.indd");
 	target.save(File(targetFolder + "/" + fn));
 	// Keep file opened if text overflows
 	if (labelFrame.overflows) {
@@ -344,20 +437,44 @@ function BalanceText(txt, length) {
 function MakeIDLayer(doc) {
 	var idLayerName = "ID", idLayer = doc.layers.item(idLayerName);
 	var hwLayerName = "HW", hwLayer = doc.layers.item(hwLayerName);
-	if (!idLayer.isValid) doc.layers.add({
-		name: idLayerName,
-		layerColor: UIColors.CYAN,
-		visible: true,
-		locked: false,
-		printable: true
-	});
+	if (!idLayer.isValid) {
+		doc.layers.add({
+			name: idLayerName,
+			layerColor: UIColors.CYAN,
+			visible: true,
+			locked: false,
+			printable: true
+		})
+	} else idLayer.locked = false;
 	if (hwLayer.isValid)
 		idLayer.move(LocationOptions.BEFORE, hwLayer)
 		else idLayer.move(LocationOptions.AT_BEGINNING);
 	return idLayer;
 }
 
-function Margins(page) { // Return page margins
+function ProgressBar(title, width) {
+	var w = new Window("palette", title);
+	w.pb = w.add("progressbar", undefined, 0, undefined);
+	w.st = w.add("statictext", undefined, undefined, { truncate: "middle" });
+	w.st.characters = width;
+	w.layout.layout();
+	w.pb.bounds = [ 12, 12, w.st.bounds[2], 24 ];
+	this.reset = function(max) {
+		w.pb.value = 0;
+		w.pb.maxvalue = max || 0;
+		w.pb.visible = !!max;
+		w.show();
+	}
+	this.update = function(val, file) {
+		w.pb.value = val;
+		w.st.text = decodeURI(file) + " (" + val + " of " + w.pb.maxvalue + ")";
+		w.show(); w.update();
+	}
+	this.hide = function() { w.hide() }
+	this.close = function() { w.close() }
+}
+
+function Margins(page) {
 	return {
 		top: page.marginPreferences.top,
 		left: (page.side == PageSideOptions.LEFT_HAND) ?

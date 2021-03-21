@@ -1,6 +1,6 @@
 # Indentz
 
-Colecție de scripturi InDesign pentru operații simple și repetitive. În mod ideal, o parte din ele ar trebui invocate printr‑un shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
+Colecție de scripturi InDesign pentru operații simple și repetitive. În mod ideal, o parte din ele ar trebui invocate printr‑un shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
 
 ---
 
@@ -114,7 +114,7 @@ Scaling | |
 
 ### **Printing**
 
-Fac câteva pregătiri pentru export și pot fi rulate în [**`batch_convert.jsx`**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează straturi cu denumiri similare gen **visible**, **vizibil** pentru **safe area**, sau **diecut**, **die cut**, **cut lines**, **stanze** pentru **dielines**.
+Fac câteva pregătiri pentru export și pot fi rulate în [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează straturi cu denumiri similare gen **visible**, **vizibil** pentru **safe area**, sau **diecut**, **die cut**, **cut lines**, **stanze** pentru **dielines**.
 
 * **`PrepareForPrint.jsx`** ascunde stratul **safe area** și mută ștanțele și marcajele pentru alb și lac UV de pe **dielines** / **white** / **varnish** pe spreaduri separate.
 
@@ -267,21 +267,19 @@ View | |
 
 * **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul **info**.
 
-* **`QR.jsx`** adaugă un cod QR în documentul activ, într-un fișier, sau creează mai multe coduri în fișiere separate:
+* **`QR.jsx`** adaugă un cod QR pe fiecare pagină a documentului activ sau într‑un fișier separat cu același nume și sufixul "_QR".
 
-  ![Generate QR Code.jsx screenshot](img/qr.png)
+  **`QRBatch.jsx`** preia o listă de coduri QR dintr‑un fișier TSV numit **`qr.txt`**, pe care le adaugă unor documente existente sau creează fișiere separate:
 
-  * **On page** adaugă codul pe fiecare pagină, în colțul din stânga jos.
+  Filename | Code | On doc
+  :- | :-: | :-
+  File 1 | Code 1 | *
+  File 2 | Code 2 |
+  ... |
 
-  * **On file** salvează codul într‑un fișier cu numele documentului activ și sufixul "_QR".
-
-  * **Batch** e activat doar dacă în folderul curent e găsit un fișier TSV numit **`qr.txt`**, conținând o listă de coduri și nume de fișiere:
-
-    Filename | Code
-    :- | :-
-    File 1 | CODE 1
-    File 2 | CODE 2
-    ... |
+  > **Filename**: numele documentului (trebuie să fie valid pentru *On doc*) \
+  > **Code**: orice șir de caractere \
+  > **On doc**: orice șir de caractere: în document; lipsă: fișier separat
 
   > **Notă:** Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
 
@@ -293,12 +291,10 @@ View | |
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
-Miscellaneous | |
-:- | -:
-**Clip.jsx** | Num*
-**ClipUndo.jsx** | ⌃Num*
-**HW.jsx** | ⇧F10
-**QR.jsx** | F9
+Miscellaneous | | | | | |
+:- | -: | :- | -: | :- | -:
+**Clip.jsx** | Num*	| **QR.jsx** | F9 | **HW.jsx** | ⇧F10
+**ClipUndo.jsx** | ⌃Num* | **QRBatch.jsx** | ⇧F9
 
 </details>
 
@@ -320,4 +316,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. De asemenea, am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, **Application Frame** on, macOS 10.13, low-DPI display). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 15 martie 2021
+README-ro.md • 21 martie 2021

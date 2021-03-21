@@ -14,7 +14,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 
 <body class="vscode-body vscode-light">
 <h1 id="indentz">Indentz</h1>
-<p>Colecție de scripturi InDesign pentru operații simple și repetitive. În mod ideal, o parte din ele ar trebui invocate printr‑un shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a> de Peter Kahrel.</p>
+<p>Colecție de scripturi InDesign pentru operații simple și repetitive. În mod ideal, o parte din ele ar trebui invocate printr‑un shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong>Batch process</strong></a> de Peter Kahrel.</p>
 <hr>
 <h6 id="toc"><a href="#alignmentproxy">Alignment/Proxy</a> | <a href="#file">File</a> | <a href="#fitting">Fitting</a> | <a href="#scaling">Scaling</a> | <a href="#printing">Printing</a> | <a href="#setup">Setup</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#installation">Instalare</a> | <a href="#license">Licență</a></h6>
 <hr>
@@ -290,7 +290,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </details>
 <hr>
 <h3 id="printing"><strong>Printing</strong></h3>
-<p>Fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong><code>batch_convert.jsx</code></strong></a>. Detectează straturi cu denumiri similare gen <strong>visible</strong>, <strong>vizibil</strong> pentru <strong>safe area</strong>, sau <strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong> pentru <strong>dielines</strong>.</p>
+<p>Fac câteva pregătiri pentru export și pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong>Batch process</strong></a>. Detectează straturi cu denumiri similare gen <strong>visible</strong>, <strong>vizibil</strong> pentru <strong>safe area</strong>, sau <strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong> pentru <strong>dielines</strong>.</p>
 <ul>
 <li>
 <p><strong><code>PrepareForPrint.jsx</code></strong> ascunde stratul <strong>safe area</strong> și mută ștanțele și marcajele pentru alb și lac UV de pe <strong>dielines</strong> / <strong>white</strong> / <strong>varnish</strong> pe spreaduri separate.</p>
@@ -600,41 +600,39 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p><strong><code>PageRatios.jsx</code></strong> calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul <strong>info</strong>.</p>
 </li>
 <li>
-<p><strong><code>QR.jsx</code></strong> adaugă un cod QR în documentul activ, într-un fișier, sau creează mai multe coduri în fișiere separate:</p>
-<p><img src="img/qr.png" alt="Generate QR Code.jsx screenshot"></p>
-<ul>
-<li>
-<p><strong>On page</strong> adaugă codul pe fiecare pagină, în colțul din stânga jos.</p>
-</li>
-<li>
-<p><strong>On file</strong> salvează codul într‑un fișier cu numele documentului activ și sufixul &quot;_QR&quot;.</p>
-</li>
-<li>
-<p><strong>Batch</strong> e activat doar dacă în folderul curent e găsit un fișier TSV numit <strong><code>qr.txt</code></strong>, conținând o listă de coduri și nume de fișiere:</p>
+<p><strong><code>QR.jsx</code></strong> adaugă un cod QR pe fiecare pagină a documentului activ sau într‑un fișier separat cu același nume și sufixul &quot;_QR&quot;.</p>
+<p><strong><code>QRBatch.jsx</code></strong> preia o listă de coduri QR dintr‑un fișier TSV numit <strong><code>qr.txt</code></strong>, pe care le adaugă unor documente existente sau creează fișiere separate:</p>
 <table>
 <thead>
 <tr>
 <th style="text-align:left">Filename</th>
-<th style="text-align:left">Code</th>
+<th style="text-align:center">Code</th>
+<th style="text-align:left">On doc</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left">File 1</td>
-<td style="text-align:left">CODE 1</td>
+<td style="text-align:center">Code 1</td>
+<td style="text-align:left">*</td>
 </tr>
 <tr>
 <td style="text-align:left">File 2</td>
-<td style="text-align:left">CODE 2</td>
+<td style="text-align:center">Code 2</td>
+<td style="text-align:left"></td>
 </tr>
 <tr>
 <td style="text-align:left">...</td>
+<td style="text-align:center"></td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
 </table>
-</li>
-</ul>
+<blockquote>
+<p><strong>Filename</strong>: numele documentului (trebuie să fie valid pentru <em>On doc</em>) <br>
+<strong>Code</strong>: orice șir de caractere <br>
+<strong>On doc</strong>: orice șir de caractere: în document; lipsă: fișier separat</p>
+</blockquote>
 <blockquote>
 <p><strong>Notă:</strong> Puteți insera &quot;|&quot; pentru împărțirea manuală a textului în mai multe rânduri.</p>
 </blockquote>
@@ -655,24 +653,28 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <tr>
 <th style="text-align:left">Miscellaneous</th>
 <th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
+<th style="text-align:left"></th>
+<th style="text-align:right"></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:left"><strong>Clip.jsx</strong></td>
 <td style="text-align:right">Num*</td>
-</tr>
-<tr>
-<td style="text-align:left"><strong>ClipUndo.jsx</strong></td>
-<td style="text-align:right">⌃Num*</td>
-</tr>
-<tr>
+<td style="text-align:left"><strong>QR.jsx</strong></td>
+<td style="text-align:right">F9</td>
 <td style="text-align:left"><strong>HW.jsx</strong></td>
 <td style="text-align:right">⇧F10</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong>QR.jsx</strong></td>
-<td style="text-align:right">F9</td>
+<td style="text-align:left"><strong>ClipUndo.jsx</strong></td>
+<td style="text-align:right">⌃Num*</td>
+<td style="text-align:left"><strong>QRBatch.jsx</strong></td>
+<td style="text-align:right">⇧F9</td>
+<td style="text-align:left"></td>
+<td style="text-align:right"></td>
 </tr>
 </tbody>
 </table>
@@ -689,7 +691,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>Codul din acest proiect nu ar fi fost posibil fără <a href="http://jongware.mit.edu">JavaScript Reference Guide</a> de Theunis de Jong, Mozilla <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, postări pe bloguri și forumuri, tutoriale și scripturi de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.</p>
 <p>Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. De asemenea, am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, <strong>Application Frame</strong> on, macOS 10.13, low-DPI display). Feedback sau sugestii sunt binevenite.</p>
-<p>README-ro.md • 15 martie 2021</p>
+<p>README-ro.md • 21 martie 2021</p>
 
 </body>
 </html>
