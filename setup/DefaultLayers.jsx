@@ -1,6 +1,6 @@
 /*
-	Default layers v1.16.3
-	© February 2021, Paul Chiorean
+	Default layers v1.17
+	© March 2021, Paul Chiorean
 	Adds/merges layers from a 6-column TSV file:
 
 	Name | Color | Visible | Printable | Order | Variants
@@ -8,11 +8,11 @@
 	template | Gray | no | no | bottom
 	...
 	1. <Name>: layer name,
-	2. <Color>: layer color (see UIColors.txt),
-	3. <Visible>: "yes" or "no",
-	4. <Printable>: "yes" or "no",
-	5. <Order>: "above" or "below" existing layers,
-	6. <Variants>: a list of layers which will be merged with the base layer (case insensitive).
+	2. <Color>: layer color (see UIColors.txt); default "Light Blue"),
+	3. <Visible>: "yes" or "no" (default "yes"),
+	4. <Printable>: "yes" or "no" (default "yes"),
+	5. <Order>: "above" or "below" existing layers (default "above"),
+	6. <Variants>: a list of layers that will be merged with the base layer (case insensitive).
 */
 
 if (!(doc = app.activeDocument)) exit();
@@ -56,12 +56,16 @@ function main() {
 	// Top layers
 	for (var i = data.length - 1; i >= 0 ; i--) {
 		if (data[i].isBelow) continue;
-		MakeLayer(
+		var layer = MakeLayer(
 			data[i].name,
 			data[i].color,
 			data[i].isVisible,
 			data[i].isPrintable,
 			data[i].variants);
+		var tmpLayer = doc.layers.item(data[i+1].name);
+		if (tmpLayer.isValid && (layer.index > tmpLayer.index)) {
+			layer.move(LocationOptions.BEFORE,doc.layers.item(data[i+1].name));
+		}
 	}
 	// Bottom layers
 	for (var i = 0; i < data.length; i++) {
@@ -77,7 +81,6 @@ function main() {
 	doc.activeLayer = set_AL; // Restore active layer
 
 	function MakeLayer(name, color, isVisible, isPrintable, variants) {
-		doc.activeLayer = doc.layers.firstItem();
 		var layer = doc.layers.item(name);
 		if (layer.isValid) layer.properties = {
 			layerColor: color,
