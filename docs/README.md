@@ -24,7 +24,7 @@ Make it easier to align objects or set the reference point for transformations u
 
 * **`SetRefPoint`** scripts change the reference point used for transformations (like clicking the little proxy squares in the **Transform** palette).
 
-> **Note:** These two sets don't make any sense if not assigned to the numeric keypad.
+**Note:** These two sets don't make any sense if not assigned to the numeric keypad.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -83,7 +83,7 @@ FitToPage | | FitToSpread | |
 **FitToPageSafeAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadSafeAreaForced.jsx** | ⌥⇧⌘F12
 **FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
 
-> **Note:** `F11` page, `F12` spread; `⌥` margins, `⌥⇧` safe area, `⇧` bleed; `⌘` forced.
+**Note:** `F11` page, `F12` spread; `⌥` margins, `⌥⇧` safe area, `⇧` bleed; `⌘` forced.
 
 TextAutosize | |
 :- | -:
@@ -169,7 +169,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Order**: `above` or `below` existing layers (default `above`) \
   > **Variants**: a list of layers that will be merged with the base layer (case insensitive)
 
-  > **Note:** The file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with "#" are ignored.
+  **Note:** The file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with "#" are ignored.
 
 * **`DefaultSwatches.jsx`** adds a set of swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
 
@@ -193,7 +193,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  > **Note:** You can use **`ShowFonts.jsx`** from **Miscellaneous** to get a tab delimited list of fonts for copy‑pasting.
+  **Note:** You can use **`ShowFonts.jsx`** from **Miscellaneous** to get a tab delimited list of fonts for copy‑pasting.
 
 * **`DocCleanup.jsx`** sets preferences (it runs **`DefaultPrefs.jsx`**), cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%.
 
@@ -271,7 +271,7 @@ View | |
   **`QRBatch.jsx`** retrieves a list of codes from a TSV file named **`qr.txt`** and adds them to existing documents or creates separate files:
 
   Filename | Code | On doc
-  :- | :-: | :-
+  :- | :- | :-:
   File 1 | Code 1 | *
   File 2 | Code 2 |
   ... |
@@ -280,7 +280,7 @@ View | |
   > **Code**: any string \
   > **On doc**: any string: on document; missing: separate file
 
-  > **Note:** You can insert "|" for manually splitting the text into several lines.
+  **Note:** You can insert "|" for manually splitting the text into several lines.
 
 * **`ShowFonts.jsx`** shows all fonts used in the current document (useful with **`ReplaceFonts.jsx`**).
 
@@ -315,4 +315,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Also, very limited testing was done outside my work configuration (Adobe InDesign 2020, **Application Frame** on, macOS 10.13, low-DPI display). Feedback or suggestions are welcome.
 
-README.md • March 21, 2021
+README.md • March 22, 2021

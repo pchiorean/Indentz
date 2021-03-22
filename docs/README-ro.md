@@ -24,7 +24,7 @@ Facilitează alinierea obiectelor sau setarea punctului de referință pentru tr
 
 * **`SetRefPoint`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**.
 
-> **Notă:** Aceste două seturi nu au nici un sens dacă nu sunt asociate tastaturii numerice.
+**Notă:** Aceste două seturi nu au nici un sens dacă nu sunt asociate tastaturii numerice.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -83,7 +83,7 @@ FitToPage | | FitToSpread | |
 **FitToPageSafeAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadSafeAreaForced.jsx** | ⌥⇧⌘F12
 **FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
 
-> **Notă:** `F11` pagină, `F12` spread; `⌥` margini, `⌥⇧` safe area, `⇧` bleed; `⌘` forțat.
+**Notă:** `F11` pagină, `F12` spread; `⌥` margini, `⌥⇧` safe area, `⇧` bleed; `⌘` forțat.
 
 TextAutosize | |
 :- | -:
@@ -170,7 +170,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Order**: `above` sau `below` (deasupra sau sub straturile existente; implicit `above`) \
   > **Variants**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)
 
-  > **Notă:** Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu "#" sunt ignorate.
+  **Notă:** Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu "#" sunt ignorate.
 
 * **`DefaultSwatches.jsx`** creează un set de culori definite într‑un fișier TSV numit [**`swatches.txt`**](../swatches.txt):
 
@@ -194,7 +194,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  > **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
+  **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
 
 * **`DocCleanup.jsx`** setează preferințe (rulează **`DefaultPrefs.jsx`**), șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%.
 
@@ -272,7 +272,7 @@ View | |
   **`QRBatch.jsx`** preia o listă de coduri QR dintr‑un fișier TSV numit **`qr.txt`**, pe care le adaugă unor documente existente sau creează fișiere separate:
 
   Filename | Code | On doc
-  :- | :-: | :-
+  :- | :- | :-:
   File 1 | Code 1 | *
   File 2 | Code 2 |
   ... |
@@ -281,7 +281,7 @@ View | |
   > **Code**: orice șir de caractere \
   > **On doc**: orice șir de caractere: în document; lipsă: fișier separat
 
-  > **Notă:** Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
+  **Notă:** Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
 
 * **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`ReplaceFonts.jsx`**).
 
@@ -316,4 +316,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. De asemenea, am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, **Application Frame** on, macOS 10.13, low-DPI display). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 21 martie 2021
+README-ro.md • 22 martie 2021
