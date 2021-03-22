@@ -1,6 +1,6 @@
 MIT License
 
-Copyright (c) 2020 Paul Chiorean <jpeg AT basement.ro>
+Copyright (c) 2021 Paul Chiorean <jpeg AT basement.ro>
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
