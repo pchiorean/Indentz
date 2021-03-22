@@ -1,6 +1,6 @@
 /*
-	Default preferences v1.0.3
-	© January 2021, Paul Chiorean
+	Default preferences v1.1
+	© March 2021, Paul Chiorean
 	Sets default preferences.
 */
 
@@ -42,6 +42,7 @@ function() {
 	app.activeWindow.screenMode = ScreenModeOptions.PREVIEW_OFF;
 	app.preflightOptions.preflightOff = true;
 	doc.pageItemDefaults.transparencySettings.blendingSettings.blendMode = BlendMode.NORMAL;
+	doc.pageItemDefaults.transparencySettings.blendingSettings.opacity = 100;
 	doc.pageItemDefaults.properties = { fillColor: "None", strokeColor: "None" };
 	doc.selection = [];
 },
