@@ -4,6 +4,7 @@ dielines	Red	yes	yes	above	cut, cut lines, decoupe, die, die cut, diecut, stanz,
 varnish	Yellow	no	yes	above	uv
 white	Cute Teal	no	yes	above	
 guides	Magenta	yes	no	above	grid
+media	Cyan	no	yes	above	
 info	Cyan	no	yes	above	info copy, ratio
 HW	Light Gray	no	yes	above	hw logo, logo hw, wh, whw
 disclaimer	Gray	no	yes	above	legal text
