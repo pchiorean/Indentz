@@ -1,12 +1,9 @@
 /*
-	Fit to page safe area, forced v2.0.0
-	© February 2021, Paul Chiorean
+	Fit to page safe area, forced v2.0.1
+	© March 2021, Paul Chiorean
 	Resizes the selected objects to the page safe area, forced.
 
-	Arguments are:
-	1. SCOPE: 'page' | 'spread' (default 'page')
-	2. TARGET: 'size' | 'margins' | 'safearea' | 'bleed' (default 'size')
-	3. FORCED_FIT: true | false (default 'false')
+	See 'FitTo.jsxinc' for arguments.
 */
 
 // @include "../lib/FitTo.jsxinc";
