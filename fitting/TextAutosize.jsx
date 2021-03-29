@@ -1,8 +1,9 @@
 /*
-	Fit frame to text v1.8.1
-	© November 2020, Paul Chiorean
-	Auto-sizes the text frame to the content. 1st paragraph's justification sets
-	horizontal alignment; vertical justification sets vertical alignment.
+	Fit frame to text v1.9
+	© March 2021, Paul Chiorean
+	Auto-sizes the text frame to the content.
+	First paragraph's justification sets horizontal alignment;
+	vertical justification sets vertical alignment.
 */
 
 if (!(doc = app.activeDocument)) exit();
@@ -14,12 +15,13 @@ app.doScript(main, ScriptLanguage.javascript, sel,
 
 function main(sel) {
 	if (sel[0].hasOwnProperty("parentTextFrames")) var sel = sel[0].parentTextFrames;
-	for (var i = 0; i < sel.length; i++) {
-		var obj = sel[i]; if (obj.constructor.name == "TextFrame") FitFrame2Text(obj);
-	}
+	for (var i = 0; i < sel.length; i++)
+		if (sel[i].constructor.name == "TextFrame") FitFrame2Text(sel[i]);
 }
 
 function FitFrame2Text(sel) {
+	// Trim ending whitespace
+	sel.contents = sel.contents.replace(/\s+$/, "");
 	// JUSTIFY_ALIGN is a special case
 	if (sel.textFramePreferences.verticalJustification == VerticalJustification.JUSTIFY_ALIGN) {
 		sel.textFramePreferences.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
