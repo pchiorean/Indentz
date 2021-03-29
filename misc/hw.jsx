@@ -1,6 +1,6 @@
 /*
-	HW 2.2.0
-	© February 2021, Paul Chiorean
+	HW 2.3
+	© March 2021, Paul Chiorean
 	Labels 'HW' selected objects and adds a HW bottom guide on the current spread.
 */
 
@@ -40,10 +40,12 @@ function main() {
 		}
 	}
 	// Remove old guides
-	var guide, guides = page.parent.guides.everyItem().getElements();
+	// var guide, guides = page.parent.guides.everyItem().getElements();
+	var guide, guides = doc.guides.everyItem().getElements();
 	while (guide = guides.shift()) if (guide.label == "HW") guide.remove();
 	// Add guides
-	var target, pages = page.parent.pages.everyItem().getElements();
+	// var target, pages = page.parent.pages.everyItem().getElements();
+	var target, pages = doc.pages.everyItem().getElements();
 	while (target = pages.shift()) {
 		var top = target.bounds[0], bottom = target.bounds[2];
 		var frame, frames = target.rectangles.everyItem().getElements();
