@@ -6,12 +6,12 @@ white	Cute Teal	no	yes	above
 guides	Magenta	yes	no	above	grid
 media	Cyan	no	yes	above	
 info	Cyan	no	yes	above	info copy, ratio
-HW	Light Gray	no	yes	above	hw logo, logo hw, wh, whw
+HW	Light Gray	no	yes	above	hw, hw logo, logo hw, wh, whw
 disclaimer	Gray	no	yes	above	legal text
 text and logos	Green	no	yes	above	copy, headline + logo, text, textes, txt, type, typo
 codes	Grid Green	no	yes	above	code, barcode, barcodes
 price	Gold	no	yes	above	preis
 products	Blue	no	yes	above	packs, packshots, product, tins
-artwork	Light Blue	no	yes	above	aw, elemente, layout, layouts
+artwork	Light Blue	no	yes	above	aw, elemente, layout, layouts, layout¨
 bg	Red	no	yes	below	background, hg, hintergrund
 .template	Black	no	no	below	template
