@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v1.0
+	Batch QR codes v1.1
 	© March 2021, Paul Chiorean
 	Batch processes "QR.txt" to add codes to existing documents or to separate files.
 	The list is a 3-column TSV file with the following format:
@@ -116,7 +116,7 @@ function main() {
 	}
 	ui.list.onDoubleClick = function() { infoFile.execute() }
 	ui.actions.err.onClick = function() {
-		AlertScroll("Errors", errors.join("\n"));
+		AlertScroll("Errors", errors);
 	}
 	ui.actions.browse.onClick = function() {
 		var folder = Folder.selectDialog("Select a folder containing the data file:");
@@ -141,7 +141,7 @@ function main() {
 		}
 	}
 	progressBar.close();
-	if (errors.length > 0) AlertScroll("Errors", errors.join("\n"));
+	if (errors.length > 0) AlertScroll("Errors", errors);
 }
 
 function MakeQROnDoc(fn, code, /*bool*/isWhite) {
@@ -490,10 +490,12 @@ function Margins(page) {
 function AlertScroll(title, input) {
 	if (input instanceof Array) input = input.join("\r");
 	var lines = input.split(/\r|\n/g);
-	for (var i = 1, width = lines[0].length; i < lines.length; i++) width = Math.max(width, lines[i].length);
 	var w = new Window("dialog", title);
 	var list = w.add("edittext", undefined, input, { multiline: true, scrolling: true, readonly: true });
-	list.characters = Math.max(width, 50);
+	list.characters = (function() {
+		for (var i = 0, width = 50; i < lines.length; i++) width = Math.max(width, lines[i].length);
+		return width;
+	})();
 	list.minimumSize.height = 100;
 	list.maximumSize.height = 880;
 	w.add("button", undefined, "Close", { name: "ok" });

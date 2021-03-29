@@ -1,6 +1,6 @@
 /*
-	Show color profiles 1.1.1
-	© July 2020, Paul Chiorean
+	Show color profiles 1.2
+	© March 2021, Paul Chiorean
 	Shows all color profiles available to the document.
 */
 
@@ -16,15 +16,19 @@ resultArray.push(profilesRGB.join("\r"));
 AlertScroll("Color Profiles", resultArray);
 
 
-// Scrollable alert function by Peter Kahrel
+// Modified from 'Scrollable alert' by Peter Kahrel
 // http://forums.adobe.com/message/2869250#2869250
-// Modified for failsafe alert height.
 function AlertScroll(title, input) {
 	if (input instanceof Array) input = input.join("\r");
+	var lines = input.split(/\r|\n/g);
 	var w = new Window("dialog", title);
-	var list = w.add("edittext", undefined, input, { multiline: true, scrolling: true });
-	list.maximumSize.height = app.documents.length > 0 ? app.activeWindow.bounds[2] * .75 : 880;
-	list.minimumSize.width = 650;
+	var list = w.add("edittext", undefined, input, { multiline: true, scrolling: true, readonly: true });
+	list.characters = (function() {
+		for (var i = 0, width = 50; i < lines.length; i++) width = Math.max(width, lines[i].length);
+		return width;
+	})();
+	list.minimumSize.height = 100;
+	list.maximumSize.height = 880;
 	w.add("button", undefined, "Close", { name: "ok" });
 	w.show();
 }
