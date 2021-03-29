@@ -1,6 +1,6 @@
 /*
-	Align to bottom-left v2.4.2
-	© November 2020, Paul Chiorean
+	Align to bottom-left v2.4.3
+	© March 2021, Paul Chiorean
 	Aligns the selected objects to the bottom-left of the 'Align To' setting.
 */
 
@@ -9,6 +9,7 @@ app.scriptPreferences.enableRedraw = false;
 var sel = doc.selection, selBAK = sel, obj;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit() }
+if (sel[0].hasOwnProperty("parentTextFrames")) { sel[0].insertionPoints[0].contents = "1"; exit() }
 if (sel.length == 1 && sel[0].locked) { alert("This object is locked."); exit() }
 
 app.doScript(main, ScriptLanguage.javascript, sel,
