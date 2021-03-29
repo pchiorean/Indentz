@@ -278,7 +278,7 @@ View | |
 
   > **Filename**: document name (it must be valid for *On doc*) \
   > **Code**: any string \
-  > **On doc**: any string: on document; missing: separate file
+  > **On doc**: any string: on document; leave empty or omit for separate file
 
   **Note:** You can insert "|" for manually splitting the text into several lines.
 
@@ -315,4 +315,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Also, very limited testing was done outside my work configuration (Adobe InDesign 2020, **Application Frame** on, macOS 10.13, low-DPI display). Feedback or suggestions are welcome.
 
-README.md • March 22, 2021
+README.md • March 23, 2021

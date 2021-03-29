@@ -279,7 +279,7 @@ View | |
 
   > **Filename**: numele documentului (trebuie să fie valid pentru *On doc*) \
   > **Code**: orice șir de caractere \
-  > **On doc**: orice șir de caractere: în document; lipsă: fișier separat
+  > **On doc**: orice șir de caractere: în document; lăsați gol sau omiteți pentru fișier separat
 
   **Notă:** Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
 
@@ -316,4 +316,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. De asemenea, am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, **Application Frame** on, macOS 10.13, low-DPI display). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 22 martie 2021
+README-ro.md • 23 martie 2021
