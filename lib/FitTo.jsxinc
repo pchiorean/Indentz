@@ -1,6 +1,6 @@
 /*
 	Fit to... v4.1.0
-	© February 2021, Paul Chiorean
+	© April 2021, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/safe area/bleed.
 
 	It's called internally by all the other FitTo scripts; arguments are:
