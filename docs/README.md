@@ -130,29 +130,33 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 #### **Document**
 
-* **`DefaultPrefs.jsx`** sets the following preferences:
+* **`DefaultPrefs.jsx`** sets some preferences.
 
-  > **Rulers:** Reset Zero Point \
-  > **Rulers Units:** Millimeters \
-  > **View:** Show Rulers \
-  > **View:** Show Frame Edges \
-  > **Document Intent:** Print \
-  > **Transparency Blend Space:** CMYK \
-  > **CMYK Profile:** ISO Coated v2 (ECI) \
-  > **RGB Profile:** sRGB IEC61966-2.1 \
-  > **Grids & Guides:** Show Guides \
-  > **Grids & Guides:** Unlock Guides \
-  > **Guides & Pasteboard: Preview Background:** Light Gray \
-  > **Keyboard Increments: Cursor Key:** 0.2 mm \
-  > **Keyboard Increments: Size/Leading:** 0.5 pt \
-  > **Keyboard Increments: Baseline Shift:** 0.1 pt \
-  > **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
-  > **Pages:** Allow Document Pages to Shuffle \
-  > **Layers:** Ungroup Remembers Layers \
-  > **Layers:** Paste Remembers Layers \
-  > **Transform Reference Point:** Center \
-  > **Type Options:** Use Typographer's Quotes \
-  > **Type Options:** Apply Leading to Entire Paragraphs
+  <details><summary><strong>Details</strong></summary>
+
+    > **Rulers:** Reset Zero Point \
+    > **Rulers Units:** Millimeters \
+    > **View:** Show Rulers \
+    > **View:** Show Frame Edges \
+    > **Document Intent:** Print \
+    > **Transparency Blend Space:** CMYK \
+    > **CMYK Profile:** ISO Coated v2 (ECI) \
+    > **RGB Profile:** sRGB IEC61966-2.1 \
+    > **Grids & Guides:** Show Guides \
+    > **Grids & Guides:** Unlock Guides \
+    > **Guides & Pasteboard: Preview Background:** Light Gray \
+    > **Keyboard Increments: Cursor Key:** 0.2 mm \
+    > **Keyboard Increments: Size/Leading:** 0.5 pt \
+    > **Keyboard Increments: Baseline Shift:** 0.1 pt \
+    > **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
+    > **Pages:** Allow Document Pages to Shuffle \
+    > **Layers:** Ungroup Remembers Layers \
+    > **Layers:** Paste Remembers Layers \
+    > **Transform Reference Point:** Center \
+    > **Type Options:** Use Typographer's Quotes \
+    > **Type Options:** Apply Leading to Entire Paragraphs
+
+  </details>
 
 * **`DefaultLayers.jsx`** adds a set of layers defined in a TSV *(tab‑separated values)* file named [**`layers.txt`**](../layers.txt):
 
