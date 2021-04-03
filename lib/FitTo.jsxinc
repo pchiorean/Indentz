@@ -1,15 +1,15 @@
 /*
-	Fit to... v4.0.0
+	Fit to... v4.1.0
 	© February 2021, Paul Chiorean
 	Resizes the selected objects to the page/spread's size/margins/safe area/bleed.
 
 	It's called internally by all the other FitTo scripts; arguments are:
-	1. SCOPE: 'page' | 'spread' (default 'page')
-	2. TARGET: 'size' | 'margins' | 'safearea' | 'bleed' (default 'size')
-	3. FORCED_FIT: true | false (default 'false')
+	[0] SCOPE: 'page' | 'spread' (default 'page')
+	[1] TARGET: 'size' | 'margins' | 'safearea' | 'bleed' (default 'size')
+	[2] FORCED: true | false (default 'false')
 */
 
-// @include "bounds.jsxinc";
+// @include "Bounds.jsxinc";
 
 const DEBUG = false;
 const SNAP_PCT = 1; // Snap distance: percent of target
@@ -23,16 +23,16 @@ if (sel.length == 0 || (sel[0].constructor.name == "Guide")) exit();
 
 const SCOPE = args[0] || "page";
 const TARGET = args[1] || "size";
-const FORCED_FIT = args[2] || false;
+const FORCED = args[2] || false;
 
-var set_RO = doc.viewPreferences.rulerOrigin;
+var bakRO = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
-var obj, page, f, selBAK = [];
-while (obj = sel.shift()) { // Skip objects on pasteboard
-	if (page = obj.parentPage) {
-		if ((f = Fit2Bounds(obj)) != undefined) { selBAK.push(f) } else { selBAK.push(obj) }
-	} else if (FORCED_FIT) { // If forced fit, include objects on pasteboard
+var obj, page, fitted, newSel = [];
+while (obj = sel.shift()) {
+	if (page = obj.parentPage) { // Skip objects on pasteboard
+		if (fitted = Fit2Bounds(obj)) { newSel.push(fitted) } else newSel.push(obj);
+	} else if (FORCED) { // If FORCED, include objects on pasteboard
 		var pages = app.activeWindow.activeSpread.pages;
 		for (var i = 0; i < pages.length; i++) {
 			if (obj.geometricBounds[3] <= pages[0].bounds[3]) { page = pages[0]; break }
@@ -40,134 +40,168 @@ while (obj = sel.shift()) { // Skip objects on pasteboard
 				obj.geometricBounds[3] <= pages[i].bounds[3]) { page = pages[i]; break }
 			if (obj.geometricBounds[1] >= pages[-1].bounds[1]) { page = pages[-1]; break }
 		}
-		if ((f = Fit2Bounds(obj)) != undefined) { selBAK.push(f) } else { selBAK.push(obj) }
+		if (fitted = Fit2Bounds(obj)) { newSel.push(fitted) } else newSel.push(obj);
 	}
 }
-if (selBAK.length > 0) app.select(selBAK);
-doc.viewPreferences.rulerOrigin = set_RO;
+if (newSel.length > 0) app.select(newSel);
+doc.viewPreferences.rulerOrigin = bakRO;
 
 function Fit2Bounds(obj) {
-	var bounds = Bounds(page);
-	var pg = bounds[SCOPE].size;
-	var tg = bounds[SCOPE][TARGET]; if (tg == undefined) return obj;
-	var mg = bounds[SCOPE]["margins"];
-	var sa = bounds[SCOPE]["safearea"];
-	var objG = obj.geometricBounds;
-	var objV = obj.visibleBounds;
-	var objRA = obj.absoluteRotationAngle;
-	// Snap zones: target and safe area
-	var snapDist = (sa != undefined) ? // Safe area takes precedence
-		Math.min(sa[2] - sa[0], sa[3] - sa[1]) * SNAP_PCT / 100 :
+	const B = Bounds(page);
+	var b = {
+		size: B[SCOPE].size,
+		target: B[SCOPE][TARGET],
+		safe: B[SCOPE]["safearea"]
+	}
+	if (!b.target) return obj;
+	var o = {
+		geo: obj.geometricBounds,
+		vis: obj.visibleBounds,
+		child: (obj.pageItems.length == 1 && obj.fillColor.name == "None") ?
+			obj.pageItems[0].visibleBounds : undefined,
+		hit: []
+	}
+	var isStraight = Boolean(obj.absoluteRotationAngle == 0 ||
+		Math.abs(obj.absoluteRotationAngle) == 90 ||
+		Math.abs(obj.absoluteRotationAngle) == 180);
+	// Snap zones: target and safe area; safe area takes precedence
+	var snapDist = !!b.safe ?
+		Math.min(b.safe[2] - b.safe[0], b.safe[3] - b.safe[1]) * SNAP_PCT / 100 :
 		(TARGET == "margins" ?
-			Math.min(tg[2] - tg[0], tg[3] - tg[1]) * SNAP_PCT / 100 :
-			Math.min(pg[2] - pg[0], pg[3] - pg[1]) * SNAP_PCT / 100);
-	var tgSZ = (TARGET == "margins") ?
-		[ tg[0] + snapDist, tg[1] + snapDist, tg[2] - snapDist, tg[3] - snapDist ] :
-		[ pg[0] + snapDist, pg[1] + snapDist, pg[2] - snapDist, pg[3] - snapDist ];
-	var saSZ = (sa != undefined) ?
-		[ sa[0] + snapDist, sa[1] + snapDist, sa[2] - snapDist, sa[3] - snapDist ] :
-		[ pg[0] + snapDist, pg[1] + snapDist, pg[2] - snapDist, pg[3] - snapDist ];
+			Math.min(b.target[2] - b.target[0], b.target[3] - b.target[1]) * SNAP_PCT / 100 :
+			Math.min(b.size[2] - b.size[0], b.size[3] - b.size[1]) * SNAP_PCT / 100);
+	var snapZone = {
+		target: (TARGET == "margins") ?
+			[ b.target[0] + snapDist, b.target[1] + snapDist,
+			  b.target[2] - snapDist, b.target[3] - snapDist ] :
+			[ b.size[0] + snapDist, b.size[1] + snapDist,
+			  b.size[2] - snapDist, b.size[3] - snapDist ],
+		safe: !!b.safe ?
+			[ b.safe[0] + snapDist, b.safe[1] + snapDist,
+			  b.safe[2] - snapDist, b.safe[3] - snapDist ] :
+			[ b.size[0] + snapDist, b.size[1] + snapDist,
+			  b.size[2] - snapDist, b.size[3] - snapDist ]
+	}
 
 	// Fit: HW (dimensions are predefined, so skip the nasty stuff)
 	if (obj.label == "HW") {
-		var hwRef = (TARGET == "margins") ? tg : pg;
-		if (sa != undefined) { hwRef = sa; if (TARGET == "margins") tg = sa }
-		if (obj.constructor.name == "TextFrame") { // Adjust inset for text frames
-			obj.textFramePreferences.insetSpacing = [ 0, hwRef[1] - tg[1], tg[2] - hwRef[2], tg[3] - hwRef[3] ];
+		var hwRef = (TARGET == "margins") ? b.target : b.size;
+		if (!!b.safe) {
+			hwRef = b.safe;
+			if (TARGET == "margins") b.target = b.safe;
 		}
-		obj.geometricBounds = [ hwRef[2] - (hwRef[2] - hwRef[0]) * Number(HW_PCT) / 100, tg[1], tg[2], tg[3] ];
+		obj.geometricBounds = [
+			hwRef[2] - (hwRef[2] - hwRef[0]) * Number(HW_PCT) / 100,
+			b.target[1], b.target[2], b.target[3]
+		];
+		// Adjust inset for text frames
+		if (obj.constructor.name == "TextFrame") {
+			obj.textFramePreferences.insetSpacing = [
+				0,
+				hwRef[1] - b.target[1], b.target[2] - hwRef[2], b.target[3] - hwRef[3]
+			];
+		}
 		return obj;
 	}
 
 	// Compute new bounds
-	if (!FORCED_FIT) {
-		// Check which obj's sides are in the safe area's snap zone
-		var flgSA = [
-			(objG[0] <= saSZ[0] && objG[2] >= saSZ[0] && objG[1] <= saSZ[3] && objG[3] >= saSZ[1]),
-			(objG[1] <= saSZ[1] && objG[3] >= saSZ[1] && objG[0] <= saSZ[2] && objG[2] >= saSZ[0]),
-			(objG[2] >= saSZ[2] && objG[0] <= saSZ[2] && objG[1] <= saSZ[3] && objG[3] >= saSZ[1]),
-			(objG[3] >= saSZ[3] && objG[1] <= saSZ[3] && objG[0] <= saSZ[2] && objG[2] >= saSZ[0])
+	if (!FORCED) {
+		// Return if obj is outside bounds
+		if (o.vis[2] <= b.target[0] || o.vis[3] <= b.target[1] ||
+			o.vis[0] >= b.target[2] || o.vis[1] >= b.target[3]) return;
+		// Return if obj is inside bounds, but not into target snap zone
+		o.hit = [ // Remember which obj's sides are into safe area snap zone
+			(o.geo[0] <= snapZone.safe[0] && o.geo[2] >= snapZone.safe[0] &&
+			 o.geo[1] <= snapZone.safe[3] && o.geo[3] >= snapZone.safe[1]),
+			(o.geo[1] <= snapZone.safe[1] && o.geo[3] >= snapZone.safe[1] &&
+			 o.geo[0] <= snapZone.safe[2] && o.geo[2] >= snapZone.safe[0]),
+			(o.geo[2] >= snapZone.safe[2] && o.geo[0] <= snapZone.safe[2] &&
+			 o.geo[1] <= snapZone.safe[3] && o.geo[3] >= snapZone.safe[1]),
+			(o.geo[3] >= snapZone.safe[3] && o.geo[1] <= snapZone.safe[3] &&
+			 o.geo[0] <= snapZone.safe[2] && o.geo[2] >= snapZone.safe[0])
 		];
-		// Check if obj is outside bounds | inside bounds, but outside target snap zone
-		if (objV[2] <= tg[0] || objV[3] <= tg[1] || objV[0] >= tg[2] || objV[1] >= tg[3]) return;
-		if (!(flgSA[0] || flgSA[1] || flgSA[2] || flgSA[3]) &&
-			(objV[0] >= tgSZ[0] && objV[1] >= tgSZ[1] && objV[2] <= tgSZ[2] && objV[3] <= tgSZ[3])) return;
-		// New target bounds --
-		// -- If larger than target, reduce
-		var fitR = [
-			objG[2] > tg[0] ? Math.max(objV[0], tg[0]) : objG[0],
-			objG[3] > tg[1] ? Math.max(objV[1], tg[1]) : objG[1],
-			objG[0] < tg[2] ? Math.min(objV[2], tg[2]) : objG[2],
-			objG[1] < tg[3] ? Math.min(objV[3], tg[3]) : objG[3]
+		if (!(o.hit[0] || o.hit[1] || o.hit[2] || o.hit[3]) &&
+			(o.vis[0] >= snapZone.target[0] && o.vis[1] >= snapZone.target[1] &&
+			 o.vis[2] <= snapZone.target[2] && o.vis[3] <= snapZone.target[3])) return;
+		// Adjusted bounds: if larger than target, reduce
+		b.reduce = [
+			o.geo[2] > b.target[0] ? Math.max(o.vis[0], b.target[0]) : o.geo[0],
+			o.geo[3] > b.target[1] ? Math.max(o.vis[1], b.target[1]) : o.geo[1],
+			o.geo[0] < b.target[2] ? Math.min(o.vis[2], b.target[2]) : o.geo[2],
+			o.geo[1] < b.target[3] ? Math.min(o.vis[3], b.target[3]) : o.geo[3]
 		];
-		// -- If smaller than target & into snap zone, expand
-		var fitE = [
-			fitR[0] < tgSZ[0] ? tg[0] : (flgSA[0] ? tg[0] : fitR[0]),
-			fitR[1] < tgSZ[1] ? tg[1] : (flgSA[1] ? tg[1] : fitR[1]),
-			fitR[2] > tgSZ[2] ? tg[2] : (flgSA[2] ? tg[2] : fitR[2]),
-			fitR[3] > tgSZ[3] ? tg[3] : (flgSA[3] ? tg[3] : fitR[3])
+		// If smaller than target & into snap zone, expand
+		b.expand = [
+			b.reduce[0] < snapZone.target[0] ? b.target[0] : (o.hit[0] ? b.target[0] : b.reduce[0]),
+			b.reduce[1] < snapZone.target[1] ? b.target[1] : (o.hit[1] ? b.target[1] : b.reduce[1]),
+			b.reduce[2] > snapZone.target[2] ? b.target[2] : (o.hit[2] ? b.target[2] : b.reduce[2]),
+			b.reduce[3] > snapZone.target[3] ? b.target[3] : (o.hit[3] ? b.target[3] : b.reduce[3])
 		];
-		// -- But don't expand past child's bounds
-		if (obj.pageItems.length == 1 && obj.fillColor.name == "None") {
-			var objC = obj.pageItems[0].visibleBounds;
-			fitE = [
-				objC[0] > tg[0] ? objC[0] : fitE[0],
-				objC[1] > tg[1] ? objC[1] : fitE[1],
-				objC[2] < tg[2] ? objC[2] : fitE[2],
-				objC[3] < tg[3] ? objC[3] : fitE[3]
-			];
-		}
+		// but not past content's bounds
+		if (o.child) b.expand = [
+			o.child[0] > b.target[0] ? Math.max(o.child[0], b.expand[0]) : b.expand[0],
+			o.child[1] > b.target[1] ? Math.max(o.child[1], b.expand[1]) : b.expand[1],
+			o.child[2] < b.target[2] ? Math.min(o.child[2], b.expand[2]) : b.expand[2],
+			o.child[3] < b.target[3] ? Math.min(o.child[3], b.expand[3]) : b.expand[3]
+		];
 		if (DEBUG) DBGFrames();
 	}
 
-	// Fit --
+	// Fit obj to new bounds
 	// -- Already clipped
-	if ((obj.name == "<clip frame>" || obj.name == "<auto clip frame>") && obj.pageItems[0].isValid) {
-		obj.geometricBounds = FORCED_FIT ? tg : fitE;
+	if ((obj.name == "<clip frame>" || obj.name == "<auto clip frame>") &&
+			obj.pageItems[0].isValid) {
+		obj.geometricBounds = FORCED ? b.target : b.expand;
 		return obj;
 	}
 	// -- Simple rectangles and containers
 	if (obj.constructor.name == "Rectangle" &&
-		(obj.pageItems.length == 0 || obj.pageItems.length == 1) &&
-		(obj.strokeWeight == 0 || obj.strokeAlignment == StrokeAlignment.INSIDE_ALIGNMENT) &&
-		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
-			obj.geometricBounds = FORCED_FIT ? tg : fitE;
-			return obj;
+			(obj.pageItems.length == 0 || obj.pageItems.length == 1) &&
+			(obj.strokeWeight == 0 || obj.strokeAlignment == StrokeAlignment.INSIDE_ALIGNMENT) &&
+			isStraight) {
+		obj.geometricBounds = FORCED ? b.target : b.expand;
+		return obj;
 	}
 	// -- Text frames
-	if (obj.constructor.name == "TextFrame" &&
-		(objRA == 0 || Math.abs(objRA) == 90 || Math.abs(objRA) == 180)) {
-			obj.geometricBounds = FORCED_FIT ? tg : fitR;
-			return obj;
+	if (obj.constructor.name == "TextFrame" && isStraight) {
+		obj.geometricBounds = FORCED ? b.target : b.expand;
+		return obj;
 	}
-	// -- Orthogonal lines: horizontal
-	if (obj.constructor.name == "GraphicLine" && obj.paths[0].entirePath.length == 2 && objG[0] == objG[2]) {
+	// -- Orthogonal lines
+	var isOrthoLine = (obj.constructor.name == "GraphicLine" &&
+		obj.paths[0].entirePath.length == 2 &&
+		(obj.paths[0].entirePath[0].length == 2 || obj.paths[0].entirePath[1].length == 2));
+	if (isOrthoLine && o.geo[0] == o.geo[2]) { // horizontal
 		obj.paths[0].entirePath = [
-			[ fitE[1], obj.paths[0].entirePath[0][1] ],
-			[ fitE[3], obj.paths[0].entirePath[1][1] ]
+			[ b.expand[1], obj.paths[0].entirePath[0][1] ],
+			[ b.expand[3], obj.paths[0].entirePath[1][1] ]
 		];
 		return obj;
 	}
-	// -- Orthogonal lines: vertical
-	if (obj.constructor.name == "GraphicLine" && obj.paths[0].entirePath.length == 2 && objG[1] == objG[3]) {
+	if (isOrthoLine && o.geo[1] == o.geo[3]) { // vertical
 		obj.paths[0].entirePath = [
-			[ obj.paths[0].entirePath[0][0], fitE[0] ],
-			[ obj.paths[0].entirePath[1][0], fitE[2] ]
+			[ obj.paths[0].entirePath[0][0], b.expand[0] ],
+			[ obj.paths[0].entirePath[1][0], b.expand[2] ]
 		];
 		return obj;
 	}
 	// -- Groups
-	if (obj.constructor.name == "Group") return Clip(obj, FORCED_FIT ? tg : fitR);
+	if (obj.constructor.name == "Group") return Clip(obj, FORCED ? b.target : b.reduce);
 	// -- Other cases
-	return Clip(obj, FORCED_FIT ? tg : fitE);
+	return Clip(obj, FORCED ? b.target : b.expand);
 
 	function Clip(obj, fit) {
-		if (objV[0] >= tg[0] && objV[1] >= tg[1] && objV[2] <= tg[2] && objV[3] <= tg[3]) return obj;
+		if (o.vis[0] >= b.target[0] && o.vis[1] >= b.target[1] &&
+			o.vis[2] <= b.target[2] && o.vis[3] <= b.target[3]) return obj;
 		var frame = doc.rectangles.add(
-			obj.itemLayer, LocationOptions.AFTER, obj,
-			{ name: "<clip frame>", label: obj.label,
-			fillColor: "None", strokeColor: "None",
-			geometricBounds: fit });
+			obj.itemLayer,
+			LocationOptions.AFTER, obj,
+			{ name: "<clip frame>",
+			label: obj.label,
+			fillColor: "None",
+			strokeColor: "None",
+			geometricBounds: fit }
+		);
 		frame.sendToBack(obj);
 		app.select(obj); app.cut(); app.select(frame); app.pasteInto();
 		return frame;
@@ -179,24 +213,30 @@ function Fit2Bounds(obj) {
 			doc.layers.add({ name: ".debug", layerColor: UIColors.BLACK })
 			.move(LocationOptions.AT_END);
 		} else {
-			var item, items = page.parent.pageItems.everyItem().getElements();
-			while (item = items.shift()) if (item.label == "debug") item.remove();
+			var obj, items = page.parent.pageItems.everyItem().getElements();
+			while (obj = items.shift()) if (obj.label == "debug") obj.remove();
 		}
-		// debugFrame("Black", false, fitE);
-		// debugFrame("Black", false, fitR);
-		objC && debugFrame("Yellow", false, objC);
-		debugFrame("Black", false, tg);
-		debugFrame("Cyan", true, tgSZ);
-		debugFrame("Magenta", true, saSZ);
-		debugFrame("Cyan", false, bounds["page"]["margins"]);
+		// debugFrame("Black", false, b.expand);
+		// debugFrame("Black", false, b.reduce);
+		debugFrame("Yellow", false, o.child);
+		debugFrame("Black", false, b.target);
+		debugFrame("Cyan", true, snapZone.target);
+		debugFrame("Magenta", true, snapZone.safe);
+		debugFrame("Cyan", false, B["page"]["margins"]);
 
-		function debugFrame(color, /*bool*/SZ, bounds) {
-			var frame = page.parent.rectangles.add(layer,
-				{ label: "debug", geometricBounds: bounds, contentType: ContentType.UNASSIGNED,
-				fillColor: "None", strokeColor: color, strokeWeight: SZ ? snapDist : "2 pt",
-				strokeAlignment: SZ ? StrokeAlignment.OUTSIDE_ALIGNMENT : StrokeAlignment.INSIDE_ALIGNMENT,
-				strokeType: SZ ? "$ID/Solid" : "$ID/Canned Dashed 3x2" });
-			frame.transparencySettings.blendingSettings.opacity = SZ ? 25 : 100;
+		function debugFrame(color, /*bool*/isSZ, bounds) {
+			var frame = page.parent.rectangles.add(
+				layer,
+				{ label: "debug",
+				geometricBounds: bounds,
+				contentType: ContentType.UNASSIGNED,
+				fillColor: "None",
+				strokeColor: color,
+				strokeWeight: isSZ ? snapDist : "2 pt",
+				strokeAlignment: isSZ ? StrokeAlignment.OUTSIDE_ALIGNMENT : StrokeAlignment.INSIDE_ALIGNMENT,
+				strokeType: isSZ ? "$ID/Solid" : "$ID/Canned Dashed 3x2" }
+			);
+			frame.transparencySettings.blendingSettings.opacity = isSZ ? 25 : 100;
 		}
 	}
 }
