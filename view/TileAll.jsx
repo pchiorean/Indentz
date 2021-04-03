@@ -1,6 +1,6 @@
 /*
-	Tile all v1.1.0
-	© November 2020, Paul Chiorean
+	Tile all v1.2
+	© April 2020, Paul Chiorean
 	Invokes 'Tile All Vertically' or 'Tile All Horizontally',
 	depending on current spread orientation.
 */
@@ -18,6 +18,6 @@ switch (size.width / size.height <= 1) {
 }
 app.selection = NothingEnum.NOTHING;
 for (var i = 0; i < app.windows.length; i++) {
-	app.windows[i].zoom(ZoomOptions.FIT_PAGE);
-	app.windows[i].zoomPercentage *= 0.9;
+	app.windows[i].zoom(ZoomOptions.FIT_SPREAD);
+	// app.windows[i].zoomPercentage *= 0.9;
 }
