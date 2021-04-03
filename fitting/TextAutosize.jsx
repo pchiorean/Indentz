@@ -1,8 +1,9 @@
 /*
-	Fit frame to text v1.9
-	© March 2021, Paul Chiorean
+	Fit frame to text v2.0
+	© April 2021, Paul Chiorean
 	Auto-sizes the text frame to the content.
-	First paragraph's justification sets horizontal alignment;
+
+	First line's justification sets horizontal alignment;
 	vertical justification sets vertical alignment.
 */
 
@@ -19,107 +20,81 @@ function main(sel) {
 		if (sel[i].constructor.name == "TextFrame") FitFrame2Text(sel[i]);
 }
 
-function FitFrame2Text(sel) {
-	// Trim ending whitespace
-	sel.contents = sel.contents.replace(/\s+$/, "");
-	// JUSTIFY_ALIGN is a special case
-	if (sel.textFramePreferences.verticalJustification == VerticalJustification.JUSTIFY_ALIGN) {
-		sel.textFramePreferences.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
-		exit();
+function FitFrame2Text(frame) {
+	const ASR = AutoSizingReferenceEnum;
+	const VJ = VerticalJustification;
+	var framePrefs = frame.textFramePreferences;
+	var oldAST = framePrefs.autoSizingType;
+	var oldASRP = framePrefs.autoSizingReferencePoint;
+
+	// Special cases
+	// -- 'HW' text frames are already set
+	if (frame.label == "HW") return;
+	// -- Vertically justified text
+	if (framePrefs.verticalJustification == VJ.JUSTIFY_ALIGN) {
+		framePrefs.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
+		return;
 	}
-	// Detect 1st paragraph's justification
-	if (sel.paragraphs.length == 0) return;
-	switch (sel.paragraphs[0].justification) {
+
+	// Trim ending whitespace
+	if (/\s$/.test(frame.contents) && frame.startTextFrame.index == frame.endTextFrame.index)
+		frame.contents = frame.contents.replace(/\s+$/, "");
+	// Disable hyphenation for single lines
+	if (frame.lines.length == 1) frame.lines[0].hyphenation = false;
+
+	// Preliminary
+	switch (framePrefs.verticalJustification) {
+		case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT; break;
+		case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
+		case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
+	}
+	framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
+
+	// Horizontal alignment
+	switch (frame.lines[0].justification) {
 		case Justification.LEFT_ALIGN:
 		case Justification.LEFT_JUSTIFIED:
-			var align = "left"; break;
+			framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break;
 		case Justification.CENTER_ALIGN:
 		case Justification.CENTER_JUSTIFIED:
 		case Justification.FULLY_JUSTIFIED:
-			var align = "center"; break;
+			framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
 		case Justification.RIGHT_ALIGN:
 		case Justification.RIGHT_JUSTIFIED:
-			var align = "right"; break;
-		default: var align = "center";
+			framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break;
+		default:
+			framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT;
 	}
-	// Save settings
-	var set_oldAS = sel.textFramePreferences.autoSizingType;
-	var set_oldVJ = sel.textFramePreferences.verticalJustification;
-	// Set auto-size reference point
-	switch (set_oldVJ) {
-		case VerticalJustification.TOP_ALIGN:
-			sel.textFramePreferences.autoSizingReferencePoint =
-				AutoSizingReferenceEnum.TOP_CENTER_POINT; break;
-		case VerticalJustification.CENTER_ALIGN:
-			sel.textFramePreferences.autoSizingReferencePoint =
-				AutoSizingReferenceEnum.CENTER_POINT; break;
-		case VerticalJustification.BOTTOM_ALIGN:
-			sel.textFramePreferences.autoSizingReferencePoint =
-				AutoSizingReferenceEnum.BOTTOM_CENTER_POINT; break;
+	framePrefs.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
+	framePrefs.useNoLineBreaksForAutoSizing = true;
+
+	// Vertical alignment
+	switch (framePrefs.autoSizingReferencePoint) {
+		case ASR.BOTTOM_LEFT_POINT: switch (framePrefs.verticalJustification) {
+			case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_LEFT_POINT; break;
+			case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.LEFT_CENTER_POINT; break;
+			case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break }
+			break;
+		case ASR.BOTTOM_CENTER_POINT: switch (framePrefs.verticalJustification) {
+			case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT; break;
+			case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
+			case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break }
+			break;
+		case ASR.BOTTOM_RIGHT_POINT: switch (framePrefs.verticalJustification) {
+			case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_RIGHT_POINT; break;
+			case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.RIGHT_CENTER_POINT; break;
+			case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break }
+			break;
 	}
-	// Resize frame
-	sel.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
-	switch (align) {
-		case "center":
-			sel.textFramePreferences.autoSizingReferencePoint =
-				AutoSizingReferenceEnum.BOTTOM_CENTER_POINT; break;
-		case "left":
-			sel.textFramePreferences.autoSizingReferencePoint =
-				AutoSizingReferenceEnum.BOTTOM_LEFT_POINT; break;
-		case "right":
-			sel.textFramePreferences.autoSizingReferencePoint =
-				AutoSizingReferenceEnum.BOTTOM_RIGHT_POINT; break;
-	}
-	sel.textFramePreferences.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
-	sel.textFramePreferences.useNoLineBreaksForAutoSizing = true;
-	// Set frame tightening
-	if (sel.lines.length > 1) {
-		sel.textFramePreferences.autoSizingType = set_oldAS == AutoSizingTypeEnum.OFF ?
-			AutoSizingTypeEnum.HEIGHT_ONLY : AutoSizingTypeEnum.HEIGHT_AND_WIDTH
+
+	// Frame auto-sizing
+	if (frame.lines.length > 1) {
+		framePrefs.autoSizingType =
+			(oldAST == AutoSizingTypeEnum.OFF) ?
+			AutoSizingTypeEnum.HEIGHT_ONLY :
+			(framePrefs.autoSizingReferencePoint != oldASRP ?
+				AutoSizingTypeEnum.HEIGHT_ONLY : AutoSizingTypeEnum.HEIGHT_AND_WIDTH)
 	} else {
-		sel.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
-	}
-	// 1st paragraph's justification sets horizontal alignment
-	// Vertical justification sets vertical alignment
-	switch (align) {
-		case "center":
-			switch (set_oldVJ) {
-				case VerticalJustification.TOP_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint =
-						AutoSizingReferenceEnum.TOP_CENTER_POINT; break;
-				case VerticalJustification.CENTER_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint =
-						AutoSizingReferenceEnum.CENTER_POINT; break;
-				case VerticalJustification.BOTTOM_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint =
-						AutoSizingReferenceEnum.BOTTOM_CENTER_POINT; break;
-			}
-			break;
-		case "left":
-			switch (set_oldVJ) {
-				case VerticalJustification.TOP_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint =
-						AutoSizingReferenceEnum.TOP_LEFT_POINT; break;
-				case VerticalJustification.CENTER_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint =
-						AutoSizingReferenceEnum.LEFT_CENTER_POINT; break;
-				case VerticalJustification.BOTTOM_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint =
-						AutoSizingReferenceEnum.BOTTOM_LEFT_POINT; break;
-			}
-			break;
-		case "right":
-			switch (set_oldVJ) {
-				case VerticalJustification.TOP_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint =
-						AutoSizingReferenceEnum.TOP_RIGHT_POINT; break;
-				case VerticalJustification.CENTER_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint =
-						AutoSizingReferenceEnum.RIGHT_CENTER_POINT; break;
-				case VerticalJustification.BOTTOM_ALIGN:
-					sel.textFramePreferences.autoSizingReferencePoint =
-						AutoSizingReferenceEnum.BOTTOM_RIGHT_POINT; break;
-			}
-			break;
+		framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
 	}
 }
