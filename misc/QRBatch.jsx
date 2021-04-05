@@ -1,11 +1,11 @@
 /*
-	Batch QR codes v1.1
-	© March 2021, Paul Chiorean
+	Batch QR codes v2.0
+	© April 2021, Paul Chiorean
 	Batch processes "QR.txt" to add codes to existing documents or to separate files.
 	The list is a 3-column TSV file with the following format:
 
 	Filename | Code | On doc
-	File 1 | Code 1 | *
+	File 1 | Code 1 | +
 	File 2 | Code 2 |
 	...
 	1. <Filename>: document name,
@@ -15,17 +15,19 @@
 
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.enableRedraw = false;
-var doc, currentPath, errors = [];
+var doc, currentPath, errors;
 if (app.documents.length > 0) doc = app.activeDocument;
 if (doc && doc.saved) currentPath = doc.filePath;
 
 main();
 
 function main() {
-	const LW = 1024; // List width (pixels)
-	const LH = 25;   // List height (lines)
-	const IH = 21;   // List item height (pixels)
-	var infoFile, header = [], data = [], pbWidth;
+	const L = {
+		WIDTH: 1200,   // pixels
+		HEIGHT: 25,    // lines
+		ITEMHEIGHT: 21 // pixels
+	}
+	var infoFile, rawData, validLines, queue, pbWidth;
 	// User interface
 	var ui = new Window("dialog", "Generate QR Codes");
 	ui.orientation = "column";
@@ -34,21 +36,21 @@ function main() {
 	ui.main.orientation = "column";
 	ui.main.alignChildren = [ "fill", "center" ];
 	ui.list = ui.main.add('listbox', undefined, undefined, {
-		numberOfColumns: 3,
+		numberOfColumns: 4,
 		showHeaders: true,
-		columnTitles: [ "Filename", "Code", "On doc" ],
-		columnWidths: [ (LW-66) * 0.6574, (LW-66) * 0.3426, 50 ],
+		columnTitles: [ "#", "Filename", "Code", "On" ],
+		columnWidths: [ 25, (L.WIDTH - 66) * 0.7, (L.WIDTH - 66) * 0.3, 25 ],
 		multiselect: true
 	});
-	ui.list.itemSize[1] = IH;
-	ui.list.size = [ LW, (IH+1) * (LH+1) - 1 ];
+	ui.list.itemSize[1] = L.ITEMHEIGHT;
+	ui.list.size = [ L.WIDTH, (L.ITEMHEIGHT + 1) * (L.HEIGHT + 1) - 1 ];
 	ui.list.active = true;
 	ui.actions = ui.add("group", undefined);
 	ui.actions.orientation = "row";
 	ui.actions.alignChildren = [ "right", "center" ];
 	ui.actions.white = ui.actions.add("checkbox", undefined, "White text");
 	ui.actions.white.helpTip = "Make text white (ignored when separate)";
-	ui.actions.white.preferredSize.width = LW-492;
+	ui.actions.white.preferredSize.width = L.WIDTH - 492;
 	ui.actions.err = ui.actions.add("button", undefined, "Show errors");
 	ui.actions.err.visible = false;
 	ui.actions.div1 = ui.actions.add("panel", undefined, undefined);
@@ -63,84 +65,126 @@ function main() {
 	// UI Functions
 	ui.actions.reload.onClick = function() {
 		ui.list.removeAll();
-		infoFile = "", header = [], data = [], errors = [], pbWidth = 1;
-		var infoLine, line = 0, flg_H = false;
-		if (!!currentPath &&
-			((infoFile = File(currentPath + "/_qr.txt")) && infoFile.exists ||
-			(infoFile = File(currentPath + "/_QR.txt")) && infoFile.exists ||
-			(infoFile = File(currentPath + "/qr.txt")) && infoFile.exists ||
-			(infoFile = File(currentPath + "/QR.txt")) && infoFile.exists)) {
+		infoFile = "", rawData = [], validLines = [], errors = [], pbWidth = 64;
+		if (/QR Codes$/g.test(decodeURI(currentPath))) currentPath = currentPath.parent;
+		if (!!currentPath && (
+				(infoFile = File(currentPath + "/_qr.txt")) && infoFile.exists ||
+				(infoFile = File(currentPath + "/_QR.txt")) && infoFile.exists ||
+				(infoFile = File(currentPath + "/qr.txt"))  && infoFile.exists ||
+				(infoFile = File(currentPath + "/QR.txt"))  && infoFile.exists)
+			) {
 			infoFile.open("r");
+			var infoLine, line = 0, flgHeader = false;
 			while (!infoFile.eof) {
+				var infoLine = "", isEmpty = isComment = isHeader = false;
 				infoLine = infoFile.readln(); line++;
-				if (infoLine == "") continue; // Skip empty lines
-				if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
+				if (infoLine == "") isEmpty = true
+				else if (infoLine.toString().slice(0,1) == "\u0023") isComment = true;
 				infoLine = infoLine.split(/ *\t */);
-				if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
-				if (!infoLine[0]) errors.push("Line " + line + ": Missing filename.");
-				if (/[\/\\?%*:|"<>]/.test(infoLine[0]))
-					errors.push("Line " + line + ": Illegal character in the filename.");
-				infoLine[2] = !!infoLine[2] || false;
-				if (!infoLine[0].match(/\.indd$/ig)) infoLine[0] += ".indd";
-				if (infoLine[2] && !File(currentPath + "/" + infoLine[0]).exists)
-					errors.push("Line " + line + ": File '" + infoLine[0] + "' not found.");
-				if (!infoLine[2] && !infoLine[0].match(/_QR\.indd$/ig))
-					infoLine[0] = infoLine[0].replace(/\.indd$/ig, "_QR.indd");
-				if (!infoLine[1]) errors.push("Line " + line + ": Missing code.");
-				pbWidth = Math.max(pbWidth, infoLine[0].length);
-				data.push({ fn: infoLine[0], qr: infoLine[1], pos: infoLine[2] });
+				if (!flgHeader) if (!isEmpty && !isComment) { isHeader = flgHeader = true }
+				if (!isEmpty && !isComment && !isHeader) {
+					// infoLine[2] = !!infoLine[2] || false;
+					if (infoLine[0] == "") {
+						errors.push("Line " + line + ": Missing filename.") }
+					if (/[\/\\?%*:|"<>]/.test(infoLine[0])) {
+						errors.push("Line " + line + ": Illegal character in the filename.") }
+					if (infoLine[0] != "" && !infoLine[0].match(/\.indd$/ig)) infoLine[0] += ".indd";
+					if (infoLine[0] != "" && !!infoLine[2] && !File(currentPath + "/" + infoLine[0]).exists) {
+						errors.push("Line " + line + ": File '" + infoLine[0] + "' not found.") }
+					if (infoLine[1] == "") { errors.push("Line " + line + ": Missing code.") }
+					if (!infoLine[2] && !infoLine[0].match(/_QR\.indd$/ig))
+						infoLine[0] = infoLine[0].replace(/\.indd$/ig, "_QR.indd");
+					if (infoLine[0] != "") pbWidth = Math.max(pbWidth, infoLine[0].length);
+					if (errors.length == 0) validLines.push(line);
+				}
+				rawData.push({
+					fn: infoLine[0],
+					code: infoLine[1],
+					pos: infoLine[2],
+					valid: (!isEmpty && !isComment && !isHeader),
+					exported: false
+				});
+				if (!isHeader) {
+					var l = ui.list.add("item", line);
+					l.subItems[0].text = rawData[line-1].fn || "";
+					l.subItems[1].text = rawData[line-1].code || "";
+					l.subItems[2].text = rawData[line-1].pos ? "+" : "";
+				}
 			}
-			infoFile.close(); infoLine = "";
+			infoFile.close();
+			infoLine = "";
 		}
-		if (data.length == 0) {
+		ui.list.onChange();
+	}
+	ui.list.onChange = function() {
+		if (ui.list.selection) {
+			queue = [];
+			for (var i = 0; i < ui.list.selection.length; i++) {
+				for (var j = 0; j < validLines.length; j++) {
+					if (Number(ui.list.selection[i].toString()) == validLines[j]) {
+						queue.push(Number(ui.list.selection[i].toString()));
+						break;
+					}
+				}
+			}
+		} else queue = validLines;
+		if (queue.length == 0) {
 			ui.text = !currentPath ? "Select a folder containing the data file" :
 				(infoFile.exists ? decodeURI(infoFile.fullName) + " – 0 records" :
 				"No data file in " + decodeURI(currentPath) + "/");
 			if (!currentPath) ui.actions.browse.notify();
 		} else {
-			for (var i = 0; i < data.length; i++) {
-				var l = ui.list.add("item", data[i].fn);
-				l.subItems[0].text = data[i].qr;
-				l.subItems[1].text = data[i].pos ? "✔︎" : "";
-			}
 			ui.text = decodeURI(infoFile.fullName) + " – " +
-				ui.list.children.length + " record" + (ui.list.children.length > 1 ? "s" : "") +
+				queue.length + " record" + (queue.length > 1 ? "s" : "") +
 				(errors.length > 0 ? " | " + errors.length + " error" + (errors.length > 1 ? "s" : "") : "");
 		}
-		ui.actions.start.enabled = data.length > 0 && errors.length == 0;
+		ui.actions.start.enabled = queue.length > 0 && (errors.length == 0 || ui.list.selection);
 		ui.actions.reload.enabled = !!currentPath;
 		ui.actions.err.visible = ui.actions.div1.visible = (errors.length > 0);
 		if (errors.length > 0) { ui.actions.err.active = true }
-		else if (data.length == 0) { ui.actions.browse.active = true }
+		else if (!infoFile.exists) { ui.actions.browse.active = true }
+		else if (queue.length == 0 && !ui.list.selection) { ui.actions.reload.active = true }
 		else ui.list.active = true;
 	}
 	ui.list.onDoubleClick = function() { infoFile.execute() }
-	ui.actions.err.onClick = function() {
-		AlertScroll("Errors", errors);
-	}
+	ui.actions.err.onClick = function() { AlertScroll("Errors", errors) }
 	ui.actions.browse.onClick = function() {
 		var folder = Folder.selectDialog("Select a folder containing the data file:");
-		if (!!folder && folder.fullName != currentPath) {
-			currentPath = Folder.encode(folder.fullName);
+		if (!!folder && folder != currentPath) {
+			if (/QR Codes$/g.test(decodeURI(folder))) folder = folder.parent;
+			currentPath = folder;
 			ui.actions.reload.onClick();
 		}
 	}
-	// Processing
 	ui.onShow = ui.actions.reload.notify();
+	// Processing
 	if (ui.show() == 2) exit();
-	errors = [];
-	var items = ui.list.selection || data;
-	var progressBar = new ProgressBar("Processing", pbWidth);
-	progressBar.reset(items.length);
-	for (var i = 0; i < items.length; i++) {
-		var item = ui.list.selection ? data[items[i].index] : data[i];
-		progressBar.update(i+1, item.fn);
-		switch (item.pos) {
-			case true: MakeQROnDoc(item.fn, item.qr, ui.actions.white.value); break;
-			case false: MakeQROnFile(item.fn, item.qr); break;
+	errors = [], isModified = false;
+	if (queue.length > 1) var progressBar = new ProgressBar("Processing", pbWidth);
+	progressBar && progressBar.reset(queue.length);
+	for (var i = 0; i < queue.length; i++) {
+		var item = rawData[queue[i]-1];
+		if (item.fn == "" || item.fn.toString().slice(0,1) == "\u0023") { progressBar.update(i+1, ""); continue }
+		progressBar && progressBar.update(i+1, item.fn);
+		if ((item.pos && MakeQROnDoc(item.fn, item.code, ui.actions.white.value)) ||
+				(!item.pos && MakeQROnFile(item.fn, item.code))) {
+			item.exported = true; isModified = true;
 		}
 	}
-	progressBar.close();
+	// Update data file
+	progressBar && progressBar.close();
+	if (infoFile.exists && isModified && infoFile.open("w")) {
+		infoFile.encoding = "UTF-8";
+		for (var i = 0; i < rawData.length; i++) {
+			infoFile.writeln(
+				(rawData[i].exported ? "# " : "") +
+				(rawData[i].fn ? rawData[i].fn : "") +
+				(rawData[i].code ? "\t" + rawData[i].code : "") +
+				(rawData[i].pos ? "\t+" : "")
+			);
+		}
+		infoFile.close();
+	}
 	if (errors.length > 0) AlertScroll("Errors", errors);
 }
 
@@ -171,7 +215,7 @@ function MakeQROnDoc(fn, code, /*bool*/isWhite) {
 			tracking: -15,
 			hyphenation: false,
 			capitalization: Capitalization.ALL_CAPS,
-			fillColor: isWhite ? "Paper" : "Black", // White text
+			fillColor: isWhite ? "Paper" : "Black", // White text checkbox
 			strokeColor: "None"
 		}
 		labelFrame.textFramePreferences.properties = {
@@ -233,6 +277,7 @@ function MakeQROnDoc(fn, code, /*bool*/isWhite) {
 	}
 	doc.save();
 	doc.close();
+	return true;
 }
 
 function MakeQROnFile(fn, code) {
@@ -311,11 +356,13 @@ function MakeQROnFile(fn, code) {
 	if (labelFrame.overflows) {
 		target.textPreferences.showInvisibles = true;
 		errors.push(fn + ": Text overflows");
+		return false;
 	} else {
 		targetPDFFolder = Folder(targetFolder + "/PDFs");
 		targetPDFFolder.create();
 		ExportToPDF(target, targetPDFFolder + "/" + fn.replace(/\.indd$/ig, ".pdf"));
 		target.close();
+		return true;
 	}
 
 	function ExportToPDF(doc, path) {
@@ -371,10 +418,8 @@ function MakeQROnFile(fn, code) {
 			omitPDF = false;
 			pageInformationMarks = false;
 			pdfColorSpace = PDFColorSpace.REPURPOSE_CMYK;
-			try { pdfDestinationProfile = "ISO Coated v2 (ECI)" } catch (e) {
-				pdfDestinationProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
-			try { pdfXProfile = "ISO Coated v2 (ECI)" } catch (e) {
-				pdfXProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
+			pdfDestinationProfile = "Coated FOGRA39 (ISO 12647-2:2004)";
+			pdfXProfile = "Coated FOGRA39 (ISO 12647-2:2004)";
 			standardsCompliance = PDFXStandards.PDFX42010_STANDARD;
 			pdfMarkType = MarkTypes.DEFAULT_VALUE;
 			pageMarksOffset = 8.50393962860107;
@@ -416,7 +461,8 @@ function BalanceText(txt, length) {
 	return linesArray.join("\u000A");
 
 	function BalanceLines() {
-		// Move the last word on the next line and test improvement
+		// Move the last word on the next line and check improvement;
+		// if better, save and repeat until no improvement
 		for (i = 0; i < linesArray.length - 1; i++) {
 			var delta = Math.abs(linesArray[i].length - linesArray[i+1].length);
 			var line = linesArray[i].match(WORDS);
@@ -424,7 +470,6 @@ function BalanceText(txt, length) {
 			var newLine1 = line.join("");
 			var newLine2 = word + linesArray[i+1];
 			var newDelta = Math.abs(newLine1.length - newLine2.length);
-			// If better, save and repeat until no improvement
 			if (newDelta < delta) {
 				linesArray[i] = newLine1;
 				linesArray[i+1] = newLine2;
@@ -453,25 +498,26 @@ function MakeIDLayer(doc) {
 }
 
 function ProgressBar(title, width) {
-	var w = new Window("palette", title);
-	w.pb = w.add("progressbar", undefined, 0, undefined);
-	w.st = w.add("statictext", undefined, undefined, { truncate: "middle" });
-	w.st.characters = width;
-	w.layout.layout();
-	w.pb.bounds = [ 12, 12, w.st.bounds[2], 24 ];
+	var pb = new Window("palette", title);
+	pb.bar = pb.add("progressbar", undefined, 0, undefined);
+	pb.msg = pb.add("statictext", undefined, undefined, { truncate: "middle" });
+	pb.msg.characters = width;
+	pb.layout.layout();
+	pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
 	this.reset = function(max) {
-		w.pb.value = 0;
-		w.pb.maxvalue = max || 0;
-		w.pb.visible = !!max;
-		w.show();
+		pb.bar.value = 0;
+		pb.bar.maxvalue = max || 0;
+		pb.bar.visible = !!max;
+		pb.show();
 	}
 	this.update = function(val, file) {
-		w.pb.value = val;
-		w.st.text = decodeURI(file) + " (" + val + " of " + w.pb.maxvalue + ")";
-		w.show(); w.update();
+		pb.bar.value = val;
+		pb.msg.text = decodeURI(file);
+		pb.text = title + " – " + val + "/" + pb.bar.maxvalue;
+		pb.show(); pb.update();
 	}
-	this.hide = function() { w.hide() }
-	this.close = function() { w.close() }
+	this.hide = function() { pb.hide() }
+	this.close = function() { pb.close() }
 }
 
 function Margins(page) {
