@@ -1,7 +1,26 @@
 /*
-	QR code v3.1
-	© March 2021, Paul Chiorean
+	QR code v3.2 (2021-03-29)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
 	Adds a QR code to the current document or to a separate file.
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
 */
 
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
@@ -14,43 +33,39 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "QR code");
 
 function main() {
-	var flg_onfile;
-	var ui = new Window("dialog");
-		ui.text = "Generate QR Code";
-		ui.orientation = "row";
-		ui.alignChildren = ["left", "fill"];
-	var qpanel = ui.add("panel", undefined, undefined);
-		qpanel.orientation = "column";
-		qpanel.alignChildren = ["left", "top"];
-		qpanel.add("statictext", undefined, "Enter QR code text:", { name: "st" });
-	var label = qpanel.add("edittext", undefined, "", { enterKeySignalsOnChange: true });
-		label.helpTip = "Use '|' for manual line breaks";
-		label.characters = 56;
-		label.active = true;
-	var white = qpanel.add("checkbox", undefined, "White text");
-		white.helpTip = "Make text white (ignored when separate)";
-	var buttons = ui.add("group", undefined);
-		buttons.orientation = "column";
-		buttons.alignChildren = ["fill", "top"];
-	var ondoc = buttons.add("button", undefined, "On doc", { name: "ok" });
-		ondoc.helpTip = "Bottom-left corner of each page";
-	var onfile = buttons.add("button", undefined, "Separate");
-		onfile.helpTip = !!currentPath ?
-			"'QR Codes/" + doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd'" :
-			"Where? Document is not saved";
-	buttons.add("button", undefined, "Cancel", { name: "cancel" });
-	onfile.enabled = !!currentPath;
-	ondoc.onClick = function() { flg_onfile = false; ui.close() }
-	onfile.onClick = function() { flg_onfile = true; ui.close() }
+	var isOnFile;
+	var ui = new Window("dialog", "Generate QR Code");
+	ui.orientation = "row";
+	ui.alignChildren = ["left", "fill"];
+	ui.qpanel = ui.add("panel", undefined, undefined);
+	ui.qpanel.orientation = "column";
+	ui.qpanel.alignChildren = ["left", "top"];
+	ui.qpanel.add("statictext", undefined, "Enter QR code text:", { name: "st" });
+	ui.label = ui.qpanel.add("edittext", undefined, "", { enterKeySignalsOnChange: true });
+	ui.label.helpTip = "Use '|' for manual line breaks";
+	ui.label.characters = 56;
+	ui.label.active = true;
+	ui.white = ui.qpanel.add("checkbox", undefined, "White text");
+	ui.white.helpTip = "Make text white (ignored when separate)";
+	ui.actions = ui.add("group", undefined);
+	ui.actions.orientation = "column";
+	ui.actions.alignChildren = ["fill", "top"];
+	ui.ondoc = ui.actions.add("button", undefined, "On doc", { name: "ok" });
+	ui.ondoc.helpTip = "Bottom-left corner of each page";
+	ui.onfile = ui.actions.add("button", undefined, "External");
+	ui.onfile.helpTip = !!currentPath ?
+		"'QR Codes/" + doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd'" :
+		"Where? Document is not saved";
+	ui.actions.add("button", undefined, "Cancel", { name: "cancel" });
+	ui.onfile.enabled = !!currentPath;
+	ui.ondoc.onClick = function() { isOnFile = false; ui.close() }
+	ui.onfile.onClick = function() { isOnFile = true; ui.close() }
 	if (ui.show() == 2) exit();
 	// Processing
-	var code = label.text.replace(/^\s+/, '').replace(/\s+$/, '');
+	var code = ui.label.text.replace(/^\s+/, '').replace(/\s+$/, '');
 	if (!code) { main(); exit() }
 	errors = [];
-	switch (flg_onfile) {
-		case false: MakeQROnDoc(code, white.value); break;
-		case true: MakeQROnFile(code); break;
-	}
+	if (isOnFile) { MakeQROnFile(code) } else { MakeQROnDoc(code, ui.white.value) }
 	if (errors.length > 0) AlertScroll("Errors", errors);
 }
 
@@ -80,7 +95,7 @@ function MakeQROnDoc(code, /*bool*/isWhite) {
 			tracking: -15,
 			hyphenation: false,
 			capitalization: Capitalization.ALL_CAPS,
-			fillColor: isWhite ? "Paper" : "Black", // White text
+			fillColor: isWhite ? "Paper" : "Black", // White text checkbox
 			strokeColor: "None"
 		}
 		labelFrame.textFramePreferences.properties = {
@@ -278,10 +293,8 @@ function MakeQROnFile(code) {
 			omitPDF = false;
 			pageInformationMarks = false;
 			pdfColorSpace = PDFColorSpace.REPURPOSE_CMYK;
-			try { pdfDestinationProfile = "ISO Coated v2 (ECI)" } catch (e) {
-				pdfDestinationProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
-			try { pdfXProfile = "ISO Coated v2 (ECI)" } catch (e) {
-				pdfXProfile = "Coated FOGRA39 (ISO 12647-2:2004)" };
+			pdfDestinationProfile = "Coated FOGRA39 (ISO 12647-2:2004)";
+			pdfXProfile = "Coated FOGRA39 (ISO 12647-2:2004)";
 			standardsCompliance = PDFXStandards.PDFX42010_STANDARD;
 			pdfMarkType = MarkTypes.DEFAULT_VALUE;
 			pageMarksOffset = 8.50393962860107;
@@ -307,6 +320,7 @@ function MakeQROnFile(code) {
 function BalanceText(txt, length) {
 	const WORDS = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})))|(.+)/g;
 	var wordsArray = txt.match(WORDS);
+	alert(wordsArray);
 	// 1st pass: roughly join words into lines
 	var linesArray = [], lineBuffer = "", word = "";
 	while (word = wordsArray.shift()) {
@@ -323,7 +337,8 @@ function BalanceText(txt, length) {
 	return linesArray.join("\u000A");
 
 	function BalanceLines() {
-		// Move the last word on the next line and test improvement
+		// Move the last word on the next line and check improvement;
+		// if better, save and repeat until no improvement
 		for (i = 0; i < linesArray.length - 1; i++) {
 			var delta = Math.abs(linesArray[i].length - linesArray[i+1].length);
 			var line = linesArray[i].match(WORDS);
@@ -331,7 +346,6 @@ function BalanceText(txt, length) {
 			var newLine1 = line.join("");
 			var newLine2 = word + linesArray[i+1];
 			var newDelta = Math.abs(newLine1.length - newLine2.length);
-			// If better, save and repeat until no improvement
 			if (newDelta < delta) {
 				linesArray[i] = newLine1;
 				linesArray[i+1] = newLine2;
