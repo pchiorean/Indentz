@@ -1,10 +1,28 @@
 /*
-	Fit frame to text v2.1
-	© April 2021, Paul Chiorean
-	Auto-sizes the text frame to the content.
+	Fit frame to text v2.2 (2021-04-07)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
+	Auto-sizes the text frame to the content.
 	First line's justification sets horizontal alignment;
 	vertical justification sets vertical alignment.
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
 */
 
 if (!(doc = app.activeDocument)) exit();
@@ -27,6 +45,7 @@ function FitFrame2Text(frame) {
 	var frameVJ = framePrefs.verticalJustification;
 	var oldAST = framePrefs.autoSizingType;
 	var oldASRP = framePrefs.autoSizingReferencePoint;
+	var align;
 
 	// Trim ending whitespace
 	if (/\s$/.test(frame.contents) && frame.startTextFrame.index == frame.endTextFrame.index)
@@ -36,54 +55,65 @@ function FitFrame2Text(frame) {
 	// Skip 'HW' text frames, they are already set
 	if (frame.label == "HW") return;
 
+	// Detect 1st paragraph's justification
+	if (frame.lines.length == 0) return;
+	switch (frame.lines[0].justification) {
+		case Justification.LEFT_ALIGN:
+		case Justification.LEFT_JUSTIFIED: align = "left"; break;
+		case Justification.CENTER_ALIGN:
+		case Justification.CENTER_JUSTIFIED:
+		case Justification.FULLY_JUSTIFIED: align = "center"; break;
+		case Justification.RIGHT_ALIGN:
+		case Justification.RIGHT_JUSTIFIED: align = "right"; break;
+		case Justification.AWAY_FROM_BINDING_SIDE:
+			align = (frame.parentPage.side == PageSideOptions.LEFT_HAND) ? "left" : "right"; break;
+		case Justification.TO_BINDING_SIDE:
+			align = (frame.parentPage.side == PageSideOptions.LEFT_HAND) ? "right" : "left"; break;
+	}
 	// Tighten frame
 	switch (frameVJ) {
 		case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT; break;
 		case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
-		case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break }
+		case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
+	}
 	if (frameVJ != VJ.JUSTIFY_ALIGN) framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
-	if (frameVJ == VJ.CENTER_ALIGN) framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT;
 	// Fix first baseline offset
-	var offset = frame.lines[0].baseline;
+	switch (align) {
+		case "center": framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
+		case "left": framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break;
+		case "right": framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break;
+	}
 	framePrefs.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
-	offset -= frame.lines[0].baseline;
-	frame.geometricBounds = [ frame.geometricBounds[0] + offset * (frameVJ == VJ.CENTER_ALIGN ? 0.5 : 1),
-		frame.geometricBounds[1], frame.geometricBounds[2], frame.geometricBounds[3] ];
 	framePrefs.useNoLineBreaksForAutoSizing = true;
 	// Set alignment
-	switch (frame.lines[0].justification) {
-		case Justification.LEFT_ALIGN:
-		case Justification.LEFT_JUSTIFIED: switch (frameVJ) {
-			case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_LEFT_POINT; break;
-			case VJ.JUSTIFY_ALIGN:
-			case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.LEFT_CENTER_POINT; break;
-			case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break }
+	switch (align) {
+		case "left":
+			switch (frameVJ) {
+				case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_LEFT_POINT; break;
+				case VJ.JUSTIFY_ALIGN:
+				case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.LEFT_CENTER_POINT; break;
+				case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break;
+			}
 			break;
-		case Justification.CENTER_ALIGN:
-		case Justification.CENTER_JUSTIFIED:
-		case Justification.FULLY_JUSTIFIED: switch (frameVJ) {
-			case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT; break;
-			case VJ.JUSTIFY_ALIGN:
-			case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
-			case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break }
+		case "center":
+			switch (frameVJ) {
+				case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT; break;
+				case VJ.JUSTIFY_ALIGN:
+				case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
+				case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
+			}
 			break;
-		case Justification.RIGHT_ALIGN:
-		case Justification.RIGHT_JUSTIFIED: switch (frameVJ) {
-			case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_RIGHT_POINT; break;
-			case VJ.JUSTIFY_ALIGN:
-			case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.RIGHT_CENTER_POINT; break;
-			case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break }
+		case "right":
+			switch (frameVJ) {
+				case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_RIGHT_POINT; break;
+				case VJ.JUSTIFY_ALIGN:
+				case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.RIGHT_CENTER_POINT; break;
+				case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break;
+			}
 			break;
-		case Justification.AWAY_FROM_BINDING_SIDE:
-			framePrefs.autoSizingReferencePoint = (frame.parentPage.side == PageSideOptions.LEFT_HAND) ?
-				ASR.LEFT_CENTER_POINT : ASR.RIGHT_CENTER_POINT; break;
-		case Justification.TO_BINDING_SIDE:
-			framePrefs.autoSizingReferencePoint = (frame.parentPage.side == PageSideOptions.LEFT_HAND) ?
-				ASR.RIGHT_CENTER_POINT : ASR.LEFT_CENTER_POINT; break;
 	}
 	// Set frame auto-sizing
-	if (frameVJ == VJ.JUSTIFY_ALIGN) {
-		framePrefs.autoSizingType = AutoSizingTypeEnum.WIDTH_ONLY; return }
+	if (frameVJ == VJ.JUSTIFY_ALIGN) { framePrefs.autoSizingType = AutoSizingTypeEnum.WIDTH_ONLY; return }
 	if (frame.lines.length > 1) {
 		framePrefs.autoSizingType = (oldAST == AutoSizingTypeEnum.OFF) ?
 		AutoSizingTypeEnum.HEIGHT_ONLY :
