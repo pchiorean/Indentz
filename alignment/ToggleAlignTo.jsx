@@ -1,14 +1,12 @@
 /*
-	Toggle 'Align To' v1.0.1 (2020-11-02)
-	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+	Toggle 'Align To' v1.1 (2021-04-07)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Toggles the 'Align To' setting.
 
 	Released under MIT License:
 	https://opensource.org/licenses/MIT
 */
-
-if (app.documents.length == 0) exit();
 
 const ADB = AlignDistributeBounds;
 
