@@ -1,7 +1,11 @@
 /*
-	Reset 'Align To' v1.1.1
-	© August 2020, Paul Chiorean
+	Reset 'Align To' v1.1.1 (2020-11-02)
+	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+
 	Resets the 'Align To' setting to default.
+
+	Released under MIT License:
+	https://opensource.org/licenses/MIT
 */
 
 if (app.documents.length == 0) exit();

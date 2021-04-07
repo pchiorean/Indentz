@@ -1,7 +1,11 @@
 /*
-	Align to top-left v2.4.2
-	© November 2020, Paul Chiorean
+	Align to top-left v2.4.2 (2020-11-22)
+	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+
 	Aligns the selected objects to the top-left of the 'Align To' setting.
+
+	Released under MIT License:
+	https://opensource.org/licenses/MIT
 */
 
 if (!(doc = app.activeDocument)) exit();

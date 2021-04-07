@@ -1,7 +1,11 @@
 /*
-	Align to bottom-right v2.4.2
-	© November 2020, Paul Chiorean
+	Align to bottom-right v2.4.2 (2020-11-22)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
 	Aligns the selected objects to the bottom-right of the 'Align To' setting.
+
+	Released under MIT License:
+	https://opensource.org/licenses/MIT
 */
 
 if (!(doc = app.activeDocument)) exit();

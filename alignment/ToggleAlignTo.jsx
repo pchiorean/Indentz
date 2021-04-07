@@ -1,19 +1,25 @@
 /*
-	Toggle 'Align To' v1.0.1
-	© August 2020, Paul Chiorean
+	Toggle 'Align To' v1.0.1 (2020-11-02)
+	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+
 	Toggles the 'Align To' setting.
+
+	Released under MIT License:
+	https://opensource.org/licenses/MIT
 */
 
 if (app.documents.length == 0) exit();
 
+const ADB = AlignDistributeBounds;
+
 switch(app.alignDistributePreferences.alignDistributeBounds) {
-	case 1416587604: // ITEM_BOUNDS
-	case 1699439993: // KEY_OBJECT
-		app.alignDistributePreferences.alignDistributeBounds = AlignDistributeBounds.MARGIN_BOUNDS; break;
-	case 1416588609: // MARGIN_BOUNDS
-		app.alignDistributePreferences.alignDistributeBounds = AlignDistributeBounds.PAGE_BOUNDS; break;
-	case 1416589377: // PAGE_BOUNDS
-		app.alignDistributePreferences.alignDistributeBounds = AlignDistributeBounds.SPREAD_BOUNDS; break;
-	case 1416590160: // SPREAD_BOUNDS
-		app.alignDistributePreferences.alignDistributeBounds = AlignDistributeBounds.ITEM_BOUNDS; break;
+	case ADB.ITEM_BOUNDS:
+	case ADB.KEY_OBJECT:
+		app.alignDistributePreferences.alignDistributeBounds = ADB.MARGIN_BOUNDS; break;
+	case ADB.MARGIN_BOUNDS:
+		app.alignDistributePreferences.alignDistributeBounds = ADB.PAGE_BOUNDS; break;
+	case ADB.PAGE_BOUNDS:
+		app.alignDistributePreferences.alignDistributeBounds = ADB.SPREAD_BOUNDS; break;
+	case ADB.SPREAD_BOUNDS:
+		app.alignDistributePreferences.alignDistributeBounds = ADB.ITEM_BOUNDS; break;
 }
