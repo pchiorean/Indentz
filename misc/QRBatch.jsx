@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.0 (2021-04-05)
+	Batch QR codes v2.1 (2021-04-05)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Batch processes "QR.txt" to add codes to existing documents or to separate files.
@@ -12,6 +12,9 @@
 	1. <Filename>: document name,
 	2. <Code>: any string,
 	3. <On doc>: any string: on document; empty: separate file.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -462,36 +465,36 @@ function MakeQROnFile(fn, code) {
 }
 
 function BalanceText(txt, length) {
-	const WORDS = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})))|(.+)/g;
-	var wordsArray = txt.match(WORDS);
+	const wordRE = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})))|(.+)/g;
+	var words = txt.match(wordRE);
 	// 1st pass: roughly join words into lines
-	var linesArray = [], lineBuffer = "", word = "";
-	while (word = wordsArray.shift()) {
+	var lines = [], lineBuffer = "", word = "";
+	while (word = words.shift()) {
 		if ((lineBuffer + word).length <= length) {
 			lineBuffer += word;
 		} else {
-			if (lineBuffer != "") linesArray.push(lineBuffer);
+			if (lineBuffer != "") lines.push(lineBuffer);
 			lineBuffer = word;
 		}
 	}
-	if (lineBuffer != "") linesArray.push(lineBuffer);
+	if (lineBuffer != "") lines.push(lineBuffer);
 	// 2nd pass: balance ragged lines
-	if (linesArray.length > 1) BalanceLines();
-	return linesArray.join("\u000A");
+	if (lines.length > 1) BalanceLines();
+	return lines.join("\u000A");
 
 	function BalanceLines() {
 		// Move the last word on the next line and check improvement;
 		// if better, save and repeat until no improvement
-		for (i = 0; i < linesArray.length - 1; i++) {
-			var delta = Math.abs(linesArray[i].length - linesArray[i+1].length);
-			var line = linesArray[i].match(WORDS);
+		for (i = 0; i < lines.length - 1; i++) {
+			var delta = Math.abs(lines[i].length - lines[i+1].length);
+			var line = lines[i].match(wordRE);
 			var word = line.pop();
 			var newLine1 = line.join("");
-			var newLine2 = word + linesArray[i+1];
+			var newLine2 = word + lines[i+1];
 			var newDelta = Math.abs(newLine1.length - newLine2.length);
 			if (newDelta < delta) {
-				linesArray[i] = newLine1;
-				linesArray[i+1] = newLine2;
+				lines[i] = newLine1;
+				lines[i+1] = newLine2;
 				BalanceLines();
 			}
 		}
@@ -529,10 +532,11 @@ function ProgressBar(title, width) {
 		pb.bar.visible = !!max;
 		pb.show();
 	}
-	this.update = function(val, file) {
+	this.update = function(val, msg) {
 		pb.bar.value = val;
-		pb.msg.text = decodeURI(file);
-		pb.text = title + " – " + val + "/" + pb.bar.maxvalue;
+		pb.msg.visible = !!msg;
+		!!msg && (pb.msg.text = msg);
+		pb.text = title + " - " + val + "/" + pb.bar.maxvalue;
 		pb.show(); pb.update();
 	}
 	this.hide = function() { pb.hide() }

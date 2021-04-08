@@ -1,14 +1,36 @@
 /*
-	SpreadsToFiles v1.5.2
-	© March 2021, Paul Chiorean
+	SpreadsToFiles v1.6 (2021-04-08)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
 	Saves the spreads of the active document in separate files.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
 */
 
 if (!(doc = app.activeDocument)) exit();
 if (!doc.saved) { alert("Document is not saved."); exit() }
 if (doc.spreads.length == 1) { alert("Document has only one spread."); exit() }
 
-var set_UIL = app.scriptPreferences.userInteractionLevel;
+var oldUIL = app.scriptPreferences.userInteractionLevel;
 
 var dPath = doc.filePath;
 var dName = doc.name.substr(0, doc.name.lastIndexOf("."));
@@ -19,7 +41,7 @@ if (/\d\s*x\s*\d/i.test(fileSufx)) fileSufx = null; // Exclude '0x0' suffixes
 // Only ask for a suffix if not autodetected
 var sufx = fileSufx ? String(fileSufx) : GetSuffix();
 
-var progressBar = new ProgressBar(dName.length + 12);
+var progressBar = new ProgressBar("Spreads to Files", dName.length);
 progressBar.reset(doc.spreads.length);
 for (var i = 0; i < doc.spreads.length; i++) {
 	// Filter out current spread
@@ -32,11 +54,11 @@ for (var i = 0; i < doc.spreads.length; i++) {
 		+ ".indd");
 		inc++;
 	} while (dFile.exists);
-	progressBar.update(i + 1, dFile.name);
+	progressBar.update(i + 1, decodeURI(dFile.name));
 	doc.saveACopy(dFile);
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 	var dCopy = app.open(dFile, false);
-	app.scriptPreferences.userInteractionLevel = set_UIL;
+	app.scriptPreferences.userInteractionLevel = oldUIL;
 	// Remove other spreads from copy
 	for (var j = r.length - 1; j >= 0; j--) dCopy.spreads[r[j]].remove();
 	dCopy.save(dFile); dCopy.close();
@@ -69,22 +91,26 @@ function GetSuffix(sufx) {
 	return sufx;
 }
 
-function ProgressBar(width) {
-	width = Math.max(width, 50);
-	var w = new Window("palette", "Spreads to Files");
-	w.pb = w.add("progressbar", [12, 12, ((width + 20) * 6.5), 24], 0, undefined);
-	w.st = w.add("statictext", [0, 0, ((width + 20) * 6.5 - 20), 20], undefined, { truncate: "middle" });
+function ProgressBar(title, width) {
+	var pb = new Window("palette", title);
+	pb.bar = pb.add("progressbar", undefined, 0, undefined);
+	pb.msg = pb.add("statictext", undefined, undefined, { truncate: "middle" });
+	pb.msg.characters = Math.max(width, 50);
+	pb.layout.layout();
+	pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
 	this.reset = function(max) {
-		w.pb.value = 0;
-		w.pb.maxvalue = max || 0;
-		w.pb.visible = !!max;
-		w.show();
+		pb.bar.value = 0;
+		pb.bar.maxvalue = max || 0;
+		pb.bar.visible = !!max;
+		pb.show();
 	}
-	this.update = function(val, file) {
-		w.pb.value = val;
-		w.st.text = "Saving: " + decodeURI(file) + " (" + val + " of " + w.pb.maxvalue + ")";
-		w.show(); w.update();
+	this.update = function(val, msg) {
+		pb.bar.value = val;
+		pb.msg.visible = !!msg;
+		!!msg && (pb.msg.text = msg);
+		pb.text = title + " - " + val + "/" + pb.bar.maxvalue;
+		pb.show(); pb.update();
 	}
-	this.hide = function() { w.hide() }
-	this.close = function() { w.close() }
+	this.hide = function() { pb.hide() }
+	this.close = function() { pb.close() }
 }
