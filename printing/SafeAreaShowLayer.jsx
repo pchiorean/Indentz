@@ -1,22 +1,22 @@
 /*
-	Show safe area layer v1.1.5
-	© September 2020, Paul Chiorean
-	Shows the "safe area" layer (or equivalents).
+	Show safe area layer v1.2 (2021-04-08)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
+	Shows the 'safe area' layer (or equivalents).
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 */
 
 if (app.documents.length == 0) exit();
 
-var saLayerName = [
-	"safe area",
-	"visible", "Visible",
-	"vizibil", "Vizibil",
-	"vis. area", "Vis. area"
-];
+var saLayerName = [ "safe area", "visible", "Visible",
+	"vizibil", "Vizibil", "vis. area", "Vis. area" ];
 
 (function(doc) {
 	for (var i = 0; i < saLayerName.length; i++) {
 		var saLayer = doc.layers.item(saLayerName[i]);
 		if (!saLayer.isValid) continue;
-		try { doc.layers.item(saLayer.name).visible = true } catch (_) {};
+		doc.layers.item(saLayer.name).visible = true;
 	}
 })(app.activeDocument);
