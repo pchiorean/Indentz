@@ -1,7 +1,11 @@
 /*
-	HW 2.3
-	© March 2021, Paul Chiorean
+	HW 2.3 (2021-03-29)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
 	Labels 'HW' selected objects and adds a HW bottom guide on the current spread.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 */
 
 if (!(doc = app.activeDocument)) exit();

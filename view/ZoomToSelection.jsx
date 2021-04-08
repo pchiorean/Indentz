@@ -1,7 +1,29 @@
 /*
-	Zoom to selection v2.1.0
-	© February 2021, Paul Chiorean
+	Zoom to selection v2.1 (2021-02-09)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
 	Zooms to the selected objects. If no selection, it zooms to the current spread.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
 */
 
 if (!(doc = app.activeDocument)) exit();
@@ -10,10 +32,10 @@ var page = app.activeWindow.activePage;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 const TL = AnchorPoint.TOP_LEFT_ANCHOR, BR = AnchorPoint.BOTTOM_RIGHT_ANCHOR,
 	CS_PBRD = +CoordinateSpaces.PASTEBOARD_COORDINATES;
-const SP = 600; // Side panels width
-const CP = 60; // Control panel height
+const SP = 600;  // Side panels width
+const CP = 60;   // Control panel height
 const Z = 5.856; // Voodoo zoom coeficient
-const N = 1; // Number of spreads to zoom to
+const N = 1;     // Number of spreads to zoom to
 
 var targetBounds = [], sel = doc.selection;
 if (sel.length == 0 || sel[0].constructor.name == "Guide") {

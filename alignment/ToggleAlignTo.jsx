@@ -5,7 +5,7 @@
 	Toggles the 'Align To' setting.
 
 	Released under MIT License:
-	https://opensource.org/licenses/MIT
+	https://choosealicense.com/licenses/mit/
 */
 
 const ADB = AlignDistributeBounds;

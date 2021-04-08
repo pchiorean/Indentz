@@ -1,7 +1,11 @@
 /*
-	Cleanup labels v1.2.1
-	© November 2020, Paul Chiorean
+	Cleanup labels v1.2.1 (2020-11-22)
+	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+
 	Removes all labels from the document.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 */
 
 if (!(doc = app.activeDocument)) exit();

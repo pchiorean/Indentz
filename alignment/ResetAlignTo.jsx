@@ -5,7 +5,7 @@
 	Resets the 'Align To' setting to default.
 
 	Released under MIT License:
-	https://opensource.org/licenses/MIT
+	https://choosealicense.com/licenses/mit/
 */
 
 if (app.documents.length > 0 && app.selection.length > 0 && app.selectionKeyObject) {

@@ -1,6 +1,6 @@
 /*
-	E grid 1.5.2
-	© November 2020, Paul Chiorean
+	E grid 1.5.2 (2020-11-22)
+	(c) 2020 Paul Chiorean (jpeg@basement.ro)
 */
 
 if (!(doc = app.activeDocument)) exit();
@@ -22,7 +22,6 @@ function main() {
 		} else {
 			var mgBounds = Bounds(doc.pages[i]);
 		}
-
 		var size = {
 			width: mgBounds[3] - mgBounds[1],
 			height: mgBounds[2] - mgBounds[0]

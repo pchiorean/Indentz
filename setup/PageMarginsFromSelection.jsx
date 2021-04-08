@@ -1,7 +1,11 @@
 /*
-	Page margins from selection v1.3.1
-	© November 2020, Paul Chiorean
+	Page margins from selection v1.3.1 (2020-11-22)
+	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+
 	Sets the page margins to the selected objects bounds.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 */
 
 if (!(doc = app.activeDocument)) exit();

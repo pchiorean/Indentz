@@ -1,6 +1,7 @@
 /*
-	Cleanup swatches v1.3.2
-	November 2020, Paul Chiorean
+	Cleanup swatches v1.3.2 (2020-11-22)
+	Paul Chiorean (jpeg@basement.ro)
+
 	Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused.
 */
 
@@ -14,6 +15,8 @@ app.doScript(DeleteUnused, ScriptLanguage.javascript, doc,
 	UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
 
 
+// Modified from ConvertRGBtoCMYK.jsx by Dave Saunders
+// https://community.adobe.com/t5/indesign/rgb-to-cmyk-script/m-p/10050289
 function RGB2CMYK(doc, c, i, j, k) {
 	for (i = 0; i < doc.colors.length; i++) {
 		c = doc.colors[i];

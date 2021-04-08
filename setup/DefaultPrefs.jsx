@@ -1,7 +1,11 @@
 /*
-	Default preferences v1.2
-	© April 2021, Paul Chiorean
+	Default preferences v1.2 (2021-04-04)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
 	Sets default preferences.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 */
 
 if (!(doc = app.activeDocument)) exit();

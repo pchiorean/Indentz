@@ -1,8 +1,12 @@
 /*
-	Tile all v1.2
-	© April 2020, Paul Chiorean
+	Tile all v1.2 (2021-04-04)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
 	Invokes 'Tile All Vertically' or 'Tile All Horizontally',
 	depending on current spread orientation.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 */
 
 if (app.documents.length < 2) exit();

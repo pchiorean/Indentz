@@ -1,6 +1,6 @@
 /*
-	L grid 1.2.2
-	© November 2020, Paul Chiorean
+	L grid 1.2.2 (2020-11-22)
+	(c) 2020 Paul Chiorean (jpeg@basement.ro)
 */
 
 if (!(doc = app.activeDocument)) exit();

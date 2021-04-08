@@ -1,7 +1,11 @@
 /*
-	Page ratios v1.4.1
-	© January 2021, Paul Chiorean
+	Page ratios v1.4.1 (2021-01-24)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
 	Calculates the ratio of each page and displays it in the upper left corner.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 */
 
 if (!(doc = app.activeDocument)) exit();
