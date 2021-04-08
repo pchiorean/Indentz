@@ -1,16 +1,16 @@
 /*
 	Align to bottom-right v2.4.2 (2020-11-22)
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	(c) 2020 Paul Chiorean (jpeg@basement.ro)
 
 	Aligns the selected objects to the bottom-right of the 'Align To' setting.
 
 	Released under MIT License:
-	https://opensource.org/licenses/MIT
+	https://choosealicense.com/licenses/mit/
 */
 
 if (!(doc = app.activeDocument)) exit();
 app.scriptPreferences.enableRedraw = false;
-var sel = doc.selection, selBAK = sel, obj;
+var sel = doc.selection, bakSel = sel, obj;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit() }
 if (sel.length == 1 && sel[0].locked) { alert("This object is locked."); exit() }
@@ -20,40 +20,40 @@ app.doScript(main, ScriptLanguage.javascript, sel,
 
 
 function main(sel) {
-	var set_ADB = app.alignDistributePreferences.alignDistributeBounds;
+	var setADB = app.alignDistributePreferences.alignDistributeBounds;
 	// If we have a key object, align all to that and exit
 	if (doc.selectionKeyObject != undefined) {
-		set_ADB = AlignDistributeBounds.KEY_OBJECT;
+		setADB = AlignDistributeBounds.KEY_OBJECT;
 		Align(sel, doc.selectionKeyObject);
 		return;
 	}
 	// Remember layers for grouping/ungrouping
-	var set_URL = app.generalPreferences.ungroupRemembersLayers;
-	var set_PRL = app.clipboardPreferences.pasteRemembersLayers;
+	var oldURL = app.generalPreferences.ungroupRemembersLayers;
+	var oldPRL = app.clipboardPreferences.pasteRemembersLayers;
 	app.generalPreferences.ungroupRemembersLayers = true;
 	app.clipboardPreferences.pasteRemembersLayers = true;
 	// Filter selection and get a single object
 	if (sel.length > 1) {
-		var objArray = [];
+		var objects = [];
 		for (var i = 0; i < sel.length; i++) {
 			if (sel[i].locked) continue;
-			objArray.push(sel[i]);
+			objects.push(sel[i]);
 		}
-		obj = doc.groups.add(objArray);
+		obj = doc.groups.add(objects);
 		obj.name = "<align group>";
 	} else obj = sel[0];
 	// Align, ungroup and restore initial selection (sans key object)
-	if (set_ADB == AlignDistributeBounds.ITEM_BOUNDS)
-		set_ADB = AlignDistributeBounds.PAGE_BOUNDS;
+	if (setADB == AlignDistributeBounds.ITEM_BOUNDS)
+		setADB = AlignDistributeBounds.PAGE_BOUNDS;
 	Align(obj);
 	if (obj.name == "<align group>") obj.ungroup();
-	app.select(selBAK);
+	app.select(bakSel);
 	// Restore layer grouping settings
-	app.generalPreferences.ungroupRemembersLayers = set_URL;
-	app.clipboardPreferences.pasteRemembersLayers = set_PRL;
+	app.generalPreferences.ungroupRemembersLayers = oldURL;
+	app.clipboardPreferences.pasteRemembersLayers = oldPRL;
 
 	function Align(obj, selKO) {
-		doc.align(obj, AlignOptions.BOTTOM_EDGES, set_ADB, selKO);
-		doc.align(obj, AlignOptions.RIGHT_EDGES, set_ADB, selKO);
+		doc.align(obj, AlignOptions.BOTTOM_EDGES, setADB, selKO);
+		doc.align(obj, AlignOptions.RIGHT_EDGES, setADB, selKO);
 	}
 }

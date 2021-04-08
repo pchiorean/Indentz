@@ -1,7 +1,11 @@
 ﻿/*
-	Doc cleanup v2.2.0
-	© December 2020, Paul Chiorean
+	Doc cleanup v2.2 (2020-12-06)
+	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 */
 
 if (!(doc = app.activeDocument)) exit();
@@ -23,12 +27,12 @@ UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
 // Turn off 'AutoUpdateURLStatus' from 'Hyperlinks' panel
 app.doScript(
 function() {
-	var set_AUU = app.menuActions.itemByName("$ID/AutoUpdateURLStatus");
+	var setAUU = app.menuActions.itemByName("$ID/AutoUpdateURLStatus");
 	var hyperLinksPanel = app.panels.itemByName("$ID/Hyperlinks");
-	var flag_HLP = hyperLinksPanel.visible;
-	if (!flag_HLP) hyperLinksPanel.visible = true;
-	if (set_AUU.checked) set_AUU.invoke();
-	hyperLinksPanel.visible = flag_HLP;
+	var oldHLP = hyperLinksPanel.visible;
+	if (!oldHLP) hyperLinksPanel.visible = true;
+	if (setAUU.checked) setAUU.invoke();
+	hyperLinksPanel.visible = oldHLP;
 },
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Turn off 'AutoUpdateURLStatus'");

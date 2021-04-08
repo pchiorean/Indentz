@@ -52,7 +52,7 @@ Name                              |    Fn  | Description
 **ScaleToPageSizeW.jsx**          |        | Scales the selected objects to the page left/right size
 **[ Printing ]**                           |
 **PrepareForPrint.jsx**           |        | Hides safe area layer and moves dielines to separate spreads
-**SafeArea.jsx**                  |        | Creates a safe area frame the size of the page margins
+**SafeArea.jsx**                  |        | Creates on each page a safe area frame the size of the page margins
 **SafeAreaHideLayer.jsx**         |        | Hides the safe area layer (or equivalents)
 **SafeAreaShowLayer.jsx**         |        | Shows the safe area layer (or equivalents)
 **[ Setup ]**                              |

@@ -1,12 +1,4 @@
-﻿/*
-	Default layers and more v3.4.1
-	© January 2021, Paul Chiorean
-	Changes some settings, adds swatches, adds/merges layers,
-	cleans up fonts and sets page dimensions from the filename.
-*/
-
-if (!(doc = app.activeDocument)) exit();
-// if (!doc.saved) { alert("Document is not saved."); exit() }
+﻿if (!(doc = app.activeDocument)) exit();
 
 // Set preferences
 app.doScript(File(app.activeScript.path + "/DefaultPrefs.jsx"), 

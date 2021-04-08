@@ -1,13 +1,6 @@
-/*
-	Fit to spread margins, forced v2.0.1
-	© March 2021, Paul Chiorean
-	Resizes the selected objects to the spread margins, forced.
-
-	See 'FitTo.jsxinc' for arguments.
-*/
-
+// See "FitTo.jsxinc" for details.
 // @include "../lib/FitTo.jsxinc";
 
 app.doScript(FitTo, ScriptLanguage.javascript,
 	[ "spread", "margins", true ],
-	UndoModes.ENTIRE_SCRIPT, "Resize to spread margins");
+	UndoModes.ENTIRE_SCRIPT, "Fit to spread margins");

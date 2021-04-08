@@ -1,19 +1,23 @@
 /*
-	Show color profiles 1.2
-	© March 2021, Paul Chiorean
+	Show color profiles 1.2 (2021-03-29)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
 	Shows all color profiles available to the document.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 */
 
 if (app.documents.length == 0) exit();
 var profilesCMYK = app.activeDocument.cmykProfileList;
 var profilesRGB = app.activeDocument.rgbProfileList;
-var resultArray = [];
-resultArray.push('\rCMYK Profiles:\r');
-resultArray.push(profilesCMYK.join("\r"));
-resultArray.push('\rRGB Profiles:\r');
-resultArray.push(profilesRGB.join("\r"));
+var result = [];
+result.push('\rCMYK Profiles:\r');
+result.push(profilesCMYK.join("\r"));
+result.push('\rRGB Profiles:\r');
+result.push(profilesRGB.join("\r"));
 
-AlertScroll("Color Profiles", resultArray);
+AlertScroll("Color Profiles", result);
 
 
 // Modified from 'Scrollable alert' by Peter Kahrel

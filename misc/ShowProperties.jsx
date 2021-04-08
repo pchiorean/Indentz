@@ -1,11 +1,12 @@
 /*
-	Show properties 1.3
-	March 2021, Paul Chiorean
-	Shows all properties and methods of a selected object.
+	Show properties 1.3 (2021-03-29)
+	Paul Chiorean (jpeg@basement.ro)
+
+	Shows properties and methods of a selected object.
 
 	Modified from https://github.com/grefel/indesignjs/blob/version2/Allgemeine_Skripte/
 	EigenschaftenAnzeigen.jsx by Gregor Fellenz (grefel).
-	*/
+*/
 
 if (app.documents.length > 0 && app.selection.length > 0) {
 	obj = app.selection[0];
@@ -20,28 +21,28 @@ ShowProps(obj);
 
 
 function ShowProps(obj) {
-	var resultArray = [];
+	var result = [];
 	// Object
-	resultArray.push('\rOBJECT:\r');
-	resultArray.push(obj.reflect.name);
-	resultArray.push(obj.toSource());
+	result.push('\rOBJECT:\r');
+	result.push(obj.reflect.name);
+	result.push(obj.toSource());
 	// Properties
-	resultArray.push('\rPROPERTIES:\r');
+	result.push('\rPROPERTIES:\r');
 	var props = obj.reflect.properties.sort();
 	for (var i = 0; i < props.length; i++) {
 		if (props[i].toString() === "__proto__" || props[i].toString() === "reflect" || props[i].toString() === "properties") continue;
 		try { var result = obj[props[i]] } catch (_) { var result = "N/A" };
-		if (result != null && result.constructor.name === "Array") resultArray.push(props[i] + " = [" + result + "]");
-		else resultArray.push(props[i] + " = " + result);
+		if (result != null && result.constructor.name === "Array") result.push(props[i] + " = [" + result + "]");
+		else result.push(props[i] + " = " + result);
 	}
 	// Methods
-	resultArray.push('\rMETHODS:\r');
+	result.push('\rMETHODS:\r');
 	var props = obj.reflect.methods.sort();
 	for (var i = 0; i < props.length; i++) {
 		if (props[i].toString() === "==" || props[i].toString() === "===") continue;
-		resultArray.push(props[i].name + "()");
+		result.push(props[i].name + "()");
 	}
-	AlertScroll("Properties", resultArray);
+	AlertScroll("Properties", result);
 }
 
 // Modified from 'Scrollable alert' by Peter Kahrel

@@ -1,6 +1,7 @@
 /*
-	Default swatches v1.13.2
-	© January 2021, Paul Chiorean
+	Default swatches v1.13.2 (2021-01-22)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
 	Adds swatches from a 3-column TSV file:
 
 	Name | Model | Values
@@ -10,6 +11,27 @@
 	1. <Name>: swatch name,
 	2. <Model>: color model: "process" or "spot",
 	3. <Values>: a list of 3 (RGB) or 4 (CMYK) color values.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
 */
 
 if (!(doc = app.activeDocument)) exit();
@@ -22,7 +44,7 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 function main() {
 	infoFile.open("r");
 	var infoLine, header, data = [],
-		line = 0, flg_H = false,
+		line = 0, flgHeader = false,
 		errors = [], errln, errfn = infoFile.fullName + "\n";
 	while (!infoFile.eof) {
 		infoLine = infoFile.readln(); line++;
@@ -30,7 +52,7 @@ function main() {
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
 		infoLine = infoLine.split(/ *\t */);
 		errln = "Line " + line + ": ";
-		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
+		if (!flgHeader) { header = infoLine; flgHeader = true; continue } // 1st line is header
 		if (!infoLine[0]) errors.push(errln + "Missing swatch name.");
 		if (errors.length == 0) data.push({
 			name: infoLine[0],
@@ -62,8 +84,8 @@ function TSVFile(fn) {
 
 function GetColorModel(color) {
 	return {
-	'process': ColorModel.PROCESS,
-	'spot': ColorModel.SPOT
+		"process": ColorModel.PROCESS,
+		"spot": ColorModel.SPOT
 	}[color] || ColorModel.PROCESS;
 }
 
@@ -81,7 +103,7 @@ function ColorAdd(doc, name, model, values) {
 		values = [
 			(parseInt(values, 16) >> 16) & 0xff,
 			(parseInt(values, 16) >> 8) & 0xff,
-			parseInt(values, 16) & 0xff
+			 parseInt(values, 16) & 0xff
 		];
 		space = ColorSpace.RGB;
 	} else {

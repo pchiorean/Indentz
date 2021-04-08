@@ -1,13 +1,6 @@
-/*
-	Fit to spread bleed, forced v2.0.1
-	© March 2021, Paul Chiorean
-	Resizes the selected objects to the spread bleed size, forced.
-
-	See 'FitTo.jsxinc' for arguments.
-*/
-
+// See "FitTo.jsxinc" for details.
 // @include "../lib/FitTo.jsxinc";
 
 app.doScript(FitTo, ScriptLanguage.javascript,
 	[ "spread", "bleed", true ],
-	UndoModes.ENTIRE_SCRIPT, "Resize to spread bleed");
+	UndoModes.ENTIRE_SCRIPT, "Fit to spread bleed");

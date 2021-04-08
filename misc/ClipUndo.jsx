@@ -1,7 +1,11 @@
 /*
-	Undo clipping v2.4.0
-	© December 2020, Paul Chiorean
+	Undo clipping v2.4 (2020-12-30)
+	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+
 	Restores objects clipped in a "<clip frame>" by the "FitTo" scripts.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 */
 
 if (!(doc = app.activeDocument)) exit();
@@ -14,15 +18,15 @@ app.doScript(main, ScriptLanguage.javascript, items,
 
 function main(items) {
 	// Remember layers for grouping/ungrouping
-	var set_URL = app.generalPreferences.ungroupRemembersLayers;
-	var set_PRL = app.clipboardPreferences.pasteRemembersLayers;
+	var oldURL = app.generalPreferences.ungroupRemembersLayers;
+	var oldPRL = app.clipboardPreferences.pasteRemembersLayers;
 	app.generalPreferences.ungroupRemembersLayers = true;
 	app.clipboardPreferences.pasteRemembersLayers = true;
 	// Undo clip
 	while (item = items.shift()) UndoClip(item);
 	// Restore layer grouping settings
-	app.generalPreferences.ungroupRemembersLayers = set_URL;
-	app.clipboardPreferences.pasteRemembersLayers = set_PRL;
+	app.generalPreferences.ungroupRemembersLayers = oldURL;
+	app.clipboardPreferences.pasteRemembersLayers = oldPRL;
 }
 
 function UndoClip(item) {

@@ -1,6 +1,7 @@
 /*
-	Default layers v1.17
-	© March 2021, Paul Chiorean
+	Default layers v1.17 (2021-03-22)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
 	Adds/merges layers from a 6-column TSV file:
 
 	Name | Color | Visible | Printable | Order | Variants
@@ -13,6 +14,27 @@
 	4. <Printable>: "yes" or "no" (default "yes"),
 	5. <Order>: "above" or "below" existing layers (default "above"),
 	6. <Variants>: a list of layers that will be merged with the base layer (case insensitive).
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
+
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
+
+	The above copyright notice and this permission notice shall be included in all
+	copies or substantial portions of the Software.
+
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+	SOFTWARE.
 */
 
 if (!(doc = app.activeDocument)) exit();
@@ -25,14 +47,14 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 function main() {
 	infoFile.open("r");
 	var infoLine, header, data = [],
-		line = 0, flg_H = false,
+		line = 0, flgHeader = false,
 		errors = [], errln, errfn = infoFile.fullName + "\n";
 	while (!infoFile.eof) {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
 		infoLine = infoLine.split(/ *\t */);
-		if (!flg_H) { header = infoLine; flg_H = true; continue } // 1st line is header
+		if (!flgHeader) { header = infoLine; flgHeader = true; continue } // 1st line is header
 		errln = "Line " + line + ": ";
 		if (!infoLine[0]) errors.push(errln + "Missing layer name.");
 		if (errors.length == 0) data.push({
@@ -52,7 +74,7 @@ function main() {
 		locked: false,
 		// layerColor: UIColors.LIGHT_GRAY
 	}
-	var set_AL = doc.activeLayer; // Save active layer
+	var oldAL = doc.activeLayer; // Save active layer
 	// Top layers
 	for (var i = data.length - 1; i >= 0 ; i--) {
 		if (data[i].isBelow) continue;
@@ -78,7 +100,7 @@ function main() {
 			data[i].variants)
 		.move(LocationOptions.AT_END);
 	}
-	doc.activeLayer = set_AL; // Restore active layer
+	doc.activeLayer = oldAL; // Restore active layer
 
 	function MakeLayer(name, color, isVisible, isPrintable, variants) {
 		var layer = doc.layers.item(name);
@@ -95,10 +117,10 @@ function main() {
 		var l, layers = doc.layers.everyItem().getElements();
 		while (l = layers.shift())
 			if (isIn(l.name, variants, false)) {
-				var set_LV = l.visible;
-				if (l == set_AL) set_AL = layer;
+				var oldLV = l.visible;
+				if (l == oldAL) oldAL = layer;
 				layer.merge(l);
-				layer.visible = set_LV;
+				layer.visible = oldLV;
 			};
 		return layer;
 	}
@@ -115,43 +137,43 @@ function TSVFile(fn) {
 
 function GetUIColor(color) {
 	return {
-	'Blue': UIColors.BLUE,
-	'Black': UIColors.BLACK,
-	'Brick Red': UIColors.BRICK_RED,
-	'Brown': UIColors.BROWN,
-	'Burgundy': UIColors.BURGUNDY,
-	'Charcoal': UIColors.CHARCOAL,
-	'Cute Teal': UIColors.CUTE_TEAL,
-	'Cyan': UIColors.CYAN,
-	'Dark Blue': UIColors.DARK_BLUE,
-	'Dark Green': UIColors.DARK_GREEN,
-	'Fiesta': UIColors.FIESTA,
-	'Gold': UIColors.GOLD,
-	'Grass Green': UIColors.GRASS_GREEN,
-	'Gray': UIColors.GRAY,
-	'Green': UIColors.GREEN,
-	'Grid Blue': UIColors.GRID_BLUE,
-	'Grid Green': UIColors.GRID_GREEN,
-	'Grid Orange': UIColors.GRID_ORANGE,
-	'Lavender': UIColors.LAVENDER,
-	'Light Blue': UIColors.LIGHT_BLUE,
-	'Light Gray': UIColors.LIGHT_GRAY,
-	'Light Olive': UIColors.LIGHT_OLIVE,
-	'Lipstick': UIColors.LIPSTICK,
-	'Magenta': UIColors.MAGENTA,
-	'Ochre': UIColors.OCHRE,
-	'Olive Green': UIColors.OLIVE_GREEN,
-	'Orange': UIColors.ORANGE,
-	'Peach': UIColors.PEACH,
-	'Pink': UIColors.PINK,
-	'Purple': UIColors.PURPLE,
-	'Red': UIColors.RED,
-	'Sulphur': UIColors.SULPHUR,
-	'Tan': UIColors.TAN,
-	'Teal': UIColors.TEAL,
-	'Violet': UIColors.VIOLET,
-	'White': UIColors.WHITE,
-	'Yellow': UIColors.YELLOW
+		'Blue': UIColors.BLUE,
+		'Black': UIColors.BLACK,
+		'Brick Red': UIColors.BRICK_RED,
+		'Brown': UIColors.BROWN,
+		'Burgundy': UIColors.BURGUNDY,
+		'Charcoal': UIColors.CHARCOAL,
+		'Cute Teal': UIColors.CUTE_TEAL,
+		'Cyan': UIColors.CYAN,
+		'Dark Blue': UIColors.DARK_BLUE,
+		'Dark Green': UIColors.DARK_GREEN,
+		'Fiesta': UIColors.FIESTA,
+		'Gold': UIColors.GOLD,
+		'Grass Green': UIColors.GRASS_GREEN,
+		'Gray': UIColors.GRAY,
+		'Green': UIColors.GREEN,
+		'Grid Blue': UIColors.GRID_BLUE,
+		'Grid Green': UIColors.GRID_GREEN,
+		'Grid Orange': UIColors.GRID_ORANGE,
+		'Lavender': UIColors.LAVENDER,
+		'Light Blue': UIColors.LIGHT_BLUE,
+		'Light Gray': UIColors.LIGHT_GRAY,
+		'Light Olive': UIColors.LIGHT_OLIVE,
+		'Lipstick': UIColors.LIPSTICK,
+		'Magenta': UIColors.MAGENTA,
+		'Ochre': UIColors.OCHRE,
+		'Olive Green': UIColors.OLIVE_GREEN,
+		'Orange': UIColors.ORANGE,
+		'Peach': UIColors.PEACH,
+		'Pink': UIColors.PINK,
+		'Purple': UIColors.PURPLE,
+		'Red': UIColors.RED,
+		'Sulphur': UIColors.SULPHUR,
+		'Tan': UIColors.TAN,
+		'Teal': UIColors.TEAL,
+		'Violet': UIColors.VIOLET,
+		'White': UIColors.WHITE,
+		'Yellow': UIColors.YELLOW
 	}[color] || UIColors.LIGHT_BLUE;
 }
 

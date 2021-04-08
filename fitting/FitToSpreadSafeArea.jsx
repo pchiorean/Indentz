@@ -1,13 +1,6 @@
-/*
-	Fit to spread safe area v2.0.1
-	© March 2021, Paul Chiorean
-	Resizes the selected objects to the spread safe area.
-
-	See 'FitTo.jsxinc' for arguments.
-*/
-
+// See "FitTo.jsxinc" for details.
 // @include "../lib/FitTo.jsxinc";
 
 app.doScript(FitTo, ScriptLanguage.javascript,
 	[ "spread", "safearea" ],
-	UndoModes.ENTIRE_SCRIPT, "Resize to spread safe area");
+	UndoModes.ENTIRE_SCRIPT, "Fit to spread safe area");

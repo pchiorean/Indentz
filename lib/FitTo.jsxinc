@@ -4,10 +4,18 @@
 
 	Resizes the selected objects to the page/spread's size/margins/safe area/bleed.
 
-	It's called internally by all the other FitTo scripts; arguments are:
-	[0] SCOPE: 'page' | 'spread' (default 'page')
-	[1] TARGET: 'size' | 'margins' | 'safearea' | 'bleed' (default 'size')
-	[2] FORCED: true | false (default 'false')
+	It's called internally by the other "FitTo" scripts, with arguments:
+	[0] SCOPE: "page" | "spread" (default "page")
+	[1] TARGET: "size" | "margins" | "safearea" | "bleed" (default "size")
+	[2] ENFORCED: true | false (default "false")
+
+	Example for fit to page size, enforced:
+	app.doScript(FitTo, ScriptLanguage.javascript,
+	[ "page", "size", true ],
+	UndoModes.ENTIRE_SCRIPT, "Fit to page");
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 
 	Permission is hereby granted, free of charge, to any person obtaining a copy
 	of this software and associated documentation files (the "Software"), to deal
@@ -42,7 +50,7 @@ if (sel.length == 0 || (sel[0].constructor.name == "Guide")) exit();
 
 const SCOPE = args[0] || "page";
 const TARGET = args[1] || "size";
-const FORCED = args[2] || false;
+const ENFORCED = args[2] || false;
 
 var bakRO = doc.viewPreferences.rulerOrigin;
 doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
@@ -51,7 +59,7 @@ var obj, page, fitted, newSel = [];
 while (obj = sel.shift()) {
 	if (page = obj.parentPage) { // Skip objects on pasteboard
 		if (fitted = Fit2Bounds(obj)) { newSel.push(fitted) } else newSel.push(obj);
-	} else if (FORCED) { // If FORCED, include objects on pasteboard
+	} else if (ENFORCED) { // If ENFORCED, include objects on pasteboard
 		var pages = app.activeWindow.activeSpread.pages;
 		for (var i = 0; i < pages.length; i++) {
 			if (obj.geometricBounds[3] <= pages[0].bounds[3]) { page = pages[0]; break }
@@ -124,7 +132,7 @@ function Fit2Bounds(obj) {
 	}
 
 	// Compute new bounds
-	if (!FORCED) {
+	if (!ENFORCED) {
 		// Return if obj is outside bounds
 		if (o.vis[2] <= b.target[0] || o.vis[3] <= b.target[1] ||
 			o.vis[0] >= b.target[2] || o.vis[1] >= b.target[3]) return;
@@ -170,7 +178,7 @@ function Fit2Bounds(obj) {
 	// -- Already clipped
 	if ((obj.name == "<clip frame>" || obj.name == "<auto clip frame>") &&
 			obj.pageItems[0].isValid) {
-		obj.geometricBounds = FORCED ? b.target : b.expand;
+		obj.geometricBounds = ENFORCED ? b.target : b.expand;
 		return obj;
 	}
 	// -- Simple rectangles and containers
@@ -178,12 +186,12 @@ function Fit2Bounds(obj) {
 			(obj.pageItems.length == 0 || obj.pageItems.length == 1) &&
 			(obj.strokeWeight == 0 || obj.strokeAlignment == StrokeAlignment.INSIDE_ALIGNMENT) &&
 			isStraight) {
-		obj.geometricBounds = FORCED ? b.target : b.expand;
+		obj.geometricBounds = ENFORCED ? b.target : b.expand;
 		return obj;
 	}
 	// -- Text frames
 	if (obj.constructor.name == "TextFrame" && isStraight) {
-		obj.geometricBounds = FORCED ? b.target : b.expand;
+		obj.geometricBounds = ENFORCED ? b.target : b.expand;
 		return obj;
 	}
 	// -- Orthogonal lines
@@ -205,9 +213,9 @@ function Fit2Bounds(obj) {
 		return obj;
 	}
 	// -- Groups
-	if (obj.constructor.name == "Group") return Clip(obj, FORCED ? b.target : b.reduce);
+	if (obj.constructor.name == "Group") return Clip(obj, ENFORCED ? b.target : b.reduce);
 	// -- Other cases
-	return Clip(obj, FORCED ? b.target : b.expand);
+	return Clip(obj, ENFORCED ? b.target : b.expand);
 
 	function Clip(obj, fit) {
 		if (o.vis[0] >= b.target[0] && o.vis[1] >= b.target[1] &&

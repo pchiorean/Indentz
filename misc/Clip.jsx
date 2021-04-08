@@ -1,7 +1,11 @@
 /*
-	Clip v2.5.1
-	© February 2021, Paul Chiorean
-	Clips selected objects in a "<clip frame>", or restores them
+	Clip v2.5.1 (2021-02-16)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+
+	Clips selected objects in a "<clip frame>", or restores them.
+
+	Released under MIT License:
+	https://choosealicense.com/licenses/mit/
 */
 
 if (!(doc = app.activeDocument)) exit();
@@ -10,8 +14,8 @@ if (items.length == 0 || (items[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit();
 }
 // Remember layers for grouping/ungrouping
-var set_URL = app.generalPreferences.ungroupRemembersLayers;
-var set_PRL = app.clipboardPreferences.pasteRemembersLayers;
+var oldURL = app.generalPreferences.ungroupRemembersLayers;
+var oldPRL = app.clipboardPreferences.pasteRemembersLayers;
 app.generalPreferences.ungroupRemembersLayers = true;
 app.clipboardPreferences.pasteRemembersLayers = true;
 
@@ -19,8 +23,8 @@ app.doScript(Clip, ScriptLanguage.javascript, items,
 	UndoModes.ENTIRE_SCRIPT, "Clipping");
 
 // Restore layer grouping settings
-app.generalPreferences.ungroupRemembersLayers = set_URL;
-app.clipboardPreferences.pasteRemembersLayers = set_PRL;
+app.generalPreferences.ungroupRemembersLayers = oldURL;
+app.clipboardPreferences.pasteRemembersLayers = oldPRL;
 
 
 function Clip(items) {
@@ -32,9 +36,9 @@ function Clip(items) {
 	var size = obj.visibleBounds;
 	// If multiple objects are selected, group them
 	if (items.length > 1) {
-		var selArray = [];
-		for (var i = 0; i < items.length; i++) if (!items[i].locked) selArray.push(items[i]);
-		obj = doc.groups.add(selArray);
+		var objects = [];
+		for (var i = 0; i < items.length; i++) if (!items[i].locked) objects.push(items[i]);
+		obj = doc.groups.add(objects);
 		obj.name = "<auto clip group>";
 		size = obj.geometricBounds;
 	}
