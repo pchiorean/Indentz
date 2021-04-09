@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.1.1 (2021-04-08)
+	Batch QR codes v2.1.2 (2021-04-09)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Batch processes "QR.txt" to add codes to existing documents or to separate files.
@@ -152,11 +152,11 @@ function main() {
 		} else queue = validLines;
 		if (queue.length == 0) {
 			ui.text = !currentPath ? "Select a folder containing the data file" :
-				(infoFile.exists ? decodeURI(infoFile.fullName) + " – 0 records" :
+				(infoFile.exists ? decodeURI(infoFile.fsName) + " - 0 records" :
 				"No data file in " + decodeURI(currentPath) + "/");
 			if (!currentPath) ui.actions.browse.notify();
 		} else {
-			ui.text = decodeURI(infoFile.fullName) + " – " +
+			ui.text = decodeURI(infoFile.fsName) + " - " +
 				queue.length + " record" + (queue.length > 1 ? "s" : "") +
 				(errors.length > 0 ? " | " + errors.length + " error" + (errors.length > 1 ? "s" : "") : "");
 		}
