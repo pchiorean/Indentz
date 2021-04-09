@@ -1,5 +1,5 @@
 /*
-	Default swatches v1.13.2 (2021-01-22)
+	Default swatches v1.14 (2021-04-09)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 3-column TSV file:
@@ -45,7 +45,7 @@ function main() {
 	infoFile.open("r");
 	var infoLine, header, data = [],
 		line = 0, flgHeader = false,
-		errors = [], errln, errfn = infoFile.fullName + "\n";
+		errors = [], errln;
 	while (!infoFile.eof) {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
@@ -61,7 +61,8 @@ function main() {
 		});
 	}
 	infoFile.close(); infoLine = "";
-	if (errors.length > 0) { alert(errfn + errors.join("\n")); exit() }
+	if (errors.length > 0) {
+		AlertScroll(infoFile.getRelativeURI(doc.filePath), errors.join("\n")); exit() }
 	if (data.length < 1) exit();
 
 	for (var i = 0; i < data.length; i++) {
@@ -122,4 +123,21 @@ function ColorAdd(doc, name, model, values) {
 		});
 	}
 	return color;
+}
+
+// Modified from 'Scrollable alert' by Peter Kahrel
+// http://forums.adobe.com/message/2869250#2869250
+function AlertScroll(title, input) {
+	if (input instanceof Array) input = input.join("\r");
+	var lines = input.split(/\r|\n/g);
+	var w = new Window("dialog", title);
+	var list = w.add("edittext", undefined, input, { multiline: true, scrolling: true, readonly: true });
+	list.characters = (function() {
+		for (var i = 0, width = 50; i < lines.length; i++) width = Math.max(width, lines[i].length);
+		return width;
+	})();
+	list.minimumSize.width = 100; list.maximumSize.width = 1024;
+	list.minimumSize.height = 100; list.maximumSize.height = 1024;
+	w.add("button", undefined, "Close", { name: "ok" });
+	w.show();
 }
