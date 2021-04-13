@@ -1,5 +1,5 @@
 /*
-	SpreadsToFiles v1.6 (2021-04-08)
+	SpreadsToFiles v1.7 (2021-04-13)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
@@ -41,7 +41,7 @@ if (/\d\s*x\s*\d/i.test(fileSufx)) fileSufx = null; // Exclude '0x0' suffixes
 // Only ask for a suffix if not autodetected
 var sufx = fileSufx ? String(fileSufx) : GetSuffix();
 
-var progressBar = new ProgressBar("Spreads to Files", dName.length);
+var progressBar = new ProgressBar("Spreads to Files");
 progressBar.reset(doc.spreads.length);
 for (var i = 0; i < doc.spreads.length; i++) {
 	// Filter out current spread
@@ -54,7 +54,7 @@ for (var i = 0; i < doc.spreads.length; i++) {
 		+ ".indd");
 		inc++;
 	} while (dFile.exists);
-	progressBar.update(i + 1, decodeURI(dFile.name));
+	progressBar.update(i+1);
 	doc.saveACopy(dFile);
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 	var dCopy = app.open(dFile, false);
@@ -94,10 +94,12 @@ function GetSuffix(sufx) {
 function ProgressBar(title, width) {
 	var pb = new Window("palette", title);
 	pb.bar = pb.add("progressbar", undefined, 0, undefined);
-	pb.msg = pb.add("statictext", undefined, undefined, { truncate: "middle" });
-	pb.msg.characters = Math.max(width, 50);
-	pb.layout.layout();
-	pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
+	if (!!width) { // Mini progress bar if no width
+		pb.msg = pb.add("statictext", undefined, undefined, { truncate: "middle" });
+		pb.msg.characters = Math.max(width, 50);
+		pb.layout.layout();
+		pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
+	} else pb.bar.bounds = [ 12, 12, 476, 24 ];
 	this.reset = function(max) {
 		pb.bar.value = 0;
 		pb.bar.maxvalue = max || 0;
@@ -106,8 +108,10 @@ function ProgressBar(title, width) {
 	}
 	this.update = function(val, msg) {
 		pb.bar.value = val;
-		pb.msg.visible = !!msg;
-		!!msg && (pb.msg.text = msg);
+		if (!!width) {
+			pb.msg.visible = !!msg;
+			!!msg && (pb.msg.text = msg);
+		}
 		pb.text = title + " - " + val + "/" + pb.bar.maxvalue;
 		pb.show(); pb.update();
 	}

@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.1.2 (2021-04-09)
+	Batch QR codes v2.2 (2021-04-13)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Batch processes "QR.txt" to add codes to existing documents or to separate files.
@@ -522,10 +522,12 @@ function MakeIDLayer(doc) {
 function ProgressBar(title, width) {
 	var pb = new Window("palette", title);
 	pb.bar = pb.add("progressbar", undefined, 0, undefined);
-	pb.msg = pb.add("statictext", undefined, undefined, { truncate: "middle" });
-	pb.msg.characters = width;
-	pb.layout.layout();
-	pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
+	if (!!width) { // Mini progress bar if no width
+		pb.msg = pb.add("statictext", undefined, undefined, { truncate: "middle" });
+		pb.msg.characters = Math.max(width, 50);
+		pb.layout.layout();
+		pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
+	} else pb.bar.bounds = [ 12, 12, 476, 24 ];
 	this.reset = function(max) {
 		pb.bar.value = 0;
 		pb.bar.maxvalue = max || 0;
@@ -534,8 +536,10 @@ function ProgressBar(title, width) {
 	}
 	this.update = function(val, msg) {
 		pb.bar.value = val;
-		pb.msg.visible = !!msg;
-		!!msg && (pb.msg.text = msg);
+		if (!!width) {
+			pb.msg.visible = !!msg;
+			!!msg && (pb.msg.text = msg);
+		}
 		pb.text = title + " - " + val + "/" + pb.bar.maxvalue;
 		pb.show(); pb.update();
 	}
