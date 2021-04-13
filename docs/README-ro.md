@@ -4,7 +4,7 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. În mod 
 
 ---
 
-###### [Alignment/Proxy](#alignmentproxy) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Printing](#printing) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [Instalare](#instalare) | [Licență](#licență)
+###### [Alignment/Proxy](#alignmentproxy) | [Export](#export) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [Instalare](#instalare) | [Licență](#licență)
 
 ---
 
@@ -41,6 +41,18 @@ Proxy | | | | | |
 **SetRefPointBL.jsx** | ⌃Num1 | **SetRefPointB.jsx** | ⌃Num2 | **SetRefPointBR.jsx** | ⌃Num3
 
 </details>
+
+---
+
+### **Export**
+
+Fac câteva pregătiri pentru export și pot fi rulate în [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează straturi cu denumiri similare gen **visible**, **vizibil** pentru **safe area**, sau **diecut**, **die cut**, **cut lines**, **stanze** pentru **dielines**.
+
+* **`PrepareForExport.jsx`** ascunde stratul **safe area** și mută ștanțele și marcajele pentru alb și lac UV de pe **dielines** / **white** / **varnish** pe spreaduri separate.
+
+* **`SafeArea.jsx`** creează un chenar de dimensiunea marginilor paginii pe stratul **safe area**. Folosește culoarea **Safe area**, care dacă nu există va fi creată cu valoarea "C=0 M=100 Y=0 K=0".
+
+* **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează **safe area**.
 
 ---
 
@@ -109,18 +121,6 @@ Scaling | |
 **ScaleToPageMargins.jsx** | ⌥F5
 
 </details>
-
----
-
-### **Printing**
-
-Fac câteva pregătiri pentru export și pot fi rulate în [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează straturi cu denumiri similare gen **visible**, **vizibil** pentru **safe area**, sau **diecut**, **die cut**, **cut lines**, **stanze** pentru **dielines**.
-
-* **`PrepareForPrint.jsx`** ascunde stratul **safe area** și mută ștanțele și marcajele pentru alb și lac UV de pe **dielines** / **white** / **varnish** pe spreaduri separate.
-
-* **`SafeArea.jsx`** creează un chenar de dimensiunea marginilor paginii pe stratul **safe area**. Folosește culoarea **Safe area**, care dacă nu există va fi creată cu valoarea "C=0 M=100 Y=0 K=0".
-
-* **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează **safe area**.
 
 ---
 
@@ -319,4 +319,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. De asemenea, am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, **Application Frame** on, macOS 10.13, low-DPI display). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 23 martie 2021
+README-ro.md • 11 aprilie 2021

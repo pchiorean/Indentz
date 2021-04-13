@@ -4,7 +4,7 @@ Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of
 
 ---
 
-###### [Alignment/Proxy](#alignmentproxy) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Printing](#printing) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [Installation](#installation) | [License](#license)
+###### [Alignment/Proxy](#alignmentproxy) | [Export](#export) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [Installation](#installation) | [License](#license)
 
 ---
 
@@ -41,6 +41,18 @@ Proxy | | | | | |
 **SetRefPointBL.jsx** | ⌃Num1 | **SetRefPointB.jsx** | ⌃Num2 | **SetRefPointBR.jsx** | ⌃Num3
 
 </details>
+
+---
+
+### **Export**
+
+Make several preparations for export and can be used with [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). The scripts detect alternative layers like **visible**, **vizibil** for **safe area**, or **diecut**, **die cut**, **cut lines**, **stanze** for **dielines**.
+
+* **`PrepareForExport.jsx`** hides the **safe area** layer and moves the dielines, white and UV markings from **dielines** / **white** / **varnish** to separate spreads.
+
+* **`SafeArea.jsx`** creates a frame the size of the page margins on the **safe area** layer. It uses the **Safe area** swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
+
+* **`SafeAreaHideLayer.jsx`** and **`SafeAreaShowLayer.jsx`** hide or show **safe area**.
 
 ---
 
@@ -109,18 +121,6 @@ Scaling | |
 **ScaleToPageMargins.jsx** | ⌥F5
 
 </details>
-
----
-
-### **Printing**
-
-Make several preparations for export and can be used with [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). The scripts detect alternative layers like **visible**, **vizibil** for **safe area**, or **diecut**, **die cut**, **cut lines**, **stanze** for **dielines**.
-
-* **`PrepareForPrint.jsx`** hides the **safe area** layer and moves the dielines, white and UV markings from **dielines** / **white** / **varnish** to separate spreads.
-
-* **`SafeArea.jsx`** creates a frame the size of the page margins on the **safe area** layer. It uses the **Safe area** swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
-
-* **`SafeAreaHideLayer.jsx`** and **`SafeAreaShowLayer.jsx`** hide or show **safe area**.
 
 ---
 
@@ -319,4 +319,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Also, very limited testing was done outside my work configuration (Adobe InDesign 2020, **Application Frame** on, macOS 10.13, low-DPI display). Feedback or suggestions are welcome.
 
-README.md • March 23, 2021
+README.md • April 11, 2021
