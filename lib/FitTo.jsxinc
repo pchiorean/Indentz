@@ -1,5 +1,5 @@
 /*
-	FitTo v4.1 (2021-04-04)
+	FitTo v4.1.1 (2021-04-13)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Resizes the selected objects to the page/spread's size/margins/safe area/bleed.
@@ -78,7 +78,7 @@ function Fit2Bounds(obj) {
 	var b = {
 		size: B[SCOPE].size,
 		target: B[SCOPE][TARGET],
-		safe: B[SCOPE]["safearea"]
+		safe: B[SCOPE].safearea
 	}
 	if (!b.target) return obj;
 	var o = {
@@ -171,7 +171,7 @@ function Fit2Bounds(obj) {
 			o.child[2] < b.target[2] ? Math.min(o.child[2], b.expand[2]) : b.expand[2],
 			o.child[3] < b.target[3] ? Math.min(o.child[3], b.expand[3]) : b.expand[3]
 		];
-		if (DEBUG) DBGFrames();
+		if (DEBUG) DebugFrames();
 	}
 
 	// Fit obj to new bounds
@@ -234,7 +234,7 @@ function Fit2Bounds(obj) {
 		return frame;
 	}
 
-	function DBGFrames() {
+	function DebugFrames() {
 		var layer = doc.layers.item(".debug");
 		if (!layer.isValid) {
 			doc.layers.add({ name: ".debug", layerColor: UIColors.BLACK })
@@ -243,15 +243,15 @@ function Fit2Bounds(obj) {
 			var obj, items = page.parent.pageItems.everyItem().getElements();
 			while (obj = items.shift()) if (obj.label == "debug") obj.remove();
 		}
-		// debugFrame("Black", false, b.expand);
-		// debugFrame("Black", false, b.reduce);
-		debugFrame("Yellow", false, o.child);
-		debugFrame("Black", false, b.target);
-		debugFrame("Cyan", true, snapZone.target);
-		debugFrame("Magenta", true, snapZone.safe);
-		debugFrame("Cyan", false, B["page"]["margins"]);
+		// dbgFrame("Black", false, b.expand);
+		// dbgFrame("Black", false, b.reduce);
+		if (o.child) dbgFrame("Yellow", false, o.child);
+		dbgFrame("Black", false, b.target);
+		dbgFrame("Cyan", true, snapZone.target);
+		dbgFrame("Magenta", true, snapZone.safe);
+		dbgFrame("Cyan", false, B.page.margins);
 
-		function debugFrame(color, /*bool*/isSZ, bounds) {
+		function dbgFrame(color, /*bool*/isSZ, bounds) {
 			var frame = page.parent.rectangles.add(
 				layer,
 				{ label: "debug",
