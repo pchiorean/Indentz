@@ -1,52 +1,49 @@
 /*
-	Show properties 1.3.1 (2021-04-08)
+	Show properties 1.4 (2021-04-10)
 	Paul Chiorean (jpeg@basement.ro)
 
-	Shows properties and methods of a selected object.
+	Shows properties and methods of a selected object/the document/the application.
 
 	Modified from https://github.com/grefel/indesignjs/blob/version2/Allgemeine_Skripte/
 	EigenschaftenAnzeigen.jsx by Gregor Fellenz (grefel).
 */
 
-if (app.documents.length > 0 && app.selection.length > 0) {
-	obj = app.selection[0];
-} else if (app.documents.length > 0) {
-	alert("Nothing is selected.\nThe properties and methods of the document are displayed.")
-	obj = app.documents[0];
-} else {
-	alert("Nothing is selected.\nThe properties and methods of the application are displayed.")
-	obj = app;
-}
-ShowProps(obj);
+var obj = app;
+if (app.documents.length > 0) obj = app.documents[0];
+if (app.documents.length > 0 && app.selection.length > 0) obj = app.selection[0];
+if (obj === app) if (!(confirm("Will show properties of the application, proceed?", false))) exit();
 
+var result = [];
+result.push(obj.reflect.name);
+result.push(obj.toSource());
+result.push('\n');
 
-function ShowProps(obj) {
-	var result = [];
-	// Object
-	result.push('OBJECT:\r');
-	result.push(obj.reflect.name);
-	result.push(obj.toSource());
-	// Properties
-	result.push('\rPROPERTIES:\r');
-	var props = obj.reflect.properties.sort();
-	for (var i = 0; i < props.length; i++) {
-		if (props[i].toString() === "__proto__" ||
-			props[i].toString() === "reflect" ||
-			props[i].toString() === "properties") continue;
-		try { var r = obj[props[i]] } catch (_) { var r = "N/A" }
-		if (r != null && r.constructor.name === "Array")
-			result.push(props[i] + " = [" + r + "]");
-		else result.push(props[i] + " = " + r);
+result.push('PROPERTIES:\r');
+var props = obj.reflect.properties.sort();
+for (var i = 0, r; i < props.length; i++) {
+	if (props[i].toString() === "__proto__" || props[i].toString() === "properties") continue;
+	try { r = obj[props[i]] } catch (_) { r = "N/A" }
+	if (r != null && r.constructor.name === "Array") r = "[ " + r + " ]";
+	result.push(props[i] + " = " + r);
+	// Go down one more level
+	if (r != null && r != "N/A" && r.reflect.properties.length > 1) {
+		var props2 = r.reflect.properties.sort();
+		for (var j = 0, q; j < props2.length; j++) {
+			if (props2[j].toString() === "__proto__" || props2[j].toString() === "properties") continue;
+			try { q = r[props2[j]] } catch (_) { q = "N/A" }
+			if (q != null && q.constructor.name === "Array") q = "[ " + q + " ]";
+			result.push("\t" + props2[j] + " = " + q);
+		}
 	}
-	// Methods
-	result.push('\rMETHODS:\r');
-	var props = obj.reflect.methods.sort();
-	for (var i = 0; i < props.length; i++) {
-		if (props[i].toString() === "==" || props[i].toString() === "===") continue;
-		result.push(props[i].name + "()");
-	}
-	AlertScroll("Properties", result);
+	result.push('\n');
 }
+result.push('METHODS:\r');
+var props = obj.reflect.methods.sort();
+for (var i = 0; i < props.length; i++) {
+	if (props[i].toString() === "==" || props[i].toString() === "===") continue;
+	result.push(props[i].name + "()");
+}
+AlertScroll("Properties", result);
 
 // Modified from 'Scrollable alert' by Peter Kahrel
 // http://forums.adobe.com/message/2869250#2869250
