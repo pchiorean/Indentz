@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for print v1.11.1 (2021-01-18)
+	Prepare for export v1.11.1 (2021-01-18)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides safe area layer and moves white, varnish & dielines to separate spreads.
