@@ -46,13 +46,15 @@ Proxy | | | | | |
 
 ### **Export**
 
-Fac câteva pregătiri pentru export și pot fi rulate în [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). Detectează straturi cu denumiri similare gen **visible**, **vizibil** pentru **safe area**, sau **diecut**, **die cut**, **cut lines**, **stanze** pentru **dielines**.
+Fac câteva pregătiri pentru export; pot fi rulate în [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
 
 * **`PrepareForExport.jsx`** ascunde stratul **safe area** și mută ștanțele și marcajele pentru alb și lac UV de pe **dielines** / **white** / **varnish** pe spreaduri separate.
 
 * **`SafeArea.jsx`** creează un chenar de dimensiunea marginilor paginii pe stratul **safe area**. Folosește culoarea **Safe area**, care dacă nu există va fi creată cu valoarea "C=0 M=100 Y=0 K=0".
 
 * **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează **safe area**.
+
+**Notă:** Detectează straturi cu denumiri similare gen **visible**, **vizibil** pentru **safe area**, sau **diecut**, **die cut**, **cut lines**, **stanze** pentru **dielines**.
 
 ---
 
@@ -317,6 +319,6 @@ Miscellaneous | | | | | |
 
 Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide](http://jongware.mit.edu) de Theunis de Jong, Mozilla [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), postări pe bloguri și forumuri, tutoriale și scripturi de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.
 
-Am creat acest proiect pentru a‑mi simplifica niște operații monotone (sunt graphic designer), așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. De asemenea, am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, **Application Frame** on, macOS 10.13, low-DPI display). Feedback sau sugestii sunt binevenite.
+Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 11 aprilie 2021
+README-ro.md • 13 aprilie 2021

@@ -46,13 +46,15 @@ Proxy | | | | | |
 
 ### **Export**
 
-Make several preparations for export and can be used with [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html). The scripts detect alternative layers like **visible**, **vizibil** for **safe area**, or **diecut**, **die cut**, **cut lines**, **stanze** for **dielines**.
+Make several preparations for export; can be used with [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
 
 * **`PrepareForExport.jsx`** hides the **safe area** layer and moves the dielines, white and UV markings from **dielines** / **white** / **varnish** to separate spreads.
 
 * **`SafeArea.jsx`** creates a frame the size of the page margins on the **safe area** layer. It uses the **Safe area** swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
 
 * **`SafeAreaHideLayer.jsx`** and **`SafeAreaShowLayer.jsx`** hide or show **safe area**.
+
+**Note:** The scripts detect alternative layers like **visible**, **vizibil** for **safe area**, or **diecut**, **die cut**, **cut lines**, **stanze** for **dielines**.
 
 ---
 
@@ -317,6 +319,6 @@ Miscellaneous | | | | | |
 
 The code in this project would not have been possible without the [JavaScript Reference Guide](http://jongware.mit.edu) by Theunis de Jong, Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington, and others.
 
-I created this project to simplify some monotonous tasks (I'm a graphic designer), so please bear with me if some things are not state-of-the-art. Also, very limited testing was done outside my work configuration (Adobe InDesign 2020, **Application Frame** on, macOS 10.13, low-DPI display). Feedback or suggestions are welcome.
+I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • April 11, 2021
+README.md • April 13, 2021
