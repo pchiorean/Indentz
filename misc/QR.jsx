@@ -1,5 +1,5 @@
 /*
-	QR code v3.2.2 (2021-04-08)
+	QR code v3.2.3 (2021-04-12)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -55,7 +55,7 @@ function main() {
 	ui.actions.alignChildren = ["fill", "top"];
 	ui.ondoc = ui.actions.add("button", undefined, "On doc", { name: "ok" });
 	ui.ondoc.helpTip = "Bottom-left corner of each page";
-	ui.onfile = ui.actions.add("button", undefined, "External");
+	ui.onfile = ui.actions.add("button", undefined, "Separate");
 	ui.onfile.helpTip = !!currentPath ?
 		"'QR Codes/" + doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd'" :
 		"Where? Document is not saved";
