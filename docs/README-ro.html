@@ -128,16 +128,16 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p>Fac câteva pregătiri pentru export; pot fi rulate în <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong>Batch process</strong></a>.</p>
 <ul>
 <li>
-<p><strong><code>PrepareForExport.jsx</code></strong> ascunde stratul <strong>safe area</strong> și mută ștanțele și marcajele pentru alb și lac UV de pe <strong>dielines</strong> / <strong>white</strong> / <strong>varnish</strong> pe spreaduri separate.</p>
+<p><strong><code>PrepareForExport.jsx</code></strong> ascunde stratul <strong>visible area</strong> și mută ștanțele și marcajele pentru alb și lac UV de pe <strong>dielines</strong> / <strong>white</strong> / <strong>varnish</strong> pe spreaduri separate.</p>
 </li>
 <li>
-<p><strong><code>SafeArea.jsx</code></strong> creează un chenar de dimensiunea marginilor paginii pe stratul <strong>safe area</strong>. Folosește culoarea <strong>Safe area</strong>, care dacă nu există va fi creată cu valoarea &quot;C=0 M=100 Y=0 K=0&quot;.</p>
+<p><strong><code>VisibleArea.jsx</code></strong> creează un chenar de dimensiunea marginilor paginii pe stratul <strong>visible area</strong>. Folosește culoarea <strong>Visible area</strong>, care dacă nu există va fi creată cu valoarea &quot;C=0 M=100 Y=0 K=0&quot;.</p>
 </li>
 <li>
-<p><strong><code>SafeAreaHideLayer.jsx</code></strong> și <strong><code>SafeAreaShowLayer.jsx</code></strong> ascund sau afișează <strong>safe area</strong>.</p>
+<p><strong><code>VisibleAreaHide.jsx</code></strong> și <strong><code>VisibleAreaShow.jsx</code></strong> ascund sau afișează <strong>visible area</strong>.</p>
 </li>
 </ul>
-<p><strong>Notă:</strong> Detectează straturi cu denumiri similare gen <strong>visible</strong>, <strong>vizibil</strong> pentru <strong>safe area</strong>, sau <strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong> pentru <strong>dielines</strong>.</p>
+<p><strong>Notă:</strong> Detectează straturi cu denumiri similare gen <strong>visible</strong>, <strong>vizibil</strong> pentru <strong>visible area</strong>, sau <strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong> pentru <strong>dielines</strong>.</p>
 <hr>
 <h3 id="file"><strong>File</strong></h3>
 <ul>
@@ -215,9 +215,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:right">⌥F12</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong>FitToPageSafeArea.jsx</strong></td>
+<td style="text-align:left"><strong>FitToPageVisibleArea.jsx</strong></td>
 <td style="text-align:right">⌥⇧F11</td>
-<td style="text-align:left"><strong>FitToSpreadSafeArea.jsx</strong></td>
+<td style="text-align:left"><strong>FitToSpreadVisibleArea.jsx</strong></td>
 <td style="text-align:right">⌥⇧F12</td>
 </tr>
 <tr>
@@ -239,9 +239,9 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:right">⌥⌘F12</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong>FitToPageSafeAreaForced.jsx</strong></td>
+<td style="text-align:left"><strong>FitToPageVisibleAreaForced.jsx</strong></td>
 <td style="text-align:right">⌥⇧⌘F11</td>
-<td style="text-align:left"><strong>FitToSpreadSafeAreaForced.jsx</strong></td>
+<td style="text-align:left"><strong>FitToSpreadVisibleAreaForced.jsx</strong></td>
 <td style="text-align:right">⌥⇧⌘F12</td>
 </tr>
 <tr>
@@ -252,7 +252,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tr>
 </tbody>
 </table>
-<p><strong>Notă:</strong> <code>F11</code> pagină, <code>F12</code> spread; <code>⌥</code> margini, <code>⌥⇧</code> safe area, <code>⇧</code> bleed; <code>⌘</code> forțat.</p>
+<p><strong>Notă:</strong> <code>F11</code> pagină, <code>F12</code> spread; <code>⌥</code> margini, <code>⌥⇧</code> aria vizibilă, <code>⇧</code> bleed; <code>⌘</code> forțat.</p>
 <table>
 <thead>
 <tr>
@@ -469,13 +469,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p><strong><code>PageMarginsFromSelection.jsx</code></strong> setează marginile paginii la dimensiunile selecției.</p>
 </li>
 <li>
-<p><strong><code>PageSizeFromFilename.jsx</code></strong> setează dimensiunea și marginile paginii, preluând informațiile din numele fișierului:</p>
+<p><strong><code>PageSizeFromFilename.jsx</code></strong> setează dimensiunea paginii și a ariei vizibile, preluând informațiile din numele fișierului:</p>
 <table>
 <thead>
 <tr>
 <th style="text-align:left">Filename</th>
 <th style="text-align:center">Total size</th>
-<th style="text-align:center">Safe area</th>
+<th style="text-align:center">Visible area</th>
 <th style="text-align:center">Bleed</th>
 </tr>
 </thead>
@@ -495,7 +495,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tbody>
 </table>
 <blockquote>
-<p>Caută în numele fișierului perechi de numere de genul <code>000x000</code> (unde <code>000</code> înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de <code>mm</code> sau <code>cm</code>). Dacă găsește doar o pereche, e dimensiunea paginii. Dacă găsește două (de ex. <code>000x000_000x000</code>), perechea mai mare e dimensiunea paginii, perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta va fi bleed.</p>
+<p>Caută în numele fișierului perechi de numere de genul <code>000x000</code> (unde <code>000</code> înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de <code>mm</code> sau <code>cm</code>). Dacă găsește doar o pereche, e dimensiunea paginii. Dacă găsește două (de ex. <code>000x000_000x000</code>), perechea mai mare e dimensiunea paginii, perechea mai mică aria vizibilă. Dacă sunt urmate de o secvență de una sau două cifre, aceasta va fi bleed.</p>
 </blockquote>
 </li>
 <li>
@@ -685,7 +685,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p>© 2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>Codul din acest proiect nu ar fi fost posibil fără <a href="http://jongware.mit.edu">JavaScript Reference Guide</a> de Theunis de Jong, Mozilla <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, postări pe bloguri și forumuri, tutoriale și scripturi de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.</p>
 <p>Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, <strong>Application Frame</strong> on). Feedback sau sugestii sunt binevenite.</p>
-<p>README-ro.md • 13 aprilie 2021</p>
+<p>README-ro.md • 14 aprilie 2021</p>
 
 </body>
 </html>

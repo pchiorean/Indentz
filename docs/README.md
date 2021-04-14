@@ -48,13 +48,13 @@ Proxy | | | | | |
 
 Make several preparations for export; can be used with [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
 
-* **`PrepareForExport.jsx`** hides the **safe area** layer and moves the dielines, white and UV markings from **dielines** / **white** / **varnish** to separate spreads.
+* **`PrepareForExport.jsx`** hides the **visible area** layer and moves the dielines, white and UV markings from **dielines** / **white** / **varnish** to separate spreads.
 
-* **`SafeArea.jsx`** creates a frame the size of the page margins on the **safe area** layer. It uses the **Safe area** swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
+* **`VisibleArea.jsx`** creates a frame the size of the page margins on the **visible area** layer. It uses the **Visible area** swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
 
-* **`SafeAreaHideLayer.jsx`** and **`SafeAreaShowLayer.jsx`** hide or show **safe area**.
+* **`VisibleAreaHide.jsx`** and **`VisibleAreaShow.jsx`** hide or show **visible area**.
 
-**Note:** The scripts detect alternative layers like **visible**, **vizibil** for **safe area**, or **diecut**, **die cut**, **cut lines**, **stanze** for **dielines**.
+**Note:** The scripts detect alternative layers like **visible**, **vizibil** for **visible area**, or **diecut**, **die cut**, **cut lines**, **stanze** for **dielines**.
 
 ---
 
@@ -90,14 +90,14 @@ FitToPage | | FitToSpread | |
 :- | -: | :- | -:
 **FitToPage.jsx** | F11 | **FitToSpread.jsx** | F12
 **FitToPageMargins.jsx** | ⌥F11 | **FitToSpreadMargins.jsx** | ⌥F12
-**FitToPageSafeArea.jsx** | ⌥⇧F11 | **FitToSpreadSafeArea.jsx** | ⌥⇧F12
+**FitToPageVisibleArea.jsx** | ⌥⇧F11 | **FitToSpreadVisibleArea.jsx** | ⌥⇧F12
 **FitToPageBleed.jsx** | ⇧F11 | **FitToSpreadBleed.jsx** | ⇧F12
 **FitToPageForced.jsx** | ⌘F11 | **FitToSpreadForced.jsx** | ⌘F12
 **FitToPageMarginsForced.jsx** | ⌥⌘F11 | **FitToSpreadMarginsForced.jsx** | ⌥⌘F12
-**FitToPageSafeAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadSafeAreaForced.jsx** | ⌥⇧⌘F12
+**FitToPageVisibleAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadVisibleAreaForced.jsx** | ⌥⇧⌘F12
 **FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
 
-**Note:** `F11` page, `F12` spread; `⌥` margins, `⌥⇧` safe area, `⇧` bleed; `⌘` forced.
+**Note:** `F11` page, `F12` spread; `⌥` margins, `⌥⇧` visible area, `⇧` bleed; `⌘` forced.
 
 TextAutosize | |
 :- | -:
@@ -213,12 +213,12 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`PageSizeFromFilename.jsx`** sets the page size and margins, retrieving the information from the filename:
 
-  Filename | Total size | Safe area | Bleed
+  Filename | Total size | Visible area | Bleed
   :- | :-: | :-: | :-:
   File1\_`1400x400`\_`700x137`\_`5`mm\.indd | 1400x400 | 700x137 | 5
   File2\_`597x517`\_`577x500.5`\_`3`mm V4\.indd | 597x517 | 577x500.5 | 3
 
-  > It searches for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it's the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair it's the page size, the smaller pair the visible/safe area size. If followed by a one- or two‑digit sequence, this will be bleed.
+  > It searches for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it's the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair it's the page size, the smaller pair the visible area. If followed by a one- or two‑digit sequence, this will be bleed.
 
 * **`PageSizeFromMargins.jsx`** resizes each page to its margins.
 
@@ -321,4 +321,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • April 13, 2021
+README.md • April 14, 2021

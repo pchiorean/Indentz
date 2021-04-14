@@ -1,5 +1,5 @@
 /*
-	Bounds v4.0 (2021-02-25)
+	Bounds v5.0 (2021-04-14)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Returns an object containing the geometric bounds of the given page,
@@ -9,13 +9,13 @@
 		page: {
 			size: [ top, left, bottom, right ],
 			margins: [ ... ],
-			safearea: [ ... ] or undefined,
+			visible: [ ... ] or undefined,
 			bleed: [ ... ]
 		},
 		spread: {
 			size: [ ... ],
 			margins: [ ... ],
-			safearea: [ ... ] or undefined,
+			visible: [ ... ] or undefined,
 			bleed: [ ... ]
 		}
 	}
@@ -70,22 +70,23 @@ return {
 			/* right */ page.side == PageSideOptions.LEFT_HAND ?
 				page.bounds[3] - margins.left : page.bounds[3] - margins.right
 		],
-		safearea: (function() {
-			var s = [], frame, frames = page.rectangles.everyItem().getElements();
-			while (frame = frames.shift()) if (frame.label == "safe area") s.push(frame);
-			if (s.length == 0) return undefined;
-			var sa = s[0].geometricBounds;
-			for (var i = 1; i < s.length; i++) {
-				sa[0] = Math.min(s[i].geometricBounds[0], sa[0]);
-				sa[1] = Math.min(s[i].geometricBounds[1], sa[1]);
-				sa[2] = Math.max(s[i].geometricBounds[2], sa[2]);
-				sa[3] = Math.max(s[i].geometricBounds[3], sa[3]);
+		visible: (function() {
+			var v = [], frame, frames = page.rectangles.everyItem().getElements();
+			while (frame = frames.shift())
+				if (frame.label == "visible area" || frame.name == "<visible area>") v.push(frame);
+			if (v.length == 0) return undefined;
+			var vis = v[0].geometricBounds;
+			for (var i = 1; i < v.length; i++) {
+				vis[0] = Math.min(v[i].geometricBounds[0], vis[0]);
+				vis[1] = Math.min(v[i].geometricBounds[1], vis[1]);
+				vis[2] = Math.max(v[i].geometricBounds[2], vis[2]);
+				vis[3] = Math.max(v[i].geometricBounds[3], vis[3]);
 			}
 			return [
-				Math.max(sa[0], page.bounds[0]),
-				Math.max(sa[1], page.bounds[1]),
-				Math.min(sa[2], page.bounds[2]),
-				Math.min(sa[3], page.bounds[3])
+				Math.max(vis[0], page.bounds[0]),
+				Math.max(vis[1], page.bounds[1]),
+				Math.min(vis[2], page.bounds[2]),
+				Math.min(vis[3], page.bounds[3])
 			];
 		})(),
 		bleed: [
@@ -124,18 +125,19 @@ return {
 					lm.marginPreferences.right)
 			];
 		})(),
-		safearea: (function() {
-			var s = [], frame, frames = page.parent.rectangles.everyItem().getElements();
-			while (frame = frames.shift()) { if (frame.label == "safe area") s.push(frame) };
-			if (s.length == 0) return undefined;
-			var sa = s[0].geometricBounds;
-			for (var i = 1; i < s.length; i++) {
-				sa[0] = Math.min(s[i].geometricBounds[0], sa[0]);
-				sa[1] = Math.min(s[i].geometricBounds[1], sa[1]);
-				sa[2] = Math.max(s[i].geometricBounds[2], sa[2]);
-				sa[3] = Math.max(s[i].geometricBounds[3], sa[3]);
+		visible: (function() {
+			var v = [], frame, frames = page.parent.rectangles.everyItem().getElements();
+			while (frame = frames.shift())
+				if (frame.label == "visible area" || frame.name == "<visible area>") v.push(frame);
+			if (v.length == 0) return undefined;
+			var vis = v[0].geometricBounds;
+			for (var i = 1; i < v.length; i++) {
+				vis[0] = Math.min(v[i].geometricBounds[0], vis[0]);
+				vis[1] = Math.min(v[i].geometricBounds[1], vis[1]);
+				vis[2] = Math.max(v[i].geometricBounds[2], vis[2]);
+				vis[3] = Math.max(v[i].geometricBounds[3], vis[3]);
 			}
-			return sa;
+			return vis;
 		})(),
 		bleed: [
 			fPg.bounds[0] - bleed.top,

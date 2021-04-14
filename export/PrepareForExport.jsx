@@ -1,8 +1,8 @@
 ﻿/*
-	Prepare for export v1.11.1 (2021-01-18)
+	Prepare for export v1.12 (2021-04-14)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Hides safe area layer and moves white, varnish & dielines to separate spreads.
+	Hides visible area layer and moves white, varnish & dielines to separate spreads.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -29,10 +29,21 @@
 if (!(doc = app.activeDocument)) exit();
 app.scriptPreferences.enableRedraw = false;
 
-var saLayer = FindLayer([ "safe area", "visible", "Visible", "vizibil", "Vizibil" ]);
-var dieLayer = FindLayer([ "dielines", "cut lines", "Cut lines", "cut", "Cut", "CUT",
-	"decoupe", "Decoupe", "die cut", "Die Cut", "Die", "diecut", "Diecut",
-	"stanz", "Stanz", "stanze", "Stanze", "stanzform", "Stanzform" ]);
+var visLayer = FindLayer([
+	"visible area",
+	"visible", "Visible",
+	"vizibil", "Vizibil",
+	"vis. area", "Vis. area"
+]);
+var saLayer = FindLayer([ "safe area" ]);
+var dieLayer = FindLayer([
+	"dielines",
+	"cut lines", "Cut lines", "cut", "Cut", "CUT",
+	"decoupe", "Decoupe",
+	"die", "Die", "die cut", "Die Cut", "diecut", "Diecut",
+	"stanz", "Stanz", "stanze", "Stanze",
+	"stanzform", "Stanzform"
+]);
 var whiteLayer = FindLayer([ "white", "White", "WHITE" ]);
 var uvLayer = FindLayer([ "varnish", "Varnish", "UV" ]);
 var guidesLayer = FindLayer([ "guides", "Guides" ]);
@@ -41,6 +52,7 @@ if (!infoLayer.isValid) doc.layers.add({ name: "info", layerColor: UIColors.CYAN
 infoLayer.move(LocationOptions.AT_BEGINNING);
 
 doc.layers.everyItem().locked = false;
+try { visLayer.visible = false } catch (_) {};
 try { saLayer.visible = false } catch (_) {};
 try { dieLayer.visible = true } catch (_) {};
 try { whiteLayer.visible = true } catch (_) {};

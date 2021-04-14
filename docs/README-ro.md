@@ -48,13 +48,13 @@ Proxy | | | | | |
 
 Fac câteva pregătiri pentru export; pot fi rulate în [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
 
-* **`PrepareForExport.jsx`** ascunde stratul **safe area** și mută ștanțele și marcajele pentru alb și lac UV de pe **dielines** / **white** / **varnish** pe spreaduri separate.
+* **`PrepareForExport.jsx`** ascunde stratul **visible area** și mută ștanțele și marcajele pentru alb și lac UV de pe **dielines** / **white** / **varnish** pe spreaduri separate.
 
-* **`SafeArea.jsx`** creează un chenar de dimensiunea marginilor paginii pe stratul **safe area**. Folosește culoarea **Safe area**, care dacă nu există va fi creată cu valoarea "C=0 M=100 Y=0 K=0".
+* **`VisibleArea.jsx`** creează un chenar de dimensiunea marginilor paginii pe stratul **visible area**. Folosește culoarea **Visible area**, care dacă nu există va fi creată cu valoarea "C=0 M=100 Y=0 K=0".
 
-* **`SafeAreaHideLayer.jsx`** și **`SafeAreaShowLayer.jsx`** ascund sau afișează **safe area**.
+* **`VisibleAreaHide.jsx`** și **`VisibleAreaShow.jsx`** ascund sau afișează **visible area**.
 
-**Notă:** Detectează straturi cu denumiri similare gen **visible**, **vizibil** pentru **safe area**, sau **diecut**, **die cut**, **cut lines**, **stanze** pentru **dielines**.
+**Notă:** Detectează straturi cu denumiri similare gen **visible**, **vizibil** pentru **visible area**, sau **diecut**, **die cut**, **cut lines**, **stanze** pentru **dielines**.
 
 ---
 
@@ -90,14 +90,14 @@ FitToPage | | FitToSpread | |
 :- | -: | :- | -:
 **FitToPage.jsx** | F11 | **FitToSpread.jsx** | F12
 **FitToPageMargins.jsx** | ⌥F11 | **FitToSpreadMargins.jsx** | ⌥F12
-**FitToPageSafeArea.jsx** | ⌥⇧F11 | **FitToSpreadSafeArea.jsx** | ⌥⇧F12
+**FitToPageVisibleArea.jsx** | ⌥⇧F11 | **FitToSpreadVisibleArea.jsx** | ⌥⇧F12
 **FitToPageBleed.jsx** | ⇧F11 | **FitToSpreadBleed.jsx** | ⇧F12
 **FitToPageForced.jsx** | ⌘F11 | **FitToSpreadForced.jsx** | ⌘F12
 **FitToPageMarginsForced.jsx** | ⌥⌘F11 | **FitToSpreadMarginsForced.jsx** | ⌥⌘F12
-**FitToPageSafeAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadSafeAreaForced.jsx** | ⌥⇧⌘F12
+**FitToPageVisibleAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadVisibleAreaForced.jsx** | ⌥⇧⌘F12
 **FitToPageBleedForced.jsx** | ⇧⌘F11 | **FitToSpreadBleedForced.jsx** | ⇧⌘F12
 
-**Notă:** `F11` pagină, `F12` spread; `⌥` margini, `⌥⇧` safe area, `⇧` bleed; `⌘` forțat.
+**Notă:** `F11` pagină, `F12` spread; `⌥` margini, `⌥⇧` aria vizibilă, `⇧` bleed; `⌘` forțat.
 
 TextAutosize | |
 :- | -:
@@ -211,14 +211,14 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
 
-* **`PageSizeFromFilename.jsx`** setează dimensiunea și marginile paginii, preluând informațiile din numele fișierului:
+* **`PageSizeFromFilename.jsx`** setează dimensiunea paginii și a ariei vizibile, preluând informațiile din numele fișierului:
 
-  Filename | Total size | Safe area | Bleed
+  Filename | Total size | Visible area | Bleed
   :- | :-: | :-: | :-:
   File1\_`1400x400`\_`700x137`\_`5`mm\.indd | 1400x400 | 700x137 | 5
   File2\_`597x517`\_`577x500.5`\_`3`mm V4\.indd | 597x517 | 577x500.5 | 3
 
-  > Caută în numele fișierului perechi de numere de genul `000x000` (unde `000` înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de `mm` sau `cm`). Dacă găsește doar o pereche, e dimensiunea paginii. Dacă găsește două (de ex. `000x000_000x000`), perechea mai mare e dimensiunea paginii, perechea mai mică dimensiunea ariei vizibile. Dacă sunt urmate de o secvență de una sau două cifre, aceasta va fi bleed.
+  > Caută în numele fișierului perechi de numere de genul `000x000` (unde `000` înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de `mm` sau `cm`). Dacă găsește doar o pereche, e dimensiunea paginii. Dacă găsește două (de ex. `000x000_000x000`), perechea mai mare e dimensiunea paginii, perechea mai mică aria vizibilă. Dacă sunt urmate de o secvență de una sau două cifre, aceasta va fi bleed.
 
 * **`PageSizeFromMargins.jsx`** redimensionează fiecare pagină la marginile acesteia.
 
@@ -321,4 +321,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 13 aprilie 2021
+README-ro.md • 14 aprilie 2021

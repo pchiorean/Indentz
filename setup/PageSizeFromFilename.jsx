@@ -28,9 +28,21 @@
 */
 
 if (!(doc = app.activeDocument)) exit();
-var saLayerName = FindLayer([ "safe area", "visible", "Visible", "vizibil", "Vizibil" ]);
-var dieLayerName = FindLayer([ "dielines", "diecut", "Diecut", "die cut", "Die Cut", "Die cut" ]);
-var saSwatchName = "Safe area";
+var visLayerName = FindLayer([
+	"visible area",
+	"visible", "Visible",
+	"vizibil", "Vizibil",
+	"vis. area", "Vis. area"
+]);
+var dieLayerName = FindLayer([
+	"dielines",
+	"cut lines", "Cut lines", "cut", "Cut", "CUT",
+	"decoupe", "Decoupe",
+	"die", "Die", "die cut", "Die Cut", "diecut", "Diecut",
+	"stanz", "Stanz", "stanze", "Stanze",
+	"stanzform", "Stanzform"
+]);
+var visSwatchName = "Visible area";
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
@@ -125,7 +137,7 @@ function main() {
 			page.marginPreferences.properties = margins;
 			page.marginPreferences.columnCount = 1;
 			page.marginPreferences.columnGutter = 0;
-			MarkSafeArea(page);
+			MarkVisibleArea(page);
 		}
 	}
 	// Set document size and bleed
@@ -139,43 +151,43 @@ function main() {
 }
 
 
-function MarkSafeArea(page) { // Draw a 'safe area' frame
-	if (!doc.colors.itemByName(saSwatchName).isValid)
+function MarkVisibleArea(page) { // Draw a 'visible area' frame
+	if (!doc.colors.itemByName(visSwatchName).isValid)
 		doc.colors.add({
-			name: saSwatchName,
+			name: visSwatchName,
 			model: ColorModel.PROCESS,
 			space: ColorSpace.CMYK,
 			colorValue: [ 0, 100, 0, 0 ] });
-	var saLayer = doc.layers.item(saLayerName);
+	var visLayer = doc.layers.item(visLayerName);
 	var dieLayer = doc.layers.item(dieLayerName);
-	if (saLayer.isValid) {
-		saLayer.properties = {
+	if (visLayer.isValid) {
+		visLayer.properties = {
 			layerColor: UIColors.YELLOW,
 			visible: true, locked: false }
-		if (dieLayer.isValid) saLayer.move(LocationOptions.before, dieLayer);
+		if (dieLayer.isValid) visLayer.move(LocationOptions.before, dieLayer);
 	} else {
-		saLayer = doc.layers.add({ name: saLayerName,
+		visLayer = doc.layers.add({ name: visLayerName,
 			layerColor: UIColors.YELLOW,
 			visible: true, locked: false });
 		if (dieLayer.isValid) {
-			saLayer.move(LocationOptions.before, dieLayer);
-		} else saLayer.move(LocationOptions.AT_BEGINNING);
+			visLayer.move(LocationOptions.before, dieLayer);
+		} else visLayer.move(LocationOptions.AT_BEGINNING);
 	}
 	var frame, frames = page.rectangles.everyItem().getElements();
 	while (frame = frames.shift())
-		if (frame.label == "safe area" &&
-			frame.itemLayer == saLayer &&
+		if (frame.label == "visible area" || frame.name == "<visible area>" &&
+			frame.itemLayer == visLayer &&
 			frame.locked == false) frame.remove();
 	var margins = page.marginPreferences;
 	var frame = page.rectangles.add({
-		name: "<safe area>", label: "safe area",
+		name: "<visible area>", label: "visible area",
 		contentType: ContentType.UNASSIGNED,
-		fillColor: "None", strokeColor: saSwatchName,
+		fillColor: "None", strokeColor: visSwatchName,
 		strokeWeight: "0.75pt",
 		strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 		strokeType: "$ID/Canned Dashed 3x2",
 		overprintStroke: false,
-		itemLayer: saLayerName,
+		itemLayer: visLayerName,
 		geometricBounds: [
 			page.bounds[0] + margins.top,
 			page.side == PageSideOptions.LEFT_HAND ?
@@ -185,7 +197,7 @@ function MarkSafeArea(page) { // Draw a 'safe area' frame
 				page.bounds[3] - margins.left : page.bounds[3] - margins.right
 		]
 	});
-	saLayer.locked = true;
+	visLayer.locked = true;
 }
 
 function FindLayer(names) { // Find first valid layer from a list of names

@@ -1,5 +1,5 @@
 /*
-	L grid 2.0 (2021-04-12)
+	L grid 2.1 (2021-04-14)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 */
 
@@ -17,7 +17,7 @@ function main() {
 	try { doc.layers.itemByName("guides").locked = false } catch (_) {};
 
 	for (var i = 0; i < doc.pages.length; i++) {
-		var tgBounds = Bounds(doc.pages[i]).page.safearea || Bounds(doc.pages[i]).page.size;
+		var tgBounds = Bounds(doc.pages[i]).page.visible || Bounds(doc.pages[i]).page.size;
 		var tgSize = {
 			width: tgBounds[3] - tgBounds[1],
 			height: tgBounds[2] - tgBounds[0]

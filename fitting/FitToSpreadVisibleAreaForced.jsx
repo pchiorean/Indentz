@@ -2,5 +2,5 @@
 // @include "../lib/FitTo.jsxinc";
 
 app.doScript(FitTo, ScriptLanguage.javascript,
-	[ "spread", "safearea" ],
-	UndoModes.ENTIRE_SCRIPT, "Fit to spread safe area");
+	[ "spread", "visible", true ],
+	UndoModes.ENTIRE_SCRIPT, "Fit to spread visible area");

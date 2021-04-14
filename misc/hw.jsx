@@ -1,5 +1,5 @@
 /*
-	HW 2.3 (2021-03-29)
+	HW 2.4 (2021-04-14)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Labels 'HW' selected objects and adds a HW bottom guide on the current spread.
@@ -44,17 +44,15 @@ function main() {
 		}
 	}
 	// Remove old guides
-	// var guide, guides = page.parent.guides.everyItem().getElements();
 	var guide, guides = doc.guides.everyItem().getElements();
 	while (guide = guides.shift()) if (guide.label == "HW") guide.remove();
 	// Add guides
-	// var target, pages = page.parent.pages.everyItem().getElements();
 	var target, pages = doc.pages.everyItem().getElements();
 	while (target = pages.shift()) {
 		var top = target.bounds[0], bottom = target.bounds[2];
 		var frame, frames = target.rectangles.everyItem().getElements();
 		while (frame = frames.shift()) {
-			if (frame.label == "safe area") {
+			if (frame.label == "visible area" || frame.name == "<visible area>") {
 				top = frame.geometricBounds[0],
 				bottom = frame.geometricBounds[2];
 				break;
