@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.2 (2021-04-13)
+	Batch QR codes v2.2.1 (2021-04-14)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Batch processes "QR.txt" to add codes to existing documents or to separate files.
@@ -39,15 +39,15 @@ app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.enableRedraw = false;
 var doc, currentPath, errors;
 if (app.documents.length > 0) doc = app.activeDocument;
-if (doc && doc.saved) currentPath = doc.filePath;
+if (!!doc && doc.saved) currentPath = doc.filePath;
 
 main();
 
 function main() {
-	const L = {
-		WIDTH: 1200,   // pixels
-		HEIGHT: 25,    // lines
-		ITEMHEIGHT: 21 // pixels
+	const LIST = {
+		width: 1200, // pixels
+		height: 25, // lines
+		itemHeight: 21 // pixels
 	}
 	var infoFile, rawData, validLines, queue, pbWidth;
 	// User interface
@@ -61,18 +61,18 @@ function main() {
 		numberOfColumns: 4,
 		showHeaders: true,
 		columnTitles: [ "#", "Filename", "Code", "On" ],
-		columnWidths: [ 25, (L.WIDTH - 66) * 0.7, (L.WIDTH - 66) * 0.3, 25 ],
+		columnWidths: [ 25, (LIST.width - 66) * 0.7, (LIST.width - 66) * 0.3, 25 ],
 		multiselect: true
 	});
-	ui.list.itemSize[1] = L.ITEMHEIGHT;
-	ui.list.size = [ L.WIDTH, (L.ITEMHEIGHT + 1) * (L.HEIGHT + 1) - 1 ];
+	ui.list.itemSize[1] = LIST.itemHeight;
+	ui.list.size = [ LIST.width, (LIST.itemHeight + 1) * (LIST.height + 1) - 1 ];
 	ui.list.active = true;
 	ui.actions = ui.add("group", undefined);
 	ui.actions.orientation = "row";
 	ui.actions.alignChildren = [ "right", "center" ];
 	ui.actions.white = ui.actions.add("checkbox", undefined, "White text");
 	ui.actions.white.helpTip = "Make text white (ignored when separate)";
-	ui.actions.white.preferredSize.width = L.WIDTH - 492;
+	ui.actions.white.preferredSize.width = LIST.width - 492;
 	ui.actions.err = ui.actions.add("button", undefined, "Show errors");
 	ui.actions.err.visible = false;
 	ui.actions.div1 = ui.actions.add("panel", undefined, undefined);
@@ -225,9 +225,9 @@ function MakeQROnDoc(fn, code, /*bool*/isWhite) {
 			itemLayer: idLayer.name,
 			fillColor: "None",
 			strokeColor: "None",
-			contents: /\|/g.test(code) ?        // If '|' found
+			contents: /\|/g.test(code) ? // If '|' found
 				code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
-				BalanceText(code, 20)           // else auto balance text
+				BalanceText(code, 20) // else auto balance text
 		});
 		labelFrame.paragraphs.everyItem().properties = {
 			appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
@@ -281,7 +281,7 @@ function MakeQROnDoc(fn, code, /*bool*/isWhite) {
 		// Reposition
 		var qrGroup = page.groups.add([labelFrame, codeFrame]);
 		qrGroup.absoluteRotationAngle = 90;
-		// If possible, put code outside safe area
+		// If possible, put code outside visible area
 		var mgs = Margins(page);
 		var szLabel = {
 			width: labelFrame.geometricBounds[3] - labelFrame.geometricBounds[1],
@@ -312,9 +312,9 @@ function MakeQROnFile(fn, code) {
 		itemLayer: idLayer.name,
 		fillColor: "None",
 		strokeColor: "None",
-		contents: /\|/g.test(code) ?        // If '|' found
+		contents: /\|/g.test(code) ? // If '|' found
 			code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
-			BalanceText(code, 18)           // else auto balance text
+			BalanceText(code, 18) // else auto balance text
 	});
 	labelFrame.paragraphs.everyItem().properties = {
 		appliedFont: app.fonts.item("Helvetica Neue\tRegular"),

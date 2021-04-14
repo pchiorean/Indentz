@@ -1,5 +1,5 @@
 /*
-	QR code v3.2.3 (2021-04-12)
+	QR code v3.2.4 (2021-04-14)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -86,9 +86,9 @@ function MakeQROnDoc(code, /*bool*/isWhite) {
 			itemLayer: idLayer.name,
 			fillColor: "None",
 			strokeColor: "None",
-			contents: /\|/g.test(code) ?        // If '|' found
+			contents: /\|/g.test(code) ? // If '|' found
 				code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
-				BalanceText(code, 20)           // else auto balance text
+				BalanceText(code, 20) // else auto balance text
 		});
 		labelFrame.paragraphs.everyItem().properties = {
 			appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
@@ -142,7 +142,7 @@ function MakeQROnDoc(code, /*bool*/isWhite) {
 		// Reposition
 		var qrGroup = page.groups.add([labelFrame, codeFrame]);
 		qrGroup.absoluteRotationAngle = 90;
-		// If possible, put code outside safe area
+		// If possible, put code outside visible area
 		var mgs = Margins(page);
 		var szLabel = {
 			width: labelFrame.geometricBounds[3] - labelFrame.geometricBounds[1],
@@ -170,9 +170,9 @@ function MakeQROnFile(code) {
 		itemLayer: idLayer.name,
 		fillColor: "None",
 		strokeColor: "None",
-		contents: /\|/g.test(code) ?        // If '|' found
+		contents: /\|/g.test(code) ? // If '|' found
 			code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
-			BalanceText(code, 18)           // else auto balance text
+			BalanceText(code, 18) // else auto balance text
 	});
 	labelFrame.paragraphs.everyItem().properties = {
 		appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
