@@ -1,17 +1,17 @@
 /*
-	Batch QR codes v2.2.1 (2021-04-14)
+	Batch QR codes v2.2.3 (2021-04-20)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Batch processes "QR.txt" to add codes to existing documents or to separate files.
 	The list is a 3-column TSV file with the following format:
 
-	Filename | Code | On doc
+	Filename | Code | Doc
 	File 1 | Code 1 | +
 	File 2 | Code 2 |
 	...
 	1. <Filename>: document name,
 	2. <Code>: any string,
-	3. <On doc>: any string: on document; empty: separate file.
+	3. <Doc>: any string: on document; empty: separate file.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -45,9 +45,9 @@ main();
 
 function main() {
 	const LIST = {
-		width: 1200, // pixels
-		height: 25, // lines
-		itemHeight: 21 // pixels
+		width: 1200,   // pixels
+		height: 24,    // lines
+		itemHeight: 24 // pixels
 	}
 	var infoFile, rawData, validLines, queue, pbWidth;
 	// User interface
@@ -60,12 +60,12 @@ function main() {
 	ui.list = ui.main.add('listbox', undefined, undefined, {
 		numberOfColumns: 4,
 		showHeaders: true,
-		columnTitles: [ "#", "Filename", "Code", "On" ],
-		columnWidths: [ 25, (LIST.width - 66) * 0.7, (LIST.width - 66) * 0.3, 25 ],
+		columnTitles: [ "#", "Filename", "Code", "Doc" ],
+		columnWidths: [ 25, (LIST.width - 72) * 0.7, (LIST.width - 72) * 0.3, 30 ],
 		multiselect: true
 	});
 	ui.list.itemSize[1] = LIST.itemHeight;
-	ui.list.size = [ LIST.width, (LIST.itemHeight + 1) * (LIST.height + 1) - 1 ];
+	ui.list.size = [ LIST.width, (LIST.itemHeight + 1) * LIST.height + 20 ];
 	ui.list.active = true;
 	ui.actions = ui.add("group", undefined);
 	ui.actions.orientation = "row";
@@ -225,9 +225,9 @@ function MakeQROnDoc(fn, code, /*bool*/isWhite) {
 			itemLayer: idLayer.name,
 			fillColor: "None",
 			strokeColor: "None",
-			contents: /\|/g.test(code) ? // If '|' found
+			contents: /\|/g.test(code) ?        // If '|' found
 				code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
-				BalanceText(code, 20) // else auto balance text
+				BalanceText(code, 20)           // else auto balance text
 		});
 		labelFrame.paragraphs.everyItem().properties = {
 			appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
@@ -312,9 +312,9 @@ function MakeQROnFile(fn, code) {
 		itemLayer: idLayer.name,
 		fillColor: "None",
 		strokeColor: "None",
-		contents: /\|/g.test(code) ? // If '|' found
+		contents: /\|/g.test(code) ?        // If '|' found
 			code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
-			BalanceText(code, 18) // else auto balance text
+			BalanceText(code, 18)           // else auto balance text
 	});
 	labelFrame.paragraphs.everyItem().properties = {
 		appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
@@ -572,5 +572,6 @@ function AlertScroll(title, input) {
 	list.minimumSize.width = 100; list.maximumSize.width = 1024;
 	list.minimumSize.height = 100; list.maximumSize.height = 1024;
 	w.add("button", undefined, "Close", { name: "ok" });
+	w.ok.active = true;
 	w.show();
 }
