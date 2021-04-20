@@ -1,5 +1,5 @@
 /*
-	Show properties 1.4 (2021-04-10)
+	Show properties 1.4.1 (2021-04-20)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Shows properties and methods of a selected object/the document/the application.
@@ -59,5 +59,6 @@ function AlertScroll(title, input) {
 	list.minimumSize.width = 100; list.maximumSize.width = 1024;
 	list.minimumSize.height = 100; list.maximumSize.height = 1024;
 	w.add("button", undefined, "Close", { name: "ok" });
+	w.ok.active = true;
 	w.show();
 }

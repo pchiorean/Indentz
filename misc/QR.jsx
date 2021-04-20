@@ -1,5 +1,5 @@
 /*
-	QR code v3.2.4 (2021-04-14)
+	QR code v3.2.5 (2021-04-20)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -398,5 +398,6 @@ function AlertScroll(title, input) {
 	list.minimumSize.width = 100; list.maximumSize.width = 1024;
 	list.minimumSize.height = 100; list.maximumSize.height = 1024;
 	w.add("button", undefined, "Close", { name: "ok" });
+	w.ok.active = true;
 	w.show();
 }
