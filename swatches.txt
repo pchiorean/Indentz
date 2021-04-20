@@ -6,4 +6,4 @@ Varnish              	spot    	0|10|70|0
 Cut                  	spot    	0|100|0|0
 Fold                 	spot    	100|0|0|0
 Visible area         	process 	0|100|0|0
-Safe area            	process 	100|0|0|0
+Safe area            	spot    	100|0|0|0
