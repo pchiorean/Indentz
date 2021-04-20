@@ -4,7 +4,7 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. În mod 
 
 ---
 
-###### [Alignment/Proxy](#alignmentproxy) | [Export](#export) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [Instalare](#instalare) | [Licență](#licență)
+###### [Alignment/Proxy](#alignmentproxy) | [Export](#export) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [Instalare](#instalare) | [Despre](#about)
 
 ---
 
@@ -276,15 +276,15 @@ View | |
 
   **`QRBatch.jsx`** preia o listă de coduri QR dintr‑un fișier TSV numit **`qr.txt`**, pe care le adaugă unor documente existente sau creează fișiere separate:
 
-  Filename | Code | On doc
+  Filename | Code | Doc
   :- | :- | :-:
-  File 1 | Code 1 | *
+  File 1 | Code 1 | +
   File 2 | Code 2 |
   ... |
 
-  > **Filename**: numele documentului (trebuie să fie valid pentru *On doc*) \
+  > **Filename**: numele documentului (trebuie să fie valid pentru *Doc*) \
   > **Code**: orice șir de caractere \
-  > **On doc**: orice șir de caractere: în document; lăsați gol sau omiteți pentru fișier separat
+  > **Doc**: orice șir de caractere: în document; lăsați gol sau omiteți pentru fișier separat
 
   **Notă:** Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
 
@@ -313,7 +313,7 @@ Miscellaneous | | | | | |
 
 ---
 
-## Licență
+## Despre
 
 © 2021 Paul Chiorean \<jpeg AT basement.ro\>. Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
 
@@ -321,4 +321,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 14 aprilie 2021
+README-ro.md • 20 aprilie 2021

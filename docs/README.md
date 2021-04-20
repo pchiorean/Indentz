@@ -4,7 +4,7 @@ Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of
 
 ---
 
-###### [Alignment/Proxy](#alignmentproxy) | [Export](#export) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [Installation](#installation) | [License](#license)
+###### [Alignment/Proxy](#alignmentproxy) | [Export](#export) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [Installation](#installation) | [About](#about)
 
 ---
 
@@ -276,15 +276,15 @@ View | |
 
   **`QRBatch.jsx`** retrieves a list of codes from a TSV file named **`qr.txt`** and adds them to existing documents or creates separate files:
 
-  Filename | Code | On doc
+  Filename | Code | Doc
   :- | :- | :-:
-  File 1 | Code 1 | *
+  File 1 | Code 1 | +
   File 2 | Code 2 |
   ... |
 
-  > **Filename**: document name (it must be valid for *On doc*) \
+  > **Filename**: document name (it must be valid for *Doc*) \
   > **Code**: any string \
-  > **On doc**: any string: on document; leave empty or omit for separate file
+  > **Doc**: any string: on document; leave empty or omit for separate file
 
   **Note:** You can insert "|" for manually splitting the text into several lines.
 
@@ -313,7 +313,7 @@ Miscellaneous | | | | | |
 
 ---
 
-## License
+## About
 
 © 2021 Paul Chiorean \<jpeg AT basement.ro\>. The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
@@ -321,4 +321,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • April 14, 2021
+README.md • April 20, 2021
