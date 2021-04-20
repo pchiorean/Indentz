@@ -1,5 +1,5 @@
 /*
-	L grid 2.1 (2021-04-14)
+	L grid 2.2 (2021-04-20)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 */
 
@@ -22,7 +22,7 @@ function main() {
 			width: tgBounds[3] - tgBounds[1],
 			height: tgBounds[2] - tgBounds[0]
 		}
-		switch (tgSize.width / tgSize.height <= 1) {
+		switch (tgSize.width / tgSize.height < 1) {
 			case true: // Portrait
 				// Logo = 12% of format height except HW
 				// Outer ring = 116% of logo
@@ -44,6 +44,12 @@ function main() {
 					guideColor: UIColors.LIGHT_GRAY,
 					orientation: HorizontalOrVertical.horizontal,
 					location: tgBounds[2] - tgSize.height * 0.1 - mg
+				});
+				doc.pages[i].guides.add(undefined, {
+					itemLayer: "guides",
+					guideColor: UIColors.LIGHT_GRAY,
+					orientation: HorizontalOrVertical.horizontal,
+					location: tgBounds[2] - tgSize.height * 0.1 - 2 * mg
 				});
 				doc.pages[i].guides.add(undefined, {
 					itemLayer: "guides",
