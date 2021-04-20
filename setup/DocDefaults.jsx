@@ -28,10 +28,14 @@ UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
 // Set pasteboard
 app.doScript(function() { doc.pasteboardPreferences.pasteboardMargins = ["150mm", "25mm"] },
 ScriptLanguage.javascript, undefined,
-UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
+UndoModes.ENTIRE_SCRIPT, "Set pasteboard");
 
-try {
-	app.doScript(File(doc.filePath + "/_finish.jsx"),
-	ScriptLanguage.javascript, undefined,
-	UndoModes.ENTIRE_SCRIPT, "Run finishing script");
-} catch (_) {}
+// Run finishing script
+if (doc.saved) {
+	var script = File(doc.filePath + "/_finish.jsx");
+	if (script.exists && confirm("Run finishing script?", true)) {
+		app.doScript(script,
+		ScriptLanguage.javascript, undefined,
+		UndoModes.ENTIRE_SCRIPT, "Finishing script");
+	}
+}
