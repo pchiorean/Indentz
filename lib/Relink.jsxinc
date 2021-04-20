@@ -1,0 +1,8 @@
+function Relink(oldLink, newLink) {
+	newLink = /\//g.test(newLink.toString()) ?
+		newLink : doc.filePath + "/Links/" + newLink;
+	for (var i = 0; i < doc.links.length; i++) {
+		if (doc.links[i].name != oldLink) continue;
+		doc.links[i].relink(File(newLink));
+	}
+}

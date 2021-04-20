@@ -1,0 +1,18 @@
+function TextKRGB2KCMYK(doc) {
+	try { doc.colors.add({ name: "C=60 M=40 Y=40 K=100", colorValue: [ 60, 40, 40, 100 ],
+		model: ColorModel.PROCESS, space: ColorSpace.CMYK }) } catch (err) {};
+	try { doc.colors.add({ name: "R=0 G=0 B=0", colorValue: [ 0, 0, 0 ],
+		model: ColorModel.PROCESS, space: ColorSpace.RGB });
+	} catch (err) {
+		app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
+		app.findChangeTextOptions.includeHiddenLayers =
+		app.findChangeTextOptions.includeLockedLayersForFind =
+		app.findChangeTextOptions.includeLockedStoriesForFind =
+		app.findChangeTextOptions.includeMasterPages = true;
+		app.findTextPreferences.fillColor = "R=0 G=0 B=0";
+		app.changeTextPreferences.fillColor = "Black";
+		// app.changeTextPreferences.fillColor = "C=60 M=40 Y=40 K=100";
+		doc.changeText();
+		app.findTextPreferences = app.changeTextPreferences = NothingEnum.nothing;
+	}
+}

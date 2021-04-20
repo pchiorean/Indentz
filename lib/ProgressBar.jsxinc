@@ -1,0 +1,32 @@
+// var progressBar = new ProgressBar("Processing");
+// progressBar.reset(infoLines);
+// progressBar.update(line);
+// progressBar.close();
+
+function ProgressBar(title, width) {
+	var pb = new Window("palette", title);
+	pb.bar = pb.add("progressbar", undefined, 0, undefined);
+	if (!!width) { // Mini progress bar if no width
+		pb.msg = pb.add("statictext", undefined, undefined, { truncate: "middle" });
+		pb.msg.characters = Math.max(width, 50);
+		pb.layout.layout();
+		pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
+	} else pb.bar.bounds = [ 12, 12, 476, 24 ];
+	this.reset = function(max) {
+		pb.bar.value = 0;
+		pb.bar.maxvalue = max || 0;
+		pb.bar.visible = !!max;
+		pb.show();
+	}
+	this.update = function(val, msg) {
+		pb.bar.value = val;
+		if (!!width) {
+			pb.msg.visible = !!msg;
+			!!msg && (pb.msg.text = msg);
+		}
+		pb.text = title + " - " + val + "/" + pb.bar.maxvalue;
+		pb.show(); pb.update();
+	}
+	this.hide = function() { pb.hide() }
+	this.close = function() { pb.close() }
+}

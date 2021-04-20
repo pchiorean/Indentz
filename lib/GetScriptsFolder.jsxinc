@@ -1,0 +1,4 @@
+function GetScriptsFolder() {
+	for (var i = 0, f = $.includePath.split(";"); i < f.length; i++)
+		if (/InDesign\/Version.+Scripts$/.test(f[i])) return f[i];
+}
