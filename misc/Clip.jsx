@@ -1,5 +1,5 @@
 /*
-	Clip v2.5.1 (2021-02-16)
+	Clip v2.5.2 (2021-04-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Clips selected objects in a "<clip frame>", or restores them.
@@ -29,7 +29,9 @@ app.clipboardPreferences.pasteRemembersLayers = oldPRL;
 
 function Clip(items) {
 	// Undo if already clipped
-	if (items.length == 1 && (items[0].name == "<clip frame>" || items[0].name == "<auto clip frame>")) {
+	if (items.length == 1 &&
+			(items[0].name == "<clip frame>" ||
+			 items[0].name == "<auto clip frame>")) {
 		UndoClip(items[0]); exit() }
 
 	var obj = items[0];
@@ -37,7 +39,8 @@ function Clip(items) {
 	// If multiple objects are selected, group them
 	if (items.length > 1) {
 		var objects = [];
-		for (var i = 0; i < items.length; i++) if (!items[i].locked) objects.push(items[i]);
+		for (var i = 0; i < items.length; i++)
+			if (!items[i].locked) objects.push(items[i]);
 		obj = doc.groups.add(objects);
 		obj.name = "<auto clip group>";
 		size = obj.geometricBounds;
@@ -68,8 +71,8 @@ function UndoClip(clipFrame) {
 	child.sendToBack(clipFrame); clipFrame.remove();
 	app.select(child);
 	if (child.name == "<clip group>" || child.name == "<auto clip group>") {
-		var sel_BAK = child.pageItems.everyItem().getElements();
+		var selBAK = child.pageItems.everyItem().getElements();
 		child.ungroup();
-		app.select(sel_BAK);
+		app.select(selBAK);
 	}
 }
