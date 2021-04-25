@@ -1,5 +1,5 @@
 /*
-	FitTo v5.0 (2021-04-14)
+	FitTo v5.1 (2021-04-21)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Resizes the selected objects to the page/spread's size/margins/visible area/bleed.
@@ -200,20 +200,22 @@ function Fit2Bounds(obj) {
 		(obj.paths[0].entirePath[0].length == 2 || obj.paths[0].entirePath[1].length == 2));
 	if (isOrthoLine && o.geo[0] == o.geo[2]) { // horizontal
 		obj.paths[0].entirePath = [
-			[ b.expand[1], obj.paths[0].entirePath[0][1] ],
-			[ b.expand[3], obj.paths[0].entirePath[1][1] ]
+			[ FORCED ? b.target[1] : b.expand[1], obj.paths[0].entirePath[0][1] ],
+			[ FORCED ? b.target[3] : b.expand[3], obj.paths[0].entirePath[1][1] ]
 		];
 		return obj;
 	}
 	if (isOrthoLine && o.geo[1] == o.geo[3]) { // vertical
 		obj.paths[0].entirePath = [
-			[ obj.paths[0].entirePath[0][0], b.expand[0] ],
-			[ obj.paths[0].entirePath[1][0], b.expand[2] ]
+			[ obj.paths[0].entirePath[0][0], FORCED ? b.target[0] : b.expand[0] ],
+			[ obj.paths[0].entirePath[1][0], FORCED ? b.target[2] : b.expand[2] ]
 		];
 		return obj;
 	}
 	// -- Groups
-	if (obj.constructor.name == "Group") return Clip(obj, FORCED ? b.target : b.reduce);
+	if (obj.constructor.name == "Group")
+		if (FORCED) { obj.geometricBounds = b.target; return obj }
+		else return Clip(obj, b.reduce);
 	// -- Other cases
 	return Clip(obj, FORCED ? b.target : b.expand);
 
