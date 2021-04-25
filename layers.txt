@@ -1,19 +1,22 @@
 Name           	Color      	Visible 	Printable 	Order 	Variants
-visible area   	Yellow     	yes     	yes       	above 	linie vizibil, rahmen, sichtbereich, sichtformat, vis. area, visible, vizibil
+visible area   	Yellow     	yes     	yes       	above 	rahmen, sicht*, *vi?ib*, vis?*
+covered areas  	Grid Green 	yes     	yes       	above 	
 safe area      	Grid Green 	yes     	yes       	above 	
-dielines       	Red        	yes     	yes       	above 	cut, cut lines, decoupe, die, die cut, diecut, stanz, stanze, stanze 1, stanzform
+dielines       	Red        	yes     	yes       	above 	cut, cut lines, decoupe, die, die*cut, stanz*
 varnish        	Yellow     	no      	yes       	above 	uv
 white          	Cute Teal  	no      	yes       	above 	
 guides         	Magenta    	yes     	no        	above 	grid, masuratori
-media          	Cyan       	no      	yes       	above 	
 info           	Cyan       	no      	yes       	above 	info copy, ratio
-HW             	Light Gray 	no      	yes       	above 	hw, hw logo, logo hw, wh, whw
+media          	Cyan       	no      	yes       	above 	
+HW             	Light Gray 	no      	yes       	above 	*hw*, wh
 disclaimer     	Gray       	no      	yes       	above 	legal text
-text and logos 	Green      	no      	yes       	above 	copy, dots, headline, headline, headline + logo, hl, logo, ls logo, text, text, textes, txt, type, typo, typo balken
-codes          	Grid Green 	no      	yes       	above 	code, barcode, barcodes
+text and logos 	Green      	no      	yes       	above 	copy, dots, headline*, hl, logo, text*, txt, typ?
+codes          	Grid Green 	no      	yes       	above 	code*, barcode*, EAN*
 price          	Gold       	no      	yes       	above 	preis
-products       	Blue       	no      	yes       	above 	packs, packshots, product, tins
-ring           	Fiesta     	no      	yes       	above 	blue background, bullseye
-artwork        	Light Blue 	no      	yes       	above 	aw, elemente, layout, layouts
-bg             	Red        	no      	yes       	below 	amber background, background, carbon background, hg, hintergrund, hintergrund amber
-.template      	Black      	no      	no        	below 	template, referinta
+products       	Blue       	no      	yes       	above 	device*, pack*, packshot*, product*, tin*
+ring           	Fiesta     	no      	yes       	above 	bullseye
+artwork        	Light Blue 	no      	yes       	above 	aw, element?, layout*
+bg             	Red        	no      	yes       	below 	*background*, bgg, hg, hintergrund*
+bg2            	Red        	no      	yes       	below 	
+bg3            	Red        	no      	yes       	below 	
+template      	Black      	no      	no        	below 	referinta
