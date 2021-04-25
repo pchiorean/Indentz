@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for export v1.12 (2021-04-14)
+	Prepare for export v1.13 (2021-04-22)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides visible area layer and moves white, varnish & dielines to separate spreads.
@@ -29,6 +29,7 @@
 if (!(doc = app.activeDocument)) exit();
 app.scriptPreferences.enableRedraw = false;
 
+var coveredLayer = FindLayer([ "covered areas"]);
 var visLayer = FindLayer([
 	"visible area",
 	"visible", "Visible",
@@ -52,6 +53,7 @@ if (!infoLayer.isValid) doc.layers.add({ name: "info", layerColor: UIColors.CYAN
 infoLayer.move(LocationOptions.AT_BEGINNING);
 
 doc.layers.everyItem().locked = false;
+try { coveredLayer.visible = false } catch (_) {};
 try { visLayer.visible = false } catch (_) {};
 try { saLayer.visible = false } catch (_) {};
 try { dieLayer.visible = true } catch (_) {};
