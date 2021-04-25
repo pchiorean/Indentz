@@ -164,7 +164,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
-  dielines | Magenta | yes | yes | above | cut, cut lines, decoupe, die, die cut, stanze
+  dielines | Magenta | yes | yes | above | cut\*, decoupe, die, die\*cut, stanz\*
   template | Gray | no | no | below
   ... |
 
@@ -173,9 +173,9 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Visible**: `yes` or `no` (default `yes`) \
   > **Printable**: `yes` or `no` (default `yes`) \
   > **Order**: `above` or `below` existing layers (default `above`) \
-  > **Variants**: a list of layers that will be merged with the base layer (case insensitive)
+  > **Variants**: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards are accepted)
 
-  **Note:** The file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with "#" are ignored.
+  **Note:** The file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored.
 
 * **`DefaultSwatches.jsx`** adds a set of swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
 
@@ -321,4 +321,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • April 20, 2021
+README.md • April 25, 2021

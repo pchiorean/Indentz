@@ -1,12 +1,12 @@
 /*
-	Default layers v1.18.1 (2021-04-20)
+	Default layers v2.0 (2021-04-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file:
 
-	Name | Color | Visible | Printable | Order | Variants
-	dielines | Magenta | yes | yes | top | cut, cut lines, decoupe, die, die cut, stanze
-	template | Gray | no | no | bottom
+	Name     | Color   | Visible | Printable | Order | Variants
+	dielines | Magenta | yes     | yes       | top   | cut*, decoupe, die, die*cut, stanz*
+	template | Gray    | no      | no        | below
 	...
 	1. <Name>: layer name,
 	2. <Color>: layer color (see UIColors.txt); default "Light Blue"),
@@ -71,10 +71,7 @@ function main() {
 		AlertScroll(infoFile.getRelativeURI(doc.filePath), errors.join("\n")); exit() }
 	if (data.length < 1) exit();
 
-	doc.layers.everyItem().properties = { // Prepare existing layers
-		locked: false,
-		// layerColor: UIColors.LIGHT_GRAY
-	}
+	doc.layers.everyItem().properties = { locked: false } // Unlock existing layers
 	var oldAL = doc.activeLayer; // Save active layer
 	// Top layers
 	for (var i = data.length - 1; i >= 0 ; i--) {
@@ -85,15 +82,16 @@ function main() {
 			data[i].isVisible,
 			data[i].isPrintable,
 			data[i].variants);
-		var tmpLayer = doc.layers.item(data[i+1].name);
-		if (tmpLayer.isValid && (layer.index > tmpLayer.index)) {
-			layer.move(LocationOptions.BEFORE,doc.layers.item(data[i+1].name));
+		if (i < data.length - 1) {
+			var tmpLayer = doc.layers.item(data[i+1].name);
+			if (tmpLayer.isValid && (layer.index > tmpLayer.index))
+				layer.move(LocationOptions.BEFORE,doc.layers.item(data[i+1].name));
 		}
 	}
 	// Bottom layers
 	for (var i = 0; i < data.length; i++) {
 		if (!data[i].isBelow) continue;
-		MakeLayer(
+		var layer = MakeLayer(
 			data[i].name,
 			data[i].color,
 			data[i].isVisible,
@@ -105,25 +103,47 @@ function main() {
 
 	function MakeLayer(name, color, isVisible, isPrintable, variants) {
 		var layer = doc.layers.item(name);
-		if (layer.isValid) layer.properties = {
-			layerColor: color,
-			printable: isPrintable }
+		if (layer.isValid)
+			layer.properties = {
+				layerColor: color,
+				// visible: isVisible,
+				printable: isPrintable
+			}
 		else {
+			doc.activeLayer = doc.layers.firstItem();
 			doc.layers.add({
 				name: name,
 				layerColor: color,
 				visible: isVisible,
-				printable: isPrintable });
+				printable: isPrintable
+			});
 		}
+		// Merge variants
 		var l, layers = doc.layers.everyItem().getElements();
 		while (l = layers.shift())
 			if (isIn(l.name, variants, false)) {
+				if (layer.name == l.name) continue;
 				var oldLV = l.visible;
 				if (l == oldAL) oldAL = layer;
 				layer.merge(l);
 				layer.visible = oldLV;
 			};
 		return layer;
+	}
+
+	// Modified from FORWARD.Util functions, by Richard Harrington
+	// https://github.com/richardharrington/indesign-scripts
+	function isIn(searchValue, array, caseSensitive) {
+		caseSensitive = (typeof caseSensitive !== 'undefined') ? caseSensitive : true;
+		var item;
+		if (!caseSensitive && typeof searchValue === 'string') searchValue = searchValue.toLowerCase();
+		for (var i = 0; i < array.length; i++) {
+			item = array[i];
+			if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
+			// if (item === searchValue) return true;
+			item = RegExp("^" + item.replace(/\*/g, ".*").replace(/\?/g, ".") + "$", "g");
+			if (item.test(searchValue)) return true;
+		}
 	}
 }
 
@@ -176,19 +196,6 @@ function GetUIColor(color) {
 		'White': UIColors.WHITE,
 		'Yellow': UIColors.YELLOW
 	}[color] || UIColors.LIGHT_BLUE;
-}
-
-// FORWARD.Util functions, by Richard Harrington
-// https://github.com/richardharrington/indesign-scripts
-function isIn(searchValue, array, caseSensitive) {
-	caseSensitive = (typeof caseSensitive !== 'undefined') ? caseSensitive : true;
-	var item;
-	if (!caseSensitive && typeof searchValue === 'string') searchValue = searchValue.toLowerCase();
-	for (var i = 0; i < array.length; i++) {
-		item = array[i];
-		if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
-		if (item === searchValue) return true;
-	}
 }
 
 // Modified from 'Scrollable alert' by Peter Kahrel

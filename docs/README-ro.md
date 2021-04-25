@@ -164,7 +164,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
-  dielines | Magenta | yes | yes | above | cut, cut lines, decoupe, die, die cut, stanze
+  dielines | Magenta | yes | yes | above | cut\*, decoupe, die, die\*cut, stanz\*
   template | Gray | no | no | below
   ... |
 
@@ -173,9 +173,9 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Visible**: `yes` sau `no` (implicit `yes`) \
   > **Printable**: `yes` sau `no` (implicit `yes`) \
   > **Order**: `above` sau `below` (deasupra sau sub straturile existente; implicit `above`) \
-  > **Variants**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive)
+  > **Variants**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive; sunt acceptate metacaracterele `*` și `?`)
 
-  **Notă:** Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu "#" sunt ignorate.
+  **Notă:** Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate.
 
 * **`DefaultSwatches.jsx`** creează un set de culori definite într‑un fișier TSV numit [**`swatches.txt`**](../swatches.txt):
 
@@ -321,4 +321,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 20 aprilie 2021
+README-ro.md • 25 aprilie 2021
