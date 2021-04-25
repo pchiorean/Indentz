@@ -1,16 +1,16 @@
 /*
-	Default swatches v1.14.1 (2021-04-20)
+	Default swatches v1.14.2 (2021-04-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 3-column TSV file:
 
-	Name | Model | Values
+	Name       | Model   | Values
 	Rich Black | process | 60|40|40|100
-	Cut | spot | 0|100|0|0
+	Cut        | spot    | 0|100|0|0
 	...
 	1. <Name>: swatch name,
 	2. <Model>: color model: "process" or "spot",
-	3. <Values>: a list of 3 (RGB) or 4 (CMYK) color values.
+	3. <Values>: 3 values in 0–255 range (RGB) or 4 values in 0–100 range (CMYK).
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
