@@ -17,6 +17,4 @@ products       	Blue       	no      	yes       	above 	device*, pack*, packshot*
 ring           	Fiesta     	no      	yes       	above 	bullseye
 artwork        	Light Blue 	no      	yes       	above 	aw, element?, layout*
 bg             	Red        	no      	yes       	below 	*background*, bgg, hg, hintergrund*
-bg2            	Red        	no      	yes       	below 	
-bg3            	Red        	no      	yes       	below 	
 template      	Black      	no      	no        	below 	referinta
