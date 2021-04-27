@@ -1,5 +1,5 @@
 /*
-	Default swatches v1.14.2 (2021-04-23)
+	Default swatches v2.0 (2021-04-27)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 3-column TSV file:
@@ -92,7 +92,7 @@ function GetColorModel(color) {
 
 function GetColorValues(array) {
 	var values = [], c;
-	array = array.split(/ *\| */);
+	array = /[\,\|]/.test(array) ? array.split(/ *[\,\|] */) : array.split(/ +/);
 	while (c = array.shift()) values.push(Number(c));
 	return values;
 }
