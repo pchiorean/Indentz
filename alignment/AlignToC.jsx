@@ -1,5 +1,5 @@
 /*
-	Align to center v2.5.3 (2021-02-14)
+	Align to center v2.6 (2021-04-27)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Aligns the selected objects to the center of the 'Align To' setting.
@@ -103,26 +103,33 @@ function main(sel) {
 	}
 
 	function SelectOption() {
-		var w = new Window("dialog", "Center");
-			w.orientation = "row";
-			w.alignChildren = [ "center", "top" ];
-		var center = w.add("panel");
-			center.spacing = 5;
-			center.orientation = "column";
-			center.alignChildren = [ "left", "top" ];
-			center.add("radiobutton { text: 'Horizontal' }");
-			center.add("radiobutton { text: 'Vertical' }");
-			center.add("radiobutton { text: 'Vertical (HW)' }")
-				.enabled = !(setADB == AlignDistributeBounds.KEY_OBJECT);
-			center.add("radiobutton { text: 'Both' }");
-			center.children[0].active = center.children[0].value = true;
-		var okcancel = w.add("group", undefined, { name: "okcancel" });
-			okcancel.orientation = "column";
-			okcancel.alignChildren = [ "fill", "top" ];
-			okcancel.add("button { text: 'Ok', name: 'ok' }");
-			okcancel.add("button { text: 'Cancel', name: 'cancel' }");
+		var title = (function(adb) { return {
+			'ITEM_BOUNDS': 'page',
+			'KEY_OBJECT': 'key object',
+			'MARGIN_BOUNDS': 'page margins',
+			'PAGE_BOUNDS': 'page',
+			'SPREAD_BOUNDS': 'spread' }[adb]
+		})(setADB);
+		var w = new Window("dialog", "Center to " + title);
+		w.orientation = "row";
+		w.alignChildren = [ "center", "top" ];
+		w.main = w.add("panel");
+		w.main.spacing = 5;
+		w.main.orientation = "column";
+		w.main.alignChildren = [ "left", "top" ];
+		w.main.add("radiobutton { text: 'Horizontal' }");
+		w.main.add("radiobutton { text: 'Vertical' }");
+		w.main.add("radiobutton { text: 'Vertical (HW)' }")
+			.enabled = !(setADB == AlignDistributeBounds.KEY_OBJECT);
+		w.main.add("radiobutton { text: 'Both' }");
+		w.main.children[0].active = w.main.children[0].value = true;
+		w.actions = w.add("group", undefined, { name: "actions" });
+		w.actions.orientation = "column";
+		w.actions.alignChildren = [ "fill", "top" ];
+		w.actions.add("button { text: 'Ok', name: 'ok' }");
+		w.actions.add("button { text: 'Cancel', name: 'cancel' }");
 		if (w.show() == 2) return;
-		for (var i = 0; i < center.children.length; i++)
-			if (center.children[i].value == true) return i;
+		for (var i = 0; i < w.main.children.length; i++)
+			if (w.main.children[i].value == true) return i;
 	}
 }
