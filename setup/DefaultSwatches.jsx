@@ -6,6 +6,7 @@
 
 	Name       | Model   | Values
 	Rich Black | process | 60 40 40 100
+	RGB Grey   | process | 128 128 128
 	Cut        | spot    | 0 100 0 0
 	...
 	1. <Name>: swatch name,
@@ -99,6 +100,7 @@ function GetColorValues(array) {
 
 // Add Custom (CMYK/RGB/HEX) Colors to Document, by Marijan Tompa (tomaxxi)
 // https://indisnip.wordpress.com/2010/09/11/quicktip-add-custom-cmykrgbhex-colors-to-document/
+// TODO: Some checks needed
 function ColorAdd(doc, name, model, values) {
 	if (values instanceof Array == false) {
 		values = [
