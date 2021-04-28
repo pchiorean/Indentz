@@ -182,6 +182,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   Name | Model | Values
   :- | :- | :-
   Rich Black | process | 60 40 40 100
+  RGB Grey | process | 128 128 128
   Cut | spot | 0 100 0 0
   ... |
 

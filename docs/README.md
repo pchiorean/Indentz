@@ -173,7 +173,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Visible**: `yes` or `no` (default `yes`) \
   > **Printable**: `yes` or `no` (default `yes`) \
   > **Order**: `above` or `below` existing layers (default `above`) \
-  > **Variants**: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards are accepted)
+  > **Variants**: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards accepted)
 
   **Note:** The file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored.
 
@@ -182,6 +182,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
   Name | Model | Values
   :- | :- | :-
   Rich Black | process | 60 40 40 100
+  RGB Grey | process | 128 128 128
   Cut | spot | 0 100 0 0
   ... |
 
