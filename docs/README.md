@@ -180,9 +180,9 @@ There are two sets: one related to document preferences, layers, swatches and fo
 * **`DefaultSwatches.jsx`** adds a set of swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
 
   Name | Model | Values
-  :- | :-: | :-
-  Rich Black | process | 60\|40\|40\|100
-  Cut | spot | 0\|100\|0\|0
+  :- | :- | :-
+  Rich Black | process | 60 40 40 100
+  Cut | spot | 0 100 0 0
   ... |
 
   > **Name**: swatch name \
@@ -266,6 +266,8 @@ View | |
 
 * **`Clip.jsx`**: To handle some objects it is sometimes useful to temporarily insert them into a container *(clipping frame)*. The script inserts selected objects in a clipping frame or restores them if already clipped.
 
+  **Note:** It uses the clipboard, so make sure you don't lose anything important.
+
   **`ClipUndo.jsx`** restores one or several clipped objects at once.
 
 * **`HW.jsx`** labels selected objects "HW" and adds a 10% bottom guide on the current page.
@@ -298,7 +300,7 @@ View | |
 
 Miscellaneous | | | | | |
 :- | -: | :- | -: | :- | -:
-**Clip.jsx** | Num*	| **QR.jsx** | F9 | **HW.jsx** | ⇧F10
+**Clip.jsx** | Num* | **QR.jsx** | F9 | **HW.jsx** | ⇧F10
 **ClipUndo.jsx** | ⌃Num* | **QRBatch.jsx** | ⇧F9
 
 </details>
@@ -315,10 +317,10 @@ Miscellaneous | | | | | |
 
 ## About
 
-© 2021 Paul Chiorean \<jpeg AT basement.ro\>. The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
+© 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 The code in this project would not have been possible without the [JavaScript Reference Guide](http://jongware.mit.edu) by Theunis de Jong, Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington, and others.
 
 I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • April 25, 2021
+README.md • April 28, 2021

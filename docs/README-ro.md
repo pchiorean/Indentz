@@ -180,9 +180,9 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 * **`DefaultSwatches.jsx`** creează un set de culori definite într‑un fișier TSV numit [**`swatches.txt`**](../swatches.txt):
 
   Name | Model | Values
-  :- | :-: | :-
-  Rich Black | process | 60\|40\|40\|100
-  Cut | spot | 0\|100\|0\|0
+  :- | :- | :-
+  Rich Black | process | 60 40 40 100
+  Cut | spot | 0 100 0 0
   ... |
 
   > **Name**: numele culorii \
@@ -266,6 +266,8 @@ View | |
 
 * **`Clip.jsx`**: Pentru a manipula unele obiecte uneori e util să le inserăm temporar într‑un container *(clipping frame)*. Scriptul inserează obiectele selectate într‑un container sau le restaurează dacă sunt deja inserate.
 
+  **Notă:** Folosește clipboardul, deci asigurați‑vă că nu pierdeți ceva important.
+
   **`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
 
 * **`HW.jsx`** etichetează obiectele selectate "HW" și adaugă un ghid inferior de 10% pe pagina curentă.
@@ -298,7 +300,7 @@ View | |
 
 Miscellaneous | | | | | |
 :- | -: | :- | -: | :- | -:
-**Clip.jsx** | Num*	| **QR.jsx** | F9 | **HW.jsx** | ⇧F10
+**Clip.jsx** | Num* | **QR.jsx** | F9 | **HW.jsx** | ⇧F10
 **ClipUndo.jsx** | ⌃Num* | **QRBatch.jsx** | ⇧F9
 
 </details>
@@ -315,10 +317,10 @@ Miscellaneous | | | | | |
 
 ## Despre
 
-© 2021 Paul Chiorean \<jpeg AT basement.ro\>. Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
+© 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
 
 Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide](http://jongware.mit.edu) de Theunis de Jong, Mozilla [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), postări pe bloguri și forumuri, tutoriale și scripturi de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 25 aprilie 2021
+README-ro.md • 28 aprilie 2021
