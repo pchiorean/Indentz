@@ -5,8 +5,8 @@
 	Adds swatches from a 3-column TSV file:
 
 	Name       | Model   | Values
-	Rich Black | process | 60|40|40|100
-	Cut        | spot    | 0|100|0|0
+	Rich Black | process | 60 40 40 100
+	Cut        | spot    | 0 100 0 0
 	...
 	1. <Name>: swatch name,
 	2. <Model>: color model: "process" or "spot",
