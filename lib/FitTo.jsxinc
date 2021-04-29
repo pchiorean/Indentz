@@ -1,5 +1,5 @@
 /*
-	FitTo v5.1 (2021-04-21)
+	FitTo v5.2 (2021-04-29)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Resizes the selected objects to the page/spread's size/margins/visible area/bleed.
@@ -111,7 +111,7 @@ function Fit2Bounds(obj) {
 	}
 
 	// Fit: HW (dimensions are predefined, so skip the nasty stuff)
-	if (obj.label == "HW" && (obj.constructor.name == "TextFrame" || obj.constructor.name == "Rectangle")) {
+	if (/hw/gi.test(obj.label) && (obj.constructor.name == "TextFrame" || obj.constructor.name == "Rectangle")) {
 		var hwRef = (TARGET == "margins") ? b.target : b.size;
 		if (!!b.vis) {
 			hwRef = b.vis;
