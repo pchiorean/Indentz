@@ -79,7 +79,7 @@ Name                               |    Fn  | Description
 `HW.jsx`                           |   ⇧F10 | Labels 'HW' selected objects; w/o selection, adds a 10% bottom guide
 `PageRatios.jsx`                   |        | Calculates the ratio of each page and displays it in the upper left corner
 `QR.jsx`                           |     F9 | Adds a QR code to the current document or to a separate file
-`QRBatch.jsx`                      |    ⇧F9 | Batch processes 'QR.txt' to add codes to existing documents or to separate files
+`QRBatch.jsx`                      |    ⇧F9 | Adds codes to existing documents or to separate files in batch mode, from a list
 `ShowFonts.jsx`                    |        | Shows all fonts used in the current document
 `ShowProfiles.jsx`                 |        | Shows all color profiles available to the document
 `ShowProperties.jsx`               |        | Shows properties and methods of a selected object/the document/the application
