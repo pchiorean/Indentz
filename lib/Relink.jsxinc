@@ -1,8 +1,9 @@
 function Relink(oldLink, newLink) {
-	if (!File(newLink).exists) return alert("Skipping '" + oldLink + "'.\n'" + newLink + "' not found.");
 	newLink = /\//g.test(newLink.toString()) ? newLink : doc.filePath + "/Links/" + newLink;
+	if (!File(newLink).exists) { errors.push("Skipped '" + oldLink + "', new link not found."); return false }
 	for (var i = 0; i < doc.links.length; i++) {
 		if (doc.links[i].name != oldLink) continue;
 		doc.links[i].relink(File(newLink));
 	}
+	return true;
 }
