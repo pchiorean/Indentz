@@ -1,8 +1,8 @@
 /*
-	Default swatches v2.0 (2021-04-27)
+	Default swatches v2.0.1 (2021-04-30)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Adds swatches from a 3-column TSV file:
+	Adds swatches from a 3-column TSV file named "swatches.txt":
 
 	Name       | Model   | Values
 	Rich Black | process | 60 40 40 100
@@ -12,6 +12,9 @@
 	1. <Name>: swatch name,
 	2. <Model>: color model: "process" or "spot",
 	3. <Values>: 3 values in 0–255 range (RGB) or 4 values in 0–100 range (CMYK).
+
+	The file can be saved in the current folder, on the desktop, or next to the script.
+	Blank lines and those prefixed with "#" are ignored.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -46,15 +49,14 @@ function main() {
 	infoFile.open("r");
 	var infoLine, header, data = [],
 		line = 0, flgHeader = false,
-		errors = [], errln;
+		errors = [];
 	while (!infoFile.eof) {
 		infoLine = infoFile.readln(); line++;
 		if (infoLine == "") continue; // Skip empty lines
 		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
 		infoLine = infoLine.split(/ *\t */);
-		errln = "Line " + line + ": ";
 		if (!flgHeader) { header = infoLine; flgHeader = true; continue } // 1st line is header
-		if (!infoLine[0]) errors.push(errln + "Missing swatch name.");
+		if (!infoLine[0]) errors.push("Line " + line + ": Missing swatch name.");
 		if (errors.length == 0) data.push({
 			name: infoLine[0],
 			model: GetColorModel(infoLine[1]),

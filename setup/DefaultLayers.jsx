@@ -1,8 +1,8 @@
 /*
-	Default layers v2.0 (2021-04-24)
+	Default layers v2.0.1 (2021-04-30)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Adds/merges layers from a 6-column TSV file:
+	Adds/merges layers from a 6-column TSV file named "layers.txt":
 
 	Name     | Color   | Visible | Printable | Order | Variants
 	dielines | Magenta | yes     | yes       | top   | cut*, decoupe, die, die*cut, stanz*
@@ -14,6 +14,9 @@
 	4. <Printable>: "yes" or "no" (default "yes"),
 	5. <Order>: "above" or "below" existing layers (default "above"),
 	6. <Variants>: a list of layers that will be merged with the base layer (case insensitive).
+
+	The file can be saved in the current folder, on the desktop, or next to the script.
+	Blank lines and those prefixed with "#" are ignored.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

@@ -1,13 +1,16 @@
 ﻿/*
-	Replace fonts 1.14.1 (2021-04-20)
+	Replace fonts 1.14.2 (2021-04-30)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Replaces fonts from a 4-column TSV file:
+	Replaces fonts from a 4-column TSV file named "fonts.txt":
 
-	Old font | Style | New font | Style
-	Arial | Regular | Helvetica Neue | Regular
-	Arial | Bold | Helvetica Neue | Bold
+	Old font | Style   | New font       | Style
+	Arial    | Regular | Helvetica Neue | Regular
+	Arial    | Bold    | Helvetica Neue | Bold
 	...
+
+	The file can be saved in the current folder, on the desktop, or next to the script.
+	Blank lines and those prefixed with "#" are ignored.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

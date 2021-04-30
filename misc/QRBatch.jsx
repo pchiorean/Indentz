@@ -1,17 +1,20 @@
 /*
-	Batch QR codes v2.2.3 (2021-04-20)
+	Batch QR codes v2.2.4 (2021-04-30)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Batch processes "QR.txt" to add codes to existing documents or to separate files.
-	The list is a 3-column TSV file with the following format:
+	Adds codes to existing documents or to separate files in batch mode, from a list.
+	The list is a 3-column TSV file named "qr.txt" with the following format:
 
-	Filename | Code | Doc
-	File 1 | Code 1 | +
-	File 2 | Code 2 |
+	Filename | Code   | Doc
+	File 1   | Code 1 | +
+	File 2   | Code 2 |
 	...
 	1. <Filename>: document name,
 	2. <Code>: any string,
 	3. <Doc>: any string: on document; empty: separate file.
+
+	The file can be saved in the current folder, on the desktop, or next to the script.
+	Blank lines and those prefixed with "#" are ignored.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
