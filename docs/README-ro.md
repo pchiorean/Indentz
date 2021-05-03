@@ -190,6 +190,8 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Model**: tipul culorii: `process` sau `spot` \
   > **Values**: 3 valori în intervalul 0–255 (RGB) sau 4 valori în intervalul 0–100 (CMYK)
 
+* **`SaveSwatches.jsx`** salvează culorile din document într‑un fișier TSV compatibil cu **`DefaultSwatches.jsx`**.
+
 * **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, le redenumește după formula "C= M= Y= K=", elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
 * **`ReplaceFonts.jsx`** substituie fonturi dintr‑o listă definită într‑un fișier TSV numit [**`fonts.txt`**](../fonts.txt):
@@ -324,4 +326,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 28 aprilie 2021
+README-ro.md • 3 mai 2021

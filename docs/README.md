@@ -190,6 +190,8 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Model**: color model: `process` or `spot` (default `process`) \
   > **Values**: 3 values in 0–255 range (RGB) or 4 values in 0–100 range (CMYK)
 
+* **`SaveSwatches.jsx`** saves document's swatches to a TSV file compatible with **`DefaultSwatches.jsx`**.
+
 * **`CleanupSwatches.jsx`** converts process RGB swatches to CMYK, renames them to "C= M= Y= K=" form, removes duplicates and deletes unused. Spot colors are not changed.
 
 * **`ReplaceFonts.jsx`** substitute fonts from a list defined in a TSV file named [**`fonts.txt`**](../fonts.txt):
@@ -324,4 +326,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • April 28, 2021
+README.md • May 3, 2021
