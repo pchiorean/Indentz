@@ -275,6 +275,8 @@ View | |
 
 * **`HW.jsx`** etichetează obiectele selectate "HW" și adaugă un ghid inferior de 10% pe pagina curentă.
 
+* **`LabelPage.jsx`** adaugă o etichetă pe slug‑ul paginii curente.
+
 * **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul **info**.
 
 * **`QR.jsx`** adaugă un cod QR pe fiecare pagină a documentului activ sau într‑un fișier separat cu același nume și sufixul "_QR".

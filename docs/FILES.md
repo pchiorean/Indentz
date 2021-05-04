@@ -78,6 +78,7 @@ Name                               |    Fn  | Description
 `ClipUndo.jsx`                     |  ⌃Num* | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
 `CleanupLabels.jsx`                |        | Removes all labels from the document
 `HW.jsx`                           |   ⇧F10 | Labels 'HW' selected objects; w/o selection, adds a 10% bottom guide
+`LabelPage.jsx`                    |        | ș
 `PageRatios.jsx`                   |        | Calculates the ratio of each page and displays it in the upper left corner
 `QR.jsx`                           |     F9 | Adds a QR code to the current document or to a separate file
 `QRBatch.jsx`                      |    ⇧F9 | Adds codes to existing documents or to separate files in batch mode, from a list

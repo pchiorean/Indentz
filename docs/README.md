@@ -276,6 +276,8 @@ View | |
 
 * **`HW.jsx`** labels selected objects "HW" and adds a 10% bottom guide on the current page.
 
+* **`LabelPage.jsx`** adds a label on the current page's slug.
+
 * **`PageRatios.jsx`** calculates the ratio of each page and puts it in the upper left corner, on the **info** layer.
 
 * **`QR.jsx`** adds a QR code on each page of the active document or a separate file with the same name and the suffix "_QR".
