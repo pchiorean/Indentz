@@ -1,17 +1,18 @@
 /*
-	Default swatches v2.0.1 (2021-04-30)
+	Default swatches v3.0 (2021-05-04)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Adds swatches from a 3-column TSV file named "swatches.txt":
+	Adds swatches from a 4-column TSV file named "swatches.txt":
 
-	Name       | Model   | Values
-	Rich Black | process | 60 40 40 100
-	RGB Grey   | process | 128 128 128
-	Cut        | spot    | 0 100 0 0
+	Name       | Color Model | Color Space | Values
+	Rich Black | process     | cmyk        | 60 40 40 100
+	RGB Grey   | process     | rgb         | 128 128 128
+	Cut        | spot        | cmyk        | 0 100 0 0
 	...
 	1. <Name>: swatch name,
-	2. <Model>: color model: "process" or "spot",
-	3. <Values>: 3 values in 0–255 range (RGB) or 4 values in 0–100 range (CMYK).
+	2. <Color Model>: "process" or "spot" (default "process"),
+	3. <Color Space>: "cmyk", "rgb" or "lab" (default "cmyk"),
+	4. <Values>: list of values, depends on the color model & space.
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with "#" are ignored.
@@ -57,10 +58,23 @@ function main() {
 		infoLine = infoLine.split(/ *\t */);
 		if (!flgHeader) { header = infoLine; flgHeader = true; continue } // 1st line is header
 		if (!infoLine[0]) errors.push("Line " + line + ": Missing swatch name.");
+		if (/\d/g.test(infoLine[2])) {
+			alert(infoFile.getRelativeURI(doc.filePath) + " must be updated to the current format."); exit() };
+		// TODO: Some checks needed
 		if (errors.length == 0) data.push({
 			name: infoLine[0],
-			model: GetColorModel(infoLine[1]),
-			values: GetColorValues(infoLine[2])
+			model: (function (c) {
+				return { "process": ColorModel.PROCESS, "spot": ColorModel.SPOT }[c] || ColorModel.PROCESS;
+			})(infoLine[1]),
+			space: (function (s) {
+				return { "cmyk": ColorSpace.CMYK, "rgb": ColorSpace.RGB, "lab": ColorSpace.LAB }[s] || ColorSpace.CMYK;
+			})(infoLine[2]),
+			values: (function (array) {
+				var values = [], c;
+				array = /[\,\|]/.test(array) ? array.split(/ *[\,\|] */) : array.split(/ +/);
+				while (c = array.shift()) values.push(Number(c));
+				return values;
+			})(infoLine[3])
 		});
 	}
 	infoFile.close(); infoLine = "";
@@ -69,11 +83,15 @@ function main() {
 	if (data.length < 1) exit();
 
 	for (var i = 0; i < data.length; i++) {
-		ColorAdd(doc,
-			data[i].name,
-			data[i].model,
-			data[i].values
-		);
+		var color = doc.colors.item(data[i].name);
+		if (!color.isValid) {
+			color = doc.colors.add({
+				name: data[i].name,
+				model: data[i].model,
+				space: data[i].space,
+				colorValue: data[i].values
+			});
+		}
 	}
 }
 
@@ -84,49 +102,6 @@ function TSVFile(fn) {
 	if ((file = File(Folder.desktop + "/" + fn)) && file.exists) return file;
 	if ((file = File(app.activeScript.path + "/" + fn)) && file.exists) return file;
 	if ((file = File(app.activeScript.path + "/../" + fn)) && file.exists) return file;
-}
-
-function GetColorModel(color) {
-	return {
-		"process": ColorModel.PROCESS,
-		"spot": ColorModel.SPOT
-	}[color] || ColorModel.PROCESS;
-}
-
-function GetColorValues(array) {
-	var values = [], c;
-	array = /[\,\|]/.test(array) ? array.split(/ *[\,\|] */) : array.split(/ +/);
-	while (c = array.shift()) values.push(Number(c));
-	return values;
-}
-
-// Add Custom (CMYK/RGB/HEX) Colors to Document, by Marijan Tompa (tomaxxi)
-// https://indisnip.wordpress.com/2010/09/11/quicktip-add-custom-cmykrgbhex-colors-to-document/
-// TODO: Some checks needed
-function ColorAdd(doc, name, model, values) {
-	if (values instanceof Array == false) {
-		values = [
-			(parseInt(values, 16) >> 16) & 0xff,
-			(parseInt(values, 16) >> 8) & 0xff,
-			 parseInt(values, 16) & 0xff
-		];
-		space = ColorSpace.RGB;
-	} else {
-		if (values.length == 3) space = ColorSpace.RGB;
-		else space = ColorSpace.CMYK;
-	}
-	try {
-		color = doc.colors.item(name);
-		name = color.name;
-	} catch (_) {
-		color = doc.colors.add({
-			name: name,
-			model: model,
-			space: space,
-			colorValue: values
-		});
-	}
-	return color;
 }
 
 // Modified from 'Scrollable alert' by Peter Kahrel
