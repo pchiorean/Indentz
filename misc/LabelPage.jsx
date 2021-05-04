@@ -2,7 +2,7 @@
 	Label page v1.0 beta (2021-04-26)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Adds a page label to the slug.
+	Adds a label on the current page's slug.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
