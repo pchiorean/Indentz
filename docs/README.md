@@ -179,16 +179,17 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`DefaultSwatches.jsx`** adds a set of swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
 
-  Name | Model | Values
-  :- | :- | :-
-  Rich Black | process | 60 40 40 100
-  RGB Grey | process | 128 128 128
-  Cut | spot | 0 100 0 0
+  Name | Color Model | Color Space | Values
+  :- | :- | :- | :-
+  Rich Black | process | cmyk | 60 40 40 100
+  RGB Grey | process | rgb | 128 128 128
+  Cut | spot | cmyk | 0 100 0 0
   ... |
 
   > **Name**: swatch name \
-  > **Model**: color model: `process` or `spot` (default `process`) \
-  > **Values**: 3 values in 0–255 range (RGB) or 4 values in 0–100 range (CMYK)
+  > **Color Model**: `process` or `spot` (default `process`) \
+  > **Color Space**: `cmyk`, `rgb` or `lab` (default `cmyk`) \
+  > **Values**: 3 values in 0–255 range for RGB; 4 values in 0–100 range for CMYK; 3 values in 0–100 (L), -128–127 (A and B) range for Lab
 
 * **`SaveSwatches.jsx`** saves document's swatches to a TSV file compatible with **`DefaultSwatches.jsx`**.
 
@@ -326,4 +327,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • May 3, 2021
+README.md • May 4, 2021

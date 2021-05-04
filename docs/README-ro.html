@@ -390,7 +390,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <thead>
 <tr>
 <th style="text-align:left">Name</th>
-<th style="text-align:left">Model</th>
+<th style="text-align:left">Color Model</th>
+<th style="text-align:left">Color Space</th>
 <th style="text-align:left">Values</th>
 </tr>
 </thead>
@@ -398,20 +399,24 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <tr>
 <td style="text-align:left">Rich Black</td>
 <td style="text-align:left">process</td>
+<td style="text-align:left">cmyk</td>
 <td style="text-align:left">60 40 40 100</td>
 </tr>
 <tr>
 <td style="text-align:left">RGB Grey</td>
 <td style="text-align:left">process</td>
+<td style="text-align:left">rgb</td>
 <td style="text-align:left">128 128 128</td>
 </tr>
 <tr>
 <td style="text-align:left">Cut</td>
 <td style="text-align:left">spot</td>
+<td style="text-align:left">cmyk</td>
 <td style="text-align:left">0 100 0 0</td>
 </tr>
 <tr>
 <td style="text-align:left">...</td>
+<td style="text-align:left"></td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 </tr>
@@ -419,12 +424,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </table>
 <blockquote>
 <p><strong>Name</strong>: numele culorii <br>
-<strong>Model</strong>: tipul culorii: <code>process</code> sau <code>spot</code> <br>
-<strong>Values</strong>: 3 valori în intervalul 0–255 (RGB) sau 4 valori în intervalul 0–100 (CMYK)</p>
+<strong>Color Model</strong>: <code>process</code> sau <code>spot</code> (implicit <code>process</code>) <br>
+<strong>Color Space</strong>: <code>cmyk</code>, <code>rgb</code> sau <code>lab</code> (implicit <code>cmyk</code>) <br>
+<strong>Values</strong>: 3 valori în intervalul 0–255 pentru RGB; 4 valori în intervalul 0–100 pentru CMYK; 3 valori în intervalul 0–100 (L), -128–127 (A și B) pentru Lab</p>
 </blockquote>
 </li>
 <li>
-<p><strong><code>SaveSwatches.jsx</code></strong> salvează culorile din document într‑un fișier TSV compatibil cu <strong><code>DefaultSwatches.jsx</code></strong>.</p>
+<p><strong><code>SaveSwatches.jsx</code></strong> salvează culorile din document într‑un fișier compatibil cu <strong><code>DefaultSwatches.jsx</code></strong>.</p>
 </li>
 <li>
 <p><strong><code>CleanupSwatches.jsx</code></strong> convertește culorile RGB la CMYK, le redenumește după formula &quot;C= M= Y= K=&quot;, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
@@ -694,7 +700,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p>© 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>Codul din acest proiect nu ar fi fost posibil fără <a href="http://jongware.mit.edu">JavaScript Reference Guide</a> de Theunis de Jong, Mozilla <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, postări pe bloguri și forumuri, tutoriale și scripturi de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.</p>
 <p>Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, <strong>Application Frame</strong> on). Feedback sau sugestii sunt binevenite.</p>
-<p>README-ro.md • 3 mai 2021</p>
+<p>README-ro.md • 4 mai 2021</p>
 
 </body>
 </html>

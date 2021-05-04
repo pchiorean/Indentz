@@ -179,11 +179,11 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`DefaultSwatches.jsx`** creează un set de culori definite într‑un fișier TSV numit [**`swatches.txt`**](../swatches.txt):
 
-  Name | Model | Values
-  :- | :- | :-
-  Rich Black | process | 60 40 40 100
-  RGB Grey | process | 128 128 128
-  Cut | spot | 0 100 0 0
+  Name | Color Model | Color Space | Values
+  :- | :- | :- | :-
+  Rich Black | process | cmyk | 60 40 40 100
+  RGB Grey | process | rgb | 128 128 128
+  Cut | spot | cmyk | 0 100 0 0
   ... |
 
   > **Name**: numele culorii \
@@ -326,4 +326,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 3 mai 2021
+README-ro.md • 4 mai 2021
