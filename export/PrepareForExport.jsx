@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for export v1.13 (2021-04-22)
+	Prepare for export v1.14 (2021-05-09)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides visible area layer and moves white, varnish & dielines to separate spreads.
@@ -36,7 +36,7 @@ var visLayer = FindLayer([
 	"vizibil", "Vizibil",
 	"vis. area", "Vis. area"
 ]);
-var saLayer = FindLayer([ "safe area" ]);
+var saLayer = FindLayer([ "safe area", "segmentation" ]);
 var dieLayer = FindLayer([
 	"dielines",
 	"cut lines", "Cut lines", "cut", "Cut", "CUT",
