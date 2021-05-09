@@ -33,7 +33,7 @@ UndoModes.ENTIRE_SCRIPT, "Set pasteboard");
 // Run finishing script
 if (doc.saved) {
 	var script = File(doc.filePath + "/_finish.jsx");
-	if (script.exists && confirm("Run finishing script?"))
+	if (script.exists && confirm("Run local finishing script?"))
 		app.doScript(script,
 		ScriptLanguage.javascript, undefined,
 		UndoModes.ENTIRE_SCRIPT, "Finishing script");
