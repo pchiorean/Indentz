@@ -24,7 +24,7 @@ Name                               |    Fn  | Description
 `SetRefPointToBR.jsx`              |  ⌃Num3 | Sets **Transform Reference Point** to bottom-right
 **Export**                                  |
 `PrepareForExport.jsx`             |        | Hides visible area layer and moves white, varnish & dielines to separate spreads
-`QuickExport.jsx`                  |        | Exports two PDFs for each of the open documents, using hardcoded presets
+`QuickExport.jsx`                  |        | Exports open documents with several configurable PDF presets
 `VisibleArea.jsx`                  |        | Creates on each page a 'visible area' frame the size of the page margins
 `VisibleAreaHide.jsx`              |        | Hides the visible area layer (or equivalents)
 `VisibleAreaShow.jsx`              |        | Shows the visible area layer (or equivalents)
