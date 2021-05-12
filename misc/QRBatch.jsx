@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.2.4 (2021-04-30)
+	Batch QR codes v2.2.5 (2021-05-12)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -380,7 +380,7 @@ function MakeQROnFile(fn, code) {
 	// Keep file opened if text overflows
 	if (labelFrame.overflows) {
 		target.textPreferences.showInvisibles = true;
-		errors.push(fn + ": Text overflows");
+		errors.push(fn + ": Text overflows.");
 		return false;
 	} else {
 		targetPDFFolder = Folder(targetFolder + "/PDFs");
