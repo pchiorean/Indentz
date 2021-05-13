@@ -1,5 +1,5 @@
 /*
-	Quick export v1.0 beta (2021-05-11)
+	Quick export v1.0 (2021-05-13)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open documents with several configurable PDF presets.
@@ -35,9 +35,8 @@ var defaults = {
 	script2: { file: "", active: false },
 	output: {
 		dest: { folder: "", active: false },
-		options: { subfolders: true, updatelinks: true, overwrite: false, save: true, close: true },
-	},
-	saveprefs: true
+		options: { subfolders: false, updatelinks: true, overwrite: false, save: true, close: true },
+	}
 };
 var settings;
 var settingsFile = File(app.activeScript.path + "/" +
@@ -124,6 +123,7 @@ if (ADV) {
 } else {
 	ui.actions.savePrefs = ui.actions.add('checkbox { text: "Save preferences", preferredSize: [ 320, -1 ], \
 		alignment: "bottom" }');
+	ui.actions.savePrefs.value = true;
 };
 ui.actions.add('button { text: "Cancel", preferredSize: [ 80, -1 ], properties: { name: "cancel" } }');
 ui.actions.ok = ui.actions.add('button { text: "Start", preferredSize: [ 80, -1 ], properties: { name: "ok" } }');
@@ -145,25 +145,39 @@ ui.presets.exp1.script.isActive.onClick = function() {
 	ui.presets.exp1.script.file.enabled = ui.presets.exp1.script.browse.enabled = this.value };
 ui.presets.exp1.script.browse.onClick = function() {
 	var newFile = File.openDialog("Select a script:");
-	if (newFile.exists && /jsx*(bin)*$/i.test(newFile)) ui.presets.exp1.script.file.text = decodeURI(newFile.fullName)
-	else { alert("Please select a .js, .jsx or a .jsxbin file."); this.notify() };
+	if (newFile.exists && /\.(jsx*(bin)*|scpt)$/i.test(newFile)) {
+		ui.presets.exp1.script.path = newFile;
+		ui.presets.exp1.script.file.text = decodeURI(newFile.name);
+		ui.presets.exp1.script.file.helpTip = decodeURI(newFile.fullName);
+	} else {
+		alert("Please select a JavaScript or AppleScript file.");
+		this.notify();
+	};
 };
 ui.presets.exp2.script.isActive.onClick = function() {
 	ui.presets.exp2.script.file.enabled = ui.presets.exp2.script.browse.enabled = this.value };
 ui.presets.exp2.script.browse.onClick = function() {
 	var newFile = File.openDialog("Select a script:");
-	if (newFile.exists && /jsx*(bin)*$/i.test(newFile)) ui.presets.exp2.script.file.text = decodeURI(newFile.fullName)
-	else { alert("Please select a .js, .jsx or a .jsxbin file."); this.notify() };
+	if (newFile.exists && /\.(jsx*(bin)*|scpt)$/i.test(newFile)) {
+		ui.presets.exp2.script.path = newFile;
+		ui.presets.exp2.script.file.text = decodeURI(newFile.name);
+		ui.presets.exp2.script.file.helpTip = decodeURI(newFile.fullName);
+	} else {
+		alert("Please select a JavaScript or AppleScript file.");
+		this.notify();
+	};
 };
 ui.presets.exp1.preset.onChange = function() {
 	var str = this.selection.text;
-	if (/_/g.test(str)) ui.presets.exp1.suffix.text = str.substr(str.lastIndexOf("_"))
-	else ui.presets.exp1.suffix.text = "";
+	if (/_/g.test(str)) {
+		ui.presets.exp1.suffix.text = str.substr(str.lastIndexOf("_"));
+	} else { ui.presets.exp1.suffix.text = "" };
 };
 ui.presets.exp2.preset.onChange = function() {
 	var str = this.selection.text;
-	if (/_/g.test(str)) ui.presets.exp2.suffix.text = str.substr(str.lastIndexOf("_"))
-	else { ui.presets.exp2.suffix.text = "" };
+	if (/_/g.test(str)) {
+		ui.presets.exp2.suffix.text = str.substr(str.lastIndexOf("_"));
+	} else { ui.presets.exp2.suffix.text = "" };
 };
 ui.presets.exp1.suffix.onChange = function() {
 	var str = this.text.replace(/^\s+/, '').replace(/\s+$/, ''); // Trim
@@ -180,7 +194,12 @@ ui.output.dest.isActive.onClick = function() {
 };
 ui.output.dest.browse.onClick = function() {
 	var newFolder = Folder.selectDialog("Select a folder:");
-	if (!!newFolder) ui.output.dest.folder.text = decodeURI(newFolder.fullName);
+	// alert(ui.output.dest.folder.characters); // TODO
+	if (!!newFolder) {
+		ui.output.dest.path = newFolder;
+		ui.output.dest.folder.text = TruncatePath(decodeURI(newFolder.fullName), 50);
+		ui.output.dest.folder.helpTip = decodeURI(newFolder.fullName);
+	};
 };
 if (ADV) {
 	ui.actions.savePrefs.onClick = function() { SaveSettings() };
@@ -200,7 +219,7 @@ var name, docs = [], pbWidth = 50;
 while (name = names.shift()) {
 	docs.push(app.documents.itemByName(name));
 	pbWidth = Math.max(pbWidth, name.length); // While we are here, find the longest name
-}
+};
 var progressBar = new ProgressBar("Exporting", pbWidth + 10);
 progressBar.reset(docs.length);
 var counter = 1, errors = [];
@@ -208,9 +227,9 @@ var doc; while (doc = docs.shift()) {
 	if (!doc.saved) { errors.push(doc.name + " has no path. Skipped."); continue };
 	// Base folder
 	var baseFolder = decodeURI(doc.filePath);
-	if (ui.output.dest.isActive.value && !!ui.output.dest.folder.text) {
-		if (!Folder(ui.output.dest.folder.text).exists) Folder(ui.output.dest.folder.text).create();
-		baseFolder = ui.output.dest.folder.text;
+	if (ui.output.dest.isActive.value && !!ui.output.dest.path) {
+		if (!ui.output.dest.path.exists) ui.output.dest.path.create();
+		baseFolder = decodeURI(ui.output.dest.path.fullName);
 	};
 	for (var i = 1; i < 3; i++) {
 		var exp = ui.presets["exp" + i];
@@ -265,7 +284,8 @@ var doc; while (doc = docs.shift()) {
 			};
 		};
 		// Run script
-		if (exp.script.enabled && exp.script.isActive.value && File(exp.script.file.text).exists) {
+		if (exp.script.enabled && exp.script.isActive.value && exp.script.path.exists) {
+			var ext = decodeURI(exp.script.path.fullName).substr(decodeURI(exp.script.path.fullName).lastIndexOf(".") + 1);
 			var scriptLanguage = (function(ext) {
 				return {
 					"scpt": ScriptLanguage.APPLESCRIPT_LANGUAGE,
@@ -273,8 +293,8 @@ var doc; while (doc = docs.shift()) {
 					"jsx": ScriptLanguage.JAVASCRIPT,
 					"jsxbin": ScriptLanguage.JAVASCRIPT,
 				}[ext];
-			})(exp.script.file.text.substr(exp.script.file.text.lastIndexOf(".") + 1));
-			app.doScript(File(exp.script.file.text),
+			})(ext);
+			app.doScript(exp.script.path,
 			scriptLanguage, undefined,
 			UndoModes.ENTIRE_SCRIPT, "Run script");
 		};
@@ -292,27 +312,42 @@ app.scriptPreferences.userInteractionLevel = old.userInteractionLevel;
 app.pdfExportPreferences.viewPDF = old.viewPDF;
 if (errors.length > 0) AlertScroll("Errors", errors);
 
+function TruncatePath(/*string*/path, maxLength) {
+	if (path.length > maxLength + 3) path = "..." + path.slice(- maxLength + 3);
+	return path;
+};
 
 function ReadSettings() {
 	try { settings = $.evalFile(settingsFile) } catch (_) { SetDefaults() };
 	ui.presets.exp1.preset.selection = FindPreset(settings.preset1.name, ui.presets.exp1.preset.items);
 	ui.presets.exp1.suffix.text = settings.preset1.suffix;
 	ui.presets.exp1.isActive.value = settings.preset1.active;
-	ui.presets.exp1.script.file.text = settings.script1.file;
-	ui.presets.exp1.script.isActive.value = settings.script1.active;
+	ui.presets.exp1.script.path = File(settings.script1.file).exists ? File(settings.script1.file) : "";
+	if (!!ui.presets.exp1.script.path) {
+		ui.presets.exp1.script.file.text = decodeURI(ui.presets.exp1.script.path.name);
+		ui.presets.exp1.script.file.helpTip = decodeURI(ui.presets.exp1.script.path.fullName);
+	};
+	ui.presets.exp1.script.isActive.value = !!ui.presets.exp1.script.path && settings.script1.active;
 	ui.presets.exp2.preset.selection = FindPreset(settings.preset2.name, ui.presets.exp2.preset.items);
 	ui.presets.exp2.suffix.text = settings.preset2.suffix;
 	ui.presets.exp2.isActive.value = settings.preset2.active;
-	ui.presets.exp2.script.file.text = settings.script2.file;
-	ui.presets.exp2.script.isActive.value = settings.script2.active;
-	ui.output.dest.folder.text = Folder(settings.output.dest.folder).exists ? settings.output.dest.folder : "";
-	ui.output.dest.isActive.value = settings.output.dest.active;
+	ui.presets.exp2.script.path = File(settings.script2.file).exists ? File(settings.script2.file) : "";
+	if (!!ui.presets.exp2.script.path) {
+		ui.presets.exp2.script.file.text = decodeURI(ui.presets.exp2.script.path.name);
+		ui.presets.exp2.script.file.helpTip = decodeURI(ui.presets.exp2.script.path.fullName);
+	};
+	ui.presets.exp2.script.isActive.value = !!ui.presets.exp2.script.path && settings.script2.active;
+	ui.output.dest.path = Folder(settings.output.dest.folder).exists ? Folder(settings.output.dest.folder) : "";
+	if (!!ui.output.dest.path) {
+		ui.output.dest.folder.text = TruncatePath(decodeURI(ui.output.dest.path.fullName), 50);
+		ui.output.dest.folder.helpTip = decodeURI(ui.output.dest.path.fullName);
+	};
+	ui.output.dest.isActive.value = !!ui.output.dest.path && settings.output.dest.active;
 	ui.output.options.subfolders.value = settings.output.options.subfolders;
 	ui.output.options.updateLinks.value = settings.output.options.updatelinks;
 	ui.output.options.fileOverwrite.value = settings.output.options.overwrite;
 	ui.output.options.docSave.value = settings.output.options.save;
 	ui.output.options.docClose.value = settings.output.options.close;
-	ui.actions.savePrefs.value = settings.saveprefs;
 	ui.presets.exp1.isActive.onClick();
 	ui.presets.exp1.script.isActive.onClick();
 	ui.presets.exp2.isActive.onClick();
@@ -327,9 +362,6 @@ function ReadSettings() {
 function SetDefaults() {
 	try { settingsFile.remove() } catch (_) {};
 	settings = defaults;
-	settingsFile.open('w');
-	settingsFile.write(settings.toSource());
-	settingsFile.close();
 };
 
 function SaveSettings() {
@@ -340,7 +372,7 @@ function SaveSettings() {
 			active: ui.presets.exp1.isActive.value
 		},
 		script1: {
-			file: ui.presets.exp1.script.file.text,
+			file: decodeURI(ui.presets.exp1.script.path.fullName),
 			active: ui.presets.exp1.script.isActive.value
 		},
 		preset2: {
@@ -349,12 +381,12 @@ function SaveSettings() {
 			active: ui.presets.exp2.isActive.value
 		},
 		script2: {
-			file: ui.presets.exp2.script.file.text,
+			file: decodeURI(ui.presets.exp2.script.path.fullName),
 			active: ui.presets.exp2.script.isActive.value
 		},
 		output: {
 			dest: {
-				folder: ui.output.dest.folder.text,
+				folder: decodeURI(ui.output.dest.path.fullName),
 				active: ui.output.dest.isActive.value
 			},
 			options: {
@@ -364,8 +396,7 @@ function SaveSettings() {
 				save: ui.output.options.docSave.value,
 				close: ui.output.options.docClose.value
 			},
-		},
-		saveprefs: ui.actions.savePrefs.value
+		}
 	};
 	settingsFile.open('w');
 	settingsFile.write(settings.toSource());
