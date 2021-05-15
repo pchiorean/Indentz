@@ -468,10 +468,10 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p><strong>Note:</strong> You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Miscellaneous</strong> to get a tab delimited list of fonts for copy‑pasting.</p>
 </li>
 <li>
-<p><strong><code>DocCleanup.jsx</code></strong> sets preferences (it runs <strong><code>DefaultPrefs.jsx</code></strong>), cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%.</p>
+<p><strong><code>DocDefaults.jsx</code></strong> runs <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong>, <strong><code>PageSizeFromFilename.jsx</code></strong>, sets loose pasteboard margins.</p>
 </li>
 <li>
-<p><strong><code>DocDefaults.jsx</code></strong> runs <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong>, <strong><code>PageSizeFromFilename.jsx</code></strong> and sets pasteboard margins to 150 mm (H) and 25 mm (V).</p>
+<p><strong><code>DocCleanup.jsx</code></strong> runs <strong><code>DefaultPrefs.jsx</code></strong>, cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%, sets tight pasteboard margins.</p>
 </li>
 </ul>
 <hr>
@@ -701,7 +701,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p>© 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the <a href="http://jongware.mit.edu">JavaScript Reference Guide</a> by Theunis de Jong, Mozilla's <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington, and others.</p>
 <p>I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, <strong>Application Frame</strong> on). Feedback or suggestions are welcome.</p>
-<p>README.md • May 4, 2021</p>
+<p>README.md • May 15, 2021</p>
 
 </body>
 </html>

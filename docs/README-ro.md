@@ -204,9 +204,9 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
 
-* **`DocCleanup.jsx`** setează preferințe (rulează **`DefaultPrefs.jsx`**), șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%.
+* **`DocDefaults.jsx`** rulează **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`**, **`PageSizeFromFilename.jsx`**, extinde pasteboardul.
 
-* **`DocDefaults.jsx`** rulează **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`**, **`PageSizeFromFilename.jsx`** și setează marginile pasteboardului la 150 mm (H) și 25 mm (V).
+* **`DocCleanup.jsx`** rulează **`DefaultPrefs.jsx`**, șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%, compactează pasteboardul.
 
 ---
 
@@ -328,4 +328,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 4 mai 2021
+README-ro.md • 15 mai 2021

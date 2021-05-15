@@ -205,9 +205,9 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   **Note:** You can use **`ShowFonts.jsx`** from **Miscellaneous** to get a tab delimited list of fonts for copy‑pasting.
 
-* **`DocCleanup.jsx`** sets preferences (it runs **`DefaultPrefs.jsx`**), cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%.
+* **`DocDefaults.jsx`** runs **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`**, **`PageSizeFromFilename.jsx`**, sets loose pasteboard margins.
 
-* **`DocDefaults.jsx`** runs **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`**, **`PageSizeFromFilename.jsx`** and sets pasteboard margins to 150 mm (H) and 25 mm (V).
+* **`DocCleanup.jsx`** runs **`DefaultPrefs.jsx`**, cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%, sets tight pasteboard margins.
 
 ---
 
@@ -329,4 +329,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • May 4, 2021
+README.md • May 15, 2021
