@@ -26,7 +26,12 @@ ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
 
 // Set pasteboard
-app.doScript(function() { doc.pasteboardPreferences.pasteboardMargins = ["150mm", "25mm"] },
+app.doScript(function() {
+	doc.pasteboardPreferences.pasteboardMargins = [
+		doc.pages[0].bounds[3] - doc.pages[0].bounds[1],
+		(doc.pages[0].bounds[2] - doc.pages[0].bounds[0]) / 2
+	];
+},
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Set pasteboard");
 
@@ -37,4 +42,4 @@ if (doc.saved) {
 		app.doScript(script,
 		ScriptLanguage.javascript, undefined,
 		UndoModes.ENTIRE_SCRIPT, "Finishing script");
-}
+};

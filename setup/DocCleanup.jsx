@@ -1,6 +1,6 @@
 ﻿/*
-	Doc cleanup v2.2 (2020-12-06)
-	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+	Doc cleanup v2.3 (2021-05-15)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
 
@@ -88,3 +88,17 @@ function() {
 },
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Unlock all items & redefine scaling to 100%");
+
+// Set pasteboard
+app.doScript(function() {
+	var size = {
+		width: doc.spreads[0].pages.lastItem().bounds[3] - doc.spreads[0].pages.firstItem().bounds[1],
+		height: doc.spreads[0].pages.lastItem().bounds[2] - doc.spreads[0].pages.firstItem().bounds[0]
+	};
+	doc.pasteboardPreferences.pasteboardMargins = [
+		((size.width / size.height) < 1.95 ? "150 mm" : "50 mm"),
+		((size.width / size.height) < 1.95 ? "25 mm" : "10 mm")
+	];
+},
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Set pasteboard");
