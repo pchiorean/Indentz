@@ -1,13 +1,13 @@
-Name                 	Color Model 	Color Space 	Values
+Name	Color Model	Color Space	Values
 # Blacks
-C=60 M=40 Y=40 K=100 	process     	cmyk        	60 40 40 100
-C=40 M=5 Y=5 K=100   	process     	cmyk        	40 5 5 100
+C=60 M=40 Y=40 K=100	process	cmyk	60 40 40 100
+C=40 M=5 Y=5 K=100	process	cmyk	40 5 5 100
 
 # Special colors
-White                	spot        	cmyk        	0 10 10 0
-Varnish              	spot        	cmyk        	0 10 70 0
-Cut                  	spot        	cmyk        	0 100 0 0
-Fold                 	spot        	cmyk        	100 0 0 0
-Glue                 	spot        	cmyk        	0 0 100 0
-Visible area         	spot        	cmyk        	0 100 0 0
-Safe area            	spot        	cmyk        	100 0 0 0
+White	spot	cmyk	0 10 10 0
+Varnish	spot	cmyk	0 10 70 0
+Cut	spot	cmyk	0 100 0 0
+Fold	spot	cmyk	100 0 0 0
+Glue	spot	cmyk	0 0 100 0
+Visible area	spot	cmyk	0 100 0 0
+Safe area	spot	cmyk	100 0 0 0

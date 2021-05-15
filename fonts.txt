@@ -1,23 +1,23 @@
-Old font              	Style                 	New font            	Style
-Akzidenz Grotesk      	Bold                  	AkzidenzGrotesk     	Bold
-Arial                 	Regular               	Helvetica Neue      	Regular
-Arial                 	Bold                  	Helvetica Neue      	Medium
-Colossalis            	Black                 	LSColossalis        	Black
-Colossalis            	Bold                  	LSColossalis        	Bold
-Colossalis            	Medium                	LSColossalis        	Medium
-Colossalis            	Regular               	LSColossalis        	Regular
-FoundryGridnik        	Regular               	Foundry Gridnik     	Regular
-FoundryGridnik        	Medium                	Foundry Gridnik     	Medium
-FoundryGridnik        	Bold                  	Foundry Gridnik     	Bold
-Gotham Light          	Regular               	Gotham              	Light
-Gotham Book           	Regular               	Gotham              	Book
-#Gotham Medium        	Regular               	Gotham              	Medium
-Gotham Bold           	Regular               	Gotham              	Bold
-#Gotham Black         	Regular               	Gotham              	Black
-Helvetica             	Regular               	Helvetica Neue      	Regular
-Helvetica             	Medium                	Helvetica Neue      	Medium
-Helvetica             	Bold                  	Helvetica Neue      	Bold
-Helvetica Neue LT Std 	65 Medium             	Helvetica Neue      	Medium
-Helvetica Neue LT Std 	75 Bold               	Helvetica Neue      	Bold
-Trade Gothic LT Std   	Condensed No. 18      	Trade Gothic for LS 	Condensed No. 18
-Trade Gothic LT Std   	Bold Condensed No. 20 	Trade Gothic for LS 	Bold Condensed No. 20
+Old font	Style	New font	Style
+Akzidenz Grotesk	Bold	AkzidenzGrotesk	Bold
+Arial	Regular	Helvetica Neue	Regular
+Arial	Bold	Helvetica Neue	Medium
+Colossalis	Black	LSColossalis	Black
+Colossalis	Bold	LSColossalis	Bold
+Colossalis	Medium	LSColossalis	Medium
+Colossalis	Regular	LSColossalis	Regular
+FoundryGridnik	Regular	Foundry Gridnik	Regular
+FoundryGridnik	Medium	Foundry Gridnik	Medium
+FoundryGridnik	Bold	Foundry Gridnik	Bold
+Gotham Light	Regular	Gotham	Light
+Gotham Book	Regular	Gotham	Book
+#Gotham Medium	Regular	Gotham	Medium
+Gotham Bold	Regular	Gotham	Bold
+#Gotham Black	Regular	Gotham	Black
+Helvetica	Regular	Helvetica Neue	Regular
+Helvetica	Medium	Helvetica Neue	Medium
+Helvetica	Bold	Helvetica Neue	Bold
+Helvetica Neue LT Std	65 Medium	Helvetica Neue	Medium
+Helvetica Neue LT Std	75 Bold	Helvetica Neue	Bold
+Trade Gothic LT Std	Condensed No. 18	Trade Gothic for LS	Condensed No. 18
+Trade Gothic LT Std	Bold Condensed No. 20	Trade Gothic for LS	Bold Condensed No. 20

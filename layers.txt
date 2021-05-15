@@ -1,20 +1,20 @@
-Name           	Color      	Visible 	Printable 	Order 	Variants
-visible area   	Yellow     	yes     	yes       	above 	rahmen, sicht*, *vi?ib*, vis?*
-covered areas  	Grid Green 	yes     	yes       	above 	
-safe area      	Grid Green 	yes     	yes       	above 	
-dielines       	Red        	yes     	yes       	above 	cut, cut lines, decoupe, die, die*cut, stanz*
-varnish        	Yellow     	no      	yes       	above 	uv
-white          	Cute Teal  	no      	yes       	above 	
-guides         	Magenta    	yes     	no        	above 	grid, masuratori
-info           	Cyan       	no      	yes       	above 	info copy, ratio
-media          	Cyan       	no      	yes       	above 	
-HW             	Light Gray 	no      	yes       	above 	*hw*, wh
-disclaimer     	Gray       	no      	yes       	above 	legal text
-text and logos 	Green      	no      	yes       	above 	copy, dots, headline*, hl, logo, text*, txt, typ?
-codes          	Grid Green 	no      	yes       	above 	code*, barcode*, EAN*
-price          	Gold       	no      	yes       	above 	preis
-products       	Blue       	no      	yes       	above 	device*, pack*, packshot*, product*, tin*
-ring           	Fiesta     	no      	yes       	above 	bullseye
-artwork        	Light Blue 	no      	yes       	above 	aw, element?, layout*
-bg             	Red        	no      	yes       	below 	*background*, bgg, hg, hintergrund*
-template      	Black      	no      	no        	below 	referinta
+Name	Color	Visible	Printable	Order	Variants
+visible area	Yellow	yes	yes	above	rahmen, sicht*, *vi?ib*, vis?*
+covered areas	Grid Green	yes	yes	above	
+safe area	Grid Green	yes	yes	above	
+dielines	Red	yes	yes	above	cut, cut lines, decoupe, die, die*cut, stanz*
+varnish	Yellow	no	yes	above	uv
+white	Cute Teal	no	yes	above	
+guides	Magenta	yes	no	above	grid, masuratori
+info	Cyan	no	yes	above	info copy, ratio
+media	Cyan	no	yes	above	
+HW	Light Gray	no	yes	above	*hw*, wh
+disclaimer	Gray	no	yes	above	legal text
+text and logos	Green	no	yes	above	copy, dots, headline*, hl, logo, text*, txt, typ?
+codes	Grid Green	no	yes	above	code*, barcode*, EAN*
+price	Gold	no	yes	above	preis
+products	Blue	no	yes	above	device*, pack*, packshot*, product*, tin*
+ring	Fiesta	no	yes	above	bullseye
+artwork	Light Blue	no	yes	above	aw, element?, layout*
+bg	Red	no	yes	below	*background*, bgg, hg, hintergrund*
+template	Black	no	no	below	referinta
