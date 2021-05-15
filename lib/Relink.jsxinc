@@ -1,9 +1,15 @@
-function Relink(oldLink, newLink) {
+function Relink(oldLink, newLink, sel) {
+	sel = sel || null;
 	newLink = /\//g.test(newLink.toString()) ? newLink : doc.filePath + "/Links/" + newLink;
-	if (!File(newLink).exists) { errors.push("Skipped '" + oldLink + "', new link not found."); return false }
-	for (var i = 0; i < doc.links.length; i++) {
-		if (doc.links[i].name != oldLink) continue;
-		doc.links[i].relink(File(newLink));
-	}
-	return true;
-}
+	if (!File(newLink).exists) { errors.push("Skipped '" + oldLink + "', new link not found."); exit() };
+
+	var item, items = doc.links.everyItem().getElements();
+	while (item = items.shift()) {
+		if (item.name != oldLink) continue;
+		if (sel.length > 0) if (!isIn(item, sel)) continue;
+		item.relink(File(newLink));
+	};
+
+function isIn(item, array) {
+	for (var i = 0; i < array.length; i++) if (array[i] == item.parent.parent) return true };
+};
