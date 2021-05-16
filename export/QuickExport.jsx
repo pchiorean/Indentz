@@ -1,5 +1,5 @@
 /*
-	Quick export v1.1 (2021-05-16)
+	Quick export v1.2 (2021-05-16)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open documents with several configurable PDF presets.
@@ -39,7 +39,7 @@ var defaults = {
 	}
 };
 var settings;
-var settingsFile = File(app.activeScript.path + "/" +
+var settingsFile = File(Folder.userData + "/" +
 	app.activeScript.name.substr(0, app.activeScript.name.lastIndexOf(".")) + ".prefs");
 var presets = app.pdfExportPresets.everyItem().name.sort();
 var old = {
