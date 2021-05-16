@@ -1,5 +1,5 @@
 /*
-	QR code v3.2.5 (2021-04-20)
+	QR code v3.3 (2021-05-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -386,18 +386,26 @@ function Margins(page) { // Return page margins
 
 // Modified from 'Scrollable alert' by Peter Kahrel
 // http://forums.adobe.com/message/2869250#2869250
-function AlertScroll(title, input) {
-	if (input instanceof Array) input = input.join("\r");
-	var lines = input.split(/\r|\n/g);
+function AlertScroll(title, msg, /*bool*/filter) {
+	if (msg instanceof Array) msg = msg.join("\n");
+	var msgArray = msg.split(/\r|\n/g);
 	var w = new Window("dialog", title);
-	var list = w.add("edittext", undefined, input, { multiline: true, scrolling: true, readonly: true });
+	if (filter) var search = w.add("edittext { characters: 40 }");
+	var list = w.add("edittext", undefined, msg, { multiline: true, scrolling: true, readonly: true });
 	list.characters = (function() {
-		for (var i = 0, width = 50; i < lines.length; i++) width = Math.max(width, lines[i].length);
+		for (var i = 0, width = 50; i < msgArray.length; i++) width = Math.max(width, msgArray[i].length);
 		return width;
 	})();
 	list.minimumSize.width = 100; list.maximumSize.width = 1024;
 	list.minimumSize.height = 100; list.maximumSize.height = 1024;
 	w.add("button", undefined, "Close", { name: "ok" });
 	w.ok.active = true;
+	if (filter) search.onChanging = function() {
+		var result = [];
+		for (var i = 0; i < msgArray.length; i++)
+			if (msgArray[i].toLowerCase().indexOf(this.text) != -1) result.push(msgArray[i]);
+		if (result.length > 0) list.text = result.join("\n")
+		else list.text = "Nothing found."
+	};
 	w.show();
-}
+};

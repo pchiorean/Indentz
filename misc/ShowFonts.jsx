@@ -1,5 +1,5 @@
 /*
-	Show used fonts 1.2.2 (2021-04-20)
+	Show used fonts 1.3 (2021-05-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Shows all fonts used in the current document.
@@ -22,29 +22,37 @@ for (var i = 0; i < usedFonts.length; i++) {
 	}
 }
 
-var fontList = "INSTALLED:\r" + fontName1.join("\n") +
-	"\r\rSUBSTITUTED:\r" + fontName2.join("\n") +
-	"\r\rFAUXED:\r" + fontName3.join("\n") +
-	"\r\rNOT_AVAILABLE:\r" + fontName4.join("\n") +
-	"\r\rUNKNOWN:\r" + fontName5.join("\n");
+var fontList = "INSTALLED:\n\n" + fontName1.join("\n") +
+	"\n\nSUBSTITUTED:\n\n" + fontName2.join("\n") +
+	"\n\nFAUXED:\n\n" + fontName3.join("\n") +
+	"\n\nNOT_AVAILABLE:\n\n" + fontName4.join("\n") +
+	"\n\nUNKNOWN:\n\n" + fontName5.join("\n");
 
 AlertScroll("Document fonts", fontList);
 
 
 // Modified from 'Scrollable alert' by Peter Kahrel
 // http://forums.adobe.com/message/2869250#2869250
-function AlertScroll(title, input) {
-	if (input instanceof Array) input = input.join("\r");
-	var lines = input.split(/\r|\n/g);
+function AlertScroll(title, msg, /*bool*/filter) {
+	if (msg instanceof Array) msg = msg.join("\n");
+	var msgArray = msg.split(/\r|\n/g);
 	var w = new Window("dialog", title);
-	var list = w.add("edittext", undefined, input, { multiline: true, scrolling: true, readonly: true });
+	if (filter) var search = w.add("edittext { characters: 40 }");
+	var list = w.add("edittext", undefined, msg, { multiline: true, scrolling: true, readonly: true });
 	list.characters = (function() {
-		for (var i = 0, width = 50; i < lines.length; i++) width = Math.max(width, lines[i].length);
+		for (var i = 0, width = 50; i < msgArray.length; i++) width = Math.max(width, msgArray[i].length);
 		return width;
 	})();
 	list.minimumSize.width = 100; list.maximumSize.width = 1024;
 	list.minimumSize.height = 100; list.maximumSize.height = 1024;
 	w.add("button", undefined, "Close", { name: "ok" });
 	w.ok.active = true;
+	if (filter) search.onChanging = function() {
+		var result = [];
+		for (var i = 0; i < msgArray.length; i++)
+			if (msgArray[i].toLowerCase().indexOf(this.text) != -1) result.push(msgArray[i]);
+		if (result.length > 0) list.text = result.join("\n")
+		else list.text = "Nothing found."
+	};
 	w.show();
-}
+};
