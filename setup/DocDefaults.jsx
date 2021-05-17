@@ -20,11 +20,6 @@ app.doScript(File(app.activeScript.path + "/ReplaceFonts.jsx"),
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Replace fonts");
 
-// Set page dimensions from filename
-app.doScript(File(app.activeScript.path + "/PageSizeFromFilename.jsx"),
-ScriptLanguage.javascript, undefined,
-UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
-
 // Set pasteboard
 app.doScript(function() {
 	doc.pasteboardPreferences.pasteboardMargins = [
@@ -34,6 +29,11 @@ app.doScript(function() {
 },
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Set pasteboard");
+
+// Set page dimensions from filename
+app.doScript(File(app.activeScript.path + "/PageSizeFromFilename.jsx"),
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
 
 // Run finishing script
 if (doc.saved) {
