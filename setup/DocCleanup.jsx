@@ -1,5 +1,5 @@
 ﻿/*
-	Doc cleanup v2.3 (2021-05-15)
+	Doc cleanup v2.4 (2021-05-17)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -14,15 +14,6 @@ if (!(doc = app.activeDocument)) exit();
 app.doScript(File(app.activeScript.path + "/DefaultPrefs.jsx"), 
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Set preferences");
-
-// Delete unused swatches
-app.doScript(
-function() {
-	var swa = doc.unusedSwatches;
-	for (var i = 0; i < swa.length; i++) if (swa[i].name != "") swa[i].remove();
-},
-ScriptLanguage.javascript, undefined,
-UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
 
 // Turn off 'AutoUpdateURLStatus' from 'Hyperlinks' panel
 app.doScript(
@@ -47,14 +38,14 @@ function() {
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Show 'guides' layer");
 
-// Delete guides
-// app.doScript(
-// function() {
-// 	var g = doc.guides.everyItem().getElements();
-// 	for (var i = 0; i < g.length; i++) if (g[i].label != "HW") g[i].remove();
-// },
-// ScriptLanguage.javascript, undefined,
-// UndoModes.ENTIRE_SCRIPT, "Delete guides");
+// Delete unused swatches
+app.doScript(
+function() {
+	var swa = doc.unusedSwatches;
+	for (var i = 0; i < swa.length; i++) if (swa[i].name != "") swa[i].remove();
+},
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
 
 // Delete unused layers
 app.doScript(
@@ -75,19 +66,38 @@ function() {
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Delete empty spreads");
 
+// Delete guides
+// app.doScript(
+// function() {
+// 	var g = doc.guides.everyItem().getElements();
+// 	for (var i = 0; i < g.length; i++) if (g[i].label != "HW") g[i].remove();
+// },
+// ScriptLanguage.javascript, undefined,
+// UndoModes.ENTIRE_SCRIPT, "Delete guides");
+
 // Unlock all items & redefine scaling to 100%
 app.doScript(
 function() {
-	for (var i = 0; i < doc.spreads.length; i++) {
-		var item, items = doc.spreads[i].allPageItems;
-		while (item = items.shift()) {
-			if (item.locked == true) item.locked = false;
-			item.redefineScaling();
-		}
+	var item, items = doc.allPageItems;
+	while (item = items.shift()) {
+		if (item.locked == true) item.locked = false;
+		item.redefineScaling();
 	}
 },
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Unlock all items & redefine scaling to 100%");
+
+// Convert empty text frames to generic frames
+app.doScript(
+function() {
+	var item, items = doc.textFrames.everyItem().getElements();
+	while (item = items.shift()) {
+		if (/ $/.test(item.contents)) item.contents = item.contents.replace(/ +$/, "");
+		if (item.contents.length == 0) item.contentType = ContentType.UNASSIGNED;
+	}
+},
+ScriptLanguage.javascript, undefined,
+UndoModes.ENTIRE_SCRIPT, "Convert empty text frames to generic frames");
 
 // Set pasteboard
 app.doScript(function() {
