@@ -1,8 +1,8 @@
 /*
-	Quick export v1.3 (2021-05-17)
+	Quick export v1.3.1 (2021-05-18)
 	Paul Chiorean (jpeg@basement.ro)
 
-	Exports open documents with several configurable PDF presets.
+	Exports open .indd documents or a folder with several configurable PDF presets.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -208,7 +208,7 @@ if (batchMode) {
 		var newFolder = Folder.selectDialog("Select a folder:");
 		if (!!newFolder) {
 			ui.input.source.path = newFolder;
-			ui.input.source.folder.text = TruncatePath(decodeURI(newFolder.fullName), 50);
+			ui.input.source.folder.text = TruncatePath(decodeURI(newFolder.fullName), 59);
 			ui.input.source.folder.helpTip = decodeURI(newFolder.fullName);
 			var docs = ui.input.source.path.getFiles("*.indd");
 			ui.actions.ok.enabled = (docs.length > 0);
@@ -219,7 +219,7 @@ ui.output.dest.browse.onClick = function() {
 	var newFolder = Folder.selectDialog("Select a folder:");
 	if (!!newFolder) {
 		ui.output.dest.path = newFolder;
-		ui.output.dest.folder.text = TruncatePath(decodeURI(newFolder.fullName), 50);
+		ui.output.dest.folder.text = TruncatePath(decodeURI(newFolder.fullName), 55);
 		ui.output.dest.folder.helpTip = decodeURI(newFolder.fullName);
 	};
 };
