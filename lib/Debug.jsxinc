@@ -1,0 +1,15 @@
+function dbg(proc, msg) {
+    var debugFile = File(Folder.desktop + "/" +
+    app.activeScript.name.substr(0, app.activeScript.name.lastIndexOf(".")) + ".debug");
+    debugFile.open("a");
+    debugFile.writeln(
+        (function() {
+            var t = new Date();
+            return (String(t.getHours()).length == 1   ? "0" + t.getHours()   : t.getHours())   + ":"
+                 + (String(t.getMinutes()).length == 1 ? "0" + t.getMinutes() : t.getMinutes()) + ":"
+                 + (String(t.getSeconds()).length == 1 ? "0" + t.getSeconds() : t.getSeconds()) + "."
+                 + (String(t.getMilliseconds()).length == 2 ? t.getMilliseconds() + "00" :
+                    String(t.getMilliseconds()).length == 1 ? t.getMilliseconds() +  "0" : t.getMilliseconds());
+        })() + "\t" + proc + "\t" + msg
+    );
+};
