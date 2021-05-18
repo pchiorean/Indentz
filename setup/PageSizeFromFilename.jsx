@@ -1,5 +1,5 @@
 /*
-	Page size from filename v2.0.2 (2021-03-12)
+	Page size from filename v2.1 (2021-05-18)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets every page size and margins according to the filename.
@@ -155,7 +155,7 @@ function MarkVisibleArea(page) { // Draw a 'visible area' frame
 	if (!doc.colors.itemByName(visSwatchName).isValid)
 		doc.colors.add({
 			name: visSwatchName,
-			model: ColorModel.PROCESS,
+			model: ColorModel.SPOT,
 			space: ColorSpace.CMYK,
 			colorValue: [ 0, 100, 0, 0 ] });
 	var visLayer = doc.layers.item(visLayerName);

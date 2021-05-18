@@ -1,5 +1,5 @@
 /*
-	Visible area v3.0 (2021-04-14)
+	Visible area v3.1 (2021-05-18)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Creates on each page a 'visible area' frame the size of the page margins.
@@ -39,7 +39,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 	if (!doc.colors.itemByName(visSwatchName).isValid)
 		doc.colors.add({
 			name: visSwatchName,
-			model: ColorModel.PROCESS,
+			model: ColorModel.SPOT,
 			space: ColorSpace.CMYK,
 			colorValue: [ 0, 100, 0, 0 ]
 		});
