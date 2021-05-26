@@ -1,5 +1,5 @@
 /*
-	Cleanup swatches v1.4 (2021-04-14)
+	Cleanup swatches v1.4.1 (2021-05-26)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused.
@@ -7,13 +7,15 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(RGB2CMYK, ScriptLanguage.javascript, doc,
-	UndoModes.ENTIRE_SCRIPT, "Convert RGB process colors to CMYK");
-app.doScript(NormalizeCMYK, ScriptLanguage.javascript, doc,
-	UndoModes.ENTIRE_SCRIPT, "Normalize similar CMYK swatches");
-app.doScript(DeleteUnused, ScriptLanguage.javascript, doc,
-	UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
-
+// app.doScript(RGB2CMYK, ScriptLanguage.javascript, doc,
+// 	UndoModes.ENTIRE_SCRIPT, "Convert RGB process colors to CMYK");
+// app.doScript(NormalizeCMYK, ScriptLanguage.javascript, doc,
+// 	UndoModes.ENTIRE_SCRIPT, "Normalize similar CMYK swatches");
+// app.doScript(DeleteUnused, ScriptLanguage.javascript, doc,
+// 	UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
+RGB2CMYK(doc);
+NormalizeCMYK(doc);
+DeleteUnused(doc);
 
 // Modified from ConvertRGBtoCMYK.jsx by Dave Saunders
 // https://community.adobe.com/t5/indesign/rgb-to-cmyk-script/m-p/10050289
@@ -52,7 +54,7 @@ function NormalizeCMYK(doc, swa, a, r, o, t, k, i) {
 	for (k in r) { // Remove dups and normalize names
 		if (!r.hasOwnProperty(k)) continue;
 		t = swa.itemByID((o = (a = r[k])[0]).id);
-		for (i = a.length; --i; swa.itemByID(a[i].id).remove(t));
+		try { for (i = a.length; --i; swa.itemByID(a[i].id).remove(t)); } catch (_) {};
 		if (k == o.name) continue; // No need to rename
 		try { t.name = k } catch (_) {} // Prevent read-only errors
 	}
