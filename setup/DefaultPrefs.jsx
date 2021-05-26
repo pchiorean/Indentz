@@ -1,5 +1,5 @@
 /*
-	Default preferences v1.2 (2021-04-04)
+	Default preferences v1.3 (2021-05-26)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets default preferences.
@@ -27,8 +27,14 @@ app.doScript(function() {
 			preventSelectingLockedItems: true,
 			ungroupRemembersLayers: true,
 		},
+		guidePreferences: {
+			guidesSnapto: true,
+		},
 		preflightOptions: {
 			preflightOff: true,
+		},
+		smartGuidePreferences: {
+			enabled: true,
 		},
 		transformPreferences: {
 			adjustEffectsWhenScaling: true,
@@ -45,6 +51,7 @@ app.doScript(function() {
 		guidePreferences: {
 			guidesLocked: false,
 			guidesShown: true,
+			guidesSnapto: true,
 		},
 		pageItemDefaults: {
 			fillColor: "None",
