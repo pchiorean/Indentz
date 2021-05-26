@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.3.1 (2021-05-20)
+	Batch QR codes v2.3.2 (2021-05-26)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -74,7 +74,7 @@ function main() {
 	ui.actions.orientation = "row";
 	ui.actions.alignChildren = [ "right", "center" ];
 	ui.actions.white = ui.actions.add("checkbox", undefined, "White text");
-	ui.actions.white.helpTip = "Make text white (ignored when separate)";
+	ui.actions.white.helpTip = "Make text white (ignored for separate files)";
 	ui.actions.white.preferredSize.width = LIST.width - 492;
 	ui.actions.err = ui.actions.add("button", undefined, "Show errors");
 	ui.actions.err.visible = false;
@@ -155,11 +155,11 @@ function main() {
 		} else queue = validLines;
 		if (queue.length == 0) {
 			ui.text = !currentPath ? "Select a folder containing the data file" :
-				(infoFile.exists ? decodeURI(infoFile.fsName) + " - 0 records" :
+				(infoFile.exists ? decodeURI(infoFile.fsName) + " \u2013 0 records" :
 				"No data file in " + decodeURI(currentPath) + "/");
 			if (!currentPath) ui.actions.browse.notify();
 		} else {
-			ui.text = decodeURI(infoFile.fsName) + " - " +
+			ui.text = decodeURI(infoFile.fsName) + " \u2013 " +
 				queue.length + " record" + (queue.length == 1 ? "" : "s") +
 				(errors.length > 0 ? " | " + errors.length + " error" + (errors.length == 1 ? "" : "s") : "");
 		}
@@ -543,7 +543,7 @@ function ProgressBar(title, width) {
 			pb.msg.visible = !!msg;
 			!!msg && (pb.msg.text = msg);
 		}
-		pb.text = title + " - " + val + "/" + pb.bar.maxvalue;
+		pb.text = title + " \u2013 " + val + "/" + pb.bar.maxvalue;
 		pb.show(); pb.update();
 	}
 	this.hide = function() { pb.hide() }

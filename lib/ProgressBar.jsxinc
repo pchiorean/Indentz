@@ -24,7 +24,7 @@ function ProgressBar(title, width) {
 			pb.msg.visible = !!msg;
 			!!msg && (pb.msg.text = msg);
 		}
-		pb.text = title + " - " + val + "/" + pb.bar.maxvalue;
+		pb.text = title + " \u2013 " + val + "/" + pb.bar.maxvalue;
 		pb.show(); pb.update();
 	}
 	this.hide = function() { pb.hide() }
