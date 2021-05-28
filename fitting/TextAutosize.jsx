@@ -1,5 +1,5 @@
 /*
-	Fit frame to text v2.3 (2021-05-17)
+	Fit frame to text v2.3.1 (2021-05-28)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Auto-sizes the text frame to the content.
@@ -51,7 +51,8 @@ function FitFrame2Text(frame) {
 	var align;
 
 	// Trim ending whitespace
-	if (/ $/.test(frame.contents)) frame.contents = frame.contents.replace(/ +$/, "");
+	if (/\s+$/g.test(frame.contents) && frame.nextTextFrame == null)
+		frame.contents = frame.contents.replace(/\s+$/g, "");
 	// Disable hyphenation for single lines
 	if (frame.lines.length == 1) frame.lines[0].hyphenation = false;
 	// Skip 'HW' text frames, they are already set
