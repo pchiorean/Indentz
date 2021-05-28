@@ -1,5 +1,5 @@
 /*
-	HW 2.4 (2021-04-14)
+	HW 2.5 (2021-05-28)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Labels 'HW' selected objects and adds a HW bottom guide on the current spread.
@@ -29,7 +29,11 @@ function main() {
 	var item, items = doc.selection;
 	while (item = items.shift()) {
 		item.label = "HW";
-		if (item.constructor.name == "Rectangle") item.fillColor = "Paper";
+		if (item.constructor.name == "Rectangle") {
+			item.fillColor = "Paper";
+			if (item.graphics[0].isValid)
+				item.graphics[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
+		}
 		if (item.constructor.name == "TextFrame") {
 			item.fillColor = "Paper";
 			item.paragraphs.everyItem().justification = Justification.CENTER_ALIGN;
