@@ -1,5 +1,5 @@
 /*
-	Show properties 1.5 (2021-05-16)
+	Show properties 1.5.1 (2021-05-28)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Shows properties and methods of a selected object/the document/the application.
@@ -63,7 +63,7 @@ function AlertScroll(title, msg, /*bool*/filter) {
 	if (filter) search.onChanging = function() {
 		var result = [];
 		for (var i = 0; i < msgArray.length; i++)
-			if (msgArray[i].toLowerCase().indexOf(this.text) != -1) result.push(msgArray[i]);
+			if (msgArray[i].toLowerCase().indexOf((this.text).toLowerCase()) != -1) result.push(msgArray[i]);
 		if (result.length > 0) list.text = result.join("\n")
 		else list.text = "Nothing found."
 	};

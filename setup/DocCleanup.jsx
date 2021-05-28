@@ -1,5 +1,5 @@
 ﻿/*
-	Doc cleanup v2.4 (2021-05-17)
+	Doc cleanup v2.4.1 (2021-05-28)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -92,7 +92,8 @@ app.doScript(
 function() {
 	var item, items = doc.textFrames.everyItem().getElements();
 	while (item = items.shift()) {
-		if (/ $/.test(item.contents)) item.contents = item.contents.replace(/ +$/, "");
+		if (/\s+$/g.test(item.contents) && item.nextTextFrame == null)
+			item.contents = item.contents.replace(/\s+$/g, "");
 		if (item.contents.length == 0) item.contentType = ContentType.UNASSIGNED;
 	}
 },
