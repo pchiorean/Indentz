@@ -1,5 +1,5 @@
 /*
-	Quick export v2.1 (2021-06-01)
+	Quick export v2.3 (2021-06-01)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -40,7 +40,6 @@ app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
 app.pdfExportPreferences.pageRange = ""; // Reset page range
 app.pdfExportPreferences.viewPDF = false;
-
 const ADV = ScriptUI.environment.keyboardState.altKey;
 const WIN = (File.fs == "Windows");
 const VER = "2";
@@ -312,13 +311,13 @@ if (folderMode) {
 	var docs = ui.input.source.path.getFiles("*.indd").sort();
 } else {
 	var doc, docs = app.documents.everyItem().getElements(), names = [];
-	while (doc = docs.shift()) names.push(doc.name); names.sort();
+	while (doc = docs.shift()) names.push(doc.fullName); names.sort();
 	var name, docs = []; while (name = names.shift()) docs.push(app.documents.itemByName(name));
 };
 // -- Init progress bar
 for (var i = 0, pbWidth = 50; i < docs.length; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
 var progressBar = new ProgressBar("Exporting", pbWidth + 10);
-progressBar.reset(docs.length);
+progressBar.reset(docs.length * ((ui.preset1.isOn.value ? 1 : 0) + (ui.preset2.isOn.value ? 1 : 0)));
 // -- Main loop
 var doc, counter = 1, errors = [];
 while (doc = docs.shift()) {
@@ -358,20 +357,23 @@ while (doc = docs.shift()) {
 		var pdfName = pdfBaseName + ".pdf";
 		var folder = baseFolder + (!!subfolder ? "/" + subfolder : "");
 		var file = folder + "/" + pdfName;
-		if (!ui.output.options.fileOverwrite.value) { // Unique name
-			pdfBaseName = pdfBaseName.replace(/(\.|\^|\$|\+|\(|\)|\[|\]|\{|\})/g, "\\$1"); // Escape special chars
-			var baseRE = RegExp("^" + pdfBaseName + (!!suffix ? "[ _-]*" : "[ _-]+") + "\\d+.*.pdf$", "i");
-			var indxRE = RegExp("^" + pdfBaseName + (!!suffix ? "[ _-]*" : "[ _-]+") +
-				"(\\d+)([ _-]*v *\\d*)?([ _-]*copy *\\d*)?([ _-]*v *\\d*)?$", "i");
-			var pdfFiles = Folder(folder).getFiles(function(f) {
-				if (!(f instanceof File)) return false;
-				if (!/\.pdf$/i.test(f)) return false;
-				return baseRE.test(decodeURI(f.name));
-			});
-			for (var j = 0, maxIndex = 0; j < pdfFiles.length; j++) { // Get max index
-				var n = indxRE.exec(decodeURI(pdfFiles[j].name).replace(/\.pdf$/i, ""));
-				if (!!n) maxIndex = Math.max(maxIndex, Number(n[1]));
-			};
+		pdfBaseName = pdfBaseName.replace(/(\.|\^|\$|\+|\(|\)|\[|\]|\{|\})/g, "\\$1"); // Escape special chars
+		var baseRE = RegExp("^" + pdfBaseName + (!!suffix ? "[ _-]*" : "[ _-]+") + "\\d+.*.pdf$", "i");
+		var indxRE = RegExp("^" + pdfBaseName + (!!suffix ? "[ _-]*" : "[ _-]+") +
+			"(\\d+)([ _-]*v *\\d*)?([ _-]*copy *\\d*)?([ _-]*v *\\d*)?$", "i");
+		var pdfFiles = Folder(folder).getFiles(function(f) {
+			if (!(f instanceof File) || !/\.pdf$/i.test(f)) return false;
+			return baseRE.test(decodeURI(f.name));
+		});
+		for (var j = 0, maxIndex = 0; j < pdfFiles.length; j++) { // Get max index
+			var n = indxRE.exec(decodeURI(pdfFiles[j].name).replace(/\.pdf$/i, ""));
+			if (!!n) maxIndex = Math.max(maxIndex, Number(n[1]));
+		};
+		if (ui.output.options.fileOverwrite.value) {
+			if (maxIndex == 0) {
+				if (File(file).exists) file = file.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + ".pdf";
+			} else { file = file.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + String(maxIndex) + ".pdf" };
+		} else {
 			if (maxIndex == 0) {
 				if (File(file).exists) file = file.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + "2.pdf";
 			} else {
@@ -418,21 +420,22 @@ while (doc = docs.shift()) {
 		app.pdfExportPreferences.includeSlugWithPDF = exp.slug.value;
 		app.pdfExportPreferences.useDocumentBleedWithPDF = !exp.bleedCustom.value;
 		if (app.pdfExportPreferences.useDocumentBleedWithPDF) {
-			app.pdfExportPreferences.pageMarksOffset = Math.max(
+			app.pdfExportPreferences.pageMarksOffset = Math.min(Math.max(
 				doc.documentPreferences.properties.documentBleedTopOffset,
 				doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
 				doc.documentPreferences.properties.documentBleedBottomOffset,
 				doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
-			) + 1;
+			), UnitValue("72 pt").as("mm"));
 		} else {
 			app.pdfExportPreferences.bleedTop = app.pdfExportPreferences.bleedBottom =
 			app.pdfExportPreferences.bleedInside = app.pdfExportPreferences.bleedOutside =
-			Number(exp.bleedValue.text);
-			app.pdfExportPreferences.pageMarksOffset = app.pdfExportPreferences.bleedTop + 1;
+				Number(exp.bleedValue.text);
+			app.pdfExportPreferences.pageMarksOffset =
+				Math.min(app.pdfExportPreferences.bleedTop, UnitValue("72 pt").as("mm"));
 		};
 		doc.exportFile(ExportFormat.PDF_TYPE, File(file), false);
+		counter++;
 	};
-	counter++;
 	// Restore measurement units
 	doc.viewPreferences.horizontalMeasurementUnits = old.horizontalMeasurementUnits;
 	doc.viewPreferences.verticalMeasurementUnits = old.verticalMeasurementUnits;
