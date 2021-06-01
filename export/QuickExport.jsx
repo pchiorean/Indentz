@@ -1,5 +1,5 @@
 /*
-	Quick export v2.0 (2021-05-30)
+	Quick export v2.1 (2021-06-01)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -27,6 +27,24 @@
 */
 
 // Initialisation
+var folderMode = (app.documents.length == 0);
+var settings, settingsFile = File(Folder.userData + "/" +
+	app.activeScript.name.substr(0, app.activeScript.name.lastIndexOf(".")) + ".prefs");
+var presets = app.pdfExportPresets.everyItem().name.sort();
+var old = {
+	measurementUnit: app.scriptPreferences.measurementUnit,
+	userInteractionLevel: app.scriptPreferences.userInteractionLevel,
+	viewPDF: app.pdfExportPreferences.viewPDF,
+};
+app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
+app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
+app.pdfExportPreferences.pageRange = ""; // Reset page range
+app.pdfExportPreferences.viewPDF = false;
+
+const ADV = ScriptUI.environment.keyboardState.altKey;
+const WIN = (File.fs == "Windows");
+const VER = "2";
+
 var defaults = {
 	presets: {
 		preset1: {
@@ -73,21 +91,9 @@ var defaults = {
 			close: true,
 		},
 	},
+	position: "",
+	version: VER,
 };
-var folderMode = (app.documents.length == 0);
-var settings, settingsFile = File(Folder.userData + "/" +
-	app.activeScript.name.substr(0, app.activeScript.name.lastIndexOf(".")) + ".prefs");
-var presets = app.pdfExportPresets.everyItem().name.sort();
-var old = {
-	measurementUnit: app.scriptPreferences.measurementUnit,
-	userInteractionLevel: app.scriptPreferences.userInteractionLevel,
-	viewPDF: app.pdfExportPreferences.viewPDF,
-};
-app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
-app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
-app.pdfExportPreferences.pageRange = ""; // Reset page range
-app.pdfExportPreferences.viewPDF = false;
-const ADV = ScriptUI.environment.keyboardState.altKey;
 
 // User interface
 var ui = new Window('dialog { alignChildren: "left", margins: 16, orientation: "column", spacing: 10, text: "Quick Export" }');
@@ -102,12 +108,12 @@ if (folderMode) {
 // -- Export presets / scripts
 ui.presets = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10, text: "Export presets" }');
 	ui.preset1 = ui.presets.add('group { margins: 0, orientation: "row", spacing: 10 }');
-		ui.preset1.isActive = ui.preset1.add('checkbox { alignment: "bottom" }');
+		ui.preset1.isOn = ui.preset1.add('checkbox { alignment: "bottom" }');
 		ui.preset1.preset = ui.preset1.add('dropdownlist', undefined, presets);
 		ui.preset1.preset.preferredSize = [ 290, 24 ];
 		ui.preset1.add('statictext { justify: "right", preferredSize: [ 40, 24 ], text: "Suffix:" }');
 		ui.preset1.suffix = ui.preset1.add('edittext { helpTip: "Append this to the exported file name. Autodetected for presets that end with \'_suffix\'.", preferredSize: [ 100, 24 ] }');
-	ui.preset1.options = ui.presets.add('group { spacing: 14 }');
+	ui.preset1.options = WIN ? ui.presets.add('group { spacing: 12 }') : ui.presets.add('group { spacing: 14 }');
 		ui.preset1.exportSpreads = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Export as spreads", text: "Spreads" }');
 		ui.preset1.cropMarks = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Include crop marks at 1 mm past bleed", text: "Crop marks" }');
 		ui.preset1.pageInfo = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Include page information", text: "Page info" }');
@@ -116,17 +122,17 @@ ui.presets = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 
 		ui.preset1.bleedValue = ui.preset1.options.add('edittext { characters: 4, justify: "center", helpTip: "Enter a value in millimeters", preferredSize: [ -1, 24 ] }');
 	ui.preset1.script = ui.presets.add('group');
 		ui.preset1.script.add('statictext { preferredSize: [ 80, 24 ], helpTip: "Run a JavaScript or AppleScript before exporting", text: "Run a script:" }');
-		ui.preset1.script.isActive = ui.preset1.script.add('checkbox { alignment: "bottom" }');
+		ui.preset1.script.isOn = ui.preset1.script.add('checkbox { alignment: "bottom" }');
 		ui.preset1.script.file = ui.preset1.script.add('edittext { preferredSize: [ 250, 24 ], properties: { readonly: true } }');
 		ui.preset1.script.browse = ui.preset1.script.add('button { preferredSize: [ 100, 24 ], text: "Browse" }');
 	ui.presets.add('panel { alignment: "fill" }');
 	ui.preset2 = ui.presets.add('group { margins: 0, orientation: "row", spacing: 10 }');
-		ui.preset2.isActive = ui.preset2.add('checkbox { alignment: "bottom" }');
+		ui.preset2.isOn = ui.preset2.add('checkbox { alignment: "bottom" }');
 		ui.preset2.preset = ui.preset2.add('dropdownlist', undefined, presets);
 		ui.preset2.preset.preferredSize = [ 290, 24 ];
 		ui.preset2.add('statictext { justify: "right", preferredSize: [ 40, 24 ], text: "Suffix:" }');
 		ui.preset2.suffix = ui.preset2.add('edittext { helpTip: "Append this to the exported file name. Autodetected for presets that end with \'_suffix\'.", preferredSize: [ 100, 24 ] }');
-	ui.preset2.options = ui.presets.add('group { spacing: 14 }');
+	ui.preset2.options = WIN ? ui.presets.add('group { spacing: 12 }') : ui.presets.add('group { spacing: 14 }');
 		ui.preset2.exportSpreads = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Export as spreads", text: "Spreads" }');
 		ui.preset2.cropMarks = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Include crop marks at 1 mm past bleed", text: "Crop marks" }');
 		ui.preset2.pageInfo = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Include page information", text: "Page info" }');
@@ -135,13 +141,13 @@ ui.presets = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 
 		ui.preset2.bleedValue = ui.preset2.options.add('edittext { characters: 4, justify: "center", helpTip: "Enter a value in millimeters", preferredSize: [ -1, 24 ] }');
 	ui.preset2.script = ui.presets.add('group');
 		ui.preset2.script.add('statictext { preferredSize: [ 80, 24 ], helpTip: "Run a JavaScript or AppleScript before exporting", text: "Run a script:" }');
-		ui.preset2.script.isActive = ui.preset2.script.add('checkbox { alignment: "bottom" }');
+		ui.preset2.script.isOn = ui.preset2.script.add('checkbox { alignment: "bottom" }');
 		ui.preset2.script.file = ui.preset2.script.add('edittext { preferredSize: [ 250, 24 ], properties: { readonly: true } }');
 		ui.preset2.script.browse = ui.preset2.script.add('button { preferredSize: [ 100, 24 ], text: "Browse" }');
 // -- Output options
 ui.output = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10, text: "Output folder and options" }');
 	ui.output.dest = ui.output.add('group { margins: 0, orientation: "row", spacing: 10 }');
-		ui.output.dest.isActive = ui.output.dest.add('checkbox { alignment: "bottom" }');
+		ui.output.dest.isOn = ui.output.dest.add('checkbox { alignment: "bottom" }');
 		ui.output.dest.folder = ui.output.dest.add('edittext { preferredSize: [ 340, 24 ], properties: { readonly: true } }');
 		ui.output.dest.browse = ui.output.dest.add('button { preferredSize: [ 100, 24 ], text: "Browse" }');
 	ui.output.options = ui.output.add('group { alignChildren: "top", margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 0 }');
@@ -157,7 +163,7 @@ ui.output = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 1
 ui.actions = ui.add('group { orientation: "row" }');
 if (ADV) {
 	ui.actions.savePrefs = ui.actions.add('button { preferredSize: [ 80, -1 ], text: "Save prefs" }');
-	ui.actions.delPrefs = ui.actions.add('button { preferredSize: [ 80, -1 ], text: "Del prefs" }');
+	ui.actions.resetPrefs = ui.actions.add('button { preferredSize: [ 80, -1 ], text: "Reset prefs" }');
 	ui.actions.add('group { preferredSize: [ 140, -1 ] }');
 } else {
 	ui.actions.savePrefs = ui.actions.add('checkbox { preferredSize: [ 320, -1 ], text: "Save preferences" }');
@@ -165,18 +171,17 @@ if (ADV) {
 };
 ui.actions.add('button { preferredSize: [ 80, -1 ], properties: { name: "cancel" }, text: "Cancel" }');
 ui.actions.ok = ui.actions.add('button { preferredSize: [ 80, -1 ], properties: { name: "ok" }, text: "Start" }');
-
-// UI callback functions
-ui.preset1.isActive.onClick = function() {
+// -- UI callback functions
+ui.preset1.isOn.onClick = function() {
 	ui.preset1.preset.enabled = ui.preset1.suffix.enabled = this.value;
 	ui.preset1.options.enabled = this.value;
 	ui.preset1.script.enabled = this.value;
 	ui.preset1.bleedCustom.onClick();
-	ui.preset1.script.isActive.onClick();
+	ui.preset1.script.isOn.onClick();
 	if (folderMode) {
-		ui.actions.ok.enabled = (this.value || ui.preset2.isActive.value) && (ui.input.source.path != undefined);
+		ui.actions.ok.enabled = (this.value || ui.preset2.isOn.value) && (ui.input.source.path != undefined);
 	} else {
-		ui.actions.ok.enabled = this.value || ui.preset2.isActive.value;
+		ui.actions.ok.enabled = this.value || ui.preset2.isOn.value;
 	};
 };
 ui.preset1.bleedCustom.onClick = function() {
@@ -187,17 +192,19 @@ ui.preset1.bleedValue.onChanging = function() {
 	ui.preset1.bleedValue.text = ui.preset1.bleedValue.text.replace(/[^\d]/gi, "");
 	if (UnitValue(Number(ui.preset1.bleedValue.text), "mm").as("pt") > 72 ) ui.preset1.bleedValue.text = 25.4;
 };
-ui.preset1.script.isActive.onClick = function() {
+ui.preset1.script.isOn.onClick = function() {
 	ui.preset1.script.file.enabled = ui.preset1.script.browse.enabled = this.value;
 };
 ui.preset1.script.browse.onClick = function() {
 	var newFile = File.openDialog("Select a script:");
-	if (newFile.exists && /\.(jsx*(bin)*|scpt)$/i.test(newFile)) {
+	if (newFile == null) ui.preset1.script.isOn.notify();
+	if (newFile.exists && (WIN ? /\.(jsx*(bin)*)$/i.test(newFile) : /\.(jsx*(bin)*|scpt)$/i.test(newFile))) {
+		var f = WIN ? decodeURI(newFile.fsName) : decodeURI(newFile.fullName);
 		ui.preset1.script.path = newFile;
 		ui.preset1.script.file.text = decodeURI(newFile.name);
-		ui.preset1.script.file.helpTip = decodeURI(newFile.fullName);
+		ui.preset1.script.file.helpTip = f;
 	} else {
-		alert("Please select a JavaScript or AppleScript file.");
+		alert("Please select a JavaScript" + (WIN ? "" : " or AppleScript") + " file.");
 		this.notify();
 	};
 };
@@ -210,18 +217,18 @@ ui.preset1.preset.onChange = function() {
 ui.preset1.suffix.onChange = function() {
 	var str = this.text.replace(/^\s+/, '').replace(/\s+$/, ''); // Trim
 	str = str.replace(/[\/\\?|%*:"<>\[\]\.]/, ''); // Remove illegal characters
-	if (this.text != str) { this.text = str };
+	if (this.text != str) this.text = str;
 };
-ui.preset2.isActive.onClick = function() {
+ui.preset2.isOn.onClick = function() {
 	ui.preset2.preset.enabled = ui.preset2.suffix.enabled = this.value;
 	ui.preset2.options.enabled = this.value;
 	ui.preset2.script.enabled = this.value;
 	ui.preset2.bleedCustom.onClick();
-	ui.preset2.script.isActive.onClick();
+	ui.preset2.script.isOn.onClick();
 	if (folderMode) {
-		ui.actions.ok.enabled = (this.value || ui.preset1.isActive.value) && (ui.input.source.path != undefined);
+		ui.actions.ok.enabled = (this.value || ui.preset1.isOn.value) && (ui.input.source.path != undefined);
 	} else {
-		ui.actions.ok.enabled = this.value || ui.preset1.isActive.value;
+		ui.actions.ok.enabled = this.value || ui.preset1.isOn.value;
 	};
 };
 ui.preset2.bleedCustom.onClick = function() {
@@ -232,17 +239,19 @@ ui.preset2.bleedValue.onChanging = function() {
 	ui.preset2.bleedValue.text = ui.preset2.bleedValue.text.replace(/[^\d]/gi, "");
 	if (UnitValue(Number(ui.preset2.bleedValue.text), "mm").as("pt") > 72 ) ui.preset2.bleedValue.text = 25.4;
 };
-ui.preset2.script.isActive.onClick = function() {
+ui.preset2.script.isOn.onClick = function() {
 	ui.preset2.script.file.enabled = ui.preset2.script.browse.enabled = this.value;
 };
 ui.preset2.script.browse.onClick = function() {
 	var newFile = File.openDialog("Select a script:");
-	if (newFile.exists && /\.(jsx*(bin)*|scpt)$/i.test(newFile)) {
+	if (newFile == null) ui.preset2.script.isOn.notify();
+	if (newFile.exists && (WIN ? /\.(jsx*(bin)*)$/i.test(newFile) : /\.(jsx*(bin)*|scpt)$/i.test(newFile))) {
+		var f = WIN ? decodeURI(newFile.fsName) : decodeURI(newFile.fullName);
 		ui.preset2.script.path = newFile;
 		ui.preset2.script.file.text = decodeURI(newFile.name);
-		ui.preset2.script.file.helpTip = decodeURI(newFile.fullName);
+		ui.preset2.script.file.helpTip = f;
 	} else {
-		alert("Please select a JavaScript or AppleScript file.");
+		alert("Please select a JavaScript" + (WIN ? "" : " or AppleScript") + " file.");
 		this.notify();
 	};
 };
@@ -255,56 +264,59 @@ ui.preset2.preset.onChange = function() {
 ui.preset2.suffix.onChange = function() {
 	var str = this.text.replace(/^\s+/, '').replace(/\s+$/, ''); // Trim
 	str = str.replace(/[\/\\?|%*:"<>\[\]\.]/, ''); // Remove illegal characters
-	if (this.text != str) { this.text = str };
-};
-ui.output.dest.isActive.onClick = function() {
-	ui.output.dest.folder.enabled = ui.output.dest.browse.enabled = this.value;
+	if (this.text != str) this.text = str;
 };
 if (folderMode) {
 	ui.input.source.browse.onClick = function() {
 		var newFolder = Folder.selectDialog("Select a folder:");
 		if (!!newFolder) {
+			var f = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
 			ui.input.source.path = newFolder;
-			ui.input.source.folder.text = TruncatePath(decodeURI(newFolder.fullName), 58);
-			ui.input.source.folder.helpTip = decodeURI(newFolder.fullName);
-			ui.actions.ok.enabled = (ui.preset1.isActive.value || ui.preset2.isActive.value) && (ui.input.source.path != undefined);
+			ui.input.source.folder.text = TruncatePath(f, 58);
+			ui.input.source.folder.helpTip = f;
+			ui.actions.ok.enabled =
+				(ui.preset1.isOn.value || ui.preset2.isOn.value) && (ui.input.source.path != undefined);
 		};
 	};
 };
+ui.output.dest.isOn.onClick = function() {
+	ui.output.dest.folder.enabled = ui.output.dest.browse.enabled = this.value;
+};
 ui.output.dest.browse.onClick = function() {
 	var newFolder = Folder.selectDialog("Select a folder:");
+	if (newFolder == null) ui.output.dest.isOn.notify();
 	if (!!newFolder) {
+		var f = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
 		ui.output.dest.path = newFolder;
-		ui.output.dest.folder.text = TruncatePath(decodeURI(newFolder.fullName), 55);
-		ui.output.dest.folder.helpTip = decodeURI(newFolder.fullName);
+		ui.output.dest.folder.text = TruncatePath(f, 55);
+		ui.output.dest.folder.helpTip = f;
 	};
 };
 if (ADV) {
 	ui.actions.savePrefs.onClick = function() { SaveSettings() };
-	ui.actions.delPrefs.onClick = function() { SetDefaults(); ReadSettings() };
+	ui.actions.resetPrefs.onClick = function() { try { settingsFile.remove() } catch (e) {}; ReadSettings() };
 } else {
 	ui.actions.savePrefs.onClick = function() { if (this.value) SaveSettings() };
 };
-ui.onShow = function() { ReadSettings() };
-if (ui.show() == 2) { exit() };
+ui.onShow = function() {
+	ReadSettings();
+	if (settings.position != null) try { ui.location = settings.position } catch (e) {};
+};
+if (ui.show() == 2) exit();
 
 // Processing
 if (ui.actions.savePrefs.value) SaveSettings();
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
-// -- Get source documents
+// -- Get a sorted document list
 if (folderMode) {
 	var docs = ui.input.source.path.getFiles("*.indd").sort();
 } else {
 	var doc, docs = app.documents.everyItem().getElements(), names = [];
-	// Sort documents by name
 	while (doc = docs.shift()) names.push(doc.name); names.sort();
-	var name, docs = [];
-	while (name = names.shift()) docs.push(app.documents.itemByName(name));
+	var name, docs = []; while (name = names.shift()) docs.push(app.documents.itemByName(name));
 };
 // -- Init progress bar
-for (var i = 0, pbWidth = 50; i < docs.length; i++) {
-	pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
-};
+for (var i = 0, pbWidth = 50; i < docs.length; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
 var progressBar = new ProgressBar("Exporting", pbWidth + 10);
 progressBar.reset(docs.length);
 // -- Main loop
@@ -324,16 +336,16 @@ while (doc = docs.shift()) {
 	old.verticalMeasurementUnits = doc.viewPreferences.verticalMeasurementUnits;
 	doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;
 	doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
-	// Base folder
+	// Get base folder
 	var baseFolder = decodeURI(doc.filePath);
-	if (ui.output.dest.isActive.value && !!ui.output.dest.path) {
+	if (ui.output.dest.isOn.value && !!ui.output.dest.path) {
 		if (!ui.output.dest.path.exists) ui.output.dest.path.create();
-		baseFolder = decodeURI(ui.output.dest.path.fullName);
+		baseFolder = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
 	};
 	// Export profiles
 	for (var i = 1; i < 3; i++) {
 		var exp = ui["preset" + i];
-		if (!exp.isActive.value) continue;
+		if (!exp.isOn.value) continue;
 		var preset = app.pdfExportPresets.item(String(exp.preset.selection));
 		var suffix = !!exp.suffix.text ? ("_" + exp.suffix.text.replace(/^_/, "")) : "";
 		var subfolder = "";
@@ -341,7 +353,7 @@ while (doc = docs.shift()) {
 			subfolder = suffix.replace(/^_/, "");
 			if (!Folder(baseFolder + "/" + subfolder).exists) Folder(baseFolder + "/" + subfolder).create();
 		};
-		// PDF name
+		// Get unique PDF name
 		var pdfBaseName = decodeURI(doc.name).replace(/\.indd$/i, "") + suffix;
 		var pdfName = pdfBaseName + ".pdf";
 		var folder = baseFolder + (!!subfolder ? "/" + subfolder : "");
@@ -381,9 +393,8 @@ while (doc = docs.shift()) {
 			};
 		};
 		// Run script
-		if (exp.script.enabled && exp.script.isActive.value && exp.script.path.exists) {
-			var ext = decodeURI(exp.script.path.fullName).
-				substr(decodeURI(exp.script.path.fullName).lastIndexOf(".") + 1);
+		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) {
+			var ext = decodeURI(exp.script.path.fsName).substr(decodeURI(exp.script.path.fsName).lastIndexOf(".") + 1);
 			var scriptLanguage = (function(ext) {
 				return {
 					"scpt": ScriptLanguage.APPLESCRIPT_LANGUAGE,
@@ -401,12 +412,10 @@ while (doc = docs.shift()) {
 		if (!ui.output.options.fileOverwrite.value && File(file).exists) {
 			alert("Attempted illegal overwrite.\nBetter quit than sorry..."); exit() };
 		LoadPDFExportPrefs(preset);
-		// -- Set custom export prefs
 		app.pdfExportPreferences.exportReaderSpreads = exp.exportSpreads.value;
 		app.pdfExportPreferences.cropMarks = exp.cropMarks.value;
 		app.pdfExportPreferences.pageInformationMarks = exp.pageInfo.value;
 		app.pdfExportPreferences.includeSlugWithPDF = exp.slug.value;
-		// -- Bleed
 		app.pdfExportPreferences.useDocumentBleedWithPDF = !exp.bleedCustom.value;
 		if (app.pdfExportPreferences.useDocumentBleedWithPDF) {
 			app.pdfExportPreferences.pageMarksOffset = Math.max(
@@ -419,7 +428,7 @@ while (doc = docs.shift()) {
 			app.pdfExportPreferences.bleedTop = app.pdfExportPreferences.bleedBottom =
 			app.pdfExportPreferences.bleedInside = app.pdfExportPreferences.bleedOutside =
 			Number(exp.bleedValue.text);
-			app.pdfExportPreferences.pageMarksOffset = Number(exp.bleedValue.text) + 1;
+			app.pdfExportPreferences.pageMarksOffset = app.pdfExportPreferences.bleedTop + 1;
 		};
 		doc.exportFile(ExportFormat.PDF_TYPE, File(file), false);
 	};
@@ -429,13 +438,9 @@ while (doc = docs.shift()) {
 	doc.viewPreferences.verticalMeasurementUnits = old.verticalMeasurementUnits;
 	// Save and close
 	if (ui.output.options.docSave.value && doc.saved && doc.modified) doc.save();
-	if (folderMode) {
-		doc.close(SaveOptions.NO);
-	} else {
-		if (ui.output.options.docClose.value) doc.close(SaveOptions.NO);
-	};
+	if (folderMode) doc.close(SaveOptions.NO)
+	else if (ui.output.options.docClose.value) doc.close(SaveOptions.NO);
 };
-
 // Finish
 progressBar.close();
 app.scriptPreferences.measurementUnit = old.measurementUnit;
@@ -450,14 +455,15 @@ function TruncatePath(/*string*/path, maxLength) {
 };
 
 function LoadPDFExportPrefs(preset) {
-	for (var key in preset) {
-		try { app.pdfExportPreferences[key] = preset[key] } catch (e) {};
-	};
+	for (var key in preset) try { app.pdfExportPreferences[key] = preset[key] } catch (e) {};
 };
 
 function ReadSettings() {
-	try { settings = $.evalFile(settingsFile) } catch (_) { SetDefaults() };
-	ui.preset1.isActive.value = settings.presets.preset1.active;
+	try { // Saved settings
+		settings = $.evalFile(settingsFile);
+		if (settings.version == undefined || settings.version != VER) SetDefaults();
+	} catch (e) { SetDefaults() };
+	ui.preset1.isOn.value = settings.presets.preset1.active;
 	ui.preset1.preset.selection = FindPreset(settings.presets.preset1.name, ui.preset1.preset.items);
 	ui.preset1.suffix.text = settings.presets.preset1.suffix;
 	ui.preset1.exportSpreads.value = settings.presets.preset1.options.spreads;
@@ -466,13 +472,15 @@ function ReadSettings() {
 	ui.preset1.bleedCustom.value = settings.presets.preset1.options.bleed.custom;
 	ui.preset1.bleedValue.text = settings.presets.preset1.options.bleed.value;
 	ui.preset1.slug.value = settings.presets.preset1.options.slug;
-	ui.preset1.script.path = File(settings.presets.preset1.script.file).exists ? File(settings.presets.preset1.script.file) : "";
+	ui.preset1.script.path = File(settings.presets.preset1.script.file).exists ?
+		File(settings.presets.preset1.script.file) : "";
 	if (!!ui.preset1.script.path) {
 		ui.preset1.script.file.text = decodeURI(ui.preset1.script.path.name);
-		ui.preset1.script.file.helpTip = decodeURI(ui.preset1.script.path.fullName);
+		ui.preset1.script.file.helpTip =
+			WIN ? decodeURI(ui.preset1.script.path.fsName) : decodeURI(ui.preset1.script.path.fullName);
 	};
-	ui.preset1.script.isActive.value = !!ui.preset1.script.path && settings.presets.preset1.script.active;
-	ui.preset2.isActive.value = settings.presets.preset2.active;
+	ui.preset1.script.isOn.value = !!ui.preset1.script.path && settings.presets.preset1.script.active;
+	ui.preset2.isOn.value = settings.presets.preset2.active;
 	ui.preset2.preset.selection = FindPreset(settings.presets.preset2.name, ui.preset2.preset.items);
 	ui.preset2.suffix.text = settings.presets.preset2.suffix;
 	ui.preset2.exportSpreads.value = settings.presets.preset2.options.spreads;
@@ -481,26 +489,29 @@ function ReadSettings() {
 	ui.preset2.bleedCustom.value = settings.presets.preset2.options.bleed.custom;
 	ui.preset2.bleedValue.text = settings.presets.preset2.options.bleed.value;
 	ui.preset2.slug.value = settings.presets.preset2.options.slug;
-	ui.preset2.script.path = File(settings.presets.preset2.script.file).exists ? File(settings.presets.preset2.script.file) : "";
+	ui.preset2.script.path = File(settings.presets.preset2.script.file).exists ?
+		File(settings.presets.preset2.script.file) : "";
 	if (!!ui.preset2.script.path) {
 		ui.preset2.script.file.text = decodeURI(ui.preset2.script.path.name);
-		ui.preset2.script.file.helpTip = decodeURI(ui.preset2.script.path.fullName);
+		ui.preset2.script.file.helpTip =
+			WIN ? decodeURI(ui.preset2.script.path.fsName) : decodeURI(ui.preset2.script.path.fullName);
 	};
-	ui.preset2.script.isActive.value = !!ui.preset2.script.path && settings.presets.preset2.script.active;
+	ui.preset2.script.isOn.value = !!ui.preset2.script.path && settings.presets.preset2.script.active;
 	ui.output.dest.path = Folder(settings.output.dest.folder).exists ? Folder(settings.output.dest.folder) : "";
 	if (!!ui.output.dest.path) {
-		ui.output.dest.folder.text = TruncatePath(decodeURI(ui.output.dest.path.fullName), 50);
-		ui.output.dest.folder.helpTip = decodeURI(ui.output.dest.path.fullName);
+		var f = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
+		ui.output.dest.folder.text = TruncatePath(f, 50);
+		ui.output.dest.folder.helpTip = f;
 	};
-	ui.output.dest.isActive.value = !!ui.output.dest.path && settings.output.dest.active;
+	ui.output.dest.isOn.value = !!ui.output.dest.path && settings.output.dest.active;
 	ui.output.options.subfolders.value = settings.output.options.subfolders;
 	ui.output.options.updateLinks.value = settings.output.options.updatelinks;
 	ui.output.options.fileOverwrite.value = settings.output.options.overwrite;
 	ui.output.options.docSave.value = settings.output.options.save;
 	ui.output.options.docClose.value = folderMode ? true : settings.output.options.close;
-	ui.preset1.isActive.onClick();
-	ui.preset2.isActive.onClick();
-	ui.output.dest.isActive.onClick();
+	ui.preset1.isOn.onClick();
+	ui.preset2.isOn.onClick();
+	ui.output.dest.isOn.onClick();
 	function FindPreset(name, array) {
 		if (!app.pdfExportPresets.itemByName(name).isValid) return 0;
 		for (var i = 0; i < array.length; i++) if (array[i].toString() == name) return array[i].index;
@@ -508,15 +519,16 @@ function ReadSettings() {
 };
 
 function SetDefaults() {
-	try { settingsFile.remove() } catch (_) {};
+	try { settingsFile.remove() } catch (e) {};
 	settings = defaults;
+	alert("Preferences were reset.\nEither the file was corrupt or it was an old version.");
 };
 
 function SaveSettings() {
 	settings = {
 		presets: {
 			preset1: {
-				active: ui.preset1.isActive.value,
+				active: ui.preset1.isOn.value,
 				name: ui.preset1.preset.selection.text,
 				suffix: ui.preset1.suffix.text,
 				options: {
@@ -532,12 +544,12 @@ function SaveSettings() {
 					slug: ui.preset1.slug.value,
 				},
 				script: {
-					active: ui.preset1.script.isActive.value,
+					active: ui.preset1.script.isOn.value,
 					file: ui.preset1.script.path.exists ? decodeURI(ui.preset1.script.path.fullName) : "",
 				},
 			},
 			preset2: {
-				active: ui.preset2.isActive.value,
+				active: ui.preset2.isOn.value,
 				name: ui.preset2.preset.selection.text,
 				suffix: ui.preset2.suffix.text,
 				options: {
@@ -553,14 +565,14 @@ function SaveSettings() {
 					slug: ui.preset2.slug.value,
 				},
 				script: {
-					active: ui.preset2.script.isActive.value,
+					active: ui.preset2.script.isOn.value,
 					file: ui.preset2.script.path.exists ? decodeURI(ui.preset2.script.path.fullName) : "",
 				},
 			},
 		},
 		output: {
 			dest: {
-				active: ui.output.dest.isActive.value,
+				active: ui.output.dest.isOn.value,
 				folder: ui.output.dest.path.exists ? decodeURI(ui.output.dest.path.fullName) : "",
 			},
 			options: {
@@ -571,11 +583,13 @@ function SaveSettings() {
 				close: ui.output.options.docClose.value,
 			},
 		},
+		position: [ ui.location[0], ui.location[1] ],
+		version: VER,
 	};
 	try {
 		oldSettings = $.evalFile(settingsFile);
 		if (settings.toSource() === oldSettings.toSource()) return;
-	} catch (_) {};
+	} catch (e) {};
 	settingsFile.open('w');
 	settingsFile.write(settings.toSource());
 	settingsFile.close();
