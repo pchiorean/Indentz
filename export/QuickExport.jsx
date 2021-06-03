@@ -1,5 +1,5 @@
 /*
-	Quick export v2.3.2 (2021-06-02)
+	Quick export v2.3.3 (2021-06-02)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -187,11 +187,6 @@ ui.preset1.bleedCustom.onClick = function() {
 	ui.preset1.bleedValue.enabled = this.value;
 	if (ui.preset1.bleedValue.enabled) ui.preset1.bleedValue.onChanging();
 };
-ui.preset1.bleedValue.onChanging = function() {
-	ui.preset1.bleedValue.text = ui.preset1.bleedValue.text.replace(/[^\d]/gi, "");
-	if (UnitValue(Number(ui.preset1.bleedValue.text), "mm").as("pt") > 72 ) ui.preset1.bleedValue.text = "25.4";
-	if (ui.preset1.bleedValue.text == "") ui.preset1.bleedValue.text = "0";
-};
 ui.preset1.script.isOn.onClick = function() {
 	ui.preset1.script.file.enabled = ui.preset1.script.browse.enabled = this.value;
 };
@@ -214,11 +209,6 @@ ui.preset1.preset.onChange = function() {
 		ui.preset1.suffix.text = str.substr(str.lastIndexOf("_"));
 	} else { ui.preset1.suffix.text = "" };
 };
-ui.preset1.suffix.onChange = function() {
-	var str = this.text.replace(/^\s+/, '').replace(/\s+$/, ''); // Trim
-	str = str.replace(/[\/\\?|%*:"<>\[\]\.]/, ''); // Remove illegal characters
-	if (this.text != str) this.text = str;
-};
 ui.preset2.isOn.onClick = function() {
 	ui.preset2.preset.enabled = ui.preset2.suffix.enabled = this.value;
 	ui.preset2.options.enabled = this.value;
@@ -235,10 +225,17 @@ ui.preset2.bleedCustom.onClick = function() {
 	ui.preset2.bleedValue.enabled = this.value;
 	if (ui.preset2.bleedValue.enabled) ui.preset2.bleedValue.onChanging();
 };
+ui.preset1.bleedValue.onChanging =
 ui.preset2.bleedValue.onChanging = function() {
-	ui.preset2.bleedValue.text = ui.preset2.bleedValue.text.replace(/[^\d]/gi, "");
-	if (UnitValue(Number(ui.preset2.bleedValue.text), "mm").as("pt") > 72 ) ui.preset2.bleedValue.text = "25.4";
-	if (ui.preset2.bleedValue.text == "") ui.preset2.bleedValue.text = "0";
+	this.text = this.text.replace(/[^\d.,]/gi, "").replace(/^0/gi, "").replace(",", ".");
+	if (this.text == "") this.text = "0";
+	if (UnitValue(Number(this.text), "mm").as("pt") > 72 ) this.text = "25.4";
+};
+ui.preset1.bleedValue.onDeactivate = ui.preset2.bleedValue.onDeactivate = function() {
+	if (isNaN(this.text)) {
+		alert("Invalid value.\nEnter a number between 0 and 25.4 mm.");
+		this.text = "0";
+	};
 };
 ui.preset2.script.isOn.onClick = function() {
 	ui.preset2.script.file.enabled = ui.preset2.script.browse.enabled = this.value;
@@ -262,6 +259,7 @@ ui.preset2.preset.onChange = function() {
 		ui.preset2.suffix.text = str.substr(str.lastIndexOf("_"));
 	} else { ui.preset2.suffix.text = "" };
 };
+ui.preset1.suffix.onChange =
 ui.preset2.suffix.onChange = function() {
 	var str = this.text.replace(/^\s+/, '').replace(/\s+$/, ''); // Trim
 	str = str.replace(/[\/\\?|%*:"<>\[\]\.]/, ''); // Remove illegal characters
