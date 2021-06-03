@@ -1,5 +1,5 @@
 /*
-	Quick export v2.3.1 (2021-06-01)
+	Quick export v2.3.2 (2021-06-02)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -117,8 +117,8 @@ ui.presets = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 
 		ui.preset1.cropMarks = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Include crop marks", text: "Crop marks" }');
 		ui.preset1.pageInfo = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Include page information", text: "Page info" }');
 		ui.preset1.slug = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Include slug area", text: "Slug" }');
-		ui.preset1.bleedCustom = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Override document bleed settings with a custom value (mm)", text: "Custom bleed:" }');
-		ui.preset1.bleedValue = ui.preset1.options.add('edittext { characters: 4, justify: "center", helpTip: "Enter a value in millimeters", preferredSize: [ -1, 24 ] }');
+		ui.preset1.bleedCustom = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Override document bleed settings", text: "Custom bleed:" }');
+		ui.preset1.bleedValue = ui.preset1.options.add('edittext { characters: 4, justify: "center", helpTip: "Enter a value between 0 and 25.4 mm", preferredSize: [ -1, 24 ] }');
 	ui.preset1.script = ui.presets.add('group');
 		ui.preset1.script.add('statictext { preferredSize: [ 80, 24 ], helpTip: "Run a JavaScript or AppleScript before exporting", text: "Run a script:" }');
 		ui.preset1.script.isOn = ui.preset1.script.add('checkbox { alignment: "bottom" }');
@@ -136,8 +136,8 @@ ui.presets = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 
 		ui.preset2.cropMarks = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Include crop marks", text: "Crop marks" }');
 		ui.preset2.pageInfo = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Include page information", text: "Page info" }');
 		ui.preset2.slug = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Include slug area", text: "Slug" }');
-		ui.preset2.bleedCustom = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Override document bleed settings with a custom value (mm)", text: "Custom bleed:" }');
-		ui.preset2.bleedValue = ui.preset2.options.add('edittext { characters: 4, justify: "center", helpTip: "Enter a value in millimeters", preferredSize: [ -1, 24 ] }');
+		ui.preset2.bleedCustom = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Override document bleed settings", text: "Custom bleed:" }');
+		ui.preset2.bleedValue = ui.preset2.options.add('edittext { characters: 4, justify: "center", helpTip: "Enter a value between 0 and 25.4 mm", preferredSize: [ -1, 24 ] }');
 	ui.preset2.script = ui.presets.add('group');
 		ui.preset2.script.add('statictext { preferredSize: [ 80, 24 ], helpTip: "Run a JavaScript or AppleScript before exporting", text: "Run a script:" }');
 		ui.preset2.script.isOn = ui.preset2.script.add('checkbox { alignment: "bottom" }');
@@ -189,7 +189,8 @@ ui.preset1.bleedCustom.onClick = function() {
 };
 ui.preset1.bleedValue.onChanging = function() {
 	ui.preset1.bleedValue.text = ui.preset1.bleedValue.text.replace(/[^\d]/gi, "");
-	if (UnitValue(Number(ui.preset1.bleedValue.text), "mm").as("pt") > 72 ) ui.preset1.bleedValue.text = 25.4;
+	if (UnitValue(Number(ui.preset1.bleedValue.text), "mm").as("pt") > 72 ) ui.preset1.bleedValue.text = "25.4";
+	if (ui.preset1.bleedValue.text == "") ui.preset1.bleedValue.text = "0";
 };
 ui.preset1.script.isOn.onClick = function() {
 	ui.preset1.script.file.enabled = ui.preset1.script.browse.enabled = this.value;
@@ -236,7 +237,8 @@ ui.preset2.bleedCustom.onClick = function() {
 };
 ui.preset2.bleedValue.onChanging = function() {
 	ui.preset2.bleedValue.text = ui.preset2.bleedValue.text.replace(/[^\d]/gi, "");
-	if (UnitValue(Number(ui.preset2.bleedValue.text), "mm").as("pt") > 72 ) ui.preset2.bleedValue.text = 25.4;
+	if (UnitValue(Number(ui.preset2.bleedValue.text), "mm").as("pt") > 72 ) ui.preset2.bleedValue.text = "25.4";
+	if (ui.preset2.bleedValue.text == "") ui.preset2.bleedValue.text = "0";
 };
 ui.preset2.script.isOn.onClick = function() {
 	ui.preset2.script.file.enabled = ui.preset2.script.browse.enabled = this.value;
