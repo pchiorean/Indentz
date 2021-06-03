@@ -1,5 +1,5 @@
 /*
-	QR code v3.3.1 (2021-05-28)
+	QR code v3.3.2 (2021-06-02)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -282,10 +282,10 @@ function MakeQROnFile(code) {
 			optimizePDF = false;
 			// Printers marks and prepress options
 			useDocumentBleedWithPDF = true;
-			bleedBottom = 0;
-			bleedTop = 0;
-			bleedInside = 0;
-			bleedOutside = 0;
+			bleedBottom = 8.50393962860107;
+			bleedTop = 8.50393962860107;
+			bleedInside = 8.50393962860107;
+			bleedOutside = 8.50393962860107;
 			bleedMarks = false;
 			colorBars = false;
 			colorTileSize = 128;
