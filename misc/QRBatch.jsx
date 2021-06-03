@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.3.3 (2021-05-28)
+	Batch QR codes v2.3.4 (2021-06-02)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -43,6 +43,7 @@ app.scriptPreferences.enableRedraw = false;
 var doc, currentPath, errors;
 if (app.documents.length > 0) doc = app.activeDocument;
 if (!!doc && doc.saved) currentPath = doc.filePath;
+const WIN = (File.fs == "Windows");
 
 main();
 
@@ -154,12 +155,14 @@ function main() {
 			}
 		} else queue = validLines;
 		if (queue.length == 0) {
-			ui.text = !currentPath ? "Select a folder containing the data file" :
-				(infoFile.exists ? decodeURI(infoFile.fsName) + " \u2013 0 records" :
-				"No data file in " + decodeURI(currentPath) + "/");
+			ui.text = !currentPath ?
+				"Select a folder containing the data file" :
+				(infoFile.exists ?
+					(WIN ? decodeURI(infoFile.fsName) : decodeURI(infoFile.fullName)) + " \u2013 0 records" :
+					"No data file in " + decodeURI(currentPath) + "/");
 			if (!currentPath) ui.actions.browse.notify();
 		} else {
-			ui.text = decodeURI(infoFile.fsName) + " \u2013 " +
+			ui.text = (WIN ? decodeURI(infoFile.fsName) : decodeURI(infoFile.fullName)) + " \u2013 " +
 				queue.length + " record" + (queue.length == 1 ? "" : "s") +
 				(errors.length > 0 ? " | " + errors.length + " error" + (errors.length == 1 ? "" : "s") : "");
 		}
@@ -429,10 +432,10 @@ function MakeQROnFile(fn, code) {
 			optimizePDF = false;
 			// Printers marks and prepress options
 			useDocumentBleedWithPDF = true;
-			bleedBottom = 0;
-			bleedTop = 0;
-			bleedInside = 0;
-			bleedOutside = 0;
+			bleedBottom = 8.50393962860107;
+			bleedTop = 8.50393962860107;
+			bleedInside = 8.50393962860107;
+			bleedOutside = 8.50393962860107;
 			bleedMarks = false;
 			colorBars = false;
 			colorTileSize = 128;
