@@ -1,5 +1,5 @@
 /*
-	Default preferences v1.3 (2021-05-26)
+	Default preferences v1.4 (2021-06-04)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets default preferences.
@@ -55,13 +55,16 @@ app.doScript(function() {
 		},
 		pageItemDefaults: {
 			fillColor: "None",
+			fillTint: "-1",
+			nonprinting: false,
 			strokeColor: "None",
+			strokeTint:"-1",
 			transparencySettings: {
 				blendingSettings: {
 					blendMode: BlendMode.NORMAL,
 					opacity: 100,
-				}
-			}
+				},
+			},
 		},
 		pasteboardPreferences: {
 			// pasteboardMargins: ["150mm", "25mm"],
@@ -69,6 +72,7 @@ app.doScript(function() {
 		},
 		rgbProfile: "sRGB IEC61966-2.1",
 		selection: [],
+		textDefaults: { paragraphShadingOn: false },
 		textPreferences: {
 			baselineShiftKeyIncrement: "0.1pt",
 			kerningKeyIncrement: 5,
