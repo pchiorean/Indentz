@@ -1,6 +1,6 @@
 /*
-	Page size from selection v1.7.1 (2020-11-22)
-	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+	Page size from selection v1.8 (2021-06-04)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets the page size to the selected objects bounds.
 
@@ -47,12 +47,12 @@ function main() {
 		if (selObj[i].parentPage != null) { page = selObj[i].parentPage; break }
 	}
 	// Get selection dimensions
-	var size = selObj[0].visibleBounds;
+	var size = selObj[0].geometricBounds;
 	for (var i = 1; i < selObj.length; i++) {
-		size[0] = Math.min(selObj[i].visibleBounds[0], size[0]);
-		size[1] = Math.min(selObj[i].visibleBounds[1], size[1]);
-		size[2] = Math.max(selObj[i].visibleBounds[2], size[2]);
-		size[3] = Math.max(selObj[i].visibleBounds[3], size[3]);
+		size[0] = Math.min(selObj[i].geometricBounds[0], size[0]);
+		size[1] = Math.min(selObj[i].geometricBounds[1], size[1]);
+		size[2] = Math.max(selObj[i].geometricBounds[2], size[2]);
+		size[3] = Math.max(selObj[i].geometricBounds[3], size[3]);
 	}
 	var mg = page.rectangles.add({ // Make temp rectangle
 		contentType: ContentType.UNASSIGNED,
