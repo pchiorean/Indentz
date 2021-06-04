@@ -2,12 +2,12 @@
 // http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
 function AlertScroll(title, msg, /*bool*/filter, /*bool*/compact) {
 	if (!(msg instanceof Array)) msg = msg.split(/\r|\n/g);
-	if (compact) {
+	if (compact && msg.length > 1) {
 		msg = msg.sort();
-		for (var i = 0, l = msg[0]; i < msg.length; l = msg[i], i++)
-			if (l == msg[i] || msg[i] == "") msg.splice(i, 1), i-- };
+		for (var i = 1, l = msg[0]; i < msg.length; l = msg[i], i++)
+			if (l == msg[i] || msg[i] == "") msg.splice(i, 1) };
 	var w = new Window('dialog', title);
-	if (filter) var search = w.add('edittext { characters: 40 }');
+	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40 }');
 	var list = w.add('edittext', undefined, msg.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	// list.characters = width;
