@@ -1,5 +1,5 @@
 /*
-	Zoom to spreads v2.2 (2021-02-09)
+	Zoom to spreads v2.3 (2021-06-03)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the current spread (if N = 1) or the first N spreads (if N > 1).
@@ -56,5 +56,8 @@ var zoom = Math.min(
 zoom = Number(zoom * 10 * Z).toFixed(2);
 zoom = Math.max(5, zoom), Math.min(zoom, 4000); // Keep in 5-4000% range
 // Zoom to target
+var oldSel = app.selection;
+app.selection = null;
 window.zoom(ZoomOptions.FIT_SPREAD);
 window.zoomPercentage = zoom;
+try { app.select(oldSel) } catch (e) {};
