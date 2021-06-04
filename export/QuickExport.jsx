@@ -1,5 +1,5 @@
 /*
-	Quick export v2.4.1 (2021-06-04)
+	Quick export v2.5 (2021-06-04)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -40,6 +40,7 @@ app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
 app.pdfExportPreferences.pageRange = ""; // Reset page range
 app.pdfExportPreferences.viewPDF = false;
+const invalidFileChars = /[\/\\?|%*:"<>\[\]\.]/g;
 const ADV = ScriptUI.environment.keyboardState.altKey;
 const WIN = (File.fs == "Windows");
 const VER = "2";
@@ -262,7 +263,7 @@ ui.preset2.preset.onChange = function() {
 ui.preset1.suffix.onChange =
 ui.preset2.suffix.onChange = function() {
 	var str = this.text.replace(/^\s+/, '').replace(/\s+$/, ''); // Trim
-	str = str.replace(/[\/\\?|%*:"<>\[\]\.]/, ''); // Remove illegal characters
+	str = str.replace(invalidFileChars, ""); // Remove illegal characters
 	if (this.text != str) this.text = str;
 };
 if (folderMode) {
@@ -354,6 +355,10 @@ while (doc = docs.shift()) {
 		};
 		// Get unique PDF name
 		var pdfBaseName = decodeURI(doc.name).replace(/\.indd$/i, "") + suffix;
+		if (invalidFileChars.test(pdfBaseName)) { // Remove illegal characters
+			pdfBaseName = pdfBaseName.replace(invalidFileChars, "");
+			errors.push(doc.name + ": Deleted illegal characters from the filename.");
+		};
 		var pdfName = pdfBaseName + ".pdf";
 		var folder = baseFolder + (!!subfolder ? "/" + subfolder : "");
 		var file = folder + "/" + pdfName;
@@ -456,7 +461,7 @@ progressBar.close();
 app.scriptPreferences.measurementUnit = old.measurementUnit;
 app.scriptPreferences.userInteractionLevel = old.userInteractionLevel;
 app.pdfExportPreferences.viewPDF = old.viewPDF;
-if (errors.length > 0) AlertScroll("Errors", errors);
+if (errors.length > 0) AlertScroll("Errors", errors, false, true);
 
 
 function TruncatePath(/*string*/path, maxLength) {
@@ -633,28 +638,28 @@ function ProgressBar(title, width) {
 	this.close = function() { pb.close() };
 };
 
-// Modified from 'Scrollable alert' by Peter Kahrel
-// http://forums.adobe.com/message/2869250#2869250
-function AlertScroll(title, msg, /*bool*/filter) {
-	if (msg instanceof Array) msg = msg.join("\n");
-	var msgArray = msg.split(/\r|\n/g);
-	var w = new Window("dialog", title);
-	if (filter) var search = w.add("edittext { characters: 40 }");
-	var list = w.add("edittext", undefined, msg, { multiline: true, scrolling: true, readonly: true });
+// Inspired by this scrollable alert by Peter Kahrel:
+// http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
+function AlertScroll(title, msg, /*bool*/filter, /*bool*/compact) {
+	if (!(msg instanceof Array)) msg = msg.split(/\r|\n/g);
+	if (compact && msg.length > 1) {
+		msg = msg.sort();
+		for (var i = 1, l = msg[0]; i < msg.length; l = msg[i], i++)
+			if (l == msg[i] || msg[i] == "") msg.splice(i, 1) };
+	var w = new Window('dialog', title);
+	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40 }');
+	var list = w.add('edittext', undefined, msg.join("\n"), { multiline: true, scrolling: true, readonly: true });
+	w.add('button { text: "Close", properties: { name: "ok" } }');
+	// list.characters = width;
 	list.characters = (function() {
-		for (var i = 0, width = 50; i < msgArray.length; i++) width = Math.max(width, msgArray[i].length);
-		return width;
-	})();
+		for (var i = 0, width = 50; i < msg.length; width = Math.max(width, msg[i].length), i++);
+		return width })();
 	list.minimumSize.width = 100; list.maximumSize.width = 1024;
 	list.minimumSize.height = 100; list.maximumSize.height = 1024;
-	w.add("button", undefined, "Close", { name: "ok" });
 	w.ok.active = true;
 	if (filter) search.onChanging = function() {
-		var result = [];
-		for (var i = 0; i < msgArray.length; i++)
-			if (msgArray[i].toLowerCase().indexOf((this.text).toLowerCase()) != -1) result.push(msgArray[i]);
-		if (result.length > 0) list.text = result.join("\n")
-		else list.text = "Nothing found."
-	};
+		for (var i = 0, result = []; i < msg.length; i++)
+			if (msg[i].toLowerCase().indexOf((this.text).toLowerCase()) != -1) result.push(msg[i]);
+		if (result.length > 0) { list.text = result.join("\n") } else list.text = "" };
 	w.show();
 };
