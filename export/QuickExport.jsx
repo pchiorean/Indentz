@@ -1,5 +1,5 @@
 /*
-	Quick export v2.4 (2021-06-03)
+	Quick export v2.4.1 (2021-06-04)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -386,7 +386,7 @@ while (doc = docs.shift()) {
 		var usedFonts = doc.fonts.everyItem().getElements();
 		for (var f = 0; f < usedFonts.length; f++) {
 			if (usedFonts[f].status !== FontStatus.INSTALLED)
-				errors.push(doc.name + ": Font '" + usedFonts[f].fullName + "' is " +
+				errors.push(doc.name + ": Font '" + usedFonts[f].name.replace(/\t/g, " ") + "' is " +
 					String(usedFonts[f].status).toLowerCase().replace("_", " "));
 		};
 		// Update links
