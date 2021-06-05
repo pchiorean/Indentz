@@ -1,5 +1,5 @@
 /*
-	SpreadsToFiles v1.7.2 (2021-05-26)
+	SpreadsToFiles v1.7.3 (2021-06-05)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
@@ -54,7 +54,7 @@ for (var i = 0; i < doc.spreads.length; i++) {
 		+ ".indd");
 		inc++;
 	} while (dFile.exists);
-	progressBar.update(i+1);
+	progressBar.update(i + 1);
 	doc.saveACopy(dFile);
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 	var dCopy = app.open(dFile, false);
@@ -84,8 +84,8 @@ function GetSuffix(sufx) {
 		alert("Invalid separator, please try again.", "Enter a suffix");
 		GetSuffix(sufx); // Ask again
 	}
-	if (/[\/\\?%*:|"<>]/.test(sufx)) { // Filename
-		alert("You entered an illegal character, please try again.", "Enter a suffix");
+	if (/[#%^&{}\\<>*?\/$!'":@`|=]/g.test(sufx)) { // Filename
+		alert("You entered a forbidden character, please try again.", "Enter a suffix");
 		GetSuffix(sufx); // Ask again
 	}
 	return sufx;

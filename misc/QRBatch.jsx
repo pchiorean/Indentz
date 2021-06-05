@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.4 (2021-06-05)
+	Batch QR codes v2.4.1 (2021-06-05)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -43,7 +43,7 @@ app.scriptPreferences.enableRedraw = false;
 var doc, currentPath, errors;
 if (app.documents.length > 0) doc = app.activeDocument;
 if (!!doc && doc.saved) currentPath = doc.filePath;
-const invalidFileChars = /[#%^&{}\\<>*?\/$!'":@`|=]/g;
+const forbiddenFilenameChars = /[#%^&{}\\<>*?\/$!'":@`|=]/g;
 const WIN = (File.fs == "Windows");
 
 main();
@@ -111,8 +111,8 @@ function main() {
 				if (!flgHeader) if (!isEmpty && !isComment) { isHeader = flgHeader = true }
 				if (!isEmpty && !isComment && !isHeader) {
 					if (infoLine[0] != "") {
-						if (invalidFileChars.test(infoLine[0])) {
-							errors.push("Line " + line + ": Illegal characters in the filename.") }
+						if (forbiddenFilenameChars.test(infoLine[0])) {
+							errors.push("Line " + line + ": Forbidden characters in the filename.") }
 						infoLine[0] = (infoLine[0].lastIndexOf(".") == -1) ? infoLine[0] :
 							infoLine[0].substr(0, infoLine[0].lastIndexOf("."));
 						if (!!infoLine[2] && !File(currentPath + "/" + infoLine[0] + ".indd").exists) {
