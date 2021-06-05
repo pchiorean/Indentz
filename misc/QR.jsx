@@ -1,5 +1,5 @@
 /*
-	QR code v3.3.2 (2021-06-02)
+	QR code v3.4 (2021-06-05)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -36,43 +36,33 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "QR code");
 
 function main() {
-	var isOnFile;
-	var ui = new Window("dialog", "Generate QR Code");
-	ui.orientation = "row";
-	ui.alignChildren = ["left", "fill"];
-	ui.qpanel = ui.add("panel", undefined, undefined);
-	ui.qpanel.orientation = "column";
-	ui.qpanel.alignChildren = ["left", "top"];
-	ui.qpanel.add("statictext", undefined, "Enter QR code text:", { name: "st" });
-	ui.label = ui.qpanel.add("edittext", undefined, "", { enterKeySignalsOnChange: true });
-	ui.label.helpTip = "Use '|' for manual line breaks";
-	ui.label.characters = 56;
-	ui.label.active = true;
-	ui.white = ui.qpanel.add("checkbox", undefined, "White text");
-	ui.white.helpTip = "Make text white (ignored when separate)";
-	ui.actions = ui.add("group", undefined);
-	ui.actions.orientation = "column";
-	ui.actions.alignChildren = ["fill", "top"];
-	ui.ondoc = ui.actions.add("button", undefined, "On doc", { name: "ok" });
-	ui.ondoc.helpTip = "Bottom-left corner of each page";
-	ui.onfile = ui.actions.add("button", undefined, "Separate");
-	ui.onfile.helpTip = !!currentPath ?
-		"'QR Codes/" + doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd'" :
-		"Where? Document is not saved";
-	ui.actions.add("button", undefined, "Cancel", { name: "cancel" });
-	ui.onfile.enabled = !!currentPath;
-	ui.ondoc.onClick = function() { isOnFile = false; ui.close() }
-	ui.onfile.onClick = function() { isOnFile = true; ui.close() }
+	var onFile;
+	var ui = new Window('dialog { alignChildren: [ "left", "fill" ], orientation: "row", text: "Generate QR Code" }');
+	ui.qpanel = ui.add('panel { alignChildren: [ "left", "top" ], orientation: "column" }');
+	ui.qpanel.add('statictext { properties: { name: "st" }, text: "Enter QR code text:" }');
+		ui.label = ui.qpanel.add('edittext { active: true, characters: 56, helpTip: "Use \'|\' for manual line breaks", properties: { enterKeySignalsOnChange: true } }');
+		ui.options = ui.qpanel.add('group { margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 15 }');
+			ui.white = ui.options.add('checkbox { helpTip: "Make text white (only on document)", text: "White text" }');
+	ui.actions = ui.add('group { alignChildren: [ "fill", "top" ], orientation: "column" }');
+		ui.ondoc = ui.actions.add('button { helpTip: "Bottom-left corner of each page", text: "On doc", properties: { name: "ok" } }');
+		ui.onfile = ui.actions.add('button { text: "Separate" }');
+		ui.onfile.helpTip = !!currentPath ?
+			"'QR Codes/" + doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd'" :
+			"Where? Document is not saved";
+		ui.actions.add('button { text: "Cancel", properties: { name: "cancel" } }');
+		ui.onfile.enabled = !!currentPath;
+		ui.ondoc.onClick = function() { onFile = false; ui.close() }
+		ui.onfile.onClick = function() { onFile = true; ui.close() }
 	if (ui.show() == 2) exit();
 	// Processing
-	var code = ui.label.text.replace(/^\s+/, '').replace(/\s+$/, '');
+	var code = ui.label.text.replace(/^\s+|\s+$/g, '');
 	if (!code) { main(); exit() }
 	errors = [];
-	if (isOnFile) { MakeQROnFile(code) } else { MakeQROnDoc(code, ui.white.value) }
+	if (onFile) { MakeQROnFile(code) } else { MakeQROnDoc(code, ui.white.value) }
 	if (errors.length > 0) AlertScroll("Errors", errors);
 }
 
-function MakeQROnDoc(code, /*bool*/isWhite) {
+function MakeQROnDoc(code, /*bool*/white) {
 	var idLayer = MakeIDLayer(doc);
 	doc.activeLayer = idLayer;
 	for (var i = 0; i < doc.pages.length; i++) {
@@ -86,9 +76,9 @@ function MakeQROnDoc(code, /*bool*/isWhite) {
 			itemLayer: idLayer.name,
 			fillColor: "None",
 			strokeColor: "None",
-			contents: /\|/g.test(code) ? // If '|' found
+			contents: /\|/g.test(code) ?        // If '|' found
 				code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
-				BalanceText(code, 20) // else auto balance text
+				BalanceText(code, 20)           // else auto balance text
 		});
 		labelFrame.paragraphs.everyItem().properties = {
 			appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
@@ -98,7 +88,7 @@ function MakeQROnDoc(code, /*bool*/isWhite) {
 			tracking: -15,
 			hyphenation: false,
 			capitalization: Capitalization.ALL_CAPS,
-			fillColor: isWhite ? "Paper" : "Black", // White text checkbox
+			fillColor: white ? "Paper" : "Black", // White text checkbox
 			strokeColor: "None"
 		}
 		labelFrame.textFramePreferences.properties = {
@@ -170,9 +160,9 @@ function MakeQROnFile(code) {
 		itemLayer: idLayer.name,
 		fillColor: "None",
 		strokeColor: "None",
-		contents: /\|/g.test(code) ? // If '|' found
+		contents: /\|/g.test(code) ?        // If '|' found
 			code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
-			BalanceText(code, 18) // else auto balance text
+			BalanceText(code, 18)           // else auto balance text
 	});
 	labelFrame.paragraphs.everyItem().properties = {
 		appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
@@ -186,7 +176,7 @@ function MakeQROnFile(code) {
 	}
 	labelFrame.geometricBounds = [
 		0, 0,
-		16.4046459005573, UnitValue("20 mm").as("pt")
+		UnitValue("5.787 mm").as("pt"), UnitValue("20 mm").as("pt")
 	];
 	labelFrame.textFramePreferences.properties = {
 		verticalJustification: VerticalJustification.BOTTOM_ALIGN,
@@ -227,97 +217,98 @@ function MakeQROnFile(code) {
 	target.documentPreferences.pageWidth = page.bounds[3] - page.bounds[1];
 	target.documentPreferences.pageHeight = page.bounds[2] - page.bounds[0];
 	qrGroup.ungroup();
-	// Create folder and save file
+	// Export PDF
 	var targetFolder = Folder(currentPath + "/QR Codes");
 	targetFolder.create();
-	var fn = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd";
-	target.save(File(targetFolder + "/" + fn));
-	// Keep file opened if text overflows
-	if (labelFrame.overflows) {
+	var baseName = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR";
+	var ancillaryFile = File(targetFolder + "/" + baseName + ".indd");
+	var pdfFile = File(targetFolder + "/" + baseName + ".pdf");
+	if (ancillaryFile.exists) ancillaryFile.remove();
+	if (pdfFile.exists) pdfFile.remove();
+	if (!labelFrame.overflows) {
+		ExportToPDF(target, pdfFile);
+		target.close(SaveOptions.NO);
+	} else { // If text overflows keep file opened
 		target.textPreferences.showInvisibles = true;
-		errors.push(fn + ": Text overflows");
-	} else {
-		targetPDFFolder = Folder(targetFolder + "/PDFs");
-		targetPDFFolder.create();
-		ExportToPDF(target, targetPDFFolder + "/" + fn.replace(/\.indd$/ig, ".pdf"));
-		target.close();
+		target.save(ancillaryFile);
+		errors.push(baseName + ".indd: Text overflows.");
 	}
+}
 
-	function ExportToPDF(doc, path) {
-		with(app.pdfExportPreferences) {
-			// Basic PDF output options
-			pageRange = PageRange.allPages;
-			acrobatCompatibility = AcrobatCompatibility.ACROBAT_7;
-			exportGuidesAndGrids = false;
-			exportLayers = false;
-			exportNonprintingObjects = false;
-			exportReaderSpreads = true;
-			generateThumbnails = false;
-			try { ignoreSpreadOverrides = false } catch (e) {}
-			includeBookmarks = false;
-			includeHyperlinks = false;
-			includeICCProfiles = ICCProfiles.INCLUDE_ALL;
-			includeSlugWithPDF = true;
-			includeStructure = false;
-			interactiveElementsOption = InteractiveElementsOptions.APPEARANCE_ONLY;
-			subsetFontsBelow = 100;
-			// Quality options
-			colorBitmapCompression = BitmapCompression.AUTO_COMPRESSION;
-			colorBitmapQuality = CompressionQuality.MAXIMUM;
-			colorBitmapSampling = Sampling.BICUBIC_DOWNSAMPLE;
-			colorBitmapSamplingDPI = 350;
-			grayscaleBitmapCompression = BitmapCompression.AUTO_COMPRESSION;
-			grayscaleBitmapQuality = CompressionQuality.MAXIMUM;
-			grayscaleBitmapSampling = Sampling.BICUBIC_DOWNSAMPLE;
-			grayscaleBitmapSamplingDPI = 350;
-			monochromeBitmapCompression = MonoBitmapCompression.CCIT4;
-			monochromeBitmapSampling = Sampling.BICUBIC_DOWNSAMPLE;
-			monochromeBitmapSamplingDPI = 2400;
-			thresholdToCompressColor = 350;
-			thresholdToCompressGray = 350;
-			thresholdToCompressMonochrome = 2400;
-			compressionType = PDFCompressionType.COMPRESS_STRUCTURE;
-			compressTextAndLineArt = true;
-			cropImagesToFrames = true;
-			optimizePDF = false;
-			// Printers marks and prepress options
-			useDocumentBleedWithPDF = true;
-			bleedBottom = 8.50393962860107;
-			bleedTop = 8.50393962860107;
-			bleedInside = 8.50393962860107;
-			bleedOutside = 8.50393962860107;
-			bleedMarks = false;
-			colorBars = false;
-			colorTileSize = 128;
-			grayTileSize = 128;
-			cropMarks = true;
-			omitBitmaps = false;
-			omitEPS = false;
-			omitPDF = false;
-			pageInformationMarks = false;
-			pdfColorSpace = PDFColorSpace.REPURPOSE_CMYK;
-			pdfDestinationProfile = "Coated FOGRA39 (ISO 12647-2:2004)";
-			pdfXProfile = "Coated FOGRA39 (ISO 12647-2:2004)";
-			standardsCompliance = PDFXStandards.PDFX42010_STANDARD;
-			pdfMarkType = MarkTypes.DEFAULT_VALUE;
-			pageMarksOffset = 8.50393962860107;
-			printerMarkWeight = PDFMarkWeight.P25PT;
-			bleedMarks = false;
-			registrationMarks = false;
-			try { simulateOverprint = false } catch (e) {}
-			// Misc
-			exportGuidesAndGrids = false;
-			exportLayers = false;
-			exportWhichLayers = ExportLayerOptions.EXPORT_VISIBLE_PRINTABLE_LAYERS;
-			pdfMagnification = PdfMagnificationOptions.DEFAULT_VALUE;
-			pdfPageLayout = PageLayoutOptions.DEFAULT_VALUE;
-			pdfDisplayTitle = PdfDisplayTitleOptions.DISPLAY_FILE_NAME;
-			exportAsSinglePages = false;
-			useSecurity = false;
-			viewPDF = false;
-		}
-	doc.exportFile(ExportFormat.pdfType, File(path), false);
+function ExportToPDF(doc, path) {
+	with(app.pdfExportPreferences) {
+		// Basic PDF output options
+		pageRange = PageRange.allPages;
+		acrobatCompatibility = AcrobatCompatibility.ACROBAT_7;
+		exportGuidesAndGrids = false;
+		exportLayers = false;
+		exportNonprintingObjects = false;
+		exportReaderSpreads = true;
+		generateThumbnails = false;
+		try { ignoreSpreadOverrides = false } catch (e) {}
+		includeBookmarks = false;
+		includeHyperlinks = false;
+		includeICCProfiles = ICCProfiles.INCLUDE_ALL;
+		includeSlugWithPDF = true;
+		includeStructure = false;
+		interactiveElementsOption = InteractiveElementsOptions.APPEARANCE_ONLY;
+		subsetFontsBelow = 100;
+		// Quality options
+		colorBitmapCompression = BitmapCompression.AUTO_COMPRESSION;
+		colorBitmapQuality = CompressionQuality.MAXIMUM;
+		colorBitmapSampling = Sampling.BICUBIC_DOWNSAMPLE;
+		colorBitmapSamplingDPI = 350;
+		grayscaleBitmapCompression = BitmapCompression.AUTO_COMPRESSION;
+		grayscaleBitmapQuality = CompressionQuality.MAXIMUM;
+		grayscaleBitmapSampling = Sampling.BICUBIC_DOWNSAMPLE;
+		grayscaleBitmapSamplingDPI = 350;
+		monochromeBitmapCompression = MonoBitmapCompression.CCIT4;
+		monochromeBitmapSampling = Sampling.BICUBIC_DOWNSAMPLE;
+		monochromeBitmapSamplingDPI = 2400;
+		thresholdToCompressColor = 350;
+		thresholdToCompressGray = 350;
+		thresholdToCompressMonochrome = 2400;
+		compressionType = PDFCompressionType.COMPRESS_STRUCTURE;
+		compressTextAndLineArt = true;
+		cropImagesToFrames = true;
+		optimizePDF = false;
+		// Printers marks and prepress options
+		useDocumentBleedWithPDF = true;
+		bleedBottom = UnitValue("3 mm").as("pt");
+		bleedTop = UnitValue("3 mm").as("pt");
+		bleedInside = UnitValue("3 mm").as("pt");
+		bleedOutside = UnitValue("3 mm").as("pt");
+		bleedMarks = false;
+		colorBars = false;
+		colorTileSize = 128;
+		grayTileSize = 128;
+		cropMarks = true;
+		omitBitmaps = false;
+		omitEPS = false;
+		omitPDF = false;
+		pageInformationMarks = false;
+		pdfColorSpace = PDFColorSpace.REPURPOSE_CMYK;
+		pdfDestinationProfile = "Coated FOGRA39 (ISO 12647-2:2004)";
+		pdfXProfile = "Coated FOGRA39 (ISO 12647-2:2004)";
+		standardsCompliance = PDFXStandards.PDFX42010_STANDARD;
+		pdfMarkType = MarkTypes.DEFAULT_VALUE;
+		pageMarksOffset = UnitValue("3 mm").as("pt");
+		printerMarkWeight = PDFMarkWeight.P25PT;
+		bleedMarks = false;
+		registrationMarks = false;
+		try { simulateOverprint = false } catch (e) {}
+		// Misc
+		exportGuidesAndGrids = false;
+		exportLayers = false;
+		exportWhichLayers = ExportLayerOptions.EXPORT_VISIBLE_PRINTABLE_LAYERS;
+		pdfMagnification = PdfMagnificationOptions.DEFAULT_VALUE;
+		pdfPageLayout = PageLayoutOptions.DEFAULT_VALUE;
+		pdfDisplayTitle = PdfDisplayTitleOptions.DISPLAY_FILE_NAME;
+		exportAsSinglePages = false;
+		useSecurity = false;
+		viewPDF = false;
 	}
+	doc.exportFile(ExportFormat.pdfType, File(path), false);
 }
 
 function BalanceText(txt, length) {
@@ -384,28 +375,27 @@ function Margins(page) { // Return page margins
 	}
 }
 
-// Modified from 'Scrollable alert' by Peter Kahrel
-// http://forums.adobe.com/message/2869250#2869250
-function AlertScroll(title, msg, /*bool*/filter) {
-	if (msg instanceof Array) msg = msg.join("\n");
-	var msgArray = msg.split(/\r|\n/g);
-	var w = new Window("dialog", title);
-	if (filter) var search = w.add("edittext { characters: 40 }");
-	var list = w.add("edittext", undefined, msg, { multiline: true, scrolling: true, readonly: true });
+// Inspired by this scrollable alert by Peter Kahrel:
+// http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
+function AlertScroll(title, msg, /*bool*/filter, /*bool*/compact) {
+	if (!(msg instanceof Array)) msg = msg.split(/\r|\n/g);
+	if (compact && msg.length > 1) {
+		msg = msg.sort();
+		for (var i = 1, l = msg[0]; i < msg.length; l = msg[i], i++)
+			if (l == msg[i] || msg[i] == "") msg.splice(i, 1) };
+	var w = new Window('dialog', title);
+	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40 }');
+	var list = w.add('edittext', undefined, msg.join("\n"), { multiline: true, scrolling: true, readonly: true });
+	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = (function() {
-		for (var i = 0, width = 50; i < msgArray.length; i++) width = Math.max(width, msgArray[i].length);
-		return width;
-	})();
+		for (var i = 0, width = 50; i < msg.length; width = Math.max(width, msg[i].length), i++);
+		return width })();
 	list.minimumSize.width = 100; list.maximumSize.width = 1024;
 	list.minimumSize.height = 100; list.maximumSize.height = 1024;
-	w.add("button", undefined, "Close", { name: "ok" });
 	w.ok.active = true;
 	if (filter) search.onChanging = function() {
-		var result = [];
-		for (var i = 0; i < msgArray.length; i++)
-			if (msgArray[i].toLowerCase().indexOf((this.text).toLowerCase()) != -1) result.push(msgArray[i]);
-		if (result.length > 0) list.text = result.join("\n")
-		else list.text = "Nothing found."
-	};
+		for (var i = 0, result = []; i < msg.length; i++)
+			if (msg[i].toLowerCase().indexOf((this.text).toLowerCase()) != -1) result.push(msg[i]);
+		if (result.length > 0) { list.text = result.join("\n") } else list.text = "" };
 	w.show();
 };
