@@ -1,5 +1,5 @@
 /*
-	Quick export v2.5 (2021-06-04)
+	Quick export v2.6 (2021-06-06)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -40,7 +40,7 @@ app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
 app.pdfExportPreferences.pageRange = ""; // Reset page range
 app.pdfExportPreferences.viewPDF = false;
-const invalidFileChars = /[\/\\?|%*:"<>\[\]\.]/g;
+const forbiddenFilenameChars = /[#%^&{}\\<>*?\/$!'":@`|=]/g;
 const ADV = ScriptUI.environment.keyboardState.altKey;
 const WIN = (File.fs == "Windows");
 const VER = "2";
@@ -171,6 +171,7 @@ if (ADV) {
 };
 ui.actions.add('button { preferredSize: [ 80, -1 ], properties: { name: "cancel" }, text: "Cancel" }');
 ui.actions.ok = ui.actions.add('button { preferredSize: [ 80, -1 ], properties: { name: "ok" }, text: "Start" }');
+if (!folderMode) ui.actions.ok.enabled = app.activeDocument.saved;
 // -- UI callback functions
 ui.preset1.isOn.onClick = function() {
 	ui.preset1.preset.enabled = ui.preset1.suffix.enabled = this.value;
@@ -178,11 +179,8 @@ ui.preset1.isOn.onClick = function() {
 	ui.preset1.script.enabled = this.value;
 	ui.preset1.bleedCustom.onClick();
 	ui.preset1.script.isOn.onClick();
-	if (folderMode) {
-		ui.actions.ok.enabled = (this.value || ui.preset2.isOn.value) && (ui.input.source.path != undefined);
-	} else {
-		ui.actions.ok.enabled = this.value || ui.preset2.isOn.value;
-	};
+	if (folderMode) ui.actions.ok.enabled = (this.value || ui.preset2.isOn.value) && !!ui.input.source.path
+	else ui.actions.ok.enabled = app.activeDocument.saved && (this.value || ui.preset2.isOn.value);
 };
 ui.preset1.bleedCustom.onClick = function() {
 	ui.preset1.bleedValue.enabled = this.value;
@@ -193,7 +191,7 @@ ui.preset1.script.isOn.onClick = function() {
 };
 ui.preset1.script.browse.onClick = function() {
 	var newFile = File.openDialog("Select a script:");
-	if (newFile == null) ui.preset1.script.isOn.notify();
+	if (newFile == null && !ui.preset1.script.path) ui.preset1.script.isOn.notify();
 	if (newFile.exists && (WIN ? /\.(jsx*(bin)*)$/i.test(newFile) : /\.(jsx*(bin)*|scpt)$/i.test(newFile))) {
 		var f = WIN ? decodeURI(newFile.fsName) : decodeURI(newFile.fullName);
 		ui.preset1.script.path = newFile;
@@ -206,9 +204,8 @@ ui.preset1.script.browse.onClick = function() {
 };
 ui.preset1.preset.onChange = function() {
 	var str = this.selection.text;
-	if (/_/g.test(str)) {
-		ui.preset1.suffix.text = str.substr(str.lastIndexOf("_"));
-	} else { ui.preset1.suffix.text = "" };
+	if (/_/g.test(str)) ui.preset1.suffix.text = str.substr(str.lastIndexOf("_"))
+	else ui.preset1.suffix.text = "";
 };
 ui.preset2.isOn.onClick = function() {
 	ui.preset2.preset.enabled = ui.preset2.suffix.enabled = this.value;
@@ -216,11 +213,8 @@ ui.preset2.isOn.onClick = function() {
 	ui.preset2.script.enabled = this.value;
 	ui.preset2.bleedCustom.onClick();
 	ui.preset2.script.isOn.onClick();
-	if (folderMode) {
-		ui.actions.ok.enabled = (this.value || ui.preset1.isOn.value) && (ui.input.source.path != undefined);
-	} else {
-		ui.actions.ok.enabled = this.value || ui.preset1.isOn.value;
-	};
+	if (folderMode) ui.actions.ok.enabled = (this.value || ui.preset1.isOn.value) && !!ui.input.source.path
+	else ui.actions.ok.enabled = app.activeDocument.saved && (this.value || ui.preset1.isOn.value);
 };
 ui.preset2.bleedCustom.onClick = function() {
 	ui.preset2.bleedValue.enabled = this.value;
@@ -232,7 +226,8 @@ ui.preset2.bleedValue.onChanging = function() {
 	if (this.text == "") this.text = "0";
 	if (UnitValue(Number(this.text), "mm").as("pt") > 72 ) this.text = "25.4";
 };
-ui.preset1.bleedValue.onDeactivate = ui.preset2.bleedValue.onDeactivate = function() {
+ui.preset1.bleedValue.onDeactivate =
+ui.preset2.bleedValue.onDeactivate = function() {
 	if (isNaN(this.text)) {
 		alert("Invalid value.\nEnter a number between 0 and 25.4 mm.");
 		this.text = "0";
@@ -243,7 +238,7 @@ ui.preset2.script.isOn.onClick = function() {
 };
 ui.preset2.script.browse.onClick = function() {
 	var newFile = File.openDialog("Select a script:");
-	if (newFile == null) ui.preset2.script.isOn.notify();
+	if (newFile == null && !ui.preset2.script.path) ui.preset2.script.isOn.notify();
 	if (newFile.exists && (WIN ? /\.(jsx*(bin)*)$/i.test(newFile) : /\.(jsx*(bin)*|scpt)$/i.test(newFile))) {
 		var f = WIN ? decodeURI(newFile.fsName) : decodeURI(newFile.fullName);
 		ui.preset2.script.path = newFile;
@@ -256,14 +251,13 @@ ui.preset2.script.browse.onClick = function() {
 };
 ui.preset2.preset.onChange = function() {
 	var str = this.selection.text;
-	if (/_/g.test(str)) {
-		ui.preset2.suffix.text = str.substr(str.lastIndexOf("_"));
-	} else { ui.preset2.suffix.text = "" };
+	if (/_/g.test(str)) ui.preset2.suffix.text = str.substr(str.lastIndexOf("_"))
+	else ui.preset2.suffix.text = "";
 };
 ui.preset1.suffix.onChange =
 ui.preset2.suffix.onChange = function() {
-	var str = this.text.replace(/^\s+/, '').replace(/\s+$/, ''); // Trim
-	str = str.replace(invalidFileChars, ""); // Remove illegal characters
+	var str = this.text.replace(/^\s+/, "").replace(/\s+$/, ""); // Trim
+	str = str.replace(forbiddenFilenameChars, ""); // Sanitize suffix
 	if (this.text != str) this.text = str;
 };
 if (folderMode) {
@@ -272,10 +266,9 @@ if (folderMode) {
 		if (!!newFolder) {
 			var f = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
 			ui.input.source.path = newFolder;
-			ui.input.source.folder.text = TruncatePath(f, 58);
+			ui.input.source.folder.text = TruncatePath(f, 57);
 			ui.input.source.folder.helpTip = f;
-			ui.actions.ok.enabled =
-				(ui.preset1.isOn.value || ui.preset2.isOn.value) && (ui.input.source.path != undefined);
+			ui.actions.ok.enabled = (ui.preset1.isOn.value || ui.preset2.isOn.value) && !!ui.input.source.path;
 		};
 	};
 };
@@ -284,11 +277,11 @@ ui.output.dest.isOn.onClick = function() {
 };
 ui.output.dest.browse.onClick = function() {
 	var newFolder = Folder.selectDialog("Select a folder:");
-	if (newFolder == null) ui.output.dest.isOn.notify();
+	if (newFolder == null && !ui.output.dest.path) ui.output.dest.isOn.notify();
 	if (!!newFolder) {
 		var f = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
 		ui.output.dest.path = newFolder;
-		ui.output.dest.folder.text = TruncatePath(f, 55);
+		ui.output.dest.folder.text = TruncatePath(f, 52);
 		ui.output.dest.folder.helpTip = f;
 	};
 };
@@ -302,21 +295,22 @@ ui.onShow = function() {
 	ReadSettings();
 	if (settings.position != null) try { ui.location = settings.position } catch (e) {};
 };
-if (ui.show() == 2) exit();
+ui.onClose = function() { if (ui.actions.savePrefs.value) SaveSettings() };
+if (ui.show() == 2) { exit() };
 
 // Processing
-if (ui.actions.savePrefs.value) SaveSettings();
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 // -- Get a sorted document list
 if (folderMode) {
 	var docs = ui.input.source.path.getFiles("*.indd").sort();
 } else {
 	var doc, docs = app.documents.everyItem().getElements(), names = [];
+	// Sort documents by name
 	while (doc = docs.shift()) names.push(doc.fullName); names.sort();
 	var name, docs = []; while (name = names.shift()) docs.push(app.documents.itemByName(name));
 };
 // -- Init progress bar
-for (var i = 0, pbWidth = 50; i < docs.length; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
+for (var i = 0, pbWidth = 50; i < docs.length; i++) { pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length) };
 var progressBar = new ProgressBar("Exporting", pbWidth + 10);
 progressBar.reset(docs.length * ((ui.preset1.isOn.value ? 1 : 0) + (ui.preset2.isOn.value ? 1 : 0)));
 // -- Main loop
@@ -326,10 +320,7 @@ while (doc = docs.shift()) {
 		doc = app.open(doc);
 	} else {
 		app.activeDocument = doc;
-		if (!doc.saved) {
-			errors.push(doc.name + " has no path. Skipped.");
-			continue;
-		};
+		if (!doc.saved) { errors.push(doc.name + " has no path. Skipped."); continue };
 	};
 	// Set measurement units
 	old.horizontalMeasurementUnits = doc.viewPreferences.horizontalMeasurementUnits;
@@ -355,14 +346,14 @@ while (doc = docs.shift()) {
 		};
 		// Get unique PDF name
 		var pdfBaseName = decodeURI(doc.name).replace(/\.indd$/i, "") + suffix;
-		if (invalidFileChars.test(pdfBaseName)) { // Remove illegal characters
-			pdfBaseName = pdfBaseName.replace(invalidFileChars, "");
-			errors.push(doc.name + ": Deleted illegal characters from the filename.");
+		if (forbiddenFilenameChars.test(pdfBaseName)) { // Sanitize filenames
+			pdfBaseName = pdfBaseName.replace(forbiddenFilenameChars, "-");
+			errors.push(doc.name + ": Sanitized output filename.");
 		};
 		var pdfName = pdfBaseName + ".pdf";
 		var folder = baseFolder + (!!subfolder ? "/" + subfolder : "");
 		var file = folder + "/" + pdfName;
-		pdfBaseName = pdfBaseName.replace(/(\.|\^|\$|\+|\(|\)|\[|\]|\{|\})/g, "\\$1"); // Escape special chars
+		pdfBaseName = pdfBaseName.replace(/[\|\^$(.)\[\]{*+?}\\]/g, "\\$&"); // Escape regex tokens
 		var baseRE = RegExp("^" + pdfBaseName + (!!suffix ? "[ _-]*" : "[ _-]+") + "\\d+.*.pdf$", "i");
 		var indxRE = RegExp("^" + pdfBaseName + (!!suffix ? "[ _-]*" : "[ _-]+") +
 			"(\\d+)([ _-]*v *\\d*)?([ _-]*copy *\\d*)?([ _-]*v *\\d*)?$", "i");
@@ -375,9 +366,7 @@ while (doc = docs.shift()) {
 			if (!!n) maxIndex = Math.max(maxIndex, Number(n[1]));
 		};
 		if (ui.output.options.fileOverwrite.value) {
-			if (maxIndex == 0) {
-				if (File(file).exists) file = file.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + ".pdf";
-			} else { file = file.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + String(maxIndex) + ".pdf" };
+			if (maxIndex != 0) file = file.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + String(maxIndex) + ".pdf";
 		} else {
 			if (maxIndex == 0) {
 				if (File(file).exists) file = file.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + "2.pdf";
@@ -390,9 +379,10 @@ while (doc = docs.shift()) {
 		// Check fonts
 		var usedFonts = doc.fonts.everyItem().getElements();
 		for (var f = 0; f < usedFonts.length; f++) {
-			if (usedFonts[f].status !== FontStatus.INSTALLED)
+			if (usedFonts[f].status !== FontStatus.INSTALLED) {
 				errors.push(doc.name + ": Font '" + usedFonts[f].name.replace(/\t/g, " ") + "' is " +
 					String(usedFonts[f].status).toLowerCase().replace("_", " "));
+			};
 		};
 		// Update links
 		for (var l = 0; l < doc.links.length; l++) {
@@ -417,14 +407,12 @@ while (doc = docs.shift()) {
 					"jsxbin": ScriptLanguage.JAVASCRIPT,
 				}[ext];
 			})(ext);
-			app.doScript(exp.script.path,
-			scriptLanguage, undefined,
-			UndoModes.ENTIRE_SCRIPT, "Run script");
+			app.doScript(exp.script.path, scriptLanguage, undefined, UndoModes.ENTIRE_SCRIPT, "Run script");
 			app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 		};
 		// Export PDF
 		if (!ui.output.options.fileOverwrite.value && File(file).exists) {
-			alert("Attempted illegal overwrite.\nBetter quit than sorry..."); exit() };
+			alert("Attempted illegal overwrite.\nBetter quit now..."); exit() };
 		LoadPDFExportPrefs(preset);
 		app.pdfExportPreferences.exportReaderSpreads = exp.exportSpreads.value;
 		app.pdfExportPreferences.cropMarks = exp.cropMarks.value;
@@ -439,9 +427,10 @@ while (doc = docs.shift()) {
 				doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
 			), UnitValue("72 pt").as("mm"));
 		} else {
-			app.pdfExportPreferences.bleedTop = app.pdfExportPreferences.bleedBottom =
-			app.pdfExportPreferences.bleedInside = app.pdfExportPreferences.bleedOutside =
-				Number(exp.bleedValue.text);
+			app.pdfExportPreferences.bleedTop =
+			app.pdfExportPreferences.bleedBottom =
+			app.pdfExportPreferences.bleedInside =
+			app.pdfExportPreferences.bleedOutside = Number(exp.bleedValue.text);
 			app.pdfExportPreferences.pageMarksOffset =
 				Math.min(app.pdfExportPreferences.bleedTop, UnitValue("72 pt").as("mm"));
 		};
@@ -474,7 +463,7 @@ function LoadPDFExportPrefs(preset) {
 };
 
 function ReadSettings() {
-	try { // Saved settings
+	try {
 		settings = $.evalFile(settingsFile);
 		if (settings.version == undefined || settings.version != VER) SetDefaults();
 	} catch (e) { SetDefaults() };
@@ -529,7 +518,7 @@ function ReadSettings() {
 	ui.output.dest.isOn.onClick();
 	function FindPreset(name, array) {
 		if (!app.pdfExportPresets.itemByName(name).isValid) return 0;
-		for (var i = 0; i < array.length; i++) if (array[i].toString() == name) return array[i].index;
+		for (var i = 0; i < array.length; i++) if (array[i].toString() === name) return array[i].index;
 	};
 };
 
@@ -650,7 +639,6 @@ function AlertScroll(title, msg, /*bool*/filter, /*bool*/compact) {
 	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40 }');
 	var list = w.add('edittext', undefined, msg.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
-	// list.characters = width;
 	list.characters = (function() {
 		for (var i = 0, width = 50; i < msg.length; width = Math.max(width, msg[i].length), i++);
 		return width })();
