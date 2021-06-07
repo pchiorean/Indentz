@@ -71,7 +71,7 @@ function Inspect(obj, prefix, level, maxLevel) {
 // Inspired by this scrollable alert by Peter Kahrel:
 // http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
 function Report(msg, title, /*bool*/filter, /*bool*/compact) {
-	if (!(msg instanceof Array)) msg = msg.split(/\r|\n/g);
+	if (msg instanceof Array) msg = msg.join("\n"); msg = msg.split(/\r|\n/g);
 	if (compact && msg.length > 1) {
 		msg = msg.sort();
 		for (var i = 1, l = msg[0]; i < msg.length; l = msg[i], i++)

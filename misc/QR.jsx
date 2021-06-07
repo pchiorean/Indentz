@@ -1,5 +1,5 @@
 /*
-	QR code v3.4 (2021-06-05)
+	QR code v3.5 (2021-06-07)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -55,11 +55,11 @@ function main() {
 		ui.onfile.onClick = function() { onFile = true; ui.close() }
 	if (ui.show() == 2) exit();
 	// Processing
-	var code = ui.label.text.replace(/^\s+|\s+$/g, '');
+	var code = ui.label.text.replace(/^\s+|\s+$/g, "");
 	if (!code) { main(); exit() }
 	errors = [];
 	if (onFile) { MakeQROnFile(code) } else { MakeQROnDoc(code, ui.white.value) }
-	if (errors.length > 0) AlertScroll("Errors", errors);
+	if (errors.length > 0) Report(errors, "Errors");
 }
 
 function MakeQROnDoc(code, /*bool*/white) {
@@ -127,8 +127,7 @@ function MakeQROnDoc(code, /*bool*/white) {
 			bottomCrop: UnitValue("2.7 mm").as("pt"),
 			rightCrop: UnitValue("2.7 mm").as("pt")
 		}
-		// codeFrame.localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
-		codeFrame.epss[0].localDisplaySetting = ViewDisplaySettings.HIGH_QUALITY;
+		codeFrame.epss[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
 		// Reposition
 		var qrGroup = page.groups.add([labelFrame, codeFrame]);
 		qrGroup.absoluteRotationAngle = 90;
@@ -204,8 +203,7 @@ function MakeQROnFile(code) {
 		bottomCrop: UnitValue("1.533 mm").as("pt"),
 		rightCrop: UnitValue("1.64 mm").as("pt")
 	}
-	// codeFrame.localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
-	codeFrame.epss[0].localDisplaySetting = ViewDisplaySettings.HIGH_QUALITY;
+	codeFrame.epss[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
 	// Reposition
 	var qrGroup = page.groups.add([labelFrame, codeFrame]);
 	qrGroup.absoluteRotationAngle = 90;
@@ -377,25 +375,40 @@ function Margins(page) { // Return page margins
 
 // Inspired by this scrollable alert by Peter Kahrel:
 // http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
-function AlertScroll(title, msg, /*bool*/filter, /*bool*/compact) {
-	if (!(msg instanceof Array)) msg = msg.split(/\r|\n/g);
+function Report(msg, title, /*bool*/filter, /*bool*/compact) {
+	if (msg instanceof Array) msg = msg.join("\n"); msg = msg.split(/\r|\n/g);
 	if (compact && msg.length > 1) {
 		msg = msg.sort();
 		for (var i = 1, l = msg[0]; i < msg.length; l = msg[i], i++)
-			if (l == msg[i] || msg[i] == "") msg.splice(i, 1) };
+			if (l == msg[i] || msg[i] == "") msg.splice(i, 1)
+	};
 	var w = new Window('dialog', title);
-	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40 }');
+	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40, \
+		helpTip: "Special operators: \'?\' (any character), space and \'*\' (and), \'|\' (or)" }');
 	var list = w.add('edittext', undefined, msg.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = (function() {
-		for (var i = 0, width = 50; i < msg.length; width = Math.max(width, msg[i].length), i++);
-		return width })();
-	list.minimumSize.width = 100; list.maximumSize.width = 1024;
-	list.minimumSize.height = 100; list.maximumSize.height = 1024;
+		for (var i = 0, width = 50; i < msg.length;
+		width = Math.max(width, msg[i].toString().length), i++);
+		return width;
+	})();
+	list.minimumSize.width = 600, list.maximumSize.width = 1024;
+	list.minimumSize.height = 100, list.maximumSize.height = 1024;
 	w.ok.active = true;
-	if (filter) search.onChanging = function() {
-		for (var i = 0, result = []; i < msg.length; i++)
-			if (msg[i].toLowerCase().indexOf((this.text).toLowerCase()) != -1) result.push(msg[i]);
-		if (result.length > 0) { list.text = result.join("\n") } else list.text = "" };
+	if (filter && msg.length > 1) {
+		search.onChanging = function() {
+			if (this.text == "") { list.text = msg.join("\n"); w.text = title; return };
+			var str = this.text.replace(/[.\[\]{+}]/g, "\\$&"); // Pass through '^*()|?'
+			str = str.replace(/\?/g, "."); // '?' -> any character
+			if (/[ *]/g.test(str)) str = "(" + str.replace(/ +|\*/g, ").*(") + ")"; // space or '*' -> AND
+			str = RegExp(str, "gi");
+			for (var i = 0, result = []; i < msg.length; i++) {
+				var line = msg[i].toString().replace(/^\s+?/g, "");
+				if (str.test(line)) result.push(line.replace(/\r|\n/g, "\u00b6").replace(/\t/g, "\\t"));
+			};
+			w.text = str + " | " + result.length + " record" + (result.length == 1 ? "" : "s");
+			if (result.length > 0) { list.text = result.join("\n") } else list.text = "";
+		};
+	};
 	w.show();
 };

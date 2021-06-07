@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.4.1 (2021-06-05)
+	Batch QR codes v2.5 (2021-06-07)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -15,6 +15,9 @@
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with "#" are ignored.
+
+	TODO:
+	- [fix] Check for visible area frame
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -105,7 +108,7 @@ function main() {
 			while (!infoFile.eof) {
 				var infoLine = "", isEmpty = isComment = isHeader = false;
 				infoLine = infoFile.readln(); line++;
-				if (infoLine.replace(/^\s+|\s+$/g, '') == "") isEmpty = true
+				if (infoLine.replace(/^\s+|\s+$/g, "") == "") isEmpty = true
 				else if (infoLine.toString().slice(0,1) == "\u0023") isComment = true;
 				infoLine = infoLine.split(/ *\t */);
 				if (!flgHeader) if (!isEmpty && !isComment) { isHeader = flgHeader = true }
@@ -176,7 +179,7 @@ function main() {
 		else ui.list.active = true;
 	}
 	ui.list.onDoubleClick = function() { infoFile.execute() }
-	ui.actions.err.onClick = function() { AlertScroll("Errors", errors) }
+	ui.actions.err.onClick = function() { Report(errors, "Errors") }
 	ui.actions.browse.onClick = function() {
 		var folder = Folder.selectDialog("Select a folder containing the data file:");
 		if (!!folder && folder != currentPath) {
@@ -214,7 +217,7 @@ function main() {
 		}
 		infoFile.close();
 	}
-	if (errors.length > 0) AlertScroll("Errors", errors);
+	if (errors.length > 0) Report(errors, "Errors");
 }
 
 function MakeQROnDoc(fn, code, /*bool*/white) {
@@ -283,8 +286,7 @@ function MakeQROnDoc(fn, code, /*bool*/white) {
 			bottomCrop: UnitValue("2.7 mm").as("pt"),
 			rightCrop: UnitValue("2.7 mm").as("pt")
 		}
-		// codeFrame.localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
-		codeFrame.epss[0].localDisplaySetting = ViewDisplaySettings.HIGH_QUALITY;
+		codeFrame.epss[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
 		// Reposition
 		var qrGroup = page.groups.add([labelFrame, codeFrame]);
 		qrGroup.absoluteRotationAngle = 90;
@@ -364,8 +366,7 @@ function MakeQROnFile(fn, code) {
 		bottomCrop: UnitValue("1.533 mm").as("pt"),
 		rightCrop: UnitValue("1.64 mm").as("pt")
 	}
-	// codeFrame.localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
-	codeFrame.epss[0].localDisplaySetting = ViewDisplaySettings.HIGH_QUALITY;
+	codeFrame.epss[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
 	// Reposition
 	var qrGroup = page.groups.add([labelFrame, codeFrame]);
 	qrGroup.absoluteRotationAngle = 90;
@@ -569,25 +570,40 @@ function Margins(page) {
 
 // Inspired by this scrollable alert by Peter Kahrel:
 // http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
-function AlertScroll(title, msg, /*bool*/filter, /*bool*/compact) {
-	if (!(msg instanceof Array)) msg = msg.split(/\r|\n/g);
+function Report(msg, title, /*bool*/filter, /*bool*/compact) {
+	if (msg instanceof Array) msg = msg.join("\n"); msg = msg.split(/\r|\n/g);
 	if (compact && msg.length > 1) {
 		msg = msg.sort();
 		for (var i = 1, l = msg[0]; i < msg.length; l = msg[i], i++)
-			if (l == msg[i] || msg[i] == "") msg.splice(i, 1) };
+			if (l == msg[i] || msg[i] == "") msg.splice(i, 1)
+	};
 	var w = new Window('dialog', title);
-	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40 }');
+	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40, \
+		helpTip: "Special operators: \'?\' (any character), space and \'*\' (and), \'|\' (or)" }');
 	var list = w.add('edittext', undefined, msg.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = (function() {
-		for (var i = 0, width = 50; i < msg.length; width = Math.max(width, msg[i].length), i++);
-		return width })();
-	list.minimumSize.width = 100; list.maximumSize.width = 1024;
-	list.minimumSize.height = 100; list.maximumSize.height = 1024;
+		for (var i = 0, width = 50; i < msg.length;
+		width = Math.max(width, msg[i].toString().length), i++);
+		return width;
+	})();
+	list.minimumSize.width = 600, list.maximumSize.width = 1024;
+	list.minimumSize.height = 100, list.maximumSize.height = 1024;
 	w.ok.active = true;
-	if (filter) search.onChanging = function() {
-		for (var i = 0, result = []; i < msg.length; i++)
-			if (msg[i].toLowerCase().indexOf((this.text).toLowerCase()) != -1) result.push(msg[i]);
-		if (result.length > 0) { list.text = result.join("\n") } else list.text = "" };
+	if (filter && msg.length > 1) {
+		search.onChanging = function() {
+			if (this.text == "") { list.text = msg.join("\n"); w.text = title; return };
+			var str = this.text.replace(/[.\[\]{+}]/g, "\\$&"); // Pass through '^*()|?'
+			str = str.replace(/\?/g, "."); // '?' -> any character
+			if (/[ *]/g.test(str)) str = "(" + str.replace(/ +|\*/g, ").*(") + ")"; // space or '*' -> AND
+			str = RegExp(str, "gi");
+			for (var i = 0, result = []; i < msg.length; i++) {
+				var line = msg[i].toString().replace(/^\s+?/g, "");
+				if (str.test(line)) result.push(line.replace(/\r|\n/g, "\u00b6").replace(/\t/g, "\\t"));
+			};
+			w.text = str + " | " + result.length + " record" + (result.length == 1 ? "" : "s");
+			if (result.length > 0) { list.text = result.join("\n") } else list.text = "";
+		};
+	};
 	w.show();
 };
