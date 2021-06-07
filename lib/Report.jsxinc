@@ -1,6 +1,6 @@
 // Inspired by this scrollable alert by Peter Kahrel:
 // http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
-function AlertScroll(msg, title, /*bool*/filter, /*bool*/compact) {
+function Report(msg, title, /*bool*/filter, /*bool*/compact) {
 	if (!(msg instanceof Array)) msg = msg.split(/\r|\n/g);
 	if (compact && msg.length > 1) {
 		msg = msg.sort();
