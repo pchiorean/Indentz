@@ -84,6 +84,6 @@ Name                               |    Fn  | Description
 `QRBatch.jsx`                      |    ⇧F9 | Adds codes to existing documents or to separate files in batch mode, from a list
 `ShowFonts.jsx`                    |        | Shows all fonts used in the current document
 `ShowProfiles.jsx`                 |        | Shows all color profiles available to the document
-`ShowProperties.jsx`               |        | Shows properties and methods of a selected object/the document/the application
+`ShowProperties.jsx`               |        | Shows properties and methods of the selected object/active document/the application
 
 <!-- ⌃⌥⇧⌘ -->
