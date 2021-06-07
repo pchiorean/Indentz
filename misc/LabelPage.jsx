@@ -1,5 +1,5 @@
 /*
-	Label page v1.0 beta (2021-04-26)
+	Label page v1.0.1 (2021-06-07)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a label on the current page's slug.
@@ -51,7 +51,7 @@ function SlugInfo(page, label, isCaps, isOnTop) {
 	while (item = items.shift()) if (item.name == "<page label>") { item.itemLayer.locked = false; item.remove() };
 	// Add new label
 	if (label == "") label = doc.name;
-	label = label.replace(/^\s+/, '').replace(/\s+$/, '');
+	label = label.replace(/^\s+|\s+$/g, "");
 	doc.activeLayer = infoLayer;
 	var infoFrame, infoText;
 	infoFrame = page.textFrames.add({

@@ -1,5 +1,5 @@
 /*
-	Clip v2.5.2 (2021-04-16)
+	Clip v2.5.3 (2021-06-07)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Clips selected objects in a "<clip frame>", or restores them.
@@ -48,7 +48,7 @@ function Clip(items) {
 	// Special case: text frames
 	else if (items.length == 1 &&
 		items[0].constructor.name == "TextFrame" &&
-		(items[0].contents.replace(/^\s+/, '').replace(/\s+$/, '')).length > 0) {
+		(items[0].contents.replace(/^\s+|\s+$/g, "")).length > 0) {
 		var outlines = items[0].createOutlines(false);
 		size = [
 			obj.geometricBounds[0], outlines[0].geometricBounds[1],
