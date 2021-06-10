@@ -76,7 +76,7 @@ Name                               |    Fn  | Description
 **Miscellaneous**                           |
 `Clip.jsx`                         |   Num* | Clips selected objects in a '\<clip frame\>', or restores them
 `ClipUndo.jsx`                     |  ⌃Num* | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
-`CleanupLabels.jsx`                |        | Removes all labels from the document
+`ClearLabels.jsx`                  |        | Removes all labels from the document
 `HW.jsx`                           |   ⇧F10 | Labels 'HW' selected objects; w/o selection, adds a 10% bottom guide
 `LabelPage.jsx`                    |        | Adds a label on the current page's slug
 `PageRatios.jsx`                   |        | Calculates the ratio of each page and displays it in the upper left corner
