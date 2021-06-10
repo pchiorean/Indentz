@@ -17,16 +17,16 @@ function ProgressBar(title, width) {
 		pb.bar.maxvalue = max || 0;
 		pb.bar.visible = !!max;
 		pb.show();
-	}
+	};
 	this.update = function(val, msg) {
 		pb.bar.value = val;
 		if (!!width) {
 			pb.msg.visible = !!msg;
 			!!msg && (pb.msg.text = msg);
-		}
+		};
 		pb.text = title + " \u2013 " + val + "/" + pb.bar.maxvalue;
 		pb.show(); pb.update();
-	}
-	this.hide = function() { pb.hide() }
-	this.close = function() { pb.close() }
-}
+	};
+	this.hide = function() { pb.hide() };
+	this.close = function() { pb.close() };
+};
