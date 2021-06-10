@@ -6,6 +6,7 @@ function ExpandItems(items) {
 		switch (item.label) {
 			case "fit":
 				app.select(item);
+				item.fit(FitOptions.FRAME_TO_CONTENT);
 				app.doScript(FitTo, ScriptLanguage.javascript, [ "page", "size" ],
 				UndoModes.ENTIRE_SCRIPT, "Resize to page");
 				break;
