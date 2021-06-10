@@ -8,7 +8,7 @@ white	Cute Teal	no	yes	above
 guides	Magenta	yes	no	above	grid, masuratori
 info	Cyan	no	yes	above	info copy, ratio
 media	Cyan	no	yes	above	
-HW	Light Gray	no	yes	above	*hw*, wh
+HW	Light Gray	no	yes	above	*hw*, legal, wh
 disclaimer	Gray	no	yes	above	legal text
 text and logos	Green	no	yes	above	copy, dots, headline*, hl, logo, text*, txt, typ?
 codes	Grid Green	no	yes	above	code*, barcode*, EAN*
