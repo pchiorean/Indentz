@@ -1,5 +1,5 @@
 /*
-	Quick export v2.7 (2021-06-07)
+	Quick export v2.7.1 (2021-06-10)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -346,10 +346,10 @@ while (doc = docs.shift()) {
 		};
 		// Get unique PDF name
 		var pdfBaseName = decodeURI(doc.name).replace(/\.indd$/i, "") + suffix;
-		if (forbiddenFilenameChars.test(pdfBaseName)) { // Sanitize filenames
-			pdfBaseName = pdfBaseName.replace(forbiddenFilenameChars, "-");
-			errors.push(doc.name + ": Sanitized output filename.");
-		};
+		// if (forbiddenFilenameChars.test(pdfBaseName)) { // Sanitize filenames
+		// 	pdfBaseName = pdfBaseName.replace(forbiddenFilenameChars, "-");
+		// 	errors.push(doc.name + ": Sanitized output filename.");
+		// };
 		var pdfName = pdfBaseName + ".pdf";
 		var folder = baseFolder + (!!subfolder ? "/" + subfolder : "");
 		var file = folder + "/" + pdfName;
