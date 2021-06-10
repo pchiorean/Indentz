@@ -63,6 +63,7 @@ Name                               |    Fn  | Description
 `SaveSwatches.jsx`                 |        | Saves document's swatches to a list
 `CleanupSwatches.jsx`              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 `ReplaceFonts.jsx`                 |        | Replaces fonts from a substitution list
+`DeleteGuides.jsx`                 |        | Deletes all guides from the document.
 `DocCleanup.jsx`                   |     F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling
 `DocDefaults.jsx`                  |    ⌥F2 | Adds swatches/layers, cleans up fonts and sets page dimensions from the filename
 `PageMarginsFromSelection.jsx`     |        | Sets the page margins to the selected objects bounds
