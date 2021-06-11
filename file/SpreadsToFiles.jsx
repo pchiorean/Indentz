@@ -1,5 +1,5 @@
 /*
-	SpreadsToFiles v1.7.3 (2021-06-05)
+	SpreadsToFiles v1.7.4 (2021-06-11)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
@@ -27,8 +27,8 @@
 */
 
 if (!(doc = app.activeDocument)) exit();
-if (!doc.saved) { alert("Document is not saved."); exit() }
-if (doc.spreads.length == 1) { alert("Document has only one spread."); exit() }
+if (!doc.saved) { alert("Document is not saved."); exit() };
+if (doc.spreads.length == 1) { alert("Document has only one spread."); exit() };
 
 var oldUIL = app.scriptPreferences.userInteractionLevel;
 
@@ -62,7 +62,7 @@ for (var i = 0; i < doc.spreads.length; i++) {
 	// Remove other spreads from copy
 	for (var j = r.length - 1; j >= 0; j--) dCopy.spreads[r[j]].remove();
 	dCopy.save(dFile); dCopy.close();
-}
+};
 progressBar.close();
 doc.close();
 
@@ -79,17 +79,17 @@ function GetSuffix(sufx) {
 		alert("You must enter a separator and " + doc.spreads.length
 		+ " additional characters.", "Enter a suffix");
 		GetSuffix(sufx); // Ask again
-	}
+	};
 	if (!/[ ._-]/.test(sufx[0])) { // Separator
 		alert("Invalid separator, please try again.", "Enter a suffix");
 		GetSuffix(sufx); // Ask again
-	}
-	if (/[#%^&{}\\<>*?\/$!'":@`|=]/g.test(sufx)) { // Filename
+	};
+	if (/[#%^{}\\<>*?\/$!'":@`|=]/g.test(sufx)) { // Filename
 		alert("You entered a forbidden character, please try again.", "Enter a suffix");
 		GetSuffix(sufx); // Ask again
-	}
+	};
 	return sufx;
-}
+};
 
 function ProgressBar(title, width) {
 	var pb = new Window("palette", title);
@@ -105,16 +105,16 @@ function ProgressBar(title, width) {
 		pb.bar.maxvalue = max || 0;
 		pb.bar.visible = !!max;
 		pb.show();
-	}
+	};
 	this.update = function(val, msg) {
 		pb.bar.value = val;
 		if (!!width) {
 			pb.msg.visible = !!msg;
 			!!msg && (pb.msg.text = msg);
-		}
+		};
 		pb.text = title + " \u2013 " + val + "/" + pb.bar.maxvalue;
 		pb.show(); pb.update();
-	}
-	this.hide = function() { pb.hide() }
-	this.close = function() { pb.close() }
-}
+	};
+	this.hide = function() { pb.hide() };
+	this.close = function() { pb.close() };
+};

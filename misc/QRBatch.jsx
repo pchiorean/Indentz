@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.5 (2021-06-07)
+	Batch QR codes v2.5.1 (2021-06-11)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -46,7 +46,7 @@ app.scriptPreferences.enableRedraw = false;
 var doc, currentPath, errors;
 if (app.documents.length > 0) doc = app.activeDocument;
 if (!!doc && doc.saved) currentPath = doc.filePath;
-const forbiddenFilenameChars = /[#%^&{}\\<>*?\/$!'":@`|=]/g;
+const forbiddenFilenameChars = /[#%^{}\\<>*?\/$!'":@`|=]/g;
 const WIN = (File.fs == "Windows");
 
 main();
@@ -56,7 +56,7 @@ function main() {
 		width: 1200,   // pixels
 		height: 24,    // lines
 		itemHeight: 24 // pixels
-	}
+	};
 	var infoFile, rawData, validLines, queue, pbWidth;
 	// User interface
 	var ui = new Window("dialog", "Generate QR Codes");
@@ -111,22 +111,22 @@ function main() {
 				if (infoLine.replace(/^\s+|\s+$/g, "") == "") isEmpty = true
 				else if (infoLine.toString().slice(0,1) == "\u0023") isComment = true;
 				infoLine = infoLine.split(/ *\t */);
-				if (!flgHeader) if (!isEmpty && !isComment) { isHeader = flgHeader = true }
+				if (!flgHeader) if (!isEmpty && !isComment) { isHeader = flgHeader = true };
 				if (!isEmpty && !isComment && !isHeader) {
 					if (infoLine[0] != "") {
 						if (forbiddenFilenameChars.test(infoLine[0])) {
-							errors.push("Line " + line + ": Forbidden characters in the filename.") }
+							errors.push("Line " + line + ": Forbidden characters in the filename.") };
 						infoLine[0] = (infoLine[0].lastIndexOf(".") == -1) ? infoLine[0] :
 							infoLine[0].substr(0, infoLine[0].lastIndexOf("."));
 						if (!!infoLine[2] && !File(currentPath + "/" + infoLine[0] + ".indd").exists) {
-							errors.push("Line " + line + ": File '" + infoLine[0] + ".indd' not found.") }
-						if (!infoLine[1]) { errors.push("Line " + line + ": Missing code.") }
+							errors.push("Line " + line + ": File '" + infoLine[0] + ".indd' not found.") };
+						if (!infoLine[1]) { errors.push("Line " + line + ": Missing code.") };
 						if (!infoLine[2]) infoLine[0] += (/_QR$/ig.test(infoLine[0]) ? "" : "_QR") + ".pdf"
 						else infoLine[0] += ".indd";
 						if (infoLine[0] != "") pbWidth = Math.max(pbWidth, infoLine[0].length);
-					} else { errors.push("Line " + line + ": Missing filename.") }
+					} else { errors.push("Line " + line + ": Missing filename.") };
 					if (errors.length == 0) validLines.push(line);
-				}
+				};
 				rawData.push({
 					fn: infoLine[0],
 					code: infoLine[1],
@@ -139,13 +139,13 @@ function main() {
 					l.subItems[0].text = rawData[line-1].fn || "";
 					l.subItems[1].text = rawData[line-1].code || "";
 					l.subItems[2].text = rawData[line-1].pos ? "+" : "";
-				}
-			}
+				};
+			};
 			infoFile.close();
 			infoLine = "";
-		}
+		};
 		ui.list.onChange();
-	}
+	};
 	ui.list.onChange = function() {
 		if (ui.list.selection) {
 			queue = [];
@@ -154,9 +154,9 @@ function main() {
 					if (Number(ui.list.selection[i].toString()) == validLines[j]) {
 						queue.push(Number(ui.list.selection[i].toString()));
 						break;
-					}
-				}
-			}
+					};
+				};
+			};
 		} else queue = validLines;
 		if (queue.length == 0) {
 			ui.text = !currentPath ?
@@ -169,7 +169,7 @@ function main() {
 			ui.text = (WIN ? decodeURI(infoFile.fsName) : decodeURI(infoFile.fullName)) + " \u2013 " +
 				queue.length + " record" + (queue.length == 1 ? "" : "s") +
 				(errors.length > 0 ? " | " + errors.length + " error" + (errors.length == 1 ? "" : "s") : "");
-		}
+		};
 		ui.actions.start.enabled = queue.length > 0 && (errors.length == 0 || ui.list.selection);
 		ui.actions.reload.enabled = !!currentPath;
 		ui.actions.err.visible = ui.actions.div1.visible = (errors.length > 0);
@@ -177,17 +177,17 @@ function main() {
 		else if (!infoFile.exists) { ui.actions.browse.active = true }
 		else if (queue.length == 0 && !ui.list.selection) { ui.actions.reload.active = true }
 		else ui.list.active = true;
-	}
-	ui.list.onDoubleClick = function() { infoFile.execute() }
-	ui.actions.err.onClick = function() { Report(errors, "Errors") }
+	};
+	ui.list.onDoubleClick = function() { infoFile.execute() };
+	ui.actions.err.onClick = function() { Report(errors, "Errors") };
 	ui.actions.browse.onClick = function() {
 		var folder = Folder.selectDialog("Select a folder containing the data file:");
 		if (!!folder && folder != currentPath) {
 			if (/QR Codes$/g.test(decodeURI(folder))) folder = folder.parent;
 			currentPath = folder;
 			ui.actions.reload.onClick();
-		}
-	}
+		};
+	};
 	ui.onShow = ui.actions.reload.notify();
 	// Processing
 	if (ui.show() == 2) exit();
@@ -196,13 +196,13 @@ function main() {
 	progressBar && progressBar.reset(queue.length);
 	for (var i = 0; i < queue.length; i++) {
 		var item = rawData[queue[i]-1];
-		if (item.fn == "" || item.fn.toString().slice(0,1) == "\u0023") { progressBar.update(i+1, ""); continue }
+		if (item.fn == "" || item.fn.toString().slice(0,1) == "\u0023") { progressBar.update(i+1, ""); continue };
 		progressBar && progressBar.update(i+1, item.fn);
 		if ((item.pos && MakeQROnDoc(item.fn, item.code, ui.actions.white.value)) ||
 				(!item.pos && MakeQROnFile(item.fn, item.code))) {
 			item.exported = true; isModified = true;
-		}
-	}
+		};
+	};
 	// Update data file
 	progressBar && progressBar.close();
 	if (infoFile.exists && isModified && infoFile.open("w")) {
@@ -214,11 +214,11 @@ function main() {
 				(rawData[i].code ? "\t" + rawData[i].code : "") +
 				(rawData[i].pos ? "\t+" : "")
 			);
-		}
+		};
 		infoFile.close();
-	}
+	};
 	if (errors.length > 0) Report(errors, "Errors");
-}
+};
 
 function MakeQROnDoc(fn, code, /*bool*/white) {
 	var doc = app.open(File(currentPath + "/" + fn));
@@ -228,7 +228,7 @@ function MakeQROnDoc(fn, code, /*bool*/white) {
 		var page = doc.pages.item(i);
 		// Remove old codes
 		var item, items = page.pageItems.everyItem().getElements();
-		while (item = items.shift()) if (item.label == "QR") { item.itemLayer.locked = false; item.remove() }
+		while (item = items.shift()) if (item.label == "QR") { item.itemLayer.locked = false; item.remove() };
 		// Add label
 		var labelFrame = page.textFrames.add({
 			label: "QR",
@@ -249,7 +249,7 @@ function MakeQROnDoc(fn, code, /*bool*/white) {
 			capitalization: Capitalization.ALL_CAPS,
 			fillColor: white ? "Paper" : "Black", // White text checkbox
 			strokeColor: "None"
-		}
+		};
 		labelFrame.textFramePreferences.properties = {
 			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
@@ -260,7 +260,7 @@ function MakeQROnDoc(fn, code, /*bool*/white) {
 				UnitValue("3 mm").as("pt"), UnitValue("2.5 mm").as("pt"),
 				UnitValue("1 mm").as("pt"), 0
 			]
-		}
+		};
 		doc.align(labelFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
 		doc.align(labelFrame, AlignOptions.TOP_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
 		// Add code
@@ -285,7 +285,7 @@ function MakeQROnDoc(fn, code, /*bool*/white) {
 			leftCrop: UnitValue("2.7 mm").as("pt"),
 			bottomCrop: UnitValue("2.7 mm").as("pt"),
 			rightCrop: UnitValue("2.7 mm").as("pt")
-		}
+		};
 		codeFrame.epss[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
 		// Reposition
 		var qrGroup = page.groups.add([labelFrame, codeFrame]);
@@ -295,7 +295,7 @@ function MakeQROnDoc(fn, code, /*bool*/white) {
 		var szLabel = {
 			width: labelFrame.geometricBounds[3] - labelFrame.geometricBounds[1],
 			height: labelFrame.geometricBounds[2] - labelFrame.geometricBounds[0]
-		}
+		};
 		var szCode = codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1];
 		doc.align(qrGroup, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
 		doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
@@ -303,14 +303,14 @@ function MakeQROnDoc(fn, code, /*bool*/white) {
 			((szLabel.width + szCode) > mgs.left && (szCode + UnitValue("2.3 mm").as("pt")) > mgs.bottom)) {
 			doc.align(qrGroup, AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
 			doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		}
+		};
 		qrGroup.ungroup();
-	}
+	};
 	// doc.save(File(currentPath + "/" + fn));
 	doc.save();
 	doc.close();
 	return true;
-}
+};
 
 function MakeQROnFile(fn, code) {
 	var target = app.documents.add();
@@ -335,7 +335,7 @@ function MakeQROnFile(fn, code) {
 		capitalization: Capitalization.ALL_CAPS,
 		hyphenation: false,
 		fillColor: "Black"
-	}
+	};
 	labelFrame.geometricBounds = [
 		0, 0,
 		UnitValue("5.787 mm").as("pt"), UnitValue("20 mm").as("pt")
@@ -349,7 +349,7 @@ function MakeQROnFile(fn, code) {
 			UnitValue("1 mm").as("pt"), UnitValue("1 mm").as("pt"),
 			0, UnitValue("0.5 mm").as("pt")
 		]
-	}
+	};
 	// Add code
 	var codeFrame = page.rectangles.add({ itemLayer: idLayer.name, label: "QR" });
 	codeFrame.absoluteRotationAngle = -90;
@@ -365,7 +365,7 @@ function MakeQROnFile(fn, code) {
 		leftCrop: UnitValue("1.64 mm").as("pt"),
 		bottomCrop: UnitValue("1.533 mm").as("pt"),
 		rightCrop: UnitValue("1.64 mm").as("pt")
-	}
+	};
 	codeFrame.epss[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
 	// Reposition
 	var qrGroup = page.groups.add([labelFrame, codeFrame]);
@@ -395,8 +395,8 @@ function MakeQROnFile(fn, code) {
 		target.save(ancillaryFile);
 		errors.push(baseName + ".indd: Text overflows.");
 		return false;
-	}
-}
+	};
+};
 
 function ExportToPDF(doc, path) {
 	with(app.pdfExportPreferences) {
@@ -408,7 +408,7 @@ function ExportToPDF(doc, path) {
 		exportNonprintingObjects = false;
 		exportReaderSpreads = true;
 		generateThumbnails = false;
-		try { ignoreSpreadOverrides = false } catch (e) {}
+		try { ignoreSpreadOverrides = false } catch (e) {};
 		includeBookmarks = false;
 		includeHyperlinks = false;
 		includeICCProfiles = ICCProfiles.INCLUDE_ALL;
@@ -459,7 +459,7 @@ function ExportToPDF(doc, path) {
 		printerMarkWeight = PDFMarkWeight.P25PT;
 		bleedMarks = false;
 		registrationMarks = false;
-		try { simulateOverprint = false } catch (e) {}
+		try { simulateOverprint = false } catch (e) {};
 		// Misc
 		exportGuidesAndGrids = false;
 		exportLayers = false;
@@ -470,9 +470,9 @@ function ExportToPDF(doc, path) {
 		exportAsSinglePages = false;
 		useSecurity = false;
 		viewPDF = false;
-	}
+	};
 	doc.exportFile(ExportFormat.pdfType, File(path), false);
-}
+};
 
 function BalanceText(txt, length) {
 	const wordRE = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})))|(.+)/g;
@@ -485,8 +485,8 @@ function BalanceText(txt, length) {
 		} else {
 			if (lineBuffer != "") lines.push(lineBuffer);
 			lineBuffer = word;
-		}
-	}
+		};
+	};
 	if (lineBuffer != "") lines.push(lineBuffer);
 	// 2nd pass: balance ragged lines
 	if (lines.length > 1) BalanceLines();
@@ -506,10 +506,10 @@ function BalanceText(txt, length) {
 				lines[i] = newLine1;
 				lines[i+1] = newLine2;
 				BalanceLines();
-			}
-		}
-	}
-}
+			};
+		};
+	};
+};
 
 function MakeIDLayer(doc) {
 	var idLayerName = "ID", idLayer = doc.layers.item(idLayerName);
@@ -527,7 +527,7 @@ function MakeIDLayer(doc) {
 		idLayer.move(LocationOptions.BEFORE, hwLayer)
 		else idLayer.move(LocationOptions.AT_BEGINNING);
 	return idLayer;
-}
+};
 
 function ProgressBar(title, width) {
 	var pb = new Window("palette", title);
@@ -543,19 +543,19 @@ function ProgressBar(title, width) {
 		pb.bar.maxvalue = max || 0;
 		pb.bar.visible = !!max;
 		pb.show();
-	}
+	};
 	this.update = function(val, msg) {
 		pb.bar.value = val;
 		if (!!width) {
 			pb.msg.visible = !!msg;
 			!!msg && (pb.msg.text = msg);
-		}
+		};
 		pb.text = title + " \u2013 " + val + "/" + pb.bar.maxvalue;
 		pb.show(); pb.update();
-	}
-	this.hide = function() { pb.hide() }
-	this.close = function() { pb.close() }
-}
+	};
+	this.hide = function() { pb.hide() };
+	this.close = function() { pb.close() };
+};
 
 function Margins(page) {
 	return {
@@ -565,8 +565,8 @@ function Margins(page) {
 		bottom: page.marginPreferences.bottom,
 		right: (page.side == PageSideOptions.LEFT_HAND) ?
 			page.marginPreferences.left : page.marginPreferences.right
-	}
-}
+	};
+};
 
 // Inspired by this scrollable alert by Peter Kahrel:
 // http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
