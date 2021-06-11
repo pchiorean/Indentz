@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for export v1.14 (2021-05-09)
+	Prepare for export v1.15 (2021-06-11)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides visible area layer and moves white, varnish & dielines to separate spreads.
@@ -46,6 +46,7 @@ var dieLayer = FindLayer([
 	"stanzform", "Stanzform"
 ]);
 var whiteLayer = FindLayer([ "white", "White", "WHITE" ]);
+var foilLayer = FindLayer([ "foil", "Foil", "FOIL", "silver", "Silver", "SILVER" ]);
 var uvLayer = FindLayer([ "varnish", "Varnish", "UV" ]);
 var guidesLayer = FindLayer([ "guides", "Guides" ]);
 var infoLayer = doc.layers.item("info");
@@ -58,16 +59,20 @@ try { visLayer.visible = false } catch (_) {};
 try { saLayer.visible = false } catch (_) {};
 try { dieLayer.visible = true } catch (_) {};
 try { whiteLayer.visible = true } catch (_) {};
+try { foilLayer.visible = true } catch (_) {};
 try { uvLayer.visible = true } catch (_) {};
 try { guidesLayer.visible = false } catch (_) {};
 try { infoLayer.visible = true } catch (_) {};
 
-if (uvLayer != null) { app.doScript(main, ScriptLanguage.JAVASCRIPT,
+if (!!dieLayer) { app.doScript(main, ScriptLanguage.JAVASCRIPT,
+	[ dieLayer, !!uvLayer || !!whiteLayer || !!foilLayer ],
+	UndoModes.ENTIRE_SCRIPT, dieLayer.name) };
+if (!!uvLayer) { app.doScript(main, ScriptLanguage.JAVASCRIPT,
 	[ uvLayer, true ], UndoModes.ENTIRE_SCRIPT, uvLayer.name) };
-if (whiteLayer != null) { app.doScript(main, ScriptLanguage.JAVASCRIPT,
+if (!!foilLayer) { app.doScript(main, ScriptLanguage.JAVASCRIPT,
+	[ foilLayer, true ], UndoModes.ENTIRE_SCRIPT, foilLayer.name) };
+if (!!whiteLayer) { app.doScript(main, ScriptLanguage.JAVASCRIPT,
 	[ whiteLayer, true ], UndoModes.ENTIRE_SCRIPT, whiteLayer.name) };
-if (dieLayer != null) { app.doScript(main, ScriptLanguage.JAVASCRIPT,
-	[ dieLayer, false ], UndoModes.ENTIRE_SCRIPT, dieLayer.name) };
 
 
 // Move items from 'layer' to separate spread(s)
@@ -84,39 +89,38 @@ function main(args) {
 			if (obj.itemLayer.name == layer.name) {
 				if (obj.locked) obj.locked = false;
 				obj.remove(); j--;
-			} else if (obj.label == "spotinfo") { obj.remove(); j-- };
-		}
+			} else if (obj.name == "<page label>") { obj.remove(); j-- };
+		};
 		// Step 2: Delete items not on 'layer' from next spread
 		for (var j = 0; j < nextSpread.pageItems.length; j++) {
 			obj = nextSpread.pageItems.item(j);
 			if (obj.itemLayer.name != layer.name) {
 				if (obj.locked) obj.locked = false;
 				obj.remove(); j--;
-			} else if (obj.label == "spotinfo") { obj.remove(); j-- };
-		}
-		if (thisSpread.pageItems.length == 0) thisSpread.remove();
+			} else if (obj.name == "<page label>") { obj.remove(); j-- };
+		};
+		if (thisSpread.allPageItems.length == 0) thisSpread.remove();
 		if (flgSlugInfo) SlugInfo(nextSpread, layer.name);
 		i++;
-	}
+	};
+	// if (layer.allPageItems.length == 0) layer.remove();
 
-	// Check if 'layer' has items on 'spread'
+	// Check if 'spread' has items on 'layer'
 	function LayerHasItems(spread, layer) {
 		for (var i = 0; i < spread.pageItems.length; i++) {
 			if (spread.pageItems.item(i).itemLayer.name == layer.name) return true;
-		}
-	}
+		};
+	};
 
 	function SlugInfo(spread, name) {
 		app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 		if (doc.documentPreferences.slugTopOffset < 9)
 			doc.documentPreferences.slugTopOffset = 9 +
 			doc.documentPreferences.properties.documentBleedTopOffset;
-
-		// spread.activeLayer = infoLayer;
 		var infoFrame, infoText, infoColor;
 		infoFrame = spread.pages[0].textFrames.add({
 			itemLayer: infoLayer.name,
-			label: "spotinfo",
+			name: "<page label>",
 			contents: name
 		});
 		infoText = infoFrame.parentStory.paragraphs.everyItem();
@@ -125,7 +129,7 @@ function main(args) {
 			pointSize: 6,
 			fillColor: "Registration",
 			capitalization: Capitalization.ALL_CAPS
-		}
+		};
 		infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
 		infoFrame.textFramePreferences.properties = {
 			verticalJustification: VerticalJustification.TOP_ALIGN,
@@ -133,15 +137,15 @@ function main(args) {
 			autoSizingReferencePoint: AutoSizingReferenceEnum.TOP_LEFT_POINT,
 			autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
 			useNoLineBreaksForAutoSizing: true
-		}
+		};
 		infoFrame.move([ 10, -4.2 - infoFrame.geometricBounds[2] -
 			doc.documentPreferences.properties.documentBleedTopOffset ]);
-	}
-}
+	};
+};
 
 function FindLayer(names) { // Find first layer from a list of names
 	for (var i = 0; i < names.length; i++) {
 		var layer = doc.layers.item(names[i]);
 		if (layer.isValid) return layer;
-	}
-}
+	};
+};
