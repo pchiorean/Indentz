@@ -1,5 +1,5 @@
 /*
-	Quick export v2.7.1 (2021-06-10)
+	Quick export v2.7.2 (2021-06-11)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -400,12 +400,19 @@ while (doc = docs.shift()) {
 		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) {
 			var ext = decodeURI(exp.script.path.fsName).substr(decodeURI(exp.script.path.fsName).lastIndexOf(".") + 1);
 			var scriptLanguage = (function(ext) {
-				return {
-					"scpt": ScriptLanguage.APPLESCRIPT_LANGUAGE,
-					"js": ScriptLanguage.JAVASCRIPT,
-					"jsx": ScriptLanguage.JAVASCRIPT,
-					"jsxbin": ScriptLanguage.JAVASCRIPT,
-				}[ext];
+				if (WIN) {
+					return {
+						"js": ScriptLanguage.JAVASCRIPT,
+						"jsx": ScriptLanguage.JAVASCRIPT,
+						"jsxbin": ScriptLanguage.JAVASCRIPT,
+					}[ext]
+				} else {
+					return { "scpt": ScriptLanguage.APPLESCRIPT_LANGUAGE,
+						"js": ScriptLanguage.JAVASCRIPT,
+						"jsx": ScriptLanguage.JAVASCRIPT,
+						"jsxbin": ScriptLanguage.JAVASCRIPT,
+					}[ext];
+				};
 			})(ext);
 			app.doScript(exp.script.path, scriptLanguage, undefined, UndoModes.ENTIRE_SCRIPT, "Run script");
 			app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
