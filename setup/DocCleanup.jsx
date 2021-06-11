@@ -1,5 +1,5 @@
 ﻿/*
-	Doc cleanup v2.4.2 (2021-05-28)
+	Doc cleanup v2.5 (2021-06-11)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -11,7 +11,7 @@
 if (!(doc = app.activeDocument)) exit();
 
 // Set preferences
-app.doScript(File(app.activeScript.path + "/DefaultPrefs.jsx"), 
+app.doScript(File(app.activeScript.path + "/DefaultPrefs.jsx"),
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Set preferences");
 
@@ -38,19 +38,28 @@ function() {
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Show 'guides' layer");
 
-// Delete unused swatches
+// Unlock layers, items, delete hidden, reset scaling
 app.doScript(
 function() {
-	var swa = doc.unusedSwatches;
-	for (var i = 0; i < swa.length; i++) if (swa[i].name != "") swa[i].remove();
+	doc.layers.everyItem().locked = false;
+	var item, items = doc.allPageItems;
+	var askd, delHidden;
+	while (item = items.shift()) {
+		if (item.locked) item.locked = false;
+		if (!item.visible) {
+			if (!askd) { delHidden = confirm("Delete hidden items?"); askd = true };
+			if (delHidden) item.remove();
+		};
+		try { item.redefineScaling() } catch (e) {};
+	};
 },
 ScriptLanguage.javascript, undefined,
-UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
+UndoModes.ENTIRE_SCRIPT, "Unlock items, delete hidden, reset scaling");
 
 // Delete unused layers
 app.doScript(
 function() {
-	if ((menu_DUL = app.menuActions.item("$ID/Delete Unused Layers")).enabled) menu_DUL.invoke();
+	if ((menu = app.menuActions.item("$ID/Delete Unused Layers")).enabled) menu.invoke();
 },
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Delete unused layers");
@@ -58,34 +67,20 @@ UndoModes.ENTIRE_SCRIPT, "Delete unused layers");
 // Delete empty spreads
 app.doScript(
 function() {
-	var s = doc.spreads;
-	for (var i = 0; i < s.length; i++) {
-		if (s[i].pageItems.length == 0 && s.length > 1) { s[i].remove(); i-- }
-	}
+	for (var i = 0, s = doc.spreads; i < s.length; i++)
+		if (s[i].pageItems.length == 0 && s.length > 1) { s[i].remove(); i-- };
 },
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Delete empty spreads");
 
-// Delete guides
-// app.doScript(
-// function() {
-// 	var g = doc.guides.everyItem().getElements();
-// 	for (var i = 0; i < g.length; i++) if (g[i].label != "HW") g[i].remove();
-// },
-// ScriptLanguage.javascript, undefined,
-// UndoModes.ENTIRE_SCRIPT, "Delete guides");
-
-// Unlock all items & redefine scaling to 100%
+// Delete unused swatches
 app.doScript(
 function() {
-	var item, items = doc.allPageItems;
-	while (item = items.shift()) {
-		if (item.locked == true) item.locked = false;
-		try { item.redefineScaling() } catch (e) {};
-	}
+	var item, items = doc.unusedSwatches;
+	while (item = items.shift()) if (item.name != "") item.remove();
 },
 ScriptLanguage.javascript, undefined,
-UndoModes.ENTIRE_SCRIPT, "Unlock all items & redefine scaling to 100%");
+UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
 
 // Convert empty text frames to generic frames
 app.doScript(
@@ -95,7 +90,7 @@ function() {
 		if (/\s+$/g.test(item.contents) && item.nextTextFrame == null)
 			item.contents = item.contents.replace(/\s+$/g, "");
 		if (item.contents.length == 0) item.contentType = ContentType.UNASSIGNED;
-	}
+	};
 },
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Convert empty text frames to generic frames");
