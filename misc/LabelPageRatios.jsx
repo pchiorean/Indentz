@@ -2,7 +2,7 @@
 	Page ratios v2.0 (2021-06-11)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Calculates the ratio of each page and displays it in the upper left corner.
+	Adds a label (ratio) on each page's slug.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
