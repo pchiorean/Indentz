@@ -1,4 +1,4 @@
-// @include "FitTo.jsxinc";
+// @include "../lib/FitTo.jsxinc";
 
 function ExpandItems(items) {
 	while (item = items.shift()) {
