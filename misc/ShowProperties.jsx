@@ -1,5 +1,5 @@
 /*
-	Show properties 2.0 (2021-06-07)
+	Show properties 2.1 (2021-06-11)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Shows properties and methods of the selected object/active document/the application.
@@ -20,7 +20,7 @@ if (obj === app) if (!(confirm("Will show properties of the application, proceed
 var result = [];
 Inspect(obj);
 
-result.push("\r");
+result.push("\nMETHODS:");
 var methods = obj.reflect.methods.sort();
 for (var i = 0; i < methods.length; i++) {
 	if (methods[i].toString() === "==" || methods[i].toString() === "===") continue;
@@ -62,7 +62,7 @@ function Inspect(obj, prefix, level, maxLevel) {
 		} catch (_) { str = "N/A" };
 		result.push((level == 1 && result.length > 0 ? "\n" : "") + prefix + props[i] + " = " + str);
 		if (val != null && str != "N/A" && val.reflect.properties.length > 1) {
-			if (props[i].toString() === "parent") continue;
+			if (/^parent.*/gi.test(props[i].toString())) continue;
 			Inspect(val, prefix + props[i] + ".", level+1, maxLevel);
 		};
 	};
