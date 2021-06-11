@@ -48,7 +48,7 @@ Proxy | | | | | |
 
 Fac câteva pregătiri pentru export; pot fi rulate în [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
 
-* **`PrepareForExport.jsx`** ascunde stratul **visible area** și mută ștanțele și marcajele pentru alb și lac UV de pe **dielines** / **white** / **varnish** pe spreaduri separate.
+* **`PrepareForExport.jsx`** ascunde stratul **visible area** și mută ștanțele și marcajele pentru alb, foil și lac UV de pe **dielines** / **white** / **foil** / **varnish** pe spreaduri separate.
 
 * **`VisibleArea.jsx`** creează un chenar de dimensiunea marginilor paginii pe stratul **visible area**. Folosește culoarea **Visible area**, care dacă nu există va fi creată cu valoarea "C=0 M=100 Y=0 K=0".
 
@@ -194,6 +194,8 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, le redenumește după formula "C= M= Y= K=", elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
+* **`DeleteGuides.jsx`** șterge toate liniile de ghidaj din document.
+
 * **`ReplaceFonts.jsx`** substituie fonturi dintr‑o listă definită într‑un fișier TSV numit [**`fonts.txt`**](../fonts.txt):
 
   Old font | Style | New font | Style
@@ -265,7 +267,7 @@ View | |
 
 ### **Miscellaneous**
 
-* **`CleanupLabels.jsx`**: Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. Scriptul șterge etichetele obiectelor selectate sau ale tuturor obiectelor din document dacă nu e selectat nimic.
+* **`ClearLabels.jsx`**: Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. Scriptul șterge etichetele obiectelor selectate sau ale tuturor obiectelor din document dacă nu e selectat nimic.
 
 * **`Clip.jsx`**: Pentru a manipula unele obiecte uneori e util să le inserăm temporar într‑un container *(clipping frame)*. Scriptul inserează obiectele selectate într‑un container sau le restaurează dacă sunt deja inserate.
 
@@ -275,9 +277,9 @@ View | |
 
 * **`HW.jsx`** etichetează obiectele selectate "HW" și adaugă un ghid inferior de 10% pe pagina curentă.
 
-* **`LabelPage.jsx`** adaugă o etichetă pe slug‑ul paginii curente.
+* **`LabelPage.jsx`** adaugă o etichetă configurabilă pe slugul paginii curente, pe stratul **info**.
 
-* **`PageRatios.jsx`** calculează rația fiecărei pagini și o afișează în colțul din stânga sus, pe stratul **info**.
+* **`LabelPageRatios.jsx`** adaugă pe slugul fiecărei pagini o etichetă cu raportul acesteia, pe stratul **info**.
 
 * **`QR.jsx`** adaugă un cod QR pe fiecare pagină a documentului activ sau într‑un fișier separat cu același nume și sufixul "_QR".
 
@@ -328,4 +330,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 17 mai 2021
+README-ro.md • 11 iunie 2021

@@ -48,7 +48,7 @@ Proxy | | | | | |
 
 Make several preparations for export; can be used with [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
 
-* **`PrepareForExport.jsx`** hides the **visible area** layer and moves the dielines, white and UV markings from **dielines** / **white** / **varnish** to separate spreads.
+* **`PrepareForExport.jsx`** hides the **visible area** layer and moves the dielines, white, foil and UV markings from **dielines** / **white** / **foil** / **varnish** to separate spreads.
 
 * **`VisibleArea.jsx`** creates a frame the size of the page margins on the **visible area** layer. It uses the **Visible area** swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
 
@@ -195,6 +195,8 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`CleanupSwatches.jsx`** converts process RGB swatches to CMYK, renames them to "C= M= Y= K=" form, removes duplicates and deletes unused. Spot colors are not changed.
 
+* **`DeleteGuides.jsx`** deletes all guides from the document.
+
 * **`ReplaceFonts.jsx`** substitute fonts from a list defined in a TSV file named [**`fonts.txt`**](../fonts.txt):
 
   Old font | Style | New font | Style
@@ -207,7 +209,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`DocDefaults.jsx`** runs **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`**, **`PageSizeFromFilename.jsx`**, sets loose pasteboard margins.
 
-* **`DocCleanup.jsx`** runs **`DefaultPrefs.jsx`**, cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%, converts empty text frames to simple frames, sets tight pasteboard margins.
+* **`DocCleanup.jsx`** runs **`DefaultPrefs.jsx`**, cleans up unused swatches, layers and pages, unlocks all items, deletes hidden items, resets scaling to 100%, converts empty text frames to simple frames, sets tight pasteboard margins.
 
 ---
 
@@ -266,7 +268,7 @@ View | |
 
 ### **Miscellaneous**
 
-* **`CleanupLabels.jsx`**: Sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
+* **`ClearLabels.jsx`**: Sometimes objects that have a label attached *(Script Label)* are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
 
 * **`Clip.jsx`**: To handle some objects it is sometimes useful to temporarily insert them into a container *(clipping frame)*. The script inserts selected objects in a clipping frame or restores them if already clipped.
 
@@ -276,9 +278,9 @@ View | |
 
 * **`HW.jsx`** labels selected objects "HW" and adds a 10% bottom guide on the current page.
 
-* **`LabelPage.jsx`** adds a label on the current page's slug.
+* **`LabelPage.jsx`** adds a custom label on the current page slug, on the **info** layer.
 
-* **`PageRatios.jsx`** calculates the ratio of each page and puts it in the upper left corner, on the **info** layer.
+* **`LabelPageRatios.jsx`** adds a label with its aspect ratio to the slug of each page, on the **info** layer.
 
 * **`QR.jsx`** adds a QR code on each page of the active document or a separate file with the same name and the suffix "_QR".
 
@@ -329,4 +331,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • May 17, 2021
+README.md • June 11, 2021
