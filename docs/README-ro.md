@@ -1,6 +1,6 @@
 # Indentz
 
-Colecție de scripturi InDesign pentru operații simple și repetitive. În mod ideal, o parte din ele ar trebui invocate printr‑un shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) de Peter Kahrel.
+Colecție de scripturi InDesign pentru operații simple și repetitive. Ideal, o parte din ele ar trebui invocate printr‑un shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; sugestii sub fiecare secțiune).
 
 ---
 
@@ -46,7 +46,15 @@ Proxy | | | | | |
 
 ### **Export**
 
-Fac câteva pregătiri pentru export; pot fi rulate în [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
+* **`QuickExport.jsx`** exportă în PDF toate documentele deschise sau documentele dintr‑un folder, cu până la două preseturi configurabile. Fără documente deschise, puteți selecta un folder pentru procesarea în serie:
+
+  ![Quick export](img/quickexport.png)
+
+  Textul din câmpul **Suffix** va fi adăugat la numele fișierului exportat (e autodetectat dacă numele presetului se termină cu "_*sufix*"). Dacă **Export in subfolders** e activ, sufixul va fi folosit și pentru numele subfolderului.
+
+  Pentru comoditate, câteva opțiuni de export sunt direct accesibile: export ca pagini/spreaduri, crop mark‑uri, page information, slug area; de asemenea, se poate seta un alt bleed.
+
+  Opțional, poate rula un JavaScript sau AppleScript înainte de export, de exemplu unul din următoarele:
 
 * **`PrepareForExport.jsx`** ascunde stratul **visible area** și mută ștanțele și marcajele pentru alb, foil și lac UV de pe **dielines** / **white** / **foil** / **varnish** pe spreaduri separate.
 
@@ -330,4 +338,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 11 iunie 2021
+README-ro.md • 12 iunie 2021

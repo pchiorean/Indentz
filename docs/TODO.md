@@ -2,11 +2,12 @@
 
 ### Global
 - [x] [docs] Update documentation
-  - [x] [`f566451`](https://github.com/pchiorean/Indentz/commit/f558c7530239c8a8acaa6e591db7553b6819d78e) `CleanupLabels.jsx` -> `ClearLabels.jsx`
-  - [x] [`da984c1`](https://github.com/pchiorean/Indentz/commit/da984c163e88f568bf72eb291ccf52e651792324) New: `DeleteGuides.jsx`
+  - [x] [`f566451`](https://github.com/pchiorean/Indentz/commit/f558c7530239c8a8acaa6e591db7553b6819d78e) [style] `CleanupLabels.jsx` -> `ClearLabels.jsx`
+  - [x] [`da984c1`](https://github.com/pchiorean/Indentz/commit/da984c163e88f568bf72eb291ccf52e651792324) [new] `DeleteGuides.jsx`
   - [x] [`5e2d6b5`](https://github.com/pchiorean/Indentz/commit/5e2d6b51b5d5045bc6e4bb6542bfb92bba042d06) `PrepareForExport.jsx`: [update] Add 'foil' layer
   - [x] [`06ab3d5`](https://github.com/pchiorean/Indentz/commit/06ab3d5ea7868698c6f814b3106646f61b4901a5) `PageRatios.jsx`: [update] Put info on slug
-  - [x] [`ee96520`](https://github.com/pchiorean/Indentz/commit/ee9652084bafac7bef2a1cd76bb501bf2ca09523) `PageRatios.jsx` -> `LabelPageRatios.jsx`
+  - [x] [`ee96520`](https://github.com/pchiorean/Indentz/commit/ee9652084bafac7bef2a1cd76bb501bf2ca09523) [style] `PageRatios.jsx` -> `LabelPageRatios.jsx`
+  - [x] [docs] Add documentation for `QuickExport.jsx`
 - [x] [fix] Remove '&' from `forbiddenFilenameChars`
 - [ ] [update] ? `selectDialog`/`selectDlg`
 - [ ] [feature] Add `@include` support when parsing TSVs [#137](https://github.com/pchiorean/Indentz/issues/137)
@@ -42,8 +43,8 @@
 
 ### QuickExport
 - [ ] [fix] Don't save 'Overwrite files' state
-- [ ] [docs] Add documentation
-- [ ] [update] Include subfolders
+- [ ] [feature] Export separate pages (see `SpreadToFiles.jsx`)
+- [ ] [feature] Include subfolders
 - [ ] [feature] ? 'View PDF after exporting' checkbox, alert if > 20 files
 - [ ] [feature] ? 'Advanced mode' checkbox
 - [ ] [feature] History for dropdowns

@@ -1,6 +1,6 @@
 # Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; suggestions below each section). Some can be run by the [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script by Peter Kahrel.
+Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; suggestions below each section).
 
 ---
 
@@ -46,7 +46,15 @@ Proxy | | | | | |
 
 ### **Export**
 
-Make several preparations for export; can be used with [**Batch process**](https://creativepro.com/files/kahrel/indesign/batch_convert.html).
+* **`QuickExport.jsx`** exports to PDF all open documents or documents from a folder, with up to two configurable presets. With no documents open, you can select a folder for batch processing:
+
+  ![Quick export](img/quickexport.png)
+
+  The text from the **Suffix** field will be appended to the exported file name (it's autodetected if the preset ends with "_*suffix*"). If **Export in subfolders** is checked, the suffix will also be used for the subfolder name.
+
+  For convenience, some export options are directly accessible: export as pages/spreads, crop marks, page information, slug area; also, you can set a custom bleed.
+
+  Optionally, it can run a JavaScript or AppleScript before exporting, e.g., one of the following:
 
 * **`PrepareForExport.jsx`** hides the **visible area** layer and moves the dielines, white, foil and UV markings from **dielines** / **white** / **foil** / **varnish** to separate spreads.
 
@@ -331,4 +339,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • June 11, 2021
+README.md • June 12, 2021
