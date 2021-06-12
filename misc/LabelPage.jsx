@@ -1,5 +1,5 @@
 /*
-	Label page v1.0.1 (2021-06-07)
+	Label page v1.1 (2021-06-12)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a label on the current page's slug.
@@ -17,7 +17,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 function main() {
 	var page = app.activeWindow.activePage;
 	var isOnTop = true;
-	var ui = new Window("dialog", "Label page");
+	var ui = new Window("dialog", "Label page " + page.name);
 	ui.orientation = "row";
 	ui.alignChildren = [ "left", "fill" ];
 	ui.main = ui.add("panel", undefined, undefined);
@@ -25,7 +25,7 @@ function main() {
 	ui.main.alignChildren = [ "left", "top" ];
 	ui.main.add("statictext", undefined, "Enter label text:");
 	ui.label = ui.main.add("edittext", undefined, "", { enterKeySignalsOnChange: true });
-	ui.label.characters = 56;
+	ui.label.characters = 40;
 	ui.label.active = true;
 	ui.caps = ui.main.add("checkbox", undefined, "Make label uppercase");
 	ui.actions = ui.add("group", undefined);
