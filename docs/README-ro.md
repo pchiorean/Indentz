@@ -64,6 +64,14 @@ Proxy | | | | | |
 
 **Notă:** Detectează straturi cu denumiri similare gen **visible**, **vizibil** pentru **visible area**, sau **diecut**, **die cut**, **cut lines**, **stanze** pentru **dielines**.
 
+<details><summary><strong>Shortcuts</strong></summary>
+
+Export | |
+:- | -:
+**QuickExport.jsx** | ⌃E
+
+</details>
+
 ---
 
 ### **File**

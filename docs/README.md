@@ -64,6 +64,14 @@ Proxy | | | | | |
 
 **Note:** The scripts detect alternative layers like **visible**, **vizibil** for **visible area**, or **diecut**, **die cut**, **cut lines**, **stanze** for **dielines**.
 
+<details><summary><strong>Shortcuts</strong></summary>
+
+Export | |
+:- | -:
+**QuickExport.jsx** | ⌃E
+
+</details>
+
 ---
 
 ### **File**
