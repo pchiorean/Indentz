@@ -62,7 +62,7 @@ Proxy | | | | | |
 
 * **`VisibleAreaHide.jsx`** and **`VisibleAreaShow.jsx`** hide or show **visible area**.
 
-**Note:** The scripts detect alternative layers like **visible**, **vizibil** for **visible area**, or **diecut**, **die cut**, **cut lines**, **stanze** for **dielines**.
+**Note:** The scripts detect some alternative layers for **visible area** (**visible**, **vizibil**), **dielines** (**diecut**, **die cut**, **cut lines**, **stanze**) etc.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -347,4 +347,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • June 12, 2021
+README.md • June 13, 2021
