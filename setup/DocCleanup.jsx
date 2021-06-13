@@ -1,5 +1,5 @@
 ﻿/*
-	Doc cleanup v2.5 (2021-06-11)
+	Doc cleanup v2.5.1 (2021-06-13)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -42,13 +42,13 @@ UndoModes.ENTIRE_SCRIPT, "Show 'guides' layer");
 app.doScript(
 function() {
 	doc.layers.everyItem().locked = false;
-	var item, items = doc.allPageItems;
+	var item, items = doc.pageItems.everyItem().getElements();
 	var askd, delHidden;
 	while (item = items.shift()) {
 		if (item.locked) item.locked = false;
 		if (!item.visible) {
 			if (!askd) { delHidden = confirm("Delete hidden items?"); askd = true };
-			if (delHidden) item.remove();
+			if (delHidden) { item.remove(); continue };
 		};
 		try { item.redefineScaling() } catch (e) {};
 	};
