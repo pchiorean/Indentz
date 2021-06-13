@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for export v2.0 (2021-06-13)
+	Prepare for export v2.0.1 (2021-06-13)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves special colors to separate spreads.
@@ -125,6 +125,7 @@ function MoveSpecialColors(layer, /*bool*/slug) {
 	// Check if 'spread' has items on 'layer'
 	function LayerHasItems(spread, layer) {
 		for (var i = 0; i < spread.pageItems.length; i++) {
+			if (spread.pageItems.item(i).visible == false) continue;
 			if (spread.pageItems.item(i).itemLayer.name == layer.name) return true;
 		};
 	};
