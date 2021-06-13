@@ -1,8 +1,8 @@
 ﻿/*
-	Prepare for export v1.15 (2021-06-11)
+	Prepare for export v2.0 (2021-06-13)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Hides visible area layer and moves white, varnish & dielines to separate spreads.
+	Hides some layers and moves special colors to separate spreads.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -29,55 +29,72 @@
 if (!(doc = app.activeDocument)) exit();
 app.scriptPreferences.enableRedraw = false;
 
-var coveredLayer = FindLayer([ "covered areas"]);
-var visLayer = FindLayer([
-	"visible area",
-	"visible", "Visible",
-	"vizibil", "Vizibil",
-	"vis. area", "Vis. area"
-]);
-var saLayer = FindLayer([ "safe area", "segmentation" ]);
-var dieLayer = FindLayer([
-	"dielines",
-	"cut lines", "Cut lines", "cut", "Cut", "CUT",
-	"decoupe", "Decoupe",
-	"die", "Die", "die cut", "Die Cut", "diecut", "Diecut",
-	"stanz", "Stanz", "stanze", "Stanze",
-	"stanzform", "Stanzform"
-]);
-var whiteLayer = FindLayer([ "white", "White", "WHITE" ]);
-var foilLayer = FindLayer([ "foil", "Foil", "FOIL", "silver", "Silver", "SILVER" ]);
-var uvLayer = FindLayer([ "varnish", "Varnish", "UV" ]);
-var guidesLayer = FindLayer([ "guides", "Guides" ]);
+// Customizable items
 var infoLayer = doc.layers.item("info");
-if (!infoLayer.isValid) doc.layers.add({ name: "info", layerColor: UIColors.CYAN });
-infoLayer.move(LocationOptions.AT_BEGINNING);
-
-doc.layers.everyItem().locked = false;
-try { coveredLayer.visible = false } catch (_) {};
-try { visLayer.visible = false } catch (_) {};
-try { saLayer.visible = false } catch (_) {};
-try { dieLayer.visible = true } catch (_) {};
-try { whiteLayer.visible = true } catch (_) {};
-try { foilLayer.visible = true } catch (_) {};
-try { uvLayer.visible = true } catch (_) {};
-try { guidesLayer.visible = false } catch (_) {};
-try { infoLayer.visible = true } catch (_) {};
-
-if (!!dieLayer) { app.doScript(main, ScriptLanguage.JAVASCRIPT,
-	[ dieLayer, !!uvLayer || !!whiteLayer || !!foilLayer ],
-	UndoModes.ENTIRE_SCRIPT, dieLayer.name) };
-if (!!uvLayer) { app.doScript(main, ScriptLanguage.JAVASCRIPT,
-	[ uvLayer, true ], UndoModes.ENTIRE_SCRIPT, uvLayer.name) };
-if (!!foilLayer) { app.doScript(main, ScriptLanguage.JAVASCRIPT,
-	[ foilLayer, true ], UndoModes.ENTIRE_SCRIPT, foilLayer.name) };
-if (!!whiteLayer) { app.doScript(main, ScriptLanguage.JAVASCRIPT,
-	[ whiteLayer, true ], UndoModes.ENTIRE_SCRIPT, whiteLayer.name) };
+var layerNames = {
+	covered:  [ "covered area*" ],
+	visible:  [ "visible area", "rahmen", "sicht*", "*vi?ib*", "vis?*" ],
+	safe:     [ "safety margins", "safe area", "segmentation" ],
+	guides:   [ "guides", "grid", "masuratori" ],
+	dielines: [ "dielines", "cut", "cut*line*", "decoupe", "die", "die*cut", "stanz*" ],
+	varnish:  [ "varnish", "uv" ],
+	foil:     [ "foil", "silver" ],
+	white:    [ "white" ]
+};
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, "Prepare for export");
 
 
-// Move items from 'layer' to separate spread(s)
-function main(args) {
-	var layer = args[0], flgSlugInfo = args[1];
+function main() {
+	if (!infoLayer.isValid) doc.layers.add({ name: "info", layerColor: UIColors.CYAN })
+	else infoLayer.visible = true;
+	infoLayer.move(LocationOptions.AT_BEGINNING);
+
+	doc.layers.everyItem().locked = false;
+
+	var matched = { dielines: [], varnish: [], foil: [], white: [] };
+	for (var i = 0, layer; i < doc.layers.length; i++) {
+		layer = doc.layers[i];
+		for (var variant in layerNames) {
+			if (IsIn(layer.name, layerNames[variant], false)) {
+				switch (layerNames[variant][0]) {
+					case layerNames.covered[0]:
+					case layerNames.visible[0]:
+					case layerNames.safe[0]:
+					case layerNames.guides[0]:
+						layer.visible = false;
+						break;
+					case layerNames.dielines[0]:
+						matched.dielines.push(layer);
+						layer.visible = true;
+						break;
+					case layerNames.varnish[0]:
+						matched.varnish.push(layer);
+						layer.visible = true;
+						break;
+					case layerNames.foil[0]:
+						matched.foil.push(layer);
+						layer.visible = true;
+						break;
+					case layerNames.white[0]:
+						matched.white.push(layer);
+						layer.visible = true;
+						break;
+				};
+				continue;
+			};
+		};
+	};
+
+	var dieLayerSlug = (matched.varnish.length > 0 || matched.foil.length > 0 || matched.white.length > 0);
+	for (var i = 0; i < matched.dielines.length > 0; i++) MoveSpecialColors(matched.dielines[i], dieLayerSlug);
+	for (var i = 0; i < matched.varnish.length > 0; i++) MoveSpecialColors(matched.varnish[i], true);
+	for (var i = 0; i < matched.foil.length > 0; i++) MoveSpecialColors(matched.foil[i], true);
+	for (var i = 0; i < matched.white.length > 0; i++) MoveSpecialColors(matched.white[i], true);
+};
+
+// Move all items from 'layer' to a separate spread
+function MoveSpecialColors(layer, /*bool*/slug) {
 	var thisSpread, nextSpread, obj;
 	for (var i = 0; i < doc.spreads.length; i++) {
 		thisSpread = doc.spreads[i];
@@ -100,7 +117,7 @@ function main(args) {
 			} else if (obj.name == "<page label>") { obj.remove(); j-- };
 		};
 		if (thisSpread.allPageItems.length == 0) thisSpread.remove();
-		if (flgSlugInfo) SlugInfo(nextSpread, layer.name);
+		if (slug) SlugInfo(nextSpread, layer.name);
 		i++;
 	};
 	// if (layer.allPageItems.length == 0) layer.remove();
@@ -143,9 +160,17 @@ function main(args) {
 	};
 };
 
-function FindLayer(names) { // Find first layer from a list of names
-	for (var i = 0; i < names.length; i++) {
-		var layer = doc.layers.item(names[i]);
-		if (layer.isValid) return layer;
+// Modified from FORWARD.Util functions, by Richard Harrington
+// https://github.com/richardharrington/indesign-scripts
+function IsIn(searchValue, array, caseSensitive) {
+	caseSensitive = (typeof caseSensitive !== 'undefined') ? caseSensitive : true;
+	var item;
+	if (!caseSensitive && typeof searchValue === 'string') searchValue = searchValue.toLowerCase();
+	for (var i = 0; i < array.length; i++) {
+		item = array[i];
+		if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
+		// if (item === searchValue) return true;
+		item = RegExp("^" + item.replace(/\*/g, ".*").replace(/\?/g, ".") + "$", "g");
+		if (item.test(searchValue)) return true;
 	};
 };
