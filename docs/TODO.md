@@ -40,6 +40,7 @@
 
 ### PrepareForExport
 - [ ] [fix] Ignore hidden items
+- [ ] [update] Take layer variants from `layers.txt`
 
 ### QuickExport
 - [ ] [fix] Don't save 'Overwrite files' state
