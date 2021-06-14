@@ -60,7 +60,7 @@ Proxy | | | | | |
 
 * **`VisibleArea.jsx`** creează un chenar de dimensiunea marginilor paginii pe stratul **visible area**. Folosește culoarea **Visible area**, care dacă nu există va fi creată cu valoarea "C=0 M=100 Y=0 K=0".
 
-* **`VisibleAreaHide.jsx`** și **`VisibleAreaShow.jsx`** ascund sau afișează **visible area**.
+* **`VisibleAreaHideLayer.jsx`** și **`VisibleAreaShowLayer.jsx`** ascund sau afișează **visible area**.
 
 **Notă:** Aceste scripturi detectează straturi cu denumiri similare pentru **visible area** (**visible**, **vizibil**), **dielines** (**diecut**, **die cut**, **cut lines**, **stanze**) etc.
 
@@ -346,4 +346,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 13 iunie 2021
+README-ro.md • 14 iunie 2021

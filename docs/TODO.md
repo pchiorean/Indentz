@@ -39,8 +39,8 @@
 - [ ] [fix] Error on pages set to 1:X scale [#129](https://github.com/pchiorean/Indentz/issues/129)
 
 ### PrepareForExport
-- [ ] [fix] Ignore hidden items
-- [ ] [update] Take layer variants from `layers.txt`
+- [x] [fix] Ignore hidden items
+- [ ] [update] Read layer variants from `layers.txt`
 
 ### QuickExport
 - [ ] [fix] Don't save 'Overwrite files' state
@@ -52,8 +52,8 @@
 - [ ] [feature] JPG & TIFF export profiles
 
 ### QR, QRBatch
-- [ ] [fix] Don't break line on '-'
-- [ ] [update] Remove 'preview', 'print' et al from filenames
+- [ ] [fix] ? Don't break line on '-'
+- [ ] [update] Remove 'preview' & 'print' from filenames
 - [ ] [fix] Check for visible area frame
 - [ ] [fix] Improve line breaking
 
@@ -69,3 +69,4 @@
 ### New scripts
 - [ ] [new] `SeparateSpreadPages.jsx` [#136](https://github.com/pchiorean/Indentz/issues/136)
 - [ ] [new] `LayersToFiles.jsx` [#94](https://github.com/pchiorean/Indentz/issues/94)
+- [ ] [new] `Adjust.jsx`

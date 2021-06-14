@@ -60,7 +60,7 @@ Proxy | | | | | |
 
 * **`VisibleArea.jsx`** creates a frame the size of the page margins on the **visible area** layer. It uses the **Visible area** swatch, which if it does not exist will be created with the value "C=0 M=100 Y=0 K=0".
 
-* **`VisibleAreaHide.jsx`** and **`VisibleAreaShow.jsx`** hide or show **visible area**.
+* **`VisibleAreaHideLayer.jsx`** and **`VisibleAreaShowLayer.jsx`** hide or show **visible area**.
 
 **Note:** The scripts detect some alternative layers for **visible area** (**visible**, **vizibil**), **dielines** (**diecut**, **die cut**, **cut lines**, **stanze**) etc.
 
@@ -347,4 +347,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020, macOS 10.13, low-DPI display, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • June 13, 2021
+README.md • June 14, 2021
