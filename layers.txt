@@ -11,7 +11,7 @@ media	Cyan	no	yes	above
 HW	Light Gray	no	yes	above	*hw*, legal, wh
 disclaimer	Gray	no	yes	above	legal text
 text and logos	Green	no	yes	above	copy, dots, headline*, hl, logo, text*, txt, typ?
-codes	Grid Green	no	yes	above	code*, barcode*, EAN*
+codes	Grid Green	no	yes	above	code*, bar*code*, EAN*
 price	Gold	no	yes	above	preis
 products	Blue	no	yes	above	device*, pack*, packshot*, product*, tin*
 ring	Fiesta	no	yes	above	bullseye
