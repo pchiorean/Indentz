@@ -1,5 +1,5 @@
 /*
-	Clip v2.5.3 (2021-06-07)
+	Clip v2.6 (2021-06-15)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Clips selected objects in a "<clip frame>", or restores them.
@@ -36,34 +36,36 @@ function Clip(items) {
 
 	var obj = items[0];
 	var size = obj.visibleBounds;
-	// If multiple objects are selected, group them
-	if (items.length > 1) {
-		var objects = [];
-		for (var i = 0; i < items.length; i++)
-			if (!items[i].locked) objects.push(items[i]);
-		obj = doc.groups.add(objects);
-		obj.name = "<auto clip group>";
-		size = obj.geometricBounds;
-	}
-	// Special case: text frames
-	else if (items.length == 1 &&
-		items[0].constructor.name == "TextFrame" &&
-		(items[0].contents.replace(/^\s+|\s+$/g, "")).length > 0) {
-		var outlines = items[0].createOutlines(false);
-		size = [
-			obj.geometricBounds[0], outlines[0].geometricBounds[1],
-			obj.geometricBounds[2], outlines[0].geometricBounds[3]
-		];
-		outlines[0].remove();
-	}
-	var clipFrame = doc.rectangles.add(
-		obj.itemLayer,
-		LocationOptions.AFTER, obj,
-		{ name: "<clip frame>", label: obj.label,
-		fillColor: "None", strokeColor: "None",
-		geometricBounds: size });
-	clipFrame.sendToBack(obj);
-	app.select(obj); app.cut(); app.select(clipFrame); app.pasteInto();
+	try {
+		// If multiple objects are selected, group them
+		if (items.length > 1) {
+			var objects = [];
+			for (var i = 0; i < items.length; i++)
+				if (!items[i].locked) objects.push(items[i]);
+			obj = doc.groups.add(objects);
+			obj.name = "<auto clip group>";
+			size = obj.geometricBounds;
+		}
+		// Special case: text frames
+		else if (items.length == 1 &&
+			items[0].constructor.name == "TextFrame" &&
+			(items[0].contents.replace(/^\s+|\s+$/g, "")).length > 0) {
+			var outlines = items[0].createOutlines(false);
+			size = [
+				obj.geometricBounds[0], outlines[0].geometricBounds[1],
+				obj.geometricBounds[2], outlines[0].geometricBounds[3]
+			];
+			outlines[0].remove();
+		}
+		var clipFrame = doc.rectangles.add(
+			obj.itemLayer,
+			LocationOptions.AFTER, obj,
+			{ name: "<clip frame>", label: obj.label,
+			fillColor: "None", strokeColor: "None",
+			geometricBounds: size });
+		clipFrame.sendToBack(obj);
+		app.select(obj); app.cut(); app.select(clipFrame); app.pasteInto();
+	} catch (e) { alert("Can't clip this object.\nTry selecting the parent."); return }
 }
 
 function UndoClip(clipFrame) {
