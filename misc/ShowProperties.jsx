@@ -1,5 +1,5 @@
 /*
-	Show properties 2.1 (2021-06-11)
+	Show properties 2.1.1 (2021-06-14)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Shows properties and methods of the selected object/active document/the application.
@@ -45,18 +45,18 @@ function Inspect(obj, prefix, level, maxLevel) {
 		try {
 			val = obj[props[i]], str = "";
 			if (val != null) switch (val.constructor.name) {
-				case "Array": str = "[ " + val + " ] [Array]"; break;
-				case "Boolean": str = val + " [Boolean]"; break;
-				case "Color": str = "[ " + val.colorValue + " ] '" + val.name + "' [Color]"; break;
-				case "Document": str = "'" + val.name + "' [Document]"; break;
-				case "Enumerator": str = val + " (" + (val).toString() + ") [Enumerator]"; break;
-				case "Font": str = val.name.replace(/\t/g, " ") + " [Font]" ; break;
-				case "Layer": str = "'" + val.name + "' [Layer]"; break;
-				case "Number": str = val + " [Number]" ; break;
-				case "Page": str = val.index + " [Page]"; break;
-				case "Spread": str = val.index + " [Spread]"; break;
-				case "String": str = "'" + val + "' [String]"; break;
-				case "Swatch": str = "'" + val.name + "' [Swatch]"; break;
+				case "Array": str = "[ " + val + " ] (Array)"; break;
+				case "Boolean": str = val + " (Boolean)"; break;
+				case "Color": str = "[ " + val.colorValue + " ] '" + val.name + "' (Color)"; break;
+				case "Document": str = "'" + val.name + "' (Document)"; break;
+				case "Enumerator": str = val + " (" + (val).toString() + ") (Enumerator)"; break;
+				case "Font": str = val.name.replace(/\t/g, " ") + " (Font)" ; break;
+				case "Layer": str = "'" + val.name + "' (Layer)"; break;
+				case "Number": str = val + " (Number)" ; break;
+				case "Page": str = val.index + " (Page)"; break;
+				case "Spread": str = val.index + " (Spread)"; break;
+				case "String": str = "'" + val + "' (String)"; break;
+				case "Swatch": str = "'" + val.name + "' (Swatch)"; break;
 				default: str = "[" + val.constructor.name + "]";
 			};
 		} catch (_) { str = "N/A" };
