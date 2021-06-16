@@ -1,16 +1,20 @@
-function dbg(proc, msg) {
-    var debugFile = File(Folder.desktop + "/" +
-    app.activeScript.name.substr(0, app.activeScript.name.lastIndexOf(".")) + ".debug");
-    debugFile.open("a");
-    debugFile.writeln(
-        (function() {
-            var t = new Date();
-            return (proc == "start" ? "\n" : "")
-                 + (String(t.getHours()).length == 1   ? "0" + t.getHours()   : t.getHours())   + ":"
-                 + (String(t.getMinutes()).length == 1 ? "0" + t.getMinutes() : t.getMinutes()) + ":"
-                 + (String(t.getSeconds()).length == 1 ? "0" + t.getSeconds() : t.getSeconds()) + "."
-                 + (String(t.getMilliseconds()).length == 2 ? t.getMilliseconds() +  "0" :
-                   (String(t.getMilliseconds()).length == 1 ? t.getMilliseconds() + "00" : t.getMilliseconds()));
-        })() + "\t" + proc + (!!msg ? ("\t" + msg) : "")
-    );
+function dbg() {
+	var script = (function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } })();
+	var debugFile = File(Folder.desktop + "/" + script.name.substr(0, script.name.lastIndexOf(".")) + ".log");
+	debugFile.open("a");
+
+	var t = new Date();
+	var msg = (String(t.getHours()).length == 1 ? "0" + t.getHours() : t.getHours()) + ":"
+		+ (String(t.getMinutes()).length == 1 ? "0" + t.getMinutes() : t.getMinutes()) + ":"
+		+ (String(t.getSeconds()).length == 1 ? "0" + t.getSeconds() : t.getSeconds()) + "."
+		+ (String(t.getMilliseconds()).length == 2 ? t.getMilliseconds() + "0" :
+		(String(t.getMilliseconds()).length == 1 ? t.getMilliseconds() + "00" : t.getMilliseconds())) + " ";
+
+	var args = Array.prototype.slice.call(arguments);
+	if (args.length === 0) {
+		msg = "--------------------------";
+	} else {
+		msg += ("            " + args.shift().substr(0, 12)).slice(-12) + ": " + args.join(" | ");
+	};
+	debugFile.writeln(msg), debugFile.close();
 };
