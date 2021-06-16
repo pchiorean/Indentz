@@ -75,8 +75,8 @@ Name                               |    Fn  | Description
 `ZoomToSelection.jsx`              |     F4 | Zooms to the selected objects. If no selection, it zooms to the current spread
 `ZoomToSpreads.jsx`                |    ⌥F4 | Zooms to the current spread or the first N spreads
 **Miscellaneous**                           |
-`Clip.jsx`                         |   Num* | Clips selected objects in a '\<clip frame\>', or restores them
-`ClipUndo.jsx`                     |  ⌃Num* | Restores objects clipped in a '\<clip group\>' by the 'FitTo' scripts
+`Clip.jsx`                         |   Num* | Clips selected objects in a clipping frame (or releases them if already clipped)
+`ClipUndo.jsx`                     |  ⌃Num* | Releases selected objects from their clipping frames
 `ClearLabels.jsx`                  |        | Removes all labels from the document
 `HW.jsx`                           |   ⇧F10 | Labels 'HW' selected objects; w/o selection, adds a 10% bottom guide
 `LabelPage.jsx`                    |        | Adds a label on the current page's slug

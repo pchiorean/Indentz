@@ -1,8 +1,8 @@
 /*
-	Clip v2.6 (2021-06-15)
+	Clip v2.6.1 (2021-06-15)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Clips selected objects in a "<clip frame>", or restores them.
+	Clips selected objects in a clipping frame (or releases them if already clipped).
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -18,6 +18,8 @@ var oldURL = app.generalPreferences.ungroupRemembersLayers;
 var oldPRL = app.clipboardPreferences.pasteRemembersLayers;
 app.generalPreferences.ungroupRemembersLayers = true;
 app.clipboardPreferences.pasteRemembersLayers = true;
+var clippingFrameRE = /^\<(auto )?clip(ping)? frame\>$/i;
+var clippingGroupRE = /^\<(auto )?clip(ping)? group\>$/i;
 
 app.doScript(Clip, ScriptLanguage.javascript, items,
 	UndoModes.ENTIRE_SCRIPT, "Clipping");
@@ -29,21 +31,17 @@ app.clipboardPreferences.pasteRemembersLayers = oldPRL;
 
 function Clip(items) {
 	// Undo if already clipped
-	if (items.length == 1 &&
-			(items[0].name == "<clip frame>" ||
-			 items[0].name == "<auto clip frame>")) {
-		UndoClip(items[0]); exit() }
-
-	var obj = items[0];
-	var size = obj.visibleBounds;
+	if (items.length == 1 && clippingFrameRE.test(items[0].name)) { UndoClip(items[0]); exit() }
+	// Clip
 	try {
+		var obj = items[0];
+		var size = obj.visibleBounds;
 		// If multiple objects are selected, group them
 		if (items.length > 1) {
 			var objects = [];
-			for (var i = 0; i < items.length; i++)
-				if (!items[i].locked) objects.push(items[i]);
+			for (var i = 0; i < items.length; i++) if (!items[i].locked) objects.push(items[i]);
 			obj = doc.groups.add(objects);
-			obj.name = "<auto clip group>";
+			obj.name = "<auto clipping group>";
 			size = obj.geometricBounds;
 		}
 		// Special case: text frames
@@ -60,7 +58,7 @@ function Clip(items) {
 		var clipFrame = doc.rectangles.add(
 			obj.itemLayer,
 			LocationOptions.AFTER, obj,
-			{ name: "<clip frame>", label: obj.label,
+			{ name: "<clipping frame>", label: obj.label,
 			fillColor: "None", strokeColor: "None",
 			geometricBounds: size });
 		clipFrame.sendToBack(obj);
@@ -72,7 +70,7 @@ function UndoClip(clipFrame) {
 	var child = clipFrame.pageItems[0].duplicate();
 	child.sendToBack(clipFrame); clipFrame.remove();
 	app.select(child);
-	if (child.name == "<clip group>" || child.name == "<auto clip group>") {
+	if (clippingGroupRE.test(child.name)) {
 		var selBAK = child.pageItems.everyItem().getElements();
 		child.ungroup();
 		app.select(selBAK);

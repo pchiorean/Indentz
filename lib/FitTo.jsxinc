@@ -1,5 +1,5 @@
 /*
-	FitTo v5.3 (2021-06-15)
+	FitTo v5.3.1 (2021-06-15)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Resizes the selected objects to the page/spread's size/margins/visible area/bleed.
@@ -41,6 +41,8 @@
 const DEBUG = false;
 const SNAP_PCT = 1; // Snap distance: percent of target
 const HW_PCT = 10; // HW: percent of visible area
+var clippingFrameRE = /^\<(auto )?clip(ping)? frame\>$/i;
+var clippingGroupRE = /^\<(auto )?clip(ping)? group\>$/i;
 
 function FitTo(args) {
 
@@ -48,7 +50,7 @@ if (!(doc = app.activeDocument)) exit();
 var sel = doc.selection;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) exit();
 
-const SCOPE = args[0] || "page";
+const SCOPE  = args[0] || "page";
 const TARGET = args[1] || "size";
 const FORCED = args[2] || false;
 
@@ -178,8 +180,7 @@ function Fit2Bounds(obj) {
 
 	// Fit obj to new bounds
 	// -- Already clipped
-	if ((obj.name == "<clip frame>" || obj.name == "<auto clip frame>") &&
-			obj.pageItems[0].isValid) {
+	if (clippingFrameRE.test(obj.name)) && obj.pageItems[0].isValid) {
 		obj.geometricBounds = FORCED ? b.target : b.expand;
 		return obj;
 	}
@@ -227,7 +228,7 @@ function Fit2Bounds(obj) {
 		var frame = doc.rectangles.add(
 			obj.itemLayer,
 			LocationOptions.AFTER, obj,
-			{ name: "<clip frame>",
+			{ name: "<clipping frame>",
 			label: obj.label,
 			fillColor: "None",
 			strokeColor: "None",

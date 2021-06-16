@@ -1,8 +1,8 @@
 /*
-	Undo clipping v2.4.1 (2021-04-17)
+	Undo clipping v2.4.2 (2021-06-15)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Restores objects clipped in a "<clip frame>" by the "FitTo" scripts.
+	Releases selected objects from their clipping frames.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -11,6 +11,8 @@
 if (!(doc = app.activeDocument)) exit();
 var item, items = doc.selection.length == 0 ?
 	doc.pageItems.everyItem().getElements() : doc.selection;
+var clippingFrameRE = /^\<(auto )?clip(ping)? frame\>$/i;
+var clippingGroupRE = /^\<(auto )?clip(ping)? group\>$/i;
 
 app.doScript(main, ScriptLanguage.javascript, items,
 	UndoModes.ENTIRE_SCRIPT, "Unclipping");
@@ -30,13 +32,11 @@ function main(items) {
 }
 
 function UndoClip(item) {
-	if (item.name != "<clip frame>" &&
-		item.name != "<auto clip frame>") return;
+	if (!clippingFrameRE.test(item.name)) return;
 	var child = item.pageItems[0].duplicate();
 	child.sendToBack(item); item.remove();
 	app.select(child);
-	if (child.name == "<clip group>" ||
-		child.name == "<auto clip group>") {
+	if (clippingGroupRE.test(child.name)) {
 		var bakSel = child.pageItems.everyItem().getElements();
 		child.ungroup();
 		app.select(bakSel);
