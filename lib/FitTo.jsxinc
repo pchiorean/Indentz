@@ -1,15 +1,16 @@
 /*
-	FitTo v5.3.1 (2021-06-15)
+	FitTo v5.3.2 (2021-06-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Resizes the selected objects to the page/spread's size/margins/visible area/bleed.
 
-	It's called internally by the other "FitTo" scripts, with arguments:
+	It's called internally by the other "FitTo" scripts, with the following arguments:
 	[0] SCOPE: "page" | "spread" (default "page")
 	[1] TARGET: "size" | "margins" | "visible" | "bleed" (default "size")
 	[2] FORCED: true | false (default "false")
 
-	Example for fit to page size, forced:
+	Example for fit to page size, enforced:
+
 	app.doScript(FitTo, ScriptLanguage.javascript,
 	[ "page", "size", true ],
 	UndoModes.ENTIRE_SCRIPT, "Fit to page");
