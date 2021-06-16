@@ -1,5 +1,5 @@
 /*
-	FitTo v5.3.2 (2021-06-16)
+	FitTo v5.3.3 (2021-06-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Resizes the selected objects to the page/spread's size/margins/visible area/bleed.
@@ -181,7 +181,7 @@ function Fit2Bounds(obj) {
 
 	// Fit obj to new bounds
 	// -- Already clipped
-	if (clippingFrameRE.test(obj.name)) && obj.pageItems[0].isValid) {
+	if (clippingFrameRE.test(obj.name) && obj.pageItems[0].isValid) {
 		obj.geometricBounds = FORCED ? b.target : b.expand;
 		return obj;
 	}
