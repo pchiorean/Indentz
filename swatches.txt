@@ -13,3 +13,5 @@ Varnish	spot	cmyk	0 10 70 0
 Covered area	spot	cmyk	0 100 0 0
 Visible area	spot	cmyk	0 100 0 0
 Safety margins	spot	cmyk	100 0 0 0
+Placeholder	process	cmyk	0 100 0 0
+Placement	process	cmyk	0 0 0 100
