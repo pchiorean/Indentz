@@ -1,6 +1,7 @@
 Name	Color	Visible	Printable	Order	Variants
 visible area	Yellow	yes	yes	above	rahmen, sicht*, *vi?ib*, vis?*
 safety margins	Grid Green	yes	yes	above	safe area
+segmentation	Grid Green	yes	yes	above	split
 covered area	Red	yes	yes	above	covered area*
 dielines	Red	yes	yes	above	cut, cut*line*, decoupe, die, die*cut, stanz*
 varnish	Yellow	no	yes	above	uv
