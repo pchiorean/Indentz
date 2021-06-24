@@ -1,5 +1,5 @@
 ﻿/*
-	Doc cleanup v2.5.1 (2021-06-13)
+	Doc cleanup v2.5.2 (2021-06-18)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -94,6 +94,8 @@ function() {
 },
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Convert empty text frames to generic frames");
+
+doc.textPreferences.showInvisibles = false;
 
 // Set pasteboard
 app.doScript(function() {
