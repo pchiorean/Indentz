@@ -20,6 +20,8 @@ app.doScript(File(app.activeScript.path + "/ReplaceFonts.jsx"),
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Replace fonts");
 
+doc.textPreferences.showInvisibles = true;
+
 // Set pasteboard
 app.doScript(function() {
 	doc.pasteboardPreferences.pasteboardMargins = [
