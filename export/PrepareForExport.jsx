@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for export v2.0.1 (2021-06-13)
+	Prepare for export v2.1 (2021-06-18)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves special colors to separate spreads.
@@ -38,7 +38,7 @@ var layerNames = {
 	guides:   [ "guides", "grid", "masuratori" ],
 	dielines: [ "dielines", "cut", "cut*line*", "decoupe", "die", "die*cut", "stanz*" ],
 	varnish:  [ "varnish", "uv" ],
-	foil:     [ "foil", "silver" ],
+	foil:     [ "foil", "silver", "silver foil" ],
 	white:    [ "white" ]
 };
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
