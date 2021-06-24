@@ -1,5 +1,5 @@
 /*
-	V grid 1.0 (2021-05-03)
+	V grid 1.1 (2021-06-18)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 */
 
@@ -52,87 +52,87 @@ function main() {
 			AddGuide("horizontal", tgBounds[0] + MG * 5, "5 x mg");
 			AddGuide("horizontal", tgBounds[0] + MG * 6, "6 x mg");
 		};
-		var arrowTip = tgBounds[1] + (tgBounds[3] - tgBounds[1]) / 2 + bigSKUsize * 0.25033;
-		AddGuide("vertical", arrowTip, "arrow tip", UIColors.GRID_GREEN);
-		AddGuide("vertical", tgBounds[3] - MG * 0.5, "half mg");
-		AddGuide("vertical", tgBounds[3] - MG * 1.5, "SKU right (with pouch)");
+		// var arrowTip = tgBounds[1] + (tgBounds[3] - tgBounds[1]) / 2 + bigSKUsize * 0.25033;
+		// AddGuide("vertical", arrowTip, "arrow tip", UIColors.GRID_GREEN);
+		// AddGuide("vertical", tgBounds[3] - MG * 0.5, "half mg");
+		// AddGuide("vertical", tgBounds[3] - MG * 1.5, "SKU right (with pouch)");
 		AddGuide("horizontal", tgBounds[0] + tgSize.height / 2, "middle", UIColors.GRID_GREEN);
-		AddGuide("horizontal", tgBounds[2] - MG * 3, "SKU bottom");
-		AddGuide("horizontal", tgBounds[2] - MG * 4.338711, "product range top", UIColors.GRID_BLUE);
-		AddGuide("horizontal", tgBounds[2] - MG * 2.4, "product range bottom", UIColors.GRID_BLUE);
-		AddGuide("horizontal", tgBounds[2] - MG / 2, "HW bottom", UIColors.GREEN);
+		// AddGuide("horizontal", tgBounds[2] - MG * 3, "SKU bottom");
+		// AddGuide("horizontal", tgBounds[2] - MG * 4.338711, "product range top", UIColors.GRID_BLUE);
+		// AddGuide("horizontal", tgBounds[2] - MG * 2.4, "product range bottom", UIColors.GRID_BLUE);
+		// AddGuide("horizontal", tgBounds[2] - MG / 2, "HW bottom", UIColors.GREEN);
 		// SKUs
-		var bigSKU = page.ovals.add({
-			itemLayer: "guides", label: "SKU big",
-			geometricBounds: [
-				page.bounds[0], page.bounds[1],
-				page.bounds[0] + 100, page.bounds[1] + 100
-			],
-			contentType: ContentType.UNASSIGNED,
-			fillColor: guide.color
-		});
-		bigSKU.transparencySettings.blendingSettings.opacity = 66;
-		var SKUsymbols = page.graphicLines.add({
-			itemLayer: "guides", fillColor: "Paper", strokeColor: "None"
-		});
-		SKUsymbols.paths[0].entirePath = [
-			[ 18.424, 24.108 ], [ 39.378, 33.692 ], [ 39.378, 14.079 ],
-			[ 60.625, 14.079 ], [ 60.625, 43.41 ], [ 75.033, 50 ],
-			[ 60.625, 56.59 ], [ 60.625, 85.921 ], [ 39.378, 85.921 ],
-			[ 39.378, 66.308 ], [ 18.425, 75.892 ], [ 18.424, 24.108 ],
-		];
-		SKUsymbols.transparencySettings.blendingSettings.opacity = 50;
-		bigSKU.contentPlace(SKUsymbols); SKUsymbols.remove();
-		bigSKU.pageItems[0].move(undefined, [ 18.424, 14.079 ]);
-		bigSKU.transform(CoordinateSpaces.INNER_COORDINATES, AnchorPoint.TOP_LEFT_ANCHOR,
-			app.transformationMatrices.add({
-				horizontalScaleFactor: bigSKUsize/100, verticalScaleFactor: bigSKUsize/100
-			})
-		);
-		doc.align(bigSKU, AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.PAGE_BOUNDS);
-		doc.align(bigSKU, AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.PAGE_BOUNDS);
-		var smallSKU = bigSKU.duplicate(); smallSKU.sendToBack(bigSKU);
-		smallSKU.transform(CoordinateSpaces.INNER_COORDINATES, AnchorPoint.CENTER_ANCHOR,
-			app.transformationMatrices.add({
-				horizontalScaleFactor: smallSKUscaleFactor, verticalScaleFactor: smallSKUscaleFactor
-			})
-		);
-		smallSKU.move(undefined, [ bigSKUsize * 0.63597, 0 ]);
-		page.groups.add([ smallSKU, bigSKU ]);
+		// var bigSKU = page.ovals.add({
+		// 	itemLayer: "guides", label: "SKU big",
+		// 	geometricBounds: [
+		// 		page.bounds[0], page.bounds[1],
+		// 		page.bounds[0] + 100, page.bounds[1] + 100
+		// 	],
+		// 	contentType: ContentType.UNASSIGNED,
+		// 	fillColor: guide.color
+		// });
+		// bigSKU.transparencySettings.blendingSettings.opacity = 66;
+		// var SKUsymbols = page.graphicLines.add({
+		// 	itemLayer: "guides", fillColor: "Paper", strokeColor: "None"
+		// });
+		// SKUsymbols.paths[0].entirePath = [
+		// 	[ 18.424, 24.108 ], [ 39.378, 33.692 ], [ 39.378, 14.079 ],
+		// 	[ 60.625, 14.079 ], [ 60.625, 43.41 ], [ 75.033, 50 ],
+		// 	[ 60.625, 56.59 ], [ 60.625, 85.921 ], [ 39.378, 85.921 ],
+		// 	[ 39.378, 66.308 ], [ 18.425, 75.892 ], [ 18.424, 24.108 ],
+		// ];
+		// SKUsymbols.transparencySettings.blendingSettings.opacity = 50;
+		// bigSKU.contentPlace(SKUsymbols); SKUsymbols.remove();
+		// bigSKU.pageItems[0].move(undefined, [ 18.424, 14.079 ]);
+		// bigSKU.transform(CoordinateSpaces.INNER_COORDINATES, AnchorPoint.TOP_LEFT_ANCHOR,
+		// 	app.transformationMatrices.add({
+		// 		horizontalScaleFactor: bigSKUsize/100, verticalScaleFactor: bigSKUsize/100
+		// 	})
+		// );
+		// doc.align(bigSKU, AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.PAGE_BOUNDS);
+		// doc.align(bigSKU, AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.PAGE_BOUNDS);
+		// var smallSKU = bigSKU.duplicate(); smallSKU.sendToBack(bigSKU);
+		// smallSKU.transform(CoordinateSpaces.INNER_COORDINATES, AnchorPoint.CENTER_ANCHOR,
+		// 	app.transformationMatrices.add({
+		// 		horizontalScaleFactor: smallSKUscaleFactor, verticalScaleFactor: smallSKUscaleFactor
+		// 	})
+		// );
+		// smallSKU.move(undefined, [ bigSKUsize * 0.63597, 0 ]);
+		// page.groups.add([ smallSKU, bigSKU ]);
 		// Arrow lines
-		var oldTRP = app.layoutWindows[0].transformReferencePoint;
-		var vLine1 = page.graphicLines.add({ itemLayer: "guides", label: "arrow guide",
-			strokeColor: guide.color, strokeType: guide.type, strokeWeight: guide.weight
-		});
-		vLine1.transparencySettings.blendingSettings.opacity = 90;
-		vLine1.paths[0].entirePath = [
-			[ 2 * arrowTip - tgBounds[3], tgBounds[0] + tgSize.height / 2 ],
-			[ tgBounds[3], tgBounds[0] + tgSize.height / 2 ]
-		];
-		app.layoutWindows[0].transformReferencePoint = AnchorPoint.CENTER_ANCHOR;
-		vLine1.rotationAngle = 24.44;
-		var vLine2 = page.graphicLines.add({ itemLayer: "guides", label: "arrow guide",
-			strokeColor: guide.color, strokeType: guide.type, strokeWeight: guide.weight
-		});
-		vLine2.transparencySettings.blendingSettings.opacity = 90;
-		vLine2.paths[0].entirePath = [
-			[ 2 * arrowTip - tgBounds[3], tgBounds[0] + tgSize.height / 2 ],
-			[ arrowTip, tgBounds[0] + tgSize.height / 2 ]
-		];
-		app.layoutWindows[0].transformReferencePoint = AnchorPoint.RIGHT_CENTER_ANCHOR;
-		vLine2.rotationAngle = -24.44;
-		var vLine3 = page.graphicLines.add({ itemLayer: "guides", label: "rotated HL guide",
-			strokeColor: guide.color, strokeType: guide.type, strokeWeight: guide.weight
-		});
-		vLine3.transparencySettings.blendingSettings.opacity = 90;
-		vLine3.paths[0].entirePath = [
-			[ tgBounds[3] - MG * 6, tgBounds[0] + MG ],
-			[ tgBounds[3] - MG * 6, tgBounds[2] - MG ]
-		];
-		app.layoutWindows[0].transformReferencePoint = AnchorPoint.BOTTOM_CENTER_ANCHOR;
-		vLine3.rotationAngle = 24.44;
-		page.groups.add([ vLine1, vLine2 ]);
-		app.layoutWindows[0].transformReferencePoint = oldTRP;
+		// var oldTRP = app.layoutWindows[0].transformReferencePoint;
+		// var vLine1 = page.graphicLines.add({ itemLayer: "guides", label: "arrow guide",
+		// 	strokeColor: guide.color, strokeType: guide.type, strokeWeight: guide.weight
+		// });
+		// vLine1.transparencySettings.blendingSettings.opacity = 90;
+		// vLine1.paths[0].entirePath = [
+		// 	[ 2 * arrowTip - tgBounds[3], tgBounds[0] + tgSize.height / 2 ],
+		// 	[ tgBounds[3], tgBounds[0] + tgSize.height / 2 ]
+		// ];
+		// app.layoutWindows[0].transformReferencePoint = AnchorPoint.CENTER_ANCHOR;
+		// vLine1.rotationAngle = 24.44;
+		// var vLine2 = page.graphicLines.add({ itemLayer: "guides", label: "arrow guide",
+		// 	strokeColor: guide.color, strokeType: guide.type, strokeWeight: guide.weight
+		// });
+		// vLine2.transparencySettings.blendingSettings.opacity = 90;
+		// vLine2.paths[0].entirePath = [
+		// 	[ 2 * arrowTip - tgBounds[3], tgBounds[0] + tgSize.height / 2 ],
+		// 	[ arrowTip, tgBounds[0] + tgSize.height / 2 ]
+		// ];
+		// app.layoutWindows[0].transformReferencePoint = AnchorPoint.RIGHT_CENTER_ANCHOR;
+		// vLine2.rotationAngle = -24.44;
+		// var vLine3 = page.graphicLines.add({ itemLayer: "guides", label: "rotated HL guide",
+		// 	strokeColor: guide.color, strokeType: guide.type, strokeWeight: guide.weight
+		// });
+		// vLine3.transparencySettings.blendingSettings.opacity = 90;
+		// vLine3.paths[0].entirePath = [
+		// 	[ tgBounds[3] - MG * 6, tgBounds[0] + MG ],
+		// 	[ tgBounds[3] - MG * 6, tgBounds[2] - MG ]
+		// ];
+		// app.layoutWindows[0].transformReferencePoint = AnchorPoint.BOTTOM_CENTER_ANCHOR;
+		// vLine3.rotationAngle = 24.44;
+		// page.groups.add([ vLine1, vLine2 ]);
+		// app.layoutWindows[0].transformReferencePoint = oldTRP;
 		// Margin size square
 		var mgFrame = page.rectangles.add({
 			itemLayer: "guides", label: "mg",
