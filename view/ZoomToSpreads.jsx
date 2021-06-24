@@ -1,5 +1,5 @@
 /*
-	Zoom to spreads v2.3 (2021-06-03)
+	Zoom to spreads v2.3 (2021-06-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the current spread (if N = 1) or the first N spreads (if N > 1).
@@ -34,7 +34,7 @@ const TL = AnchorPoint.TOP_LEFT_ANCHOR, BR = AnchorPoint.BOTTOM_RIGHT_ANCHOR,
 	CS_PBRD = +CoordinateSpaces.PASTEBOARD_COORDINATES;
 const SP = 600;  // Side panels width
 const CP = 60;   // Control panel height
-const Z = 5.856; // Voodoo zoom coeficient
+const Z = 5.469 // 5.856; // Voodoo zoom coeficient
 const N = 4;     // Number of spreads to zoom to
 
 var targetBounds = [];

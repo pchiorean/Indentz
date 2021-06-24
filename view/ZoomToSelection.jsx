@@ -1,5 +1,5 @@
 /*
-	Zoom to selection v2.1 (2021-02-09)
+	Zoom to selection v2.1.1 (2021-06-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the selected objects. If no selection, it zooms to the current spread.
@@ -34,7 +34,7 @@ const TL = AnchorPoint.TOP_LEFT_ANCHOR, BR = AnchorPoint.BOTTOM_RIGHT_ANCHOR,
 	CS_PBRD = +CoordinateSpaces.PASTEBOARD_COORDINATES;
 const SP = 600;  // Side panels width
 const CP = 60;   // Control panel height
-const Z = 5.856; // Voodoo zoom coeficient
+const Z = 5.469 // 5.856; // Voodoo zoom coeficient
 const N = 1;     // Number of spreads to zoom to
 
 var targetBounds = [], sel = doc.selection;
