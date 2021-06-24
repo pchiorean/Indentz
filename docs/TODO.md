@@ -16,7 +16,7 @@
 ---
 
 ### Clip/ClipUndo
-- [ ] [update] Keep original label [#135](https://github.com/pchiorean/Indentz/issues/135)
+- [x] [fix] Keep original label [#135](https://github.com/pchiorean/Indentz/issues/135)
 
 ### DefaultSwatches
 - [ ] [fix] Check values on parsing
@@ -24,12 +24,14 @@
 
 ### DocCleanup
 - [x] [feature] Convert all empty text frames to unassigned
+- [ ] [feature] Ask to delete empty frames
 - [ ] [feature] Remove unused masters
 - [ ] [feature] Remove unused styles and groups (https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331)
 
 ### FitTo
-- [ ] [fix] Check item's parent [#130](https://github.com/pchiorean/Indentz/issues/130)
+- [x] [fix] Check item's parent [#130](https://github.com/pchiorean/Indentz/issues/130)
 - [ ] [fix] Check for transformations [#131](https://github.com/pchiorean/Indentz/issues/131)
+- [ ] [refactor] Refactor snapping
 
 ### PageRatios
 - [x] [update] Put text on slug (name: `<page label>`)
@@ -40,21 +42,22 @@
 
 ### PrepareForExport
 - [x] [fix] Ignore hidden items
+* [ ] [fix] Ignore hidden layers
 - [ ] [update] Read layer variants from `layers.txt`
 
 ### QuickExport
-- [ ] [fix] Don't save 'Overwrite files' state
-- [ ] [feature] Export separate pages (see `SpreadToFiles.jsx`)
+* [ ] [fix] Don't save 'Overwrite files' state
+* [ ] [feature] Export separate pages (see `SpreadToFiles.jsx`)
 - [ ] [feature] Include subfolders
 - [ ] [feature] ? 'View PDF after exporting' checkbox, alert if > 20 files
 - [ ] [feature] ? 'Advanced mode' checkbox
 - [ ] [feature] History for dropdowns
-- [ ] [feature] JPG & TIFF export profiles
+- [ ] [feature] JPG & ?TIFF export profiles
 
 ### QR, QRBatch
+- [ ] [fix] Align to visible area
 - [ ] [fix] ? Don't break line on '-'
 - [ ] [update] Remove 'preview' & 'print' from filenames
-- [ ] [fix] Check for visible area frame
 - [ ] [fix] Improve line breaking
 
 ### TextAutoSize
