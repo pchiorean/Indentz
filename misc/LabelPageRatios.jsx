@@ -1,5 +1,5 @@
 /*
-	Page ratios v2.0 (2021-06-11)
+	Page ratios v2.1 (2021-06-20)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a label (ratio) on each page's slug.
@@ -9,50 +9,51 @@
 */
 
 if (!(doc = app.activeDocument)) exit();
-var idLayerName = "id", idLayer = doc.layers.item(idLayerName);
-var infoLayerName = "info", infoLayer = doc.layers.item(infoLayerName);
-app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
-	UndoModes.ENTIRE_SCRIPT, "Page ratios");
-
+	UndoModes.ENTIRE_SCRIPT, "Label page ratios");
 
 function main() {
-	if (!infoLayer.isValid) doc.layers.add({ name: infoLayerName });
-	infoLayer.properties = {
-		layerColor: UIColors.CYAN,
-		visible: true,
-		locked: false,
-		printable: true };
-	if (idLayer.isValid) infoLayer.move(LocationOptions.after, idLayer);
-	else infoLayer.move(LocationOptions.AT_BEGINNING);
-
-	var item, items = doc.rectangles.everyItem().getElements();
-	while (item = items.shift()) if (item.name == "<page label>") item.remove();
 	for (var i = 0; i < doc.pages.length; i++) {
 		var page = doc.pages.item(i), size = Bounds(page);
 		var ratio = ((size[3] - size[1]) / (size[2] - size[0])).toFixed(3);
-		SlugInfo(page.parent, ratio);
+		SlugInfo(page, ratio);
 	};
 };
 
-function SlugInfo(spread, name) {
+function SlugInfo(page, label, /*bool*/isCaps, /*bool*/isOnTop) {
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
-	if (doc.documentPreferences.slugTopOffset < 9)
-		doc.documentPreferences.slugTopOffset = 9 +
-		doc.documentPreferences.properties.documentBleedTopOffset;
-	var infoFrame, infoText, infoColor;
-	infoFrame = spread.pages[0].textFrames.add({
+	isCaps = isCaps || true;
+	isOnTop = isOnTop || true;
+	// Make layer
+	var infoLayerName = "info", infoLayer = doc.layers.item(infoLayerName);
+	var idLayerName = "id", idLayer = doc.layers.item(idLayerName);
+	if (!infoLayer.isValid) doc.layers.add({
+		name: infoLayerName,
+		layerColor: UIColors.CYAN,
+		visible: true, locked: false, printable: true
+	});
+	if (idLayer.isValid) infoLayer.move(LocationOptions.after, idLayer);
+	else infoLayer.move(LocationOptions.AT_BEGINNING);
+	// Remove old page labels
+	var item, items = page.pageItems.everyItem().getElements();
+	while (item = items.shift()) if (item.name == "<page label>") { item.itemLayer.locked = false; item.remove() };
+	// Add new label
+	if (label == "") label = doc.name, isCaps = false;
+	label = label.replace(/^\s+|\s+$/g, "");
+	doc.activeLayer = infoLayer;
+	var infoFrame, infoText;
+	infoFrame = page.textFrames.add({
 		itemLayer: infoLayer.name,
 		name: "<page label>",
-		contents: name
+		contents: label
 	});
 	infoText = infoFrame.parentStory.paragraphs.everyItem();
 	infoText.properties = {
 		appliedFont: app.fonts.item("Helvetica\tRegular"),
 		pointSize: 6,
 		fillColor: "Registration",
-		capitalization: Capitalization.ALL_CAPS
+		capitalization: isCaps ? Capitalization.ALL_CAPS : Capitalization.NORMAL
 	};
 	infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
 	infoFrame.textFramePreferences.properties = {
@@ -62,8 +63,26 @@ function SlugInfo(spread, name) {
 		autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
 		useNoLineBreaksForAutoSizing: true
 	};
-	infoFrame.move([ 10, -4.2 - infoFrame.geometricBounds[2] -
-		doc.documentPreferences.properties.documentBleedTopOffset ]);
+	// Move frame in position
+	switch (isOnTop) {
+		case false:
+			if (doc.documentPreferences.slugBottomOffset < 9)
+				doc.documentPreferences.slugBottomOffset = 9 +
+				doc.documentPreferences.properties.documentBleedBottomOffset;
+			infoFrame.move([
+				page.bounds[1] + 10,
+				page.bounds[2] + doc.documentPreferences.properties.documentBleedBottomOffset + 3.5
+			]);
+			break;
+		default:
+			if (doc.documentPreferences.slugTopOffset < 9)
+				doc.documentPreferences.slugTopOffset = 9 +
+				doc.documentPreferences.properties.documentBleedTopOffset;
+			infoFrame.move([
+				page.bounds[1] + 10,
+				-4.2 - infoFrame.geometricBounds[2] - doc.documentPreferences.properties.documentBleedTopOffset
+			]);
+	};
 };
 
 function Bounds(page) { // Return page margins bounds

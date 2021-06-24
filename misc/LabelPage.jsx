@@ -1,8 +1,8 @@
 /*
-	Label page v1.1 (2021-06-12)
+	Label page v1.2 (2021-06-20)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Adds a label on the current page's slug.
+	Adds a custom label on the current page's slug.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -28,6 +28,7 @@ function main() {
 	ui.label.characters = 40;
 	ui.label.active = true;
 	ui.caps = ui.main.add("checkbox", undefined, "Make label uppercase");
+	ui.caps.value = true;
 	ui.actions = ui.add("group", undefined);
 	ui.actions.orientation = "column";
 	ui.actions.alignChildren = [ "fill", "top" ];
@@ -40,17 +41,25 @@ function main() {
 	SlugInfo(page, ui.label.text, ui.caps.value, isOnTop);
 };
 
-function SlugInfo(page, label, isCaps, isOnTop) {
+function SlugInfo(page, label, /*bool*/isCaps, /*bool*/isOnTop) {
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
-	var infoLayer = doc.layers.item("info");
-	if (!infoLayer.isValid) doc.layers.add({ name: "info", layerColor: UIColors.CYAN });
-	infoLayer.move(LocationOptions.AT_BEGINNING);
-	infoLayer.visible = true;
+	isCaps = isCaps || true;
+	isOnTop = isOnTop || true;
+	// Make layer
+	var infoLayerName = "info", infoLayer = doc.layers.item(infoLayerName);
+	var idLayerName = "id", idLayer = doc.layers.item(idLayerName);
+	if (!infoLayer.isValid) doc.layers.add({
+		name: infoLayerName,
+		layerColor: UIColors.CYAN,
+		visible: true, locked: false, printable: true
+	});
+	if (idLayer.isValid) infoLayer.move(LocationOptions.after, idLayer);
+	else infoLayer.move(LocationOptions.AT_BEGINNING);
 	// Remove old page labels
 	var item, items = page.pageItems.everyItem().getElements();
 	while (item = items.shift()) if (item.name == "<page label>") { item.itemLayer.locked = false; item.remove() };
 	// Add new label
-	if (label == "") label = doc.name;
+	if (label == "") label = doc.name, isCaps = false;
 	label = label.replace(/^\s+|\s+$/g, "");
 	doc.activeLayer = infoLayer;
 	var infoFrame, infoText;
