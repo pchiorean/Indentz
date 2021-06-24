@@ -1,5 +1,5 @@
 lib/es5-array.jsxinc linguist-vendored
-lib/es5-shim.js  linguist-vendored
+lib/es5-shim.js linguist-vendored
 lib/prototypes.jsxinc linguist-vendored
 lib/underscore-min.js linguist-generated
 lib/underscore.html linguist-documentation
