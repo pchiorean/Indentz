@@ -1,5 +1,5 @@
 /*
-	Quick export v2.7.5 (2021-06-26)
+	Quick export v2.7.6 (2021-06-26)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -28,8 +28,9 @@
 
 // Initialisation
 var folderMode = (app.documents.length == 0);
+var scriptPath = GetScriptPath();
 var settings, settingsFile = File(Folder.userData + "/" +
-	app.activeScript.name.substr(0, app.activeScript.name.lastIndexOf(".")) + ".prefs");
+	scriptPath.name.substr(0, scriptPath.name.lastIndexOf(".")) + ".prefs");
 var presets = app.pdfExportPresets.everyItem().name.sort();
 var old = {
 	measurementUnit: app.scriptPreferences.measurementUnit,
@@ -301,35 +302,24 @@ if (ui.show() == 2) { exit() };
 // Processing
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 // -- Get a sorted document list
-if (folderMode) {
-	var docs = ui.input.source.path.getFiles("*.indd").sort();
-} else {
-	var doc, docs = app.documents.everyItem().getElements(), names = [];
-	// Sort documents by name
-	while (doc = docs.shift()) names.push(doc.fullName); names.sort();
-	var name, docs = []; while (name = names.shift()) docs.push(app.documents.itemByName(name));
+var doc, docs = [], name, names = [], errors = [];
+if (folderMode) docs = ui.input.source.path.getFiles("*.indd")
+else docs = app.documents.everyItem().getElements();
+while (doc = docs.shift()) {
+	if (doc.saved && !doc.converted) names.push(doc.fullName)
+	else errors.push(doc.name + " has not been saved. Skipped.");
 };
+if (names.length > 0) names.sort();
+var docs = [];
+while (name = names.shift()) docs.push(app.documents.itemByName(name));
 // -- Init progress bar
 for (var i = 0, pbWidth = 50; i < docs.length; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
 var progressBar = new ProgressBar("Exporting", pbWidth + 10);
 progressBar.reset(docs.length * ((ui.preset1.isOn.value ? 1 : 0) + (ui.preset2.isOn.value ? 1 : 0)));
 // -- Main loop
-var doc, counter = 1, errors = [];
+var doc, counter = 1;
 while (doc = docs.shift()) {
-	if (folderMode) {
-		doc = app.open(doc);
-		if (doc.converted) {
-			errors.push(doc.name + " has no path. Skipped.");
-			doc.close(SaveOptions.NO);
-			continue;
-		};
-	} else {
-		app.activeDocument = doc;
-		if (!doc.saved || doc.converted) {
-			errors.push(doc.name + " has no path. Skipped.");
-			continue;
-		};
-	};
+	if (folderMode) { doc = app.open(doc) } else app.activeDocument = doc;
 	// Set measurement units
 	old.horizontalMeasurementUnits = doc.viewPreferences.horizontalMeasurementUnits;
 	old.verticalMeasurementUnits = doc.viewPreferences.verticalMeasurementUnits;
@@ -612,6 +602,10 @@ function SaveSettings() {
 	settingsFile.open('w');
 	settingsFile.write(settings.toSource());
 	settingsFile.close();
+};
+
+function GetScriptPath() {
+	try { return app.activeScript } catch(e) { return new File(e.fileName) };
 };
 
 function ProgressBar(title, width) {
