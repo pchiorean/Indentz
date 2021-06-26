@@ -1,5 +1,5 @@
 /*
-	Quick export v2.7.4 (2021-06-26)
+	Quick export v2.7.5 (2021-06-26)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -525,7 +525,7 @@ function ReadSettings() {
 	ui.output.dest.isOn.value = !!ui.output.dest.path && settings.output.dest.active;
 	ui.output.options.subfolders.value = settings.output.options.subfolders;
 	ui.output.options.updateLinks.value = settings.output.options.updatelinks;
-	ui.output.options.fileOverwrite.value = settings.output.options.overwrite;
+	ui.output.options.fileOverwrite.value = false; // settings.output.options.overwrite;
 	ui.output.options.docSave.value = settings.output.options.save;
 	ui.output.options.docClose.value = folderMode ? true : settings.output.options.close;
 	ui.preset1.isOn.onClick();
@@ -597,7 +597,7 @@ function SaveSettings() {
 			options: {
 				subfolders: ui.output.options.subfolders.value,
 				updatelinks: ui.output.options.updateLinks.value,
-				overwrite: ui.output.options.fileOverwrite.value,
+				overwrite: false, // ui.output.options.fileOverwrite.value,
 				save: ui.output.options.docSave.value,
 				close: ui.output.options.docClose.value,
 			},
