@@ -1,5 +1,5 @@
 /*
-	Quick export v2.7.3 (2021-06-11)
+	Quick export v2.7.4 (2021-06-26)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -318,9 +318,17 @@ var doc, counter = 1, errors = [];
 while (doc = docs.shift()) {
 	if (folderMode) {
 		doc = app.open(doc);
+		if (doc.converted) {
+			errors.push(doc.name + " has no path. Skipped.");
+			doc.close(SaveOptions.NO);
+			continue;
+		};
 	} else {
 		app.activeDocument = doc;
-		if (!doc.saved) { errors.push(doc.name + " has no path. Skipped."); continue };
+		if (!doc.saved || doc.converted) {
+			errors.push(doc.name + " has no path. Skipped.");
+			continue;
+		};
 	};
 	// Set measurement units
 	old.horizontalMeasurementUnits = doc.viewPreferences.horizontalMeasurementUnits;
