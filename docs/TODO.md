@@ -2,7 +2,7 @@
 
 ### Global
 - [ ] [fix] Improve active script path detection
-- [ ] [update] ? `selectDialog`/`selectDlg`
+- [ ] [update] ? `Folder().selectDlg`
 - [ ] [feature] Add `@include` support when parsing TSVs [#137](https://github.com/pchiorean/Indentz/issues/137)
 - [ ] [update] Make a custom object style for 'Visible area' frame [#123](https://github.com/pchiorean/Indentz/issues/123)
 
@@ -29,7 +29,8 @@
 ### QuickExport
 - [x] [fix] Don't save 'Overwrite files' state
 - [x] [fix] Skip converted documents
-- [ ] [feature] Export separate pages (see `SpreadToFiles.jsx`)
+- [x] [fix] When 'Update links' is off, don't report missing links
+- [x] [feature] Export separate pages (see `SpreadToFiles.jsx`)
 - [ ] [feature] Include subfolders
 - [ ] [feature] ? 'View PDF after exporting' checkbox, alert if > 20 files
 - [ ] [feature] History for dropdowns
