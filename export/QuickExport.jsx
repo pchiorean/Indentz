@@ -1,5 +1,5 @@
 /*
-	Quick export v2.7.6 (2021-06-26)
+	Quick export v2.8 (2021-06-28)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -39,7 +39,6 @@ var old = {
 };
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
-app.pdfExportPreferences.pageRange = ""; // Reset page range
 app.pdfExportPreferences.viewPDF = false;
 const forbiddenFilenameChars = /[#%^{}\\<>*?\/$!'":@`|=]/g;
 const ADV = ScriptUI.environment.keyboardState.altKey;
@@ -86,8 +85,9 @@ var defaults = {
 		},
 		options: {
 			subfolders: true,
-			updatelinks: true,
+			split: false,
 			overwrite: false,
+			updatelinks: true,
 			save: true,
 			close: true,
 		},
@@ -99,14 +99,14 @@ var defaults = {
 // User interface
 var ui = new Window('dialog { alignChildren: "left", margins: 16, orientation: "column", spacing: 10, text: "Quick Export" }');
 ui.main = ui.add('group { margins: 0, orientation: "column", preferredSize: [ 500, -1 ], spacing: 10 }');
-// -- Folder mode
+// -- Input source
 if (folderMode) {
 	ui.input = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10, text: "Input folder" }');
 		ui.input.source = ui.input.add('group { margins: 0, orientation: "row", spacing: 10 }');
 			ui.input.source.folder = ui.input.source.add('edittext { preferredSize: [ 368, 24 ], properties: { readonly: true } }');
 			ui.input.source.browse = ui.input.source.add('button { preferredSize: [ 100, 24 ], text: "Browse" }');
 };
-// -- Export presets / scripts
+// -- Export options
 ui.presets = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10, text: "Export presets" }');
 	ui.preset1 = ui.presets.add('group { margins: 0, orientation: "row", spacing: 10 }');
 		ui.preset1.isOn = ui.preset1.add('checkbox { alignment: "bottom" }');
@@ -154,10 +154,11 @@ ui.output = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 1
 	ui.output.options = ui.output.add('group { alignChildren: "top", margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 0 }');
 		ui.output.opt1 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", preferredSize: [ 200, -1 ], spacing: 5 }');
 			ui.output.options.subfolders = ui.output.opt1.add('checkbox { helpTip: "Use \'suffix\' fields as subfolders", text: "Export in subfolders" }');
-			ui.output.options.updateLinks = ui.output.opt1.add('checkbox { text: "Update links" }');
-			ui.output.options.fileOverwrite = ui.output.opt1.add('checkbox { text: "Overwrite existing files" }');
+			ui.output.options.split = ui.output.opt1.add('checkbox { text: "Export separate pages" }');
+			ui.output.options.overwrite = ui.output.opt1.add('checkbox { text: "Overwrite existing files" }');
 		ui.output.opt2 = ui.output.options.add('group { alignChildren: "left", orientation: "column", margins: 0, spacing: 5 }');
-			ui.output.options.docSave = ui.output.opt2.add('checkbox { text: "Save and ..." }');
+			ui.output.options.updateLinks = ui.output.opt2.add('checkbox { text: "Update links" }');
+			ui.output.options.docSave = ui.output.opt2.add('checkbox { text: "Save exported documents" }');
 			ui.output.options.docClose = ui.output.opt2.add('checkbox { text: "Close exported documents" }');
 			ui.output.options.docClose.enabled = !folderMode;
 // -- Actions
@@ -172,7 +173,6 @@ if (ADV) {
 };
 ui.actions.add('button { preferredSize: [ 80, -1 ], properties: { name: "cancel" }, text: "Cancel" }');
 ui.actions.ok = ui.actions.add('button { preferredSize: [ 80, -1 ], properties: { name: "ok" }, text: "Start" }');
-if (!folderMode) ui.actions.ok.enabled = app.activeDocument.saved;
 // -- UI callback functions
 ui.preset1.isOn.onClick = function() {
 	ui.preset1.preset.enabled = ui.preset1.suffix.enabled = this.value;
@@ -181,7 +181,7 @@ ui.preset1.isOn.onClick = function() {
 	ui.preset1.bleedCustom.onClick();
 	ui.preset1.script.isOn.onClick();
 	if (folderMode) ui.actions.ok.enabled = (this.value || ui.preset2.isOn.value) && !!ui.input.source.path
-	else ui.actions.ok.enabled = app.activeDocument.saved && (this.value || ui.preset2.isOn.value);
+	else ui.actions.ok.enabled = (this.value || ui.preset2.isOn.value);
 };
 ui.preset1.bleedCustom.onClick = function() {
 	ui.preset1.bleedValue.enabled = this.value;
@@ -215,7 +215,7 @@ ui.preset2.isOn.onClick = function() {
 	ui.preset2.bleedCustom.onClick();
 	ui.preset2.script.isOn.onClick();
 	if (folderMode) ui.actions.ok.enabled = (this.value || ui.preset1.isOn.value) && !!ui.input.source.path
-	else ui.actions.ok.enabled = app.activeDocument.saved && (this.value || ui.preset1.isOn.value);
+	else ui.actions.ok.enabled = (this.value || ui.preset1.isOn.value);
 };
 ui.preset2.bleedCustom.onClick = function() {
 	ui.preset2.bleedValue.enabled = this.value;
@@ -307,7 +307,7 @@ if (folderMode) docs = ui.input.source.path.getFiles("*.indd")
 else docs = app.documents.everyItem().getElements();
 while (doc = docs.shift()) {
 	if (doc.saved && !doc.converted) names.push(doc.fullName)
-	else errors.push(doc.name + " has not been saved. Skipped.");
+	else errors.push(doc.name + " is not saved; skipped.");
 };
 if (names.length > 0) names.sort();
 var docs = [];
@@ -331,79 +331,47 @@ while (doc = docs.shift()) {
 		if (!ui.output.dest.path.exists) ui.output.dest.path.create();
 		baseFolder = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
 	};
-	// Export profiles
+	// Check fonts
+	var usedFonts = doc.fonts.everyItem().getElements();
+	for (var f = 0; f < usedFonts.length; f++) {
+		if (usedFonts[f].status !== FontStatus.INSTALLED) {
+			errors.push(doc.name + ": Font '" + usedFonts[f].name.replace(/\t/g, " ") + "' is " +
+				String(usedFonts[f].status).toLowerCase().replace("_", " "));
+		};
+	};
+	// Update links
+	if (ui.output.options.updateLinks.value) {
+		for (var l = 0; l < doc.links.length; l++) {
+			switch (doc.links[l].status) {
+				case LinkStatus.LINK_OUT_OF_DATE:
+					doc.links[l].update(); break;
+				case LinkStatus.LINK_MISSING:
+					errors.push(doc.name + ": Link '" + doc.links[l].name + "' not found."); break;
+			};
+		};
+	};
+	// Export
 	for (var i = 1; i < 3; i++) {
 		var exp = ui["preset" + i];
 		if (!exp.isOn.value) continue;
 		var preset = app.pdfExportPresets.item(exp.preset.selection.text);
+		// Create subfolder
 		var suffix = !!exp.suffix.text ? ("_" + exp.suffix.text.replace(/^_/, "")) : "";
 		var subfolder = "";
 		if (ui.output.options.subfolders.value && !!suffix) {
 			subfolder = suffix.replace(/^_/, "");
 			if (!Folder(baseFolder + "/" + subfolder).exists) Folder(baseFolder + "/" + subfolder).create();
 		};
-		// Get unique PDF name
-		var pdfBaseName = decodeURI(doc.name).replace(/\.indd$/i, "") + suffix;
-		// if (forbiddenFilenameChars.test(pdfBaseName)) { // Sanitize filenames
-		// 	pdfBaseName = pdfBaseName.replace(forbiddenFilenameChars, "-");
-		// 	errors.push(doc.name + ": Sanitized output filename.");
-		// };
-		var pdfName = pdfBaseName + ".pdf";
-		var folder = baseFolder + (!!subfolder ? "/" + subfolder : "");
-		var file = folder + "/" + pdfName;
-		pdfBaseName = pdfBaseName.replace(/[\|\^$(.)\[\]{*+?}\\]/g, "\\$&"); // Escape regex tokens
-		var baseRE = RegExp("^" + pdfBaseName + (!!suffix ? "[ _-]*" : "[ _-]+") + "\\d+.*.pdf$", "i");
-		var indxRE = RegExp("^" + pdfBaseName + (!!suffix ? "[ _-]*" : "[ _-]+") +
-			"(\\d+)([ _-]*v *\\d*)?([ _-]*copy *\\d*)?([ _-]*v *\\d*)?$", "i");
-		var pdfFiles = Folder(folder).getFiles(function(f) {
-			if (!(f instanceof File) || !/\.pdf$/i.test(f)) return false;
-			return baseRE.test(decodeURI(f.name));
-		});
-		for (var j = 0, maxIndex = 0; j < pdfFiles.length; j++) { // Get max index
-			var n = indxRE.exec(decodeURI(pdfFiles[j].name).replace(/\.pdf$/i, ""));
-			if (!!n) maxIndex = Math.max(maxIndex, Number(n[1]));
-		};
-		if (ui.output.options.fileOverwrite.value) {
-			if (maxIndex != 0) file = file.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + String(maxIndex) + ".pdf";
-		} else {
-			if (maxIndex == 0) {
-				if (File(file).exists) file = file.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + "2.pdf";
-			} else {
-				maxIndex++;
-				file = file.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + String(maxIndex) + ".pdf";
-			};
-		};
-		progressBar.update(counter, (baseFolder == decodeURI(doc.filePath) ? decodeURI(File(file).name) : file));
-		// Check fonts
-		var usedFonts = doc.fonts.everyItem().getElements();
-		for (var f = 0; f < usedFonts.length; f++) {
-			if (usedFonts[f].status !== FontStatus.INSTALLED) {
-				errors.push(doc.name + ": Font '" + usedFonts[f].name.replace(/\t/g, " ") + "' is " +
-					String(usedFonts[f].status).toLowerCase().replace("_", " "));
-			};
-		};
-		// Update links
-		for (var l = 0; l < doc.links.length; l++) {
-			switch (doc.links[l].status) {
-				case LinkStatus.LINK_OUT_OF_DATE:
-					if (ui.output.options.updateLinks.value) doc.links[l].update()
-					else errors.push(doc.name + ": Link '" + doc.links[l].name + "' is out of date.");
-					break;
-				case LinkStatus.LINK_MISSING:
-					errors.push(doc.name + ": Link '" + doc.links[l].name + "' not found.");
-					break;
-			};
-		};
 		// Run script
 		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) {
 			var ext = decodeURI(exp.script.path.fsName).substr(decodeURI(exp.script.path.fsName).lastIndexOf(".") + 1);
-			var scriptLanguage = (function(ext) {
+			var scriptLanguage = function(ext) {
 				if (WIN) {
 					return {
 						"js": ScriptLanguage.JAVASCRIPT,
 						"jsx": ScriptLanguage.JAVASCRIPT,
 						"jsxbin": ScriptLanguage.JAVASCRIPT,
-					}[ext]
+					}[ext];
 				} else {
 					return { "scpt": ScriptLanguage.APPLESCRIPT_LANGUAGE,
 						"js": ScriptLanguage.JAVASCRIPT,
@@ -411,35 +379,30 @@ while (doc = docs.shift()) {
 						"jsxbin": ScriptLanguage.JAVASCRIPT,
 					}[ext];
 				};
-			})(ext);
-			app.doScript(exp.script.path, scriptLanguage, undefined, UndoModes.ENTIRE_SCRIPT, "Run script");
+			};
+			app.doScript(exp.script.path, scriptLanguage(ext), undefined, UndoModes.ENTIRE_SCRIPT, "Run script");
 			app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 		};
 		// Export PDF
-		if (!ui.output.options.fileOverwrite.value && File(file).exists) {
-			alert("Attempted illegal overwrite.\nBetter quit now..."); exit() };
-		LoadPDFExportPrefs(preset);
-		app.pdfExportPreferences.exportReaderSpreads = exp.exportSpreads.value;
-		app.pdfExportPreferences.cropMarks = exp.cropMarks.value;
-		app.pdfExportPreferences.pageInformationMarks = exp.pageInfo.value;
-		app.pdfExportPreferences.includeSlugWithPDF = exp.slug.value;
-		app.pdfExportPreferences.useDocumentBleedWithPDF = !exp.bleedCustom.value;
-		if (app.pdfExportPreferences.useDocumentBleedWithPDF) {
-			app.pdfExportPreferences.pageMarksOffset = Math.min(Math.max(
-				doc.documentPreferences.properties.documentBleedTopOffset,
-				doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
-				doc.documentPreferences.properties.documentBleedBottomOffset,
-				doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
-			), UnitValue("72 pt").as("mm"));
+		if (ui.output.options.split.value) {
+			var t = exp.exportSpreads.value ? doc.spreads : doc.pages;
+			for (var p = 0; p < t.length; p++) {
+				var baseName = decodeURI(doc.name).replace(/\.indd$/i, "");
+				var fileSufx = RegExp("([ ._-])([a-zA-Z]{" + t.length + "})$", "i").exec(baseName);
+				baseName = fileSufx ?
+					baseName.replace(RegExp(fileSufx[0] + "$"), "") + fileSufx[1] + fileSufx[2][p] + suffix :
+					baseName + "_" + ZeroPad(p+1, String(t.length).length) + suffix;
+				var fn = UniqueName(baseName);
+				progressBar.update(counter, (baseFolder == decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
+				ExportPDF(fn, preset,
+					(exp.exportSpreads.value ? (t[p].pages[0].name + "-" + t[p].pages[-1].name) : t[p].name));
+			};
 		} else {
-			app.pdfExportPreferences.bleedTop =
-			app.pdfExportPreferences.bleedBottom =
-			app.pdfExportPreferences.bleedInside =
-			app.pdfExportPreferences.bleedOutside = Number(exp.bleedValue.text);
-			app.pdfExportPreferences.pageMarksOffset =
-				Math.min(app.pdfExportPreferences.bleedTop, UnitValue("72 pt").as("mm"));
+			var baseName = decodeURI(doc.name).replace(/\.indd$/i, "") + suffix;
+			var fn = UniqueName(baseName);
+			progressBar.update(counter, (baseFolder == decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
+			ExportPDF(fn, preset, PageRange.ALL_PAGES);
 		};
-		doc.exportFile(ExportFormat.PDF_TYPE, File(file), false);
 		counter++;
 	};
 	// Restore measurement units
@@ -458,13 +421,72 @@ app.pdfExportPreferences.viewPDF = old.viewPDF;
 if (errors.length > 0) Report(errors, "Errors", false, true);
 
 
+// Functions
+// --
+function ExportPDF(fn, preset, range) {
+	for (var key in preset) try { app.pdfExportPreferences[key] = preset[key] } catch (e) {};
+	app.pdfExportPreferences.pageRange = range;
+	app.pdfExportPreferences.exportReaderSpreads = exp.exportSpreads.value;
+	app.pdfExportPreferences.cropMarks = exp.cropMarks.value;
+	app.pdfExportPreferences.pageInformationMarks = exp.pageInfo.value;
+	app.pdfExportPreferences.includeSlugWithPDF = exp.slug.value;
+	app.pdfExportPreferences.useDocumentBleedWithPDF = !exp.bleedCustom.value;
+	if (app.pdfExportPreferences.useDocumentBleedWithPDF) {
+		app.pdfExportPreferences.pageMarksOffset = Math.min(Math.max(
+			doc.documentPreferences.properties.documentBleedTopOffset,
+			doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
+			doc.documentPreferences.properties.documentBleedBottomOffset,
+			doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
+		), UnitValue("72 pt").as("mm"));
+	} else {
+		app.pdfExportPreferences.bleedTop =
+		app.pdfExportPreferences.bleedBottom =
+		app.pdfExportPreferences.bleedInside =
+		app.pdfExportPreferences.bleedOutside = Number(exp.bleedValue.text);
+		app.pdfExportPreferences.pageMarksOffset =
+			Math.min(app.pdfExportPreferences.bleedTop, UnitValue("72 pt").as("mm"));
+	};
+	doc.exportFile(ExportFormat.PDF_TYPE, File(fn), false);
+};
+
 function TruncatePath(/*string*/path, maxLength) {
 	if (path.length > maxLength + 3) path = "..." + path.slice(- maxLength + 3);
 	return path;
 };
 
-function LoadPDFExportPrefs(preset) {
-	for (var key in preset) try { app.pdfExportPreferences[key] = preset[key] } catch (e) {};
+function UniqueName(name) {
+	var pdfName = name + ".pdf";
+	var folder = baseFolder + (!!subfolder ? "/" + subfolder : "");
+	var fn = folder + "/" + pdfName;
+	name = name.replace(/[\|\^$(.)\[\]{*+?}\\]/g, "\\$&"); // Escape regex tokens
+	var baseRE = RegExp("^" + name + (!!suffix ? "[ _-]*" : "[ _-]+") + "\\d+.*.pdf$", "i");
+	var indxRE = RegExp("^" + name + (!!suffix ? "[ _-]*" : "[ _-]+") +
+		"(\\d+)([ _-]*v *\\d*)?([ _-]*copy *\\d*)?([ _-]*v *\\d*)?$", "i");
+	var pdfFiles = Folder(folder).getFiles(function(f) {
+		if (!(f instanceof File) || !/\.pdf$/i.test(f)) return false;
+		return baseRE.test(decodeURI(f.name));
+	});
+	for (var j = 0, maxIndex = 0; j < pdfFiles.length; j++) { // Get max index
+		var n = indxRE.exec(decodeURI(pdfFiles[j].name).replace(/\.pdf$/i, ""));
+		if (!!n) maxIndex = Math.max(maxIndex, Number(n[1]));
+	};
+	if (ui.output.options.overwrite.value) {
+		if (maxIndex != 0) fn = fn.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + String(maxIndex) + ".pdf";
+	} else {
+		if (maxIndex == 0) {
+			if (File(fn).exists) fn = fn.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + "2.pdf";
+		} else {
+			maxIndex++;
+			fn = fn.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + String(maxIndex) + ".pdf";
+		};
+	};
+	return fn;
+};
+
+function ZeroPad(number, digits) {
+	number = number.toString();
+	while (number.length < digits) number = "0" + number;
+	return number;
 };
 
 function ReadSettings() {
@@ -514,8 +536,9 @@ function ReadSettings() {
 	};
 	ui.output.dest.isOn.value = !!ui.output.dest.path && settings.output.dest.active;
 	ui.output.options.subfolders.value = settings.output.options.subfolders;
+	ui.output.options.split.value = settings.output.options.split;
+	ui.output.options.overwrite.value = false; // settings.output.options.overwrite;
 	ui.output.options.updateLinks.value = settings.output.options.updatelinks;
-	ui.output.options.fileOverwrite.value = false; // settings.output.options.overwrite;
 	ui.output.options.docSave.value = settings.output.options.save;
 	ui.output.options.docClose.value = folderMode ? true : settings.output.options.close;
 	ui.preset1.isOn.onClick();
@@ -586,8 +609,9 @@ function SaveSettings() {
 			},
 			options: {
 				subfolders: ui.output.options.subfolders.value,
+				split: ui.output.options.split.value,
+				overwrite: false, // ui.output.options.overwrite.value,
 				updatelinks: ui.output.options.updateLinks.value,
-				overwrite: false, // ui.output.options.fileOverwrite.value,
 				save: ui.output.options.docSave.value,
 				close: ui.output.options.docClose.value,
 			},
