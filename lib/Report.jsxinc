@@ -2,11 +2,10 @@
 // http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
 function Report(msg, title, /*bool*/filter, /*bool*/compact) {
 	if (msg instanceof Array) msg = msg.join("\n"); msg = msg.split(/\r|\n/g);
-	if (msg.length > 20) filter = true;
 	if (compact && msg.length > 1) {
 		msg = msg.sort();
 		for (var i = 1, l = msg[0]; i < msg.length; l = msg[i], i++)
-			if (l == msg[i] || msg[i] == "") msg.splice(i, 1)
+			if (l == msg[i] || msg[i] == "") { msg.splice(i, 1); i-- };
 	};
 	var w = new Window('dialog', title);
 	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40, \

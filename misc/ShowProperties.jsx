@@ -1,5 +1,5 @@
 /*
-	Show properties 2.1.1 (2021-06-14)
+	Show properties 2.1.2 (2021-06-28)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Shows properties and methods of the selected object/active document/the application.
@@ -75,11 +75,11 @@ function Report(msg, title, /*bool*/filter, /*bool*/compact) {
 	if (compact && msg.length > 1) {
 		msg = msg.sort();
 		for (var i = 1, l = msg[0]; i < msg.length; l = msg[i], i++)
-			if (l == msg[i] || msg[i] == "") msg.splice(i, 1)
+			if (l == msg[i] || msg[i] == "") { msg.splice(i, 1); i-- };
 	};
 	var w = new Window('dialog', title);
 	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40, \
-		helpTip: "Special chars: \'?\' (any character), \'*\' (and), \'|\' (or)" }');
+		helpTip: "Special operators: \'?\' (any character), space and \'*\' (and), \'|\' (or)" }');
 	var list = w.add('edittext', undefined, msg.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = (function() {
