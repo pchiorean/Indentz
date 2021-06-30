@@ -1,5 +1,5 @@
 /*
-	Quick export v2.8.1 (2021-06-28)
+	Quick export v2.8.2 (2021-06-30)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -28,9 +28,9 @@
 
 // Initialisation
 var folderMode = (app.documents.length == 0);
-var scriptPath = GetScriptPath();
+var script = (function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } })();
 var settings, settingsFile = File(Folder.userData + "/" +
-	scriptPath.name.substr(0, scriptPath.name.lastIndexOf(".")) + ".prefs");
+	script.name.substr(0, script.name.lastIndexOf(".")) + ".prefs");
 var presets = app.pdfExportPresets.everyItem().name.sort();
 var old = {
 	measurementUnit: app.scriptPreferences.measurementUnit,
@@ -626,10 +626,6 @@ function SaveSettings() {
 	settingsFile.open('w');
 	settingsFile.write(settings.toSource());
 	settingsFile.close();
-};
-
-function GetScriptPath() {
-	try { return app.activeScript } catch(e) { return new File(e.fileName) };
 };
 
 function ProgressBar(title, width) {

@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 1.16.1 (2021-06-28)
+	Replace fonts 1.16.2 (2021-06-30)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named "fonts.txt":
@@ -79,11 +79,12 @@ function main() {
 
 function TSVFile(fn) {
 	var file = "";
+	var script = (function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } })();
 	if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + fn)) && file.exists) return file;
 	if (doc.saved && (file = File(app.activeDocument.filePath + "/" + fn)) && file.exists) return file;
 	if ((file = File(Folder.desktop + "/" + fn)) && file.exists) return file;
-	if ((file = File(app.activeScript.path + "/" + fn)) && file.exists) return file;
-	if ((file = File(app.activeScript.path + "/../" + fn)) && file.exists) return file;
+	if ((file = File(script.path + "/" + fn)) && file.exists) return file;
+	if ((file = File(script.path + "/../" + fn)) && file.exists) return file;
 }
 
 // Inspired by this scrollable alert by Peter Kahrel:
