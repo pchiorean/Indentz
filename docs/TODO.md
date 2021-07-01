@@ -1,8 +1,5 @@
 # TODO
 
-### Global
-- [x] [fix] Improve active script path detection
-- [ ] [update] `Folder().selectDlg`
 - [ ] [update] Make a custom object style for 'Visible area' frame [#123](https://github.com/pchiorean/Indentz/issues/123)
 - [ ] [feature] Add `@include` support when parsing TSVs [#137](https://github.com/pchiorean/Indentz/issues/137)
 
