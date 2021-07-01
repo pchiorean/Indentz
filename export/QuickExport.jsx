@@ -1,5 +1,5 @@
 /*
-	Quick export v2.8.2 (2021-06-30)
+	Quick export v2.9 (2021-07-01)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -204,9 +204,17 @@ ui.preset1.script.browse.onClick = function() {
 	};
 };
 ui.preset1.preset.onChange = function() {
+	// Auto-set suffix
 	var str = this.selection.text;
 	if (/_/g.test(str)) ui.preset1.suffix.text = str.substr(str.lastIndexOf("_"))
 	else ui.preset1.suffix.text = "";
+	// Populate preset options
+	var preset = app.pdfExportPresets.item(str);
+	ui.preset1.exportSpreads.value = preset.exportReaderSpreads;
+	ui.preset1.cropMarks.value = preset.cropMarks;
+	ui.preset1.pageInfo.value = preset.pageInformationMarks;
+	ui.preset1.slug.value = preset.includeSlugWithPDF;
+	ui.preset1.bleedValue.text = Math.round(preset.pageMarksOffset);
 };
 ui.preset2.isOn.onClick = function() {
 	ui.preset2.preset.enabled = ui.preset2.suffix.enabled = this.value;
@@ -251,9 +259,17 @@ ui.preset2.script.browse.onClick = function() {
 	};
 };
 ui.preset2.preset.onChange = function() {
+	// Auto-set suffix
 	var str = this.selection.text;
 	if (/_/g.test(str)) ui.preset2.suffix.text = str.substr(str.lastIndexOf("_"))
 	else ui.preset2.suffix.text = "";
+	// Populate preset options
+	var preset = app.pdfExportPresets.item(str);
+	ui.preset2.exportSpreads.value = preset.exportReaderSpreads;
+	ui.preset2.cropMarks.value = preset.cropMarks;
+	ui.preset2.pageInfo.value = preset.pageInformationMarks;
+	ui.preset2.slug.value = preset.includeSlugWithPDF;
+	ui.preset2.bleedValue.text = Math.round(preset.pageMarksOffset);
 };
 ui.preset1.suffix.onChange =
 ui.preset2.suffix.onChange = function() {
