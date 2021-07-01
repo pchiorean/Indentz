@@ -1,5 +1,5 @@
 /*
-	Quick export v2.9 (2021-07-01)
+	Quick export v2.9.1 (2021-07-01)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -318,24 +318,26 @@ if (ui.show() == 2) { exit() };
 // Processing
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 // -- Get a sorted document list
-var doc, docs = [], name, names = [], errors = [];
-if (folderMode) docs = ui.input.source.path.getFiles("*.indd")
-else docs = app.documents.everyItem().getElements();
-while (doc = docs.shift()) {
-	if (doc.saved && !doc.converted) names.push(doc.fullName)
-	else errors.push(doc.name + " is not saved; skipped.");
-};
-if (names.length > 0) names.sort();
-var docs = [];
-while (name = names.shift()) docs.push(app.documents.itemByName(name));
+var docs = folderMode ? ui.input.source.path.getFiles("*.indd") : app.documents.everyItem().getElements();
+if (docs.length > 0) docs.sort();
 // -- Init progress bar
 for (var i = 0, pbWidth = 50; i < docs.length; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
 var progressBar = new ProgressBar("Exporting", pbWidth + 10);
 progressBar.reset(docs.length * ((ui.preset1.isOn.value ? 1 : 0) + (ui.preset2.isOn.value ? 1 : 0)));
 // -- Main loop
-var doc, counter = 1;
+var doc, counter = 1, errors = [];
 while (doc = docs.shift()) {
-	if (folderMode) { doc = app.open(doc) } else app.activeDocument = doc;
+	if (folderMode) {
+		doc = app.open(doc);
+		if (doc.converted) {
+			errors.push(decodeURI(doc.name) + " must be converted; skipped.");
+			doc.close(SaveOptions.NO); continue;
+		};
+	} else {
+		app.activeDocument = doc;
+		if (doc.converted) { errors.push(decodeURI(doc.name) + " must be converted; skipped."); continue };
+		if (!doc.saved) { errors.push(decodeURI(doc.name) + " is not saved; skipped."); continue };
+	};
 	// Set measurement units
 	old.horizontalMeasurementUnits = doc.viewPreferences.horizontalMeasurementUnits;
 	old.verticalMeasurementUnits = doc.viewPreferences.verticalMeasurementUnits;
