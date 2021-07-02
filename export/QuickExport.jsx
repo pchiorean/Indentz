@@ -1,5 +1,5 @@
 /*
-	Quick export v2.9.1 (2021-07-01)
+	Quick export v2.9.2 (2021-07-02)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -318,8 +318,10 @@ if (ui.show() == 2) { exit() };
 // Processing
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 // -- Get a sorted document list
-var docs = folderMode ? ui.input.source.path.getFiles("*.indd") : app.documents.everyItem().getElements();
-if (docs.length > 0) docs.sort();
+var names = [], doc,
+	docs = folderMode ? ui.input.source.path.getFiles("*.indd") : app.documents.everyItem().getElements();
+while (doc = docs.shift()) try { names.push(doc.fullName) } catch (e) { names.push(doc.name) }; names.sort();
+var docs = [], name; while (name = names.shift()) docs.push(app.documents.itemByName(name));
 // -- Init progress bar
 for (var i = 0, pbWidth = 50; i < docs.length; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
 var progressBar = new ProgressBar("Exporting", pbWidth + 10);
