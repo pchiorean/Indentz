@@ -1,5 +1,5 @@
 /*
-	SpreadsToFiles v1.7.4 (2021-06-11)
+	SpreadsToFiles v1.7.5 (2021-07-02)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
@@ -35,11 +35,11 @@ var oldUIL = app.scriptPreferences.userInteractionLevel;
 var dPath = doc.filePath;
 var dName = doc.name.substr(0, doc.name.lastIndexOf("."));
 // Default suffix
-var defSufx = "-123456789abcdefghijklmnopqrstuvwxyz".substr(0, doc.spreads.length + 1);
-var fileSufx = RegExp("[ ._-][a-zA-Z0-9]{" + doc.spreads.length + "}$", "i").exec(dName);
-if (/\d\s*x\s*\d/i.test(fileSufx)) fileSufx = null; // Exclude '0x0' suffixes
+var defaultSufx = "-123456789abcdefghijklmnopqrstuvwxyz".substr(0, doc.spreads.length + 1);
+var detectedSufx = RegExp("[ ._-][a-zA-Z0-9]{" + doc.spreads.length + "}$", "i").exec(dName);
+if (/\d\s*x\s*\d/i.test(detectedSufx)) detectedSufx = null; // Exclude '0x0' suffixes
 // Only ask for a suffix if not autodetected
-var sufx = fileSufx ? String(fileSufx) : GetSuffix();
+var sufx = detectedSufx ? String(detectedSufx) : GetSuffix();
 
 var progressBar = new ProgressBar("Saving");
 progressBar.reset(doc.spreads.length);
@@ -47,7 +47,7 @@ for (var i = 0; i < doc.spreads.length; i++) {
 	// Filter out current spread
 	for (var r = [], j = 0; j < doc.spreads.length; j++) if (j != i) r.push(j);
 	// Disable user interaction and open a copy
-	if (sufx == fileSufx) dName = dName.replace(fileSufx, "");
+	if (sufx == detectedSufx) dName = dName.replace(detectedSufx, "");
 	var inc = 0;
 	do { var dFile = File(dPath + "/" + dName + sufx[0] + sufx[i + 1]
 		+ (inc > 1 ? " copy " + inc : (inc == 0 ? "" : " copy"))
@@ -69,15 +69,14 @@ doc.close();
 
 function GetSuffix(sufx) {
 	// First recursion
-	if (sufx == undefined) sufx = fileSufx != null ? fileSufx : defSufx;
+	if (!sufx) sufx = detectedSufx || defaultSufx;
 	// Ask user
 	sufx = prompt("Enter a suffix template.\nThe first character is the separator, "
 		+ "the rest are added sequentially to the file names.", sufx, "Enter a suffix");
 	if (!sufx) exit();
 	// Sanitize input
 	if (sufx.length != doc.spreads.length + 1) { // Length
-		alert("You must enter a separator and " + doc.spreads.length
-		+ " additional characters.", "Enter a suffix");
+		alert("You must enter a separator and " + doc.spreads.length + " additional characters.", "Enter a suffix");
 		GetSuffix(sufx); // Ask again
 	};
 	if (!/[ ._-]/.test(sufx[0])) { // Separator
