@@ -1,5 +1,5 @@
 /*
-	Page ratios v2.1 (2021-06-20)
+	Page ratios v2.1.1 (2021-07-09)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a label (ratio) on each page's slug.
@@ -23,8 +23,8 @@ function main() {
 
 function SlugInfo(page, label, /*bool*/isCaps, /*bool*/isOnTop) {
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
-	isCaps = isCaps || true;
-	isOnTop = isOnTop || true;
+	isCaps = (isCaps == undefined) ? true : isCaps;
+	isOnTop = (isOnTop == undefined) ? true : isOnTop;
 	// Make layer
 	var infoLayerName = "info", infoLayer = doc.layers.item(infoLayerName);
 	var idLayerName = "id", idLayer = doc.layers.item(idLayerName);
