@@ -55,9 +55,10 @@ function main() {
 		// var arrowTip = tgBounds[1] + (tgBounds[3] - tgBounds[1]) / 2 + bigSKUsize * 0.25033;
 		// AddGuide("vertical", arrowTip, "arrow tip", UIColors.GRID_GREEN);
 		// AddGuide("vertical", tgBounds[3] - MG * 0.5, "half mg");
+		AddGuide("vertical", (tgBounds[3] - tgBounds[1]) * 3/4, "3/4");
 		// AddGuide("vertical", tgBounds[3] - MG * 1.5, "SKU right (with pouch)");
 		AddGuide("horizontal", tgBounds[0] + tgSize.height / 2, "middle", UIColors.GRID_GREEN);
-		// AddGuide("horizontal", tgBounds[2] - MG * 3, "SKU bottom");
+		AddGuide("horizontal", tgBounds[2] - MG * 3, "SKU bottom");
 		// AddGuide("horizontal", tgBounds[2] - MG * 4.338711, "product range top", UIColors.GRID_BLUE);
 		// AddGuide("horizontal", tgBounds[2] - MG * 2.4, "product range bottom", UIColors.GRID_BLUE);
 		// AddGuide("horizontal", tgBounds[2] - MG / 2, "HW bottom", UIColors.GREEN);
