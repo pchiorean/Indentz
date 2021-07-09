@@ -1,5 +1,5 @@
 /*
-	Show properties 2.1.2 (2021-06-28)
+	Show properties 2.1.3 (2021-07-08)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Shows properties and methods of the selected object/active document/the application.
@@ -24,7 +24,7 @@ result.push("\nMETHODS:");
 var methods = obj.reflect.methods.sort();
 for (var i = 0; i < methods.length; i++) {
 	if (methods[i].toString() === "==" || methods[i].toString() === "===") continue;
-	result.push(methods[i].name + "() [Method]");
+	result.push(methods[i].name + "() (Method)");
 };
 Report(result, obj.reflect.name + " | " + obj.toSource(), true);
 

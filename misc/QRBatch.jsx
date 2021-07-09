@@ -16,9 +16,6 @@
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with "#" are ignored.
 
-	TODO:
-	- [fix] Check for visible area frame
-
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
 
