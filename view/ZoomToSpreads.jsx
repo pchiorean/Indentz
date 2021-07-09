@@ -1,5 +1,5 @@
 /*
-	Zoom to spreads v2.3 (2021-06-23)
+	Zoom to spreads v2.4 (2021-07-09)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the current spread (if N = 1) or the first N spreads (if N > 1).
@@ -32,10 +32,10 @@ var page = app.activeWindow.activePage;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 const TL = AnchorPoint.TOP_LEFT_ANCHOR, BR = AnchorPoint.BOTTOM_RIGHT_ANCHOR,
 	CS_PBRD = +CoordinateSpaces.PASTEBOARD_COORDINATES;
-const SP = 600;  // Side panels width
-const CP = 60;   // Control panel height
+const SP = 600; // Side panels width
+const CP = 60;  // Control panel height
 const Z = 5.469 // 5.856; // Voodoo zoom coeficient
-const N = 4;     // Number of spreads to zoom to
+const N = 3;    // Number of spreads to zoom to
 
 var targetBounds = [];
 targetBounds[0] = ((N == 1) ? page.parent : doc.spreads[0]).pages[0].resolve(TL, CS_PBRD)[0][1];
@@ -47,7 +47,13 @@ for (var i = 0; i < doc.spreads.length && i < N && N > 1; i++) {
 	targetBounds[1] = Math.min(targetBounds[1], doc.spreads[i].pages[0].resolve(TL, CS_PBRD)[0][0]);
 	targetBounds[2] = Math.max(targetBounds[2], doc.spreads[i].pages[-1].resolve(BR, CS_PBRD)[0][1]);
 	targetBounds[3] = Math.max(targetBounds[3], doc.spreads[i].pages[-1].resolve(BR, CS_PBRD)[0][0]);
-}
+};
+if (app.properties.activeWindow.screenMode == ScreenModeOptions.PREVIEW_OFF) {
+	targetBounds[0] -= doc.documentPreferences.properties.documentBleedTopOffset;
+	targetBounds[1] -= doc.documentPreferences.properties.documentBleedInsideOrLeftOffset;
+	targetBounds[2] += doc.documentPreferences.properties.documentBleedBottomOffset;
+	targetBounds[3] += doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
+};
 // Compute zoom percentage
 var zoom = Math.min(
 	(UnitValue(window.bounds[3] - window.bounds[1] - SP, "px").as('pt')) / (targetBounds[3] - targetBounds[1]),
@@ -56,8 +62,5 @@ var zoom = Math.min(
 zoom = Number(zoom * 10 * Z).toFixed(2);
 zoom = Math.max(5, zoom), Math.min(zoom, 4000); // Keep in 5-4000% range
 // Zoom to target
-var oldSel = app.selection;
-app.selection = null;
-window.zoom(ZoomOptions.FIT_SPREAD);
-window.zoomPercentage = zoom;
-try { app.select(oldSel) } catch (e) {};
+if (doc.pages.length > 1) app.activeWindow.activePage = doc.pages[1];
+window.zoom(ZoomOptions.FIT_SPREAD), window.zoomPercentage = zoom;

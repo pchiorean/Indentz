@@ -1,5 +1,5 @@
 /*
-	Zoom to selection v2.1.1 (2021-06-23)
+	Zoom to selection v2.2 (2021-07-09)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the selected objects. If no selection, it zooms to the current spread.
@@ -32,10 +32,10 @@ var page = app.activeWindow.activePage;
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 const TL = AnchorPoint.TOP_LEFT_ANCHOR, BR = AnchorPoint.BOTTOM_RIGHT_ANCHOR,
 	CS_PBRD = +CoordinateSpaces.PASTEBOARD_COORDINATES;
-const SP = 600;  // Side panels width
-const CP = 60;   // Control panel height
+const SP = 600; // Side panels width
+const CP = 60;  // Control panel height
 const Z = 5.469 // 5.856; // Voodoo zoom coeficient
-const N = 1;     // Number of spreads to zoom to
+const N = 1;    // Number of spreads to zoom to
 
 var targetBounds = [], sel = doc.selection;
 if (sel.length == 0 || sel[0].constructor.name == "Guide") {
@@ -49,7 +49,13 @@ if (sel.length == 0 || sel[0].constructor.name == "Guide") {
 		targetBounds[1] = Math.min(targetBounds[1], doc.spreads[i].pages[0].resolve(TL, CS_PBRD)[0][0]);
 		targetBounds[2] = Math.max(targetBounds[2], doc.spreads[i].pages[-1].resolve(BR, CS_PBRD)[0][1]);
 		targetBounds[3] = Math.max(targetBounds[3], doc.spreads[i].pages[-1].resolve(BR, CS_PBRD)[0][0]);
-	}
+	};
+	if (app.properties.activeWindow.screenMode == ScreenModeOptions.PREVIEW_OFF) {
+		targetBounds[0] -= doc.documentPreferences.properties.documentBleedTopOffset;
+		targetBounds[1] -= doc.documentPreferences.properties.documentBleedInsideOrLeftOffset;
+		targetBounds[2] += doc.documentPreferences.properties.documentBleedBottomOffset;
+		targetBounds[3] += doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
+	};
 } else { // Zoom to selection
 	var selObj = sel, obj = selObj[0];
 	if (obj.hasOwnProperty("parentTextFrames")) { // Inside a text frame
@@ -57,15 +63,15 @@ if (sel.length == 0 || sel[0].constructor.name == "Guide") {
 	} else if (obj.constructor.name == "Table" || obj.constructor.name == "Cell") {
 		obj = obj.parent;
 		while (obj.constructor.name != "TextFrame") obj = obj.parent; app.select(obj);
-	}
+	};
 	targetBounds = obj.visibleBounds;
 	for (var i = 1; i < selObj.length; i++) { // Get selection's extremities
 		targetBounds[0] = Math.min(selObj[i].visibleBounds[0], targetBounds[0]);
 		targetBounds[1] = Math.min(selObj[i].visibleBounds[1], targetBounds[1]);
 		targetBounds[2] = Math.max(selObj[i].visibleBounds[2], targetBounds[2]);
 		targetBounds[3] = Math.max(selObj[i].visibleBounds[3], targetBounds[3]);
-	}
-}
+	};
+};
 // Compute zoom percentage
 var zoom = Math.min(
 	(UnitValue(window.bounds[3] - window.bounds[1] - SP, "px").as('pt')) / (targetBounds[3] - targetBounds[1]),
@@ -77,6 +83,6 @@ zoom = Math.max(5, zoom), Math.min(zoom, 4000); // Keep in 5-4000% range
 window.zoom(ZoomOptions.FIT_SPREAD);
 try { window.zoomPercentage = zoom } catch (_) {
 	// Avoid error 30481 'Data is out of range'
-	try { app.menuActions.item("$ID/Fit Selection in Window").invoke() } catch (_) {}
-}
+	try { app.menuActions.item("$ID/Fit Selection in Window").invoke() } catch (_) {};
+};
 sel && app.select(sel); // Restore initial selection
