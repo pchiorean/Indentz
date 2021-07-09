@@ -25,9 +25,9 @@
 - [ ] [update] Read layer variants from `layers.txt`
 
 ### QuickExport
+- [ ] [feature] Include subfolders
 - [ ] [feature] History for dropdowns
 - [ ] [feature] JPG & ?TIFF export profiles
-- [ ] [feature] Include subfolders
 - [ ] [feature] ? 'View PDF after exporting' checkbox, alert if > 20 files
 
 ### QR, QRBatch
@@ -35,6 +35,9 @@
 - [ ] [fix] Remove 'preview' & 'print' from filenames
 - [ ] [fix] Improve line breaking
 - [ ] [fix] ? Don't break line on '-'
+
+### SpreadsToFiles
+- [ ] [docs] Explain suffix autodetection
 
 ### TextAutoSize
 - [ ] [update] Check `baselineShift` [#132](https://github.com/pchiorean/Indentz/issues/132)
