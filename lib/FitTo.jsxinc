@@ -1,5 +1,5 @@
 /*
-	FitTo v5.3.3 (2021-06-16)
+	FitTo v5.4 (2021-07-09)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Resizes the selected objects to the page/spread's size/margins/visible area/bleed.
@@ -247,29 +247,31 @@ function Fit2Bounds(obj) {
 			.move(LocationOptions.AT_END);
 		} else {
 			var obj, items = page.parent.pageItems.everyItem().getElements();
-			while (obj = items.shift()) if (obj.label == "debug") obj.remove();
+			while (obj = items.shift()) if (obj.name == "<debug frame>") obj.remove();
 		}
-		// dbgFrame("Black", false, b.expand);
-		// dbgFrame("Black", false, b.reduce);
-		if (o.child) dbgFrame("Yellow", false, o.child);
-		dbgFrame("Black", false, b.target);
-		dbgFrame("Cyan", true, snapZone.target);
-		dbgFrame("Magenta", true, snapZone.vis);
-		dbgFrame("Cyan", false, B.page.margins);
+		// dbgFrame("Black", false, b.expand, "b.expand");
+		// dbgFrame("Black", false, b.reduce, "b.reduce");
+		if (o.child) dbgFrame("Yellow", false, o.child, "o.child");
+		dbgFrame("Black", false, b.target, "b.target");
+		dbgFrame("Cyan", true, snapZone.target, "snapZone.target");
+		dbgFrame("Magenta", true, snapZone.vis, "snapZone.vis");
+		dbgFrame("Cyan", false, B.page.margins, "B.page.margins");
 
-		function dbgFrame(color, /*bool*/isSZ, bounds) {
+		function dbgFrame(color, /*bool*/isSZ, bounds, label) {
 			var frame = page.parent.rectangles.add(
 				layer,
-				{ label: "debug",
+				LocationOptions.AT_END,
+				{ name: "<debug frame>",
 				geometricBounds: bounds,
 				contentType: ContentType.UNASSIGNED,
 				fillColor: "None",
 				strokeColor: color,
-				strokeWeight: isSZ ? snapDist : "2 pt",
+				strokeWeight: isSZ ? snapDist : "1.5 pt",
 				strokeAlignment: isSZ ? StrokeAlignment.OUTSIDE_ALIGNMENT : StrokeAlignment.INSIDE_ALIGNMENT,
 				strokeType: isSZ ? "$ID/Solid" : "$ID/Canned Dashed 3x2" }
 			);
 			frame.transparencySettings.blendingSettings.opacity = isSZ ? 25 : 100;
+			if (label) frame.label = label;
 		}
 	}
 }
