@@ -78,7 +78,7 @@ Name                               |    Fn  | Description
 `Clip.jsx`                         |   Num* | Clips selected objects in a clipping frame (or releases them if already clipped)
 `ClipUndo.jsx`                     |  ⌃Num* | Releases selected objects from their clipping frames
 `ClearLabels.jsx`                  |        | Removes all labels from the document
-`HW.jsx`                           |   ⇧F10 | Labels 'HW' selected objects; w/o selection, adds a 10% bottom guide
+`HW.jsx`                           |   ⇧F10 | Labels 'HW' selected objects and adds a HW bottom guide on all spreads
 `LabelPage.jsx`                    |        | Adds a custom label on the current page's slug
 `LabelPageRatios.jsx`              |        | Adds a label (ratio) on each page's slug
 `QR.jsx`                           |     F9 | Adds a QR code to the current document or to a separate file
