@@ -1,8 +1,8 @@
 /*
-	HW 2.5.1 (2021-06-10)
+	HW 2.6 (2021-07-10)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Labels 'HW' selected objects and adds a HW bottom guide on the current spread.
+	Labels 'HW' selected objects and adds a HW bottom guide on all spreads.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -28,15 +28,14 @@ function main() {
 	// Set selected objects' label and color
 	var item, items = doc.selection;
 	while (item = items.shift()) {
-		item.label = "HW";
+		if (!/hw/gi.test(item.label)) item.label += " hw";
+		item.label = item.label.replace(/^ +| +$/g, "").replace(/ +/g, " ");
 		if (item.constructor.name == "Rectangle") {
 			if (item.graphics[0].isValid) {
-				// item.fillColor = "Paper";
 				item.graphics[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
 			}
 		}
 		if (item.constructor.name == "TextFrame") {
-			// item.fillColor = "Paper";
 			item.paragraphs.everyItem().justification = Justification.CENTER_ALIGN;
 			item.textFramePreferences.properties = {
 				firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
@@ -50,7 +49,7 @@ function main() {
 	}
 	// Remove old guides
 	var guide, guides = doc.guides.everyItem().getElements();
-	while (guide = guides.shift()) if (guide.label == "HW") guide.remove();
+	while (guide = guides.shift()) if (/hw/gi.test(guide.label)) guide.remove();
 	// Add guides
 	var target, pages = doc.pages.everyItem().getElements();
 	while (target = pages.shift()) {
@@ -65,7 +64,7 @@ function main() {
 		}
 		target.guides.add(undefined, {
 			itemLayer: hwLayer,
-			label: "HW",
+			label: "hw",
 			guideColor: UIColors.GREEN,
 			orientation: HorizontalOrVertical.horizontal,
 			location: bottom - (bottom - top) * (Number(HW_PCT) / 100) });
