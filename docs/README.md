@@ -136,7 +136,9 @@ Scale the selected objects proportionally, as a block.
 Scaling | |
 :- | -:
 **ScaleToPageSize.jsx** | F5
+**ScaleToPageSizeH.jsx** | ^F5
 **ScaleToPageMargins.jsx** | ⌥F5
+**ScaleToPageMarginsH.jsx** | ^⌥F5
 
 </details>
 
@@ -347,4 +349,4 @@ The code in this project would not have been possible without the [JavaScript Re
 
 I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020/2021, macOS 10.13/10.15, **Application Frame** on). Feedback or suggestions are welcome.
 
-README.md • June 26, 2021
+README.md • July 15, 2021

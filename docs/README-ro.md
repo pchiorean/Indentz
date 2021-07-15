@@ -136,7 +136,9 @@ Scalează proporțional obiectele selectate, ca un bloc unitar.
 Scaling | |
 :- | -:
 **ScaleToPageSize.jsx** | F5
+**ScaleToPageSizeH.jsx** | ^F5
 **ScaleToPageMargins.jsx** | ⌥F5
+**ScaleToPageMarginsH.jsx** | ^⌥F5
 
 </details>
 
@@ -346,4 +348,4 @@ Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide
 
 Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020/2021, macOS 10.13/10.15, **Application Frame** on). Feedback sau sugestii sunt binevenite.
 
-README-ro.md • 26 iunie 2021
+README-ro.md • 15 iulie 2021

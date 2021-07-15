@@ -51,10 +51,10 @@ Name                               |    Fn  | Description
 `TextAutosize.jsx`                 |     F6 | Auto-sizes the text frame to the content
 **Scaling**                                 |
 `ScaleToPageSize.jsx`              |     F5 | Scales the selected objects to the page size
-`ScaleToPageSizeH.jsx`             |        | Scales the selected objects to the page top/bottom size
+`ScaleToPageSizeH.jsx`             |    ^F5 | Scales the selected objects to the page top/bottom size
 `ScaleToPageSizeW.jsx`             |        | Scales the selected objects to the page left/right size
 `ScaleToPageMargins.jsx`           |    ⌥F5 | Scales the selected objects to the page margins
-`ScaleToPageMarginsH.jsx`          |        | Scales the selected objects to the page top/bottom margins
+`ScaleToPageMarginsH.jsx`          |   ^⌥F5 | Scales the selected objects to the page top/bottom margins
 `ScaleToPageMarginsW.jsx`          |        | Scales the selected objects to the page left/right margins
 **Setup**                                   |
 `DefaultPrefs.jsx`                 |        | Sets default preferences
