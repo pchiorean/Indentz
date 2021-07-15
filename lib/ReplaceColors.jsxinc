@@ -1,0 +1,15 @@
+function ReplaceColors(/*string or strings array*/oldColorNames, /*string*/newColorName, /*values array*/newColorValues) {
+	// Add new color if values provided
+	if (newColorValues)
+		if (!doc.colors.itemByName(newColorName).isValid)
+			doc.colors.add({
+				name: newColorName,
+				colorValue: newColorValues,
+				model: ColorModel.PROCESS,
+				space: ColorSpace.CMYK
+			});
+	// Replace colors
+	if (oldColorNames.constructor.name !== Array) oldColorNames = Array(oldColorNames);
+	for (var i = 0; i < oldColorNames.length; i++)
+		try { doc.colors.itemByName(oldColorNames[i]).remove(newColorName) } catch (e) {};
+};
