@@ -11,19 +11,28 @@ function dbg() {
 		  pad(t.getMinutes(), 2) + ':' +
 		  pad(t.getSeconds(), 2) + '.' +
 		  pad(t.getMilliseconds(), 3),
-		args = Array.prototype.slice.call(arguments);
-		msg = "", scope = "";
+		args = [].slice.call(arguments);
+		msg = "", scope = "",
+		separator = " | ";
 
 	if (args.length === 0) {
-		msg = "";
+		msg = "\n";
 	} else {
 		scope = args.shift();
-		scope = scope == "" ?
-			 "                " :
-			("                " + "[" + scope.substr(0, 15)).slice(-15) + "]";
-		msg = now + " " + scope + " " + args.join(" | ");
+		switch(scope) {
+			default:
+				msg = "\n" + now + " " + ("                " +
+					"[" + scope.substr(0, 15)).slice(-15) + "]" + " " + args.join(separator);
+				break;
+			case "":
+				msg = "\n" + now + " " + "                " + " " + args.join(separator);
+				break;
+			case "+":
+				msg = separator + args.join(separator);
+				break;
+		}
 	};
-	debugFile.writeln(msg), debugFile.close();
+	debugFile.write(msg), debugFile.close();
 
 	function pad(number, digits) { return ("0000" + number.toString()).slice(-digits) };
 };
