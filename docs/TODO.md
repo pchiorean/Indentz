@@ -8,14 +8,18 @@
 - [ ] [feature] Merge known swatch variants [#126](https://github.com/pchiorean/Indentz/issues/126)
 
 ### DocCleanup
+- [ ] [fix] Fix 'sticky' unused swatches
 - [ ] [update] For very large pages, set pasteboard ×50
 - [ ] [feature] Ask to delete empty frames
 - [ ] [feature] Remove unused masters
 - [ ] [feature] Remove unused styles and groups [#](https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331)
 
+### FilesToSpreads
+- [ ] [fix] Fix for files in different folders but same name
+
 ### FitTo
-- [ ] [fix] Check for transformations [#131](https://github.com/pchiorean/Indentz/issues/131)
-- [ ] [refactor] Refactor snapping
+- [ ] [fix] Check for transformations [#131](https://github.com/pchiorean/Indentz/issues/131) <!-- ItemTransform = [1 0 0 1 0 0] -->
+- [ ] [refactor] Refactor snapping (use delta)
 
 ### PageSizeFromFilename
 - [ ] [fix] Error on pages set to 1:X scale [#129](https://github.com/pchiorean/Indentz/issues/129)
@@ -25,6 +29,7 @@
 - [ ] [update] Read layer variants from `layers.txt`
 
 ### QuickExport
+- [ ] [update] ? JSONify preferences (see 'hardwareConfig.json')
 - [ ] [feature] Include subfolders
 - [ ] [feature] History for dropdowns
 - [ ] [feature] JPG & ?TIFF export profiles
@@ -41,12 +46,8 @@
 
 ### TextAutoSize
 - [ ] [update] Check `baselineShift` [#132](https://github.com/pchiorean/Indentz/issues/132)
-- [ ] [update] ? Break paragraph for frames with multiple lines
-
-### ZoomTo
-- [ ] [update] When zooming to whole page/spread, include the bleed [#125](https://github.com/pchiorean/Indentz/issues/125)
+- [ ] [update] ? Break paragraphs when multiple lines, on 2nd run
 
 ### New scripts
 - [ ] [new] `SeparateSpreadPages.jsx` [#136](https://github.com/pchiorean/Indentz/issues/136)
 - [ ] [new] `LayersToFiles.jsx` [#94](https://github.com/pchiorean/Indentz/issues/94)
-- [ ] [new] `Adjust.jsx`
