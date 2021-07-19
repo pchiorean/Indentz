@@ -1,10 +1,11 @@
 /*
-	Fit frame to text v2.3.1 (2021-05-28)
+	Fit frame to text v2.3.2 (2021-07-19)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Auto-sizes the text frame to the content.
-	First line's justification sets horizontal alignment;
-	vertical justification sets vertical alignment.
+	Auto-sizes the text frame to the content from None to Height Only to Height and Width
+	(single lines are always auto-sized Height and Width). A second run tightens auto-sizing.
+	The first line's justification sets the horizontal alignment; vertical justification
+	sets the vertical alignment.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -55,8 +56,8 @@ function FitFrame2Text(frame) {
 		frame.contents = frame.contents.replace(/\s+$/g, "");
 	// Disable hyphenation for single lines
 	if (frame.lines.length == 1) frame.lines[0].hyphenation = false;
-	// Skip 'HW' text frames, they are already set
-	if (frame.label == "HW") return;
+	// Skip 'HW' frames, they are already set
+	if (/hw/gi.test(frame.label)) return;
 
 	// Detect 1st paragraph's justification
 	if (frame.lines.length == 0) return;
@@ -120,6 +121,7 @@ function FitFrame2Text(frame) {
 	if (frame.lines.length > 1) {
 		framePrefs.autoSizingType = (oldAST == AutoSizingTypeEnum.OFF) ?
 		AutoSizingTypeEnum.HEIGHT_ONLY :
+		// Keep Height Only when just reference point is changed
 		(framePrefs.autoSizingReferencePoint != oldASRP ?
 			AutoSizingTypeEnum.HEIGHT_ONLY : AutoSizingTypeEnum.HEIGHT_AND_WIDTH)
 	} else framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
