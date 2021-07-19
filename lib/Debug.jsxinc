@@ -12,6 +12,8 @@ function dbg() {
 	var script = (function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } })();
 	var debugFile = File(Folder.desktop + "/" + script.name.substr(0, script.name.lastIndexOf(".")) + ".log");
 	debugFile.open("a");
+	debugFile.encoding = "UTF-8";
+
 
 	var t = new Date(),
 		now = t.getFullYear()    + '-' +
