@@ -1,25 +1,277 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Indentz</title>
+<!DOCTYPE html><html><head>
+      <title>README</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-<style>
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif; font-size: 18px; line-height: 1.6; }
-.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
-</style>
-</head>
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
 
-<body class="vscode-body vscode-light">
-<h1 id="indentz">Indentz</h1>
-<p>Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; suggestions below each section). Some can be run by the <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong>Batch process</strong></a> script by Peter Kahrel.</p>
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="indentz">Indentz</h1>
+
+<p>Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (<strong>Edit &gt; Keyboard Shortcuts&#x2026; &gt; Product Area &gt; Scripts</strong>; suggestions below each section).</p>
 <hr>
-<h6 id="toc"><a href="#alignmentproxy">Alignment/Proxy</a> | <a href="#export">Export</a> | <a href="#file">File</a> | <a href="#fitting">Fitting</a> | <a href="#scaling">Scaling</a> | <a href="#setup">Setup</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#installation">Installation</a> | <a href="#about">About</a></h6>
+<h6 class="mume-header" id="alignmentproxyalignmentproxy-exportexport-filefile-fittingfitting-scalingscaling-setupsetup-viewview-miscellaneousmiscellaneous-installationinstallation-aboutabout"><a href="#alignmentproxy">Alignment/Proxy</a> | <a href="#export">Export</a> | <a href="#file">File</a> | <a href="#fitting">Fitting</a> | <a href="#scaling">Scaling</a> | <a href="#setup">Setup</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#installation">Installation</a> | <a href="#about">About</a></h6>
+
 <hr>
-<h2 id="description">Description</h2>
-<h3 id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
+<h2 class="mume-header" id="description">Description</h2>
+
+<h3 class="mume-header" id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
+
 <p>Make it easier to align objects or set the reference point for transformations using shortcuts.</p>
 <ul>
 <li>
@@ -36,7 +288,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p><strong><code>SetRefPoint</code></strong> scripts change the reference point used for transformations (like clicking the little proxy squares in the <strong>Transform</strong> palette).</p>
 </li>
 </ul>
-<p><strong>Note:</strong> These two sets don't make any sense if not assigned to the numeric keypad.</p>
+<p><strong>Note:</strong> These two sets don&#x2019;t make any sense if not assigned to the numeric keypad.</p>
 <details><summary><strong>Shortcuts</strong></summary>
 <table>
 <thead>
@@ -70,7 +322,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:left"><strong>AlignToR.jsx</strong></td>
 <td style="text-align:right">Num6</td>
 <td style="text-align:left"><strong>ResetAlignTo.jsx</strong></td>
-<td style="text-align:right">⌃Num0</td>
+<td style="text-align:right">&#x2303;Num0</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>AlignToBL.jsx</strong></td>
@@ -98,38 +350,39 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <tbody>
 <tr>
 <td style="text-align:left"><strong>SetRefPointTL.jsx</strong></td>
-<td style="text-align:right">⌃Num7</td>
+<td style="text-align:right">&#x2303;Num7</td>
 <td style="text-align:left"><strong>SetRefPointT.jsx</strong></td>
-<td style="text-align:right">⌃Num8</td>
+<td style="text-align:right">&#x2303;Num8</td>
 <td style="text-align:left"><strong>SetRefPointTR.jsx</strong></td>
-<td style="text-align:right">⌃Num9</td>
+<td style="text-align:right">&#x2303;Num9</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>SetRefPointL.jsx</strong></td>
-<td style="text-align:right">⌃Num4</td>
+<td style="text-align:right">&#x2303;Num4</td>
 <td style="text-align:left"><strong>SetRefPointC.jsx</strong></td>
-<td style="text-align:right">⌃Num5</td>
+<td style="text-align:right">&#x2303;Num5</td>
 <td style="text-align:left"><strong>SetRefPointR.jsx</strong></td>
-<td style="text-align:right">⌃Num6</td>
+<td style="text-align:right">&#x2303;Num6</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>SetRefPointBL.jsx</strong></td>
-<td style="text-align:right">⌃Num1</td>
+<td style="text-align:right">&#x2303;Num1</td>
 <td style="text-align:left"><strong>SetRefPointB.jsx</strong></td>
-<td style="text-align:right">⌃Num2</td>
+<td style="text-align:right">&#x2303;Num2</td>
 <td style="text-align:left"><strong>SetRefPointBR.jsx</strong></td>
-<td style="text-align:right">⌃Num3</td>
+<td style="text-align:right">&#x2303;Num3</td>
 </tr>
 </tbody>
 </table>
 </details>
 <hr>
-<h3 id="export"><strong>Export</strong></h3>
+<h3 class="mume-header" id="export"><strong>Export</strong></h3>
+
 <ul>
 <li>
 <p><strong><code>QuickExport.jsx</code></strong> exports to PDF all open documents or documents from a folder, with up to two configurable presets. With no documents open, you can select a folder for batch processing:</p>
 <p><img src="img/quickexport.png" alt="Quick export"></p>
-<p>The text from the <strong>Suffix</strong> field will be appended to the exported file name (it's autodetected if the preset ends with &quot;_<em>suffix</em>&quot;). If <strong>Export in subfolders</strong> is checked, the suffix will also be used for the subfolder name.</p>
+<p>The text from the <strong>Suffix</strong> field will be appended to the exported file name (it&#x2019;s autodetected if the preset ends with &#x201C;_<em>suffix</em>&#x201D;). If <strong>Export in subfolders</strong> is checked, the suffix will also be used for the subfolder name.</p>
 <p>For convenience, some export options are directly accessible: export as pages/spreads, crop marks, page information, slug area; also, you can set a custom bleed.</p>
 <p>Optionally, it can run a JavaScript or AppleScript before exporting, e.g., one of the following:</p>
 </li>
@@ -137,7 +390,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p><strong><code>PrepareForExport.jsx</code></strong> hides the <strong>visible area</strong> layer and moves the dielines, white, foil and UV markings from <strong>dielines</strong> / <strong>white</strong> / <strong>foil</strong> / <strong>varnish</strong> to separate spreads.</p>
 </li>
 <li>
-<p><strong><code>VisibleArea.jsx</code></strong> creates a frame the size of the page margins on the <strong>visible area</strong> layer. It uses the <strong>Visible area</strong> swatch, which if it does not exist will be created with the value &quot;C=0 M=100 Y=0 K=0&quot;.</p>
+<p><strong><code>VisibleArea.jsx</code></strong> creates a frame the size of the page margins on the <strong>visible area</strong> layer. It uses the <strong>Visible area</strong> swatch, which if it does not exist will be created with the value &#x201C;C=0&#xA0;M=100&#xA0;Y=0&#xA0;K=0&#x201D;.</p>
 </li>
 <li>
 <p><strong><code>VisibleAreaHideLayer.jsx</code></strong> and <strong><code>VisibleAreaShowLayer.jsx</code></strong> hide or show <strong>visible area</strong>.</p>
@@ -155,13 +408,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <tbody>
 <tr>
 <td style="text-align:left"><strong>QuickExport.jsx</strong></td>
-<td style="text-align:right">⌃E</td>
+<td style="text-align:right">&#x2303;E</td>
 </tr>
 </tbody>
 </table>
 </details>
 <hr>
-<h3 id="file"><strong>File</strong></h3>
+<h3 class="mume-header" id="file"><strong>File</strong></h3>
+
 <ul>
 <li>
 <p><strong><code>FilesToSpreads.jsx</code></strong> combines the open documents, sorted alphabetically.</p>
@@ -171,22 +425,23 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </li>
 </ul>
 <hr>
-<h3 id="fitting"><strong>Fitting</strong></h3>
+<h3 class="mume-header" id="fitting"><strong>Fitting</strong></h3>
+
 <p>Resize the selected objects, without scaling. Rectangular frames are simply resized; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is resized.</p>
 <ul>
 <li>
-<p><strong><code>FitToPage</code></strong> and <strong><code>FitToSpread</code></strong>: if the selected object is larger than the target, it will be reduced; if it is smaller but inside a 1% &quot;snap&quot; area, it will be enlarged.</p>
+<p><strong><code>FitToPage</code></strong> and <strong><code>FitToSpread</code></strong>: if the selected object is larger than the target, it will be reduced; if it is smaller but inside a 1% &#x201C;snap&#x201D; area, it will be enlarged.</p>
 <p><strong><code>FitTo...Forced</code></strong> resize exactly to the named dimensions.</p>
 </li>
 <li>
-<p><strong><code>TextAutosize.jsx</code></strong> fits the text frame to the text and sets it to auto‑size. You control the auto‑sizing reference point by setting <strong>Paragraph Alignment</strong> for the horizontal axis, and <strong>Text Frame Options &gt; Vertical Justification</strong> for the vertical axis:</p>
+<p><strong><code>TextAutosize.jsx</code></strong> auto-sizes the text frame to the content from <strong>None</strong> to <strong>Height Only</strong> and from <strong>Height Only</strong> to <strong>Height and Width</strong> (single lines are always auto-sized <strong>Height and Width</strong>). The first paragraph&#x2019;s alignment sets the frame&#x2019;s horizontal alignment; <strong>Text Frame Options &gt; Vertical Justification</strong> sets the vertical alignment:</p>
 <table>
 <thead>
 <tr>
 <th style="text-align:center"></th>
-<th style="text-align:center"><img src="img/paragraphalign-L.png" alt="¶ Align left"></th>
-<th style="text-align:center"><img src="img/paragraphalign-C.png" alt="¶ Align center"></th>
-<th style="text-align:center"><img src="img/paragraphalign-R.png" alt="¶ Align right"></th>
+<th style="text-align:center"><img src="img/paragraphalign-L.png" alt="&#xB6; Align left"></th>
+<th style="text-align:center"><img src="img/paragraphalign-C.png" alt="&#xB6; Align center"></th>
+<th style="text-align:center"><img src="img/paragraphalign-R.png" alt="&#xB6; Align right"></th>
 </tr>
 </thead>
 <tbody>
@@ -210,7 +465,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tr>
 </tbody>
 </table>
-<p>If the text has only one line, <strong>Auto‑Sizing Type</strong> will be set to <em>Height and width</em>. If it has multiple lines, the first run will set it to <em>Height only</em>, the second run to <em>Height and width</em>.</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuts</strong></summary>
@@ -232,49 +486,49 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageMargins.jsx</strong></td>
-<td style="text-align:right">⌥F11</td>
+<td style="text-align:right">&#x2325;F11</td>
 <td style="text-align:left"><strong>FitToSpreadMargins.jsx</strong></td>
-<td style="text-align:right">⌥F12</td>
+<td style="text-align:right">&#x2325;F12</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageVisibleArea.jsx</strong></td>
-<td style="text-align:right">⌥⇧F11</td>
+<td style="text-align:right">&#x2325;&#x21E7;F11</td>
 <td style="text-align:left"><strong>FitToSpreadVisibleArea.jsx</strong></td>
-<td style="text-align:right">⌥⇧F12</td>
+<td style="text-align:right">&#x2325;&#x21E7;F12</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageBleed.jsx</strong></td>
-<td style="text-align:right">⇧F11</td>
+<td style="text-align:right">&#x21E7;F11</td>
 <td style="text-align:left"><strong>FitToSpreadBleed.jsx</strong></td>
-<td style="text-align:right">⇧F12</td>
+<td style="text-align:right">&#x21E7;F12</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageForced.jsx</strong></td>
-<td style="text-align:right">⌘F11</td>
+<td style="text-align:right">&#x2318;F11</td>
 <td style="text-align:left"><strong>FitToSpreadForced.jsx</strong></td>
-<td style="text-align:right">⌘F12</td>
+<td style="text-align:right">&#x2318;F12</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageMarginsForced.jsx</strong></td>
-<td style="text-align:right">⌥⌘F11</td>
+<td style="text-align:right">&#x2325;&#x2318;F11</td>
 <td style="text-align:left"><strong>FitToSpreadMarginsForced.jsx</strong></td>
-<td style="text-align:right">⌥⌘F12</td>
+<td style="text-align:right">&#x2325;&#x2318;F12</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageVisibleAreaForced.jsx</strong></td>
-<td style="text-align:right">⌥⇧⌘F11</td>
+<td style="text-align:right">&#x2325;&#x21E7;&#x2318;F11</td>
 <td style="text-align:left"><strong>FitToSpreadVisibleAreaForced.jsx</strong></td>
-<td style="text-align:right">⌥⇧⌘F12</td>
+<td style="text-align:right">&#x2325;&#x21E7;&#x2318;F12</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageBleedForced.jsx</strong></td>
-<td style="text-align:right">⇧⌘F11</td>
+<td style="text-align:right">&#x21E7;&#x2318;F11</td>
 <td style="text-align:left"><strong>FitToSpreadBleedForced.jsx</strong></td>
-<td style="text-align:right">⇧⌘F12</td>
+<td style="text-align:right">&#x21E7;&#x2318;F12</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> <code>F11</code> page, <code>F12</code> spread; <code>⌥</code> margins, <code>⌥⇧</code> visible area, <code>⇧</code> bleed; <code>⌘</code> forced.</p>
+<p><strong>Note:</strong> <code>F11</code> page, <code>F12</code> spread; <code>&#x2325;</code> margins, <code>&#x2325;&#x21E7;</code> visible area, <code>&#x21E7;</code> bleed; <code>&#x2318;</code> forced.</p>
 <table>
 <thead>
 <tr>
@@ -291,7 +545,8 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </table>
 </details>
 <hr>
-<h3 id="scaling"><strong>Scaling</strong></h3>
+<h3 class="mume-header" id="scaling"><strong>Scaling</strong></h3>
+
 <p>Scale the selected objects proportionally, as a block.</p>
 <ul>
 <li>
@@ -320,19 +575,21 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tr>
 <tr>
 <td style="text-align:left"><strong>ScaleToPageMargins.jsx</strong></td>
-<td style="text-align:right">⌥F5</td>
+<td style="text-align:right">&#x2325;F5</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>ScaleToPageMarginsH.jsx</strong></td>
-<td style="text-align:right">^⌥F5</td>
+<td style="text-align:right">^&#x2325;F5</td>
 </tr>
 </tbody>
 </table>
 </details>
 <hr>
-<h3 id="setup"><strong>Setup</strong></h3>
+<h3 class="mume-header" id="setup"><strong>Setup</strong></h3>
+
 <p>There are two sets: one related to document preferences, layers, swatches and fonts, the other to page size and margins.</p>
-<h4 id="document"><strong>Document</strong></h4>
+<h4 class="mume-header" id="document"><strong>Document</strong></h4>
+
 <ul>
 <li>
 <p><strong><code>DefaultPrefs.jsx</code></strong> sets some preferences.</p>
@@ -357,13 +614,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <strong>Layers:</strong> Ungroup Remembers Layers <br>
 <strong>Layers:</strong> Paste Remembers Layers <br>
 <strong>Transform Reference Point:</strong> Center <br>
-<strong>Type Options:</strong> Use Typographer's Quotes <br>
+<strong>Type Options:</strong> Use Typographer&#x2019;s Quotes <br>
 <strong>Type Options:</strong> Apply Leading to Entire Paragraphs</p>
 </blockquote>
 </details>
 </li>
 <li>
-<p><strong><code>DefaultLayers.jsx</code></strong> adds a set of layers defined in a TSV <em>(tab‑separated values)</em> file named <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
+<p><strong><code>DefaultLayers.jsx</code></strong> adds a set of layers defined in a TSV <em>(tab&#x2011;separated values)</em> file named <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -393,7 +650,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:left"></td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -408,7 +665,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <strong>Visible</strong>: <code>yes</code> or <code>no</code> (default <code>yes</code>) <br>
 <strong>Printable</strong>: <code>yes</code> or <code>no</code> (default <code>yes</code>) <br>
 <strong>Order</strong>: <code>above</code> or <code>below</code> existing layers (default <code>above</code>) <br>
-<strong>Variants</strong>: a list of layers that will be merged with the base layer (case insensitive&semi; <code>*</code> and <code>?</code> wildcards accepted)</p>
+<strong>Variants</strong>: a list of layers that will be merged with the base layer (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
 </blockquote>
 <p><strong>Note:</strong> The file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored.</p>
 </li>
@@ -443,7 +700,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:left">0 100 0 0</td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
@@ -454,14 +711,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p><strong>Name</strong>: swatch name <br>
 <strong>Color Model</strong>: <code>process</code> or <code>spot</code> (default <code>process</code>) <br>
 <strong>Color Space</strong>: <code>cmyk</code>, <code>rgb</code> or <code>lab</code> (default <code>cmyk</code>) <br>
-<strong>Values</strong>: 3 values in 0–255 range for RGB; 4 values in 0–100 range for CMYK; 3 values in 0–100 (L), -128–127 (A and B) range for Lab</p>
+<strong>Values</strong>: 3 values in 0&#x2013;255 range for RGB; 4 values in 0&#x2013;100 range for CMYK; 3 values in 0&#x2013;100 (L), -128&#x2013;127 (A and B) range for Lab</p>
 </blockquote>
 </li>
 <li>
-<p><strong><code>SaveSwatches.jsx</code></strong> saves document's swatches to a file compatible with <strong><code>DefaultSwatches.jsx</code></strong>.</p>
+<p><strong><code>SaveSwatches.jsx</code></strong> saves document&#x2019;s swatches to a TSV file compatible with <strong><code>DefaultSwatches.jsx</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>CleanupSwatches.jsx</code></strong> converts process RGB swatches to CMYK, renames them to &quot;C= M= Y= K=&quot; form, removes duplicates and deletes unused. Spot colors are not changed.</p>
+<p><strong><code>CleanupSwatches.jsx</code></strong> converts process RGB swatches to CMYK, renames them to &#x201C;C=&#xA0;M=&#xA0;Y=&#xA0;K=&#x201D; form, removes duplicates and deletes unused. Spot colors are not changed.</p>
 </li>
 <li>
 <p><strong><code>DeleteGuides.jsx</code></strong> deletes all guides from the document.</p>
@@ -491,24 +748,25 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:left">Bold</td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Miscellaneous</strong> to get a tab delimited list of fonts for copy‑pasting.</p>
+<p><strong>Note:</strong> You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Miscellaneous</strong> to get a tab delimited list of fonts for copy&#x2011;pasting.</p>
 </li>
 <li>
 <p><strong><code>DocDefaults.jsx</code></strong> runs <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong>, <strong><code>PageSizeFromFilename.jsx</code></strong>, sets loose pasteboard margins.</p>
 </li>
 <li>
-<p><strong><code>DocCleanup.jsx</code></strong> runs <strong><code>DefaultPrefs.jsx</code></strong>, cleans up unused swatches, layers and pages, unlocks all items and resets their scaling to 100%, converts empty text frames to simple frames, sets tight pasteboard margins.</p>
+<p><strong><code>DocCleanup.jsx</code></strong> runs <strong><code>DefaultPrefs.jsx</code></strong>, cleans up unused swatches, layers and pages, unlocks all items, deletes hidden items, resets scaling to 100%, converts empty text frames to simple frames, sets tight pasteboard margins.</p>
 </li>
 </ul>
 <hr>
-<h4 id="layout"><strong>Layout</strong></h4>
+<h4 class="mume-header" id="layout"><strong>Layout</strong></h4>
+
 <ul>
 <li>
 <p><strong><code>PageMarginsFromSelection.jsx</code></strong> sets the page margins to the selected objects.</p>
@@ -540,7 +798,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tbody>
 </table>
 <blockquote>
-<p>It searches for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it's the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair it's the page size, the smaller pair the visible area. If followed by a one- or two‑digit sequence, this will be bleed.</p>
+<p>It searches for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it&#x2019;s the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair it&#x2019;s the page size, the smaller pair the visible area. If followed by a one- or two&#x2011;digit sequence, this will be bleed.</p>
 </blockquote>
 </li>
 <li>
@@ -569,27 +827,28 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tr>
 <tr>
 <td style="text-align:left"><strong>DocDefaults.jsx</strong></td>
-<td style="text-align:right">⌥F2</td>
+<td style="text-align:right">&#x2325;F2</td>
 <td style="text-align:left"><strong>PageSizeFromMargins.jsx</strong></td>
-<td style="text-align:right">⌥F3</td>
+<td style="text-align:right">&#x2325;F3</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>CleanupSwatches.jsx</strong></td>
-<td style="text-align:right">⇧F2</td>
+<td style="text-align:right">&#x21E7;F2</td>
 <td style="text-align:left"><strong>PageSizeFromSelection.jsx</strong></td>
-<td style="text-align:right">⇧F3</td>
+<td style="text-align:right">&#x21E7;F3</td>
 </tr>
 </tbody>
 </table>
 </details>
 <hr>
-<h3 id="view"><strong>View</strong></h3>
+<h3 class="mume-header" id="view"><strong>View</strong></h3>
+
 <ul>
 <li>
 <p><strong><code>TileAll.jsx</code></strong> invokes <strong>Window &gt; Arrange &gt; Tile All Vertically</strong> or <strong>Tile All Horizontally</strong>, depending on the current spread orientation.</p>
 </li>
 <li>
-<p><strong><code>ZoomToSelection.jsx</code></strong> resembles <strong>Fit Selection in Window</strong> (⌥⌘=), but with some improvements:</p>
+<p><strong><code>ZoomToSelection.jsx</code></strong> resembles <strong>Fit Selection in Window</strong> (&#x2325;&#x2318;=), but with some improvements:</p>
 <ul>
 <li>brings the selection a little closer;</li>
 <li>if the cursor is in the text, zooms on the whole frame;</li>
@@ -611,7 +870,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <tbody>
 <tr>
 <td style="text-align:left"><strong>TileAll.jsx</strong></td>
-<td style="text-align:right">⇧F4</td>
+<td style="text-align:right">&#x21E7;F4</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>ZoomToSelection.jsx</strong></td>
@@ -619,24 +878,25 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tr>
 <tr>
 <td style="text-align:left"><strong>ZoomToSpreads.jsx</strong></td>
-<td style="text-align:right">⌥F4</td>
+<td style="text-align:right">&#x2325;F4</td>
 </tr>
 </tbody>
 </table>
 </details>
 <hr>
-<h3 id="miscellaneous"><strong>Miscellaneous</strong></h3>
+<h3 class="mume-header" id="miscellaneous"><strong>Miscellaneous</strong></h3>
+
 <ul>
 <li>
 <p><strong><code>ClearLabels.jsx</code></strong>: Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.</p>
 </li>
 <li>
 <p><strong><code>Clip.jsx</code></strong>: To handle some objects it is sometimes useful to temporarily insert them into a container <em>(clipping frame)</em>. The script inserts selected objects in a clipping frame or restores them if already clipped.</p>
-<p><strong>Note:</strong> It uses the clipboard, so make sure you don't lose anything important.</p>
+<p><strong>Note:</strong> It uses the clipboard, so make sure you don&#x2019;t lose anything important.</p>
 <p><strong><code>ClipUndo.jsx</code></strong> restores one or several clipped objects at once.</p>
 </li>
 <li>
-<p><strong><code>HW.jsx</code></strong> labels selected objects &quot;HW&quot; and adds a 10% bottom guide on the current page.</p>
+<p><strong><code>HW.jsx</code></strong> labels selected objects &#x201C;HW&#x201D; and adds a 10% bottom guide on the current page.</p>
 </li>
 <li>
 <p><strong><code>LabelPage.jsx</code></strong> adds a custom label on the current page slug, on the <strong>info</strong> layer.</p>
@@ -645,7 +905,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <p><strong><code>LabelPageRatios.jsx</code></strong> adds a label with its aspect ratio to the slug of each page, on the <strong>info</strong> layer.</p>
 </li>
 <li>
-<p><strong><code>QR.jsx</code></strong> adds a QR code on each page of the active document or a separate file with the same name and the suffix &quot;_QR&quot;.</p>
+<p><strong><code>QR.jsx</code></strong> adds a QR code on each page of the active document or a separate file with the same name and the suffix &#x201C;_QR&#x201D;.</p>
 <p><strong><code>QRBatch.jsx</code></strong> retrieves a list of codes from a TSV file named <strong><code>qr.txt</code></strong> and adds them to existing documents or creates separate files:</p>
 <table>
 <thead>
@@ -667,7 +927,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:left"></td>
 <td style="text-align:center"></td>
 </tr>
@@ -678,7 +938,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <strong>Code</strong>: any string <br>
 <strong>Doc</strong>: any string: on document; leave empty or omit for separate file</p>
 </blockquote>
-<p><strong>Note:</strong> You can insert &quot;|&quot; for manually splitting the text into several lines.</p>
+<p><strong>Note:</strong> You can insert &#x201C;|&#x201D; for manually splitting the text into several lines.</p>
 </li>
 <li>
 <p><strong><code>ShowFonts.jsx</code></strong> shows all fonts used in the current document (useful with <strong><code>ReplaceFonts.jsx</code></strong>).</p>
@@ -709,13 +969,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:left"><strong>QR.jsx</strong></td>
 <td style="text-align:right">F9</td>
 <td style="text-align:left"><strong>HW.jsx</strong></td>
-<td style="text-align:right">⇧F10</td>
+<td style="text-align:right">&#x21E7;F10</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>ClipUndo.jsx</strong></td>
-<td style="text-align:right">⌃Num*</td>
+<td style="text-align:right">&#x2303;Num*</td>
 <td style="text-align:left"><strong>QRBatch.jsx</strong></td>
-<td style="text-align:right">⇧F9</td>
+<td style="text-align:right">&#x21E7;F9</td>
 <td style="text-align:left"></td>
 <td style="text-align:right"></td>
 </tr>
@@ -723,18 +983,32 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </table>
 </details>
 <hr>
-<h2 id="installation">Installation</h2>
+<h2 class="mume-header" id="installation">Installation</h2>
+
 <ol>
 <li>Open <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
-<li>Right‑click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
+<li>Right&#x2011;click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
 <li>Copy files to this folder.</li>
 </ol>
 <hr>
-<h2 id="about">About</h2>
-<p>© 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>The code in this project would not have been possible without the <a href="http://jongware.mit.edu">JavaScript Reference Guide</a> by Theunis de Jong, Mozilla's <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington, and others.</p>
-<p>I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020/2021, macOS 10.13/10.15, <strong>Application Frame</strong> on). Feedback or suggestions are welcome.</p>
-<p>README.md • July 15, 2021</p>
+<h2 class="mume-header" id="about">About</h2>
 
-</body>
-</html>
+<p>I&#x2019;m a graphic designer, not a programmer, and I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.</p>
+<p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
+<p>&#xA9; 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
+The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
+<p>README.md &#x2022; July 20, 2021</p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>

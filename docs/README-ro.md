@@ -90,15 +90,13 @@ Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuit
 
   **`FitTo...Forced`** redimensionează exact la dimensiunile respective.
 
-* **`TextAutosize.jsx`** „strânge” chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând **Paragraph Alignment** pentru axa orizontală și **Text Frame Options > Vertical Justification** pentru axa verticală:
+* **`TextAutosize.jsx`** setează dimensionarea automată a chenarului de text de la **None** la **Height Only** și de la **Height Only** la **Height and Width** (rândurile singulare sunt setate întotdeauna **Height and Width**). Alinierea primului paragraf setează alinierea orizontală a chenarului; **Text Frame Options > Vertical Justification** setează alinierea verticală:
 
   | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
   :-: | :-: | :-: | :-:
   ![Vertical Justification Top](img/verticaljustification-T.png) | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
   ![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
   ![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
-
-  Dacă textul are un singur rând, **Auto‑Sizing Type** va fi setat *Height and width*. Dacă are mai multe rânduri, prima rulare îl va seta *Height only*, a doua *Height and width*.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -342,10 +340,11 @@ Miscellaneous | | | | | |
 
 ## Despre
 
-© 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. Codul este publicat sub licența MIT ([LICENSE.txt](LICENSE.txt)).
+Sunt un graphic designer, nu un programator, și am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback sau sugestii sunt binevenite.
 
-Codul din acest proiect nu ar fi fost posibil fără [JavaScript Reference Guide](http://jongware.mit.edu) de Theunis de Jong, Mozilla [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), postări pe bloguri și forumuri, tutoriale și scripturi de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.
+Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API de [Theunis de Jong](http://jongware.mit.edu) și [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), postări pe bloguri și forumuri, tutoriale și scripturi de [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) și mulți alții.
 
-Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020/2021, macOS 10.13/10.15, **Application Frame** on). Feedback sau sugestii sunt binevenite.
+© 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
+Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 15 iulie 2021
+README-ro.md • 20 iulie 2021

@@ -90,15 +90,13 @@ Resize the selected objects, without scaling. Rectangular frames are simply resi
 
   **`FitTo...Forced`** resize exactly to the named dimensions.
 
-* **`TextAutosize.jsx`** fits the text frame to the text and sets it to auto‑size. You control the auto‑sizing reference point by setting **Paragraph Alignment** for the horizontal axis, and **Text Frame Options > Vertical Justification** for the vertical axis:
+* **`TextAutosize.jsx`** auto-sizes the text frame to the content from **None** to **Height Only** and from **Height Only** to **Height and Width** (single lines are always auto-sized **Height and Width**). The first paragraph's alignment sets the frame's horizontal alignment; **Text Frame Options > Vertical Justification** sets the vertical alignment:
 
   | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
   :-: | :-: | :-: | :-:
   ![Vertical Justification Top](img/verticaljustification-T.png) | ![top-left](img/textautosize-TL.png) | ![top-center](img/textautosize-TC.png) | ![top-right](img/textautosize-TR.png)
   ![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png)
   ![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png)
-
-  If the text has only one line, **Auto‑Sizing Type** will be set to *Height and width*. If it has multiple lines, the first run will set it to *Height only*, the second run to *Height and width*.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -343,10 +341,11 @@ Miscellaneous | | | | | |
 
 ## About
 
-© 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
+I'm a graphic designer, not a programmer, and I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.
 
-The code in this project would not have been possible without the [JavaScript Reference Guide](http://jongware.mit.edu) by Theunis de Jong, Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington, and others.
+The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Very limited testing was done outside my work configuration (Adobe InDesign 2020/2021, macOS 10.13/10.15, **Application Frame** on). Feedback or suggestions are welcome.
+© 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
+The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • July 15, 2021
+README.md • July 20, 2021

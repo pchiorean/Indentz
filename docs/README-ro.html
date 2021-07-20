@@ -1,42 +1,294 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Indentz</title>
+<!DOCTYPE html><html><head>
+      <title>README-ro</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.11/dist/katex.min.css">
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <style>
+      /**
+ * prism.js Github theme based on GitHub's theme.
+ * @author Sam Clarke
+ */
+code[class*="language-"],
+pre[class*="language-"] {
+  color: #333;
+  background: none;
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  word-wrap: normal;
+  line-height: 1.4;
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/markdown.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Microsoft/vscode/extensions/markdown-language-features/media/highlight.css">
-<style>
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', system-ui, 'Ubuntu', 'Droid Sans', sans-serif; font-size: 18px; line-height: 1.6; }
-.task-list-item { list-style-type: none; } .task-list-item-checkbox { margin-left: -20px; vertical-align: middle; }
-</style>
-</head>
+  -moz-tab-size: 8;
+  -o-tab-size: 8;
+  tab-size: 8;
 
-<body class="vscode-body vscode-light">
-<h1 id="indentz">Indentz</h1>
-<p>Colecție de scripturi InDesign pentru operații simple și repetitive. Ideal, o parte din ele ar trebui invocate printr‑un shortcut (<strong>Edit &gt; Keyboard Shortcuts... &gt; Product Area &gt; Scripts</strong>; sugestii sub fiecare secțiune). Câteva pot fi rulate de scriptul <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html"><strong>Batch process</strong></a> de Peter Kahrel.</p>
+  -webkit-hyphens: none;
+  -moz-hyphens: none;
+  -ms-hyphens: none;
+  hyphens: none;
+}
+
+/* Code blocks */
+pre[class*="language-"] {
+  padding: .8em;
+  overflow: auto;
+  /* border: 1px solid #ddd; */
+  border-radius: 3px;
+  /* background: #fff; */
+  background: #f5f5f5;
+}
+
+/* Inline code */
+:not(pre) > code[class*="language-"] {
+  padding: .1em;
+  border-radius: .3em;
+  white-space: normal;
+  background: #f5f5f5;
+}
+
+.token.comment,
+.token.blockquote {
+  color: #969896;
+}
+
+.token.cdata {
+  color: #183691;
+}
+
+.token.doctype,
+.token.punctuation,
+.token.variable,
+.token.macro.property {
+  color: #333;
+}
+
+.token.operator,
+.token.important,
+.token.keyword,
+.token.rule,
+.token.builtin {
+  color: #a71d5d;
+}
+
+.token.string,
+.token.url,
+.token.regex,
+.token.attr-value {
+  color: #183691;
+}
+
+.token.property,
+.token.number,
+.token.boolean,
+.token.entity,
+.token.atrule,
+.token.constant,
+.token.symbol,
+.token.command,
+.token.code {
+  color: #0086b3;
+}
+
+.token.tag,
+.token.selector,
+.token.prolog {
+  color: #63a35c;
+}
+
+.token.function,
+.token.namespace,
+.token.pseudo-element,
+.token.class,
+.token.class-name,
+.token.pseudo-class,
+.token.id,
+.token.url-reference .token.variable,
+.token.attr-name {
+  color: #795da3;
+}
+
+.token.entity {
+  cursor: help;
+}
+
+.token.title,
+.token.title .token.punctuation {
+  font-weight: bold;
+  color: #1d3e81;
+}
+
+.token.list {
+  color: #ed6a43;
+}
+
+.token.inserted {
+  background-color: #eaffea;
+  color: #55a532;
+}
+
+.token.deleted {
+  background-color: #ffecec;
+  color: #bd2c00;
+}
+
+.token.bold {
+  font-weight: bold;
+}
+
+.token.italic {
+  font-style: italic;
+}
+
+
+/* JSON */
+.language-json .token.property {
+  color: #183691;
+}
+
+.language-markup .token.tag .token.punctuation {
+  color: #333;
+}
+
+/* CSS */
+code.language-css,
+.language-css .token.function {
+  color: #0086b3;
+}
+
+/* YAML */
+.language-yaml .token.atrule {
+  color: #63a35c;
+}
+
+code.language-yaml {
+  color: #183691;
+}
+
+/* Ruby */
+.language-ruby .token.function {
+  color: #333;
+}
+
+/* Markdown */
+.language-markdown .token.url {
+  color: #795da3;
+}
+
+/* Makefile */
+.language-makefile .token.symbol {
+  color: #795da3;
+}
+
+.language-makefile .token.variable {
+  color: #183691;
+}
+
+.language-makefile .token.builtin {
+  color: #0086b3;
+}
+
+/* Bash */
+.language-bash .token.keyword {
+  color: #0086b3;
+}
+
+/* highlight */
+pre[data-line] {
+  position: relative;
+  padding: 1em 0 1em 3em;
+}
+pre[data-line] .line-highlight-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: transparent;
+  display: block;
+  width: 100%;
+}
+
+pre[data-line] .line-highlight {
+  position: absolute;
+  left: 0;
+  right: 0;
+  padding: inherit 0;
+  margin-top: 1em;
+  background: hsla(24, 20%, 50%,.08);
+  background: linear-gradient(to right, hsla(24, 20%, 50%,.1) 70%, hsla(24, 20%, 50%,0));
+  pointer-events: none;
+  line-height: inherit;
+  white-space: pre;
+}
+
+pre[data-line] .line-highlight:before, 
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-start);
+  position: absolute;
+  top: .4em;
+  left: .6em;
+  min-width: 1em;
+  padding: 0 .5em;
+  background-color: hsla(24, 20%, 50%,.4);
+  color: hsl(24, 20%, 95%);
+  font: bold 65%/1.5 sans-serif;
+  text-align: center;
+  vertical-align: .3em;
+  border-radius: 999px;
+  text-shadow: none;
+  box-shadow: 0 1px white;
+}
+
+pre[data-line] .line-highlight[data-end]:after {
+  content: attr(data-end);
+  top: auto;
+  bottom: .4em;
+}html body{font-family:"Helvetica Neue",Helvetica,"Segoe UI",Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ul,html body>ol{margin-bottom:16px}html body ul,html body ol{padding-left:2em}html body ul.no-list,html body ol.no-list{padding:0;list-style-type:none}html body ul ul,html body ul ol,html body ol ol,html body ol ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:bold;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:bold}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em !important;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::before,html body code::after{letter-spacing:-0.2em;content:"\00a0"}html body pre>code{padding:0;margin:0;font-size:.85em !important;word-break:normal;white-space:pre;background:transparent;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;font-size:.85em !important;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:before,html body pre tt:before,html body pre code:after,html body pre tt:after{content:normal}html body p,html body blockquote,html body ul,html body ol,html body dl,html body pre{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body pre,html body code{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview .pagebreak,.markdown-preview .newpage{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center !important}.markdown-preview:not([for="preview"]) .code-chunk .btn-group{display:none}.markdown-preview:not([for="preview"]) .code-chunk .status{display:none}.markdown-preview:not([for="preview"]) .code-chunk .output-div{margin-bottom:16px}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0}@media screen and (min-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode]) .markdown-preview{font-size:14px !important;padding:1em}}@media print{html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for="html-export"]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,0.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,0.66);border:4px solid rgba(150,150,150,0.66);background-clip:content-box}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{padding:0 1.6em;margin-top:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc li{margin-bottom:.8em}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc ul{list-style-type:none}html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% -  300px);padding:2em calc(50% - 457px -  150px);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for="html-export"]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for="html-export"]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+    </head>
+    <body for="html-export">
+      <div class="mume markdown-preview  ">
+      <h1 class="mume-header" id="indentz">Indentz</h1>
+
+<p>Colec&#x21B;ie de scripturi InDesign pentru opera&#x21B;ii simple &#x219;i repetitive. Ideal, o parte din ele ar trebui invocate printr&#x2011;un shortcut (<strong>Edit &gt; Keyboard Shortcuts&#x2026; &gt; Product Area &gt; Scripts</strong>; sugestii sub fiecare sec&#x21B;iune).</p>
 <hr>
-<h6 id="toc"><a href="#alignmentproxy">Alignment/Proxy</a> | <a href="#export">Export</a> | <a href="#file">File</a> | <a href="#fitting">Fitting</a> | <a href="#scaling">Scaling</a> | <a href="#setup">Setup</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#installation">Instalare</a> | <a href="#about">Despre</a></h6>
+<h6 class="mume-header" id="alignmentproxyalignmentproxy-exportexport-filefile-fittingfitting-scalingscaling-setupsetup-viewview-miscellaneousmiscellaneous-instalareinstalare-despreabout"><a href="#alignmentproxy">Alignment/Proxy</a> | <a href="#export">Export</a> | <a href="#file">File</a> | <a href="#fitting">Fitting</a> | <a href="#scaling">Scaling</a> | <a href="#setup">Setup</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#instalare">Instalare</a> | <a href="#about">Despre</a></h6>
+
 <hr>
-<h2 id="description">Descriere</h2>
-<h3 id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
-<p>Facilitează alinierea obiectelor sau setarea punctului de referință pentru transformări folosind shortcuturi.</p>
+<h2 class="mume-header" id="descriere">Descriere</h2>
+
+<h3 class="mume-header" id="alignmentproxy"><strong>Alignment/Proxy</strong></h3>
+
+<p>Faciliteaz&#x103; alinierea obiectelor sau setarea punctului de referin&#x21B;&#x103; pentru transform&#x103;ri folosind shortcuturi.</p>
 <ul>
 <li>
-<p><strong><code>AlignTo</code></strong> aliniază obiectele selectate la referința setării <strong>Align To</strong>:</p>
+<p><strong><code>AlignTo</code></strong> aliniaz&#x103; obiectele selectate la referin&#x21B;a set&#x103;rii <strong>Align To</strong>:</p>
 <p><img src="img/alignto.png" alt="Align Panel screenshot"></p>
 </li>
 <li>
-<p><strong><code>ToggleAlignTo.jsx</code></strong> comută alinierea între obiect, margini, pagină sau spread (rulați scriptul în mod repetat).</p>
+<p><strong><code>ToggleAlignTo.jsx</code></strong> comut&#x103; alinierea &#xEE;ntre obiect, margini, pagin&#x103; sau spread (rula&#x21B;i scriptul &#xEE;n mod repetat).</p>
 </li>
 <li>
-<p><strong><code>ResetAlignTo.jsx</code></strong> o resetează la <strong>Align to Selection</strong>.</p>
+<p><strong><code>ResetAlignTo.jsx</code></strong> o reseteaz&#x103; la <strong>Align to Selection</strong>.</p>
 </li>
 <li>
-<p><strong><code>SetRefPoint</code></strong> schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta <strong>Transform</strong>.</p>
+<p><strong><code>SetRefPoint</code></strong> schimb&#x103; punctul de referin&#x21B;&#x103; pentru transform&#x103;ri, similar cu selectarea p&#x103;tr&#x103;&#x21B;elelor proxy &#xEE;n paleta <strong>Transform</strong>.</p>
 </li>
 </ul>
-<p><strong>Notă:</strong> Aceste două seturi nu au nici un sens dacă nu sunt asociate tastaturii numerice.</p>
+<p><strong>Not&#x103;:</strong> Aceste dou&#x103; seturi nu au nici un sens dac&#x103; nu sunt asociate tastaturii numerice.</p>
 <details><summary><strong>Shortcuturi</strong></summary>
 <table>
 <thead>
@@ -70,7 +322,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:left"><strong>AlignToR.jsx</strong></td>
 <td style="text-align:right">Num6</td>
 <td style="text-align:left"><strong>ResetAlignTo.jsx</strong></td>
-<td style="text-align:right">⌃Num0</td>
+<td style="text-align:right">&#x2303;Num0</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>AlignToBL.jsx</strong></td>
@@ -98,53 +350,53 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <tbody>
 <tr>
 <td style="text-align:left"><strong>SetRefPointTL.jsx</strong></td>
-<td style="text-align:right">⌃Num7</td>
+<td style="text-align:right">&#x2303;Num7</td>
 <td style="text-align:left"><strong>SetRefPointT.jsx</strong></td>
-<td style="text-align:right">⌃Num8</td>
+<td style="text-align:right">&#x2303;Num8</td>
 <td style="text-align:left"><strong>SetRefPointTR.jsx</strong></td>
-<td style="text-align:right">⌃Num9</td>
+<td style="text-align:right">&#x2303;Num9</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>SetRefPointL.jsx</strong></td>
-<td style="text-align:right">⌃Num4</td>
+<td style="text-align:right">&#x2303;Num4</td>
 <td style="text-align:left"><strong>SetRefPointC.jsx</strong></td>
-<td style="text-align:right">⌃Num5</td>
+<td style="text-align:right">&#x2303;Num5</td>
 <td style="text-align:left"><strong>SetRefPointR.jsx</strong></td>
-<td style="text-align:right">⌃Num6</td>
+<td style="text-align:right">&#x2303;Num6</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>SetRefPointBL.jsx</strong></td>
-<td style="text-align:right">⌃Num1</td>
+<td style="text-align:right">&#x2303;Num1</td>
 <td style="text-align:left"><strong>SetRefPointB.jsx</strong></td>
-<td style="text-align:right">⌃Num2</td>
+<td style="text-align:right">&#x2303;Num2</td>
 <td style="text-align:left"><strong>SetRefPointBR.jsx</strong></td>
-<td style="text-align:right">⌃Num3</td>
+<td style="text-align:right">&#x2303;Num3</td>
 </tr>
 </tbody>
 </table>
 </details>
 <hr>
-<h3 id="export"><strong>Export</strong></h3>
+<h3 class="mume-header" id="export"><strong>Export</strong></h3>
+
 <ul>
 <li>
-<p><strong><code>QuickExport.jsx</code></strong> exportă în PDF toate documentele deschise sau documentele dintr‑un folder, cu până la două preseturi configurabile. Fără documente deschise, puteți selecta un folder pentru procesarea în serie:</p>
+<p><strong><code>QuickExport.jsx</code></strong> export&#x103; &#xEE;n PDF toate documentele deschise sau documentele dintr&#x2011;un folder, cu p&#xE2;n&#x103; la dou&#x103; preseturi configurabile. F&#x103;r&#x103; documente deschise, pute&#x21B;i selecta un folder pentru procesarea &#xEE;n serie:</p>
 <p><img src="img/quickexport.png" alt="Quick export"></p>
-<p>Textul din câmpul <strong>Suffix</strong> va fi adăugat la numele fișierului exportat (e autodetectat dacă numele presetului se termină cu &quot;_<em>sufix</em>&quot;). Dacă <strong>Export in subfolders</strong> e activ, sufixul va fi folosit și pentru numele subfolderului.</p>
-<p>Pentru comoditate, câteva opțiuni de export sunt direct accesibile: export ca pagini/spreaduri, crop mark‑uri, page information, slug area; de asemenea, se poate seta un alt bleed.</p>
-<p>Opțional, poate rula un JavaScript sau AppleScript înainte de export, de exemplu unul din următoarele:</p>
+<p>Textul din c&#xE2;mpul <strong>Suffix</strong> va fi ad&#x103;ugat la numele fi&#x219;ierului exportat (e autodetectat dac&#x103; numele presetului se termin&#x103; cu &#x201C;_<em>sufix</em>&#x201D;). Dac&#x103; <strong>Export in subfolders</strong> e activ, sufixul va fi folosit &#x219;i pentru numele subfolderului.</p>
+<p>Pentru comoditate, c&#xE2;teva op&#x21B;iuni de export sunt direct accesibile: export ca pagini/spreaduri, crop mark&#x2011;uri, page information, slug area; de asemenea, se poate seta un alt bleed.</p>
+<p>Op&#x21B;ional, poate rula un JavaScript sau AppleScript &#xEE;nainte de export, de exemplu unul din urm&#x103;toarele:</p>
 </li>
 <li>
-<p><strong><code>PrepareForExport.jsx</code></strong> ascunde stratul <strong>visible area</strong> și mută ștanțele și marcajele pentru alb, foil și lac UV de pe <strong>dielines</strong> / <strong>white</strong> / <strong>foil</strong> / <strong>varnish</strong> pe spreaduri separate.</p>
+<p><strong><code>PrepareForExport.jsx</code></strong> ascunde stratul <strong>visible area</strong> &#x219;i mut&#x103; &#x219;tan&#x21B;ele &#x219;i marcajele pentru alb, foil &#x219;i lac UV de pe <strong>dielines</strong> / <strong>white</strong> / <strong>foil</strong> / <strong>varnish</strong> pe spreaduri separate.</p>
 </li>
 <li>
-<p><strong><code>VisibleArea.jsx</code></strong> creează un chenar de dimensiunea marginilor paginii pe stratul <strong>visible area</strong>. Folosește culoarea <strong>Visible area</strong>, care dacă nu există va fi creată cu valoarea &quot;C=0 M=100 Y=0 K=0&quot;.</p>
+<p><strong><code>VisibleArea.jsx</code></strong> creeaz&#x103; un chenar de dimensiunea marginilor paginii pe stratul <strong>visible area</strong>. Folose&#x219;te culoarea <strong>Visible area</strong>, care dac&#x103; nu exist&#x103; va fi creat&#x103; cu valoarea &#x201C;C=0&#xA0;M=100&#xA0;Y=0&#xA0;K=0&#x201D;.</p>
 </li>
 <li>
-<p><strong><code>VisibleAreaHideLayer.jsx</code></strong> și <strong><code>VisibleAreaShowLayer.jsx</code></strong> ascund sau afișează <strong>visible area</strong>.</p>
+<p><strong><code>VisibleAreaHideLayer.jsx</code></strong> &#x219;i <strong><code>VisibleAreaShowLayer.jsx</code></strong> ascund sau afi&#x219;eaz&#x103; <strong>visible area</strong>.</p>
 </li>
 </ul>
-<p><strong>Notă:</strong> Aceste scripturi detectează straturi cu denumiri similare pentru <strong>visible area</strong> (<strong>visible</strong>, <strong>vizibil</strong>), <strong>dielines</strong> (<strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong>) etc.</p>
-<hr>
+<p><strong>Not&#x103;:</strong> Aceste scripturi detecteaz&#x103; straturi cu denumiri similare pentru <strong>visible area</strong> (<strong>visible</strong>, <strong>vizibil</strong>), <strong>dielines</strong> (<strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong>) etc.</p>
 <details><summary><strong>Shortcuts</strong></summary>
 <table>
 <thead>
@@ -156,37 +408,40 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <tbody>
 <tr>
 <td style="text-align:left"><strong>QuickExport.jsx</strong></td>
-<td style="text-align:right">⌃E</td>
+<td style="text-align:right">&#x2303;E</td>
 </tr>
 </tbody>
 </table>
 </details>
-<h3 id="file"><strong>File</strong></h3>
+<hr>
+<h3 class="mume-header" id="file"><strong>File</strong></h3>
+
 <ul>
 <li>
-<p><strong><code>FilesToSpreads.jsx</code></strong> combină documentele deschise, sortate alfabetic.</p>
+<p><strong><code>FilesToSpreads.jsx</code></strong> combin&#x103; documentele deschise, sortate alfabetic.</p>
 </li>
 <li>
-<p><strong><code>SpreadsToFiles.jsx</code></strong> salvează spreadurile documentului activ în fișiere separate, cu un sufix configurabil.</p>
+<p><strong><code>SpreadsToFiles.jsx</code></strong> salveaz&#x103; spreadurile documentului activ &#xEE;n fi&#x219;iere separate, cu un sufix configurabil.</p>
 </li>
 </ul>
 <hr>
-<h3 id="fitting"><strong>Fitting</strong></h3>
-<p>Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container <em>(clipping frame)</em> și acesta e redimensionat.</p>
+<h3 class="mume-header" id="fitting"><strong>Fitting</strong></h3>
+
+<p>Redimensioneaz&#x103; obiectele selectate, f&#x103;r&#x103; s&#x103; le scaleze. Chenarele obi&#x219;nuite sunt redimensionate pur &#x219;i simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse &#xEE;ntr&#x2011;un container <em>(clipping frame)</em> &#x219;i acesta e redimensionat.</p>
 <ul>
 <li>
-<p><strong><code>FitToPage</code></strong> și <strong><code>FitToSpread</code></strong>: dacă obiectul este mai mare, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.</p>
-<p><strong><code>FitTo...Forced</code></strong> redimensionează exact la dimensiunile respective.</p>
+<p><strong><code>FitToPage</code></strong> &#x219;i <strong><code>FitToSpread</code></strong>: dac&#x103; obiectul este mai mare, va fi redus; dac&#x103; este mai mic dar intr&#x103; &#xEE;ntr&#x2011;o zon&#x103; &#x201E;snap&#x201D; de 1%, va fi m&#x103;rit.</p>
+<p><strong><code>FitTo...Forced</code></strong> redimensioneaz&#x103; exact la dimensiunile respective.</p>
 </li>
 <li>
-<p><strong><code>TextAutosize.jsx</code></strong> „strânge” chenarul la text și îi setează dimensionarea automată. Controlați referința pentru dimensionarea automată setând <strong>Paragraph Alignment</strong> pentru axa orizontală și <strong>Text Frame Options &gt; Vertical Justification</strong> pentru axa verticală:</p>
+<p><strong><code>TextAutosize.jsx</code></strong> seteaz&#x103; dimensionarea automat&#x103; a chenarului de text de la <strong>None</strong> la <strong>Height Only</strong> &#x219;i de la <strong>Height Only</strong> la <strong>Height and Width</strong> (r&#xE2;ndurile singulare sunt setate &#xEE;ntotdeauna <strong>Height and Width</strong>). Alinierea primului paragraf seteaz&#x103; alinierea orizontal&#x103; a chenarului; <strong>Text Frame Options &gt; Vertical Justification</strong> seteaz&#x103; alinierea vertical&#x103;:</p>
 <table>
 <thead>
 <tr>
 <th style="text-align:center"></th>
-<th style="text-align:center"><img src="img/paragraphalign-L.png" alt="¶ Align left"></th>
-<th style="text-align:center"><img src="img/paragraphalign-C.png" alt="¶ Align center"></th>
-<th style="text-align:center"><img src="img/paragraphalign-R.png" alt="¶ Align right"></th>
+<th style="text-align:center"><img src="img/paragraphalign-L.png" alt="&#xB6; Align left"></th>
+<th style="text-align:center"><img src="img/paragraphalign-C.png" alt="&#xB6; Align center"></th>
+<th style="text-align:center"><img src="img/paragraphalign-R.png" alt="&#xB6; Align right"></th>
 </tr>
 </thead>
 <tbody>
@@ -210,7 +465,6 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tr>
 </tbody>
 </table>
-<p>Dacă textul are un singur rând, <strong>Auto‑Sizing Type</strong> va fi setat <em>Height and width</em>. Dacă are mai multe rânduri, prima rulare îl va seta <em>Height only</em>, a doua <em>Height and width</em>.</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuturi</strong></summary>
@@ -232,49 +486,49 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageMargins.jsx</strong></td>
-<td style="text-align:right">⌥F11</td>
+<td style="text-align:right">&#x2325;F11</td>
 <td style="text-align:left"><strong>FitToSpreadMargins.jsx</strong></td>
-<td style="text-align:right">⌥F12</td>
+<td style="text-align:right">&#x2325;F12</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageVisibleArea.jsx</strong></td>
-<td style="text-align:right">⌥⇧F11</td>
+<td style="text-align:right">&#x2325;&#x21E7;F11</td>
 <td style="text-align:left"><strong>FitToSpreadVisibleArea.jsx</strong></td>
-<td style="text-align:right">⌥⇧F12</td>
+<td style="text-align:right">&#x2325;&#x21E7;F12</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageBleed.jsx</strong></td>
-<td style="text-align:right">⇧F11</td>
+<td style="text-align:right">&#x21E7;F11</td>
 <td style="text-align:left"><strong>FitToSpreadBleed.jsx</strong></td>
-<td style="text-align:right">⇧F12</td>
+<td style="text-align:right">&#x21E7;F12</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageForced.jsx</strong></td>
-<td style="text-align:right">⌘F11</td>
+<td style="text-align:right">&#x2318;F11</td>
 <td style="text-align:left"><strong>FitToSpreadForced.jsx</strong></td>
-<td style="text-align:right">⌘F12</td>
+<td style="text-align:right">&#x2318;F12</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageMarginsForced.jsx</strong></td>
-<td style="text-align:right">⌥⌘F11</td>
+<td style="text-align:right">&#x2325;&#x2318;F11</td>
 <td style="text-align:left"><strong>FitToSpreadMarginsForced.jsx</strong></td>
-<td style="text-align:right">⌥⌘F12</td>
+<td style="text-align:right">&#x2325;&#x2318;F12</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageVisibleAreaForced.jsx</strong></td>
-<td style="text-align:right">⌥⇧⌘F11</td>
+<td style="text-align:right">&#x2325;&#x21E7;&#x2318;F11</td>
 <td style="text-align:left"><strong>FitToSpreadVisibleAreaForced.jsx</strong></td>
-<td style="text-align:right">⌥⇧⌘F12</td>
+<td style="text-align:right">&#x2325;&#x21E7;&#x2318;F12</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>FitToPageBleedForced.jsx</strong></td>
-<td style="text-align:right">⇧⌘F11</td>
+<td style="text-align:right">&#x21E7;&#x2318;F11</td>
 <td style="text-align:left"><strong>FitToSpreadBleedForced.jsx</strong></td>
-<td style="text-align:right">⇧⌘F12</td>
+<td style="text-align:right">&#x21E7;&#x2318;F12</td>
 </tr>
 </tbody>
 </table>
-<p><strong>Notă:</strong> <code>F11</code> pagină, <code>F12</code> spread; <code>⌥</code> margini, <code>⌥⇧</code> aria vizibilă, <code>⇧</code> bleed; <code>⌘</code> forțat.</p>
+<p><strong>Not&#x103;:</strong> <code>F11</code> pagin&#x103;, <code>F12</code> spread; <code>&#x2325;</code> margini, <code>&#x2325;&#x21E7;</code> aria vizibil&#x103;, <code>&#x21E7;</code> bleed; <code>&#x2318;</code> for&#x21B;at.</p>
 <table>
 <thead>
 <tr>
@@ -291,14 +545,15 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </table>
 </details>
 <hr>
-<h3 id="scaling"><strong>Scaling</strong></h3>
-<p>Scalează proporțional obiectele selectate, ca un bloc unitar.</p>
+<h3 class="mume-header" id="scaling"><strong>Scaling</strong></h3>
+
+<p>Scaleaz&#x103; propor&#x21B;ional obiectele selectate, ca un bloc unitar.</p>
 <ul>
 <li>
-<p><strong><code>ScaleToPageSize.jsx</code></strong> și <strong><code>ScaleToPageMargins.jsx</code></strong> scalează la dimensiunile paginii sau marginii.</p>
+<p><strong><code>ScaleToPageSize.jsx</code></strong> &#x219;i <strong><code>ScaleToPageMargins.jsx</code></strong> scaleaz&#x103; la dimensiunile paginii sau marginii.</p>
 </li>
 <li>
-<p>Variantele <strong><code>H</code></strong> (height) și <strong><code>W</code></strong> (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.</p>
+<p>Variantele <strong><code>H</code></strong> (height) &#x219;i <strong><code>W</code></strong> (width) scaleaz&#x103; la &#xEE;n&#x103;l&#x21B;imea, respectiv l&#x103;&#x21B;imea paginii sau marginii.</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuturi</strong></summary>
@@ -320,22 +575,24 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tr>
 <tr>
 <td style="text-align:left"><strong>ScaleToPageMargins.jsx</strong></td>
-<td style="text-align:right">⌥F5</td>
+<td style="text-align:right">&#x2325;F5</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>ScaleToPageMarginsH.jsx</strong></td>
-<td style="text-align:right">^⌥F5</td>
+<td style="text-align:right">^&#x2325;F5</td>
 </tr>
 </tbody>
 </table>
 </details>
 <hr>
-<h3 id="setup"><strong>Setup</strong></h3>
-<p>Sunt două seturi: unul legat de preferințele documentului, straturi, culori și fonturi, iar celălalt de dimensiunea și marginile paginii.</p>
-<h4 id="document"><strong>Document</strong></h4>
+<h3 class="mume-header" id="setup"><strong>Setup</strong></h3>
+
+<p>Sunt dou&#x103; seturi: unul legat de preferin&#x21B;ele documentului, straturi, culori &#x219;i fonturi, iar cel&#x103;lalt de dimensiunea &#x219;i marginile paginii.</p>
+<h4 class="mume-header" id="document"><strong>Document</strong></h4>
+
 <ul>
 <li>
-<p><strong><code>DefaultPrefs.jsx</code></strong> setează câteva preferințe.</p>
+<p><strong><code>DefaultPrefs.jsx</code></strong> seteaz&#x103; c&#xE2;teva preferin&#x21B;e.</p>
 <details><summary><strong>Detalii</strong></summary>
 <blockquote>
 <p><strong>Rulers:</strong> Reset Zero Point <br>
@@ -357,13 +614,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <strong>Layers:</strong> Ungroup Remembers Layers <br>
 <strong>Layers:</strong> Paste Remembers Layers <br>
 <strong>Transform Reference Point:</strong> Center <br>
-<strong>Type Options:</strong> Use Typographer's Quotes <br>
+<strong>Type Options:</strong> Use Typographer&#x2019;s Quotes <br>
 <strong>Type Options:</strong> Apply Leading to Entire Paragraphs</p>
 </blockquote>
 </details>
 </li>
 <li>
-<p><strong><code>DefaultLayers.jsx</code></strong> creează un set de straturi definite într‑un fișier TSV <em>(tab‑separated values)</em> numit <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
+<p><strong><code>DefaultLayers.jsx</code></strong> creeaz&#x103; un set de straturi definite &#xEE;ntr&#x2011;un fi&#x219;ier TSV <em>(tab&#x2011;separated values)</em> numit <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -393,7 +650,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:left"></td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
 <td style="text-align:center"></td>
@@ -408,14 +665,12 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <strong>Visible</strong>: <code>yes</code> sau <code>no</code> (implicit <code>yes</code>) <br>
 <strong>Printable</strong>: <code>yes</code> sau <code>no</code> (implicit <code>yes</code>) <br>
 <strong>Order</strong>: <code>above</code> sau <code>below</code> (deasupra sau sub straturile existente; implicit <code>above</code>) <br>
-<strong>Variants</strong>: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive; sunt acceptate metacaracterele <code>*</code> și <code>?</code>)</p>
+<strong>Variants</strong>: o list&#x103; de straturi care vor fi combinate cu stratul de baz&#x103; (case insensitive; sunt acceptate metacaracterele <code>*</code> &#x219;i <code>?</code>)</p>
 </blockquote>
-<blockquote>
-<p><strong>Note:</strong> Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu <code>#</code> sunt ignorate.</p>
-</blockquote>
+<p><strong>Not&#x103;:</strong> Fi&#x219;ierul poate fi plasat &#xEE;n folderul curent, pe desktop sau l&#xE2;ng&#x103; script. Liniile goale &#x219;i cele care &#xEE;ncep cu <code>#</code> sunt ignorate.</p>
 </li>
 <li>
-<p><strong><code>DefaultSwatches.jsx</code></strong> creează un set de culori definite într‑un fișier TSV numit <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
+<p><strong><code>DefaultSwatches.jsx</code></strong> creeaz&#x103; un set de culori definite &#xEE;ntr&#x2011;un fi&#x219;ier TSV numit <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -445,7 +700,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:left">0 100 0 0</td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
@@ -454,22 +709,21 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </table>
 <blockquote>
 <p><strong>Name</strong>: numele culorii <br>
-<strong>Color Model</strong>: <code>process</code> sau <code>spot</code> (implicit <code>process</code>) <br>
-<strong>Color Space</strong>: <code>cmyk</code>, <code>rgb</code> sau <code>lab</code> (implicit <code>cmyk</code>) <br>
-<strong>Values</strong>: 3 valori în intervalul 0–255 pentru RGB; 4 valori în intervalul 0–100 pentru CMYK; 3 valori în intervalul 0–100 (L), -128–127 (A și B) pentru Lab</p>
+<strong>Model</strong>: tipul culorii: <code>process</code> sau <code>spot</code> <br>
+<strong>Values</strong>: 3 valori &#xEE;n intervalul 0&#x2013;255 (RGB) sau 4 valori &#xEE;n intervalul 0&#x2013;100 (CMYK)</p>
 </blockquote>
 </li>
 <li>
-<p><strong><code>SaveSwatches.jsx</code></strong> salvează culorile din document într‑un fișier compatibil cu <strong><code>DefaultSwatches.jsx</code></strong>.</p>
+<p><strong><code>SaveSwatches.jsx</code></strong> salveaz&#x103; culorile din document &#xEE;ntr&#x2011;un fi&#x219;ier TSV compatibil cu <strong><code>DefaultSwatches.jsx</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>CleanupSwatches.jsx</code></strong> convertește culorile RGB la CMYK, le redenumește după formula &quot;C= M= Y= K=&quot;, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.</p>
+<p><strong><code>CleanupSwatches.jsx</code></strong> converte&#x219;te culorile RGB la CMYK, le redenume&#x219;te dup&#x103; formula &#x201C;C=&#xA0;M=&#xA0;Y=&#xA0;K=&#x201D;, elimin&#x103; duplicatele &#x219;i le &#x219;terge pe cele nefolosite. Culorile spot r&#x103;m&#xE2;n neschimbate.</p>
 </li>
 <li>
-<p><strong><code>DeleteGuides.jsx</code></strong> șterge toate liniile de ghidaj din document.</p>
+<p><strong><code>DeleteGuides.jsx</code></strong> &#x219;terge toate liniile de ghidaj din document.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> substituie fonturi dintr‑o listă definită într‑un fișier TSV numit <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
+<p><strong><code>ReplaceFonts.jsx</code></strong> substituie fonturi dintr&#x2011;o list&#x103; definit&#x103; &#xEE;ntr&#x2011;un fi&#x219;ier TSV numit <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -493,30 +747,31 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:left">Bold</td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Notă:</strong> Puteți utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a obține o listă a fonturilor pentru copy‑paste.</p>
+<p><strong>Not&#x103;:</strong> Pute&#x21B;i utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a ob&#x21B;ine o list&#x103; a fonturilor pentru copy&#x2011;paste.</p>
 </li>
 <li>
-<p><strong><code>DocDefaults.jsx</code></strong> rulează <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong>, <strong><code>PageSizeFromFilename.jsx</code></strong>, extinde pasteboardul.</p>
+<p><strong><code>DocDefaults.jsx</code></strong> ruleaz&#x103; <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong>, <strong><code>PageSizeFromFilename.jsx</code></strong>, extinde pasteboardul.</p>
 </li>
 <li>
-<p><strong><code>DocCleanup.jsx</code></strong> rulează <strong><code>DefaultPrefs.jsx</code></strong>, șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%, convertește chenarele goale de text în chenare simple, compactează pasteboardul.</p>
+<p><strong><code>DocCleanup.jsx</code></strong> ruleaz&#x103; <strong><code>DefaultPrefs.jsx</code></strong>, &#x219;terge culorile, straturile &#x219;i paginile neutilizate, deblocheaz&#x103; toate elementele &#x219;i le reseteaz&#x103; scalarea la 100%, converte&#x219;te chenarele goale de text &#xEE;n chenare simple, compacteaz&#x103; pasteboardul.</p>
 </li>
 </ul>
 <hr>
-<h4 id="layout"><strong>Layout</strong></h4>
+<h4 class="mume-header" id="layout"><strong>Layout</strong></h4>
+
 <ul>
 <li>
-<p><strong><code>PageMarginsFromSelection.jsx</code></strong> setează marginile paginii la dimensiunile selecției.</p>
+<p><strong><code>PageMarginsFromSelection.jsx</code></strong> seteaz&#x103; marginile paginii la dimensiunile selec&#x21B;iei.</p>
 </li>
 <li>
-<p><strong><code>PageSizeFromFilename.jsx</code></strong> setează dimensiunea paginii și a ariei vizibile, preluând informațiile din numele fișierului:</p>
+<p><strong><code>PageSizeFromFilename.jsx</code></strong> seteaz&#x103; dimensiunea paginii &#x219;i a ariei vizibile, prelu&#xE2;nd informa&#x21B;iile din numele fi&#x219;ierului:</p>
 <table>
 <thead>
 <tr>
@@ -542,14 +797,14 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tbody>
 </table>
 <blockquote>
-<p>Caută în numele fișierului perechi de numere de genul <code>000x000</code> (unde <code>000</code> înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de <code>mm</code> sau <code>cm</code>). Dacă găsește doar o pereche, e dimensiunea paginii. Dacă găsește două (de ex. <code>000x000_000x000</code>), perechea mai mare e dimensiunea paginii, perechea mai mică aria vizibilă. Dacă sunt urmate de o secvență de una sau două cifre, aceasta va fi bleed.</p>
+<p>Caut&#x103; &#xEE;n numele fi&#x219;ierului perechi de numere de genul <code>000x000</code> (unde <code>000</code> &#xEE;nseamn&#x103; un grup de cel pu&#x21B;in o cifr&#x103;, urmat&#x103; sau nu de zecimale, &#x219;i op&#x21B;ional de <code>mm</code> sau <code>cm</code>). Dac&#x103; g&#x103;se&#x219;te doar o pereche, e dimensiunea paginii. Dac&#x103; g&#x103;se&#x219;te dou&#x103; (de ex. <code>000x000_000x000</code>), perechea mai mare e dimensiunea paginii, perechea mai mic&#x103; aria vizibil&#x103;. Dac&#x103; sunt urmate de o secven&#x21B;&#x103; de una sau dou&#x103; cifre, aceasta va fi bleed.</p>
 </blockquote>
 </li>
 <li>
-<p><strong><code>PageSizeFromMargins.jsx</code></strong> redimensionează fiecare pagină la marginile acesteia.</p>
+<p><strong><code>PageSizeFromMargins.jsx</code></strong> redimensioneaz&#x103; fiecare pagin&#x103; la marginile acesteia.</p>
 </li>
 <li>
-<p><strong><code>PageSizeFromSelection.jsx</code></strong> redimensionează pagina curentă la obiectele selectate (similar cu <strong>Artboards &gt; Fit to Selected Art</strong> din Illustrator).</p>
+<p><strong><code>PageSizeFromSelection.jsx</code></strong> redimensioneaz&#x103; pagina curent&#x103; la obiectele selectate (similar cu <strong>Artboards &gt; Fit to Selected Art</strong> din Illustrator).</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuturi</strong></summary>
@@ -571,31 +826,32 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tr>
 <tr>
 <td style="text-align:left"><strong>DocDefaults.jsx</strong></td>
-<td style="text-align:right">⌥F2</td>
+<td style="text-align:right">&#x2325;F2</td>
 <td style="text-align:left"><strong>PageSizeFromMargins.jsx</strong></td>
-<td style="text-align:right">⌥F3</td>
+<td style="text-align:right">&#x2325;F3</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>CleanupSwatches.jsx</strong></td>
-<td style="text-align:right">⇧F2</td>
+<td style="text-align:right">&#x21E7;F2</td>
 <td style="text-align:left"><strong>PageSizeFromSelection.jsx</strong></td>
-<td style="text-align:right">⇧F3</td>
+<td style="text-align:right">&#x21E7;F3</td>
 </tr>
 </tbody>
 </table>
 </details>
 <hr>
-<h3 id="view"><strong>View</strong></h3>
+<h3 class="mume-header" id="view"><strong>View</strong></h3>
+
 <ul>
 <li>
-<p><strong><code>TileAll.jsx</code></strong> invocă <strong>Window &gt; Arrange &gt; Tile All Vertically</strong> sau <strong>Tile All Horizontally</strong>, în funcție de orientarea spreadului curent.</p>
+<p><strong><code>TileAll.jsx</code></strong> invoc&#x103; <strong>Window &gt; Arrange &gt; Tile All Vertically</strong> sau <strong>Tile All Horizontally</strong>, &#xEE;n func&#x21B;ie de orientarea spreadului curent.</p>
 </li>
 <li>
-<p><strong><code>ZoomToSelection.jsx</code></strong> e asemănător cu <strong>Fit Selection in Window</strong> (⌥⌘=), dar cu câteva îmbunătățiri:</p>
+<p><strong><code>ZoomToSelection.jsx</code></strong> e asem&#x103;n&#x103;tor cu <strong>Fit Selection in Window</strong> (&#x2325;&#x2318;=), dar cu c&#xE2;teva &#xEE;mbun&#x103;t&#x103;&#x21B;iri:</p>
 <ul>
-<li>aduce selecția puțin mai aproape;</li>
-<li>dacă cursorul e în text, face zoom pe întreg cadrul;</li>
-<li>fără nimic selectat face zoom pe spreadul curent.</li>
+<li>aduce selec&#x21B;ia pu&#x21B;in mai aproape;</li>
+<li>dac&#x103; cursorul e &#xEE;n text, face zoom pe &#xEE;ntreg cadrul;</li>
+<li>f&#x103;r&#x103; nimic selectat face zoom pe spreadul curent.</li>
 </ul>
 </li>
 <li>
@@ -613,7 +869,7 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <tbody>
 <tr>
 <td style="text-align:left"><strong>TileAll.jsx</strong></td>
-<td style="text-align:right">⇧F4</td>
+<td style="text-align:right">&#x21E7;F4</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>ZoomToSelection.jsx</strong></td>
@@ -621,34 +877,35 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </tr>
 <tr>
 <td style="text-align:left"><strong>ZoomToSpreads.jsx</strong></td>
-<td style="text-align:right">⌥F4</td>
+<td style="text-align:right">&#x2325;F4</td>
 </tr>
 </tbody>
 </table>
 </details>
 <hr>
-<h3 id="miscellaneous"><strong>Miscellaneous</strong></h3>
+<h3 class="mume-header" id="miscellaneous"><strong>Miscellaneous</strong></h3>
+
 <ul>
 <li>
-<p><strong><code>ClearLabels.jsx</code></strong>: Uneori se refolosesc obiecte care au o etichetă atașată <em>(Script Label)</em>, și asta poate crea probleme ulterior. Scriptul șterge etichetele obiectelor selectate sau ale tuturor obiectelor din document dacă nu e selectat nimic.</p>
+<p><strong><code>ClearLabels.jsx</code></strong>: Uneori se refolosesc obiecte care au o etichet&#x103; ata&#x219;at&#x103; <em>(Script Label)</em>, &#x219;i asta poate crea probleme ulterior. Scriptul &#x219;terge etichetele obiectelor selectate sau ale tuturor obiectelor din document dac&#x103; nu e selectat nimic.</p>
 </li>
 <li>
-<p><strong><code>Clip.jsx</code></strong>: Pentru a manipula unele obiecte uneori e util să le inserăm temporar într‑un container <em>(clipping frame)</em>. Scriptul inserează obiectele selectate într‑un container sau le restaurează dacă sunt deja inserate.</p>
-<p><strong>Notă:</strong> Folosește clipboardul, deci asigurați‑vă că nu pierdeți ceva important.</p>
-<p><strong><code>ClipUndo.jsx</code></strong> restaurează unul sau mai multe obiecte simultan.</p>
+<p><strong><code>Clip.jsx</code></strong>: Pentru a manipula unele obiecte uneori e util s&#x103; le inser&#x103;m temporar &#xEE;ntr&#x2011;un container <em>(clipping frame)</em>. Scriptul insereaz&#x103; obiectele selectate &#xEE;ntr&#x2011;un container sau le restaureaz&#x103; dac&#x103; sunt deja inserate.</p>
+<p><strong>Not&#x103;:</strong> Folose&#x219;te clipboardul, deci asigura&#x21B;i&#x2011;v&#x103; c&#x103; nu pierde&#x21B;i ceva important.</p>
+<p><strong><code>ClipUndo.jsx</code></strong> restaureaz&#x103; unul sau mai multe obiecte simultan.</p>
 </li>
 <li>
-<p><strong><code>HW.jsx</code></strong> etichetează obiectele selectate &quot;HW&quot; și adaugă un ghid inferior de 10% pe pagina curentă.</p>
+<p><strong><code>HW.jsx</code></strong> eticheteaz&#x103; obiectele selectate &#x201C;HW&#x201D; &#x219;i adaug&#x103; un ghid inferior de 10% pe pagina curent&#x103;.</p>
 </li>
 <li>
-<p><strong><code>LabelPage.jsx</code></strong> adaugă o etichetă configurabilă pe slugul paginii curente, pe stratul <strong>info</strong>.</p>
+<p><strong><code>LabelPage.jsx</code></strong> adaug&#x103; o etichet&#x103; configurabil&#x103; pe slugul paginii curente, pe stratul <strong>info</strong>.</p>
 </li>
 <li>
-<p><strong><code>LabelPageRatios.jsx</code></strong> adaugă pe slugul fiecărei pagini o etichetă cu raportul acesteia, pe stratul <strong>info</strong>.</p>
+<p><strong><code>LabelPageRatios.jsx</code></strong> adaug&#x103; pe slugul fiec&#x103;rei pagini o etichet&#x103; cu raportul acesteia, pe stratul <strong>info</strong>.</p>
 </li>
 <li>
-<p><strong><code>QR.jsx</code></strong> adaugă un cod QR pe fiecare pagină a documentului activ sau într‑un fișier separat cu același nume și sufixul &quot;_QR&quot;.</p>
-<p><strong><code>QRBatch.jsx</code></strong> preia o listă de coduri QR dintr‑un fișier TSV numit <strong><code>qr.txt</code></strong>, pe care le adaugă unor documente existente sau creează fișiere separate:</p>
+<p><strong><code>QR.jsx</code></strong> adaug&#x103; un cod QR pe fiecare pagin&#x103; a documentului activ sau &#xEE;ntr&#x2011;un fi&#x219;ier separat cu acela&#x219;i nume &#x219;i sufixul &#x201C;_QR&#x201D;.</p>
+<p><strong><code>QRBatch.jsx</code></strong> preia o list&#x103; de coduri QR dintr&#x2011;un fi&#x219;ier TSV numit <strong><code>qr.txt</code></strong>, pe care le adaug&#x103; unor documente existente sau creeaz&#x103; fi&#x219;iere separate:</p>
 <table>
 <thead>
 <tr>
@@ -669,27 +926,27 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:left"></td>
 <td style="text-align:center"></td>
 </tr>
 </tbody>
 </table>
 <blockquote>
-<p><strong>Filename</strong>: numele documentului (trebuie să fie valid pentru <em>Doc</em>) <br>
-<strong>Code</strong>: orice șir de caractere <br>
-<strong>Doc</strong>: orice șir de caractere: în document; lăsați gol sau omiteți pentru fișier separat</p>
+<p><strong>Filename</strong>: numele documentului (trebuie s&#x103; fie valid pentru <em>Doc</em>) <br>
+<strong>Code</strong>: orice &#x219;ir de caractere <br>
+<strong>Doc</strong>: orice &#x219;ir de caractere: &#xEE;n document; l&#x103;sa&#x21B;i gol sau omite&#x21B;i pentru fi&#x219;ier separat</p>
 </blockquote>
-<p><strong>Notă:</strong> Puteți insera &quot;|&quot; pentru împărțirea manuală a textului în mai multe rânduri.</p>
+<p><strong>Not&#x103;:</strong> Pute&#x21B;i insera &#x201C;|&#x201D; pentru &#xEE;mp&#x103;r&#x21B;irea manual&#x103; a textului &#xEE;n mai multe r&#xE2;nduri.</p>
 </li>
 <li>
-<p><strong><code>ShowFonts.jsx</code></strong> afișează toate fonturile utilizate în documentul curent (util pentru <strong><code>ReplaceFonts.jsx</code></strong>).</p>
+<p><strong><code>ShowFonts.jsx</code></strong> afi&#x219;eaz&#x103; toate fonturile utilizate &#xEE;n documentul curent (util pentru <strong><code>ReplaceFonts.jsx</code></strong>).</p>
 </li>
 <li>
-<p><strong><code>ShowProfiles.jsx</code></strong> afișează toate profilele de culori disponibile.</p>
+<p><strong><code>ShowProfiles.jsx</code></strong> afi&#x219;eaz&#x103; toate profilele de culori disponibile.</p>
 </li>
 <li>
-<p><strong><code>ShowProperties.jsx</code></strong> afișează proprietățile și metodele unui obiect selectat (util pentru depanare).</p>
+<p><strong><code>ShowProperties.jsx</code></strong> afi&#x219;eaz&#x103; propriet&#x103;&#x21B;ile &#x219;i metodele unui obiect selectat (util pentru depanare).</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuturi</strong></summary>
@@ -711,13 +968,13 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 <td style="text-align:left"><strong>QR.jsx</strong></td>
 <td style="text-align:right">F9</td>
 <td style="text-align:left"><strong>HW.jsx</strong></td>
-<td style="text-align:right">⇧F10</td>
+<td style="text-align:right">&#x21E7;F10</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>ClipUndo.jsx</strong></td>
-<td style="text-align:right">⌃Num*</td>
+<td style="text-align:right">&#x2303;Num*</td>
 <td style="text-align:left"><strong>QRBatch.jsx</strong></td>
-<td style="text-align:right">⇧F9</td>
+<td style="text-align:right">&#x21E7;F9</td>
 <td style="text-align:left"></td>
 <td style="text-align:right"></td>
 </tr>
@@ -725,18 +982,32 @@ body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe WPC', 'Segoe UI', 
 </table>
 </details>
 <hr>
-<h2 id="installation">Instalare</h2>
+<h2 class="mume-header" id="instalare">Instalare</h2>
+
 <ol>
-<li>Deschideți <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
-<li>Faceți clic dreapta pe folderul <strong>User</strong> și selectați <strong>Reveal in Finder/Explorer</strong>.</li>
-<li>Copiați fișierele în acest folder.</li>
+<li>Deschide&#x21B;i <strong>Window &gt; Utilities &gt; Scripts</strong>.</li>
+<li>Face&#x21B;i clic dreapta pe folderul <strong>User</strong> &#x219;i selecta&#x21B;i <strong>Reveal in Finder/Explorer</strong>.</li>
+<li>Copia&#x21B;i fi&#x219;ierele &#xEE;n acest folder.</li>
 </ol>
 <hr>
-<h2 id="about">Despre</h2>
-<p>© 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. Codul este publicat sub licența MIT (<a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>Codul din acest proiect nu ar fi fost posibil fără <a href="http://jongware.mit.edu">JavaScript Reference Guide</a> de Theunis de Jong, Mozilla <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, postări pe bloguri și forumuri, tutoriale și scripturi de Marc Autret, Dave Saunders, Peter Kahrel, Gregor Fellenz, Keith Gilbert, Richard Harrington și alții.</p>
-<p>Am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Am testat foarte puțin configurații care diferă de a mea (Adobe InDesign 2020/2021, macOS 10.13/10.15, <strong>Application Frame</strong> on). Feedback sau sugestii sunt binevenite.</p>
-<p>README-ro.md • 15 iulie 2021</p>
+<h2 class="mume-header" id="despre">Despre</h2>
 
-</body>
-</html>
+<p>Sunt un graphic designer, nu un programator, &#x219;i am creat acest proiect pentru a&#x2011;mi simplifica ni&#x219;te opera&#x21B;ii monotone, a&#x219;a c&#x103; trece&#x21B;i cu vederea dac&#x103; unele lucruri nu sunt state&#x2011;of&#x2011;the&#x2011;art. Feedback sau sugestii sunt binevenite.</p>
+<p>Codul din acest proiect nu ar fi fost posibil f&#x103;r&#x103; InDesign ExtendScript API de <a href="http://jongware.mit.edu">Theunis de Jong</a> &#x219;i <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, post&#x103;ri pe bloguri &#x219;i forumuri, tutoriale &#x219;i scripturi de <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> &#x219;i mul&#x21B;i al&#x21B;ii.</p>
+<p>&#xA9; 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
+Codul este publicat sub licen&#x21B;a MIT (v. <a href="LICENSE.txt">LICENSE.txt</a>).</p>
+<p>README-ro.md &#x2022; 20 iulie 2021</p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
