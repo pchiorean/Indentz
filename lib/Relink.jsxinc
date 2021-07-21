@@ -1,11 +1,12 @@
-function Relink(oldLink, newLink, sel) {
+function Relink(oldLink, newLink) {
 	newLink = /\//g.test(newLink.toString()) ? newLink : doc.filePath + "/Links/" + newLink;
-	if (!File(newLink).exists) { errors.push("Skipped '" + oldLink + "', new link not found."); return };
 
 	var item, items = doc.links.everyItem().getElements();
+	var sel = doc.selection.length == 0 ? doc.allPageItems : doc.selection;
 	while (item = items.shift()) {
 		if (item.name != oldLink.toString()) continue;
 		if (!!sel && sel.length > 0) if (!isIn(item, sel)) continue;
+		if (!File(newLink).exists) { errors.push("Skipped '" + oldLink + "', new link not found."); return };
 		item.relink(File(newLink));
 	};
 
