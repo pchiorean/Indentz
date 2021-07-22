@@ -1,14 +1,22 @@
-function Relink(oldLink, newLink) {
-	newLink = /\//g.test(newLink.toString()) ? newLink : doc.filePath + "/Links/" + newLink;
+function Relink(/*str*/oldLink, /*str*/newLink) {
+	var sel = doc.selection;
+	var link, links = doc.links.everyItem().getElements();
+	if (!isIn(oldLink, links)) return;
 
-	var item, items = doc.links.everyItem().getElements();
-	var sel = doc.selection.length == 0 ? doc.allPageItems : doc.selection;
-	while (item = items.shift()) {
-		if (item.name != oldLink.toString()) continue;
-		if (!!sel && sel.length > 0) if (!isIn(item, sel)) continue;
-		if (!File(newLink).exists) { errors.push("Skipped '" + oldLink + "', new link not found."); return };
-		item.relink(File(newLink));
+	newLink = /\//g.test(newLink) ? newLink : doc.filePath + "/Links/" + newLink;
+	if (!File(newLink).exists) { errors.push("Skipped '" + oldLink + "', new link not found."); return };
+
+	while (link = links.shift()) {
+		if (link.name != oldLink) continue;
+		if (sel.length > 0 && !isIn(link.parent.parent, sel)) continue;
+		link.relink(File(newLink));
 	};
 
-	function isIn(item, arr) { for (var i = 0; i < arr.length; i++) if (arr[i] == item.parent.parent) return true };
+	function isIn(item, array) {
+		for (var i = 0; i < array.length; i++) {
+			if (item.constructor.name == "String") if (array[i].name.lastIndexOf(item) != -1) return true
+			else if (item == array[i]) return true;
+		};
+		return false;
+	};
 };
