@@ -1,5 +1,5 @@
 /*
-	QR code v3.5.1 (2021-06-28)
+	QR code v3.5.2 (2021-07-21)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -310,9 +310,10 @@ function ExportToPDF(doc, path) {
 }
 
 function BalanceText(txt, length) {
-	const wordRE = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})))|(.+)/g;
+	// 1st pass: break text into words
+	const wordRE = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})|(?=[([])))|(.+)/g;
 	var words = txt.match(wordRE);
-	// 1st pass: roughly join words into lines
+	// 2nd pass: roughly join words into lines
 	var lines = [], lineBuffer = "", word = "";
 	while (word = words.shift()) {
 		if ((lineBuffer + word).length <= length) {
@@ -323,14 +324,14 @@ function BalanceText(txt, length) {
 		}
 	}
 	if (lineBuffer != "") lines.push(lineBuffer);
-	// 2nd pass: balance ragged lines
+	// 3rd pass: balance ragged lines
 	if (lines.length > 1) BalanceLines();
 	return lines.join("\u000A");
 
 	function BalanceLines() {
 		// Move the last word on the next line and check improvement;
 		// if better, save and repeat until no improvement
-		for (i = 0; i < lines.length - 1; i++) {
+		for (var i = 0; i < lines.length - 1; i++) {
 			var delta = Math.abs(lines[i].length - lines[i+1].length);
 			var line = lines[i].match(wordRE);
 			var word = line.pop();
