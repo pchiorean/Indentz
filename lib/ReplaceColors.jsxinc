@@ -9,7 +9,7 @@ function ReplaceColors(/*str|[]*/oldNames, /*str*/newName, /*[]*/newValues) {
 				space: ColorSpace.CMYK
 			});
 	// Replace colors
-	if (oldNames.constructor.name !== Array) oldNames = Array(oldNames);
+	if (oldNames.constructor.name !== "Array") oldNames = Array(oldNames);
 	for (var i = 0; i < oldNames.length; i++)
 		try { doc.colors.itemByName(oldNames[i]).remove(newName) } catch (e) {};
 };
