@@ -37,12 +37,3 @@ UndoModes.ENTIRE_SCRIPT, "Set pasteboard");
 app.doScript(File(script.path + "/PageSizeFromFilename.jsx"),
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
-
-// Run finishing script
-if (doc.saved) {
-	var script = File(doc.filePath + "/_finish.jsx");
-	if (script.exists && confirm("Run local finishing script?"))
-		app.doScript(script,
-		ScriptLanguage.javascript, undefined,
-		UndoModes.ENTIRE_SCRIPT, "Finishing script");
-};
