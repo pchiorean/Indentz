@@ -1,5 +1,5 @@
 /*
-	FilesToSpreads v1.0 (2021-02-09)
+	FilesToSpreads v1.0.1 (2021-07-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Combines the open documents, sorted alphabetically.
@@ -12,9 +12,11 @@ if (app.documents.length < 2) exit();
 var oldUIL = app.scriptPreferences.userInteractionLevel;
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
 
-var doc, docs = app.documents.everyItem().getElements(), names = [];
-while (doc = docs.shift()) names.push(doc.name); names.sort();
-var name, docs = []; while (name = names.shift()) docs.push(app.documents.itemByName(name));
+// -- Get a sorted document list
+var name, names = [], doc, docs = [];
+docs = app.documents.everyItem().getElements();
+while (doc = docs.shift()) try { names.push(doc.fullName) } catch (e) { names.push(doc.name) }; names.sort();
+docs = []; while (name = names.shift()) docs.push(app.documents.itemByName(name));
 
 var doc, target = docs.shift();
 var oldAPS = target.documentPreferences.allowPageShuffle;
