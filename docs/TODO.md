@@ -6,7 +6,6 @@
 - [ ] `add` Report: Add button to save errors to file
 
 ### DefaultSwatches
-- [x] `add` Merge known swatch variants [#126](https://github.com/pchiorean/Indentz/issues/126)
 - [ ] `fix` Check values on parsing
 
 ### DocCleanup
@@ -15,9 +14,6 @@
 - [ ] `add` Remove unused masters
 - [ ] `add` Remove unused styles and groups [#](https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331)
 - [ ] `fix` Fix 'sticky' unused swatches
-
-### FilesToSpreads
-- [x] `fix` Fix for namesake files in different folders
 
 ### FitTo
 - [ ] `fix` Check for transformations [#131](https://github.com/pchiorean/Indentz/issues/131) <!-- ItemTransform = [1 0 0 1 0 0] -->
