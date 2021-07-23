@@ -1,5 +1,5 @@
 /*
-	Default layers v2.2.12 (2021-06-30)
+	Default layers v2.3 (2021-07-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named "layers.txt":
@@ -122,14 +122,15 @@ function main() {
 		}
 		// Merge variants
 		var l, layers = doc.layers.everyItem().getElements();
-		while (l = layers.shift())
+		while (l = layers.shift()) {
+			if (layer == l) continue;
 			if (isIn(l.name, variants, false)) {
-				if (layer.name == l.name) continue;
 				var oldLV = l.visible;
 				if (l == oldAL) oldAL = layer;
 				layer.merge(l);
 				layer.visible = oldLV;
 			};
+		};
 		return layer;
 	}
 
