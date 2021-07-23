@@ -667,7 +667,6 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Order</strong>: <code>above</code> or <code>below</code> existing layers (default <code>above</code>) <br>
 <strong>Variants</strong>: a list of layers that will be merged with the base layer (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
 </blockquote>
-<p><strong>Note:</strong> The file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored.</p>
 </li>
 <li>
 <p><strong><code>DefaultSwatches.jsx</code></strong> adds a set of swatches defined in a TSV file named <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
@@ -678,6 +677,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <th style="text-align:left">Color Model</th>
 <th style="text-align:left">Color Space</th>
 <th style="text-align:left">Values</th>
+<th style="text-align:left">Variants</th>
 </tr>
 </thead>
 <tbody>
@@ -686,21 +686,25 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:left">process</td>
 <td style="text-align:left">cmyk</td>
 <td style="text-align:left">60 40 40 100</td>
+<td style="text-align:left"></td>
 </tr>
 <tr>
 <td style="text-align:left">RGB Grey</td>
 <td style="text-align:left">process</td>
 <td style="text-align:left">rgb</td>
 <td style="text-align:left">128 128 128</td>
+<td style="text-align:left"></td>
 </tr>
 <tr>
 <td style="text-align:left">Cut</td>
 <td style="text-align:left">spot</td>
 <td style="text-align:left">cmyk</td>
 <td style="text-align:left">0 100 0 0</td>
+<td style="text-align:left">couper, diecut</td>
 </tr>
 <tr>
 <td style="text-align:left">&#x2026;</td>
+<td style="text-align:left"></td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
@@ -711,7 +715,8 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><strong>Name</strong>: swatch name <br>
 <strong>Color Model</strong>: <code>process</code> or <code>spot</code> (default <code>process</code>) <br>
 <strong>Color Space</strong>: <code>cmyk</code>, <code>rgb</code> or <code>lab</code> (default <code>cmyk</code>) <br>
-<strong>Values</strong>: 3 values in 0&#x2013;255 range for RGB; 4 values in 0&#x2013;100 range for CMYK; 3 values in 0&#x2013;100 (L), -128&#x2013;127 (A and B) range for Lab</p>
+<strong>Values</strong>: 3 values in 0&#x2013;255 range for RGB; 4 values in 0&#x2013;100 range for CMYK; 3 values in 0&#x2013;100 (L), -128&#x2013;127 (A and B) range for Lab <br>
+<strong>Variants</strong>: a list of swatches that will be replaced by the base swatch (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
 </blockquote>
 </li>
 <li>
@@ -755,7 +760,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Miscellaneous</strong> to get a tab delimited list of fonts for copy&#x2011;pasting.</p>
+<p>You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Miscellaneous</strong> to get a tab delimited list of fonts for copy&#x2011;pasting.</p>
 </li>
 <li>
 <p><strong><code>DocDefaults.jsx</code></strong> runs <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong>, <strong><code>PageSizeFromFilename.jsx</code></strong>, sets loose pasteboard margins.</p>
@@ -764,6 +769,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><strong><code>DocCleanup.jsx</code></strong> runs <strong><code>DefaultPrefs.jsx</code></strong>, cleans up unused swatches, layers and pages, unlocks all items, deletes hidden items, resets scaling to 100%, converts empty text frames to simple frames, sets tight pasteboard margins.</p>
 </li>
 </ul>
+<p><strong>Note:</strong> The TSV files can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored.</p>
 <hr>
 <h4 class="mume-header" id="layout"><strong>Layout</strong></h4>
 
@@ -997,7 +1003,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>&#xA9; 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md &#x2022; July 20, 2021</p>
+<p>README.md &#x2022; July 23, 2021</p>
 
       </div>
       

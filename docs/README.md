@@ -191,21 +191,20 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Order**: `above` or `below` existing layers (default `above`) \
   > **Variants**: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards accepted)
 
-  **Note:** The file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored.
-
 * **`DefaultSwatches.jsx`** adds a set of swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
 
-  Name | Color Model | Color Space | Values
-  :- | :- | :- | :-
+  Name | Color Model | Color Space | Values | Variants
+  :- | :- | :- | :- | :-
   Rich Black | process | cmyk | 60 40 40 100
   RGB Grey | process | rgb | 128 128 128
-  Cut | spot | cmyk | 0 100 0 0
+  Cut | spot | cmyk | 0 100 0 0 | couper, diecut
   ... |
 
   > **Name**: swatch name \
   > **Color Model**: `process` or `spot` (default `process`) \
   > **Color Space**: `cmyk`, `rgb` or `lab` (default `cmyk`) \
-  > **Values**: 3 values in 0–255 range for RGB; 4 values in 0–100 range for CMYK; 3 values in 0–100 (L), -128–127 (A and B) range for Lab
+  > **Values**: 3 values in 0–255 range for RGB; 4 values in 0–100 range for CMYK; 3 values in 0–100 (L), -128–127 (A and B) range for Lab \
+  > **Variants**: a list of swatches that will be replaced by the base swatch (case insensitive; `*` and `?` wildcards accepted)
 
 * **`SaveSwatches.jsx`** saves document's swatches to a TSV file compatible with **`DefaultSwatches.jsx`**.
 
@@ -221,11 +220,13 @@ There are two sets: one related to document preferences, layers, swatches and fo
   Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  **Note:** You can use **`ShowFonts.jsx`** from **Miscellaneous** to get a tab delimited list of fonts for copy‑pasting.
+  You can use **`ShowFonts.jsx`** from **Miscellaneous** to get a tab delimited list of fonts for copy‑pasting.
 
 * **`DocDefaults.jsx`** runs **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`**, **`PageSizeFromFilename.jsx`**, sets loose pasteboard margins.
 
 * **`DocCleanup.jsx`** runs **`DefaultPrefs.jsx`**, cleans up unused swatches, layers and pages, unlocks all items, deletes hidden items, resets scaling to 100%, converts empty text frames to simple frames, sets tight pasteboard margins.
+
+**Note:** The TSV files can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored.
 
 ---
 
@@ -348,4 +349,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • July 20, 2021
+README.md • July 23, 2021

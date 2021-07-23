@@ -191,20 +191,19 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Order**: `above` sau `below` (deasupra sau sub straturile existente; implicit `above`) \
   > **Variants**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive; sunt acceptate metacaracterele `*` și `?`)
 
-  **Notă:** Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate.
-
 * **`DefaultSwatches.jsx`** creează un set de culori definite într‑un fișier TSV numit [**`swatches.txt`**](../swatches.txt):
 
-  Name | Color Model | Color Space | Values
-  :- | :- | :- | :-
+  Name | Color Model | Color Space | Values | Variants
+  :- | :- | :- | :- | :-
   Rich Black | process | cmyk | 60 40 40 100
   RGB Grey | process | rgb | 128 128 128
-  Cut | spot | cmyk | 0 100 0 0
+  Cut | spot | cmyk | 0 100 0 0 | couper, diecut
   ... |
 
   > **Name**: numele culorii \
   > **Model**: tipul culorii: `process` sau `spot` \
-  > **Values**: 3 valori în intervalul 0–255 (RGB) sau 4 valori în intervalul 0–100 (CMYK)
+  > **Values**: 3 valori în intervalul 0–255 (RGB) sau 4 valori în intervalul 0–100 (CMYK) \
+  > **Variants**: o listă de culori care vor fi combinate cu culoarea de bază (case insensitive; sunt acceptate metacaracterele `*` și `?`)
 
 * **`SaveSwatches.jsx`** salvează culorile din document într‑un fișier TSV compatibil cu **`DefaultSwatches.jsx`**.
 
@@ -220,11 +219,13 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   Arial | Bold | Helvetica Neue | Bold
   ... |
 
-  **Notă:** Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
+  Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
 
 * **`DocDefaults.jsx`** rulează **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`**, **`PageSizeFromFilename.jsx`**, extinde pasteboardul.
 
 * **`DocCleanup.jsx`** rulează **`DefaultPrefs.jsx`**, șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%, convertește chenarele goale de text în chenare simple, compactează pasteboardul.
+
+**Notă:** Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate.
 
 ---
 
@@ -347,4 +348,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 20 iulie 2021
+README-ro.md • 23 iulie 2021
