@@ -1,18 +1,22 @@
 /*
-	Default swatches v3.2.2 (2021-06-30)
+	Default swatches v4.0 (2021-07-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Adds swatches from a 4-column TSV file named "swatches.txt":
+	Adds swatches from a 5-column TSV file named "swatches.txt":
 
-	Name       | Color Model | Color Space | Values
-	Rich Black | process     | cmyk        | 60 40 40 100
-	RGB Grey   | process     | rgb         | 128 128 128
-	Cut        | spot        | cmyk        | 0 100 0 0
+	Name       | Color Model | Color Space | Values       | Variants
+	Rich Black | process     | cmyk        | 60 40 40 100 |
+	RGB Grey   | process     | rgb         | 128 128 128  |
+	Cut        | spot        | cmyk        | 0 100 0 0    | couper, diecut
 	...
-	1. <Name>: swatch name,
-	2. <Color Model>: "process" or "spot" (default "process"),
-	3. <Color Space>: "cmyk", "rgb" or "lab" (default "cmyk"),
-	4. <Values>: list of values, depends on the color model & space.
+	1. <Name>: swatch name
+	2. <Color Model>: "process" or "spot" (default "process")
+	3. <Color Space>: "cmyk", "rgb" or "lab" (default "cmyk")
+	4. <Values>: 3 values in 0–255 range for RGB,
+	   4 values in 0–100 range for CMYK,
+	   3 values in 0–100 (L), -128–127 (A and B) range for Lab
+	5. <Variants>: a list of swatches that will be replaced by the base swatch
+	   (case insensitive; '*' and '?' wildcards accepted)
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with "#" are ignored.
@@ -40,11 +44,10 @@
 */
 
 if (!(doc = app.activeDocument)) exit();
-if (!(infoFile = TSVFile("swatches.txt"))) { alert("File 'swatches.txt' not found."); exit() }
+if (!(infoFile = TSVFile("swatches.txt"))) { alert("File 'swatches.txt' not found."); exit() };
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Default swatches");
-
 
 function main() {
 	infoFile.open("r");
@@ -58,42 +61,71 @@ function main() {
 		infoLine = infoLine.split(/ *\t */);
 		if (!flgHeader) { header = infoLine; flgHeader = true; continue } // 1st line is header
 		if (!infoLine[0]) errors.push("Line " + line + ": Missing swatch name.");
-		if (/\d/g.test(infoLine[2])) {
-			alert(infoFile.getRelativeURI(doc.filePath) + " must be updated to the current format."); exit() };
-		// TODO: Some checks needed
 		if (errors.length == 0) data.push({
 			name: infoLine[0],
-			model: (function (c) {
-				return { "process": ColorModel.PROCESS, "spot": ColorModel.SPOT }[c] || ColorModel.PROCESS;
-			})(infoLine[1]),
-			space: (function (s) {
-				return { "cmyk": ColorSpace.CMYK, "rgb": ColorSpace.RGB, "lab": ColorSpace.LAB }[s] || ColorSpace.CMYK;
-			})(infoLine[2]),
+			model: (function (string) { return {
+				"process": ColorModel.PROCESS,
+				"spot": ColorModel.SPOT
+			}[string] || ColorModel.PROCESS })(infoLine[1]),
+			space: (function (string) { return {
+				"cmyk": ColorSpace.CMYK,
+				"rgb": ColorSpace.RGB,
+				"lab": ColorSpace.LAB
+			}[string] || ColorSpace.CMYK })(infoLine[2]),
 			values: (function (array) {
 				var values = [], c;
 				array = /[\,\|]/.test(array) ? array.split(/ *[\,\|] */) : array.split(/ +/);
 				while (c = array.shift()) values.push(Number(c));
 				return values;
-			})(infoLine[3])
+			})(infoLine[3]),
+			variants: !!infoLine[4] ? infoLine[4].split(/ *, */) : ""
 		});
-	}
+	};
 	infoFile.close(); infoLine = "";
-	if (errors.length > 0) {
-		Report(errors.join("\n"), infoFile.getRelativeURI(doc.filePath)); exit() }
+	if (errors.length > 0) { Report(errors.join("\n"), infoFile.getRelativeURI(doc.filePath)); exit() };
 	if (data.length < 1) exit();
 
 	for (var i = 0; i < data.length; i++) {
-		var color = doc.colors.item(data[i].name);
-		if (!color.isValid) {
-			color = doc.colors.add({
-				name: data[i].name,
-				model: data[i].model,
-				space: data[i].space,
-				colorValue: data[i].values
-			});
-		}
-	}
-}
+		var color = AddColor(
+			data[i].name,
+			data[i].model,
+			data[i].space,
+			data[i].values,
+			data[i].variants);
+	};
+
+	function AddColor(name, model, space, values, variants) {
+		var color = doc.colors.itemByName(name);
+		if (!color.isValid) color = doc.colors.add({
+			name: name,
+			model: model || ColorModel.PROCESS,
+			space: space || ColorSpace.CMYK,
+			colorValue: values
+		});
+		// Merge variants
+		var c, colors = doc.colors.everyItem().getElements();
+		while (c = colors.shift()) {
+			if (c == color) continue;
+			if (isIn(c.name, variants, false)) try { c.remove(color) } catch (e) {};
+		};
+		return color;
+	};
+
+	// Modified from FORWARD.Util functions, by Richard Harrington
+	// https://github.com/richardharrington/indesign-scripts
+	function isIn(searchValue, array, caseSensitive) {
+		caseSensitive = (typeof caseSensitive !== 'undefined') ? caseSensitive : true;
+		var item;
+		if (!caseSensitive && typeof searchValue === 'string') searchValue = searchValue.toLowerCase();
+		for (var i = 0; i < array.length; i++) {
+			item = array[i];
+			if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
+			// if (item === searchValue) return true;
+			item = RegExp("^" + item.replace(/\*/g, ".*").replace(/\?/g, ".") + "$", "g");
+			if (item.test(searchValue)) return true;
+		};
+	};
+};
 
 function TSVFile(fn) {
 	var file = "";
@@ -103,7 +135,7 @@ function TSVFile(fn) {
 	if ((file = File(Folder.desktop + "/" + fn)) && file.exists) return file;
 	if ((file = File(script.path + "/" + fn)) && file.exists) return file;
 	if ((file = File(script.path + "/../" + fn)) && file.exists) return file;
-}
+};
 
 // Inspired by this scrollable alert by Peter Kahrel:
 // http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
