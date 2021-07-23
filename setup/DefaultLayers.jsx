@@ -8,12 +8,13 @@
 	dielines | Magenta | yes     | yes       | top   | cut*, decoupe, die, die*cut, stanz*
 	template | Gray    | no      | no        | below
 	...
-	1. <Name>: layer name,
-	2. <Color>: layer color (see UIColors.txt; default "Light Blue"),
-	3. <Visible>: "yes" or "no" (default "yes"),
-	4. <Printable>: "yes" or "no" (default "yes"),
-	5. <Order>: "above" or "below" existing layers (default "above"),
-	6. <Variants>: a list of layers that will be merged with the base layer (case insensitive).
+	1. <Name>: layer name
+	2. <Color>: layer color (see UIColors.txt; default "Light Blue")
+	3. <Visible>: "yes" or "no" (default "yes")
+	4. <Printable>: "yes" or "no" (default "yes")
+	5. <Order>: "above" or "below" existing layers (default "above")
+	6. <Variants>: a list of layers that will be merged with the base layer
+	   (case insensitive; '*' and '?' wildcards accepted)
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with "#" are ignored.
