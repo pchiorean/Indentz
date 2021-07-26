@@ -1,21 +1,37 @@
-function Relink(/*str*/oldLink, /*str*/newLink) {
+/**
+ * Replaces a link or a list of links with a new one. A selection limits the scope.
+ *
+ * @param {string} oldLinks Link name, or
+ * @param {array}  oldLinks List of link names
+ * @param {string} newLink  Same-folder link name, or full link path
+ */
+function Relink(/*str|[]*/oldLinks, /*str*/newLink) {
 	var sel = doc.selection;
 	var link, links = doc.links.everyItem().getElements();
-	if (!isIn(oldLink, links)) return;
 
+	// Check if document has at least one of oldLinks
+	if (oldLinks.constructor.name !== "Array") oldLinks = Array(oldLinks);
+	for (var i = 0, isFound = false; i < oldLinks.length; i++)
+		if (isIn(oldLinks[i], links)) { isFound = true; break };
+	if (!isFound) return false;
+
+	// Check if newLink is valid
 	newLink = /\//g.test(newLink) ? newLink : doc.filePath + "/Links/" + newLink;
-	if (!File(newLink).exists) { errors.push("Skipped '" + oldLink + "', new link not found."); return };
+	if (!File(newLink).exists) { errors.push("'" + newLink + "' not found."); return false };
 
 	while (link = links.shift()) {
-		if (link.name != oldLink) continue;
-		if (sel.length > 0 && !isIn(link.parent.parent, sel)) continue;
+		if (sel.length > 0 && !isIn(link.parent.parent, sel)) { continue }
+		else if (!isIn(link.name, oldLinks)) continue;
 		link.relink(File(newLink));
 	};
+	return true;
 
 	function isIn(item, array) {
 		for (var i = 0; i < array.length; i++) {
-			if (item.constructor.name == "String") if (array[i].name.lastIndexOf(item) != -1) return true
-			else if (item == array[i]) return true;
+			if (item.constructor.name == "String") {
+				if ((array[i].constructor.name == "Link" ? array[i].name : array[i])
+					.lastIndexOf(item) != -1) return true;
+			} else if (item == array[i]) return true;
 		};
 		return false;
 	};
