@@ -252,7 +252,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 Setup | | | |
 :- | -: | :- | -:
 **DocCleanup.jsx** | F2 | **PageSizeFromFilename.jsx** | F3
-**DocDefaults.jsx** | ⌥F2 | **PageSizeFromMargins.jsx** | ⌥F3
+**DocDefaults.jsx** | ⌥F2 | **PageMarginsFromSelection.jsx** | ⌥F3
 **CleanupSwatches.jsx** | ⇧F2 | **PageSizeFromSelection.jsx** | ⇧F3
 
 </details>
@@ -349,4 +349,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • July 23, 2021
+README.md • July 26, 2021

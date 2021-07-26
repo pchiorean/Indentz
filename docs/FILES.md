@@ -66,9 +66,9 @@ Name                               |    Fn  | Description
 `DeleteGuides.jsx`                 |        | Deletes all guides from the document.
 `DocCleanup.jsx`                   |     F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling
 `DocDefaults.jsx`                  |    ⌥F2 | Adds swatches/layers, cleans up fonts and sets page dimensions from the filename
-`PageMarginsFromSelection.jsx`     |        | Sets the page margins to the selected objects bounds
+`PageMarginsFromSelection.jsx`     |    ⌥F3 | Sets the page margins to the selected objects bounds
 `PageSizeFromFilename.jsx`         |     F3 | Sets every page size and margins according to the filename
-`PageSizeFromMargins.jsx`          |    ⌥F3 | Sets the page size to the page margins
+`PageSizeFromMargins.jsx`          |        | Sets the page size to the page margins
 `PageSizeFromSelection.jsx`        |    ⇧F3 | Sets the page size to the selected objects bounds
 **View**                                    |
 `TileAll.jsx`                      |    ⇧F4 | Invokes 'Tile All Vertically/Horizontally', depending on current spread orientation

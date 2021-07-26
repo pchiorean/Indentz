@@ -251,7 +251,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 Setup | | | |
 :- | -: | :- | -:
 **DocCleanup.jsx** | F2 | **PageSizeFromFilename.jsx** | F3
-**DocDefaults.jsx** | ⌥F2 | **PageSizeFromMargins.jsx** | ⌥F3
+**DocDefaults.jsx** | ⌥F2 | **PageMarginsFromSelection.jsx** | ⌥F3
 **CleanupSwatches.jsx** | ⇧F2 | **PageSizeFromSelection.jsx** | ⇧F3
 
 </details>
@@ -348,4 +348,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 23 iulie 2021
+README-ro.md • 26 iulie 2021
