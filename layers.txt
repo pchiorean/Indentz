@@ -1,24 +1,34 @@
 Name	Color	Visible	Printable	Order	Variants
+
+# Technical
 visible area	Yellow	yes	yes	above	rahmen, safe area, sicht*, *vi?ib*, vis?*
 safety margins	Grid Green	yes	yes	above
 segmentation	Grid Green	yes	yes	above	split
 covered area	Red	yes	yes	above	covered area*
 dielines	Red	yes	yes	above	cut, cut*line*, decoupe, die, die*cut, stanz*
+
+# Finishing
 varnish	Yellow	no	yes	above	uv
-white	Cute Teal	no	yes	above	
+white	Cute Teal	no	yes	above
+
+# Info
 guides	Magenta	yes	no	above	grid, masuratori
 info	Cyan	no	yes	above	info copy, ratio
-media	Cyan	no	yes	above	
-placeholder	Magenta	no	yes	above	
-placement	Black	no	yes	above	
+media	Cyan	no	yes	above
+placement	Black	no	yes	above
+placeholder	Magenta	no	yes	above
+
+# Artwork
 HW	Light Gray	no	yes	above	*hw*, legal, wh
 disclaimer	Gray	no	yes	above	legal text
 text and logos	Green	no	yes	above	copy, dots, headline*, hl, logo, text*, txt, typ?
 codes	Grid Green	no	yes	above	code*, bar*code*, EAN*
 price	Gold	no	yes	above	preis
 products	Blue	no	yes	above	device*, pack*, packshot*, product*, tin*
-new	Grid Green	no	yes	above	
+new	Grid Green	no	yes	above
 ring	Fiesta	no	yes	above	bullseye
 artwork	Light Blue	no	yes	above	aw, element?, layout*
 bg	Red	no	yes	below	*background*, bgg, hg, hintergrund*
+
+# Template
 template	Black	no	no	below	referinta
