@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 2.0 (2021-07-28)
+	Replace fonts 2.1 (2021-07-28)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named "fonts.txt":
@@ -35,7 +35,9 @@
 */
 
 if (!(doc = app.activeDocument)) exit();
-if (!(infoFile = FindFile("fonts.txt"))) { alert("File 'fonts.txt' not found."); exit() };
+
+var infoFile, infoFilename = "fonts.txt";
+if (!(infoFile = FindFile(infoFilename))) { alert("File '" + infoFilename + "' not found."); exit() };
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Replace fonts");
@@ -73,10 +75,12 @@ function ParseInfo(infoFile) {
 		if (infoLine.slice(0,1) == "\u0023") continue; // Ignore lines prefixed with '#'
 		infoLine = infoLine.split(/ *\t */);
 		if (!flgHeader) { header = infoLine; flgHeader = true; continue }; // Header
-		if (infoLine[0].slice(0,1) == "\u0040") { // '@"filename"': include 'filename'
-			var includeFile = File(infoLine[0].slice(1)
-				.replace(/^\s+|\s+$/g, "") // Remove whitespace
-				.replace(/^['"]+|['"]+$/g, "")); // Remove quotes
+		if (infoLine[0].slice(0,1) == "\u0040") { // '@include'
+			var include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, "").replace(/^['"]+|['"]+$/g, "");
+			var includeFile = include.toLowerCase() == "default" ?
+				FindFile(infoFilename, true) : // '@default': include default info file
+				File(include); // '@path/to/file.txt': include 'file.txt'
+			if (includeFile.path == infoFile.path) continue; // Skip self
 			if (includeFile.exists) {
 				buffer = ParseInfo(includeFile);
 				records = records.concat(buffer.records);
@@ -99,17 +103,20 @@ function ParseInfo(infoFile) {
 
 /**
  * Finds the first occurence of a file, looking in the current folder, on the desktop, or next to the script.
- * @param {string} fn - Filename
+ * @param {string} filename - Filename
+ * @param {boolean} skipLocal - Don't search in current folder
  * @returns {File} - File object
  */
-function FindFile(fn) {
+function FindFile(filename, skipLocal) {
 	var file = "";
 	var script = (function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } })();
-	if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + fn)) && file.exists) return file;
-	if (doc.saved && (file = File(app.activeDocument.filePath + "/" + fn)) && file.exists) return file;
-	if ((file = File(Folder.desktop + "/" + fn)) && file.exists) return file;
-	if ((file = File(script.path + "/" + fn)) && file.exists) return file;
-	if ((file = File(script.path + "/../" + fn)) && file.exists) return file;
+	if (!skipLocal) {
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/" + filename)) && file.exists) return file;
+	};
+	if ((file = File(Folder.desktop + "/" + filename)) && file.exists) return file;
+	if ((file = File(script.path + "/" + filename)) && file.exists) return file;
+	if ((file = File(script.path + "/../" + filename)) && file.exists) return file;
 };
 
 /**

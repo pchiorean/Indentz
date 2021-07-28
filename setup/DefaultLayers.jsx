@@ -1,5 +1,5 @@
 /*
-	Default layers v3.0 (2021-07-28)
+	Default layers v3.1 (2021-07-28)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named "layers.txt":
@@ -42,7 +42,9 @@
 */
 
 if (!(doc = app.activeDocument)) exit();
-if (!(infoFile = FindFile("layers.txt"))) { alert("File 'layers.txt' not found."); exit() }
+
+var infoFile, infoFilename = "layers.txt";
+if (!(infoFile = FindFile(infoFilename))) { alert("File '" + infoFilename + "' not found."); exit() };
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Default layers");
@@ -68,8 +70,8 @@ function main() {
 			var tmpLayer = doc.layers.item(data.records[i+1].name);
 			if (tmpLayer.isValid && (layer.index > tmpLayer.index))
 				layer.move(LocationOptions.BEFORE,doc.layers.item(data.records[i+1].name));
-		}
-	}
+		};
+	};
 	// Bottom layers
 	for (var i = 0; i < data.records.length; i++) {
 		if (!data.records[i].isBelow) continue;
@@ -80,7 +82,7 @@ function main() {
 			data.records[i].isPrintable,
 			data.records[i].variants)
 		.move(LocationOptions.AT_END);
-	}
+	};
 	doc.activeLayer = oldAL; // Restore active layer
 
 	function MakeLayer(name, color, isVisible, isPrintable, variants) {
@@ -90,7 +92,7 @@ function main() {
 				layerColor: color,
 				// visible: isVisible,
 				printable: isPrintable
-			}
+			};
 		else {
 			doc.activeLayer = doc.layers.firstItem();
 			doc.layers.add({
@@ -99,7 +101,7 @@ function main() {
 				visible: isVisible,
 				printable: isPrintable
 			});
-		}
+		};
 		// Merge variants
 		var l, layers = doc.layers.everyItem().getElements();
 		while (l = layers.shift()) {
@@ -112,7 +114,7 @@ function main() {
 			};
 		};
 		return layer;
-	}
+	};
 
 	// Modified from FORWARD.Util functions, by Richard Harrington
 	// https://github.com/richardharrington/indesign-scripts
@@ -126,9 +128,9 @@ function main() {
 			// if (item === searchValue) return true;
 			item = RegExp("^" + item.replace(/\*/g, ".*").replace(/\?/g, ".") + "$", "g");
 			if (item.test(searchValue)) return true;
-		}
-	}
-}
+		};
+	};
+};
 
 function GetUIColor(color) {
 	return {
@@ -170,7 +172,7 @@ function GetUIColor(color) {
 		'White': UIColors.WHITE,
 		'Yellow': UIColors.YELLOW
 	}[color] || UIColors.LIGHT_BLUE;
-}
+};
 
 /**
  * Parses a TSV file, returning an object containing found records and errors.
@@ -187,10 +189,12 @@ function ParseInfo(infoFile) {
 		if (infoLine.slice(0,1) == "\u0023") continue; // Ignore lines prefixed with '#'
 		infoLine = infoLine.split(/ *\t */);
 		if (!flgHeader) { header = infoLine; flgHeader = true; continue }; // Header
-		if (infoLine[0].slice(0,1) == "\u0040") { // '@"filename"': include 'filename'
-			var includeFile = File(infoLine[0].slice(1)
-				.replace(/^\s+|\s+$/g, "") // Remove whitespace
-				.replace(/^['"]+|['"]+$/g, "")); // Remove quotes
+		if (infoLine[0].slice(0,1) == "\u0040") { // '@include'
+			var include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, "").replace(/^['"]+|['"]+$/g, "");
+			var includeFile = include.toLowerCase() == "default" ?
+				FindFile(infoFilename, true) : // '@default': include default info file
+				File(include); // '@path/to/file.txt': include 'file.txt'
+			if (includeFile.path == infoFile.path) continue; // Skip self
 			if (includeFile.exists) {
 				buffer = ParseInfo(includeFile);
 				records = records.concat(buffer.records);
@@ -213,17 +217,20 @@ function ParseInfo(infoFile) {
 
 /**
  * Finds the first occurence of a file, looking in the current folder, on the desktop, or next to the script.
- * @param {string} fn - Filename
+ * @param {string} filename - Filename
+ * @param {boolean} skipLocal - Don't search in current folder
  * @returns {File} - File object
  */
-function FindFile(fn) {
+function FindFile(filename, skipLocal) {
 	var file = "";
 	var script = (function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } })();
-	if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + fn)) && file.exists) return file;
-	if (doc.saved && (file = File(app.activeDocument.filePath + "/" + fn)) && file.exists) return file;
-	if ((file = File(Folder.desktop + "/" + fn)) && file.exists) return file;
-	if ((file = File(script.path + "/" + fn)) && file.exists) return file;
-	if ((file = File(script.path + "/../" + fn)) && file.exists) return file;
+	if (!skipLocal) {
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/" + filename)) && file.exists) return file;
+	};
+	if ((file = File(Folder.desktop + "/" + filename)) && file.exists) return file;
+	if ((file = File(script.path + "/" + filename)) && file.exists) return file;
+	if ((file = File(script.path + "/../" + filename)) && file.exists) return file;
 };
 
 /**

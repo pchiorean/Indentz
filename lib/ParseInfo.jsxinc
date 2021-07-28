@@ -1,3 +1,6 @@
+// var infoFile, infoFilename = "data.txt";
+// if (!(infoFile = FindFile(infoFilename))) { alert("File '" + infoFilename + "' not found."); exit() };
+
 // var data = ParseInfo(infoFile);
 // if (data.errors.length > 0) { Report(data.errors, decodeURI(infoFile.getRelativeURI(doc.filePath))); exit() };
 // if (data.records.length == 0) exit();
@@ -17,10 +20,12 @@ function ParseInfo(infoFile) {
 		if (infoLine.slice(0,1) == "\u0023") continue; // Ignore lines prefixed with '#'
 		infoLine = infoLine.split(/ *\t */);
 		if (!flgHeader) { header = infoLine; flgHeader = true; continue }; // Header
-		if (infoLine[0].slice(0,1) == "\u0040") { // '@"filename"': include 'filename'
-			var includeFile = File(infoLine[0].slice(1)
-				.replace(/^\s+|\s+$/g, "") // Remove whitespace
-				.replace(/^['"]+|['"]+$/g, "")); // Remove quotes
+		if (infoLine[0].slice(0,1) == "\u0040") { // '@include'
+			var include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, "").replace(/^['"]+|['"]+$/g, "");
+			var includeFile = include.toLowerCase() == "default" ?
+				FindFile(infoFilename, true) : // '@default': include default info file
+				File(include); // '@path/to/file.txt': include 'file.txt'
+			if (includeFile.path == infoFile.path) continue; // Skip self
 			if (includeFile.exists) {
 				buffer = ParseInfo(includeFile);
 				records = records.concat(buffer.records);
