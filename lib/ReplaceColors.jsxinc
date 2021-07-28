@@ -1,4 +1,11 @@
-function ReplaceColors(/*str|[]*/oldNames, /*str*/newName, /*[]*/newValues) {
+/**
+ * Replaces a swatch or a list of swatches with a different one.
+ * The new swatch is created only if values are provided (CMYK).
+ * @param {(string|string[])} oldNames - Swatch name, or a list of swatch names to be replaced
+ * @param {string} newName - New swatch name
+ * @param {number[]} [newValues] - Array of 4 values in 0-100 range (optional)
+ */
+function ReplaceColors(oldNames, newName, newValues) {
 	// Add new color if values provided
 	if (newValues)
 		if (!doc.colors.itemByName(newName).isValid)
@@ -8,6 +15,7 @@ function ReplaceColors(/*str|[]*/oldNames, /*str*/newName, /*[]*/newValues) {
 				model: ColorModel.PROCESS,
 				space: ColorSpace.CMYK
 			});
+
 	// Replace colors
 	if (oldNames.constructor.name !== "Array") oldNames = Array(oldNames);
 	for (var i = 0; i < oldNames.length; i++)

@@ -1,11 +1,9 @@
 /**
  * Replaces a link or a list of links with a new one. A selection limits the scope.
- *
- * @param {string} oldLinks Link name, or
- * @param {array}  oldLinks List of link names
- * @param {string} newLink  Same-folder link name, or full link path
+ * @param {(string|string[])} oldLinks - Link name, or a list of link names to be replaced
+ * @param {string} newLink - New link name (for same folder), or full link path
  */
-function Relink(/*str|[]*/oldLinks, /*str*/newLink) {
+function Relink(oldLinks, newLink) {
 	var sel = doc.selection;
 	var link, links = doc.links.everyItem().getElements();
 

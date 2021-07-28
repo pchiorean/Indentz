@@ -1,6 +1,6 @@
-// var progressBar = new ProgressBar("Processing");
-// progressBar.reset(infoLines);
-// progressBar.update(line);
+// var progressBar = new ProgressBar(title, ?maxwidth);
+// progressBar.reset(max value);
+// progressBar.update(value, ?message);
 // progressBar.close();
 
 function ProgressBar(title, width) {
