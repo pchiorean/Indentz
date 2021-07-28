@@ -1,5 +1,5 @@
 ﻿/*
-	Doc cleanup v2.5.3 (2021-06-30)
+	Doc cleanup v2.6 (2021-07-26)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -100,13 +100,15 @@ doc.textPreferences.showInvisibles = false;
 
 // Set pasteboard
 app.doScript(function() {
+	const P = { width: 150, height: 50 }; // Defaults (mm)
 	var size = {
 		width: doc.spreads[0].pages.lastItem().bounds[3] - doc.spreads[0].pages.firstItem().bounds[1],
 		height: doc.spreads[0].pages.lastItem().bounds[2] - doc.spreads[0].pages.firstItem().bounds[0]
 	};
+	const K = (size.width > 1000 && size.height > 1000) ? 10 : 1;
 	doc.pasteboardPreferences.pasteboardMargins = [
-		((size.width / size.height) < 1.95 ? "150 mm" : "50 mm"),
-		((size.width / size.height) < 1.95 ? "25 mm" : "10 mm")
+		(size.width / size.height < 1.95) ? P.width*K + "mm" : P.width/1.5*K + "mm",
+		(size.width / size.height < 1.95) ? P.height*K + "mm" : P.height/2.5*K + "mm"
 	];
 },
 ScriptLanguage.javascript, undefined,
