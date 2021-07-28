@@ -1,5 +1,5 @@
 /*
-	QR code v3.5.2 (2021-07-21)
+	QR code v3.5.3 (2021-07-28)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -51,16 +51,16 @@ function main() {
 			"Where? Document is not saved";
 		ui.actions.add('button { text: "Cancel", properties: { name: "cancel" } }');
 		ui.onfile.enabled = !!currentPath;
-		ui.ondoc.onClick = function() { onFile = false; ui.close() }
-		ui.onfile.onClick = function() { onFile = true; ui.close() }
+		ui.ondoc.onClick = function() { onFile = false; ui.close() };
+		ui.onfile.onClick = function() { onFile = true; ui.close() };
 	if (ui.show() == 2) exit();
 	// Processing
 	var code = ui.label.text.replace(/^\s+|\s+$/g, "");
-	if (!code) { main(); exit() }
+	if (!code) { main(); exit() };
 	errors = [];
-	if (onFile) { MakeQROnFile(code) } else { MakeQROnDoc(code, ui.white.value) }
+	if (onFile) { MakeQROnFile(code) } else { MakeQROnDoc(code, ui.white.value) };
 	if (errors.length > 0) Report(errors, "Errors");
-}
+};
 
 function MakeQROnDoc(code, /*bool*/white) {
 	var idLayer = MakeIDLayer(doc);
@@ -69,7 +69,7 @@ function MakeQROnDoc(code, /*bool*/white) {
 		var page = doc.pages.item(i);
 		// Remove old codes
 		var item, items = page.pageItems.everyItem().getElements();
-		while (item = items.shift()) if (item.label == "QR") { item.itemLayer.locked = false; item.remove() }
+		while (item = items.shift()) if (item.label == "QR") { item.itemLayer.locked = false; item.remove() };
 		// Add label
 		var labelFrame = page.textFrames.add({
 			label: "QR",
@@ -90,7 +90,7 @@ function MakeQROnDoc(code, /*bool*/white) {
 			capitalization: Capitalization.ALL_CAPS,
 			fillColor: white ? "Paper" : "Black", // White text checkbox
 			strokeColor: "None"
-		}
+		};
 		labelFrame.textFramePreferences.properties = {
 			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
 			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
@@ -101,7 +101,7 @@ function MakeQROnDoc(code, /*bool*/white) {
 				UnitValue("3 mm").as("pt"), UnitValue("2.5 mm").as("pt"),
 				UnitValue("1 mm").as("pt"), 0
 			]
-		}
+		};
 		doc.align(labelFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
 		doc.align(labelFrame, AlignOptions.TOP_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
 		// Add code
@@ -126,7 +126,7 @@ function MakeQROnDoc(code, /*bool*/white) {
 			leftCrop: UnitValue("2.7 mm").as("pt"),
 			bottomCrop: UnitValue("2.7 mm").as("pt"),
 			rightCrop: UnitValue("2.7 mm").as("pt")
-		}
+		};
 		codeFrame.epss[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
 		// Reposition
 		var qrGroup = page.groups.add([labelFrame, codeFrame]);
@@ -136,7 +136,7 @@ function MakeQROnDoc(code, /*bool*/white) {
 		var szLabel = {
 			width: labelFrame.geometricBounds[3] - labelFrame.geometricBounds[1],
 			height: labelFrame.geometricBounds[2] - labelFrame.geometricBounds[0]
-		}
+		};
 		var szCode = codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1];
 		doc.align(qrGroup, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
 		doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
@@ -144,10 +144,10 @@ function MakeQROnDoc(code, /*bool*/white) {
 			((szLabel.width + szCode) > mgs.left && (szCode + UnitValue("2.3 mm").as("pt")) > mgs.bottom)) {
 			doc.align(qrGroup, AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
 			doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		}
+		};
 		qrGroup.ungroup();
-	}
-}
+	};
+};
 
 function MakeQROnFile(code) {
 	var target = app.documents.add();
@@ -172,7 +172,7 @@ function MakeQROnFile(code) {
 		capitalization: Capitalization.ALL_CAPS,
 		hyphenation: false,
 		fillColor: "Black"
-	}
+	};
 	labelFrame.geometricBounds = [
 		0, 0,
 		UnitValue("5.787 mm").as("pt"), UnitValue("20 mm").as("pt")
@@ -186,7 +186,7 @@ function MakeQROnFile(code) {
 			UnitValue("1 mm").as("pt"), UnitValue("1 mm").as("pt"),
 			0, UnitValue("0.5 mm").as("pt")
 		]
-	}
+	};
 	// Add code
 	var codeFrame = page.rectangles.add({ itemLayer: idLayer.name, label: "QR" });
 	codeFrame.absoluteRotationAngle = -90;
@@ -202,7 +202,7 @@ function MakeQROnFile(code) {
 		leftCrop: UnitValue("1.64 mm").as("pt"),
 		bottomCrop: UnitValue("1.533 mm").as("pt"),
 		rightCrop: UnitValue("1.64 mm").as("pt")
-	}
+	};
 	codeFrame.epss[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
 	// Reposition
 	var qrGroup = page.groups.add([labelFrame, codeFrame]);
@@ -230,8 +230,8 @@ function MakeQROnFile(code) {
 		target.textPreferences.showInvisibles = true;
 		target.save(ancillaryFile);
 		errors.push(baseName + ".indd: Text overflows.");
-	}
-}
+	};
+};
 
 function ExportToPDF(doc, path) {
 	with(app.pdfExportPreferences) {
@@ -243,7 +243,7 @@ function ExportToPDF(doc, path) {
 		exportNonprintingObjects = false;
 		exportReaderSpreads = true;
 		generateThumbnails = false;
-		try { ignoreSpreadOverrides = false } catch (e) {}
+		try { ignoreSpreadOverrides = false } catch (e) {};
 		includeBookmarks = false;
 		includeHyperlinks = false;
 		includeICCProfiles = ICCProfiles.INCLUDE_ALL;
@@ -294,7 +294,7 @@ function ExportToPDF(doc, path) {
 		printerMarkWeight = PDFMarkWeight.P25PT;
 		bleedMarks = false;
 		registrationMarks = false;
-		try { simulateOverprint = false } catch (e) {}
+		try { simulateOverprint = false } catch (e) {};
 		// Misc
 		exportGuidesAndGrids = false;
 		exportLayers = false;
@@ -305,9 +305,9 @@ function ExportToPDF(doc, path) {
 		exportAsSinglePages = false;
 		useSecurity = false;
 		viewPDF = false;
-	}
+	};
 	doc.exportFile(ExportFormat.pdfType, File(path), false);
-}
+};
 
 function BalanceText(txt, length) {
 	// 1st pass: break text into words
@@ -321,8 +321,8 @@ function BalanceText(txt, length) {
 		} else {
 			if (lineBuffer != "") lines.push(lineBuffer);
 			lineBuffer = word;
-		}
-	}
+		};
+	};
 	if (lineBuffer != "") lines.push(lineBuffer);
 	// 3rd pass: balance ragged lines
 	if (lines.length > 1) BalanceLines();
@@ -342,10 +342,10 @@ function BalanceText(txt, length) {
 				lines[i] = newLine1;
 				lines[i+1] = newLine2;
 				BalanceLines();
-			}
-		}
-	}
-}
+			};
+		};
+	};
+};
 
 function MakeIDLayer(doc) {
 	var idLayerName = "ID", idLayer = doc.layers.item(idLayerName);
@@ -361,7 +361,7 @@ function MakeIDLayer(doc) {
 		idLayer.move(LocationOptions.BEFORE, hwLayer)
 		else idLayer.move(LocationOptions.AT_BEGINNING);
 	return idLayer;
-}
+};
 
 function Margins(page) { // Return page margins
 	return {
@@ -371,40 +371,46 @@ function Margins(page) { // Return page margins
 		bottom: page.marginPreferences.bottom,
 		right: (page.side == PageSideOptions.LEFT_HAND) ?
 			page.marginPreferences.left : page.marginPreferences.right
-	}
-}
+	};
+};
 
-// Inspired by this scrollable alert by Peter Kahrel:
-// http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
-function Report(msg, title, /*bool*/filter, /*bool*/compact) {
-	if (msg instanceof Array) msg = msg.join("\n"); msg = msg.split(/\r|\n/g);
-	if (compact && msg.length > 1) {
-		msg = msg.sort();
-		for (var i = 1, l = msg[0]; i < msg.length; l = msg[i], i++)
-			if (l == msg[i] || msg[i] == "") { msg.splice(i, 1); i-- };
+/**
+ * Simple scrollable alert inspired by this snippet by Peter Kahrel:
+ * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
+ * @param {string|string[]} message - Message to be displayed (string or array)
+ * @param {string} title - Dialog title
+ * @param {boolean} [showFilter] - Shows a filtering field; wildcards: '?' (any char), space and '*' (AND), '|' (OR)
+ * @param {boolean} [showCompact] - Sorts message and removes duplicates
+ */
+function Report(message, title, showFilter, showCompact) {
+	if (message instanceof Array) message = message.join("\n"); message = message.split(/\r|\n/g);
+	if (showCompact && message.length > 1) {
+		message = message.sort();
+		for (var i = 1, l = message[0]; i < message.length; l = message[i], i++)
+			if (l == message[i] || message[i] == "") { message.splice(i, 1); i-- };
 	};
 	var w = new Window('dialog', title);
-	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40, \
-		helpTip: "Special operators: \'?\' (any character), space and \'*\' (and), \'|\' (or)" }');
-	var list = w.add('edittext', undefined, msg.join("\n"), { multiline: true, scrolling: true, readonly: true });
+	if (showFilter && message.length > 1) var search = w.add('edittext { characters: 40, \
+		helpTip: "Wildcards: \'?\' (any character), space and \'*\' (AND), \'|\' (OR)" }');
+	var list = w.add('edittext', undefined, message.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = (function() {
-		for (var i = 0, width = 50; i < msg.length;
-		width = Math.max(width, msg[i].toString().length), i++);
+		for (var i = 0, width = 50; i < message.length;
+		width = Math.max(width, message[i].toString().length), i++);
 		return width;
 	})();
 	list.minimumSize.width = 600, list.maximumSize.width = 1024;
 	list.minimumSize.height = 100, list.maximumSize.height = 1024;
 	w.ok.active = true;
-	if (filter && msg.length > 1) {
+	if (search) {
 		search.onChanging = function() {
-			if (this.text == "") { list.text = msg.join("\n"); w.text = title; return };
+			if (this.text == "") { list.text = message.join("\n"); w.text = title; return };
 			var str = this.text.replace(/[.\[\]{+}]/g, "\\$&"); // Pass through '^*()|?'
 			str = str.replace(/\?/g, "."); // '?' -> any character
 			if (/[ *]/g.test(str)) str = "(" + str.replace(/ +|\*/g, ").*(") + ")"; // space or '*' -> AND
 			str = RegExp(str, "gi");
-			for (var i = 0, result = []; i < msg.length; i++) {
-				var line = msg[i].toString().replace(/^\s+?/g, "");
+			for (var i = 0, result = []; i < message.length; i++) {
+				var line = message[i].toString().replace(/^\s+?/g, "");
 				if (str.test(line)) result.push(line.replace(/\r|\n/g, "\u00b6").replace(/\t/g, "\\t"));
 			};
 			w.text = str + " | " + result.length + " record" + (result.length == 1 ? "" : "s");
