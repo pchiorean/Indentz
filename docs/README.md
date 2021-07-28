@@ -226,7 +226,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`DocCleanup.jsx`** runs **`DefaultPrefs.jsx`**, cleans up unused swatches, layers and pages, unlocks all items, deletes hidden items, resets scaling to 100%, converts empty text frames to simple frames, sets tight pasteboard margins.
 
-**Note:** The TSV files can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored.
+**Note:** The TSV files can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored. You can include records from another file by inserting **`@path/to/file.txt`** in the desired position.
 
 ---
 
@@ -349,4 +349,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • July 26, 2021
+README.md • July 28, 2021

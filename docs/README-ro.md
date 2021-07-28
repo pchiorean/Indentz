@@ -225,7 +225,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`DocCleanup.jsx`** rulează **`DefaultPrefs.jsx`**, șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%, convertește chenarele goale de text în chenare simple, compactează pasteboardul.
 
-**Notă:** Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate.
+**Notă:** Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include înregistrări dintr‑un alt fișier inserând **`@path/to/file.txt`** în poziția dorită.
 
 ---
 
@@ -348,4 +348,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 26 iulie 2021
+README-ro.md • 28 iulie 2021
