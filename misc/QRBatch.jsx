@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.5.3 (2021-07-21)
+	Batch QR codes v2.6 (2021-07-28)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -475,9 +475,10 @@ function ExportToPDF(doc, path) {
 };
 
 function BalanceText(txt, length) {
-	const wordRE = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})))|(.+)/g;
+	// 1st pass: break text into words
+	const wordRE = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})|(?=[([])))|(.+)/g;
 	var words = txt.match(wordRE);
-	// 1st pass: roughly join words into lines
+	// 2nd pass: roughly join words into lines
 	var lines = [], lineBuffer = "", word = "";
 	while (word = words.shift()) {
 		if ((lineBuffer + word).length <= length) {
@@ -488,14 +489,14 @@ function BalanceText(txt, length) {
 		};
 	};
 	if (lineBuffer != "") lines.push(lineBuffer);
-	// 2nd pass: balance ragged lines
+	// 3rd pass: balance ragged lines
 	if (lines.length > 1) BalanceLines();
 	return lines.join("\u000A");
 
 	function BalanceLines() {
 		// Move the last word on the next line and check improvement;
 		// if better, save and repeat until no improvement
-		for (i = 0; i < lines.length - 1; i++) {
+		for (var i = 0; i < lines.length - 1; i++) {
 			var delta = Math.abs(lines[i].length - lines[i+1].length);
 			var line = lines[i].match(wordRE);
 			var word = line.pop();
@@ -568,37 +569,43 @@ function Margins(page) {
 	};
 };
 
-// Inspired by this scrollable alert by Peter Kahrel:
-// http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
-function Report(msg, title, /*bool*/filter, /*bool*/compact) {
-	if (msg instanceof Array) msg = msg.join("\n"); msg = msg.split(/\r|\n/g);
-	if (compact && msg.length > 1) {
-		msg = msg.sort();
-		for (var i = 1, l = msg[0]; i < msg.length; l = msg[i], i++)
-			if (l == msg[i] || msg[i] == "") { msg.splice(i, 1); i-- };
+/**
+ * Simple scrollable alert inspired by this snippet by Peter Kahrel:
+ * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
+ * @param {string|string[]} message - Message to be displayed (string or array)
+ * @param {string} title - Dialog title
+ * @param {boolean} [showFilter] - Shows a filtering field; wildcards: '?' (any char), space and '*' (AND), '|' (OR)
+ * @param {boolean} [showCompact] - Sorts message and removes duplicates
+ */
+function Report(message, title, showFilter, showCompact) {
+	if (message instanceof Array) message = message.join("\n"); message = message.split(/\r|\n/g);
+	if (showCompact && message.length > 1) {
+		message = message.sort();
+		for (var i = 1, l = message[0]; i < message.length; l = message[i], i++)
+			if (l == message[i] || message[i] == "") { message.splice(i, 1); i-- };
 	};
 	var w = new Window('dialog', title);
-	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40, \
-		helpTip: "Special operators: \'?\' (any character), space and \'*\' (and), \'|\' (or)" }');
-	var list = w.add('edittext', undefined, msg.join("\n"), { multiline: true, scrolling: true, readonly: true });
+	if (showFilter && message.length > 1) var search = w.add('edittext { characters: 40, \
+		helpTip: "Wildcards: \'?\' (any character), space and \'*\' (AND), \'|\' (OR)" }');
+	var list = w.add('edittext', undefined, message.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = (function() {
-		for (var i = 0, width = 50; i < msg.length;
-		width = Math.max(width, msg[i].toString().length), i++);
+		for (var i = 0, width = 50; i < message.length;
+		width = Math.max(width, message[i].toString().length), i++);
 		return width;
 	})();
 	list.minimumSize.width = 600, list.maximumSize.width = 1024;
 	list.minimumSize.height = 100, list.maximumSize.height = 1024;
 	w.ok.active = true;
-	if (filter && msg.length > 1) {
+	if (search) {
 		search.onChanging = function() {
-			if (this.text == "") { list.text = msg.join("\n"); w.text = title; return };
+			if (this.text == "") { list.text = message.join("\n"); w.text = title; return };
 			var str = this.text.replace(/[.\[\]{+}]/g, "\\$&"); // Pass through '^*()|?'
 			str = str.replace(/\?/g, "."); // '?' -> any character
 			if (/[ *]/g.test(str)) str = "(" + str.replace(/ +|\*/g, ").*(") + ")"; // space or '*' -> AND
 			str = RegExp(str, "gi");
-			for (var i = 0, result = []; i < msg.length; i++) {
-				var line = msg[i].toString().replace(/^\s+?/g, "");
+			for (var i = 0, result = []; i < message.length; i++) {
+				var line = message[i].toString().replace(/^\s+?/g, "");
 				if (str.test(line)) result.push(line.replace(/\r|\n/g, "\u00b6").replace(/\t/g, "\\t"));
 			};
 			w.text = str + " | " + result.length + " record" + (result.length == 1 ? "" : "s");
