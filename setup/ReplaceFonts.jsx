@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 1.16.2 (2021-06-30)
+	Replace fonts 2.0 (2021-07-28)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named "fonts.txt":
@@ -10,7 +10,7 @@
 	...
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
-	Blank lines and those prefixed with "#" are ignored.
+	Blank lines and those prefixed with "#" are ignored; '@"file.txt"' includes records from 'file.txt'.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -35,49 +35,74 @@
 */
 
 if (!(doc = app.activeDocument)) exit();
-if (!(infoFile = TSVFile("fonts.txt"))) { alert("File 'fonts.txt' not found."); exit() }
+if (!(infoFile = FindFile("fonts.txt"))) { alert("File 'fonts.txt' not found."); exit() };
 
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Replace fonts");
 
-
 function main() {
-	infoFile.open("r");
-	var infoLine, header, data = [],
-		line = 0, flgHeader = false,
-		errors = [];
-	while (!infoFile.eof) {
-		infoLine = infoFile.readln(); line++;
-		if (infoLine.replace(/^\s+|\s+$/g, "") == "") continue; // Skip empty lines
-		if (infoLine.toString().slice(0,1) == "\u0023") continue; // Skip lines beginning with '#'
-		infoLine = infoLine.split(/ *\t */);
-		if (!flgHeader) { header = infoLine; flgHeader = true; continue } // 1st line is header
-		if (!infoLine[0] || !infoLine[2]) errors.push("Line " + line + ": Missing font name.");
-		if (!infoLine[1] || !infoLine[3]) errors.push("Line " + line + ": Missing font style.");
-		if (errors.length == 0) data.push([
-			infoLine[0] + "\t" + infoLine[1],
-			infoLine[2] + "\t" + infoLine[3]
-		]);
-	}
-	infoFile.close(); infoLine = "";
-	if (errors.length > 0) {
-		Report(errors.join("\n"), infoFile.getRelativeURI(doc.filePath)); exit() }
-	if (data.length < 1) exit();
+	var data = ParseInfo(infoFile);
+	if (data.errors.length > 0) { Report(data.errors, decodeURI(infoFile.getRelativeURI(doc.filePath))); exit() };
+	if (data.records.length == 0) exit();
 
-	for (var i = 0; i < data.length; i++) {
+	for (var i = 0; i < data.records.length; i++) {
 		app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
 		app.findChangeTextOptions.includeHiddenLayers = true;
 		app.findChangeTextOptions.includeLockedLayersForFind = true;
 		app.findChangeTextOptions.includeLockedStoriesForFind = true;
 		app.findChangeTextOptions.includeMasterPages = true;
-		app.findTextPreferences.appliedFont = data[i][0];
-		app.changeTextPreferences.appliedFont = data[i][1];
+		app.findTextPreferences.appliedFont = data.records[i][0];
+		app.changeTextPreferences.appliedFont = data.records[i][1];
 		doc.changeText();
-	}
+	};
 	app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
-}
+};
 
-function TSVFile(fn) {
+/**
+ * Parses a TSV file, returning an object containing found records and errors.
+ * Ignores blank lines and those prefixed with '#'; '@"file.txt"' includes records from 'file.txt'.
+ * @param {File} infoFile - Tab-separated-values file object
+ * @returns {{records: Array, errors: Array}}
+ */
+function ParseInfo(infoFile) {
+	var buffer = [], records = [], errors = [], infoLine, header, flgHeader = false, line = 0;
+	infoFile.open("r");
+	while (!infoFile.eof) {
+		infoLine = infoFile.readln(); line++;
+		if (infoLine.replace(/^\s+|\s+$/g, "") == "") continue; // Ignore blank lines
+		if (infoLine.slice(0,1) == "\u0023") continue; // Ignore lines prefixed with '#'
+		infoLine = infoLine.split(/ *\t */);
+		if (!flgHeader) { header = infoLine; flgHeader = true; continue }; // Header
+		if (infoLine[0].slice(0,1) == "\u0040") { // '@"filename"': include 'filename'
+			var includeFile = File(infoLine[0].slice(1)
+				.replace(/^\s+|\s+$/g, "") // Remove whitespace
+				.replace(/^['"]+|['"]+$/g, "")); // Remove quotes
+			if (includeFile.exists) {
+				buffer = ParseInfo(includeFile);
+				records = records.concat(buffer.records);
+			};
+		} else {
+			if (!infoLine[0] || !infoLine[2]) errors.push("Line " + line + ": Missing font name.");
+			if (!infoLine[1] || !infoLine[3]) errors.push("Line " + line + ": Missing font style.");
+			if (app.fonts.item(infoLine[2] + "\t" + infoLine[3]).status !== FontStatus.INSTALLED)
+				errors.push("Line " + line + ": Font '" + (infoLine[2] + " " + infoLine[3]).replace(/\t/g, " ") +
+					"' is not installed.");
+			if (errors.length == 0) records.push([
+				infoLine[0] + "\t" + infoLine[1],
+				infoLine[2] + "\t" + infoLine[3]
+			]);
+		};
+	};
+	infoFile.close(); infoLine = "";
+	return { records: records, errors: errors };
+};
+
+/**
+ * Finds the first occurence of a file, looking in the current folder, on the desktop, or next to the script.
+ * @param {string} fn - Filename
+ * @returns {File} - File object
+ */
+function FindFile(fn) {
 	var file = "";
 	var script = (function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } })();
 	if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + fn)) && file.exists) return file;
@@ -85,39 +110,45 @@ function TSVFile(fn) {
 	if ((file = File(Folder.desktop + "/" + fn)) && file.exists) return file;
 	if ((file = File(script.path + "/" + fn)) && file.exists) return file;
 	if ((file = File(script.path + "/../" + fn)) && file.exists) return file;
-}
+};
 
-// Inspired by this scrollable alert by Peter Kahrel:
-// http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
-function Report(msg, title, /*bool*/filter, /*bool*/compact) {
-	if (msg instanceof Array) msg = msg.join("\n"); msg = msg.split(/\r|\n/g);
-	if (compact && msg.length > 1) {
-		msg = msg.sort();
-		for (var i = 1, l = msg[0]; i < msg.length; l = msg[i], i++)
-			if (l == msg[i] || msg[i] == "") { msg.splice(i, 1); i-- };
+/**
+ * Simple scrollable alert inspired by this snippet by Peter Kahrel:
+ * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
+ * @param {string|string[]} message - Message to be displayed (string or array)
+ * @param {string} title - Dialog title
+ * @param {boolean} [showFilter] - Shows a filtering field; wildcards: '?' (any char), space and '*' (AND), '|' (OR)
+ * @param {boolean} [showCompact] - Sorts message and removes duplicates
+ */
+function Report(message, title, showFilter, showCompact) {
+	if (message instanceof Array) message = message.join("\n"); message = message.split(/\r|\n/g);
+	if (showCompact && message.length > 1) {
+		message = message.sort();
+		for (var i = 1, l = message[0]; i < message.length; l = message[i], i++)
+			if (l == message[i] || message[i] == "") { message.splice(i, 1); i-- };
 	};
 	var w = new Window('dialog', title);
-	if (filter && msg.length > 1) var search = w.add('edittext { characters: 40, \
-		helpTip: "Special operators: \'?\' (any character), space and \'*\' (and), \'|\' (or)" }');
-	var list = w.add('edittext', undefined, msg.join("\n"), { multiline: true, scrolling: true, readonly: true });
+	if (showFilter && message.length > 1) var search = w.add('edittext { characters: 40, \
+		helpTip: "Wildcards: \'?\' (any character), space and \'*\' (AND), \'|\' (OR)" }');
+	var list = w.add('edittext', undefined, message.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = (function() {
-		for (var i = 0, width = 50; i < msg.length;
-		width = Math.max(width, msg[i].toString().length), i++);
+		for (var i = 0, width = 50; i < message.length;
+		width = Math.max(width, message[i].toString().length), i++);
 		return width;
 	})();
 	list.minimumSize.width = 600, list.maximumSize.width = 1024;
 	list.minimumSize.height = 100, list.maximumSize.height = 1024;
 	w.ok.active = true;
-	if (filter && msg.length > 1) {
+	if (search) {
 		search.onChanging = function() {
-			if (this.text == "") { list.text = msg.join("\n"); w.text = title; return };
+			if (this.text == "") { list.text = message.join("\n"); w.text = title; return };
 			var str = this.text.replace(/[.\[\]{+}]/g, "\\$&"); // Pass through '^*()|?'
 			str = str.replace(/\?/g, "."); // '?' -> any character
 			if (/[ *]/g.test(str)) str = "(" + str.replace(/ +|\*/g, ").*(") + ")"; // space or '*' -> AND
 			str = RegExp(str, "gi");
-			for (var i = 0, result = []; i < msg.length; i++) {
-				var line = msg[i].toString().replace(/^\s+?/g, "");
+			for (var i = 0, result = []; i < message.length; i++) {
+				var line = message[i].toString().replace(/^\s+?/g, "");
 				if (str.test(line)) result.push(line.replace(/\r|\n/g, "\u00b6").replace(/\t/g, "\\t"));
 			};
 			w.text = str + " | " + result.length + " record" + (result.length == 1 ? "" : "s");
