@@ -1,4 +1,9 @@
-function GetScriptsFolder() {
+// Detects the user scripts folder
+const scriptsFolder = (function() {
 	for (var i = 0, f = $.includePath.split(";"); i < f.length; i++)
-		if (/InDesign\/Version.+Scripts$/.test(f[i])) return f[i];
-}
+	if (/Scripts Panel$/.test(localize(f[i]))) return f[i] + "/" })();
+
+// @includepath scriptsFolder;
+// @include 'path/to/script.jsxinc';
+// or
+// $.evalFile(File(scriptsFolder + 'path/to/script.jsxinc'));
