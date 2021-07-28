@@ -1,7 +1,7 @@
 /**
  * Finds the first occurence of a file, looking in the current folder, on the desktop, or next to the script.
  * @param {string} filename - Filename
- * @param {boolean} skipLocal - Don't search in current folder
+ * @param {boolean} [skipLocal] - Don't search in current folder
  * @returns {File} - File object
  */
 function FindFile(filename, skipLocal) {

@@ -175,8 +175,8 @@ function GetUIColor(color) {
 };
 
 /**
- * Parses a TSV file, returning an object containing found records and errors.
- * Ignores blank lines and those prefixed with '#'; '@"file.txt"' includes records from 'file.txt'.
+ * Parses a TSV file, returning an object containing found records and errors. Ignores blank lines and those prefixed
+ * with '#'; '@path/to/file.txt' includes records from 'file.txt', '@default' includes the default info file.
  * @param {File} infoFile - Tab-separated-values object file
  * @returns {{records: Array, errors: Array}}
  */
