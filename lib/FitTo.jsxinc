@@ -6,16 +6,16 @@
 	'Forced' means it just reframes the object without any checks.
 
 	It's called internally by the other "FitTo" scripts, with the following arguments:
-	[0] SCOPE: "page" | "spread" (default "page")
-	[1] TARGET: "size" | "margins" | "visible" | "bleed" (default "size")
-	[2] FORCED: true | false (optional, default "false")
+	1st: SCOPE: "page" | "spread" (default "page")
+	2nd: TARGET: "size" | "margins" | "visible" | "bleed" (default "size")
+	3rd: FORCED: true | false (optional, default "false")
 
 	Example for fit to page size:
-		app.doScript(
-			FitTo, ScriptLanguage.javascript,
-			[ "page", "size" ],
-			UndoModes.ENTIRE_SCRIPT, "Fit to page"
-		);
+	app.doScript(
+		FitTo, ScriptLanguage.javascript,
+		[ "page", "size" ],
+		UndoModes.ENTIRE_SCRIPT, "Fit to page"
+	);
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
