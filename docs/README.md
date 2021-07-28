@@ -194,7 +194,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 * **`DefaultSwatches.jsx`** adds a set of swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
 
   Name | Color Model | Color Space | Values | Variants
-  :- | :- | :- | :- | :-
+  :- | :-: | :-: | :- | :-
   Rich Black | process | cmyk | 60 40 40 100
   RGB Grey | process | rgb | 128 128 128
   Cut | spot | cmyk | 0 100 0 0 | couper, diecut
@@ -226,7 +226,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`DocCleanup.jsx`** runs **`DefaultPrefs.jsx`**, cleans up unused swatches, layers and pages, unlocks all items, deletes hidden items, resets scaling to 100%, converts empty text frames to simple frames, sets tight pasteboard margins.
 
-**Note:** The TSV files can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored. You can include records from another file by inserting **`@path/to/file.txt`** in the desired position.
+**Note:** The TSV files can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored. You can include another file by inserting **`@path/to/file.txt`** in the desired position (the default file can be referenced with **`@default`**).
 
 ---
 

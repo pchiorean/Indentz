@@ -194,7 +194,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 * **`DefaultSwatches.jsx`** creează un set de culori definite într‑un fișier TSV numit [**`swatches.txt`**](../swatches.txt):
 
   Name | Color Model | Color Space | Values | Variants
-  :- | :- | :- | :- | :-
+  :- | :-: | :-: | :- | :-
   Rich Black | process | cmyk | 60 40 40 100
   RGB Grey | process | rgb | 128 128 128
   Cut | spot | cmyk | 0 100 0 0 | couper, diecut
@@ -225,7 +225,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`DocCleanup.jsx`** rulează **`DefaultPrefs.jsx`**, șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%, convertește chenarele goale de text în chenare simple, compactează pasteboardul.
 
-**Notă:** Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include înregistrări dintr‑un alt fișier inserând **`@path/to/file.txt`** în poziția dorită.
+**Notă:** Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită (fișierul implicit poate fi referit prin **`@default`**).
 
 ---
 
