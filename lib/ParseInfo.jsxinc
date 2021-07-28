@@ -1,0 +1,36 @@
+// var data = ParseInfo(infoFile);
+// if (data.errors.length > 0) { Report(data.errors, decodeURI(infoFile.getRelativeURI(doc.filePath))); exit() };
+// if (data.records.length == 0) exit();
+
+/**
+ * Parses a TSV file, returning an object containing found records and errors.
+ * Ignores blank lines and those prefixed with '#'; '@"file.txt"' includes records from 'file.txt'.
+ * @param {File} infoFile - Tab-separated-values file object
+ * @returns {{records: Array, errors: Array}}
+ */
+function ParseInfo(infoFile) {
+	var buffer = [], records = [], errors = [], infoLine, header, flgHeader = false, line = 0;
+	infoFile.open("r");
+	while (!infoFile.eof) {
+		infoLine = infoFile.readln(); line++;
+		if (infoLine.replace(/^\s+|\s+$/g, "") == "") continue; // Ignore blank lines
+		if (infoLine.slice(0,1) == "\u0023") continue; // Ignore lines prefixed with '#'
+		infoLine = infoLine.split(/ *\t */);
+		if (!flgHeader) { header = infoLine; flgHeader = true; continue }; // Header
+		if (infoLine[0].slice(0,1) == "\u0040") { // '@"filename"': include 'filename'
+			var includeFile = File(infoLine[0].slice(1)
+				.replace(/^\s+|\s+$/g, "") // Remove whitespace
+				.replace(/^['"]+|['"]+$/g, "")); // Remove quotes
+			if (includeFile.exists) {
+				buffer = ParseInfo(includeFile);
+				records = records.concat(buffer.records);
+			};
+		} else {
+			// Some data validation and defaults here
+			// if (!infoLine[x]) errors.push("Some error");
+			if (errors.length == 0) records.push(infoLine);
+		};
+	};
+	infoFile.close(); infoLine = "";
+	return { records: records, errors: errors };
+};
