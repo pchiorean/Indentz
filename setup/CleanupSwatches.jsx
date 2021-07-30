@@ -1,5 +1,5 @@
 /*
-	Cleanup swatches v1.4.1 (2021-05-26)
+	Cleanup swatches v1.5 (2021-07-29)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused.
@@ -7,15 +7,19 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-// app.doScript(RGB2CMYK, ScriptLanguage.javascript, doc,
-// 	UndoModes.ENTIRE_SCRIPT, "Convert RGB process colors to CMYK");
-// app.doScript(NormalizeCMYK, ScriptLanguage.javascript, doc,
-// 	UndoModes.ENTIRE_SCRIPT, "Normalize similar CMYK swatches");
-// app.doScript(DeleteUnused, ScriptLanguage.javascript, doc,
-// 	UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
-RGB2CMYK(doc);
-NormalizeCMYK(doc);
-DeleteUnused(doc);
+app.doScript(AddUnnamedColors, ScriptLanguage.javascript, doc,
+	UndoModes.ENTIRE_SCRIPT, "Add Unnamed Colors");
+app.doScript(RGB2CMYK, ScriptLanguage.javascript, doc,
+	UndoModes.ENTIRE_SCRIPT, "Convert RGB process colors to CMYK");
+app.doScript(NormalizeCMYK, ScriptLanguage.javascript, doc,
+	UndoModes.ENTIRE_SCRIPT, "Normalize similar CMYK swatches");
+app.doScript(DeleteUnused, ScriptLanguage.javascript, doc,
+	UndoModes.ENTIRE_SCRIPT, "Delete unused swatches");
+
+// Add Unnamed Colors
+function AddUnnamedColors() {
+	if ((menu = app.menuActions.item("$ID/Add Unnamed Colors")).enabled) menu.invoke();
+}
 
 // Modified from ConvertRGBtoCMYK.jsx by Dave Saunders
 // https://community.adobe.com/t5/indesign/rgb-to-cmyk-script/m-p/10050289
@@ -60,7 +64,7 @@ function NormalizeCMYK(doc, swa, a, r, o, t, k, i) {
 	}
 }
 
-function DeleteUnused(doc, swa, i) {
+function DeleteUnused(doc, swa, c) {
 	swa = doc.unusedSwatches;
-	for (i = 0; i < swa.length; i++) if (swa[i].name != "") swa[i].remove();
+	while (c = swa.shift()) if (c.name != "") c.remove();
 }
