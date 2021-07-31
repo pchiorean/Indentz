@@ -1,5 +1,5 @@
 ﻿if (!(doc = app.activeDocument)) exit();
-var script = (function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } })();
+var script = function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } }();
 
 // Set preferences
 app.doScript(File(script.path + "/DefaultPrefs.jsx"),
