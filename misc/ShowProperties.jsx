@@ -88,11 +88,11 @@ function Report(message, title, showFilter, showCompact) {
 		helpTip: "Wildcards: \'?\' (any character), space and \'*\' (AND), \'|\' (OR)" }');
 	var list = w.add('edittext', undefined, message.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
-	list.characters = (function() {
+	list.characters = function() {
 		for (var i = 0, width = 50; i < message.length;
 		width = Math.max(width, message[i].toString().length), i++);
 		return width;
-	})();
+	}();
 	list.minimumSize.width = 600, list.maximumSize.width = 1024;
 	list.minimumSize.height = 100, list.maximumSize.height = 1024;
 	w.ok.active = true;
