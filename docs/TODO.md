@@ -1,6 +1,5 @@
 # TO DO
 
-- [x] `add` Add `@include` support when parsing TSVs [#137](https://github.com/pchiorean/Indentz/issues/137)
 - [ ] `upd` Ignore columns starting with '#' when parsing TSVs
 - [ ] `upd` Make a custom object style for 'Visible area' frame [#123](https://github.com/pchiorean/Indentz/issues/123)
 - [ ] `add` `Report()`: Add button to save errors to file
@@ -13,7 +12,6 @@
 - [ ] `add` Ask to delete empty frames
 - [ ] `add` Remove unused masters
 - [ ] `add` Remove unused styles and groups [#](https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331)
-- [x] `fix` Adjust pasteboard for very large pages
 - [ ] `fix` Fix 'sticky' unused swatches
 
 ### FitTo
@@ -52,12 +50,14 @@
 
 ---
 
-Legend:
-- `add` - new features
-- `upd` - changes in existing functionality
-- `ref` - code changes that neither fixes a bug or adds a feature
-- `sty` - everything related to styling/formatting
-- `del` - removed features
-- `fix` - bug fixes
-- `doc` - changes in documentation
-- `new` - first release
+###### Legend:
+
+`add` - new features\
+`upd` - changes in existing functionality\
+`brk` - changes in existing functionality that break compatibility\
+`ref` - code changes that neither fixes a bug or adds a feature\
+`sty` - everything related to styling/formatting\
+`del` - removed features\
+`fix` - bug fixes\
+`doc` - changes in documentation\
+`new` - first release
