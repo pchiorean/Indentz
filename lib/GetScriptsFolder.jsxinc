@@ -1,7 +1,7 @@
 // Detects the user scripts folder
-const scriptsFolder = (function() {
+const scriptsFolder = function() {
 	for (var i = 0, f = $.includePath.split(";"); i < f.length; i++)
-	if (/Scripts Panel$/.test(localize(f[i]))) return f[i] + "/" })();
+	if (/Scripts Panel$/.test(localize(f[i]))) return f[i] + "/" }();
 
 // @includepath scriptsFolder;
 // @include 'path/to/script.jsxinc';
