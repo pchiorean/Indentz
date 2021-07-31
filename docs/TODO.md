@@ -1,9 +1,10 @@
 # TO DO
 
-- [ ] `upd` Ignore columns starting with '#' when parsing TSVs
+- [ ] `upd` Ignore columns starting with `#` when parsing TSVs
 - [ ] `upd` Make a custom object style for 'Visible area' frame [#123](https://github.com/pchiorean/Indentz/issues/123)
 - [ ] `add` `Report()`: Add button to save errors to file
-- [ ] `ref` Use `slice()` instead of `substring()`/`substr()` [ref](https://masteringjs.io/tutorials/fundamentals/substring)
+- [x] `ref` Refactor deprecated `substr()` to `slice()` [ref](https://masteringjs.io/tutorials/fundamentals/substring)
+- [ ] `fix` Check for converted documents
 
 ### DefaultSwatches
 - [ ] `fix` Check values on parsing
@@ -27,14 +28,39 @@
 
 ### QuickExport
 - [ ] `add` Include subfolders
+    <details>
+    <summary>Sample code</summary>
+
+    ```jsx
+    var files, folder = Folder.selectDialog("Select a folder with InDesign documents");
+    if (folder != null) {
+        files = GetFiles(folder);
+        if (files.length > 0) alert("Found " + files.length + " InDesign documents")
+        else alert("Found no InDesign documents");
+    }
+
+    function GetFiles(theFolder) {
+        var files = [],
+            fileList = theFolder.getFiles(),
+            i, file;
+        for (i = 0; i < fileList.length; i++) {
+            file = fileList[i];
+            if (file instanceof Folder) files = files.concat(GetFiles(file));
+            else if (file instanceof File && file.name.match(/\.indd$/i)) files.push(file);
+        }
+        return files;
+    }
+    ```
+
+    </details>
 - [ ] `add` History for dropdowns
-- [ ] `add` JPG & ?TIFF export profiles
+- [ ] `add` JPG & `?`TIFF export profiles
 - [ ] `add` `?` 'View PDF after exporting' checkbox, alert if > 20 files
-- [ ] `upd` `?` JSONify preferences (see 'hardwareConfig.json')
+- [ ] `upd` `?` JSONify preferences (see `hardwareConfig.json`)
 
 ### QR, QRBatch
 - [ ] `fix` Align to page > visible area > margins
-- [ ] `fix` Remove 'preview' & 'print' from filenames
+- [ ] `fix` Remove `preview` & `print` from filenames
 - [ ] `fix` Improve line breaking
 
 ### SpreadsToFiles
