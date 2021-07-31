@@ -12,7 +12,7 @@ if (!(doc = app.activeDocument)) exit();
 var sel = doc.selection, bakSel = sel;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
 	alert("Select an object and try again."); exit();
-}
+};
 app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Scale to page");
 
@@ -21,9 +21,9 @@ function main() {
 	// Get selection's parent page
 	var page;
 	for (var i = 0; i < sel.length; i++) {
-		if (sel[i].parentPage != null) { page = doc.pages[sel[i].parentPage.documentOffset]; break }
-	}
-	if (page == null) { alert("Select an object on page and try again."); exit() }
+		if (sel[i].parentPage != null) { page = doc.pages[sel[i].parentPage.documentOffset]; break };
+	};
+	if (page == null) { alert("Select an object on page and try again."); exit() };
 	// Remember layers for grouping/ungrouping
 	var oldURL = app.generalPreferences.ungroupRemembersLayers;
 	var oldPRL = app.clipboardPreferences.pasteRemembersLayers;
@@ -53,4 +53,4 @@ function main() {
 	// Restore layer grouping settings
 	app.generalPreferences.ungroupRemembersLayers = oldURL;
 	app.clipboardPreferences.pasteRemembersLayers = oldPRL;
-}
+};
