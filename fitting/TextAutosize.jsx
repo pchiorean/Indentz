@@ -40,7 +40,7 @@ function main(sel) {
 	if (sel[0].hasOwnProperty("parentTextFrames")) var sel = sel[0].parentTextFrames;
 	for (var i = 0; i < sel.length; i++)
 		if (sel[i].constructor.name == "TextFrame") FitFrame2Text(sel[i]);
-}
+};
 
 function FitFrame2Text(frame) {
 	const ASR = AutoSizingReferenceEnum;
@@ -73,20 +73,20 @@ function FitFrame2Text(frame) {
 			align = (frame.parentPage.side == PageSideOptions.LEFT_HAND) ? "left" : "right"; break;
 		case Justification.TO_BINDING_SIDE:
 			align = (frame.parentPage.side == PageSideOptions.LEFT_HAND) ? "right" : "left"; break;
-	}
+	};
 	// Tighten frame
 	switch (frameVJ) {
 		case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT; break;
 		case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
 		case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
-	}
+	};
 	if (frameVJ != VJ.JUSTIFY_ALIGN) framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
 	// Fix first baseline offset
 	switch (align) {
 		case "center": framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
 		case "left": framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break;
 		case "right": framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break;
-	}
+	};
 	framePrefs.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
 	framePrefs.useNoLineBreaksForAutoSizing = true;
 	// Set alignment
@@ -97,7 +97,7 @@ function FitFrame2Text(frame) {
 				case VJ.JUSTIFY_ALIGN:
 				case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.LEFT_CENTER_POINT; break;
 				case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break;
-			}
+			};
 			break;
 		case "center":
 			switch (frameVJ) {
@@ -105,7 +105,7 @@ function FitFrame2Text(frame) {
 				case VJ.JUSTIFY_ALIGN:
 				case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
 				case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
-			}
+			};
 			break;
 		case "right":
 			switch (frameVJ) {
@@ -113,11 +113,11 @@ function FitFrame2Text(frame) {
 				case VJ.JUSTIFY_ALIGN:
 				case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.RIGHT_CENTER_POINT; break;
 				case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break;
-			}
+			};
 			break;
-	}
+	};
 	// Set frame auto-sizing
-	if (frameVJ == VJ.JUSTIFY_ALIGN) { framePrefs.autoSizingType = AutoSizingTypeEnum.WIDTH_ONLY; return }
+	if (frameVJ == VJ.JUSTIFY_ALIGN) { framePrefs.autoSizingType = AutoSizingTypeEnum.WIDTH_ONLY; return };
 	if (frame.lines.length > 1) {
 		framePrefs.autoSizingType = (oldAST == AutoSizingTypeEnum.OFF) ?
 		AutoSizingTypeEnum.HEIGHT_ONLY :
@@ -125,4 +125,4 @@ function FitFrame2Text(frame) {
 		(framePrefs.autoSizingReferencePoint != oldASRP ?
 			AutoSizingTypeEnum.HEIGHT_ONLY : AutoSizingTypeEnum.HEIGHT_AND_WIDTH)
 	} else framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
-}
+};
