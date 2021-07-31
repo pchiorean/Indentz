@@ -1,5 +1,5 @@
 /*
-	Quick export v2.9.4 (2021-07-28)
+	Quick export v2.9.5 (2021-07-31)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -30,7 +30,7 @@
 var folderMode = (app.documents.length == 0);
 var script = function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } }();
 var settings, settingsFile = File(Folder.userData + "/" +
-	script.name.substr(0, script.name.lastIndexOf(".")) + ".prefs");
+	script.name.slice(0, script.name.lastIndexOf(".")) + ".prefs");
 var presets = app.pdfExportPresets.everyItem().name.sort();
 var old = {
 	measurementUnit: app.scriptPreferences.measurementUnit,
@@ -206,8 +206,7 @@ ui.preset1.script.browse.onClick = function() {
 ui.preset1.preset.onChange = function() {
 	// Auto-set suffix
 	var str = this.selection.text;
-	if (/_/g.test(str)) ui.preset1.suffix.text = str.substr(str.lastIndexOf("_"))
-	else ui.preset1.suffix.text = "";
+	ui.preset1.suffix.text = /_/g.test(str) && str.slice(str.lastIndexOf("_")) || "";
 	// Populate preset options
 	var preset = app.pdfExportPresets.item(str);
 	ui.preset1.exportSpreads.value = preset.exportReaderSpreads;
@@ -261,8 +260,7 @@ ui.preset2.script.browse.onClick = function() {
 ui.preset2.preset.onChange = function() {
 	// Auto-set suffix
 	var str = this.selection.text;
-	if (/_/g.test(str)) ui.preset2.suffix.text = str.substr(str.lastIndexOf("_"))
-	else ui.preset2.suffix.text = "";
+	ui.preset2.suffix.text = /_/g.test(str) && str.slice(str.lastIndexOf("_")) || "";
 	// Populate preset options
 	var preset = app.pdfExportPresets.item(str);
 	ui.preset2.exportSpreads.value = preset.exportReaderSpreads;
@@ -388,7 +386,7 @@ while (doc = docs.shift()) {
 		};
 		// Run script
 		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) {
-			var ext = decodeURI(exp.script.path.fsName).substr(decodeURI(exp.script.path.fsName).lastIndexOf(".") + 1);
+			var ext = decodeURI(exp.script.path.fsName).slice(decodeURI(exp.script.path.fsName).lastIndexOf(".") + 1);
 			var scriptLanguage = function(ext) {
 				if (WIN) {
 					return {
@@ -474,7 +472,7 @@ function ExportPDF(fn, preset, range) {
 	doc.exportFile(ExportFormat.PDF_TYPE, File(fn), false);
 };
 
-function TruncatePath(/*string*/path, maxLength) {
+function TruncatePath(/*string*/path, /*number*/maxLength) {
 	if (path.length > maxLength + 3) path = "..." + path.slice(- maxLength + 3);
 	return path;
 };

@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.6 (2021-07-28)
+	Batch QR codes v2.6.1 (2021-07-31)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -115,8 +115,8 @@ function main() {
 					if (infoLine[0] != "") {
 						if (forbiddenFilenameChars.test(infoLine[0])) {
 							errors.push("Line " + line + ": Forbidden characters in the filename.") };
-						infoLine[0] = (infoLine[0].lastIndexOf(".") == -1) ? infoLine[0] :
-							infoLine[0].substr(0, infoLine[0].lastIndexOf("."));
+						infoLine[0] = /\./g.test(infoLine[0]) &&
+							infoLine[0].slice(0, infoLine[0].lastIndexOf(".")) || infoLine[0];
 						if (!!infoLine[2] && !File(currentPath + "/" + infoLine[0] + ".indd").exists) {
 							errors.push("Line " + line + ": File '" + infoLine[0] + ".indd' not found.") };
 						if (!infoLine[1]) { errors.push("Line " + line + ": Missing code.") };
@@ -381,7 +381,7 @@ function MakeQROnFile(fn, code) {
 	// Export PDF
 	var targetFolder = Folder(currentPath + "/QR Codes");
 	targetFolder.create();
-	var baseName = fn.substr(0, fn.lastIndexOf("."));
+	var baseName = /\./g.test(fn) && fn.slice(0, fn.lastIndexOf(".")) || fn;
 	var ancillaryFile = File(targetFolder + "/" + baseName + ".indd");
 	var pdfFile = File(targetFolder + "/" + baseName + ".pdf");
 	if (ancillaryFile.exists) ancillaryFile.remove();

@@ -1,5 +1,5 @@
 /*
-	QR code v3.5.3 (2021-07-28)
+	QR code v3.5.4 (2021-07-31)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -46,8 +46,8 @@ function main() {
 	ui.actions = ui.add('group { alignChildren: [ "fill", "top" ], orientation: "column" }');
 		ui.ondoc = ui.actions.add('button { helpTip: "Bottom-left corner of each page", text: "On doc", properties: { name: "ok" } }');
 		ui.onfile = ui.actions.add('button { text: "Separate" }');
-		ui.onfile.helpTip = !!currentPath ?
-			"'QR Codes/" + doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR.indd'" :
+		ui.onfile.helpTip = !!currentPath ? "QR Codes/" +
+			(/\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf(".")) || doc.name) + "_QR.indd" :
 			"Where? Document is not saved";
 		ui.actions.add('button { text: "Cancel", properties: { name: "cancel" } }');
 		ui.onfile.enabled = !!currentPath;
@@ -218,7 +218,7 @@ function MakeQROnFile(code) {
 	// Export PDF
 	var targetFolder = Folder(currentPath + "/QR Codes");
 	targetFolder.create();
-	var baseName = doc.name.substr(0, doc.name.lastIndexOf(".")) + "_QR";
+	var baseName = /\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf(".")) || doc.name + "_QR";
 	var ancillaryFile = File(targetFolder + "/" + baseName + ".indd");
 	var pdfFile = File(targetFolder + "/" + baseName + ".pdf");
 	if (ancillaryFile.exists) ancillaryFile.remove();

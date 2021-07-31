@@ -1,5 +1,5 @@
 /*
-	SpreadsToFiles v1.7.5 (2021-07-02)
+	SpreadsToFiles v1.7.6 (2021-07-31)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
@@ -32,11 +32,11 @@ if (doc.spreads.length == 1) { alert("Document has only one spread."); exit() };
 
 var oldUIL = app.scriptPreferences.userInteractionLevel;
 
-var dPath = doc.filePath;
-var dName = doc.name.substr(0, doc.name.lastIndexOf("."));
+var currentPath = doc.filePath;
+var baseName = /\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf(".")) || doc.name;
 // Default suffix
-var defaultSufx = "-123456789abcdefghijklmnopqrstuvwxyz".substr(0, doc.spreads.length + 1);
-var detectedSufx = RegExp("[ ._-][a-zA-Z0-9]{" + doc.spreads.length + "}$", "i").exec(dName);
+var defaultSufx = "-123456789abcdefghijklmnopqrstuvwxyz".slice(0, doc.spreads.length + 1);
+var detectedSufx = RegExp("[ ._-][a-zA-Z0-9]{" + doc.spreads.length + "}$", "i").exec(baseName);
 if (/\d\s*x\s*\d/i.test(detectedSufx)) detectedSufx = null; // Exclude '0x0' suffixes
 // Only ask for a suffix if not autodetected
 var sufx = detectedSufx ? String(detectedSufx) : GetSuffix();
@@ -47,24 +47,24 @@ for (var i = 0; i < doc.spreads.length; i++) {
 	// Filter out current spread
 	for (var r = [], j = 0; j < doc.spreads.length; j++) if (j != i) r.push(j);
 	// Disable user interaction and open a copy
-	if (sufx == detectedSufx) dName = dName.replace(detectedSufx, "");
+	if (sufx == detectedSufx) baseName = baseName.replace(detectedSufx, "");
 	var inc = 0;
-	do { var dFile = File(dPath + "/" + dName + sufx[0] + sufx[i + 1]
+	do { var targetFile = File(currentPath + "/" + baseName + sufx[0] + sufx[i+1]
 		+ (inc > 1 ? " copy " + inc : (inc == 0 ? "" : " copy"))
 		+ ".indd");
 		inc++;
-	} while (dFile.exists);
-	progressBar.update(i + 1);
-	doc.saveACopy(dFile);
+	} while (targetFile.exists);
+	progressBar.update(i+1);
+	doc.saveACopy(targetFile);
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
-	var dCopy = app.open(dFile, false);
+	var target = app.open(targetFile, false);
 	app.scriptPreferences.userInteractionLevel = oldUIL;
 	// Remove other spreads from copy
-	for (var j = r.length - 1; j >= 0; j--) dCopy.spreads[r[j]].remove();
-	dCopy.save(dFile); dCopy.close();
+	for (var j = r.length - 1; j >= 0; j--) target.spreads[r[j]].remove();
+	target.save(targetFile); target.close();
 };
 progressBar.close();
-doc.close();
+doc.close(SaveOptions.ASK);
 
 
 function GetSuffix(sufx) {

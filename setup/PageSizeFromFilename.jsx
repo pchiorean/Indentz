@@ -1,5 +1,5 @@
 /*
-	Page size from filename v2.1 (2021-05-18)
+	Page size from filename v2.1.1 (2021-07-31)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets every page size and margins according to the filename.
@@ -58,23 +58,23 @@ function main() {
 	var pgSize, mgSize, margins, isSpread = false;
 
 	// Look for '_000[.0] [mm] x 000[.0] [mm]' pairs. If none are found, try to match common 'A' sizes
-	var dName = doc.name.substr(0, doc.name.lastIndexOf("."));
+	var baseName = /\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf(".")) || doc.name;
 	var pairsRE = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig;
-	var dimensions = dName.match(pairsRE);
+	var dimensions = baseName.match(pairsRE);
 	// 1. [_-] -- '_' or '-' separator between pairs
 	// 2. \d+([.,]\d+)?([cm]m)? -- group 1: digits, optional decimals, optional cm/mm
 	// 3. x -- 'x' separator between groups
 	// 4. \d+([.,]\d+)?(cm|mm)? -- group 2
 	// 5. (?!x)(?!\d) -- discard if more groups (to avoid 000x00x00 et al)
 	// Bleed: look for '_00 [mm]' after '0 [mm]'
-	var bleed = /\d\s*(?:[cm]m)?[_+](\d{1,2})\s*(?:[cm]m)/i.exec(dName);
+	var bleed = /\d\s*(?:[cm]m)?[_+](\d{1,2})\s*(?:[cm]m)/i.exec(baseName);
 	// 1. \d(?:[cm]m)? -- 1 digit followed by optional mm/cm (non-capturing group)
 	// 2. [_+] -- '_' or '+' separator
 	// 3. (\d{1,2}) -- 1 or 2 digits (capturing group #1)
 	// 4. (?:[cm]m) -- mandatory mm/cm (non-capturing group)
 	if (dimensions == null) {
 		var ISO216SubsetRE = /A[1-7]\b/;
-		var dimensions = dName.match(ISO216SubsetRE);
+		var dimensions = baseName.match(ISO216SubsetRE);
 		if (dimensions == null) exit();
 		switch (dimensions[0]) {
 			case "A1": pgSize = { width: 594, height: 841 }; break;

@@ -10,7 +10,7 @@
 
 function dbg() {
 	var script = function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } }();
-	var debugFile = File(Folder.desktop + "/" + script.name.substr(0, script.name.lastIndexOf(".")) + ".log");
+	var debugFile = File(Folder.desktop + "/" + script.name.slice(0, script.name.lastIndexOf(".")) + ".log");
 	debugFile.open("a");
 	debugFile.encoding = "UTF-8";
 
@@ -37,7 +37,7 @@ function dbg() {
 		if (args[0].length == 1) {
 			type = args.shift();
 			switch(type.toLowerCase()) {
-				case "e": type = "[ERR]" ; break;
+				case "e": type =  "[ERR]"; break;
 				case "f": type = "[FAIL]"; break;
 				case "i": type = "[INFO]"; break;
 				case "m": type = "[MARK]"; break;
@@ -50,12 +50,12 @@ function dbg() {
 		if (!args[0]) args.shift();
 		if (/[\<\>\[\]]/g.test(args[0])) {
 			context = args.shift();
-			context = "[" + context.substr(1, context.length-2) + "]: ";
+			context = "[" + context.slice(1, context.length-1) + "]: ";
 		};
 		if (!args[0]) args.shift();
 		return "\n" + now + type + context + args.join(separator);
 	};
 
 	function pad  (number, chars) { return ("0000000000000000" + number.toString()).slice(-chars) };
-	function trunc(string, chars) { return ("                " + string.substr(0, chars)).slice(-chars) };
+	function trunc(string, chars) { return ("                " + string.slice(0, chars)).slice(-chars) };
 };
