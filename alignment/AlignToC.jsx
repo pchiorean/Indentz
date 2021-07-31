@@ -31,8 +31,8 @@ app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 app.scriptPreferences.enableRedraw = false;
 var sel = doc.selection, bakSel = sel, obj;
 if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
-	alert("Select an object and try again."); exit() }
-if (sel.length == 1 && sel[0].locked) { alert("This object is locked."); exit() }
+	alert("Select an object and try again."); exit() };
+if (sel.length == 1 && sel[0].locked) { alert("This object is locked."); exit() };
 
 app.doScript(main, ScriptLanguage.javascript, sel,
 	UndoModes.ENTIRE_SCRIPT, "Align to center");
@@ -45,7 +45,7 @@ function main(sel) {
 		setADB = AlignDistributeBounds.KEY_OBJECT;
 		Align(sel, doc.selectionKeyObject);
 		return;
-	}
+	};
 	// Remember layers for grouping/ungrouping
 	var oldURL = app.generalPreferences.ungroupRemembersLayers;
 	var oldPRL = app.clipboardPreferences.pasteRemembersLayers;
@@ -57,7 +57,7 @@ function main(sel) {
 		for (var i = 0; i < sel.length; i++) {
 			if (sel[i].locked) continue;
 			objects.push(sel[i]);
-		}
+		};
 		obj = doc.groups.add(objects);
 		obj.name = "<align group>";
 	} else obj = sel[0];
@@ -93,23 +93,23 @@ function main(sel) {
 							[ 0, -((page.bounds[2] - page.bounds[0]) -
 							(page.marginPreferences.top + page.marginPreferences.bottom)) * 0.1 / 2 ]);
 						break;
-				}
+				};
 				break;
 			case 3:
 				doc.align(obj, AlignOptions.HORIZONTAL_CENTERS, setADB, selKO);
 				doc.align(obj, AlignOptions.VERTICAL_CENTERS, setADB, selKO);
 				break;
-		}
-	}
+		};
+	};
 
 	function SelectOption() {
-		var title = (function(adb) { return {
+		var title = function(adb) { return {
 			'ITEM_BOUNDS': 'page',
 			'KEY_OBJECT': 'key object',
 			'MARGIN_BOUNDS': 'page margins',
 			'PAGE_BOUNDS': 'page',
 			'SPREAD_BOUNDS': 'spread' }[adb]
-		})(setADB);
+		}(setADB);
 		var w = new Window("dialog", "Center to " + title);
 		w.orientation = "row";
 		w.alignChildren = [ "center", "top" ];
@@ -131,5 +131,5 @@ function main(sel) {
 		if (w.show() == 2) return;
 		for (var i = 0; i < w.main.children.length; i++)
 			if (w.main.children[i].value == true) return i;
-	}
-}
+	};
+};
