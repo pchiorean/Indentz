@@ -78,7 +78,7 @@ Export | |
 
 * **`FilesToSpreads.jsx`** combină documentele deschise, sortate alfabetic.
 
-* **`SpreadsToFiles.jsx`** salvează spreadurile documentului activ în fișiere separate, cu un sufix configurabil.
+* **`SpreadsToFiles.jsx`** salvează fiecare spread al documentului activ într‑un fișier separat. Sufixul va fi autodetectat dacă numele documentului se termină cu un separator (spațiu, punct, linie de subliniere sau cratimă) urmat de o secvență de cifre sau litere egală cu numărul de spreaduri (de exemplu, un document `file_ABC.indd` cu trei spreaduri va fi separat în `file_A.indd`, `file_B.indd` și `file_C.indd`).
 
 ---
 
@@ -348,4 +348,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 28 iulie 2021
+README-ro.md • 1 august 2021

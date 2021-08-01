@@ -421,7 +421,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><strong><code>FilesToSpreads.jsx</code></strong> combines the open documents, sorted alphabetically.</p>
 </li>
 <li>
-<p><strong><code>SpreadsToFiles.jsx</code></strong> saves the spreads of the active document in separate files, with a user configurable suffix.</p>
+<p><strong><code>SpreadsToFiles.jsx</code></strong> saves each spread of the active document to a separate file. The suffix will be autodetected if the document name ends with a separator (space, dot, underscore or hyphen) followed by a sequence of digits or letters equal with the number of spreads (e.g., a document <code>file_ABC.indd</code> with three spreads will be split in <code>file_A.indd</code>, <code>file_B.indd</code> and <code>file_C.indd</code>).</p>
 </li>
 </ul>
 <hr>
@@ -1003,7 +1003,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>&#xA9; 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md &#x2022; July 28, 2021</p>
+<p>README.md &#x2022; August 1, 2021</p>
 
       </div>
       

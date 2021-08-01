@@ -78,7 +78,8 @@ Export | |
 
 * **`FilesToSpreads.jsx`** combines the open documents, sorted alphabetically.
 
-* **`SpreadsToFiles.jsx`** saves the spreads of the active document in separate files, with a user configurable suffix.
+
+* **`SpreadsToFiles.jsx`** saves each spread of the active document to a separate file. The suffix will be autodetected if the document name ends with a separator (space, dot, underscore or hyphen) followed by a sequence of digits or letters equal with the number of spreads (e.g., a document `file_ABC.indd` with three spreads will be split in `file_A.indd`, `file_B.indd` and `file_C.indd`).
 
 ---
 
@@ -349,4 +350,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • July 28, 2021
+README.md • August 1, 2021
