@@ -146,7 +146,7 @@ return {
 			lPg.bounds[3] + (fPg == lPg ?
 				(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) : bleed.right)
 		]
-	};
+	}
 };
 
 };
