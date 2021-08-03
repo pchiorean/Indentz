@@ -17,7 +17,7 @@
 			margins: [ ... ],
 			visible: [ ... ] or undefined,
 			bleed: [ ... ]
-		};
+		}
 	};
 
 	Released under MIT License:
