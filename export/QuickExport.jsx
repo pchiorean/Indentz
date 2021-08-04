@@ -1,5 +1,5 @@
 /*
-	Quick export v2.9.6 (2021-08-04)
+	Quick export v2.10 (2021-08-04)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -105,6 +105,8 @@ if (folderMode) {
 		ui.input.source = ui.input.add('group { margins: 0, orientation: "row", spacing: 10 }');
 			ui.input.source.folder = ui.input.source.add('edittext { preferredSize: [ 368, 24 ], properties: { readonly: true } }');
 			ui.input.source.browse = ui.input.source.add('button { preferredSize: [ 100, 24 ], text: "Browse" }');
+		ui.input.options = ui.input.add('group { margins: 0, orientation: "row", spacing: 10 }');
+			ui.input.options.subfolders = ui.input.options.add('checkbox { alignment: "bottom", text: "Include subfolders" }');
 };
 // -- Export options
 ui.presets = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10, text: "Export presets" }');
@@ -281,7 +283,7 @@ if (folderMode) {
 		if (!!newFolder) {
 			var f = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
 			ui.input.source.path = newFolder;
-			ui.input.source.folder.text = TruncatePath(f, 57);
+			ui.input.source.folder.text = TruncatePath(f, 52);
 			ui.input.source.folder.helpTip = f;
 			ui.actions.ok.enabled = (ui.preset1.isOn.value || ui.preset2.isOn.value) && !!ui.input.source.path;
 		};
@@ -296,7 +298,7 @@ ui.output.dest.browse.onClick = function() {
 	if (!!newFolder) {
 		var f = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
 		ui.output.dest.path = newFolder;
-		ui.output.dest.folder.text = TruncatePath(f, 52);
+		ui.output.dest.folder.text = TruncatePath(f, 48);
 		ui.output.dest.folder.helpTip = f;
 	};
 };
@@ -318,7 +320,10 @@ app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERAC
 // -- Get a sorted document list
 var name, names = [], doc, docs = [];
 if (folderMode) {
-	docs = ui.input.source.path.getFiles("*.indd").sort();
+	docs = ui.input.options.subfolders.value ?
+		GetFilesRecursively(ui.input.source.path).sort() :
+		ui.input.source.path.getFiles("*.indd").sort();
+	if (docs.length == 0) { alert("No InDesign documents found."); exit() };
 } else {
 	docs = app.documents.everyItem().getElements();
 	while (doc = docs.shift()) try { names.push(doc.fullName) } catch (e) { names.push(doc.name) }; names.sort();
@@ -453,6 +458,18 @@ if (errors.length > 0) Report(errors, "Errors", false, true);
 
 // Functions
 // --
+function GetFilesRecursively(folder) {
+	var files = [],
+		fileList = folder.getFiles(),
+		i, file;
+	for (var i = 0; i < fileList.length; i++) {
+		file = fileList[i];
+		if (file instanceof Folder) files = files.concat(GetFilesRecursively(file));
+		else if (file instanceof File && file.name.match(/\.indd$/i)) files.push(file);
+	};
+	return files;
+};
+
 function ExportPDF(fn, preset, range) {
 	for (var key in preset) try { app.pdfExportPreferences[key] = preset[key] } catch (e) {};
 	app.pdfExportPreferences.pageRange = range;
@@ -477,11 +494,6 @@ function ExportPDF(fn, preset, range) {
 			Math.min(app.pdfExportPreferences.bleedTop, UnitValue("72 pt").as("mm"));
 	};
 	doc.exportFile(ExportFormat.PDF_TYPE, File(fn), false);
-};
-
-function TruncatePath(/*string*/path, /*number*/maxLength) {
-	if (path.length > maxLength + 3) path = "..." + path.slice(- maxLength + 3);
-	return path;
 };
 
 function UniqueName(name) {
@@ -511,6 +523,11 @@ function UniqueName(name) {
 		};
 	};
 	return fn;
+};
+
+function TruncatePath(/*string*/path, /*number*/maxLength) {
+	if (path.length > maxLength + 1) path = "\u2026" + path.slice(- maxLength + 1); // ellipsis
+	return path;
 };
 
 function ZeroPad(number, digits) {
@@ -561,7 +578,7 @@ function ReadSettings() {
 	ui.output.dest.path = Folder(settings.output.dest.folder).exists ? Folder(settings.output.dest.folder) : "";
 	if (!!ui.output.dest.path) {
 		var f = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
-		ui.output.dest.folder.text = TruncatePath(f, 50);
+		ui.output.dest.folder.text = TruncatePath(f, 48);
 		ui.output.dest.folder.helpTip = f;
 	};
 	ui.output.dest.isOn.value = !!ui.output.dest.path && settings.output.dest.active;
@@ -570,7 +587,7 @@ function ReadSettings() {
 	ui.output.options.overwrite.value = false; // settings.output.options.overwrite;
 	ui.output.options.updateLinks.value = settings.output.options.updatelinks;
 	ui.output.options.docSave.value = settings.output.options.save;
-	ui.output.options.docClose.value = folderMode ? true : settings.output.options.close;
+	ui.output.options.docClose.value = settings.output.options.close;
 	ui.preset1.isOn.onClick();
 	ui.preset2.isOn.onClick();
 	ui.output.dest.isOn.onClick();
