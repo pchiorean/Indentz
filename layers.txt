@@ -5,7 +5,7 @@ visible area	Yellow	yes	yes	above	rahmen, safe area, sicht*, *vi?ib*, vis?*
 safety margins	Grid Green	yes	yes	above
 segmentation	Grid Green	yes	yes	above	split
 covered area	Red	yes	yes	above	covered area*
-dielines	Red	yes	yes	above	cut, cut*line*, decoupe, die, die*cut, stanz*
+dielines	Red	yes	yes	above	cut, cut*line*, decoupe, die, die*cut, mark, stanz*
 
 # Finishing
 varnish	Yellow	no	yes	above	uv
@@ -26,9 +26,9 @@ codes	Grid Green	no	yes	above	code*, bar*code*, EAN*
 price	Gold	no	yes	above	preis
 products	Blue	no	yes	above	device*, pack*, packshot*, product*, tin*
 new	Grid Green	no	yes	above
-ring	Fiesta	no	yes	above	bullseye
-artwork	Light Blue	no	yes	above	aw, element?, layout*
-bg	Red	no	yes	below	*background*, bgg, hg, hintergrund*
+ring	Fiesta	no	yes	above	bullseye, inner frame dot
+artwork	Light Blue	no	yes	above	aw, design, element?, layout*
+bg	Red	no	yes	below	back, *background*, bgg, hg, hintergrund*
 
 # Template
 template	Black	no	no	below	referinta
