@@ -1,6 +1,10 @@
+// This is just a template
+
+// @include "FindFile.jsxinc";
+//
 // var infoFile, infoFilename = "data.txt";
 // if (!(infoFile = FindFile(infoFilename))) { alert("File '" + infoFilename + "' not found."); exit() };
-
+//
 // var data = ParseInfo(infoFile);
 // if (data.errors.length > 0) { Report(data.errors, decodeURI(infoFile.getRelativeURI(doc.filePath))); exit() };
 // if (data.records.length == 0) exit();
@@ -22,7 +26,7 @@ function ParseInfo(infoFile) {
 		if (!flgHeader) { header = infoLine; flgHeader = true; continue }; // Header
 		if (infoLine[0].slice(0,1) == "\u0040") { // '@include'
 			var include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, "").replace(/^['"]+|['"]+$/g, "");
-			var includeFile = include.toLowerCase() == "default" ?
+			var includeFile = /^default(s?)$/i.test(include) ?
 				FindFile(infoFilename, true) : // '@default': include default info file
 				File(include); // '@path/to/file.txt': include 'file.txt'
 			if (includeFile.path == infoFile.path) continue; // Skip self
