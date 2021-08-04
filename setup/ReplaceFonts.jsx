@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 2.1 (2021-07-28)
+	Replace fonts 2.1.1 (2021-08-04)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named "fonts.txt":
@@ -77,7 +77,7 @@ function ParseInfo(infoFile) {
 		if (!flgHeader) { header = infoLine; flgHeader = true; continue }; // Header
 		if (infoLine[0].slice(0,1) == "\u0040") { // '@include'
 			var include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, "").replace(/^['"]+|['"]+$/g, "");
-			var includeFile = include.toLowerCase() == "default" ?
+			var includeFile = /^default(s?)$/i.test(include) ?
 				FindFile(infoFilename, true) : // '@default': include default info file
 				File(include); // '@path/to/file.txt': include 'file.txt'
 			if (includeFile.path == infoFile.path) continue; // Skip self
