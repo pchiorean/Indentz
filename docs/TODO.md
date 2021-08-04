@@ -1,9 +1,10 @@
 # TO DO
 
-- [ ] `upd` Ignore columns starting with `#` when parsing TSVs
+- [x] `upd` ParseInfo: `@default`/`@defaults`
+- [ ] `upd` ParseInfo: Use relative paths for includes
+- [ ] `upd` ParseInfo: Ignore columns starting with `#`
 - [ ] `upd` Make a custom object style for 'Visible area' frame [#123](https://github.com/pchiorean/Indentz/issues/123)
 - [ ] `add` `Report()`: Add button to save errors to file
-- [x] `ref` Refactor deprecated `substr()` to `slice()` [ref](https://masteringjs.io/tutorials/fundamentals/substring)
 - [ ] `fix` Check for converted documents
 
 ### DefaultSwatches
@@ -27,44 +28,18 @@
 - [ ] `upd` Read layer variants from `layers.txt`, fallback to defaults
 
 ### QuickExport
-- [ ] `add` Include subfolders
-    <details>
-    <summary>Sample code</summary>
-
-    ```jsx
-    var files, folder = Folder.selectDialog("Select a folder with InDesign documents");
-    if (folder != null) {
-        files = GetFiles(folder);
-        if (files.length > 0) alert("Found " + files.length + " InDesign documents")
-        else alert("Found no InDesign documents");
-    }
-
-    function GetFiles(theFolder) {
-        var files = [],
-            fileList = theFolder.getFiles(),
-            i, file;
-        for (i = 0; i < fileList.length; i++) {
-            file = fileList[i];
-            if (file instanceof Folder) files = files.concat(GetFiles(file));
-            else if (file instanceof File && file.name.match(/\.indd$/i)) files.push(file);
-        }
-        return files;
-    }
-    ```
-
-    </details>
-- [ ] `add` History for dropdowns
+- [x] `add` Add 'Include subfolders' to folder mode
+- [ ] `add` Add history for dropdowns
 - [ ] `add` JPG & `?`TIFF export profiles
 - [ ] `add` `?` 'View PDF after exporting' checkbox, alert if > 20 files
-- [ ] `upd` `?` JSONify preferences (see `hardwareConfig.json`)
+- [ ] `upd` `?` JSONify preferences (see `hardwareConfig.json`, `Export_Multiple_PDF_JPG.jsx`)
+- [ ] `upd` `?` Limit export subfolder to suffix's first word
+- [x] `fix` Folder mode should not change 'Close docs' value
 
 ### QR, QRBatch
 - [ ] `fix` Align to page > visible area > margins
 - [ ] `fix` Remove `preview` & `print` from filenames
 - [ ] `fix` Improve line breaking
-
-### SpreadsToFiles
-- [ ] `doc` Explain suffix autodetection
 
 ### TextAutoSize
 - [ ] `upd` Check `baselineShift` [#132](https://github.com/pchiorean/Indentz/issues/132)
