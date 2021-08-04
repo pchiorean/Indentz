@@ -1,5 +1,5 @@
 /*
-	Quick export v2.9.5 (2021-07-31)
+	Quick export v2.9.6 (2021-08-04)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -327,7 +327,8 @@ if (folderMode) {
 // -- Init progress bar
 for (var i = 0, pbWidth = 50; i < docs.length; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
 var progressBar = new ProgressBar("Exporting", pbWidth + 10);
-progressBar.reset(docs.length * ((ui.preset1.isOn.value ? 1 : 0) + (ui.preset2.isOn.value ? 1 : 0)));
+var maxCounter = docs.length * ((ui.preset1.isOn.value ? 1 : 0) + (ui.preset2.isOn.value ? 1 : 0));
+progressBar.reset(maxCounter);
 // -- Main loop
 var doc, counter = 1, errors = [];
 while (doc = docs.shift()) {
@@ -417,8 +418,14 @@ while (doc = docs.shift()) {
 					baseName + "_" + ZeroPad(p+1, String(t.length).length) + suffix;
 				var fn = UniqueName(baseName);
 				progressBar.update(counter, (baseFolder == decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
-				ExportPDF(fn, preset,
-					(exp.exportSpreads.value ? (t[p].pages[0].name + "-" + t[p].pages[-1].name) : t[p].name));
+				if (exp.exportSpreads.value) {
+					var range = t[p].pages[0].documentOffset != t[p].pages[-1].documentOffset ?
+						(String(t[p].pages[0].documentOffset + 1) + "-" + String(t[p].pages[-1].documentOffset + 1)) :
+						 String(t[p].pages[0].documentOffset + 1);
+				} else {
+					var range = String(t[p].documentOffset + 1);
+				};
+				ExportPDF(fn, preset, range);
 			};
 		} else {
 			var baseName = decodeURI(doc.name).replace(/\.indd$/i, "") + suffix;
