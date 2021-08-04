@@ -1,6 +1,5 @@
 # TO DO
 
-- [x] `upd` ParseInfo: `@default`/`@defaults`
 - [ ] `upd` ParseInfo: Use relative paths for includes
 - [ ] `upd` ParseInfo: Ignore columns starting with `#`
 - [ ] `upd` Make a custom object style for 'Visible area' frame [#123](https://github.com/pchiorean/Indentz/issues/123)
@@ -28,13 +27,11 @@
 - [ ] `upd` Read layer variants from `layers.txt`, fallback to defaults
 
 ### QuickExport
-- [x] `add` Add 'Include subfolders' to folder mode
 - [ ] `add` Add history for dropdowns
 - [ ] `add` JPG & `?`TIFF export profiles
 - [ ] `add` `?` 'View PDF after exporting' checkbox, alert if > 20 files
 - [ ] `upd` `?` JSONify preferences (see `hardwareConfig.json`, `Export_Multiple_PDF_JPG.jsx`)
 - [ ] `upd` `?` Limit export subfolder to suffix's first word
-- [x] `fix` Folder mode should not change 'Close docs' value
 
 ### QR, QRBatch
 - [ ] `fix` Align to page > visible area > margins
