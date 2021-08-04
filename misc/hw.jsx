@@ -1,5 +1,5 @@
 /*
-	HW 2.6 (2021-07-10)
+	HW 2.6.1 (2021-08-03)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Labels 'HW' selected objects and adds a HW bottom guide on all spreads.
@@ -54,7 +54,7 @@ function main() {
 	var target, pages = doc.pages.everyItem().getElements();
 	while (target = pages.shift()) {
 		var top = target.bounds[0], bottom = target.bounds[2];
-		var frame, frames = target.rectangles.everyItem().getElements();
+		var frame, frames = target.pageItems.everyItem().getElements();
 		while (frame = frames.shift()) {
 			if (frame.label == "visible area" || frame.name == "<visible area>") {
 				top = frame.geometricBounds[0],

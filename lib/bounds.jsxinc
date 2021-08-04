@@ -1,5 +1,5 @@
 /*
-	Bounds v5.0 (2021-04-14)
+	Bounds v5.0.1 (2021-08-03)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Returns an object containing the geometric bounds of the given page,
@@ -71,7 +71,7 @@ return {
 				page.bounds[3] - margins.left : page.bounds[3] - margins.right
 		],
 		visible: (function() {
-			var v = [], frame, frames = page.rectangles.everyItem().getElements();
+			var v = [], frame, frames = page.pageItems.everyItem().getElements();
 			while (frame = frames.shift())
 				if (frame.label == "visible area" || frame.name == "<visible area>") v.push(frame);
 			if (v.length == 0) return undefined;
@@ -126,7 +126,7 @@ return {
 			];
 		})(),
 		visible: (function() {
-			var v = [], frame, frames = page.parent.rectangles.everyItem().getElements();
+			var v = [], frame, frames = page.parent.pageItems.everyItem().getElements();
 			while (frame = frames.shift())
 				if (frame.label == "visible area" || frame.name == "<visible area>") v.push(frame);
 			if (v.length == 0) return undefined;
