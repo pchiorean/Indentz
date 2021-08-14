@@ -23,17 +23,16 @@ UndoModes.ENTIRE_SCRIPT, "Replace fonts");
 
 doc.textPreferences.showInvisibles = true;
 
-// Set pasteboard
 app.doScript(function() {
+	// Set page dimensions from filename
+	app.doScript(File(script.path + "/PageSizeFromFilename.jsx"),
+	ScriptLanguage.javascript, undefined,
+	UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
+	// Set pasteboard
 	doc.pasteboardPreferences.pasteboardMargins = [
 		doc.pages[0].bounds[3] - doc.pages[0].bounds[1],
 		(doc.pages[0].bounds[2] - doc.pages[0].bounds[0]) / 2
 	];
 },
 ScriptLanguage.javascript, undefined,
-UndoModes.ENTIRE_SCRIPT, "Set pasteboard");
-
-// Set page dimensions from filename
-app.doScript(File(script.path + "/PageSizeFromFilename.jsx"),
-ScriptLanguage.javascript, undefined,
-UndoModes.ENTIRE_SCRIPT, "Set page dimensions");
+UndoModes.ENTIRE_SCRIPT, "Set page dimensions & pasteboard");
