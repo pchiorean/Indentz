@@ -1,5 +1,5 @@
 /*
-	Quick export v2.10 (2021-08-04)
+	Quick export v2.10.1 (2021-08-14)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -411,6 +411,7 @@ while (doc = docs.shift()) {
 			};
 			app.doScript(exp.script.path, scriptLanguage(ext), undefined, UndoModes.ENTIRE_SCRIPT, "Run script");
 			app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
+			app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 		};
 		// Export PDF
 		if (ui.output.options.split.value) {
