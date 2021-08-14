@@ -1,5 +1,5 @@
 /*
-	Default layers v3.1.1 (2021-08-04)
+	Default layers v3.1.2 (2021-08-14)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named "layers.txt":
@@ -177,7 +177,7 @@ function GetUIColor(color) {
 /**
  * Parses a TSV file, returning an object containing found records and errors. Ignores blank lines and those prefixed
  * with '#'; '@path/to/file.txt' includes records from 'file.txt', '@default' includes the default info file.
- * @param {File} infoFile - Tab-separated-values object file
+ * @param {File} infoFile - Tab-separated-values file object
  * @returns {{records: Array, errors: Array}}
  */
 function ParseInfo(infoFile) {
