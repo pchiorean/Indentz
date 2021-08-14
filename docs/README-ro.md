@@ -14,17 +14,17 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. Ideal, o
 
 Facilitează alinierea obiectelor sau setarea punctului de referință pentru transformări folosind shortcuturi.
 
-* **`AlignTo`** aliniază obiectele selectate la referința setării **Align To**:
+* **`AlignTo...`** aliniază obiectele selectate la referința setării **Align To**:
 
   ![Align Panel screenshot](img/alignto.png)
 
-* **`ToggleAlignTo.jsx`** comută alinierea între obiect, margini, pagină sau spread (rulați scriptul în mod repetat).
+* **`ToggleAlignTo`** comută alinierea între obiect, margini, pagină sau spread (rulați scriptul în mod repetat).
 
-* **`ResetAlignTo.jsx`** o resetează la **Align to Selection**.
+* **`ResetAlignTo`** o resetează la **Align to Selection**.
 
-* **`SetRefPoint`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**.
+* **`SetRefPoint...`** schimbă punctul de referință pentru transformări, similar cu selectarea pătrățelelor proxy în paleta **Transform**.
 
-**Notă:** Aceste două seturi nu au nici un sens dacă nu sunt asociate tastaturii numerice.
+**Notă:** Acest set e conceput pentru a fi utilizat cu tastatura numerică.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -46,21 +46,21 @@ Proxy | | | | | |
 
 ### **Export**
 
-* **`QuickExport.jsx`** exportă în PDF toate documentele deschise sau documentele dintr‑un folder, cu până la două preseturi configurabile. Fără documente deschise, puteți selecta un folder pentru procesarea în serie:
+* **`QuickExport`** exportă în PDF toate documentele deschise sau documentele dintr‑un folder, cu până la două preseturi configurabile. Fără documente deschise, puteți selecta un folder pentru procesarea în serie:
 
   ![Quick export](img/quickexport.png)
 
-  Textul din câmpul **Suffix** va fi adăugat la numele fișierului exportat (e autodetectat dacă numele presetului se termină cu "_*sufix*"). Dacă **Export in subfolders** e activ, sufixul va fi folosit și pentru numele subfolderului.
+  Textul din câmpul **Suffix** va fi adăugat la numele fișierului exportat (e autodetectat dacă numele presetului se termină cu „_*sufix*”). Dacă **Export in subfolders** e activ, sufixul va fi folosit și pentru numele subfolderului.
 
   Pentru comoditate, câteva opțiuni de export sunt direct accesibile: export ca pagini/spreaduri, crop mark‑uri, page information, slug area; de asemenea, se poate seta un alt bleed.
 
   Opțional, poate rula un JavaScript sau AppleScript înainte de export, de exemplu unul din următoarele:
 
-* **`PrepareForExport.jsx`** ascunde stratul **visible area** și mută ștanțele și marcajele pentru alb, foil și lac UV de pe **dielines** / **white** / **foil** / **varnish** pe spreaduri separate.
+* **`PrepareForExport`** ascunde stratul **visible area** și mută ștanțele și marcajele pentru alb, foil și lac UV de pe **dielines** / **white** / **foil** / **varnish** pe spreaduri separate.
 
-* **`VisibleArea.jsx`** creează un chenar de dimensiunea marginilor paginii pe stratul **visible area**. Folosește culoarea **Visible area**, care dacă nu există va fi creată cu valoarea "C=0 M=100 Y=0 K=0".
+* **`VisibleArea`** creează un cadru de dimensiunea marginilor paginii pe stratul **visible area**. Folosește culoarea **Visible area**, care dacă nu există va fi creată cu valoarea „C=0 M=100 Y=0 K=0”.
 
-* **`VisibleAreaHideLayer.jsx`** și **`VisibleAreaShowLayer.jsx`** ascund sau afișează **visible area**.
+* **`VisibleAreaHideLayer`** și **`VisibleAreaShowLayer`** ascund sau afișează stratul **visible area**.
 
 **Notă:** Aceste scripturi detectează straturi cu denumiri similare pentru **visible area** (**visible**, **vizibil**), **dielines** (**diecut**, **die cut**, **cut lines**, **stanze**) etc.
 
@@ -76,21 +76,21 @@ Export | |
 
 ### **File**
 
-* **`FilesToSpreads.jsx`** combină documentele deschise, sortate alfabetic.
+* **`FilesToSpreads`** combină documentele deschise, sortate alfabetic.
 
-* **`SpreadsToFiles.jsx`** salvează fiecare spread al documentului activ într‑un fișier separat. Sufixul va fi autodetectat dacă numele documentului se termină cu un separator (spațiu, punct, linie de subliniere sau cratimă) urmat de o secvență de cifre sau litere egală cu numărul de spreaduri (de exemplu, un document `file_ABC.indd` cu trei spreaduri va fi separat în `file_A.indd`, `file_B.indd` și `file_C.indd`).
+* **`SpreadsToFiles`** salvează fiecare spread al documentului activ într‑un fișier separat. Sufixul va fi autodetectat dacă numele documentului se termină cu un separator (spațiu, punct, linie de subliniere sau cratimă) urmat de o secvență de cifre sau litere egală cu numărul de spreaduri (de exemplu, un document `file_ABC.indd` cu trei spreaduri va fi separat în `file_A.indd`, `file_B.indd` și `file_C.indd`).
 
 ---
 
 ### **Fitting**
 
-Redimensionează obiectele selectate, fără să le scaleze. Chenarele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container *(clipping frame)* și acesta e redimensionat.
+Redimensionează obiectele selectate, fără să le scaleze. Cadrele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container *(clipping frame)* și acesta e redimensionat.
 
 * **`FitToPage`** și **`FitToSpread`**: dacă obiectul este mai mare, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.
 
   **`FitTo...Forced`** redimensionează exact la dimensiunile respective.
 
-* **`TextAutosize.jsx`** setează dimensionarea automată a chenarului de text de la **None** la **Height Only** și de la **Height Only** la **Height and Width** (rândurile singulare sunt setate întotdeauna **Height and Width**). Alinierea primului paragraf setează alinierea orizontală a chenarului; **Text Frame Options > Vertical Justification** setează alinierea verticală:
+* **`TextAutosize`** setează dimensionarea automată a cadrului de text de la **None** la **Height Only** și de la **Height Only** la **Height and Width** (rândurile singulare sunt setate întotdeauna **Height and Width**). Alinierea primului paragraf stabilește alinierea orizontală a cadrului; **Text Frame Options > Vertical Justification** stabilește alinierea verticală:
 
   | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
   :-: | :-: | :-: | :-:
@@ -125,9 +125,9 @@ TextAutosize | |
 
 Scalează proporțional obiectele selectate, ca un bloc unitar.
 
-* **`ScaleToPageSize.jsx`** și **`ScaleToPageMargins.jsx`** scalează la dimensiunile paginii sau marginii.
+* **`ScaleToPageSize`** și **`ScaleToPageMargins`** scalează la dimensiunile paginii sau marginii.
 
-* Variantele **`H`** (height) și **`W`** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
+* Variantele **`...H`** (height) și **`...W`** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -148,7 +148,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 #### **Document**
 
-* **`DefaultPrefs.jsx`** setează câteva preferințe.
+* **`DefaultPrefs`** setează câteva preferințe.
 
   <details><summary><strong>Detalii</strong></summary>
 
@@ -176,12 +176,12 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   </details>
 
-* **`DefaultLayers.jsx`** creează un set de straturi definite într‑un fișier TSV *(tab‑separated values)* numit [**`layers.txt`**](../layers.txt):
+* **`DefaultLayers`** creează un set de straturi definite într‑un fișier TSV *(tab‑separated values)* numit [**`layers.txt`**](../layers.txt):
 
   Name | Color | Visible | Printable | Order | Variants
   :- | :-: | :-: | :-: | :-: | :-
-  dielines | Magenta | yes | yes | above | cut\*, decoupe, die, die\*cut, stanz\*
-  template | Gray | no | no | below
+  **dielines** | Magenta | yes | yes | above | cut\*, decoupe, die, die\*cut, stanz\*
+  **template** | Gray | no | no | below
   ... |
 
   > **Name**: numele stratului \
@@ -191,49 +191,54 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Order**: `above` sau `below` (deasupra sau sub straturile existente; implicit `above`) \
   > **Variants**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive; sunt acceptate metacaracterele `*` și `?`)
 
-* **`DefaultSwatches.jsx`** creează un set de culori definite într‑un fișier TSV numit [**`swatches.txt`**](../swatches.txt):
+  Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
+
+* **`DefaultSwatches`** creează un set de culori definite într‑un fișier TSV numit [**`swatches.txt`**](../swatches.txt):
 
   Name | Color Model | Color Space | Values | Variants
   :- | :-: | :-: | :- | :-
-  Rich Black | process | cmyk | 60 40 40 100
-  RGB Grey | process | rgb | 128 128 128
-  Cut | spot | cmyk | 0 100 0 0 | couper, diecut
+  **Rich Black** | process | cmyk | 60 40 40 100
+  **RGB Grey** | process | rgb | 128 128 128
+  **Cut** | spot | cmyk | 0 100 0 0 | couper, diecut
   ... |
 
   > **Name**: numele culorii \
-  > **Model**: tipul culorii: `process` sau `spot` \
-  > **Values**: 3 valori în intervalul 0–255 (RGB) sau 4 valori în intervalul 0–100 (CMYK) \
+  > **Color Model**: `process` sau `spot` (implicit `process`) \
+  > **Color Space**: `cmyk`, `rgb` sau `lab` (implicit `cmyk`) \
+  > **Values**: 3 valori în intervalul 0–255 pentru RGB; 4 valori în intervalul 0–100 pentru CMYK; 3 valori în intervalul 0–100 (L), -128–127 (A și B) pentru Lab \
   > **Variants**: o listă de culori care vor fi combinate cu culoarea de bază (case insensitive; sunt acceptate metacaracterele `*` și `?`)
 
-* **`SaveSwatches.jsx`** salvează culorile din document într‑un fișier TSV compatibil cu **`DefaultSwatches.jsx`**.
+  Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
 
-* **`CleanupSwatches.jsx`** convertește culorile RGB la CMYK, le redenumește după formula "C= M= Y= K=", elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
+* **`SaveSwatches`** salvează culorile din document într‑un fișier TSV compatibil cu **`DefaultSwatches`**.
 
-* **`DeleteGuides.jsx`** șterge toate liniile de ghidaj din document.
+* **`CleanupSwatches`** convertește culorile RGB la CMYK, le redenumește după formula „C= M= Y= K=”, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
-* **`ReplaceFonts.jsx`** substituie fonturi dintr‑o listă definită într‑un fișier TSV numit [**`fonts.txt`**](../fonts.txt):
+* **`DeleteGuides`** șterge toate liniile de ghidaj din document.
+
+* **`ReplaceFonts`** substituie fonturi dintr‑o listă definită într‑un fișier TSV numit [**`fonts.txt`**](../fonts.txt):
 
   Old font | Style | New font | Style
   :- | :- | :- | :-
-  Arial | Regular | Helvetica Neue | Regular
-  Arial | Bold | Helvetica Neue | Bold
+  **Arial** | Regular | **Helvetica Neue** | Regular
+  **Arial** | Bold | **Helvetica Neue** | Bold
   ... |
 
-  Puteți utiliza **`ShowFonts.jsx`** din **Misc** pentru a obține o listă a fonturilor pentru copy‑paste.
+  Puteți utiliza **`ShowFonts`** din **Misc** pentru a obține o listă a fonturilor din document pentru copy‑paste.
 
-* **`DocDefaults.jsx`** rulează **`DefaultPrefs.jsx`**, **`DefaultSwatches.jsx`**, **`DefaultLayers.jsx`**, **`ReplaceFonts.jsx`**, **`PageSizeFromFilename.jsx`**, extinde pasteboardul.
+  Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
 
-* **`DocCleanup.jsx`** rulează **`DefaultPrefs.jsx`**, șterge culorile, straturile și paginile neutilizate, deblochează toate elementele și le resetează scalarea la 100%, convertește chenarele goale de text în chenare simple, compactează pasteboardul.
+* **`DocDefaults`** rulează **`DefaultPrefs`**, **`DefaultSwatches`**, **`DefaultLayers`**, **`ReplaceFonts`**, **`PageSizeFromFilename`** și extinde pasteboardul.
 
-**Notă:** Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită (fișierul implicit poate fi referit prin **`@default`**).
+* **`DocCleanup`** rulează **`DefaultPrefs`**, șterge culorile, straturile și paginile neutilizate, deblochează toate obiectele și le resetează scalarea la 100%, convertește cadrele goale de text în cadre generice și compactează pasteboardul.
 
 ---
 
 #### **Layout**
 
-* **`PageMarginsFromSelection.jsx`** setează marginile paginii la dimensiunile selecției.
+* **`PageMarginsFromSelection`** setează marginile paginii la dimensiunile selecției.
 
-* **`PageSizeFromFilename.jsx`** setează dimensiunea paginii și a ariei vizibile, preluând informațiile din numele fișierului:
+* **`PageSizeFromFilename`** setează dimensiunea paginii și a ariei vizibile, preluând informațiile din numele fișierului:
 
   Filename | Total size | Visible area | Bleed
   :- | :-: | :-: | :-:
@@ -242,9 +247,9 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   > Caută în numele fișierului perechi de numere de genul `000x000` (unde `000` înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de `mm` sau `cm`). Dacă găsește doar o pereche, e dimensiunea paginii. Dacă găsește două (de ex. `000x000_000x000`), perechea mai mare e dimensiunea paginii, perechea mai mică aria vizibilă. Dacă sunt urmate de o secvență de una sau două cifre, aceasta va fi bleed.
 
-* **`PageSizeFromMargins.jsx`** redimensionează fiecare pagină la marginile acesteia.
+* **`PageSizeFromMargins`** redimensionează fiecare pagină la marginile acesteia.
 
-* **`PageSizeFromSelection.jsx`** redimensionează pagina curentă la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
+* **`PageSizeFromSelection`** redimensionează pagina curentă la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -260,15 +265,15 @@ Setup | | | |
 
 ### **View**
 
-* **`TileAll.jsx`** invocă **Window > Arrange > Tile All Vertically** sau **Tile All Horizontally**, în funcție de orientarea spreadului curent.
+* **`TileAll`** invocă **Window > Arrange > Tile All Vertically** sau **Tile All Horizontally**, în funcție de orientarea spreadului curent.
 
-* **`ZoomToSelection.jsx`** e asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
+* **`ZoomToSelection`** e asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
 
   * aduce selecția puțin mai aproape;
   * dacă cursorul e în text, face zoom pe întreg cadrul;
   * fără nimic selectat face zoom pe spreadul curent.
 
-* **`ZoomToSpreads.jsx`** face zoom pe primele 4 spreaduri.
+* **`ZoomToSpreads`** face zoom pe primele 3 spreaduri.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -284,23 +289,21 @@ View | |
 
 ### **Miscellaneous**
 
-* **`ClearLabels.jsx`**: Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, și asta poate crea probleme ulterior. Scriptul șterge etichetele obiectelor selectate sau ale tuturor obiectelor din document dacă nu e selectat nimic.
+* **`ClearLabels`**: Uneori se refolosesc obiecte care au o etichetă atașată *(Script Label)*, ceea ce poate crea probleme ulterior. Scriptul șterge etichetele obiectelor selectate sau ale tuturor obiectelor din document dacă nu e selectat nimic.
 
-* **`Clip.jsx`**: Pentru a manipula unele obiecte uneori e util să le inserăm temporar într‑un container *(clipping frame)*. Scriptul inserează obiectele selectate într‑un container sau le restaurează dacă sunt deja inserate.
+* **`Clip`**: Pentru a manipula unele obiecte uneori e util să le inserăm temporar într‑un container *(clipping frame)*. Scriptul inserează obiectele selectate într‑un container sau le restaurează dacă sunt deja inserate. Folosește clipboardul, deci asigurați‑vă că nu pierdeți ceva important.
 
-  **Notă:** Folosește clipboardul, deci asigurați‑vă că nu pierdeți ceva important.
+  **`ClipUndo`** restaurează unul sau mai multe obiecte simultan.
 
-  **`ClipUndo.jsx`** restaurează unul sau mai multe obiecte simultan.
+* **`HW`** etichetează obiectele selectate „HW” și adaugă un ghid în partea de jos a fiecărei pagini, la 10% din înălțimea ariei vizibile.
 
-* **`HW.jsx`** etichetează obiectele selectate "HW" și adaugă un ghid inferior de 10% pe pagina curentă.
+* **`LabelPage`** adaugă o etichetă configurabilă pe slugul paginii curente, pe stratul **info**.
 
-* **`LabelPage.jsx`** adaugă o etichetă configurabilă pe slugul paginii curente, pe stratul **info**.
+* **`LabelPageRatios`** adaugă pe slugul fiecărei pagini o etichetă cu raportul acesteia, pe stratul **info**.
 
-* **`LabelPageRatios.jsx`** adaugă pe slugul fiecărei pagini o etichetă cu raportul acesteia, pe stratul **info**.
+* **`QR`** adaugă un cod QR pe fiecare pagină a documentului activ sau într‑un fișier separat cu același nume și sufixul „_QR”.
 
-* **`QR.jsx`** adaugă un cod QR pe fiecare pagină a documentului activ sau într‑un fișier separat cu același nume și sufixul "_QR".
-
-  **`QRBatch.jsx`** preia o listă de coduri QR dintr‑un fișier TSV numit **`qr.txt`**, pe care le adaugă unor documente existente sau creează fișiere separate:
+  **`QRBatch`** preia o listă de coduri QR dintr‑un fișier TSV numit **`qr.txt`**, pe care le adaugă unor documente existente sau creează fișiere separate:
 
   Filename | Code | Doc
   :- | :- | :-:
@@ -308,17 +311,17 @@ View | |
   File 2 | Code 2 |
   ... |
 
-  > **Filename**: numele documentului (trebuie să fie valid pentru *Doc*) \
+  > **Filename**: numele documentului \
   > **Code**: orice șir de caractere \
-  > **Doc**: orice șir de caractere: în document; lăsați gol sau omiteți pentru fișier separat
+  > **Doc**: orice șir de caractere: în document existent; gol sau omis: în fișier separat
 
-  **Notă:** Puteți insera "|" pentru împărțirea manuală a textului în mai multe rânduri.
+  **Notă:** Puteți insera „|” pentru împărțirea manuală a textului în mai multe rânduri.
 
-* **`ShowFonts.jsx`** afișează toate fonturile utilizate în documentul curent (util pentru **`ReplaceFonts.jsx`**).
+* **`ShowFonts`** afișează toate fonturile utilizate în documentul curent.
 
-* **`ShowProfiles.jsx`** afișează toate profilele de culori disponibile.
+* **`ShowProfiles`** afișează toate profilele de culori disponibile în InDesign.
 
-* **`ShowProperties.jsx`** afișează proprietățile și metodele unui obiect selectat (util pentru depanare).
+* **`ShowProperties`** afișează proprietățile și metodele unui obiect selectat.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -348,4 +351,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 1 august 2021
+README-ro.md • 14 august 2021

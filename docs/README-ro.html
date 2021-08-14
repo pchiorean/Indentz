@@ -275,20 +275,20 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Faciliteaz&#x103; alinierea obiectelor sau setarea punctului de referin&#x21B;&#x103; pentru transform&#x103;ri folosind shortcuturi.</p>
 <ul>
 <li>
-<p><strong><code>AlignTo</code></strong> aliniaz&#x103; obiectele selectate la referin&#x21B;a set&#x103;rii <strong>Align To</strong>:</p>
+<p><strong><code>AlignTo...</code></strong> aliniaz&#x103; obiectele selectate la referin&#x21B;a set&#x103;rii <strong>Align To</strong>:</p>
 <p><img src="img/alignto.png" alt="Align Panel screenshot"></p>
 </li>
 <li>
-<p><strong><code>ToggleAlignTo.jsx</code></strong> comut&#x103; alinierea &#xEE;ntre obiect, margini, pagin&#x103; sau spread (rula&#x21B;i scriptul &#xEE;n mod repetat).</p>
+<p><strong><code>ToggleAlignTo</code></strong> comut&#x103; alinierea &#xEE;ntre obiect, margini, pagin&#x103; sau spread (rula&#x21B;i scriptul &#xEE;n mod repetat).</p>
 </li>
 <li>
-<p><strong><code>ResetAlignTo.jsx</code></strong> o reseteaz&#x103; la <strong>Align to Selection</strong>.</p>
+<p><strong><code>ResetAlignTo</code></strong> o reseteaz&#x103; la <strong>Align to Selection</strong>.</p>
 </li>
 <li>
-<p><strong><code>SetRefPoint</code></strong> schimb&#x103; punctul de referin&#x21B;&#x103; pentru transform&#x103;ri, similar cu selectarea p&#x103;tr&#x103;&#x21B;elelor proxy &#xEE;n paleta <strong>Transform</strong>.</p>
+<p><strong><code>SetRefPoint...</code></strong> schimb&#x103; punctul de referin&#x21B;&#x103; pentru transform&#x103;ri, similar cu selectarea p&#x103;tr&#x103;&#x21B;elelor proxy &#xEE;n paleta <strong>Transform</strong>.</p>
 </li>
 </ul>
-<p><strong>Not&#x103;:</strong> Aceste dou&#x103; seturi nu au nici un sens dac&#x103; nu sunt asociate tastaturii numerice.</p>
+<p><strong>Not&#x103;:</strong> Acest set e conceput pentru a fi utilizat cu tastatura numeric&#x103;.</p>
 <details><summary><strong>Shortcuturi</strong></summary>
 <table>
 <thead>
@@ -380,20 +380,20 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <ul>
 <li>
-<p><strong><code>QuickExport.jsx</code></strong> export&#x103; &#xEE;n PDF toate documentele deschise sau documentele dintr&#x2011;un folder, cu p&#xE2;n&#x103; la dou&#x103; preseturi configurabile. F&#x103;r&#x103; documente deschise, pute&#x21B;i selecta un folder pentru procesarea &#xEE;n serie:</p>
+<p><strong><code>QuickExport</code></strong> export&#x103; &#xEE;n PDF toate documentele deschise sau documentele dintr&#x2011;un folder, cu p&#xE2;n&#x103; la dou&#x103; preseturi configurabile. F&#x103;r&#x103; documente deschise, pute&#x21B;i selecta un folder pentru procesarea &#xEE;n serie:</p>
 <p><img src="img/quickexport.png" alt="Quick export"></p>
-<p>Textul din c&#xE2;mpul <strong>Suffix</strong> va fi ad&#x103;ugat la numele fi&#x219;ierului exportat (e autodetectat dac&#x103; numele presetului se termin&#x103; cu &#x201C;_<em>sufix</em>&#x201D;). Dac&#x103; <strong>Export in subfolders</strong> e activ, sufixul va fi folosit &#x219;i pentru numele subfolderului.</p>
+<p>Textul din c&#xE2;mpul <strong>Suffix</strong> va fi ad&#x103;ugat la numele fi&#x219;ierului exportat (e autodetectat dac&#x103; numele presetului se termin&#x103; cu &#x201E;_<em>sufix</em>&#x201D;). Dac&#x103; <strong>Export in subfolders</strong> e activ, sufixul va fi folosit &#x219;i pentru numele subfolderului.</p>
 <p>Pentru comoditate, c&#xE2;teva op&#x21B;iuni de export sunt direct accesibile: export ca pagini/spreaduri, crop mark&#x2011;uri, page information, slug area; de asemenea, se poate seta un alt bleed.</p>
 <p>Op&#x21B;ional, poate rula un JavaScript sau AppleScript &#xEE;nainte de export, de exemplu unul din urm&#x103;toarele:</p>
 </li>
 <li>
-<p><strong><code>PrepareForExport.jsx</code></strong> ascunde stratul <strong>visible area</strong> &#x219;i mut&#x103; &#x219;tan&#x21B;ele &#x219;i marcajele pentru alb, foil &#x219;i lac UV de pe <strong>dielines</strong> / <strong>white</strong> / <strong>foil</strong> / <strong>varnish</strong> pe spreaduri separate.</p>
+<p><strong><code>PrepareForExport</code></strong> ascunde stratul <strong>visible area</strong> &#x219;i mut&#x103; &#x219;tan&#x21B;ele &#x219;i marcajele pentru alb, foil &#x219;i lac UV de pe <strong>dielines</strong> / <strong>white</strong> / <strong>foil</strong> / <strong>varnish</strong> pe spreaduri separate.</p>
 </li>
 <li>
-<p><strong><code>VisibleArea.jsx</code></strong> creeaz&#x103; un chenar de dimensiunea marginilor paginii pe stratul <strong>visible area</strong>. Folose&#x219;te culoarea <strong>Visible area</strong>, care dac&#x103; nu exist&#x103; va fi creat&#x103; cu valoarea &#x201C;C=0&#xA0;M=100&#xA0;Y=0&#xA0;K=0&#x201D;.</p>
+<p><strong><code>VisibleArea</code></strong> creeaz&#x103; un cadru de dimensiunea marginilor paginii pe stratul <strong>visible area</strong>. Folose&#x219;te culoarea <strong>Visible area</strong>, care dac&#x103; nu exist&#x103; va fi creat&#x103; cu valoarea &#x201E;C=0&#xA0;M=100&#xA0;Y=0&#xA0;K=0&#x201D;.</p>
 </li>
 <li>
-<p><strong><code>VisibleAreaHideLayer.jsx</code></strong> &#x219;i <strong><code>VisibleAreaShowLayer.jsx</code></strong> ascund sau afi&#x219;eaz&#x103; <strong>visible area</strong>.</p>
+<p><strong><code>VisibleAreaHideLayer</code></strong> &#x219;i <strong><code>VisibleAreaShowLayer</code></strong> ascund sau afi&#x219;eaz&#x103; stratul <strong>visible area</strong>.</p>
 </li>
 </ul>
 <p><strong>Not&#x103;:</strong> Aceste scripturi detecteaz&#x103; straturi cu denumiri similare pentru <strong>visible area</strong> (<strong>visible</strong>, <strong>vizibil</strong>), <strong>dielines</strong> (<strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong>) etc.</p>
@@ -418,23 +418,23 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <ul>
 <li>
-<p><strong><code>FilesToSpreads.jsx</code></strong> combin&#x103; documentele deschise, sortate alfabetic.</p>
+<p><strong><code>FilesToSpreads</code></strong> combin&#x103; documentele deschise, sortate alfabetic.</p>
 </li>
 <li>
-<p><strong><code>SpreadsToFiles.jsx</code></strong> salveaz&#x103; fiecare spread al documentului activ &#xEE;ntr&#x2011;un fi&#x219;ier separat. Sufixul va fi autodetectat dac&#x103; numele documentului se termin&#x103; cu un separator (spa&#x21B;iu, punct, linie de subliniere sau cratim&#x103;) urmat de o secven&#x21B;&#x103; de cifre sau litere egal&#x103; cu num&#x103;rul de spreaduri (de exemplu, un document <code>file_ABC.indd</code> cu trei spreaduri va fi separat &#xEE;n <code>file_A.indd</code>, <code>file_B.indd</code> &#x219;i <code>file_C.indd</code>).</p>
+<p><strong><code>SpreadsToFiles</code></strong> salveaz&#x103; fiecare spread al documentului activ &#xEE;ntr&#x2011;un fi&#x219;ier separat. Sufixul va fi autodetectat dac&#x103; numele documentului se termin&#x103; cu un separator (spa&#x21B;iu, punct, linie de subliniere sau cratim&#x103;) urmat de o secven&#x21B;&#x103; de cifre sau litere egal&#x103; cu num&#x103;rul de spreaduri (de exemplu, un document <code>file_ABC.indd</code> cu trei spreaduri va fi separat &#xEE;n <code>file_A.indd</code>, <code>file_B.indd</code> &#x219;i <code>file_C.indd</code>).</p>
 </li>
 </ul>
 <hr>
 <h3 class="mume-header" id="fitting"><strong>Fitting</strong></h3>
 
-<p>Redimensioneaz&#x103; obiectele selectate, f&#x103;r&#x103; s&#x103; le scaleze. Chenarele obi&#x219;nuite sunt redimensionate pur &#x219;i simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse &#xEE;ntr&#x2011;un container <em>(clipping frame)</em> &#x219;i acesta e redimensionat.</p>
+<p>Redimensioneaz&#x103; obiectele selectate, f&#x103;r&#x103; s&#x103; le scaleze. Cadrele obi&#x219;nuite sunt redimensionate pur &#x219;i simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse &#xEE;ntr&#x2011;un container <em>(clipping frame)</em> &#x219;i acesta e redimensionat.</p>
 <ul>
 <li>
 <p><strong><code>FitToPage</code></strong> &#x219;i <strong><code>FitToSpread</code></strong>: dac&#x103; obiectul este mai mare, va fi redus; dac&#x103; este mai mic dar intr&#x103; &#xEE;ntr&#x2011;o zon&#x103; &#x201E;snap&#x201D; de 1%, va fi m&#x103;rit.</p>
 <p><strong><code>FitTo...Forced</code></strong> redimensioneaz&#x103; exact la dimensiunile respective.</p>
 </li>
 <li>
-<p><strong><code>TextAutosize.jsx</code></strong> seteaz&#x103; dimensionarea automat&#x103; a chenarului de text de la <strong>None</strong> la <strong>Height Only</strong> &#x219;i de la <strong>Height Only</strong> la <strong>Height and Width</strong> (r&#xE2;ndurile singulare sunt setate &#xEE;ntotdeauna <strong>Height and Width</strong>). Alinierea primului paragraf seteaz&#x103; alinierea orizontal&#x103; a chenarului; <strong>Text Frame Options &gt; Vertical Justification</strong> seteaz&#x103; alinierea vertical&#x103;:</p>
+<p><strong><code>TextAutosize</code></strong> seteaz&#x103; dimensionarea automat&#x103; a cadrului de text de la <strong>None</strong> la <strong>Height Only</strong> &#x219;i de la <strong>Height Only</strong> la <strong>Height and Width</strong> (r&#xE2;ndurile singulare sunt setate &#xEE;ntotdeauna <strong>Height and Width</strong>). Alinierea primului paragraf stabile&#x219;te alinierea orizontal&#x103; a cadrului; <strong>Text Frame Options &gt; Vertical Justification</strong> stabile&#x219;te alinierea vertical&#x103;:</p>
 <table>
 <thead>
 <tr>
@@ -550,10 +550,10 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Scaleaz&#x103; propor&#x21B;ional obiectele selectate, ca un bloc unitar.</p>
 <ul>
 <li>
-<p><strong><code>ScaleToPageSize.jsx</code></strong> &#x219;i <strong><code>ScaleToPageMargins.jsx</code></strong> scaleaz&#x103; la dimensiunile paginii sau marginii.</p>
+<p><strong><code>ScaleToPageSize</code></strong> &#x219;i <strong><code>ScaleToPageMargins</code></strong> scaleaz&#x103; la dimensiunile paginii sau marginii.</p>
 </li>
 <li>
-<p>Variantele <strong><code>H</code></strong> (height) &#x219;i <strong><code>W</code></strong> (width) scaleaz&#x103; la &#xEE;n&#x103;l&#x21B;imea, respectiv l&#x103;&#x21B;imea paginii sau marginii.</p>
+<p>Variantele <strong><code>...H</code></strong> (height) &#x219;i <strong><code>...W</code></strong> (width) scaleaz&#x103; la &#xEE;n&#x103;l&#x21B;imea, respectiv l&#x103;&#x21B;imea paginii sau marginii.</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuturi</strong></summary>
@@ -592,7 +592,7 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <ul>
 <li>
-<p><strong><code>DefaultPrefs.jsx</code></strong> seteaz&#x103; c&#xE2;teva preferin&#x21B;e.</p>
+<p><strong><code>DefaultPrefs</code></strong> seteaz&#x103; c&#xE2;teva preferin&#x21B;e.</p>
 <details><summary><strong>Detalii</strong></summary>
 <blockquote>
 <p><strong>Rulers:</strong> Reset Zero Point <br>
@@ -620,7 +620,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </details>
 </li>
 <li>
-<p><strong><code>DefaultLayers.jsx</code></strong> creeaz&#x103; un set de straturi definite &#xEE;ntr&#x2011;un fi&#x219;ier TSV <em>(tab&#x2011;separated values)</em> numit <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
+<p><strong><code>DefaultLayers</code></strong> creeaz&#x103; un set de straturi definite &#xEE;ntr&#x2011;un fi&#x219;ier TSV <em>(tab&#x2011;separated values)</em> numit <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -634,7 +634,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">dielines</td>
+<td style="text-align:left"><strong>dielines</strong></td>
 <td style="text-align:center">Magenta</td>
 <td style="text-align:center">yes</td>
 <td style="text-align:center">yes</td>
@@ -642,7 +642,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:left">cut*, decoupe, die, die*cut, stanz*</td>
 </tr>
 <tr>
-<td style="text-align:left">template</td>
+<td style="text-align:left"><strong>template</strong></td>
 <td style="text-align:center">Gray</td>
 <td style="text-align:center">no</td>
 <td style="text-align:center">no</td>
@@ -667,9 +667,10 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Order</strong>: <code>above</code> sau <code>below</code> (deasupra sau sub straturile existente; implicit <code>above</code>) <br>
 <strong>Variants</strong>: o list&#x103; de straturi care vor fi combinate cu stratul de baz&#x103; (case insensitive; sunt acceptate metacaracterele <code>*</code> &#x219;i <code>?</code>)</p>
 </blockquote>
+<p>Fi&#x219;ierul poate fi plasat &#xEE;n folderul curent, pe desktop sau l&#xE2;ng&#x103; script. Liniile goale &#x219;i cele care &#xEE;ncep cu <code>#</code> sunt ignorate. Pute&#x21B;i include un alt fi&#x219;ier inser&#xE2;nd <strong><code>@path/to/file.txt</code></strong> &#xEE;n pozi&#x21B;ia dorit&#x103;, ori fi&#x219;ierul implicit cu <strong><code>@default</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>DefaultSwatches.jsx</code></strong> creeaz&#x103; un set de culori definite &#xEE;ntr&#x2011;un fi&#x219;ier TSV numit <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
+<p><strong><code>DefaultSwatches</code></strong> creeaz&#x103; un set de culori definite &#xEE;ntr&#x2011;un fi&#x219;ier TSV numit <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -682,21 +683,21 @@ pre[data-line] .line-highlight[data-end]:after {
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">Rich Black</td>
+<td style="text-align:left"><strong>Rich Black</strong></td>
 <td style="text-align:center">process</td>
 <td style="text-align:center">cmyk</td>
 <td style="text-align:left">60 40 40 100</td>
 <td style="text-align:left"></td>
 </tr>
 <tr>
-<td style="text-align:left">RGB Grey</td>
+<td style="text-align:left"><strong>RGB Grey</strong></td>
 <td style="text-align:center">process</td>
 <td style="text-align:center">rgb</td>
 <td style="text-align:left">128 128 128</td>
 <td style="text-align:left"></td>
 </tr>
 <tr>
-<td style="text-align:left">Cut</td>
+<td style="text-align:left"><strong>Cut</strong></td>
 <td style="text-align:center">spot</td>
 <td style="text-align:center">cmyk</td>
 <td style="text-align:left">0 100 0 0</td>
@@ -713,22 +714,24 @@ pre[data-line] .line-highlight[data-end]:after {
 </table>
 <blockquote>
 <p><strong>Name</strong>: numele culorii <br>
-<strong>Model</strong>: tipul culorii: <code>process</code> sau <code>spot</code> <br>
-<strong>Values</strong>: 3 valori &#xEE;n intervalul 0&#x2013;255 (RGB) sau 4 valori &#xEE;n intervalul 0&#x2013;100 (CMYK) <br>
+<strong>Color Model</strong>: <code>process</code> sau <code>spot</code> (implicit <code>process</code>) <br>
+<strong>Color Space</strong>: <code>cmyk</code>, <code>rgb</code> sau <code>lab</code> (implicit <code>cmyk</code>) <br>
+<strong>Values</strong>: 3 valori &#xEE;n intervalul 0&#x2013;255 pentru RGB; 4 valori &#xEE;n intervalul 0&#x2013;100 pentru CMYK; 3 valori &#xEE;n intervalul 0&#x2013;100 (L), -128&#x2013;127 (A &#x219;i B) pentru Lab <br>
 <strong>Variants</strong>: o list&#x103; de culori care vor fi combinate cu culoarea de baz&#x103; (case insensitive; sunt acceptate metacaracterele <code>*</code> &#x219;i <code>?</code>)</p>
 </blockquote>
+<p>Fi&#x219;ierul poate fi plasat &#xEE;n folderul curent, pe desktop sau l&#xE2;ng&#x103; script. Liniile goale &#x219;i cele care &#xEE;ncep cu <code>#</code> sunt ignorate. Pute&#x21B;i include un alt fi&#x219;ier inser&#xE2;nd <strong><code>@path/to/file.txt</code></strong> &#xEE;n pozi&#x21B;ia dorit&#x103;, ori fi&#x219;ierul implicit cu <strong><code>@default</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>SaveSwatches.jsx</code></strong> salveaz&#x103; culorile din document &#xEE;ntr&#x2011;un fi&#x219;ier TSV compatibil cu <strong><code>DefaultSwatches.jsx</code></strong>.</p>
+<p><strong><code>SaveSwatches</code></strong> salveaz&#x103; culorile din document &#xEE;ntr&#x2011;un fi&#x219;ier TSV compatibil cu <strong><code>DefaultSwatches</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>CleanupSwatches.jsx</code></strong> converte&#x219;te culorile RGB la CMYK, le redenume&#x219;te dup&#x103; formula &#x201C;C=&#xA0;M=&#xA0;Y=&#xA0;K=&#x201D;, elimin&#x103; duplicatele &#x219;i le &#x219;terge pe cele nefolosite. Culorile spot r&#x103;m&#xE2;n neschimbate.</p>
+<p><strong><code>CleanupSwatches</code></strong> converte&#x219;te culorile RGB la CMYK, le redenume&#x219;te dup&#x103; formula &#x201E;C=&#xA0;M=&#xA0;Y=&#xA0;K=&#x201D;, elimin&#x103; duplicatele &#x219;i le &#x219;terge pe cele nefolosite. Culorile spot r&#x103;m&#xE2;n neschimbate.</p>
 </li>
 <li>
-<p><strong><code>DeleteGuides.jsx</code></strong> &#x219;terge toate liniile de ghidaj din document.</p>
+<p><strong><code>DeleteGuides</code></strong> &#x219;terge toate liniile de ghidaj din document.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> substituie fonturi dintr&#x2011;o list&#x103; definit&#x103; &#xEE;ntr&#x2011;un fi&#x219;ier TSV numit <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
+<p><strong><code>ReplaceFonts</code></strong> substituie fonturi dintr&#x2011;o list&#x103; definit&#x103; &#xEE;ntr&#x2011;un fi&#x219;ier TSV numit <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -740,15 +743,15 @@ pre[data-line] .line-highlight[data-end]:after {
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">Arial</td>
+<td style="text-align:left"><strong>Arial</strong></td>
 <td style="text-align:left">Regular</td>
-<td style="text-align:left">Helvetica Neue</td>
+<td style="text-align:left"><strong>Helvetica Neue</strong></td>
 <td style="text-align:left">Regular</td>
 </tr>
 <tr>
-<td style="text-align:left">Arial</td>
+<td style="text-align:left"><strong>Arial</strong></td>
 <td style="text-align:left">Bold</td>
-<td style="text-align:left">Helvetica Neue</td>
+<td style="text-align:left"><strong>Helvetica Neue</strong></td>
 <td style="text-align:left">Bold</td>
 </tr>
 <tr>
@@ -759,25 +762,25 @@ pre[data-line] .line-highlight[data-end]:after {
 </tr>
 </tbody>
 </table>
-<p>Pute&#x21B;i utiliza <strong><code>ShowFonts.jsx</code></strong> din <strong>Misc</strong> pentru a ob&#x21B;ine o list&#x103; a fonturilor pentru copy&#x2011;paste.</p>
+<p>Pute&#x21B;i utiliza <strong><code>ShowFonts</code></strong> din <strong>Misc</strong> pentru a ob&#x21B;ine o list&#x103; a fonturilor din document pentru copy&#x2011;paste.</p>
+<p>Fi&#x219;ierul poate fi plasat &#xEE;n folderul curent, pe desktop sau l&#xE2;ng&#x103; script. Liniile goale &#x219;i cele care &#xEE;ncep cu <code>#</code> sunt ignorate. Pute&#x21B;i include un alt fi&#x219;ier inser&#xE2;nd <strong><code>@path/to/file.txt</code></strong> &#xEE;n pozi&#x21B;ia dorit&#x103;, ori fi&#x219;ierul implicit cu <strong><code>@default</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>DocDefaults.jsx</code></strong> ruleaz&#x103; <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong>, <strong><code>PageSizeFromFilename.jsx</code></strong>, extinde pasteboardul.</p>
+<p><strong><code>DocDefaults</code></strong> ruleaz&#x103; <strong><code>DefaultPrefs</code></strong>, <strong><code>DefaultSwatches</code></strong>, <strong><code>DefaultLayers</code></strong>, <strong><code>ReplaceFonts</code></strong>, <strong><code>PageSizeFromFilename</code></strong> &#x219;i extinde pasteboardul.</p>
 </li>
 <li>
-<p><strong><code>DocCleanup.jsx</code></strong> ruleaz&#x103; <strong><code>DefaultPrefs.jsx</code></strong>, &#x219;terge culorile, straturile &#x219;i paginile neutilizate, deblocheaz&#x103; toate elementele &#x219;i le reseteaz&#x103; scalarea la 100%, converte&#x219;te chenarele goale de text &#xEE;n chenare simple, compacteaz&#x103; pasteboardul.</p>
+<p><strong><code>DocCleanup</code></strong> ruleaz&#x103; <strong><code>DefaultPrefs</code></strong>, &#x219;terge culorile, straturile &#x219;i paginile neutilizate, deblocheaz&#x103; toate obiectele &#x219;i le reseteaz&#x103; scalarea la 100%, converte&#x219;te cadrele goale de text &#xEE;n cadre generice &#x219;i compacteaz&#x103; pasteboardul.</p>
 </li>
 </ul>
-<p><strong>Not&#x103;:</strong> Fi&#x219;ierul poate fi plasat &#xEE;n folderul curent, pe desktop sau l&#xE2;ng&#x103; script. Liniile goale &#x219;i cele care &#xEE;ncep cu <code>#</code> sunt ignorate. Pute&#x21B;i include un alt fi&#x219;ier inser&#xE2;nd <strong><code>@path/to/file.txt</code></strong> &#xEE;n pozi&#x21B;ia dorit&#x103; (fi&#x219;ierul implicit poate fi referit prin <strong><code>@default</code></strong>).</p>
 <hr>
 <h4 class="mume-header" id="layout"><strong>Layout</strong></h4>
 
 <ul>
 <li>
-<p><strong><code>PageMarginsFromSelection.jsx</code></strong> seteaz&#x103; marginile paginii la dimensiunile selec&#x21B;iei.</p>
+<p><strong><code>PageMarginsFromSelection</code></strong> seteaz&#x103; marginile paginii la dimensiunile selec&#x21B;iei.</p>
 </li>
 <li>
-<p><strong><code>PageSizeFromFilename.jsx</code></strong> seteaz&#x103; dimensiunea paginii &#x219;i a ariei vizibile, prelu&#xE2;nd informa&#x21B;iile din numele fi&#x219;ierului:</p>
+<p><strong><code>PageSizeFromFilename</code></strong> seteaz&#x103; dimensiunea paginii &#x219;i a ariei vizibile, prelu&#xE2;nd informa&#x21B;iile din numele fi&#x219;ierului:</p>
 <table>
 <thead>
 <tr>
@@ -807,10 +810,10 @@ pre[data-line] .line-highlight[data-end]:after {
 </blockquote>
 </li>
 <li>
-<p><strong><code>PageSizeFromMargins.jsx</code></strong> redimensioneaz&#x103; fiecare pagin&#x103; la marginile acesteia.</p>
+<p><strong><code>PageSizeFromMargins</code></strong> redimensioneaz&#x103; fiecare pagin&#x103; la marginile acesteia.</p>
 </li>
 <li>
-<p><strong><code>PageSizeFromSelection.jsx</code></strong> redimensioneaz&#x103; pagina curent&#x103; la obiectele selectate (similar cu <strong>Artboards &gt; Fit to Selected Art</strong> din Illustrator).</p>
+<p><strong><code>PageSizeFromSelection</code></strong> redimensioneaz&#x103; pagina curent&#x103; la obiectele selectate (similar cu <strong>Artboards &gt; Fit to Selected Art</strong> din Illustrator).</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuturi</strong></summary>
@@ -850,10 +853,10 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <ul>
 <li>
-<p><strong><code>TileAll.jsx</code></strong> invoc&#x103; <strong>Window &gt; Arrange &gt; Tile All Vertically</strong> sau <strong>Tile All Horizontally</strong>, &#xEE;n func&#x21B;ie de orientarea spreadului curent.</p>
+<p><strong><code>TileAll</code></strong> invoc&#x103; <strong>Window &gt; Arrange &gt; Tile All Vertically</strong> sau <strong>Tile All Horizontally</strong>, &#xEE;n func&#x21B;ie de orientarea spreadului curent.</p>
 </li>
 <li>
-<p><strong><code>ZoomToSelection.jsx</code></strong> e asem&#x103;n&#x103;tor cu <strong>Fit Selection in Window</strong> (&#x2325;&#x2318;=), dar cu c&#xE2;teva &#xEE;mbun&#x103;t&#x103;&#x21B;iri:</p>
+<p><strong><code>ZoomToSelection</code></strong> e asem&#x103;n&#x103;tor cu <strong>Fit Selection in Window</strong> (&#x2325;&#x2318;=), dar cu c&#xE2;teva &#xEE;mbun&#x103;t&#x103;&#x21B;iri:</p>
 <ul>
 <li>aduce selec&#x21B;ia pu&#x21B;in mai aproape;</li>
 <li>dac&#x103; cursorul e &#xEE;n text, face zoom pe &#xEE;ntreg cadrul;</li>
@@ -861,7 +864,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </ul>
 </li>
 <li>
-<p><strong><code>ZoomToSpreads.jsx</code></strong> face zoom pe primele 4 spreaduri.</p>
+<p><strong><code>ZoomToSpreads</code></strong> face zoom pe primele 3 spreaduri.</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuts</strong></summary>
@@ -893,25 +896,24 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <ul>
 <li>
-<p><strong><code>ClearLabels.jsx</code></strong>: Uneori se refolosesc obiecte care au o etichet&#x103; ata&#x219;at&#x103; <em>(Script Label)</em>, &#x219;i asta poate crea probleme ulterior. Scriptul &#x219;terge etichetele obiectelor selectate sau ale tuturor obiectelor din document dac&#x103; nu e selectat nimic.</p>
+<p><strong><code>ClearLabels</code></strong>: Uneori se refolosesc obiecte care au o etichet&#x103; ata&#x219;at&#x103; <em>(Script Label)</em>, ceea ce poate crea probleme ulterior. Scriptul &#x219;terge etichetele obiectelor selectate sau ale tuturor obiectelor din document dac&#x103; nu e selectat nimic.</p>
 </li>
 <li>
-<p><strong><code>Clip.jsx</code></strong>: Pentru a manipula unele obiecte uneori e util s&#x103; le inser&#x103;m temporar &#xEE;ntr&#x2011;un container <em>(clipping frame)</em>. Scriptul insereaz&#x103; obiectele selectate &#xEE;ntr&#x2011;un container sau le restaureaz&#x103; dac&#x103; sunt deja inserate.</p>
-<p><strong>Not&#x103;:</strong> Folose&#x219;te clipboardul, deci asigura&#x21B;i&#x2011;v&#x103; c&#x103; nu pierde&#x21B;i ceva important.</p>
-<p><strong><code>ClipUndo.jsx</code></strong> restaureaz&#x103; unul sau mai multe obiecte simultan.</p>
+<p><strong><code>Clip</code></strong>: Pentru a manipula unele obiecte uneori e util s&#x103; le inser&#x103;m temporar &#xEE;ntr&#x2011;un container <em>(clipping frame)</em>. Scriptul insereaz&#x103; obiectele selectate &#xEE;ntr&#x2011;un container sau le restaureaz&#x103; dac&#x103; sunt deja inserate. Folose&#x219;te clipboardul, deci asigura&#x21B;i&#x2011;v&#x103; c&#x103; nu pierde&#x21B;i ceva important.</p>
+<p><strong><code>ClipUndo</code></strong> restaureaz&#x103; unul sau mai multe obiecte simultan.</p>
 </li>
 <li>
-<p><strong><code>HW.jsx</code></strong> eticheteaz&#x103; obiectele selectate &#x201C;HW&#x201D; &#x219;i adaug&#x103; un ghid inferior de 10% pe pagina curent&#x103;.</p>
+<p><strong><code>HW</code></strong> eticheteaz&#x103; obiectele selectate &#x201E;HW&#x201D; &#x219;i adaug&#x103; un ghid &#xEE;n partea de jos a fiec&#x103;rei pagini, la 10% din &#xEE;n&#x103;l&#x21B;imea ariei vizibile.</p>
 </li>
 <li>
-<p><strong><code>LabelPage.jsx</code></strong> adaug&#x103; o etichet&#x103; configurabil&#x103; pe slugul paginii curente, pe stratul <strong>info</strong>.</p>
+<p><strong><code>LabelPage</code></strong> adaug&#x103; o etichet&#x103; configurabil&#x103; pe slugul paginii curente, pe stratul <strong>info</strong>.</p>
 </li>
 <li>
-<p><strong><code>LabelPageRatios.jsx</code></strong> adaug&#x103; pe slugul fiec&#x103;rei pagini o etichet&#x103; cu raportul acesteia, pe stratul <strong>info</strong>.</p>
+<p><strong><code>LabelPageRatios</code></strong> adaug&#x103; pe slugul fiec&#x103;rei pagini o etichet&#x103; cu raportul acesteia, pe stratul <strong>info</strong>.</p>
 </li>
 <li>
-<p><strong><code>QR.jsx</code></strong> adaug&#x103; un cod QR pe fiecare pagin&#x103; a documentului activ sau &#xEE;ntr&#x2011;un fi&#x219;ier separat cu acela&#x219;i nume &#x219;i sufixul &#x201C;_QR&#x201D;.</p>
-<p><strong><code>QRBatch.jsx</code></strong> preia o list&#x103; de coduri QR dintr&#x2011;un fi&#x219;ier TSV numit <strong><code>qr.txt</code></strong>, pe care le adaug&#x103; unor documente existente sau creeaz&#x103; fi&#x219;iere separate:</p>
+<p><strong><code>QR</code></strong> adaug&#x103; un cod QR pe fiecare pagin&#x103; a documentului activ sau &#xEE;ntr&#x2011;un fi&#x219;ier separat cu acela&#x219;i nume &#x219;i sufixul &#x201E;_QR&#x201D;.</p>
+<p><strong><code>QRBatch</code></strong> preia o list&#x103; de coduri QR dintr&#x2011;un fi&#x219;ier TSV numit <strong><code>qr.txt</code></strong>, pe care le adaug&#x103; unor documente existente sau creeaz&#x103; fi&#x219;iere separate:</p>
 <table>
 <thead>
 <tr>
@@ -939,20 +941,20 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 <blockquote>
-<p><strong>Filename</strong>: numele documentului (trebuie s&#x103; fie valid pentru <em>Doc</em>) <br>
+<p><strong>Filename</strong>: numele documentului <br>
 <strong>Code</strong>: orice &#x219;ir de caractere <br>
-<strong>Doc</strong>: orice &#x219;ir de caractere: &#xEE;n document; l&#x103;sa&#x21B;i gol sau omite&#x21B;i pentru fi&#x219;ier separat</p>
+<strong>Doc</strong>: orice &#x219;ir de caractere: &#xEE;n document existent; gol sau omis: &#xEE;n fi&#x219;ier separat</p>
 </blockquote>
-<p><strong>Not&#x103;:</strong> Pute&#x21B;i insera &#x201C;|&#x201D; pentru &#xEE;mp&#x103;r&#x21B;irea manual&#x103; a textului &#xEE;n mai multe r&#xE2;nduri.</p>
+<p><strong>Not&#x103;:</strong> Pute&#x21B;i insera &#x201E;|&#x201D; pentru &#xEE;mp&#x103;r&#x21B;irea manual&#x103; a textului &#xEE;n mai multe r&#xE2;nduri.</p>
 </li>
 <li>
-<p><strong><code>ShowFonts.jsx</code></strong> afi&#x219;eaz&#x103; toate fonturile utilizate &#xEE;n documentul curent (util pentru <strong><code>ReplaceFonts.jsx</code></strong>).</p>
+<p><strong><code>ShowFonts</code></strong> afi&#x219;eaz&#x103; toate fonturile utilizate &#xEE;n documentul curent.</p>
 </li>
 <li>
-<p><strong><code>ShowProfiles.jsx</code></strong> afi&#x219;eaz&#x103; toate profilele de culori disponibile.</p>
+<p><strong><code>ShowProfiles</code></strong> afi&#x219;eaz&#x103; toate profilele de culori disponibile &#xEE;n InDesign.</p>
 </li>
 <li>
-<p><strong><code>ShowProperties.jsx</code></strong> afi&#x219;eaz&#x103; propriet&#x103;&#x21B;ile &#x219;i metodele unui obiect selectat (util pentru depanare).</p>
+<p><strong><code>ShowProperties</code></strong> afi&#x219;eaz&#x103; propriet&#x103;&#x21B;ile &#x219;i metodele unui obiect selectat.</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuturi</strong></summary>
@@ -1002,7 +1004,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Codul din acest proiect nu ar fi fost posibil f&#x103;r&#x103; InDesign ExtendScript API de <a href="http://jongware.mit.edu">Theunis de Jong</a> &#x219;i <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, post&#x103;ri pe bloguri &#x219;i forumuri, tutoriale &#x219;i scripturi de <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> &#x219;i mul&#x21B;i al&#x21B;ii.</p>
 <p>&#xA9; 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
 Codul este publicat sub licen&#x21B;a MIT (v. <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README-ro.md &#x2022; 1 august 2021</p>
+<p>README-ro.md &#x2022; 14 august 2021</p>
 
       </div>
       

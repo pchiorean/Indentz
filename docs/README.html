@@ -275,20 +275,20 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Make it easier to align objects or set the reference point for transformations using shortcuts.</p>
 <ul>
 <li>
-<p><strong><code>AlignTo</code></strong> scripts align the selected object(s) to the <strong>Align To</strong> setting:</p>
+<p><strong><code>AlignTo...</code></strong> scripts align the selected object(s) to the <strong>Align To</strong> setting:</p>
 <p><img src="img/alignto.png" alt="Align Panel screenshot"></p>
 </li>
 <li>
-<p><strong><code>ToggleAlignTo.jsx</code></strong> toggles the alignment between item, margins, page or spread (just run it repeatedly).</p>
+<p><strong><code>ToggleAlignTo</code></strong> toggles the alignment between item, margins, page or spread (just run it repeatedly).</p>
 </li>
 <li>
-<p><strong><code>ResetAlignTo.jsx</code></strong> resets the setting to <strong>Align to Selection</strong>.</p>
+<p><strong><code>ResetAlignTo</code></strong> resets the setting to <strong>Align to Selection</strong>.</p>
 </li>
 <li>
-<p><strong><code>SetRefPoint</code></strong> scripts change the reference point used for transformations (like clicking the little proxy squares in the <strong>Transform</strong> palette).</p>
+<p><strong><code>SetRefPoint...</code></strong> scripts change the reference point used for transformations (like clicking the little proxy squares in the <strong>Transform</strong> palette).</p>
 </li>
 </ul>
-<p><strong>Note:</strong> These two sets don&#x2019;t make any sense if not assigned to the numeric keypad.</p>
+<p><strong>Note:</strong> This set is designed to be used with the numeric keypad.</p>
 <details><summary><strong>Shortcuts</strong></summary>
 <table>
 <thead>
@@ -380,20 +380,20 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <ul>
 <li>
-<p><strong><code>QuickExport.jsx</code></strong> exports to PDF all open documents or documents from a folder, with up to two configurable presets. With no documents open, you can select a folder for batch processing:</p>
+<p><strong><code>QuickExport</code></strong> exports to PDF all open documents or documents from a folder, with up to two configurable presets. With no documents open, you can select a folder for batch processing:</p>
 <p><img src="img/quickexport.png" alt="Quick export"></p>
 <p>The text from the <strong>Suffix</strong> field will be appended to the exported file name (it&#x2019;s autodetected if the preset ends with &#x201C;_<em>suffix</em>&#x201D;). If <strong>Export in subfolders</strong> is checked, the suffix will also be used for the subfolder name.</p>
 <p>For convenience, some export options are directly accessible: export as pages/spreads, crop marks, page information, slug area; also, you can set a custom bleed.</p>
 <p>Optionally, it can run a JavaScript or AppleScript before exporting, e.g., one of the following:</p>
 </li>
 <li>
-<p><strong><code>PrepareForExport.jsx</code></strong> hides the <strong>visible area</strong> layer and moves the dielines, white, foil and UV markings from <strong>dielines</strong> / <strong>white</strong> / <strong>foil</strong> / <strong>varnish</strong> to separate spreads.</p>
+<p><strong><code>PrepareForExport</code></strong> hides the <strong>visible area</strong> layer and moves the dielines, white, foil and UV markings from <strong>dielines</strong> / <strong>white</strong> / <strong>foil</strong> / <strong>varnish</strong> to separate spreads.</p>
 </li>
 <li>
-<p><strong><code>VisibleArea.jsx</code></strong> creates a frame the size of the page margins on the <strong>visible area</strong> layer. It uses the <strong>Visible area</strong> swatch, which if it does not exist will be created with the value &#x201C;C=0&#xA0;M=100&#xA0;Y=0&#xA0;K=0&#x201D;.</p>
+<p><strong><code>VisibleArea</code></strong> creates a frame the size of the page margins on the <strong>visible area</strong> layer. It uses the <strong>Visible area</strong> swatch, which if it does not exist will be created with the value &#x201C;C=0&#xA0;M=100&#xA0;Y=0&#xA0;K=0&#x201D;.</p>
 </li>
 <li>
-<p><strong><code>VisibleAreaHideLayer.jsx</code></strong> and <strong><code>VisibleAreaShowLayer.jsx</code></strong> hide or show <strong>visible area</strong>.</p>
+<p><strong><code>VisibleAreaHideLayer</code></strong> and <strong><code>VisibleAreaShowLayer</code></strong> hide or show the <strong>visible area</strong> layer.</p>
 </li>
 </ul>
 <p><strong>Note:</strong> The scripts detect some alternative layers for <strong>visible area</strong> (<strong>visible</strong>, <strong>vizibil</strong>), <strong>dielines</strong> (<strong>diecut</strong>, <strong>die cut</strong>, <strong>cut lines</strong>, <strong>stanze</strong>) etc.</p>
@@ -418,10 +418,10 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <ul>
 <li>
-<p><strong><code>FilesToSpreads.jsx</code></strong> combines the open documents, sorted alphabetically.</p>
+<p><strong><code>FilesToSpreads</code></strong> combines the open documents, sorted alphabetically.</p>
 </li>
 <li>
-<p><strong><code>SpreadsToFiles.jsx</code></strong> saves each spread of the active document to a separate file. The suffix will be autodetected if the document name ends with a separator (space, dot, underscore or hyphen) followed by a sequence of digits or letters equal with the number of spreads (e.g., a document <code>file_ABC.indd</code> with three spreads will be split in <code>file_A.indd</code>, <code>file_B.indd</code> and <code>file_C.indd</code>).</p>
+<p><strong><code>SpreadsToFiles</code></strong> saves each spread of the active document to a separate file. The suffix will be autodetected if the document name ends with a separator (space, dot, underscore or hyphen) followed by a sequence of digits or letters equal with the number of spreads (e.g., a document <code>file_ABC.indd</code> with three spreads will be split in <code>file_A.indd</code>, <code>file_B.indd</code> and <code>file_C.indd</code>).</p>
 </li>
 </ul>
 <hr>
@@ -434,7 +434,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><strong><code>FitTo...Forced</code></strong> resize exactly to the named dimensions.</p>
 </li>
 <li>
-<p><strong><code>TextAutosize.jsx</code></strong> auto-sizes the text frame to the content from <strong>None</strong> to <strong>Height Only</strong> and from <strong>Height Only</strong> to <strong>Height and Width</strong> (single lines are always auto-sized <strong>Height and Width</strong>). The first paragraph&#x2019;s alignment sets the frame&#x2019;s horizontal alignment; <strong>Text Frame Options &gt; Vertical Justification</strong> sets the vertical alignment:</p>
+<p><strong><code>TextAutosize</code></strong> auto-sizes the text frame to the content from <strong>None</strong> to <strong>Height Only</strong> and from <strong>Height Only</strong> to <strong>Height and Width</strong> (single lines are always auto-sized <strong>Height and Width</strong>). The first paragraph&#x2019;s alignment sets the frame&#x2019;s horizontal alignment; <strong>Text Frame Options &gt; Vertical Justification</strong> sets the vertical alignment:</p>
 <table>
 <thead>
 <tr>
@@ -550,10 +550,10 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Scale the selected objects proportionally, as a block.</p>
 <ul>
 <li>
-<p><strong><code>ScaleToPageSize.jsx</code></strong> and <strong><code>ScaleToPageMargins.jsx</code></strong> scale to the page size or page margins.</p>
+<p><strong><code>ScaleToPageSize</code></strong> and <strong><code>ScaleToPageMargins</code></strong> scale to the page size or page margins.</p>
 </li>
 <li>
-<p>The <strong><code>H</code></strong> (height) and <strong><code>W</code></strong> (width) variants scale to the height or width of the page or page margins.</p>
+<p>The <strong><code>...H</code></strong> (height) and <strong><code>...W</code></strong> (width) variants scale to the height or width of the page or page margins.</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuts</strong></summary>
@@ -592,7 +592,7 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <ul>
 <li>
-<p><strong><code>DefaultPrefs.jsx</code></strong> sets some preferences.</p>
+<p><strong><code>DefaultPrefs</code></strong> sets some preferences.</p>
 <details><summary><strong>Details</strong></summary>
 <blockquote>
 <p><strong>Rulers:</strong> Reset Zero Point <br>
@@ -620,7 +620,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </details>
 </li>
 <li>
-<p><strong><code>DefaultLayers.jsx</code></strong> adds a set of layers defined in a TSV <em>(tab&#x2011;separated values)</em> file named <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
+<p><strong><code>DefaultLayers</code></strong> adds a set of layers defined in a TSV <em>(tab&#x2011;separated values)</em> file named <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -634,7 +634,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">dielines</td>
+<td style="text-align:left"><strong>dielines</strong></td>
 <td style="text-align:center">Magenta</td>
 <td style="text-align:center">yes</td>
 <td style="text-align:center">yes</td>
@@ -642,7 +642,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:left">cut*, decoupe, die, die*cut, stanz*</td>
 </tr>
 <tr>
-<td style="text-align:left">template</td>
+<td style="text-align:left"><strong>template</strong></td>
 <td style="text-align:center">Gray</td>
 <td style="text-align:center">no</td>
 <td style="text-align:center">no</td>
@@ -667,9 +667,10 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Order</strong>: <code>above</code> or <code>below</code> existing layers (default <code>above</code>) <br>
 <strong>Variants</strong>: a list of layers that will be merged with the base layer (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
 </blockquote>
+<p>The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>DefaultSwatches.jsx</code></strong> adds a set of swatches defined in a TSV file named <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
+<p><strong><code>DefaultSwatches</code></strong> adds a set of swatches defined in a TSV file named <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -682,21 +683,21 @@ pre[data-line] .line-highlight[data-end]:after {
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">Rich Black</td>
+<td style="text-align:left"><strong>Rich Black</strong></td>
 <td style="text-align:center">process</td>
 <td style="text-align:center">cmyk</td>
 <td style="text-align:left">60 40 40 100</td>
 <td style="text-align:left"></td>
 </tr>
 <tr>
-<td style="text-align:left">RGB Grey</td>
+<td style="text-align:left"><strong>RGB Grey</strong></td>
 <td style="text-align:center">process</td>
 <td style="text-align:center">rgb</td>
 <td style="text-align:left">128 128 128</td>
 <td style="text-align:left"></td>
 </tr>
 <tr>
-<td style="text-align:left">Cut</td>
+<td style="text-align:left"><strong>Cut</strong></td>
 <td style="text-align:center">spot</td>
 <td style="text-align:center">cmyk</td>
 <td style="text-align:left">0 100 0 0</td>
@@ -718,18 +719,19 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Values</strong>: 3 values in 0&#x2013;255 range for RGB; 4 values in 0&#x2013;100 range for CMYK; 3 values in 0&#x2013;100 (L), -128&#x2013;127 (A and B) range for Lab <br>
 <strong>Variants</strong>: a list of swatches that will be replaced by the base swatch (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
 </blockquote>
+<p>The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>SaveSwatches.jsx</code></strong> saves document&#x2019;s swatches to a TSV file compatible with <strong><code>DefaultSwatches.jsx</code></strong>.</p>
+<p><strong><code>SaveSwatches</code></strong> saves document&#x2019;s swatches to a TSV file compatible with <strong><code>DefaultSwatches</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>CleanupSwatches.jsx</code></strong> converts process RGB swatches to CMYK, renames them to &#x201C;C=&#xA0;M=&#xA0;Y=&#xA0;K=&#x201D; form, removes duplicates and deletes unused. Spot colors are not changed.</p>
+<p><strong><code>CleanupSwatches</code></strong> converts process RGB swatches to CMYK, renames them to &#x201C;C=&#xA0;M=&#xA0;Y=&#xA0;K=&#x201D; form, removes duplicates and deletes unused. Spot colors are not changed.</p>
 </li>
 <li>
-<p><strong><code>DeleteGuides.jsx</code></strong> deletes all guides from the document.</p>
+<p><strong><code>DeleteGuides</code></strong> deletes all guides from the document.</p>
 </li>
 <li>
-<p><strong><code>ReplaceFonts.jsx</code></strong> substitute fonts from a list defined in a TSV file named <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
+<p><strong><code>ReplaceFonts</code></strong> substitute fonts from a list defined in a TSV file named <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -741,15 +743,15 @@ pre[data-line] .line-highlight[data-end]:after {
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">Arial</td>
+<td style="text-align:left"><strong>Arial</strong></td>
 <td style="text-align:left">Regular</td>
-<td style="text-align:left">Helvetica Neue</td>
+<td style="text-align:left"><strong>Helvetica Neue</strong></td>
 <td style="text-align:left">Regular</td>
 </tr>
 <tr>
-<td style="text-align:left">Arial</td>
+<td style="text-align:left"><strong>Arial</strong></td>
 <td style="text-align:left">Bold</td>
-<td style="text-align:left">Helvetica Neue</td>
+<td style="text-align:left"><strong>Helvetica Neue</strong></td>
 <td style="text-align:left">Bold</td>
 </tr>
 <tr>
@@ -760,25 +762,25 @@ pre[data-line] .line-highlight[data-end]:after {
 </tr>
 </tbody>
 </table>
-<p>You can use <strong><code>ShowFonts.jsx</code></strong> from <strong>Miscellaneous</strong> to get a tab delimited list of fonts for copy&#x2011;pasting.</p>
+<p>You can use <strong><code>ShowFonts</code></strong> from <strong>Miscellaneous</strong> to get a tab delimited list of document fonts for copy&#x2011;pasting.</p>
+<p>The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>DocDefaults.jsx</code></strong> runs <strong><code>DefaultPrefs.jsx</code></strong>, <strong><code>DefaultSwatches.jsx</code></strong>, <strong><code>DefaultLayers.jsx</code></strong>, <strong><code>ReplaceFonts.jsx</code></strong>, <strong><code>PageSizeFromFilename.jsx</code></strong>, sets loose pasteboard margins.</p>
+<p><strong><code>DocDefaults</code></strong> runs <strong><code>DefaultPrefs</code></strong>, <strong><code>DefaultSwatches</code></strong>, <strong><code>DefaultLayers</code></strong>, <strong><code>ReplaceFonts</code></strong>, <strong><code>PageSizeFromFilename</code></strong> and sets loose pasteboard margins.</p>
 </li>
 <li>
-<p><strong><code>DocCleanup.jsx</code></strong> runs <strong><code>DefaultPrefs.jsx</code></strong>, cleans up unused swatches, layers and pages, unlocks all items, deletes hidden items, resets scaling to 100%, converts empty text frames to simple frames, sets tight pasteboard margins.</p>
+<p><strong><code>DocCleanup</code></strong> runs <strong><code>DefaultPrefs</code></strong>, cleans up unused swatches, layers and pages, unlocks all items, deletes hidden items, resets scaling to 100%, converts empty text frames to generic frames and sets tight pasteboard margins.</p>
 </li>
 </ul>
-<p><strong>Note:</strong> The TSV files can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position (the default file can be referenced with <strong><code>@default</code></strong>).</p>
 <hr>
 <h4 class="mume-header" id="layout"><strong>Layout</strong></h4>
 
 <ul>
 <li>
-<p><strong><code>PageMarginsFromSelection.jsx</code></strong> sets the page margins to the selected objects.</p>
+<p><strong><code>PageMarginsFromSelection</code></strong> sets the page margins to the selected objects.</p>
 </li>
 <li>
-<p><strong><code>PageSizeFromFilename.jsx</code></strong> sets the page size and margins, retrieving the information from the filename:</p>
+<p><strong><code>PageSizeFromFilename</code></strong> sets the page size and margins, retrieving the information from the filename:</p>
 <table>
 <thead>
 <tr>
@@ -808,10 +810,10 @@ pre[data-line] .line-highlight[data-end]:after {
 </blockquote>
 </li>
 <li>
-<p><strong><code>PageSizeFromMargins.jsx</code></strong> resizes each page to its margins.</p>
+<p><strong><code>PageSizeFromMargins</code></strong> resizes each page to its margins.</p>
 </li>
 <li>
-<p><strong><code>PageSizeFromSelection.jsx</code></strong> resizes the current page to the selected objects (similar to <strong>Artboards &gt; Fit to Selected Art</strong> in Illustrator).</p>
+<p><strong><code>PageSizeFromSelection</code></strong> resizes the current page to the selected objects (similar to <strong>Artboards &gt; Fit to Selected Art</strong> in Illustrator).</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuts</strong></summary>
@@ -851,10 +853,10 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <ul>
 <li>
-<p><strong><code>TileAll.jsx</code></strong> invokes <strong>Window &gt; Arrange &gt; Tile All Vertically</strong> or <strong>Tile All Horizontally</strong>, depending on the current spread orientation.</p>
+<p><strong><code>TileAll</code></strong> invokes <strong>Window &gt; Arrange &gt; Tile All Vertically</strong> or <strong>Tile All Horizontally</strong>, depending on the current spread orientation.</p>
 </li>
 <li>
-<p><strong><code>ZoomToSelection.jsx</code></strong> resembles <strong>Fit Selection in Window</strong> (&#x2325;&#x2318;=), but with some improvements:</p>
+<p><strong><code>ZoomToSelection</code></strong> resembles <strong>Fit Selection in Window</strong> (&#x2325;&#x2318;=), but with some improvements:</p>
 <ul>
 <li>brings the selection a little closer;</li>
 <li>if the cursor is in the text, zooms on the whole frame;</li>
@@ -862,7 +864,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </ul>
 </li>
 <li>
-<p><strong><code>ZoomToSpreads.jsx</code></strong> zooms on the first 4 spreads.</p>
+<p><strong><code>ZoomToSpreads</code></strong> zooms on the first 3 spreads.</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuts</strong></summary>
@@ -894,25 +896,24 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <ul>
 <li>
-<p><strong><code>ClearLabels.jsx</code></strong>: Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.</p>
+<p><strong><code>ClearLabels</code></strong>: Sometimes objects that have a label attached <em>(Script Label)</em> are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.</p>
 </li>
 <li>
-<p><strong><code>Clip.jsx</code></strong>: To handle some objects it is sometimes useful to temporarily insert them into a container <em>(clipping frame)</em>. The script inserts selected objects in a clipping frame or restores them if already clipped.</p>
-<p><strong>Note:</strong> It uses the clipboard, so make sure you don&#x2019;t lose anything important.</p>
-<p><strong><code>ClipUndo.jsx</code></strong> restores one or several clipped objects at once.</p>
+<p><strong><code>Clip</code></strong>: To handle some objects it is sometimes useful to temporarily insert them into a container <em>(clipping frame)</em>. The script inserts selected objects in a clipping frame or restores them if already clipped. It uses the clipboard, so make sure you don&#x2019;t lose anything important.</p>
+<p><strong><code>ClipUndo</code></strong> restores one or several clipped objects at once.</p>
 </li>
 <li>
-<p><strong><code>HW.jsx</code></strong> labels selected objects &#x201C;HW&#x201D; and adds a 10% bottom guide on the current page.</p>
+<p><strong><code>HW</code></strong> labels &#x201C;HW&#x201D; selected objects and adds a bottom guide on each page, at 10% of the height of the visible area.</p>
 </li>
 <li>
-<p><strong><code>LabelPage.jsx</code></strong> adds a custom label on the current page slug, on the <strong>info</strong> layer.</p>
+<p><strong><code>LabelPage</code></strong> adds a custom label on the current page slug, on the <strong>info</strong> layer.</p>
 </li>
 <li>
-<p><strong><code>LabelPageRatios.jsx</code></strong> adds a label with its aspect ratio to the slug of each page, on the <strong>info</strong> layer.</p>
+<p><strong><code>LabelPageRatios</code></strong> adds on the slug of each page a label with its aspect ratio, on the <strong>info</strong> layer.</p>
 </li>
 <li>
-<p><strong><code>QR.jsx</code></strong> adds a QR code on each page of the active document or a separate file with the same name and the suffix &#x201C;_QR&#x201D;.</p>
-<p><strong><code>QRBatch.jsx</code></strong> retrieves a list of codes from a TSV file named <strong><code>qr.txt</code></strong> and adds them to existing documents or creates separate files:</p>
+<p><strong><code>QR</code></strong> adds a QR code on each page of the active document or a separate file with the same name and the suffix &#x201C;_QR&#x201D;.</p>
+<p><strong><code>QRBatch</code></strong> retrieves a list of codes from a TSV file named <strong><code>qr.txt</code></strong> and adds them to existing documents or creates separate files:</p>
 <table>
 <thead>
 <tr>
@@ -940,20 +941,20 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 <blockquote>
-<p><strong>Filename</strong>: document name (it must be valid for <em>Doc</em>) <br>
+<p><strong>Filename</strong>: document name <br>
 <strong>Code</strong>: any string <br>
-<strong>Doc</strong>: any string: on document; leave empty or omit for separate file</p>
+<strong>Doc</strong>: any string: on existing document; empty or missing: on separate file</p>
 </blockquote>
 <p><strong>Note:</strong> You can insert &#x201C;|&#x201D; for manually splitting the text into several lines.</p>
 </li>
 <li>
-<p><strong><code>ShowFonts.jsx</code></strong> shows all fonts used in the current document (useful with <strong><code>ReplaceFonts.jsx</code></strong>).</p>
+<p><strong><code>ShowFonts</code></strong> shows all fonts used in the current document.</p>
 </li>
 <li>
-<p><strong><code>ShowProfiles.jsx</code></strong> shows all color profiles available to InDesign.</p>
+<p><strong><code>ShowProfiles</code></strong> shows all color profiles available to InDesign.</p>
 </li>
 <li>
-<p><strong><code>ShowProperties.jsx</code></strong> shows properties and methods of a selected object (useful for debugging).</p>
+<p><strong><code>ShowProperties</code></strong> shows properties and methods of a selected object.</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuts</strong></summary>
@@ -1003,7 +1004,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>&#xA9; 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md &#x2022; August 1, 2021</p>
+<p>README.md &#x2022; August 14, 2021</p>
 
       </div>
       
