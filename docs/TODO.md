@@ -1,18 +1,23 @@
 # TO DO
 
-- [ ] `upd` ParseInfo: Use relative paths for includes
-- [ ] `upd` ParseInfo: Ignore columns starting with `#`
+- [ ] `upd` `ParseInfo()`: Use relative paths for includes
+- [ ] `upd` `ParseInfo()`: Ignore columns starting with `#`
 - [ ] `upd` Make a custom object style for 'Visible area' frame [#123](https://github.com/pchiorean/Indentz/issues/123)
-- [ ] `add` `Report()`: Add button to save errors to file
+- [ ] `new` `Report()`: Add button to save errors to file
 - [ ] `fix` Check for converted documents
+- [ ] `fix` Fix static/edittext width (see [#](https://twitter.com/indiscripts/status/1408788941550108674))
+- [ ] `ref` `for` loops: init the length in the initialization to cache it, not in the condition
+- [ ] `ref` Use `===` instead of `==`
+- [ ] `ref` `?` K&R, 2 spaces
 
 ### DefaultSwatches
+- [ ] `upd` Add unnamed colors
 - [ ] `fix` Check values on parsing
 
 ### DocCleanup
-- [ ] `add` Ask to delete empty frames
-- [ ] `add` Remove unused masters
-- [ ] `add` Remove unused styles and groups [#](https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331)
+- [ ] `new` Ask to delete empty frames
+- [ ] `new` Remove unused masters
+- [ ] `new` Remove unused styles and groups [#](https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331)
 - [ ] `fix` Fix 'sticky' unused swatches
 
 ### FitTo
@@ -22,14 +27,18 @@
 ### PageSizeFromFilename
 - [ ] `fix` Error on pages set to 1:X scale [#129](https://github.com/pchiorean/Indentz/issues/129)
 
+### PageSizeFromSelection
+- [ ] `upd` Without selection fit all pages to their contents
+- [ ] `fix` For text frames use outlined text bounds
+
 ### PrepareForExport
 - [ ] `fix` Ignore hidden layers
 - [ ] `upd` Read layer variants from `layers.txt`, fallback to defaults
 
 ### QuickExport
-- [ ] `add` Add history for dropdowns
-- [ ] `add` JPG & `?`TIFF export profiles
-- [ ] `add` `?` 'View PDF after exporting' checkbox, alert if > 20 files
+- [ ] `new` Add history for dropdowns
+- [ ] `new` JPG & `?`TIFF export profiles
+- [ ] `new` `?` 'View PDF after exporting' checkbox, alert if > 20 files
 - [ ] `upd` `?` JSONify preferences (see `hardwareConfig.json`, `Export_Multiple_PDF_JPG.jsx`)
 - [ ] `upd` `?` Limit export subfolder to suffix's first word
 
@@ -50,12 +59,11 @@
 
 ###### Legend:
 
-`add` - new features\
+`new` - new features or first release\
 `upd` - changes in existing functionality\
 `brk` - changes in existing functionality that break compatibility\
 `ref` - code changes that neither fixes a bug or adds a feature\
 `sty` - everything related to styling/formatting\
 `del` - removed features\
 `fix` - bug fixes\
-`doc` - changes in documentation\
-`new` - first release
+`doc` - changes in documentation
