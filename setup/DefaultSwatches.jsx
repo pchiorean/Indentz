@@ -1,5 +1,5 @@
 /*
-	Default swatches v4.2.1 (2021-08-04)
+	Default swatches v4.2.2 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 5-column TSV file named "swatches.txt":
@@ -19,7 +19,7 @@
 	   (case insensitive; '*' and '?' wildcards accepted)
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
-	Blank lines and those prefixed with "#" are ignored; '@"file.txt"' includes records from 'file.txt'.
+	Blank lines and those prefixed with "#" are ignored; "@file.txt" includes records from 'file.txt'.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -56,7 +56,7 @@ function main() {
 	if (data.errors.length > 0) { Report(data.errors, decodeURI(infoFile.getRelativeURI(doc.filePath))); exit() };
 	if (data.records.length == 0) exit();
 
-	for (var i = 0; i < data.records.length; i++) {
+	for (var i = 0, n = data.records.length; i < n; i++) {
 		var color = AddSwatch(
 			data.records[i].name,
 			data.records[i].model,
@@ -89,7 +89,7 @@ function main() {
 		caseSensitive = (typeof caseSensitive !== 'undefined') ? caseSensitive : true;
 		var item;
 		if (!caseSensitive && typeof searchValue === 'string') searchValue = searchValue.toLowerCase();
-		for (var i = 0; i < array.length; i++) {
+		for (var i = 0, n = array.length; i < n; i++) {
 			item = array[i];
 			if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
 			// if (item === searchValue) return true;
@@ -190,7 +190,7 @@ function Report(message, title, showFilter, showCompact) {
 	var list = w.add('edittext', undefined, message.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = function() {
-		for (var i = 0, width = 50; i < message.length;
+		for (var i = 0, n = message.length, width = 50; i < n;
 		width = Math.max(width, message[i].toString().length), i++);
 		return width;
 	}();
@@ -204,7 +204,7 @@ function Report(message, title, showFilter, showCompact) {
 			str = str.replace(/\?/g, "."); // '?' -> any character
 			if (/[ *]/g.test(str)) str = "(" + str.replace(/ +|\*/g, ").*(") + ")"; // space or '*' -> AND
 			str = RegExp(str, "gi");
-			for (var i = 0, result = []; i < message.length; i++) {
+			for (var i = 0, n = message.length, result = []; i < n; i++) {
 				var line = message[i].toString().replace(/^\s+?/g, "");
 				if (str.test(line)) result.push(line.replace(/\r|\n/g, "\u00b6").replace(/\t/g, "\\t"));
 			};

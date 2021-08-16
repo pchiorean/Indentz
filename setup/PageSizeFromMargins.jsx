@@ -1,6 +1,6 @@
 /*
-	Page size from margins v1.3.1 (2020-11-22)
-	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+	Page size from margins v1.3.2 (2021-08-16)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets the page size to the page margins.
 
@@ -36,7 +36,7 @@ function main() {
 	app.generalPreferences.objectsMoveWithPage = false;
 	doc.adjustLayoutPreferences.enableAdjustLayout = false;
 	doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
-	for (var i = 0; i < doc.pages.length; i++) {
+	for (var i = 0, n = doc.pages.length; i < n; i++) {
 		var page = doc.pages[i];
 		var mgPg = page.marginPreferences;
 		if (mgPg.top + mgPg.left + mgPg.bottom + mgPg.right == 0) continue;

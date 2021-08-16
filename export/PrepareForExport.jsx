@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for export v2.1 (2021-06-18)
+	Prepare for export v2.1.1 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves special colors to separate spreads.
@@ -44,7 +44,6 @@ var layerNames = {
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, "Prepare for export");
 
-
 function main() {
 	if (!infoLayer.isValid) doc.layers.add({ name: "info", layerColor: UIColors.CYAN })
 	else infoLayer.visible = true;
@@ -53,7 +52,7 @@ function main() {
 	doc.layers.everyItem().locked = false;
 
 	var matched = { dielines: [], varnish: [], foil: [], white: [] };
-	for (var i = 0, layer; i < doc.layers.length; i++) {
+	for (var i = 0, n = doc.layers.length, layer; i < n; i++) {
 		layer = doc.layers[i];
 		for (var variant in layerNames) {
 			if (IsIn(layer.name, layerNames[variant], false)) {
@@ -87,16 +86,16 @@ function main() {
 	};
 
 	var dieLayerSlug = (matched.varnish.length > 0 || matched.foil.length > 0 || matched.white.length > 0);
-	for (var i = 0; i < matched.dielines.length > 0; i++) MoveSpecialColors(matched.dielines[i], dieLayerSlug);
-	for (var i = 0; i < matched.varnish.length > 0; i++) MoveSpecialColors(matched.varnish[i], true);
-	for (var i = 0; i < matched.foil.length > 0; i++) MoveSpecialColors(matched.foil[i], true);
-	for (var i = 0; i < matched.white.length > 0; i++) MoveSpecialColors(matched.white[i], true);
+	for (var i = 0; i < matched.dielines.length; i++) MoveSpecialColors(matched.dielines[i], dieLayerSlug);
+	for (var i = 0; i < matched.varnish.length; i++) MoveSpecialColors(matched.varnish[i], true);
+	for (var i = 0; i < matched.foil.length; i++) MoveSpecialColors(matched.foil[i], true);
+	for (var i = 0; i < matched.white.length; i++) MoveSpecialColors(matched.white[i], true);
 };
 
 // Move all items from 'layer' to a separate spread
 function MoveSpecialColors(layer, /*bool*/slug) {
 	var thisSpread, nextSpread, obj;
-	for (var i = 0; i < doc.spreads.length; i++) {
+	for (var i = 0, n = doc.spreads.length; i < n; i++) {
 		thisSpread = doc.spreads[i];
 		if (!LayerHasItems(thisSpread, layer)) continue;
 		nextSpread = thisSpread.duplicate(LocationOptions.AFTER, thisSpread);
@@ -124,7 +123,7 @@ function MoveSpecialColors(layer, /*bool*/slug) {
 
 	// Check if 'spread' has items on 'layer'
 	function LayerHasItems(spread, layer) {
-		for (var i = 0; i < spread.pageItems.length; i++) {
+		for (var i = 0, n = spread.pageItems.length; i < n; i++) {
 			if (spread.pageItems.item(i).visible == false) continue;
 			if (spread.pageItems.item(i).itemLayer.name == layer.name) return true;
 		};
@@ -167,7 +166,7 @@ function IsIn(searchValue, array, caseSensitive) {
 	caseSensitive = (typeof caseSensitive !== 'undefined') ? caseSensitive : true;
 	var item;
 	if (!caseSensitive && typeof searchValue === 'string') searchValue = searchValue.toLowerCase();
-	for (var i = 0; i < array.length; i++) {
+	for (var i = 0, n = array.length; i < n; i++) {
 		item = array[i];
 		if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
 		// if (item === searchValue) return true;

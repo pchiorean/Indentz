@@ -1,5 +1,5 @@
 /*
-	Fit frame to text v2.3.2 (2021-07-19)
+	Fit frame to text v2.3.3 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Auto-sizes the text frame to the content from None to Height Only to Height and Width
@@ -38,7 +38,7 @@ app.doScript(main, ScriptLanguage.javascript, sel,
 
 function main(sel) {
 	if (sel[0].hasOwnProperty("parentTextFrames")) var sel = sel[0].parentTextFrames;
-	for (var i = 0; i < sel.length; i++)
+	for (var i = 0, n = sel.length; i < n; i++)
 		if (sel[i].constructor.name == "TextFrame") FitFrame2Text(sel[i]);
 };
 

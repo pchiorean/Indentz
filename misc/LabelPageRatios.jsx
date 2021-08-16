@@ -1,5 +1,5 @@
 /*
-	Page ratios v2.1.1 (2021-07-09)
+	Page ratios v2.1.2 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a label (ratio) on each page's slug.
@@ -14,7 +14,7 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 	UndoModes.ENTIRE_SCRIPT, "Label page ratios");
 
 function main() {
-	for (var i = 0; i < doc.pages.length; i++) {
+	for (var i = 0, n = doc.pages.length; i < n; i++) {
 		var page = doc.pages.item(i), size = Bounds(page);
 		var ratio = ((size[3] - size[1]) / (size[2] - size[0])).toFixed(3);
 		SlugInfo(page, ratio);

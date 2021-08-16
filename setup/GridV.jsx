@@ -1,5 +1,5 @@
 /*
-	V grid 1.1 (2021-06-18)
+	V grid 1.1.1 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 */
 
@@ -17,7 +17,7 @@ function main() {
 	try { doc.layers.itemByName("guides").printable = false } catch (_) {};
 	try { doc.layers.itemByName("guides").locked = false } catch (_) {};
 
-	for (var i = 0; i < doc.pages.length; i++) {
+	for (var i = 0, n = doc.pages.length; i < n; i++) {
 		var page = doc.pages[i];
 		var tgBounds = Bounds(page).page.visible || Bounds(page).page.size;
 		var tgSize = { width: tgBounds[3] - tgBounds[1], height: tgBounds[2] - tgBounds[0] };

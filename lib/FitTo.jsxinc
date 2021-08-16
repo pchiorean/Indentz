@@ -1,5 +1,5 @@
 /*
-	FitTo v5.5 (2021-07-21)
+	FitTo v5.5.1 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Resizes the selected objects to the page/spread's size/margins/visible area/bleed.
@@ -68,7 +68,7 @@ while (obj = sel.shift()) {
 		if (fitted = Fit2Bounds(obj)) { newSel.push(fitted) } else newSel.push(obj);
 	} else if (FORCED) { // If FORCED, include objects on pasteboard
 		var pages = app.activeWindow.activeSpread.pages;
-		for (var i = 0; i < pages.length; i++) {
+		for (var i = 0, n = pages.length; i < n; i++) {
 			if (obj.geometricBounds[3] <= pages[0].bounds[3]) { page = pages[0]; break };
 			if (obj.geometricBounds[1] >= pages[i].bounds[1] &&
 				obj.geometricBounds[3] <= pages[i].bounds[3]) { page = pages[i]; break };

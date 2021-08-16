@@ -1,5 +1,5 @@
 /*
-	QR code v3.5.4 (2021-07-31)
+	QR code v3.5.5 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -65,7 +65,7 @@ function main() {
 function MakeQROnDoc(code, /*bool*/white) {
 	var idLayer = MakeIDLayer(doc);
 	doc.activeLayer = idLayer;
-	for (var i = 0; i < doc.pages.length; i++) {
+	for (var i = 0, n = doc.pages.length; i < n; i++) {
 		var page = doc.pages.item(i);
 		// Remove old codes
 		var item, items = page.pageItems.everyItem().getElements();
@@ -395,7 +395,7 @@ function Report(message, title, showFilter, showCompact) {
 	var list = w.add('edittext', undefined, message.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = function() {
-		for (var i = 0, width = 50; i < message.length;
+		for (var i = 0, n = message.length, width = 50; i < n;
 		width = Math.max(width, message[i].toString().length), i++);
 		return width;
 	}();
@@ -409,7 +409,7 @@ function Report(message, title, showFilter, showCompact) {
 			str = str.replace(/\?/g, "."); // '?' -> any character
 			if (/[ *]/g.test(str)) str = "(" + str.replace(/ +|\*/g, ").*(") + ")"; // space or '*' -> AND
 			str = RegExp(str, "gi");
-			for (var i = 0, result = []; i < message.length; i++) {
+			for (var i = 0, n = message.length, result = []; i < n; i++) {
 				var line = message[i].toString().replace(/^\s+?/g, "");
 				if (str.test(line)) result.push(line.replace(/\r|\n/g, "\u00b6").replace(/\t/g, "\\t"));
 			};

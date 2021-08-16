@@ -1,6 +1,6 @@
 /*
-	Quick export v2.10.1 (2021-08-14)
-	Paul Chiorean (jpeg@basement.ro)
+	Quick export v2.10.2 (2021-08-16)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
 
@@ -330,7 +330,7 @@ if (folderMode) {
 	docs = []; while (name = names.shift()) docs.push(app.documents.itemByName(name));
 };
 // -- Init progress bar
-for (var i = 0, pbWidth = 50; i < docs.length; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
+for (var i = 0, n = docs.length, pbWidth = 50; i < n; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
 var progressBar = new ProgressBar("Exporting", pbWidth + 10);
 var maxCounter = docs.length * ((ui.preset1.isOn.value ? 1 : 0) + (ui.preset2.isOn.value ? 1 : 0));
 progressBar.reset(maxCounter);
@@ -361,20 +361,20 @@ while (doc = docs.shift()) {
 	};
 	// Check fonts
 	var usedFonts = doc.fonts.everyItem().getElements();
-	for (var f = 0; f < usedFonts.length; f++) {
-		if (usedFonts[f].status !== FontStatus.INSTALLED) {
-			errors.push(doc.name + ": Font '" + usedFonts[f].name.replace(/\t/g, " ") + "' is " +
-				String(usedFonts[f].status).toLowerCase().replace("_", " "));
+	for (var i = 0, n = usedFonts.length; i < n; i++) {
+		if (usedFonts[i].status !== FontStatus.INSTALLED) {
+			errors.push(doc.name + ": Font '" + usedFonts[i].name.replace(/\t/g, " ") + "' is " +
+				String(usedFonts[i].status).toLowerCase().replace("_", " "));
 		};
 	};
 	// Update links
 	if (ui.output.options.updateLinks.value) {
-		for (var l = 0; l < doc.links.length; l++) {
-			switch (doc.links[l].status) {
+		for (var i = 0, n = doc.links.length; i < n; i++) {
+			switch (doc.links[i].status) {
 				case LinkStatus.LINK_OUT_OF_DATE:
-					doc.links[l].update(); break;
+					doc.links[i].update(); break;
 				case LinkStatus.LINK_MISSING:
-					errors.push(doc.name + ": Link '" + doc.links[l].name + "' not found."); break;
+					errors.push(doc.name + ": Link '" + doc.links[i].name + "' not found."); break;
 			};
 		};
 	};
@@ -416,7 +416,7 @@ while (doc = docs.shift()) {
 		// Export PDF
 		if (ui.output.options.split.value) {
 			var t = exp.exportSpreads.value ? doc.spreads : doc.pages;
-			for (var p = 0; p < t.length; p++) {
+			for (var p = 0, n = t.length; p < n; p++) {
 				var baseName = decodeURI(doc.name).replace(/\.indd$/i, "");
 				var fileSufx = RegExp("([ ._-])([a-zA-Z]{" + t.length + "})$", "i").exec(baseName);
 				baseName = fileSufx ?
@@ -463,7 +463,7 @@ function GetFilesRecursively(folder) {
 	var files = [],
 		fileList = folder.getFiles(),
 		i, file;
-	for (var i = 0; i < fileList.length; i++) {
+	for (var i = 0, n = fileList.length; i < n; i++) {
 		file = fileList[i];
 		if (file instanceof Folder) files = files.concat(GetFilesRecursively(file));
 		else if (file instanceof File && file.name.match(/\.indd$/i)) files.push(file);
@@ -509,9 +509,9 @@ function UniqueName(name) {
 		if (!(f instanceof File) || !/\.pdf$/i.test(f)) return false;
 		return baseRE.test(decodeURI(f.name));
 	});
-	for (var j = 0, maxIndex = 0; j < pdfFiles.length; j++) { // Get max index
-		var n = indxRE.exec(decodeURI(pdfFiles[j].name).replace(/\.pdf$/i, ""));
-		if (!!n) maxIndex = Math.max(maxIndex, Number(n[1]));
+	for (var j = 0, n = pdfFiles.length, maxIndex = 0; j < n; j++) { // Get max index
+		var nn = indxRE.exec(decodeURI(pdfFiles[j].name).replace(/\.pdf$/i, ""));
+		if (!!nn) maxIndex = Math.max(maxIndex, Number(nn[1]));
 	};
 	if (ui.output.options.overwrite.value) {
 		if (maxIndex != 0) fn = fn.replace(/\.pdf$/i, "") + (!!suffix ? "" : " ") + String(maxIndex) + ".pdf";
@@ -594,7 +594,7 @@ function ReadSettings() {
 	ui.output.dest.isOn.onClick();
 	function FindPreset(name, array) {
 		if (!app.pdfExportPresets.itemByName(name).isValid) return 0;
-		for (var i = 0; i < array.length; i++) if (array[i].toString() === name) return array[i].index;
+		for (var i = 0, n = array.length; i < n; i++) if (array[i].toString() === name) return array[i].index;
 	};
 };
 
@@ -725,7 +725,7 @@ function Report(message, title, showFilter, showCompact) {
 	var list = w.add('edittext', undefined, message.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = function() {
-		for (var i = 0, width = 50; i < message.length;
+		for (var i = 0, n = message.length, width = 50; i < n;
 		width = Math.max(width, message[i].toString().length), i++);
 		return width;
 	}();
@@ -739,7 +739,7 @@ function Report(message, title, showFilter, showCompact) {
 			str = str.replace(/\?/g, "."); // '?' -> any character
 			if (/[ *]/g.test(str)) str = "(" + str.replace(/ +|\*/g, ").*(") + ")"; // space or '*' -> AND
 			str = RegExp(str, "gi");
-			for (var i = 0, result = []; i < message.length; i++) {
+			for (var i = 0, n = message.length, result = []; i < n; i++) {
 				var line = message[i].toString().replace(/^\s+?/g, "");
 				if (str.test(line)) result.push(line.replace(/\r|\n/g, "\u00b6").replace(/\t/g, "\\t"));
 			};

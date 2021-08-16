@@ -9,7 +9,7 @@ function Relink(oldLinks, newLink) {
 
 	// Check if document has at least one of oldLinks
 	if (oldLinks.constructor.name !== "Array") oldLinks = Array(oldLinks);
-	for (var i = 0, isFound = false; i < oldLinks.length; i++)
+	for (var i = 0, n = oldLinks.length, isFound = false; i < n; i++)
 		if (isIn(oldLinks[i], links)) { isFound = true; break };
 	if (!isFound) return false;
 
@@ -25,7 +25,7 @@ function Relink(oldLinks, newLink) {
 	return true;
 
 	function isIn(item, array) {
-		for (var i = 0; i < array.length; i++) {
+		for (var i = 0, n = array.length; i < n; i++) {
 			if (item.constructor.name == "String") {
 				if ((array[i].constructor.name == "Link" ? array[i].name : array[i])
 					.lastIndexOf(item) != -1) return true;

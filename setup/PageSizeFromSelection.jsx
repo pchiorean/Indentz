@@ -1,5 +1,5 @@
 /*
-	Page size from selection v1.8 (2021-06-04)
+	Page size from selection v1.8.1 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets the page size to the selected objects bounds.
@@ -43,12 +43,12 @@ function main() {
 	// Get selection's parent page
 	var selObj = sel; var s = selObj[0].parent;
 	while (s.constructor.name != "Spread") s = s.parent; var page = s.pages[0];
-	for (var i = 0; i < selObj.length; i++) {
+	for (var i = 0, n = selObj.length; i < n; i++) {
 		if (selObj[i].parentPage != null) { page = selObj[i].parentPage; break }
 	}
 	// Get selection dimensions
 	var size = selObj[0].geometricBounds;
-	for (var i = 1; i < selObj.length; i++) {
+	for (var i = 1, n = selObj.length; i < n; i++) {
 		size[0] = Math.min(selObj[i].geometricBounds[0], size[0]);
 		size[1] = Math.min(selObj[i].geometricBounds[1], size[1]);
 		size[2] = Math.max(selObj[i].geometricBounds[2], size[2]);

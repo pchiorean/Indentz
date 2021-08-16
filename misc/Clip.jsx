@@ -1,5 +1,5 @@
 /*
-	Clip v2.6.1 (2021-06-15)
+	Clip v2.6.2 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Clips selected objects in a clipping frame (or releases them if already clipped).
@@ -39,7 +39,7 @@ function Clip(items) {
 		// If multiple objects are selected, group them
 		if (items.length > 1) {
 			var objects = [];
-			for (var i = 0; i < items.length; i++) if (!items[i].locked) objects.push(items[i]);
+			for (var i = 0, n = items.length; i < n; i++) if (!items[i].locked) objects.push(items[i]);
 			obj = doc.groups.add(objects);
 			obj.name = "<auto clipping group>";
 			size = obj.geometricBounds;

@@ -1,5 +1,5 @@
 /*
-	Show used fonts 1.4.2 (2021-07-28)
+	Show used fonts 1.4.3 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Shows all fonts used in the current document.
@@ -12,7 +12,7 @@ if (app.documents.length == 0) exit();
 var usedFonts = app.activeDocument.fonts.everyItem().getElements();
 var fontName1 = [], fontName2 = [], fontName3 = [], fontName4 = [], fontName5 = [];
 
-for (var i = 0; i < usedFonts.length; i++) {
+for (var i = 0, n = usedFonts.length; i < n; i++) {
 	switch (String(usedFonts[i].status)) {
 		case "INSTALLED": fontName1.push(usedFonts[i].fontFamily + "\t" + usedFonts[i].fontStyleName); break;
 		case "SUBSTITUTED": fontName2.push(usedFonts[i].fontFamily + "\t" + usedFonts[i].fontStyleName); break;
@@ -52,7 +52,7 @@ function Report(message, title, showFilter, showCompact) {
 	var list = w.add('edittext', undefined, message.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = function() {
-		for (var i = 0, width = 50; i < message.length;
+		for (var i = 0, n = message.length, width = 50; i < n;
 		width = Math.max(width, message[i].toString().length), i++);
 		return width;
 	}();
@@ -66,7 +66,7 @@ function Report(message, title, showFilter, showCompact) {
 			str = str.replace(/\?/g, "."); // '?' -> any character
 			if (/[ *]/g.test(str)) str = "(" + str.replace(/ +|\*/g, ").*(") + ")"; // space or '*' -> AND
 			str = RegExp(str, "gi");
-			for (var i = 0, result = []; i < message.length; i++) {
+			for (var i = 0, n = message.length, result = []; i < n; i++) {
 				var line = message[i].toString().replace(/^\s+?/g, "");
 				if (str.test(line)) result.push(line.replace(/\r|\n/g, "\u00b6").replace(/\t/g, "\\t"));
 			};

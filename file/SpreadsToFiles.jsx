@@ -1,5 +1,5 @@
 /*
-	SpreadsToFiles v1.7.6 (2021-07-31)
+	SpreadsToFiles v1.7.7 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
@@ -43,9 +43,9 @@ var sufx = detectedSufx ? String(detectedSufx) : GetSuffix();
 
 var progressBar = new ProgressBar("Saving");
 progressBar.reset(doc.spreads.length);
-for (var i = 0; i < doc.spreads.length; i++) {
+for (var i = 0, n = doc.spreads.length; i < n; i++) {
 	// Filter out current spread
-	for (var r = [], j = 0; j < doc.spreads.length; j++) if (j != i) r.push(j);
+	for (var j = 0, m = doc.spreads.length, r = []; j < m; j++) if (j != i) r.push(j);
 	// Disable user interaction and open a copy
 	if (sufx == detectedSufx) baseName = baseName.replace(detectedSufx, "");
 	var inc = 0;

@@ -1,6 +1,6 @@
 /*
-	Page margins from selection v1.3.1 (2020-11-22)
-	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+	Page margins from selection v1.3.2 (2021-08-16)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets the page margins to the selected objects bounds.
 
@@ -21,13 +21,13 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 function main() {
 	// Get selection's parent page
 	var selObj = sel, page;
-	for (var i = 0; i < selObj.length; i++) {
+	for (var i = 0, n = selObj.length; i < n; i++) {
 		if (selObj[i].parentPage != null) { page = selObj[i].parentPage; break }
 	}
 	if (page == null) { alert("Select an object on page and try again."); exit() }
 	// Get selection dimensions
 	var size = selObj[0].visibleBounds;
-	for (var i = 1; i < selObj.length; i++) {
+	for (var i = 1, n = selObj.length; i < n; i++) {
 		size[0] = Math.min(selObj[i].visibleBounds[0], size[0]);
 		size[1] = Math.min(selObj[i].visibleBounds[1], size[1]);
 		size[2] = Math.max(selObj[i].visibleBounds[2], size[2]);

@@ -1,5 +1,5 @@
 /*
-	Page size from filename v2.1.1 (2021-07-31)
+	Page size from filename v2.1.2 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets every page size and margins according to the filename.
@@ -87,7 +87,7 @@ function main() {
 		}
 	} else {
 		// Sanitize dimensions array
-		for (var i = 0; i < dimensions.length; i++) {
+		for (var i = 0, n = dimensions.length; i < n; i++) {
 			dimensions[i] = dimensions[i].replace(/[_-]/g, ""); // Clean up underscores
 			dimensions[i] = dimensions[i].replace(/\s/g, ""); // Clean up whitespace
 			dimensions[i] = dimensions[i].replace(/[cm]m/g, ""); // Clean up cm/mm
@@ -117,7 +117,7 @@ function main() {
 		}
 	}
 	// Resize pages
-	for (var i = 0; i < doc.pages.length; i++) {
+	for (var i = 0, n = doc.pages.length; i < n; i++) {
 		var page = doc.pages[i];
 		if (page.parent.pages.length > 1) { isSpread = true; continue } // Skip multipage spreads
 		page.layoutRule = LayoutRuleOptions.OFF;
@@ -201,7 +201,7 @@ function MarkVisibleArea(page) { // Draw a 'visible area' frame
 }
 
 function FindLayer(names) { // Find first valid layer from a list of names
-	for (var i = 0; i < names.length; i++) {
+	for (var i = 0, n = names.length; i < n; i++) {
 		var layer = doc.layers.item(names[i]);
 		if (layer.isValid) return names[i];
 	}

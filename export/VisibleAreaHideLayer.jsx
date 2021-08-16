@@ -1,5 +1,5 @@
 /*
-	Hide visible area v2.1 (2021-06-13)
+	Hide visible area v2.1.1 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides the 'visible area' layer (and variants).
@@ -16,7 +16,7 @@ if (app.documents.length == 0) exit();
 		"visible area", "rahmen", "sicht*", "*vi?ib*", "vis?*"
 	];
 
-	for (var i = 0; i < doc.layers.length; i++)
+	for (var i = 0, n = doc.layers.length; i < n; i++)
 		if (IsIn(doc.layers[i].name, layerNames, false)) doc.layers[i].visible = false;
 
 	// Modified from FORWARD.Util functions, by Richard Harrington
@@ -25,7 +25,7 @@ if (app.documents.length == 0) exit();
 		caseSensitive = (typeof caseSensitive !== 'undefined') ? caseSensitive : true;
 		var item;
 		if (!caseSensitive && typeof searchValue === 'string') searchValue = searchValue.toLowerCase();
-		for (var i = 0; i < array.length; i++) {
+		for (var i = 0, n = array.length; i < n; i++) {
 			item = array[i];
 			if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
 			// if (item === searchValue) return true;

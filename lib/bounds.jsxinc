@@ -1,5 +1,5 @@
 /*
-	Bounds v5.0.1 (2021-08-03)
+	Bounds v5.0.2 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Returns an object containing the geometric bounds of the given page,
@@ -76,7 +76,7 @@ return {
 				if (frame.label == "visible area" || frame.name == "<visible area>") v.push(frame);
 			if (v.length == 0) return undefined;
 			var vis = v[0].geometricBounds;
-			for (var i = 1; i < v.length; i++) {
+			for (var i = 1, n = v.length; i < n; i++) {
 				vis[0] = Math.min(v[i].geometricBounds[0], vis[0]);
 				vis[1] = Math.min(v[i].geometricBounds[1], vis[1]);
 				vis[2] = Math.max(v[i].geometricBounds[2], vis[2]);
@@ -103,7 +103,7 @@ return {
 		size: [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ],
 		margins: (function() {
 			var fm, lm, p = page.parent.pages;
-			for (var i = 0; i < p.length; i++) {
+			for (var i = 0, n = p.length; i < n; i++) {
 				var m = p[i].marginPreferences;
 				if (m.top + m.left + m.bottom + m.right > 0) { fm = p[i]; break };
 			};
@@ -131,7 +131,7 @@ return {
 				if (frame.label == "visible area" || frame.name == "<visible area>") v.push(frame);
 			if (v.length == 0) return undefined;
 			var vis = v[0].geometricBounds;
-			for (var i = 1; i < v.length; i++) {
+			for (var i = 1, n = v.length; i < n; i++) {
 				vis[0] = Math.min(v[i].geometricBounds[0], vis[0]);
 				vis[1] = Math.min(v[i].geometricBounds[1], vis[1]);
 				vis[2] = Math.max(v[i].geometricBounds[2], vis[2]);

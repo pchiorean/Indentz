@@ -1,5 +1,5 @@
 /*
-	Zoom to selection v2.2 (2021-07-09)
+	Zoom to selection v2.2.1 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the selected objects. If no selection, it zooms to the current spread.
@@ -65,7 +65,7 @@ if (sel.length == 0 || sel[0].constructor.name == "Guide") {
 		while (obj.constructor.name != "TextFrame") obj = obj.parent; app.select(obj);
 	};
 	targetBounds = obj.visibleBounds;
-	for (var i = 1; i < selObj.length; i++) { // Get selection's extremities
+	for (var i = 1, n = selObj.length; i < n; i++) { // Get selection's extremities
 		targetBounds[0] = Math.min(selObj[i].visibleBounds[0], targetBounds[0]);
 		targetBounds[1] = Math.min(selObj[i].visibleBounds[1], targetBounds[1]);
 		targetBounds[2] = Math.max(selObj[i].visibleBounds[2], targetBounds[2]);

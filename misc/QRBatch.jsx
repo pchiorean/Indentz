@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.6.1 (2021-07-31)
+	Batch QR codes v2.6.2 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -148,8 +148,8 @@ function main() {
 	ui.list.onChange = function() {
 		if (ui.list.selection) {
 			queue = [];
-			for (var i = 0; i < ui.list.selection.length; i++) {
-				for (var j = 0; j < validLines.length; j++) {
+			for (var i = 0, n = ui.list.selection.length; i < n; i++) {
+				for (var j = 0, m = validLines.length; j < m; j++) {
 					if (Number(ui.list.selection[i].toString()) == validLines[j]) {
 						queue.push(Number(ui.list.selection[i].toString()));
 						break;
@@ -193,7 +193,7 @@ function main() {
 	errors = [], isModified = false;
 	if (queue.length > 1) var progressBar = new ProgressBar("Processing", pbWidth);
 	progressBar && progressBar.reset(queue.length);
-	for (var i = 0; i < queue.length; i++) {
+	for (var i = 0, n = queue.length; i < n; i++) {
 		var item = rawData[queue[i]-1];
 		if (item.fn == "" || item.fn.toString().slice(0,1) == "\u0023") { progressBar.update(i+1, ""); continue };
 		progressBar && progressBar.update(i+1, item.fn);
@@ -206,7 +206,7 @@ function main() {
 	progressBar && progressBar.close();
 	if (infoFile.exists && isModified && infoFile.open("w")) {
 		infoFile.encoding = "UTF-8";
-		for (var i = 0; i < rawData.length; i++) {
+		for (var i = 0, n = rawData.length; i < n; i++) {
 			infoFile.writeln(
 				(rawData[i].exported ? "# " : "") +
 				(rawData[i].fn ? rawData[i].fn : "") +
@@ -224,7 +224,7 @@ function MakeQROnDoc(fn, code, /*bool*/white) {
 	var doc = app.open(File(currentPath + "/" + fn));
 	var idLayer = MakeIDLayer(doc);
 	doc.activeLayer = idLayer;
-	for (var i = 0; i < doc.pages.length; i++) {
+	for (var i = 0, n = doc.pages.length; i < n; i++) {
 		var page = doc.pages.item(i);
 		// Remove old codes
 		var item, items = page.pageItems.everyItem().getElements();
@@ -306,8 +306,7 @@ function MakeQROnDoc(fn, code, /*bool*/white) {
 		};
 		qrGroup.ungroup();
 	};
-	// doc.save(File(currentPath + "/" + fn));
-	doc.save();
+	doc.save(/* File(currentPath + "/" + fn) */);
 	doc.close();
 	return true;
 };
@@ -590,7 +589,7 @@ function Report(message, title, showFilter, showCompact) {
 	var list = w.add('edittext', undefined, message.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = function() {
-		for (var i = 0, width = 50; i < message.length;
+		for (var i = 0, n = message.length, width = 50; i < n;
 		width = Math.max(width, message[i].toString().length), i++);
 		return width;
 	}();
@@ -604,7 +603,7 @@ function Report(message, title, showFilter, showCompact) {
 			str = str.replace(/\?/g, "."); // '?' -> any character
 			if (/[ *]/g.test(str)) str = "(" + str.replace(/ +|\*/g, ").*(") + ")"; // space or '*' -> AND
 			str = RegExp(str, "gi");
-			for (var i = 0, result = []; i < message.length; i++) {
+			for (var i = 0, n = message.length, result = []; i < n; i++) {
 				var line = message[i].toString().replace(/^\s+?/g, "");
 				if (str.test(line)) result.push(line.replace(/\r|\n/g, "\u00b6").replace(/\t/g, "\\t"));
 			};

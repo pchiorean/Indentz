@@ -1,5 +1,5 @@
 /*
-	Visible area v3.1 (2021-05-18)
+	Visible area v3.1.2 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Creates on each page a 'visible area' frame the size of the page margins.
@@ -31,7 +31,7 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 
 function main() {
 
-for (var i = 0; i < doc.pages.length; i++) {
+for (var i = 0, n = doc.pages.length; i < n; i++) {
 	var page = doc.pages[i];
 	var margins = page.marginPreferences;
 	if (margins.top + margins.left + margins.bottom + margins.right == 0) continue;
@@ -97,7 +97,7 @@ for (var i = 0; i < doc.pages.length; i++) {
 
 // Find first valid layer from a list of names
 function FindLayer(names) {
-	for (var i = 0; i < names.length; i++) {
+	for (var i = 0, n = names.length; i < n; i++) {
 		var layer = doc.layers.item(names[i]);
 		if (layer.isValid) return names[i];
 	}

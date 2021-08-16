@@ -1,6 +1,6 @@
 /*
-	Align to left v2.4.2 (2020-11-22)
-	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+	Align to left v2.4.3 (2020-08-16)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Aligns the selected objects to the left of the 'Align To' setting.
 
@@ -35,7 +35,7 @@ function main(sel) {
 	// Filter selection and get a single object
 	if (sel.length > 1) {
 		var objects = [];
-		for (var i = 0; i < sel.length; i++) {
+		for (var i = 0, n = sel.length; i < n; i++) {
 			if (sel[i].locked) continue;
 			objects.push(sel[i]);
 		}

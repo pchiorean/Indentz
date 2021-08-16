@@ -1,5 +1,5 @@
 /*
-	Tile all v1.2 (2021-04-04)
+	Tile all v1.2.1 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Invokes 'Tile All Vertically' or 'Tile All Horizontally',
@@ -21,7 +21,7 @@ switch (size.width / size.height <= 1) {
 	case false: app.menuActions.item("$ID/Tile All Horizontally").invoke(); break;
 };
 app.selection = NothingEnum.NOTHING;
-for (var i = 0; i < app.windows.length; i++) {
+for (var i = 0, n = app.windows.length; i < n; i++) {
 	app.windows[i].zoom(ZoomOptions.FIT_SPREAD);
 	// app.windows[i].zoomPercentage *= 0.9;
 };

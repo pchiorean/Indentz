@@ -1,5 +1,5 @@
 /*
-	Show properties 2.1.4 (2021-07-28)
+	Show properties 2.1.5 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Shows properties and methods of the selected object/active document/the application.
@@ -22,7 +22,7 @@ Inspect(obj);
 
 result.push("\nMETHODS:");
 var methods = obj.reflect.methods.sort();
-for (var i = 0; i < methods.length; i++) {
+for (var i = 0, n = methods.length; i < n; i++) {
 	if (methods[i].toString() === "==" || methods[i].toString() === "===") continue;
 	result.push(methods[i].name + "() (Method)");
 };
@@ -36,7 +36,7 @@ function Inspect(obj, prefix, level, maxLevel) {
 	if (level > maxLevel) return;
 
 	var props = obj.reflect.properties.sort();
-	for (var i = 0, val; i < props.length; i++) {
+	for (var i = 0, n = props.length, val; i < n; i++) {
 		if (props[i].toString() === "__proto__" ||
 			props[i].toString() === "properties" ||
 			props[i].toString() === "isValid" ||
@@ -89,7 +89,7 @@ function Report(message, title, showFilter, showCompact) {
 	var list = w.add('edittext', undefined, message.join("\n"), { multiline: true, scrolling: true, readonly: true });
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = function() {
-		for (var i = 0, width = 50; i < message.length;
+		for (var i = 0, n = message.length, width = 50; i < n;
 		width = Math.max(width, message[i].toString().length), i++);
 		return width;
 	}();
@@ -103,7 +103,7 @@ function Report(message, title, showFilter, showCompact) {
 			str = str.replace(/\?/g, "."); // '?' -> any character
 			if (/[ *]/g.test(str)) str = "(" + str.replace(/ +|\*/g, ").*(") + ")"; // space or '*' -> AND
 			str = RegExp(str, "gi");
-			for (var i = 0, result = []; i < message.length; i++) {
+			for (var i = 0, n = message.length, result = []; i < n; i++) {
 				var line = message[i].toString().replace(/^\s+?/g, "");
 				if (str.test(line)) result.push(line.replace(/\r|\n/g, "\u00b6").replace(/\t/g, "\\t"));
 			};

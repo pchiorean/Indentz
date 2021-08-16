@@ -1,6 +1,6 @@
 /*
-	Scale to page margins (left/right) v1.5.1 (2020-11-22)
-	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+	Scale to page margins (left/right) v1.5.2 (2021-08-16)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Scales the selected objects to the page left/right margins.
 
@@ -20,7 +20,7 @@ app.doScript(main, ScriptLanguage.javascript, undefined,
 function main() {
 	// Get selection's parent page
 	var page;
-	for (var i = 0; i < sel.length; i++) {
+	for (var i = 0, n = sel.length; i < n; i++) {
 		if (sel[i].parentPage != null) { page = doc.pages[sel[i].parentPage.documentOffset]; break };
 	};
 	if (page == null) { alert("Select an object on page and try again."); exit() };
@@ -33,7 +33,7 @@ function main() {
 	var ungroup = false;
 	if (sel.length > 1) {
 		var objects = [];
-		for (var i = 0; i < sel.length; i++) if (!sel[i].locked) objects.push(sel[i]);
+		for (var i = 0, n = sel.length; i < n; i++) if (!sel[i].locked) objects.push(sel[i]);
 		sel = page.groups.add(objects); ungroup = true;
 	} else sel = sel[0];
 	// Compute scale factor
