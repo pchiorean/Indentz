@@ -1,5 +1,5 @@
 /*
-	QR code v3.5.5 (2021-08-16)
+	QR code v3.5.6 (2021-08-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -215,6 +215,8 @@ function MakeQROnFile(code) {
 	target.documentPreferences.pageWidth = page.bounds[3] - page.bounds[1];
 	target.documentPreferences.pageHeight = page.bounds[2] - page.bounds[0];
 	qrGroup.ungroup();
+	target.documentPreferences.documentBleedUniformSize = true;
+	target.documentPreferences.documentBleedTopOffset = UnitValue("3 mm").as("pt");
 	// Export PDF
 	var targetFolder = Folder(currentPath + "/QR Codes");
 	targetFolder.create();
@@ -235,13 +237,17 @@ function MakeQROnFile(code) {
 
 function ExportToPDF(doc, path) {
 	with(app.pdfExportPreferences) {
-		// Basic PDF output options
+		// Output options
 		pageRange = PageRange.allPages;
 		acrobatCompatibility = AcrobatCompatibility.ACROBAT_7;
+		exportAsSinglePages = false;
 		exportGuidesAndGrids = false;
 		exportLayers = false;
+		exportWhichLayers = ExportLayerOptions.EXPORT_VISIBLE_PRINTABLE_LAYERS;
 		exportNonprintingObjects = false;
 		exportReaderSpreads = true;
+		pdfMagnification = PdfMagnificationOptions.DEFAULT_VALUE;
+		pdfPageLayout = PageLayoutOptions.DEFAULT_VALUE;
 		generateThumbnails = false;
 		try { ignoreSpreadOverrides = false } catch (e) {};
 		includeBookmarks = false;
@@ -276,7 +282,6 @@ function ExportToPDF(doc, path) {
 		bleedTop = UnitValue("3 mm").as("pt");
 		bleedInside = UnitValue("3 mm").as("pt");
 		bleedOutside = UnitValue("3 mm").as("pt");
-		bleedMarks = false;
 		colorBars = false;
 		colorTileSize = 128;
 		grayTileSize = 128;
@@ -296,13 +301,7 @@ function ExportToPDF(doc, path) {
 		registrationMarks = false;
 		try { simulateOverprint = false } catch (e) {};
 		// Misc
-		exportGuidesAndGrids = false;
-		exportLayers = false;
-		exportWhichLayers = ExportLayerOptions.EXPORT_VISIBLE_PRINTABLE_LAYERS;
-		pdfMagnification = PdfMagnificationOptions.DEFAULT_VALUE;
-		pdfPageLayout = PageLayoutOptions.DEFAULT_VALUE;
 		pdfDisplayTitle = PdfDisplayTitleOptions.DISPLAY_FILE_NAME;
-		exportAsSinglePages = false;
 		useSecurity = false;
 		viewPDF = false;
 	};
