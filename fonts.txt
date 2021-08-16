@@ -10,7 +10,9 @@ FoundryGridnik	Regular	Foundry Gridnik	Regular
 FoundryGridnik	Medium	Foundry Gridnik	Medium
 FoundryGridnik	Bold	Foundry Gridnik	Bold
 Gotham Light	Regular	Gotham	Light
+Gotham Book	Book	Gotham	Book
 Gotham Book	Regular	Gotham	Book
+GothamBook	Regular	Gotham	Book
 #Gotham Medium	Regular	Gotham	Medium
 Gotham Bold	Regular	Gotham	Bold
 #Gotham Black	Regular	Gotham	Black
