@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for export v2.1.1 (2021-08-16)
+	Prepare for export v2.1.2 (2021-08-18)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves special colors to separate spreads.
@@ -87,15 +87,15 @@ function main() {
 
 	var dieLayerSlug = (matched.varnish.length > 0 || matched.foil.length > 0 || matched.white.length > 0);
 	for (var i = 0; i < matched.dielines.length; i++) MoveSpecialColors(matched.dielines[i], dieLayerSlug);
-	for (var i = 0; i < matched.varnish.length; i++) MoveSpecialColors(matched.varnish[i], true);
-	for (var i = 0; i < matched.foil.length; i++) MoveSpecialColors(matched.foil[i], true);
-	for (var i = 0; i < matched.white.length; i++) MoveSpecialColors(matched.white[i], true);
+	for (var i = 0; i < matched.varnish.length;  i++) MoveSpecialColors(matched.varnish[i], true);
+	for (var i = 0; i < matched.foil.length;     i++) MoveSpecialColors(matched.foil[i], true);
+	for (var i = 0; i < matched.white.length;    i++) MoveSpecialColors(matched.white[i], true);
 };
 
 // Move all items from 'layer' to a separate spread
 function MoveSpecialColors(layer, /*bool*/slug) {
 	var thisSpread, nextSpread, obj;
-	for (var i = 0, n = doc.spreads.length; i < n; i++) {
+	for (var i = 0; i < doc.spreads.length; i++) {
 		thisSpread = doc.spreads[i];
 		if (!LayerHasItems(thisSpread, layer)) continue;
 		nextSpread = thisSpread.duplicate(LocationOptions.AFTER, thisSpread);
