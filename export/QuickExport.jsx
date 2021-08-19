@@ -1,5 +1,5 @@
 /*
-	Quick export v2.10.2 (2021-08-16)
+	Quick export v2.11 (2021-08-19)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -348,6 +348,7 @@ while (doc = docs.shift()) {
 		if (doc.converted) { errors.push(decodeURI(doc.name) + " must be converted; skipped."); continue };
 		if (!doc.saved) { errors.push(decodeURI(doc.name) + " is not saved; skipped."); continue };
 	};
+	old.docSpreads = doc.spreads.length;
 	// Set measurement units
 	old.horizontalMeasurementUnits = doc.viewPreferences.horizontalMeasurementUnits;
 	old.verticalMeasurementUnits = doc.viewPreferences.verticalMeasurementUnits;
@@ -414,30 +415,34 @@ while (doc = docs.shift()) {
 			app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 		};
 		// Export PDF
-		if (ui.output.options.split.value) {
-			var t = exp.exportSpreads.value ? doc.spreads : doc.pages;
-			for (var p = 0, n = t.length; p < n; p++) {
-				var baseName = decodeURI(doc.name).replace(/\.indd$/i, "");
-				var fileSufx = RegExp("([ ._-])([a-zA-Z]{" + t.length + "})$", "i").exec(baseName);
-				baseName = fileSufx ?
-					baseName.replace(RegExp(fileSufx[0] + "$"), "") + fileSufx[1] + fileSufx[2][p] + suffix :
-					baseName + "_" + ZeroPad(p+1, String(t.length).length) + suffix;
-				var fn = UniqueName(baseName);
-				progressBar.update(counter, (baseFolder == decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
-				if (exp.exportSpreads.value) {
-					var range = t[p].pages[0].documentOffset != t[p].pages[-1].documentOffset ?
-						(String(t[p].pages[0].documentOffset + 1) + "-" + String(t[p].pages[-1].documentOffset + 1)) :
-						 String(t[p].pages[0].documentOffset + 1);
-				} else {
-					var range = String(t[p].documentOffset + 1);
-				};
-				ExportPDF(fn, preset, range);
-			};
-		} else {
+		if (!ui.output.options.split.value) { // Export all pages
 			var baseName = decodeURI(doc.name).replace(/\.indd$/i, "") + suffix;
 			var fn = UniqueName(baseName);
 			progressBar.update(counter, (baseFolder == decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
 			ExportPDF(fn, preset, PageRange.ALL_PAGES);
+		} else { // Export separate pages
+			var extendRange = (doc.spreads.length == old.docSpreads * 2) && exp.exportSpreads.value;
+			var t = exp.exportSpreads.value ? doc.spreads : doc.pages;
+			var baseName = decodeURI(doc.name).replace(/\.indd$/i, "");
+			var fileSufx = RegExp("([ ._-])([a-zA-Z]{" +
+				(extendRange ? t.length/2 : t.length) + "})$", "i").exec(baseName);
+			for (var p = 0, n = t.length; p < n; p++) {
+				var fn = UniqueName(fileSufx ?
+					baseName.replace(RegExp(fileSufx[0] + "$"), "") + fileSufx[1] +
+					fileSufx[2][ extendRange && !Boolean(p%2) ? p/2 : p ] + suffix :
+					baseName + "_" + ZeroPad(extendRange && !Boolean(p%2) ? p/2+1 : p+1, String(n).length) + suffix
+				);
+				progressBar.update(counter, (baseFolder == decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
+				// Get page range
+				if (!exp.exportSpreads.value) { // Export as pages
+					var range = String(t[p].documentOffset + 1);
+				} else { // Export as spreads
+					var range = String(t[p].pages[0].documentOffset + 1) + "-" +
+						String(t[ extendRange ? p+1 : p ].pages[-1].documentOffset + 1);
+					if (extendRange && !Boolean(p%2)) p++;
+				};
+				ExportPDF(fn, preset, range);
+			};
 		};
 		counter++;
 	};
