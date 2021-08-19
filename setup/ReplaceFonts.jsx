@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 2.1.2 (2021-08-16)
+	Replace fonts 2.1.3 (2021-08-18)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named "fonts.txt":
@@ -102,9 +102,10 @@ function ParseInfo(infoFile) {
 };
 
 /**
- * Finds the first occurence of a file, looking in the current folder, on the desktop, or next to the script.
+ * Returns the first occurrence of a data file, first searching for a local one (in the current
+ * folder or the parent folder), then a global one (on the desktop or next to the script).
  * @param {string} filename - Filename
- * @param {boolean} skipLocal - Don't search in current folder
+ * @param {boolean} [skipLocal] - Don't search locally
  * @returns {File} - File object
  */
 function FindFile(filename, skipLocal) {
@@ -113,6 +114,8 @@ function FindFile(filename, skipLocal) {
 	if (!skipLocal) {
 		if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + filename)) && file.exists) return file;
 		if (doc.saved && (file = File(app.activeDocument.filePath + "/" + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/../_" + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/../" + filename)) && file.exists) return file;
 	};
 	if ((file = File(Folder.desktop + "/" + filename)) && file.exists) return file;
 	if ((file = File(script.path + "/" + filename)) && file.exists) return file;
