@@ -1,9 +1,8 @@
 # TO DO
 
-- [ ] `upd` `ParseInfo()`: Use relative paths for includes
-- [ ] `upd` `ParseInfo()`: Ignore columns starting with `#`
-- [ ] `upd` Make a custom object style for 'Visible area' frame [#123](https://github.com/pchiorean/Indentz/issues/123)
 - [ ] `new` `Report()`: Add button to save errors to file
+- [ ] `upd` `FindFile()`: Use relative paths for includes
+- [ ] `upd` Make a custom object style for 'Visible area' frame [#123](https://github.com/pchiorean/Indentz/issues/123)
 - [ ] `fix` Check for converted documents
 - [ ] `fix` Fix static/edittext width (see [#](https://twitter.com/indiscripts/status/1408788941550108674))
 - [ ] `ref` `for` loops: init the length in the initialization to cache it, not in the condition
@@ -11,7 +10,7 @@
 - [ ] `ref` `?` K&R, 2 spaces
 
 ### DefaultSwatches
-- [ ] `upd` Add unnamed colors
+- [ ] `upd` Add tints support
 - [ ] `fix` Check values on parsing
 
 ### DocCleanup
@@ -26,6 +25,7 @@
 
 ### PageSizeFromFilename
 - [ ] `fix` Error on pages set to 1:X scale [#129](https://github.com/pchiorean/Indentz/issues/129)
+- [ ] `fix` Limit detected bleed to max values
 
 ### PageSizeFromSelection
 - [ ] `upd` Without selection fit all pages to their contents
