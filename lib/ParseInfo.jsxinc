@@ -1,7 +1,7 @@
 // This is just a template
 
 // @include "FindFile.jsxinc";
-//
+
 // var infoFile, infoFilename = "data.txt";
 // if (!(infoFile = FindFile(infoFilename))) { alert("File '" + infoFilename + "' not found."); exit() };
 //

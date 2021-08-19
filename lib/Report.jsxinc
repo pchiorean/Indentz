@@ -20,7 +20,7 @@ function Report(message, title, showFilter, showCompact) {
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = function() {
 		for (var i = 0, n = message.length, width = 50; i < n;
-		width = Math.max(width, message[i].toString().length), i++);
+			width = Math.max(width, message[i].toString().length), i++);
 		return width;
 	}();
 	list.minimumSize.width = 600, list.maximumSize.width = 1024;
