@@ -29,7 +29,7 @@ function ParseInfo(infoFile) {
 			var includeFile = /^default(s?)$/i.test(include) ?
 				FindFile(infoFilename, true) : // '@default': include default info file
 				File(include); // '@path/to/file.txt': include 'file.txt'
-			if (includeFile.path == infoFile.path) continue; // Skip self
+			if (includeFile.fullName == infoFile.fullName) continue; // Skip self
 			if (includeFile.exists) {
 				buffer = ParseInfo(includeFile);
 				records = records.concat(buffer.records);
