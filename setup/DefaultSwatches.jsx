@@ -1,5 +1,5 @@
 /*
-	Default swatches v4.2.3 (2021-08-18)
+	Default swatches v4.3 (2021-08-22)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 5-column TSV file named "swatches.txt":
@@ -57,7 +57,7 @@ function main() {
 	if (data.records.length == 0) exit();
 
 	for (var i = 0, n = data.records.length; i < n; i++) {
-		var color = AddSwatch(
+		AddSwatch(
 			data.records[i].name,
 			data.records[i].model,
 			data.records[i].space,
@@ -75,27 +75,22 @@ function main() {
 			colorValue: values
 		});
 		// Merge variants
-		var c, colors = doc.colors.everyItem().getElements();
-		while (c = colors.shift()) {
-			if (c == color) continue;
-			if (isIn(c.name, variants, false)) try { c.remove(color) } catch (e) {};
+		if (variants.length > 0) {
+			var c, colors = doc.colors.everyItem().getElements();
+			while (c = colors.shift()) {
+				if (c == color) continue;
+				if (IsIn(c.name, variants)) try { c.remove(color) } catch (e) {};
+			};
 		};
 		return color;
 	};
 
-	// Modified from FORWARD.Util functions, by Richard Harrington
-	// https://github.com/richardharrington/indesign-scripts
-	function isIn(searchValue, array, caseSensitive) {
-		caseSensitive = (typeof caseSensitive !== 'undefined') ? caseSensitive : true;
-		var item;
-		if (!caseSensitive && typeof searchValue === 'string') searchValue = searchValue.toLowerCase();
+	function IsIn(searchValue, array) {
 		for (var i = 0, n = array.length; i < n; i++) {
-			item = array[i];
-			if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
-			// if (item === searchValue) return true;
-			item = RegExp("^" + item.replace(/\*/g, ".*").replace(/\?/g, ".") + "$", "g");
+			var item = RegExp("^" + array[i].replace(/\*/g, ".*").replace(/\?/g, ".") + "$", "ig");
 			if (item.test(searchValue)) return true;
 		};
+		return false;
 	};
 };
 
@@ -119,7 +114,7 @@ function ParseInfo(infoFile) {
 			var includeFile = /^default(s?)$/i.test(include) ?
 				FindFile(infoFilename, true) : // '@default': include default info file
 				File(include); // '@path/to/file.txt': include 'file.txt'
-			if (includeFile.path == infoFile.path) continue; // Skip self
+			if (includeFile.fullName == infoFile.fullName) continue; // Skip self
 			if (includeFile.exists) {
 				buffer = ParseInfo(includeFile);
 				records = records.concat(buffer.records);
@@ -162,14 +157,14 @@ function FindFile(filename, skipLocal) {
 	var file = "";
 	var script = function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } }();
 	if (!skipLocal) {
-		if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + filename)) && file.exists) return file;
-		if (doc.saved && (file = File(app.activeDocument.filePath + "/" + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/_"    + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/"     + filename)) && file.exists) return file;
 		if (doc.saved && (file = File(app.activeDocument.filePath + "/../_" + filename)) && file.exists) return file;
-		if (doc.saved && (file = File(app.activeDocument.filePath + "/../" + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/../"  + filename)) && file.exists) return file;
 	};
-	if ((file = File(Folder.desktop + "/" + filename)) && file.exists) return file;
-	if ((file = File(script.path + "/" + filename)) && file.exists) return file;
-	if ((file = File(script.path + "/../" + filename)) && file.exists) return file;
+	if ((file = File(Folder.desktop + "/"    + filename)) && file.exists) return file;
+	if ((file = File(script.path    + "/"    + filename)) && file.exists) return file;
+	if ((file = File(script.path    + "/../" + filename)) && file.exists) return file;
 };
 
 /**
@@ -194,10 +189,10 @@ function Report(message, title, showFilter, showCompact) {
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	list.characters = function() {
 		for (var i = 0, n = message.length, width = 50; i < n;
-		width = Math.max(width, message[i].toString().length), i++);
+			width = Math.max(width, message[i].toString().length), i++);
 		return width;
 	}();
-	list.minimumSize.width = 600, list.maximumSize.width = 1024;
+	list.minimumSize.width  = 600, list.maximumSize.width  = 1024;
 	list.minimumSize.height = 100, list.maximumSize.height = 1024;
 	w.ok.active = true;
 	if (search) {
