@@ -9,12 +9,12 @@ function FindFile(filename, skipLocal) {
 	var file = "";
 	var script = function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } }();
 	if (!skipLocal) {
-		if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + filename)) && file.exists) return file;
-		if (doc.saved && (file = File(app.activeDocument.filePath + "/" + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/_"    + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/"     + filename)) && file.exists) return file;
 		if (doc.saved && (file = File(app.activeDocument.filePath + "/../_" + filename)) && file.exists) return file;
-		if (doc.saved && (file = File(app.activeDocument.filePath + "/../" + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/../"  + filename)) && file.exists) return file;
 	};
-	if ((file = File(Folder.desktop + "/" + filename)) && file.exists) return file;
-	if ((file = File(script.path + "/" + filename)) && file.exists) return file;
-	if ((file = File(script.path + "/../" + filename)) && file.exists) return file;
+	if ((file = File(Folder.desktop + "/"    + filename)) && file.exists) return file;
+	if ((file = File(script.path    + "/"    + filename)) && file.exists) return file;
+	if ((file = File(script.path    + "/../" + filename)) && file.exists) return file;
 };

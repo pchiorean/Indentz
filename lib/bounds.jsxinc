@@ -1,5 +1,5 @@
 /*
-	Bounds v5.0.2 (2021-08-16)
+	Bounds v5.0.3 (2021-08-20)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Returns an object containing the geometric bounds of the given page,
@@ -7,16 +7,16 @@
 
 	{
 		page: {
-			size: [ top, left, bottom, right ],
-			margins: [ ... ],
-			visible: [ ... ] or undefined,
-			bleed: [ ... ]
+			size    : [ top, left, bottom, right ],
+			margins : [ t, l, b, r ],
+			visible : [ t, l, b, r ] || undefined,
+			bleed   : [ t, l, b, r ]
 		},
 		spread: {
-			size: [ ... ],
-			margins: [ ... ],
-			visible: [ ... ] or undefined,
-			bleed: [ ... ]
+			size    : [ t, l, b, r ],
+			margins : [ t, l, b, r ],
+			visible : [ t, l, b, r ] || undefined,
+			bleed   : [ t, l, b, r ]
 		}
 	};
 
@@ -47,28 +47,28 @@ function Bounds(page) {
 var fPg = page.parent.pages.firstItem();
 var lPg = page.parent.pages.lastItem();
 var bleed = {
-	top: doc.documentPreferences.properties.documentBleedTopOffset,
-	left: doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
-	bottom: doc.documentPreferences.properties.documentBleedBottomOffset,
-	right: doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
+	top    : doc.documentPreferences.properties.documentBleedTopOffset,
+	left   : doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
+	bottom : doc.documentPreferences.properties.documentBleedBottomOffset,
+	right  : doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
 };
 var margins = {
-	top: page.marginPreferences.top,
-	left: page.marginPreferences.left,
-	bottom: page.marginPreferences.bottom,
-	right: page.marginPreferences.right
+	top    : page.marginPreferences.top,
+	left   : page.marginPreferences.left,
+	bottom : page.marginPreferences.bottom,
+	right  : page.marginPreferences.right
 };
 
 return {
 	page: {
 		size: page.bounds,
 		margins: [
-			/* top */ page.bounds[0] + margins.top,
-			/* left */ page.side == PageSideOptions.LEFT_HAND ?
-				page.bounds[1] + margins.right : page.bounds[1] + margins.left,
-			/* bottom */ page.bounds[2] - margins.bottom,
-			/* right */ page.side == PageSideOptions.LEFT_HAND ?
-				page.bounds[3] - margins.left : page.bounds[3] - margins.right
+			/* t */ page.bounds[0] + margins.top,
+			/* l */ page.side == PageSideOptions.LEFT_HAND ?
+			        page.bounds[1] + margins.right : page.bounds[1] + margins.left,
+			/* b */ page.bounds[2] - margins.bottom,
+			/* r */ page.side == PageSideOptions.LEFT_HAND ?
+			        page.bounds[3] - margins.left : page.bounds[3] - margins.right
 		],
 		visible: (function() {
 			var v = [], frame, frames = page.pageItems.everyItem().getElements();
@@ -90,13 +90,13 @@ return {
 			];
 		})(),
 		bleed: [
-			/* top */ page.bounds[0] - bleed.top,
-			/* left */ page.bounds[1] - (page == fPg ?
-				(fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left) : 0),
-			/* bottom */ page.bounds[2] + bleed.bottom,
-			/* right */ page.bounds[3] + (fPg == lPg ?
-				(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) :
-				(page == lPg ? bleed.right : 0))
+			/* t */ page.bounds[0] - bleed.top,
+			/* l */ page.bounds[1] - (page == fPg ?
+			        (fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left) : 0),
+			/* b */ page.bounds[2] + bleed.bottom,
+			/* r */ page.bounds[3] + (fPg == lPg ?
+			        (fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) :
+			        (page == lPg ? bleed.right : 0))
 		]
 	},
 	spread: {
@@ -113,16 +113,16 @@ return {
 			};
 			if (!fm && !lm) return [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ];
 			else return [
-				/* top */ Math.min(fm.bounds[0] + fm.marginPreferences.top,
-					lm.bounds[0] + lm.marginPreferences.top),
-				/* left */ fm.bounds[1] + (fm.side == PageSideOptions.LEFT_HAND ?
-					fm.marginPreferences.right : fm.marginPreferences.left),
-				/* bottom */ Math.max(lm.bounds[2] - lm.marginPreferences.bottom,
-					fm.bounds[2] - fm.marginPreferences.bottom),
-				/* right */ lm.bounds[3] - (fm == lm ?
-					(fm.side == PageSideOptions.LEFT_HAND ?
-					fm.marginPreferences.left : fm.marginPreferences.right) :
-					lm.marginPreferences.right)
+				/* t */ Math.min(fm.bounds[0] + fm.marginPreferences.top,
+				                 lm.bounds[0] + lm.marginPreferences.top),
+				/* l */ fm.bounds[1] + (fm.side == PageSideOptions.LEFT_HAND ?
+				        fm.marginPreferences.right : fm.marginPreferences.left),
+				/* b */ Math.max(lm.bounds[2] - lm.marginPreferences.bottom,
+				                 fm.bounds[2] - fm.marginPreferences.bottom),
+				/* r */ lm.bounds[3] - (fm == lm ?
+				        (fm.side == PageSideOptions.LEFT_HAND ?
+				        fm.marginPreferences.left : fm.marginPreferences.right) :
+				        lm.marginPreferences.right)
 			];
 		})(),
 		visible: (function() {

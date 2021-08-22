@@ -23,7 +23,7 @@ function Report(message, title, showFilter, showCompact) {
 			width = Math.max(width, message[i].toString().length), i++);
 		return width;
 	}();
-	list.minimumSize.width = 600, list.maximumSize.width = 1024;
+	list.minimumSize.width  = 600, list.maximumSize.width  = 1024;
 	list.minimumSize.height = 100, list.maximumSize.height = 1024;
 	w.ok.active = true;
 	if (search) {
