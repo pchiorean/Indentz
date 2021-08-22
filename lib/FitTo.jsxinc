@@ -43,7 +43,7 @@
 
 const DEBUG = false;
 const SNAP_PCT = 1; // Snap distance in percent of target
-const HW_PCT = 10; // HW: percent of visible area
+const HW_PCT = 10;  // HW: percent of visible area
 var clippingFrameRE = /^\<(auto )?clip(ping)? frame\>$/i;
 var clippingGroupRE = /^\<(auto )?clip(ping)? group\>$/i;
 
@@ -71,7 +71,7 @@ while (obj = sel.shift()) {
 		for (var i = 0, n = pages.length; i < n; i++) {
 			if (obj.geometricBounds[3] <= pages[0].bounds[3]) { page = pages[0]; break };
 			if (obj.geometricBounds[1] >= pages[i].bounds[1] &&
-				obj.geometricBounds[3] <= pages[i].bounds[3]) { page = pages[i]; break };
+			    obj.geometricBounds[3] <= pages[i].bounds[3]) { page = pages[i]; break };
 			if (obj.geometricBounds[1] >= pages[-1].bounds[1]) { page = pages[-1]; break };
 		};
 		if (fitted = Fit2Bounds(obj)) { newSel.push(fitted) } else newSel.push(obj);
@@ -83,20 +83,20 @@ doc.viewPreferences.rulerOrigin = oldRO;
 function Fit2Bounds(obj) {
 	const B = Bounds(page);
 	var b = {
-		size:   B[SCOPE].size,
-		target: B[SCOPE][TARGET],
-		vis:    B[SCOPE].visible
+		size   : B[SCOPE].size,
+		target : B[SCOPE][TARGET],
+		vis    : B[SCOPE].visible
 	};
 	if (!b.target) return obj;
 	if (FORCED) { obj.geometricBounds = b.target; return obj };
 
 	// Initialization
 	var o = {
-		geo: obj.geometricBounds,
-		vis: obj.visibleBounds,
-		child: (obj.pageItems.length == 1 && obj.fillColor.name == "None") ?
-			obj.pageItems[0].visibleBounds : undefined,
-		hit: []
+		geo   : obj.geometricBounds,
+		vis   : obj.visibleBounds,
+		child : (obj.pageItems.length == 1 && obj.fillColor.name == "None") ?
+		         obj.pageItems[0].visibleBounds : undefined,
+		hit   : []
 	};
 	var isStraight = Boolean(obj.absoluteRotationAngle == 0 ||
 		Math.abs(obj.absoluteRotationAngle) == 90 ||
@@ -106,16 +106,16 @@ function Fit2Bounds(obj) {
 		Math.min(b.vis[2] - b.vis[0], b.vis[3] - b.vis[1]) * SNAP_PCT / 100 :
 		(TARGET == "margins" ?
 			Math.min(b.target[2] - b.target[0], b.target[3] - b.target[1]) * SNAP_PCT / 100 :
-			Math.min(b.size[2] - b.size[0], b.size[3] - b.size[1]) * SNAP_PCT / 100);
+			Math.min(b.size[2]   - b.size[0],   b.size[3]   - b.size[1])   * SNAP_PCT / 100);
 	var snapZone = {
 		target: (TARGET == "margins") ?
 			[ b.target[0] + snapDist, b.target[1] + snapDist,
 			  b.target[2] - snapDist, b.target[3] - snapDist ] :
-			[ b.size[0] + snapDist, b.size[1] + snapDist,
-			  b.size[2] - snapDist, b.size[3] - snapDist ],
+			[ b.size[0]   + snapDist, b.size[1]   + snapDist,
+			  b.size[2]   - snapDist, b.size[3]   - snapDist ],
 		vis: !!b.vis ?
-			[ b.vis[0] + snapDist, b.vis[1] + snapDist,
-			  b.vis[2] - snapDist, b.vis[3] - snapDist ] :
+			[ b.vis[0]  + snapDist, b.vis[1]  + snapDist,
+			  b.vis[2]  - snapDist, b.vis[3]  - snapDist ] :
 			[ b.size[0] + snapDist, b.size[1] + snapDist,
 			  b.size[2] - snapDist, b.size[3] - snapDist ]
 	};
@@ -192,7 +192,7 @@ function Fit2Bounds(obj) {
 	// -- Simple rectangles and containers
 	if (obj.constructor.name == "Rectangle" &&
 		(obj.pageItems.length == 0 || obj.pageItems.length == 1) &&
-		(obj.strokeWeight == 0 || obj.strokeAlignment == StrokeAlignment.INSIDE_ALIGNMENT) &&
+		// (obj.strokeWeight == 0 || obj.strokeAlignment == StrokeAlignment.INSIDE_ALIGNMENT) &&
 		isStraight) {
 		obj.geometricBounds = b.expand;
 		return obj;
@@ -254,10 +254,10 @@ function Fit2Bounds(obj) {
 		// dbgFrame("Black", false, b.expand, "b.expand");
 		// dbgFrame("Black", false, b.reduce, "b.reduce");
 		if (o.child) dbgFrame("Yellow", false, o.child, "o.child");
-		dbgFrame("Black", false, b.target, "b.target");
-		dbgFrame("Cyan", true, snapZone.target, "snapZone.target");
-		dbgFrame("Magenta", true, snapZone.vis, "snapZone.vis");
-		dbgFrame("Cyan", false, B.page.margins, "B.page.margins");
+		dbgFrame("Black",   false, b.target,        "b.target");
+		dbgFrame("Cyan",    true,  snapZone.target, "snapZone.target");
+		dbgFrame("Magenta", true,  snapZone.vis,    "snapZone.vis");
+		dbgFrame("Cyan",    false, B.page.margins,  "B.page.margins");
 
 		function dbgFrame(color, /*bool*/isSZ, bounds, label) {
 			var frame = page.parent.rectangles.add(
