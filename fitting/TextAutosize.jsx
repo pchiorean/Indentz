@@ -1,5 +1,5 @@
 /*
-	Fit frame to text v2.3.3 (2021-08-16)
+	Fit frame to text v2.4 (2021-08-20)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Auto-sizes the text frame to the content from None to Height Only to Height and Width
@@ -38,17 +38,21 @@ app.doScript(main, ScriptLanguage.javascript, sel,
 
 function main(sel) {
 	if (sel[0].hasOwnProperty("parentTextFrames")) var sel = sel[0].parentTextFrames;
-	for (var i = 0, n = sel.length; i < n; i++)
-		if (sel[i].constructor.name == "TextFrame") FitFrame2Text(sel[i]);
+	for (var i = 0, n = sel.length; i < n; i++) {
+		if (sel[i].allPageItems.length > 0) { // Child text frames
+			for (var j = 0, childs = sel[i].allPageItems, m = childs.length; j < m; j++)
+				if (childs[j].constructor.name == "TextFrame") FitFrame2Text(childs[j]);
+		} else if (sel[i].constructor.name == "TextFrame") FitFrame2Text(sel[i]);
+	};
 };
 
 function FitFrame2Text(frame) {
 	const ASR = AutoSizingReferenceEnum;
 	const VJ = VerticalJustification;
 	var framePrefs = frame.textFramePreferences;
-	var frameVJ = framePrefs.verticalJustification;
-	var oldAST = framePrefs.autoSizingType;
-	var oldASRP = framePrefs.autoSizingReferencePoint;
+	var frameVJ    = framePrefs.verticalJustification;
+	var oldAST     = framePrefs.autoSizingType;
+	var oldASRP    = framePrefs.autoSizingReferencePoint;
 	var align;
 
 	// Trim ending whitespace
@@ -63,12 +67,15 @@ function FitFrame2Text(frame) {
 	if (frame.lines.length == 0) return;
 	switch (frame.lines[0].justification) {
 		case Justification.LEFT_ALIGN:
-		case Justification.LEFT_JUSTIFIED: align = "left"; break;
+		case Justification.LEFT_JUSTIFIED:
+			align = "left"; break;
 		case Justification.CENTER_ALIGN:
 		case Justification.CENTER_JUSTIFIED:
-		case Justification.FULLY_JUSTIFIED: align = "center"; break;
+		case Justification.FULLY_JUSTIFIED:
+			align = "center"; break;
 		case Justification.RIGHT_ALIGN:
-		case Justification.RIGHT_JUSTIFIED: align = "right"; break;
+		case Justification.RIGHT_JUSTIFIED:
+			align = "right"; break;
 		case Justification.AWAY_FROM_BINDING_SIDE:
 			align = (frame.parentPage.side == PageSideOptions.LEFT_HAND) ? "left" : "right"; break;
 		case Justification.TO_BINDING_SIDE:
@@ -76,16 +83,22 @@ function FitFrame2Text(frame) {
 	};
 	// Tighten frame
 	switch (frameVJ) {
-		case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT; break;
-		case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
-		case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
+		case VJ.TOP_ALIGN:
+			framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT; break;
+		case VJ.CENTER_ALIGN:
+			framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
+		case VJ.BOTTOM_ALIGN:
+			framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
 	};
 	if (frameVJ != VJ.JUSTIFY_ALIGN) framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
 	// Fix first baseline offset
 	switch (align) {
-		case "center": framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
-		case "left": framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break;
-		case "right": framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break;
+		case "center":
+			framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
+		case "left":
+			framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break;
+		case "right":
+			framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break;
 	};
 	framePrefs.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
 	framePrefs.useNoLineBreaksForAutoSizing = true;
@@ -93,26 +106,35 @@ function FitFrame2Text(frame) {
 	switch (align) {
 		case "left":
 			switch (frameVJ) {
-				case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_LEFT_POINT; break;
+				case VJ.TOP_ALIGN:
+					framePrefs.autoSizingReferencePoint = ASR.TOP_LEFT_POINT; break;
 				case VJ.JUSTIFY_ALIGN:
-				case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.LEFT_CENTER_POINT; break;
-				case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break;
+				case VJ.CENTER_ALIGN:
+					framePrefs.autoSizingReferencePoint = ASR.LEFT_CENTER_POINT; break;
+				case VJ.BOTTOM_ALIGN:
+					framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break;
 			};
 			break;
 		case "center":
 			switch (frameVJ) {
-				case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT; break;
+				case VJ.TOP_ALIGN:
+					framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT; break;
 				case VJ.JUSTIFY_ALIGN:
-				case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
-				case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
+				case VJ.CENTER_ALIGN:
+					framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
+				case VJ.BOTTOM_ALIGN:
+					framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
 			};
 			break;
 		case "right":
 			switch (frameVJ) {
-				case VJ.TOP_ALIGN: framePrefs.autoSizingReferencePoint = ASR.TOP_RIGHT_POINT; break;
+				case VJ.TOP_ALIGN:
+					framePrefs.autoSizingReferencePoint = ASR.TOP_RIGHT_POINT; break;
 				case VJ.JUSTIFY_ALIGN:
-				case VJ.CENTER_ALIGN: framePrefs.autoSizingReferencePoint = ASR.RIGHT_CENTER_POINT; break;
-				case VJ.BOTTOM_ALIGN: framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break;
+				case VJ.CENTER_ALIGN:
+					framePrefs.autoSizingReferencePoint = ASR.RIGHT_CENTER_POINT; break;
+				case VJ.BOTTOM_ALIGN:
+					framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break;
 			};
 			break;
 	};
@@ -121,7 +143,7 @@ function FitFrame2Text(frame) {
 	if (frame.lines.length > 1) {
 		framePrefs.autoSizingType = (oldAST == AutoSizingTypeEnum.OFF) ?
 		AutoSizingTypeEnum.HEIGHT_ONLY :
-		// Keep Height Only when just reference point is changed
+		// Keep HEIGHT_ONLY when just reference point is changed
 		(framePrefs.autoSizingReferencePoint != oldASRP ?
 			AutoSizingTypeEnum.HEIGHT_ONLY : AutoSizingTypeEnum.HEIGHT_AND_WIDTH)
 	} else framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
