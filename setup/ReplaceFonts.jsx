@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 2.1.3 (2021-08-18)
+	Replace fonts 2.1.4 (2021-08-22)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named "fonts.txt":
@@ -80,7 +80,7 @@ function ParseInfo(infoFile) {
 			var includeFile = /^default(s?)$/i.test(include) ?
 				FindFile(infoFilename, true) : // '@default': include default info file
 				File(include); // '@path/to/file.txt': include 'file.txt'
-			if (includeFile.path == infoFile.path) continue; // Skip self
+			if (includeFile.fullName == infoFile.fullName) continue; // Skip self
 			if (includeFile.exists) {
 				buffer = ParseInfo(includeFile);
 				records = records.concat(buffer.records);
@@ -112,14 +112,14 @@ function FindFile(filename, skipLocal) {
 	var file = "";
 	var script = function() { try { return app.activeScript } catch(e) { return new File(e.fileName) } }();
 	if (!skipLocal) {
-		if (doc.saved && (file = File(app.activeDocument.filePath + "/_" + filename)) && file.exists) return file;
-		if (doc.saved && (file = File(app.activeDocument.filePath + "/" + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/_"    + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/"     + filename)) && file.exists) return file;
 		if (doc.saved && (file = File(app.activeDocument.filePath + "/../_" + filename)) && file.exists) return file;
-		if (doc.saved && (file = File(app.activeDocument.filePath + "/../" + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + "/../"  + filename)) && file.exists) return file;
 	};
-	if ((file = File(Folder.desktop + "/" + filename)) && file.exists) return file;
-	if ((file = File(script.path + "/" + filename)) && file.exists) return file;
-	if ((file = File(script.path + "/../" + filename)) && file.exists) return file;
+	if ((file = File(Folder.desktop + "/"    + filename)) && file.exists) return file;
+	if ((file = File(script.path    + "/"    + filename)) && file.exists) return file;
+	if ((file = File(script.path    + "/../" + filename)) && file.exists) return file;
 };
 
 /**
