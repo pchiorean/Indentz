@@ -1,5 +1,5 @@
 ﻿/*
-	Prepare for export v2.1.2 (2021-08-18)
+	Prepare for export v2.2 (2021-08-25)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves special colors to separate spreads.
@@ -85,15 +85,14 @@ function main() {
 		};
 	};
 
-	var dieLayerSlug = (matched.varnish.length > 0 || matched.foil.length > 0 || matched.white.length > 0);
-	for (var i = 0; i < matched.dielines.length; i++) MoveSpecialColors(matched.dielines[i], dieLayerSlug);
-	for (var i = 0; i < matched.varnish.length;  i++) MoveSpecialColors(matched.varnish[i], true);
-	for (var i = 0; i < matched.foil.length;     i++) MoveSpecialColors(matched.foil[i], true);
-	for (var i = 0; i < matched.white.length;    i++) MoveSpecialColors(matched.white[i], true);
+	for (var i = 0; i < matched.dielines.length; i++) MoveSpecialColors(matched.dielines[i]);
+	for (var i = 0; i < matched.varnish.length;  i++) MoveSpecialColors(matched.varnish[i]);
+	for (var i = 0; i < matched.foil.length;     i++) MoveSpecialColors(matched.foil[i]);
+	for (var i = 0; i < matched.white.length;    i++) MoveSpecialColors(matched.white[i]);
 };
 
 // Move all items from 'layer' to a separate spread
-function MoveSpecialColors(layer, /*bool*/slug) {
+function MoveSpecialColors(layer) {
 	var thisSpread, nextSpread, obj;
 	for (var i = 0; i < doc.spreads.length; i++) {
 		thisSpread = doc.spreads[i];
@@ -104,19 +103,20 @@ function MoveSpecialColors(layer, /*bool*/slug) {
 			obj = thisSpread.pageItems.item(j);
 			if (obj.itemLayer.name == layer.name) {
 				if (obj.locked) obj.locked = false;
-				obj.remove(); j--;
-			} else if (obj.name == "<page label>") { obj.remove(); j-- };
+				if (obj.name != "<page label>") { obj.remove(); j-- };
+			};
 		};
 		// Step 2: Delete items not on 'layer' from next spread
 		for (var j = 0; j < nextSpread.pageItems.length; j++) {
 			obj = nextSpread.pageItems.item(j);
 			if (obj.itemLayer.name != layer.name) {
 				if (obj.locked) obj.locked = false;
-				obj.remove(); j--;
-			} else if (obj.name == "<page label>") { obj.remove(); j-- };
+				if (obj.name != "<page label>") { obj.remove(); j-- };
+			};
 		};
-		if (thisSpread.allPageItems.length == 0) thisSpread.remove();
-		if (slug) SlugInfo(nextSpread, layer.name);
+		if (thisSpread.allPageItems.length == 0 || (thisSpread.allPageItems.length == 1 &&
+			thisSpread.pageItems[0].name == "<page label>")) thisSpread.remove();
+		SlugInfo(nextSpread, layer.name);
 		i++;
 	};
 	// if (layer.allPageItems.length == 0) layer.remove();
@@ -129,34 +129,39 @@ function MoveSpecialColors(layer, /*bool*/slug) {
 		};
 	};
 
-	function SlugInfo(spread, name) {
+	function SlugInfo(spread, label) {
 		app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 		if (doc.documentPreferences.slugTopOffset < 9)
 			doc.documentPreferences.slugTopOffset = 9 +
 			doc.documentPreferences.properties.documentBleedTopOffset;
-		var infoFrame, infoText, infoColor;
-		infoFrame = spread.pages[0].textFrames.add({
-			itemLayer: infoLayer.name,
-			name: "<page label>",
-			contents: name
-		});
-		infoText = infoFrame.parentStory.paragraphs.everyItem();
-		infoText.properties = {
-			appliedFont: app.fonts.item("Helvetica\tRegular"),
-			pointSize: 6,
-			fillColor: "Registration",
-			capitalization: Capitalization.ALL_CAPS
+		var infoFrame = spread.pageItems.itemByName("<page label>");
+		if (infoFrame.isValid) {
+			infoFrame.contents = infoFrame.contents.replace(" " + label, "") + " " + label;
+		} else {
+			var infoText, infoColor;
+			infoFrame = spread.pages[0].textFrames.add({
+				itemLayer: infoLayer.name,
+				name: "<page label>",
+				contents: label
+			});
+			infoText = infoFrame.parentStory.paragraphs.everyItem();
+			infoText.properties = {
+				appliedFont: app.fonts.item("Helvetica\tRegular"),
+				pointSize: 6,
+				fillColor: "Registration",
+				capitalization: Capitalization.ALL_CAPS
+			};
+			infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
+			infoFrame.textFramePreferences.properties = {
+				verticalJustification: VerticalJustification.TOP_ALIGN,
+				firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
+				autoSizingReferencePoint: AutoSizingReferenceEnum.TOP_LEFT_POINT,
+				autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
+				useNoLineBreaksForAutoSizing: true
+			};
+			infoFrame.move([ 10, -4.2 - infoFrame.geometricBounds[2] -
+				doc.documentPreferences.properties.documentBleedTopOffset ]);
 		};
-		infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
-		infoFrame.textFramePreferences.properties = {
-			verticalJustification: VerticalJustification.TOP_ALIGN,
-			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
-			autoSizingReferencePoint: AutoSizingReferenceEnum.TOP_LEFT_POINT,
-			autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
-			useNoLineBreaksForAutoSizing: true
-		};
-		infoFrame.move([ 10, -4.2 - infoFrame.geometricBounds[2] -
-			doc.documentPreferences.properties.documentBleedTopOffset ]);
 	};
 };
 
