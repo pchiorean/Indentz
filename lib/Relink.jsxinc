@@ -10,7 +10,7 @@ function Relink(oldLinks, newLink) {
 	// Check if document has at least one of oldLinks
 	if (oldLinks.constructor.name !== "Array") oldLinks = Array(oldLinks);
 	for (var i = 0, n = oldLinks.length, isFound = false; i < n; i++)
-		if (isIn(oldLinks[i], links)) { isFound = true; break };
+		if (IsIn(oldLinks[i], links)) { isFound = true; break };
 	if (!isFound) return false;
 
 	// Check if newLink is valid
@@ -18,13 +18,14 @@ function Relink(oldLinks, newLink) {
 	if (!File(newLink).exists) { errors.push("'" + newLink + "' not found."); return false };
 
 	while (link = links.shift()) {
-		if (sel.length > 0 && !isIn(link.parent.parent, sel)) { continue }
-		else if (!isIn(link.name, oldLinks)) continue;
+		if (sel.length > 0 && !IsIn(link.parent.parent, sel)) { continue } // Skip (not selected)
+		else if (!IsIn(link.name, oldLinks)) { continue }; // Skip (no match)
+		if (File(link.filePath).fullName === File(newLink).fullName) { continue }; // Skip (self)
 		link.relink(File(newLink));
 	};
 	return true;
 
-	function isIn(item, array) {
+	function IsIn(item, array) {
 		for (var i = 0, n = array.length; i < n; i++) {
 			if (item.constructor.name == "String") {
 				if ((array[i].constructor.name == "Link" ? array[i].name : array[i])
