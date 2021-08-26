@@ -12,7 +12,7 @@ Glue	spot	cmyk	0 0 100 0
 White	spot	cmyk	0 10 10 0
 Varnish	spot	cmyk	0 10 70 0
 Covered area	spot	cmyk	0 100 0 0
-Visible area	spot	cmyk	66 0 100 0	Safe area, Visible Mark
+Visible area	spot	cmyk	0 33 100 0	Safe area, Visible Mark
 Safety margins	spot	cmyk	100 0 0 0
 Segmentation	spot	cmyk	0 100 0 0	Split
 Placeholder	process	cmyk	0 100 0 0
