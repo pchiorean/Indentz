@@ -1,5 +1,5 @@
 ﻿/*
-	Doc cleanup v2.7 (2021-08-26)
+	Doc cleanup v2.8 (2021-09-06)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -93,34 +93,18 @@ app.doScript(function () {
 ScriptLanguage.javascript, undefined,
 UndoModes.ENTIRE_SCRIPT, "Convert empty text frames to generic frames");
 
-// Fix paragraphs end leading
-app.doScript(function () {
-	var story, stories = doc.stories.everyItem().getElements();
-	while (story = stories.shift()) {
-		var paragraph, paragraphs = story.paragraphs.everyItem().getElements();
-		while (paragraph = paragraphs.shift()) {
-			if (paragraph.characters.length > 1 && paragraph.characters[-1].contents == "\r") {
-				paragraph.characters[-1].pointSize = paragraph.characters[-2].pointSize;
-				paragraph.characters[-1].leading = paragraph.characters[-2].leading;
-			};
-		};
-	};
-},
-ScriptLanguage.javascript, undefined,
-UndoModes.ENTIRE_SCRIPT, "Fix paragraphs end leading");
-
 doc.textPreferences.showInvisibles = false;
 
 // Set pasteboard
 app.doScript(function () {
 	const P = { width: 150, height: 50 }; // Defaults (mm)
 	var size = {
-		width: doc.spreads[0].pages.lastItem().bounds[3] - doc.spreads[0].pages.firstItem().bounds[1],
+		width:  doc.spreads[0].pages.lastItem().bounds[3] - doc.spreads[0].pages.firstItem().bounds[1],
 		height: doc.spreads[0].pages.lastItem().bounds[2] - doc.spreads[0].pages.firstItem().bounds[0]
 	};
 	const K = (size.width > 1000 && size.height > 1000) ? 10 : 1;
 	doc.pasteboardPreferences.pasteboardMargins = [
-		(size.width / size.height < 1.95) ? P.width*K + "mm" : P.width/1.5*K + "mm",
+		(size.width / size.height < 1.95) ? P.width *K + "mm" : P.width /1.5*K + "mm",
 		(size.width / size.height < 1.95) ? P.height*K + "mm" : P.height/2.5*K + "mm"
 	];
 },
