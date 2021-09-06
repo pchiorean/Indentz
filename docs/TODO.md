@@ -39,7 +39,7 @@
 - `new` Add history for dropdowns
 - `new` JPG & `?`TIFF export profiles
 - `upd` `?` Limit export subfolder to suffix's first word
-- `upd` `?` JSONify preferences (see `hardwareConfig.json`, `Export_Multiple_PDF_JPG.jsx`)
+- `upd` `?` JSONify preferences (see [JSON-js](https://github.com/douglascrockford/JSON-js))
 
 ### QR, QRBatch
 - `fix` Align to page > visible area > margins
@@ -47,11 +47,10 @@
 - `fix` Remove `preview` & `print` from filenames
 
 ### SpreadsToFiles
-- upd` ABBBCC -> A{1}, B{3}, C{2}
+- `upd` ABBBCC -> A{1}, B{3}, C{2}
 
 ### TextAutoSize
 - `upd` Check `baselineShift` [#132](https://github.com/pchiorean/Indentz/issues/132)
-- `upd` `?` Multiple lines: break paragraphs on 2nd run
 
 ### New scripts
 - `new` Ctrl+digit: Activate document #digit
