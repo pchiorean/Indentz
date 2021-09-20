@@ -1,0 +1,42 @@
+/* eslint-disable no-unused-vars */
+
+/**
+ * Replaces a link or a list of links with a new one. A selection limits the scope.
+ * @param {(String|String[])} oldLinks - Link name, or a list of link names to be replaced
+ * @param {String} newLink - New link name (for same folder), or full link path
+ */
+function replaceLinks(oldLinks, newLink) {
+	var link;
+	var links = doc.links.everyItem().getElements();
+	var selection = doc.selection;
+	var isFound = false;
+	// Check if document has at least one of oldLinks
+	if (oldLinks.constructor.name !== 'Array') oldLinks = Array(oldLinks);
+	for (var i = 0, n = oldLinks.length; i < n; i++)
+		if (isIn(oldLinks[i], links)) { isFound = true; break; }
+	if (!isFound) return false;
+	// Check if newLink is valid
+	newLink = /\//g.test(newLink) ? newLink : doc.filePath + '/Links/' + newLink;
+	if (!File(newLink).exists) {
+		errors.push("Link '" + newLink + "' not found.");
+		return false;
+	}
+	// Relink
+	while ((link = links.shift())) {
+		if (selection.length > 0 && !isIn(link.parent.parent, selection)) continue; // Skip not selected
+		else if (!isIn(link.name, oldLinks)) continue;                              // Skip not matched
+		if (File(link.filePath).fullName === File(newLink).fullName) continue;      // Skip self
+		link.relink(File(newLink));
+	}
+	return true;
+
+	function isIn(item, array) {
+		for (var i = 0, n = array.length; i < n; i++) {
+			if (item.constructor.name === 'String') {
+				if ((array[i].constructor.name === 'Link' ? array[i].name : array[i])
+					.lastIndexOf(item) !== -1) return true;
+			} else if (item === array[i]) { return true; }
+		}
+		return false;
+	}
+}
