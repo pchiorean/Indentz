@@ -23,7 +23,7 @@ Name                               |    Fn  | Description
 `SetRefPointToB.jsx`               |  ⌃Num2 | Sets **Transform Reference Point** to bottom
 `SetRefPointToBR.jsx`              |  ⌃Num3 | Sets **Transform Reference Point** to bottom-right
 **Export**                                  |
-`PrepareForExport.jsx`             |        | Hides visible area layer and moves white, varnish & dielines to separate spreads
+`PrepareForExport.jsx`             |        | Hides some layers and moves items with special colors to separate spreads
 `QuickExport.jsx`                  |        | Exports open .indd documents or a folder with several configurable PDF presets
 `VisibleArea.jsx`                  |        | Creates on each page a 'visible area' frame the size of the page margins
 `VisibleAreaHideLayer.jsx`         |        | Hides Hides the 'visible area' layer (and variants)
@@ -81,10 +81,11 @@ Name                               |    Fn  | Description
 `HW.jsx`                           |   ⇧F10 | Labels 'HW' selected objects and adds a HW bottom guide on all spreads
 `LabelPage.jsx`                    |        | Adds a custom label on the current page's slug
 `LabelPageRatios.jsx`              |        | Adds a label (ratio) on each page's slug
+`OffsetPath.jsx`                   |        | Use InDesign's text wrap feature to create offset/inset paths
 `QR.jsx`                           |     F9 | Adds a QR code to the current document or to a separate file
 `QRBatch.jsx`                      |    ⇧F9 | Adds codes to existing documents or to separate files in batch mode, from a list
 `ShowFonts.jsx`                    |        | Shows all fonts used in the current document
-`ShowProfiles.jsx`                 |        | Shows all color profiles available to the document
+`ShowProfiles.jsx`                 |        | Shows all color profiles available to a document
 `ShowProperties.jsx`               |        | Shows properties and methods of the selected object/active document/the application
 
 <!-- ⌃⌥⇧⌘ -->
