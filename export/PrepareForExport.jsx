@@ -1,8 +1,8 @@
-﻿/*
-	Prepare for export v2.2 (2021-08-25)
+/*
+	Prepare for export v2.2.1 (2021-09-12)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Hides some layers and moves special colors to separate spreads.
+	Hides some layers and moves items with special colors to separate spreads.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -27,155 +27,168 @@
 */
 
 if (!(doc = app.activeDocument)) exit();
-app.scriptPreferences.enableRedraw = false;
 
-// Customizable items
-var infoLayer = doc.layers.item("info");
-var layerNames = {
-	covered:  [ "covered area*" ],
-	visible:  [ "visible area", "rahmen", "sicht*", "*vi?ib*", "vis?*" ],
-	safe:     [ "safety margins", "safe area", "segmentation" ],
-	guides:   [ "guides", "grid", "masuratori" ],
-	dielines: [ "dielines", "cut", "cut*line*", "decoupe", "die", "die*cut", "stanz*" ],
-	varnish:  [ "varnish", "uv" ],
-	foil:     [ "foil", "silver", "silver foil" ],
-	white:    [ "white" ]
-};
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.ENTIRE_SCRIPT, "Prepare for export");
+app.doScript(prepareForExport, ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, 'Prepare for export');
 
-function main() {
-	if (!infoLayer.isValid) doc.layers.add({ name: "info", layerColor: UIColors.CYAN })
-	else infoLayer.visible = true;
+function prepareForExport() {
+	var i, n, l, variants;
+	var infoLayer = doc.layers.item('info');
+	var layerNames = {
+		covered:  [ 'covered area*' ],
+		visible:  [ 'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ],
+		safe:     [ 'safety margins', 'safe area', 'segmentation' ],
+		guides:   [ 'guides', 'grid', 'masuratori' ],
+		dielines: [ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ],
+		varnish:  [ 'varnish', 'uv' ],
+		foil:     [ 'foil', 'silver', 'silver foil' ],
+		white:    [ 'white' ]
+	};
+	var matched = { dielines: [], varnish: [], foil: [], white: [] };
+	app.scriptPreferences.enableRedraw = false;
+
+	// Create or show info layer
+	if (infoLayer.isValid) infoLayer.visible = true;
+	else doc.layers.add({ name: 'info', layerColor: UIColors.CYAN });
 	infoLayer.move(LocationOptions.AT_BEGINNING);
 
+	// Unlock all layers
 	doc.layers.everyItem().locked = false;
 
-	var matched = { dielines: [], varnish: [], foil: [], white: [] };
-	for (var i = 0, n = doc.layers.length, layer; i < n; i++) {
-		layer = doc.layers[i];
-		for (var variant in layerNames) {
-			if (IsIn(layer.name, layerNames[variant], false)) {
-				switch (layerNames[variant][0]) {
+	// Match special layers
+	for (i = 0, n = doc.layers.length; i < n; i++) {
+		l = doc.layers[i];
+		if (l.name === infoLayer.name) continue;
+		for (variants in layerNames) {
+			if (isIn(l.name, layerNames[variants], false)) {
+				switch (layerNames[variants][0]) {
 					case layerNames.covered[0]:
 					case layerNames.visible[0]:
 					case layerNames.safe[0]:
 					case layerNames.guides[0]:
-						layer.visible = false;
+						l.visible = false;
 						break;
 					case layerNames.dielines[0]:
-						matched.dielines.push(layer);
-						layer.visible = true;
+						matched.dielines.push(l);
+						l.visible = true;
 						break;
 					case layerNames.varnish[0]:
-						matched.varnish.push(layer);
-						layer.visible = true;
+						matched.varnish.push(l);
+						l.visible = true;
 						break;
 					case layerNames.foil[0]:
-						matched.foil.push(layer);
-						layer.visible = true;
+						matched.foil.push(l);
+						l.visible = true;
 						break;
 					case layerNames.white[0]:
-						matched.white.push(layer);
-						layer.visible = true;
+						matched.white.push(l);
+						l.visible = true;
 						break;
+				}
+				break;
+			}
+		}
+	}
+
+	// Move items from special layers on separate spreads
+	for (i = 0; i < matched.dielines.length; i++) moveSpecials(matched.dielines[i]);
+	for (i = 0; i < matched.varnish.length;  i++) moveSpecials(matched.varnish[i]);
+	for (i = 0; i < matched.foil.length;     i++) moveSpecials(matched.foil[i]);
+	for (i = 0; i < matched.white.length;    i++) moveSpecials(matched.white[i]);
+
+	// Move all items from 'layer' to a separate spread
+	function moveSpecials(layer) {
+		var thisSpread, nextSpread, item, items;
+		for (var i = 0; i < doc.spreads.length; i++) {
+			thisSpread = doc.spreads[i];
+			if (!layerHasItems(thisSpread)) continue;
+			nextSpread = thisSpread.duplicate(LocationOptions.AFTER, thisSpread);
+			// Step 1: Delete items on 'layer' from this spread
+			items = thisSpread.pageItems.everyItem().getElements();
+			while ((item = items.shift())) {
+				if (item.itemLayer === layer) {
+					if (item.locked) item.locked = false;
+					if (item.name !== '<page label>') item.remove(); // Preserve page labels
+				}
+			}
+			// Step 2: Delete items not on 'layer' from next spread
+			item = null;
+			items = nextSpread.pageItems.everyItem().getElements();
+			while ((item = items.shift())) {
+				if (item.itemLayer !== layer) {
+					if (item.locked) item.locked = false;
+					if (item.name !== '<page label>') item.remove(); // Preserve page labels
+				}
+			}
+			if (thisSpread.allPageItems.length === 0 || (thisSpread.allPageItems.length === 1 &&
+				thisSpread.pageItems[0].name === '<page label>')) thisSpread.remove();
+			slugInfo(nextSpread, layer.name); // Label spread with layer name
+			i++; // Skip nextSpread
+		}
+		// if (layer.allPageItems.length == 0) layer.remove();
+
+		function layerHasItems(spread) {
+			for (var i = 0, n = spread.pageItems.length; i < n; i++) {
+				if (!spread.pageItems.item(i).visible) continue;
+				if (spread.pageItems.item(i).itemLayer.name === layer.name) return true;
+			}
+			return false;
+		}
+
+		function slugInfo(spread, label) {
+			var infoFrame, infoText;
+			app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
+			if (doc.documentPreferences.slugTopOffset < 9) {
+				doc.documentPreferences.slugTopOffset = 9 +
+				doc.documentPreferences.properties.documentBleedTopOffset;
+			}
+			infoFrame = spread.pageItems.itemByName('<page label>');
+			if (infoFrame.isValid) {
+				if (infoFrame.contents !== label)
+					infoFrame.contents = infoFrame.contents.replace(' ' + label, '') + ' ' + label;
+			} else {
+				infoFrame = spread.pages[0].textFrames.add({
+					itemLayer: infoLayer.name,
+					name:      '<page label>',
+					contents:  label
+				});
+				infoText = infoFrame.parentStory.paragraphs.everyItem();
+				infoText.properties = {
+					appliedFont:    app.fonts.item('Helvetica\tRegular'),
+					pointSize:      6,
+					fillColor:      'Registration',
+					capitalization: Capitalization.ALL_CAPS
 				};
-				continue;
-			};
-		};
-	};
+				infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
+				infoFrame.textFramePreferences.properties = {
+					verticalJustification:        VerticalJustification.TOP_ALIGN,
+					firstBaselineOffset:          FirstBaseline.CAP_HEIGHT,
+					autoSizingReferencePoint:     AutoSizingReferenceEnum.TOP_LEFT_POINT,
+					autoSizingType:               AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
+					useNoLineBreaksForAutoSizing: true
+				};
+				infoFrame.move([
+					10,
+					-4.2 - infoFrame.geometricBounds[2] -
+						doc.documentPreferences.properties.documentBleedTopOffset
+				]);
+			}
+		}
+	}
 
-	for (var i = 0; i < matched.dielines.length; i++) MoveSpecialColors(matched.dielines[i]);
-	for (var i = 0; i < matched.varnish.length;  i++) MoveSpecialColors(matched.varnish[i]);
-	for (var i = 0; i < matched.foil.length;     i++) MoveSpecialColors(matched.foil[i]);
-	for (var i = 0; i < matched.white.length;    i++) MoveSpecialColors(matched.white[i]);
-};
-
-// Move all items from 'layer' to a separate spread
-function MoveSpecialColors(layer) {
-	var thisSpread, nextSpread, obj;
-	for (var i = 0; i < doc.spreads.length; i++) {
-		thisSpread = doc.spreads[i];
-		if (!LayerHasItems(thisSpread, layer)) continue;
-		nextSpread = thisSpread.duplicate(LocationOptions.AFTER, thisSpread);
-		// Step 1: Delete items on 'layer' from this spread
-		for (var j = 0; j < thisSpread.pageItems.length; j++) {
-			obj = thisSpread.pageItems.item(j);
-			if (obj.itemLayer.name == layer.name) {
-				if (obj.locked) obj.locked = false;
-				if (obj.name != "<page label>") { obj.remove(); j-- };
-			};
-		};
-		// Step 2: Delete items not on 'layer' from next spread
-		for (var j = 0; j < nextSpread.pageItems.length; j++) {
-			obj = nextSpread.pageItems.item(j);
-			if (obj.itemLayer.name != layer.name) {
-				if (obj.locked) obj.locked = false;
-				if (obj.name != "<page label>") { obj.remove(); j-- };
-			};
-		};
-		if (thisSpread.allPageItems.length == 0 || (thisSpread.allPageItems.length == 1 &&
-			thisSpread.pageItems[0].name == "<page label>")) thisSpread.remove();
-		SlugInfo(nextSpread, layer.name);
-		i++;
-	};
-	// if (layer.allPageItems.length == 0) layer.remove();
-
-	// Check if 'spread' has items on 'layer'
-	function LayerHasItems(spread, layer) {
-		for (var i = 0, n = spread.pageItems.length; i < n; i++) {
-			if (spread.pageItems.item(i).visible == false) continue;
-			if (spread.pageItems.item(i).itemLayer.name == layer.name) return true;
-		};
-	};
-
-	function SlugInfo(spread, label) {
-		app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
-		if (doc.documentPreferences.slugTopOffset < 9)
-			doc.documentPreferences.slugTopOffset = 9 +
-			doc.documentPreferences.properties.documentBleedTopOffset;
-		var infoFrame = spread.pageItems.itemByName("<page label>");
-		if (infoFrame.isValid) {
-			infoFrame.contents = infoFrame.contents.replace(" " + label, "") + " " + label;
-		} else {
-			var infoText, infoColor;
-			infoFrame = spread.pages[0].textFrames.add({
-				itemLayer: infoLayer.name,
-				name: "<page label>",
-				contents: label
-			});
-			infoText = infoFrame.parentStory.paragraphs.everyItem();
-			infoText.properties = {
-				appliedFont: app.fonts.item("Helvetica\tRegular"),
-				pointSize: 6,
-				fillColor: "Registration",
-				capitalization: Capitalization.ALL_CAPS
-			};
-			infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
-			infoFrame.textFramePreferences.properties = {
-				verticalJustification: VerticalJustification.TOP_ALIGN,
-				firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
-				autoSizingReferencePoint: AutoSizingReferenceEnum.TOP_LEFT_POINT,
-				autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
-				useNoLineBreaksForAutoSizing: true
-			};
-			infoFrame.move([ 10, -4.2 - infoFrame.geometricBounds[2] -
-				doc.documentPreferences.properties.documentBleedTopOffset ]);
-		};
-	};
-};
-
-// Modified from FORWARD.Util functions, by Richard Harrington
-// https://github.com/richardharrington/indesign-scripts
-function IsIn(searchValue, array, caseSensitive) {
-	caseSensitive = (typeof caseSensitive !== 'undefined') ? caseSensitive : true;
-	var item;
-	if (!caseSensitive && typeof searchValue === 'string') searchValue = searchValue.toLowerCase();
-	for (var i = 0, n = array.length; i < n; i++) {
-		item = array[i];
-		if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
-		// if (item === searchValue) return true;
-		item = RegExp("^" + item.replace(/\*/g, ".*").replace(/\?/g, ".") + "$", "g");
-		if (item.test(searchValue)) return true;
-	};
-};
+	// Modified from FORWARD.Util functions, by Richard Harrington
+	// https://github.com/richardharrington/indesign-scripts
+	function isIn(searchValue, array, caseSensitive) {
+		var item;
+		caseSensitive = (caseSensitive === undefined) ? true : caseSensitive;
+		if (!caseSensitive && typeof searchValue === 'string') searchValue = searchValue.toLowerCase();
+		for (var i = 0, n = array.length; i < n; i++) {
+			item = array[i];
+			if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
+			// if (item === searchValue) return true;
+			item = RegExp('^' + item.replace(/\*/g, '.*').replace(/\?/g, '.') + '$', 'g');
+			if (item.test(searchValue)) return true;
+		}
+		return false;
+	}
+}

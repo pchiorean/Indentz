@@ -1,32 +1,43 @@
-// var progressBar = new ProgressBar(title, ?maxwidth);
-// progressBar.reset(max value);
-// progressBar.update(value, ?message);
-// progressBar.close();
+/* eslint-disable no-unused-vars */
 
-function ProgressBar(title, width) {
-	var pb = new Window("palette", title);
-	pb.bar = pb.add("progressbar", undefined, 0, undefined);
-	if (!!width) { // Mini progress bar if no width
-		pb.msg = pb.add("statictext", undefined, undefined, { truncate: "middle" });
-		pb.msg.characters = Math.max(width, 50);
+/**
+ * A simple progress bar. Usage:
+ * - create: var progress = new ProgressBar(title, ?maxWidth);
+ * - init:   progress.reset(maxValue);
+ * - update: progress.update(value, ?message);
+ * - close:  progress.close();
+ * @param {String} title - Palette title (a counter will be appended)
+ * @param {Number} maxValue - Number of steps
+ * @param {Number} [maxWidth] - Max message length (characters); if ommitted, no message is shown
+ * @param {Number} value - Updated value
+ * @param {String} message - Message
+ */
+function ProgressBar(title, maxWidth) {
+	var pb = new Window('palette', title);
+	pb.bar = pb.add('progressbar');
+	if (maxWidth) { // Full progress bar
+		pb.msg = pb.add('statictext { properties: { truncate: "middle" } }');
+		pb.msg.characters = Math.max(maxWidth, 50);
 		pb.layout.layout();
 		pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
-	} else pb.bar.bounds = [ 12, 12, 476, 24 ];
-	this.reset = function(max) {
+	} else { // Mini progress bar
+		pb.bar.bounds = [ 12, 12, 476, 24 ];
+	}
+	this.reset = function (maxValue) {
 		pb.bar.value = 0;
-		pb.bar.maxvalue = max || 0;
-		pb.bar.visible = !!max;
+		pb.bar.maxvalue = maxValue || 0;
+		pb.bar.visible = !!maxValue;
 		pb.show();
 	};
-	this.update = function(val, msg) {
-		pb.bar.value = val;
-		if (!!width) {
-			pb.msg.visible = !!msg;
-			!!msg && (pb.msg.text = msg);
-		};
-		pb.text = title + " \u2013 " + val + "/" + pb.bar.maxvalue;
+	this.update = function (value, message) {
+		pb.bar.value = value;
+		if (maxWidth) {
+			pb.msg.visible = !!message;
+			if (message) pb.msg.text = message;
+		}
+		pb.text = title + ' \u2013 ' + value + '/' + pb.bar.maxvalue;
 		pb.show(); pb.update();
 	};
-	this.hide = function() { pb.hide() };
-	this.close = function() { pb.close() };
-};
+	this.hide = function () { pb.hide(); };
+	this.close = function () { pb.close(); };
+}

@@ -1,5 +1,5 @@
 /*
-	Default preferences v1.4 (2021-06-04)
+	Default preferences v1.4.1 (2021-09-15)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets default preferences.
@@ -10,88 +10,88 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(function() {
+app.doScript(function () {
 	app.properties = {
 		activeWindow: {
 			screenMode: ScreenModeOptions.PREVIEW_OFF,
-			transformReferencePoint: AnchorPoint.CENTER_ANCHOR,
+			transformReferencePoint: AnchorPoint.CENTER_ANCHOR
 		},
 		clipboardPreferences: {
-			pasteRemembersLayers: true,
+			pasteRemembersLayers: true
 		},
 		displayPerformancePreferences: {
-			persistLocalSettings: true,
+			persistLocalSettings: true
 		},
 		generalPreferences: {
 			includePreview: true,
 			preventSelectingLockedItems: true,
-			ungroupRemembersLayers: true,
+			ungroupRemembersLayers: true
 		},
 		guidePreferences: {
-			guidesSnapto: true,
+			guidesSnapto: true
 		},
 		preflightOptions: {
-			preflightOff: true,
+			preflightOff: true
 		},
 		smartGuidePreferences: {
-			enabled: true,
+			enabled: true
 		},
 		transformPreferences: {
 			adjustEffectsWhenScaling: true,
-			adjustStrokeWeightWhenScaling: true,
-		},
-	}
+			adjustStrokeWeightWhenScaling: true
+		}
+	};
 	doc.properties = {
-		cmykProfile: "ISO Coated v2 (ECI)",
+		cmykProfile: 'ISO Coated v2 (ECI)',
 		documentPreferences: {
 			allowPageShuffle: false,
 			preserveLayoutWhenShuffling: true,
-			intent: DocumentIntentOptions.PRINT_INTENT,
+			intent: DocumentIntentOptions.PRINT_INTENT
 		},
 		guidePreferences: {
 			guidesLocked: false,
 			guidesShown: true,
-			guidesSnapto: true,
+			guidesSnapto: true
 		},
 		pageItemDefaults: {
-			fillColor: "None",
-			fillTint: "-1",
+			fillColor: 'None',
+			fillTint: '-1',
 			nonprinting: false,
-			strokeColor: "None",
-			strokeTint:"-1",
+			strokeColor: 'None',
+			strokeTint: '-1',
 			transparencySettings: {
 				blendingSettings: {
 					blendMode: BlendMode.NORMAL,
-					opacity: 100,
-				},
-			},
+					opacity: 100
+				}
+			}
 		},
 		pasteboardPreferences: {
 			// pasteboardMargins: ["150mm", "25mm"],
-			previewBackgroundColor: UIColors.LIGHT_GRAY,
+			previewBackgroundColor: UIColors.LIGHT_GRAY
 		},
-		rgbProfile: "sRGB IEC61966-2.1",
+		rgbProfile: 'sRGB IEC61966-2.1',
 		selection: [],
 		textDefaults: { paragraphShadingOn: false },
 		textPreferences: {
-			baselineShiftKeyIncrement: "0.1pt",
+			baselineShiftKeyIncrement: '0.1pt',
 			kerningKeyIncrement: 5,
-			leadingKeyIncrement: "0.5pt",
+			leadingKeyIncrement: '0.5pt',
 			typographersQuotes: true,
-			useParagraphLeading: true,
+			useParagraphLeading: true
 		},
 		transparencyPreferences: {
-			blendingSpace: BlendingSpace.CMYK,
+			blendingSpace: BlendingSpace.CMYK
 		},
 		viewPreferences: {
-			cursorKeyIncrement: "0.2mm",
+			cursorKeyIncrement: '0.2mm',
 			horizontalMeasurementUnits: MeasurementUnits.MILLIMETERS,
 			verticalMeasurementUnits: MeasurementUnits.MILLIMETERS,
 			showFrameEdges: true,
-			showRulers: true,
+			showRulers: true
 		},
-		zeroPoint: [0, 0],
-	}
+		zeroPoint: [ 0, 0 ]
+	};
 },
-ScriptLanguage.javascript, undefined,
-UndoModes.ENTIRE_SCRIPT, "Set preferences");
+ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, 'Set preferences');

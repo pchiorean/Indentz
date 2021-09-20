@@ -9,9 +9,9 @@
 */
 
 if (app.documents.length > 0 && app.selection.length > 0 && app.selectionKeyObject) {
-	var sel = app.selection;
+	var oldSelection = app.selection;
 	app.selectionKeyObject = NothingEnum.NOTHING;
-	app.selection = sel;
+	app.selection = oldSelection;
 }
 
 app.alignDistributePreferences.alignDistributeBounds = AlignDistributeBounds.ITEM_BOUNDS;

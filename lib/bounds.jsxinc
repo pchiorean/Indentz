@@ -1,5 +1,5 @@
 /*
-	Bounds v5.0.3 (2021-08-20)
+	Bounds v5.1 (2021-09-12)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Returns an object containing the geometric bounds of the given page,
@@ -7,16 +7,16 @@
 
 	{
 		page: {
-			size    : [ top, left, bottom, right ],
-			margins : [ t, l, b, r ],
-			visible : [ t, l, b, r ] || undefined,
-			bleed   : [ t, l, b, r ]
+			size:    [ top, left, bottom, right ],
+			margins: [ t, l, b, r ],
+			visible: [ t, l, b, r ] or undefined,
+			bleed:   [ t, l, b, r ]
 		},
 		spread: {
-			size    : [ t, l, b, r ],
-			margins : [ t, l, b, r ],
-			visible : [ t, l, b, r ] || undefined,
-			bleed   : [ t, l, b, r ]
+			size:    [ t, l, b, r ],
+			margins: [ t, l, b, r ],
+			visible: [ t, l, b, r ] or undefined,
+			bleed:   [ t, l, b, r ]
 		}
 	};
 
@@ -42,111 +42,128 @@
 	SOFTWARE.
 */
 
+/* eslint-disable no-unused-vars */
+
 function Bounds(page) {
+	var PSO = PageSideOptions;
+	var fPg = page.parent.pages.firstItem();
+	var lPg = page.parent.pages.lastItem();
+	var bleed = {
+		top:    doc.documentPreferences.properties.documentBleedTopOffset,
+		left:   doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
+		bottom: doc.documentPreferences.properties.documentBleedBottomOffset,
+		right:  doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
+	};
+	var margins = {
+		top:    page.marginPreferences.top,
+		left:   page.marginPreferences.left,
+		bottom: page.marginPreferences.bottom,
+		right:  page.marginPreferences.right
+	};
+	var visibleAreaRE = /^<?(visible|safe) area>?$/i;
 
-var fPg = page.parent.pages.firstItem();
-var lPg = page.parent.pages.lastItem();
-var bleed = {
-	top    : doc.documentPreferences.properties.documentBleedTopOffset,
-	left   : doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
-	bottom : doc.documentPreferences.properties.documentBleedBottomOffset,
-	right  : doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
-};
-var margins = {
-	top    : page.marginPreferences.top,
-	left   : page.marginPreferences.left,
-	bottom : page.marginPreferences.bottom,
-	right  : page.marginPreferences.right
-};
-
-return {
-	page: {
-		size: page.bounds,
-		margins: [
-			/* t */ page.bounds[0] + margins.top,
-			/* l */ page.side == PageSideOptions.LEFT_HAND ?
-			        page.bounds[1] + margins.right : page.bounds[1] + margins.left,
-			/* b */ page.bounds[2] - margins.bottom,
-			/* r */ page.side == PageSideOptions.LEFT_HAND ?
-			        page.bounds[3] - margins.left : page.bounds[3] - margins.right
-		],
-		visible: (function() {
-			var v = [], frame, frames = page.pageItems.everyItem().getElements();
-			while (frame = frames.shift())
-				if (frame.label == "visible area" || frame.name == "<visible area>") v.push(frame);
-			if (v.length == 0) return undefined;
-			var vis = v[0].geometricBounds;
-			for (var i = 1, n = v.length; i < n; i++) {
-				vis[0] = Math.min(v[i].geometricBounds[0], vis[0]);
-				vis[1] = Math.min(v[i].geometricBounds[1], vis[1]);
-				vis[2] = Math.max(v[i].geometricBounds[2], vis[2]);
-				vis[3] = Math.max(v[i].geometricBounds[3], vis[3]);
-			};
-			return [
-				Math.max(vis[0], page.bounds[0]),
-				Math.max(vis[1], page.bounds[1]),
-				Math.min(vis[2], page.bounds[2]),
-				Math.min(vis[3], page.bounds[3])
-			];
-		})(),
-		bleed: [
-			/* t */ page.bounds[0] - bleed.top,
-			/* l */ page.bounds[1] - (page == fPg ?
-			        (fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left) : 0),
-			/* b */ page.bounds[2] + bleed.bottom,
-			/* r */ page.bounds[3] + (fPg == lPg ?
-			        (fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) :
-			        (page == lPg ? bleed.right : 0))
-		]
-	},
-	spread: {
-		size: [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ],
-		margins: (function() {
-			var fm, lm, p = page.parent.pages;
-			for (var i = 0, n = p.length; i < n; i++) {
-				var m = p[i].marginPreferences;
-				if (m.top + m.left + m.bottom + m.right > 0) { fm = p[i]; break };
-			};
-			for (var i = p.length - 1; i >= 0 ; i--) {
-				var m = p[i].marginPreferences;
-				if (m.top + m.left + m.bottom + m.right > 0) { lm = p[i]; break };
-			};
-			if (!fm && !lm) return [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ];
-			else return [
-				/* t */ Math.min(fm.bounds[0] + fm.marginPreferences.top,
-				                 lm.bounds[0] + lm.marginPreferences.top),
-				/* l */ fm.bounds[1] + (fm.side == PageSideOptions.LEFT_HAND ?
-				        fm.marginPreferences.right : fm.marginPreferences.left),
-				/* b */ Math.max(lm.bounds[2] - lm.marginPreferences.bottom,
-				                 fm.bounds[2] - fm.marginPreferences.bottom),
-				/* r */ lm.bounds[3] - (fm == lm ?
-				        (fm.side == PageSideOptions.LEFT_HAND ?
-				        fm.marginPreferences.left : fm.marginPreferences.right) :
-				        lm.marginPreferences.right)
-			];
-		})(),
-		visible: (function() {
-			var v = [], frame, frames = page.parent.pageItems.everyItem().getElements();
-			while (frame = frames.shift())
-				if (frame.label == "visible area" || frame.name == "<visible area>") v.push(frame);
-			if (v.length == 0) return undefined;
-			var vis = v[0].geometricBounds;
-			for (var i = 1, n = v.length; i < n; i++) {
-				vis[0] = Math.min(v[i].geometricBounds[0], vis[0]);
-				vis[1] = Math.min(v[i].geometricBounds[1], vis[1]);
-				vis[2] = Math.max(v[i].geometricBounds[2], vis[2]);
-				vis[3] = Math.max(v[i].geometricBounds[3], vis[3]);
-			};
-			return vis;
-		})(),
-		bleed: [
-			fPg.bounds[0] - bleed.top,
-			fPg.bounds[1] - (fPg.side == PageSideOptions.LEFT_HAND ? bleed.right : bleed.left),
-			lPg.bounds[2] + bleed.bottom,
-			lPg.bounds[3] + (fPg == lPg ?
-				(fPg.side == PageSideOptions.LEFT_HAND ? bleed.left : bleed.right) : bleed.right)
-		]
-	}
-};
-
-};
+	return {
+		page: {
+			size: page.bounds,
+			margins: [
+				page.bounds[0] + margins.top,
+				(page.side === PSO.LEFT_HAND) ?
+					page.bounds[1] + margins.right :
+					page.bounds[1] + margins.left,
+				page.bounds[2] - margins.bottom,
+				(page.side === PSO.LEFT_HAND) ?
+					page.bounds[3] - margins.left :
+					page.bounds[3] - margins.right
+			],
+			visible: (function () {
+				var frame, i, n;
+				var frames = page.pageItems.everyItem().getElements();
+				var bounds = [];
+				var v = [];
+				while ((frame = frames.shift()))
+					if (visibleAreaRE.test(frame.label) || visibleAreaRE.test(frame.name)) v.push(frame);
+				if (v.length === 0) return undefined;
+				bounds = v[0].geometricBounds;
+				for (i = 1, n = v.length; i < n; i++) {
+					bounds[0] = Math.min(v[i].geometricBounds[0], bounds[0]);
+					bounds[1] = Math.min(v[i].geometricBounds[1], bounds[1]);
+					bounds[2] = Math.max(v[i].geometricBounds[2], bounds[2]);
+					bounds[3] = Math.max(hhv[i].geometricBounds[3], bounds[3]);
+				}
+				return [
+					Math.max(bounds[0], page.bounds[0]),
+					Math.max(bounds[1], page.bounds[1]),
+					Math.min(bounds[2], page.bounds[2]),
+					Math.min(bounds[3], page.bounds[3])
+				];
+			}()),
+			bleed: [
+				page.bounds[0] - bleed.top,
+				page.bounds[1] - ((page === fPg) ?
+					((fPg.side === PSO.LEFT_HAND) ? bleed.right : bleed.left) :
+					0),
+				page.bounds[2] + bleed.bottom,
+				page.bounds[3] + ((fPg === lPg) ?
+					((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right) :
+					(page === lPg ? bleed.right : 0))
+			]
+		},
+		spread: {
+			size: [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ],
+			margins: (function () {
+				var fm, lm, m, i, n;
+				var p = page.parent.pages;
+				var bounds = [];
+				for (i = 0, n = p.length; i < n; i++) {
+					m = p[i].marginPreferences;
+					if (m.top + m.left + m.bottom + m.right > 0) { fm = p[i]; break; }
+				}
+				for (i = p.length - 1; i >= 0 ; i--) {
+					m = p[i].marginPreferences;
+					if (m.top + m.left + m.bottom + m.right > 0) { lm = p[i]; break; }
+				}
+				if (!fm && !lm) {
+					bounds = [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ];
+				} else {
+					bounds = [
+						Math.min(fm.bounds[0] + fm.marginPreferences.top,
+							lm.bounds[0] + lm.marginPreferences.top),
+						fm.bounds[1] + ((fm.side === PSO.LEFT_HAND) ?
+							fm.marginPreferences.right : fm.marginPreferences.left),
+						Math.max(lm.bounds[2] - lm.marginPreferences.bottom,
+							fm.bounds[2] - fm.marginPreferences.bottom),
+						lm.bounds[3] - ((fm === lm) ?
+							((fm.side === PSO.LEFT_HAND) ? fm.marginPreferences.left : fm.marginPreferences.right) :
+							lm.marginPreferences.right)
+					];
+				}
+				return bounds;
+			}()),
+			visible: (function () {
+				var frame, i, n;
+				var frames = page.parent.pageItems.everyItem().getElements();
+				var bounds = [];
+				var v = [];
+				while ((frame = frames.shift()))
+					if (visibleAreaRE.test(frame.label) || visibleAreaRE.test(frame.name)) v.push(frame);
+				if (v.length === 0) return undefined;
+				bounds = v[0].geometricBounds;
+				for (i = 1, n = v.length; i < n; i++) {
+					bounds[0] = Math.min(v[i].geometricBounds[0], bounds[0]);
+					bounds[1] = Math.min(v[i].geometricBounds[1], bounds[1]);
+					bounds[2] = Math.max(v[i].geometricBounds[2], bounds[2]);
+					bounds[3] = Math.max(v[i].geometricBounds[3], bounds[3]);
+				}
+				return bounds;
+			}()),
+			bleed: [
+				fPg.bounds[0] - bleed.top,
+				fPg.bounds[1] - ((fPg.side === PSO.LEFT_HAND) ? bleed.right : bleed.left),
+				lPg.bounds[2] + bleed.bottom,
+				lPg.bounds[3] + ((fPg === lPg) ?
+					((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right) :
+					bleed.right)
+			]
+		}
+	};
+}

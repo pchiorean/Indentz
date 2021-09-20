@@ -1,85 +1,77 @@
 /*
-	Page size from selection v1.8.1 (2021-08-16)
+	Page size from selection v1.8.2 (2021-09-17)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets the page size to the selected objects bounds.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
-
-	Permission is hereby granted, free of charge, to any person obtaining a copy
-	of this software and associated documentation files (the "Software"), to deal
-	in the Software without restriction, including without limitation the rights
-	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-	copies of the Software, and to permit persons to whom the Software is
-	furnished to do so, subject to the following conditions:
-
-	The above copyright notice and this permission notice shall be included in all
-	copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-	SOFTWARE.
 */
 
-if (!(doc = app.activeDocument)) exit();
-var sel = doc.selection;
-if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
-	alert("Select an object and try again."); exit();
-}
+if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.javascript, undefined,
-	UndoModes.ENTIRE_SCRIPT, "Page size from selection");
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection,
+	UndoModes.ENTIRE_SCRIPT, 'Page size from selection');
 
 
-function main() {
+function main(selection) {
+	var page, size, newPgSize, tmpFrame, i, n, mm, pp, p, s;
+	var old = {
+		objectsMoveWithPage: app.generalPreferences.objectsMoveWithPage,
+		enableAdjustLayout: doc.adjustLayoutPreferences.enableAdjustLayout,
+		enableAutoAdjustMargins: doc.adjustLayoutPreferences.enableAutoAdjustMargins
+	};
 	app.generalPreferences.objectsMoveWithPage = false;
 	doc.adjustLayoutPreferences.enableAdjustLayout = false;
 	doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 	// Get selection's parent page
-	var selObj = sel; var s = selObj[0].parent;
-	while (s.constructor.name != "Spread") s = s.parent; var page = s.pages[0];
-	for (var i = 0, n = selObj.length; i < n; i++) {
-		if (selObj[i].parentPage != null) { page = selObj[i].parentPage; break }
-	}
+	s = selection[0].parent;
+	while (s.constructor.name !== 'Spread') s = s.parent;
+	page = s.pages[0];
+	for (i = 0, n = selection.length; i < n; i++)
+		if (selection[i].parentPage) { page = selection[i].parentPage; break; }
 	// Get selection dimensions
-	var size = selObj[0].geometricBounds;
-	for (var i = 1, n = selObj.length; i < n; i++) {
-		size[0] = Math.min(selObj[i].geometricBounds[0], size[0]);
-		size[1] = Math.min(selObj[i].geometricBounds[1], size[1]);
-		size[2] = Math.max(selObj[i].geometricBounds[2], size[2]);
-		size[3] = Math.max(selObj[i].geometricBounds[3], size[3]);
+	size = selection[0].geometricBounds;
+	for (i = 1, n = selection.length; i < n; i++) {
+		size[0] = Math.min(selection[i].geometricBounds[0], size[0]);
+		size[1] = Math.min(selection[i].geometricBounds[1], size[1]);
+		size[2] = Math.max(selection[i].geometricBounds[2], size[2]);
+		size[3] = Math.max(selection[i].geometricBounds[3], size[3]);
 	}
-	var mg = page.rectangles.add({ // Make temp rectangle
-		contentType: ContentType.UNASSIGNED,
-		fillColor: "None", strokeColor: "None",
-		geometricBounds: size });
-	page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }
-	doc.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }
+	// Set page size
+	page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
+	doc.marginPreferences.properties =  { top: 0, left: 0, bottom: 0, right: 0 };
 	page.layoutRule = LayoutRuleOptions.OFF;
+	tmpFrame = page.rectangles.add({
+		contentType: ContentType.UNASSIGNED,
+		fillColor: 'None',
+		strokeColor: 'None',
+		geometricBounds: size
+	});
 	page.reframe(CoordinateSpaces.SPREAD_COORDINATES, [
-		mg.resolve(AnchorPoint.TOP_LEFT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0],
-		mg.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0]
+		tmpFrame.resolve(AnchorPoint.TOP_LEFT_ANCHOR,     CoordinateSpaces.SPREAD_COORDINATES)[0],
+		tmpFrame.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0]
 	]);
-	mg.remove();
+	tmpFrame.remove();
 	// Also set document size
-	var sizePg = { width: size[3] - size[1], height: size[2] - size[0] }
-	if (doc.pages.length == 1) {
+	if (doc.pages.length === 1) {
+		newPgSize = { width: size[3] - size[1], height: size[2] - size[0] };
 		try {
-			doc.documentPreferences.pageWidth = sizePg.width;
-			doc.documentPreferences.pageHeight = sizePg.height;
-		} catch (_) {
-			while (s = doc.masterSpreads.shift()) {
-				while (i = s.pages.shift())
-					i.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 }
+			doc.documentPreferences.pageWidth =  newPgSize.width;
+			doc.documentPreferences.pageHeight = newPgSize.height;
+		} catch (e) {
+			mm = doc.masterSpreads.everyItem().getElements();
+			while ((s = mm.shift())) {
+				pp = s.pages.everyItem().getElements();
+				while ((p = pp.shift()))
+					p.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
 			}
-			doc.documentPreferences.pageWidth = sizePg.width;
-			doc.documentPreferences.pageHeight = sizePg.height;
+			doc.documentPreferences.pageWidth =  newPgSize.width;
+			doc.documentPreferences.pageHeight = newPgSize.height;
 		}
 	}
-	try { app.select(sel) } catch (_) {} // Restore initial selection
+	// Restore settings
+	app.generalPreferences.objectsMoveWithPage = old.objectsMoveWithPage;
+	doc.adjustLayoutPreferences.enableAdjustLayout = old.enableAdjustLayout;
+	doc.adjustLayoutPreferences.enableAutoAdjustMargins = old.enableAutoAdjustMargins;
 }

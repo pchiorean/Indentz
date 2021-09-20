@@ -1,5 +1,5 @@
 /*
-	Scale to page margins v1.5.2 (2021-08-16)
+	Scale to page margins v1.5.3 (2021-09-15)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Scales the selected objects to the page margins.
@@ -8,48 +8,64 @@
 	https://choosealicense.com/licenses/mit/
 */
 
-if (!(doc = app.activeDocument)) exit();
-var sel = doc.selection, bakSel = sel;
-if (sel.length == 0 || (sel[0].constructor.name == "Guide")) {
-	alert("Select an object and try again."); exit();
-};
-app.doScript(main, ScriptLanguage.javascript, undefined,
-	UndoModes.ENTIRE_SCRIPT, "Scale to page margins");
+if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection,
+	UndoModes.ENTIRE_SCRIPT, 'Scale to page margins');
 
-function main() {
+function main(selection) {
+	var item, page, i, n;
+	var items = [];
+	var old = {
+		selection: selection,
+		ungroupRemembersLayers: app.generalPreferences.ungroupRemembersLayers,
+		pasteRemembersLayers: app.clipboardPreferences.pasteRemembersLayers
+	};
 	// Get selection's parent page
-	var page;
-	for (var i = 0, n = sel.length; i < n; i++)
-		if (sel[i].parentPage != null) { page = doc.pages[sel[i].parentPage.documentOffset]; break };
-	if (page == null) { alert("Select an object on page and try again."); exit() };
-	// Remember layers for grouping/ungrouping
-	var oldURL = app.generalPreferences.ungroupRemembersLayers;
-	var oldPRL = app.clipboardPreferences.pasteRemembersLayers;
+	for (i = 0, n = selection.length; i < n; i++)
+		if (selection[i].parentPage) { page = doc.pages[selection[i].parentPage.documentOffset]; break; }
+	if (!page) return;
+	// Group multiple items
 	app.generalPreferences.ungroupRemembersLayers = true;
 	app.clipboardPreferences.pasteRemembersLayers = true;
-	// Get selection dimensions
-	var ungroup = false;
-	if (sel.length > 1) {
-		var objects = [];
-		for (var i = 0, n = sel.length; i < n; i++) if (!sel[i].locked) objects.push(sel[i]);
-		sel = page.groups.add(objects); ungroup = true;
-	} else sel = sel[0];
-	// Compute scale factor
-	var mgW = (page.bounds[3] - page.bounds[1]) - (page.marginPreferences.left + page.marginPreferences.right);
-	var mgH = (page.bounds[2] - page.bounds[0]) - (page.marginPreferences.top + page.marginPreferences.bottom);
-	var objW = sel.visibleBounds[3] - sel.visibleBounds[1];
-	var objH = sel.visibleBounds[2] - sel.visibleBounds[0];
-	var objSF = Math.min(mgW / objW, mgH / objH);
-	var matrix = app.transformationMatrices.add({ horizontalScaleFactor: objSF, verticalScaleFactor: objSF });
-	// Scale selection
-	sel.transform(CoordinateSpaces.PASTEBOARD_COORDINATES, AnchorPoint.CENTER_ANCHOR, matrix);
-	doc.align(sel, DistributeOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
-	doc.align(sel, DistributeOptions.VERTICAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
-	// Ungroup and restore selection
-	if (ungroup) sel.ungroup();
-	app.select(bakSel);
+	if (selection.length > 1) {
+		for (i = 0, n = selection.length; i < n; i++) if (!selection[i].locked) items.push(selection[i]);
+		item = page.groups.add(items, { name: '<scale group>' });
+	} else {
+		item = selection[0];
+	}
+	// Scale, ungroup and restore initial selection
+	scale(item);
+	if (item.name === '<scale group>') item.ungroup();
+	app.select(old.selection);
 	// Restore layer grouping settings
-	app.generalPreferences.ungroupRemembersLayers = oldURL;
-	app.clipboardPreferences.pasteRemembersLayers = oldPRL;
-};
+	app.generalPreferences.ungroupRemembersLayers = old.ungroupRemembersLayers;
+	app.clipboardPreferences.pasteRemembersLayers = old.pasteRemembersLayers;
+
+	function scale(objects) {
+		var size = {
+			target: {
+				w: (page.bounds[3] - page.bounds[1]) - (page.marginPreferences.left + page.marginPreferences.right),
+				h: (page.bounds[2] - page.bounds[0]) - (page.marginPreferences.top  + page.marginPreferences.bottom)
+			},
+			item: {
+				w: item.visibleBounds[3] - item.visibleBounds[1],
+				h: item.visibleBounds[2] - item.visibleBounds[0]
+			}
+		};
+		var scaleFactor = Math.min(
+			size.target.w / size.item.w,
+			size.target.h / size.item.h
+		);
+		objects.transform(
+			CoordinateSpaces.PASTEBOARD_COORDINATES,
+			AnchorPoint.CENTER_ANCHOR,
+			app.transformationMatrices.add({
+				horizontalScaleFactor: scaleFactor,
+				verticalScaleFactor:   scaleFactor
+			})
+		);
+		doc.align(item, DistributeOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.MARGIN_BOUNDS);
+		doc.align(item, DistributeOptions.VERTICAL_CENTERS,   AlignDistributeBounds.MARGIN_BOUNDS);
+	}
+}

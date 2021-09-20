@@ -1,45 +1,56 @@
-// This is just a template
+/* eslint-disable no-unused-vars, no-lonely-if */
 
-// @include "FindFile.jsxinc";
+// @include 'FindFile.jsxinc';
+// @include 'Report.jsxinc';
 
-// var infoFile, infoFilename = "data.txt";
-// if (!(infoFile = FindFile(infoFilename))) { alert("File '" + infoFilename + "' not found."); exit() };
-//
-// var data = ParseInfo(infoFile);
-// if (data.errors.length > 0) { Report(data.errors, decodeURI(infoFile.getRelativeURI(doc.filePath))); exit() };
-// if (data.records.length == 0) exit();
+// (This function is just a stub)
+// var dataFile = findFile('data.txt');
+// if (!dataFile) { alert('No data file found.'); exit(); }
+// var data = parseInfo(dataFile);
+// if (data.errors.length > 0) { report(data.errors, decodeURI(dataFile.getRelativeURI(doc.filePath))); exit(); }
+// if (data.records.length === 0) exit();
 
 /**
  * Parses a TSV file, returning an object containing found records and errors. Ignores blank lines and those prefixed
- * with '#'; '@path/to/file.txt' includes records from 'file.txt', '@default' includes the default info file.
- * @param {File} infoFile - Tab-separated-values file object
+ * with '#'; '@path/to/file.txt' includes records from 'file.txt', '@default' includes the default data file.
+ * @param {File} dataFile - Tab-separated-values file object
  * @returns {{records: Array, errors: Array}}
  */
-function ParseInfo(infoFile) {
-	var buffer = [], records = [], errors = [], infoLine, header, flgHeader = false, line = 0;
-	infoFile.open("r");
-	while (!infoFile.eof) {
-		infoLine = infoFile.readln(); line++;
-		if (infoLine.replace(/^\s+|\s+$/g, "") == "") continue; // Ignore blank lines
-		if (infoLine.slice(0,1) == "\u0023") continue; // Ignore lines prefixed with '#'
+function parseInfo(dataFile) {
+	var infoLine, header, include, includeFile;
+	var buffer = [];
+	var records = [];
+	var errors = [];
+	var flgHeader = false;
+	var line = 0;
+	dataFile.open('r');
+	while (!dataFile.eof) {
+		infoLine = dataFile.readln(); line++;
+		if (infoLine.replace(/^\s+|\s+$/g, '') === '') continue; // Ignore blank lines
+		if (infoLine.slice(0,1) === '\u0023') continue;          // Ignore lines prefixed with '#'
 		infoLine = infoLine.split(/ *\t */);
-		if (!flgHeader) { header = infoLine; flgHeader = true; continue }; // Header
-		if (infoLine[0].slice(0,1) == "\u0040") { // '@include'
-			var include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, "").replace(/^['"]+|['"]+$/g, "");
-			var includeFile = /^default(s?)$/i.test(include) ?
-				FindFile(infoFilename, true) : // '@default': include default info file
-				File(include); // '@path/to/file.txt': include 'file.txt'
-			if (includeFile.fullName == infoFile.fullName) continue; // Skip self
-			if (includeFile.exists) {
-				buffer = ParseInfo(includeFile);
+		// Header
+		if (!flgHeader) {
+			header = infoLine; flgHeader = true;
+			continue;
+		}
+		// '@include'
+		if (infoLine[0].slice(0,1) === '\u0040') { // '@'
+			include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
+			includeFile = /^default(s?)$/i.test(include) ?                   // '@default' ?
+				findFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // include default data file :
+				File(include);                                               // include 'path/to/file.txt'
+			if (includeFile && includeFile.exists) {
+				if (includeFile.fullName === dataFile.fullName) continue; // Skip self
+				buffer = parseInfo(includeFile);
 				records = records.concat(buffer.records);
-			};
+			}
 		} else {
 			// Some data validation and defaults here
 			// if (!infoLine[x]) errors.push("Some error");
-			if (errors.length == 0) records.push(infoLine);
-		};
-	};
-	infoFile.close(); infoLine = "";
+			if (errors.length === 0) records.push(infoLine);
+		}
+	}
+	dataFile.close(); infoLine = '';
 	return { records: records, errors: errors };
-};
+}

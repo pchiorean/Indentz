@@ -1,6 +1,6 @@
 /*
-	Cleanup labels v1.2.1 (2020-11-22)
-	(c) 2020 Paul Chiorean (jpeg@basement.ro)
+	Cleanup labels v1.2.2 (2021-09-12)
+	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Removes all labels from the document.
 
@@ -10,11 +10,11 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(main, ScriptLanguage.javascript, undefined,
-	UndoModes.ENTIRE_SCRIPT, "Cleanup labels");
-
-
-function main() {
-	var item, items = doc.selection.length == 0 ? doc.allPageItems : doc.selection;
-	while (item = items.shift()) item.label = "";
-}
+app.doScript(
+	function () {
+		var item;
+		var items = (doc.selection.length === 0) ? doc.allPageItems : doc.selection;
+		while ((item = items.shift())) item.label = '';
+	},
+	ScriptLanguage.JAVASCRIPT, undefined,
+	UndoModes.ENTIRE_SCRIPT, 'Cleanup labels');

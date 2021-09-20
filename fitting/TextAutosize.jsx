@@ -1,9 +1,9 @@
 /*
-	Fit frame to text v2.5 (2021-09-06)
+	Fit frame to text v2.5.1 (2021-09-18)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Auto-sizes the text frame to the content from None to Height Only to Height and Width
-	(single lines are always auto-sized Height and Width). A second run tightens auto-sizing.
+	Auto-sizes the text frame to the content from 'None' to 'Height Only' to 'Height and Width'
+	(single lines are always auto-sized 'Height and Width'). A second run tightens auto-sizing.
 	The first line's justification sets the horizontal alignment; vertical justification
 	sets the vertical alignment.
 
@@ -29,154 +29,174 @@
 	SOFTWARE.
 */
 
-if (!(doc = app.activeDocument)) exit();
-if (doc.selection.length == 0) { exit() } else { var sel = doc.selection }
+if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.javascript, sel,
-	UndoModes.ENTIRE_SCRIPT, "Fit frame to text");
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection,
+	UndoModes.ENTIRE_SCRIPT, 'Fit frame to text');
 
-
-function main(sel) {
-	if (sel[0].hasOwnProperty("parentTextFrames")) sel = sel[0].parentTextFrames;
-	for (var i = 0, n = sel.length; i < n; i++) {
-		if (sel[i].allPageItems.length > 0) { // Child text frames
-			for (var j = 0, childs = sel[i].allPageItems, m = childs.length; j < m; j++)
-				if (childs[j].constructor.name == "TextFrame") FitFrame2Text(childs[j]);
-		} else if (sel[i].constructor.name == "TextFrame") FitFrame2Text(sel[i]);
+function main(selection) {
+	if (Object.prototype.hasOwnProperty.call(selection[0], 'parentTextFrames'))
+		selection = selection[0].parentTextFrames;
+	for (var i = 0, n = selection.length; i < n; i++) {
+		if (selection[i].allPageItems.length > 0) { // Also get child text frames
+			for (var j = 0, childs = selection[i].allPageItems, m = childs.length; j < m; j++)
+				if (childs[j].constructor.name === 'TextFrame') fitFrame2Text(childs[j]);
+		} else if (selection[i].constructor.name === 'TextFrame') { fitFrame2Text(selection[i]); }
 	}
-}
 
-function FitFrame2Text(frame) {
-	const ASR = AutoSizingReferenceEnum;
-	const VJ = VerticalJustification;
-	var framePrefs = frame.textFramePreferences;
-	var frameVJ    = framePrefs.verticalJustification;
-	var oldAST     = framePrefs.autoSizingType;
-	var oldASRP    = framePrefs.autoSizingReferencePoint;
-	var align;
+	function fitFrame2Text(frame) {
+		var align;
+		var ASR = AutoSizingReferenceEnum;
+		var VJ = VerticalJustification;
+		var framePrefs = frame.textFramePreferences;
+		var oldAST = framePrefs.autoSizingType;
+		var oldASRP = framePrefs.autoSizingReferencePoint;
 
-	// Trim ending whitespace
-	if (/\s+$/g.test(frame.contents) && frame.nextTextFrame == null && !frame.overflows)
-		frame.contents = frame.contents.replace(/\s+$/g, "");
-	// Disable hyphenation for single lines
-	if (frame.lines.length == 1) frame.lines[0].hyphenation = false;
-	// Skip 'HW' frames, they are already set
-	if (/hw/gi.test(frame.label)) return;
+		// Trim ending whitespace
+		if (/\s+$/g.test(frame.contents) && frame.nextTextFrame == null && !frame.overflows)
+			frame.contents = frame.contents.replace(/\s+$/g, '');
+		// Disable hyphenation for single lines
+		if (frame.lines.length === 1) frame.lines[0].hyphenation = false;
+		// Skip 'HW' frames, they are already set
+		if (/hw/gi.test(frame.label)) return;
 
-	// Detect 1st paragraph's justification
-	if (frame.lines.length == 0) return;
-	switch (frame.lines[0].justification) {
-		case Justification.LEFT_ALIGN:
-		case Justification.LEFT_JUSTIFIED:
-			align = "left"; break;
-		case Justification.CENTER_ALIGN:
-		case Justification.CENTER_JUSTIFIED:
-		case Justification.FULLY_JUSTIFIED:
-			align = "center"; break;
-		case Justification.RIGHT_ALIGN:
-		case Justification.RIGHT_JUSTIFIED:
-			align = "right"; break;
-		case Justification.AWAY_FROM_BINDING_SIDE:
-			align = (frame.parentPage.side == PageSideOptions.LEFT_HAND) ? "left" : "right"; break;
-		case Justification.TO_BINDING_SIDE:
-			align = (frame.parentPage.side == PageSideOptions.LEFT_HAND) ? "right" : "left"; break;
-	}
-	// Tighten frame
-	switch (frameVJ) {
-		case VJ.TOP_ALIGN:
-			framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT; break;
-		case VJ.CENTER_ALIGN:
-			framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
-		case VJ.BOTTOM_ALIGN:
-			framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
-	}
-	if (frameVJ != VJ.JUSTIFY_ALIGN) framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
-	// Fix first baseline offset
-	switch (align) {
-		case "center":
-			framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
-		case "left":
-			framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break;
-		case "right":
-			framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break;
-	}
-	framePrefs.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
-	framePrefs.useNoLineBreaksForAutoSizing = true;
-	// Set alignment
-	switch (align) {
-		case "left":
-			switch (frameVJ) {
-				case VJ.TOP_ALIGN:
-					framePrefs.autoSizingReferencePoint = ASR.TOP_LEFT_POINT; break;
-				case VJ.JUSTIFY_ALIGN:
-				case VJ.CENTER_ALIGN:
-					framePrefs.autoSizingReferencePoint = ASR.LEFT_CENTER_POINT; break;
-				case VJ.BOTTOM_ALIGN:
-					framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT; break;
-			}
-			break;
-		case "center":
-			switch (frameVJ) {
-				case VJ.TOP_ALIGN:
-					framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT; break;
-				case VJ.JUSTIFY_ALIGN:
-				case VJ.CENTER_ALIGN:
-					framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT; break;
-				case VJ.BOTTOM_ALIGN:
-					framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT; break;
-			}
-			break;
-		case "right":
-			switch (frameVJ) {
-				case VJ.TOP_ALIGN:
-					framePrefs.autoSizingReferencePoint = ASR.TOP_RIGHT_POINT; break;
-				case VJ.JUSTIFY_ALIGN:
-				case VJ.CENTER_ALIGN:
-					framePrefs.autoSizingReferencePoint = ASR.RIGHT_CENTER_POINT; break;
-				case VJ.BOTTOM_ALIGN:
-					framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT; break;
-			}
-			break;
-	}
-	// Set frame auto-sizing
-	if (frameVJ == VJ.JUSTIFY_ALIGN) { framePrefs.autoSizingType = AutoSizingTypeEnum.WIDTH_ONLY; return }
-	if (frame.lines.length == 1) { // Tighten single lines
-		framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
-	} else {
-		switch(oldAST) {
-			case AutoSizingTypeEnum.OFF:
-				framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY; break;
-			case AutoSizingTypeEnum.HEIGHT_AND_WIDTH:
-			case AutoSizingTypeEnum.HEIGHT_AND_WIDTH_PROPORTIONALLY:
-				// Already tightened
+		// Detect 1st paragraph's justification
+		if (frame.lines.length === 0) return;
+		switch (frame.lines[0].justification) {
+			case Justification.LEFT_ALIGN:
+			case Justification.LEFT_JUSTIFIED:
+				align = 'left';
 				break;
-			case AutoSizingTypeEnum.HEIGHT_ONLY:
-			case AutoSizingTypeEnum.WIDTH_ONLY:
-				// Don't tighten when just the reference point is changed
-				if (framePrefs.autoSizingReferencePoint != oldASRP) break;
-				// Break lines and increase tightening
-				for (var i = 0, n = frame.paragraphs.length; i < n; i++) FreezePara(frame.paragraphs[i]);
-				framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
+			case Justification.CENTER_ALIGN:
+			case Justification.CENTER_JUSTIFIED:
+			case Justification.FULLY_JUSTIFIED:
+				align = 'center';
+				break;
+			case Justification.RIGHT_ALIGN:
+			case Justification.RIGHT_JUSTIFIED:
+				align = 'right';
+				break;
+			case Justification.AWAY_FROM_BINDING_SIDE:
+				align = (frame.parentPage.side === PageSideOptions.LEFT_HAND) ? 'left' : 'right';
+				break;
+			case Justification.TO_BINDING_SIDE:
+				align = (frame.parentPage.side === PageSideOptions.LEFT_HAND) ? 'right' : 'left';
 				break;
 		}
+
+		// Tighten frame
+		switch (framePrefs.verticalJustification) {
+			case VJ.TOP_ALIGN:
+				framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT;
+				break;
+			case VJ.CENTER_ALIGN:
+				framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT;
+				break;
+			case VJ.BOTTOM_ALIGN:
+				framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT;
+				break;
+		}
+		if (framePrefs.verticalJustification !== VJ.JUSTIFY_ALIGN)
+			framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
+
+		// Fix first baseline offset
+		switch (align) {
+			case 'center':
+				framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT;
+				break;
+			case 'left':
+				framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT;
+				break;
+			case 'right':
+				framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT;
+				break;
+		}
+		framePrefs.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
+		framePrefs.useNoLineBreaksForAutoSizing = true;
+
+		// Set alignment
+		switch (align) {
+			case 'left':
+				switch (framePrefs.verticalJustification) {
+					case VJ.TOP_ALIGN:
+						framePrefs.autoSizingReferencePoint = ASR.TOP_LEFT_POINT;
+						break;
+					case VJ.JUSTIFY_ALIGN:
+					case VJ.CENTER_ALIGN:
+						framePrefs.autoSizingReferencePoint = ASR.LEFT_CENTER_POINT;
+						break;
+					case VJ.BOTTOM_ALIGN:
+						framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT;
+						break;
+				}
+				break;
+			case 'center':
+				switch (framePrefs.verticalJustification) {
+					case VJ.TOP_ALIGN:
+						framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT;
+						break;
+					case VJ.JUSTIFY_ALIGN:
+					case VJ.CENTER_ALIGN:
+						framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT;
+						break;
+					case VJ.BOTTOM_ALIGN:
+						framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT;
+						break;
+				}
+				break;
+			case 'right':
+				switch (framePrefs.verticalJustification) {
+					case VJ.TOP_ALIGN:
+						framePrefs.autoSizingReferencePoint = ASR.TOP_RIGHT_POINT;
+						break;
+					case VJ.JUSTIFY_ALIGN:
+					case VJ.CENTER_ALIGN:
+						framePrefs.autoSizingReferencePoint = ASR.RIGHT_CENTER_POINT;
+						break;
+					case VJ.BOTTOM_ALIGN:
+						framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT;
+						break;
+				}
+				break;
+		}
+
+		// Set frame auto-sizing
+		if (framePrefs.verticalJustification === VJ.JUSTIFY_ALIGN) {
+			framePrefs.autoSizingType = AutoSizingTypeEnum.WIDTH_ONLY;
+			return;
+		}
+		if (frame.lines.length === 1) { // Tighten single lines
+			framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
+		} else {
+			switch (oldAST) {
+				case AutoSizingTypeEnum.OFF:
+					framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
+					break;
+				case AutoSizingTypeEnum.HEIGHT_AND_WIDTH:
+				case AutoSizingTypeEnum.HEIGHT_AND_WIDTH_PROPORTIONALLY:
+					// Already tightened
+					break;
+				case AutoSizingTypeEnum.HEIGHT_ONLY:
+				case AutoSizingTypeEnum.WIDTH_ONLY:
+					// Don't tighten when just the reference point was changed
+					if (framePrefs.autoSizingReferencePoint !== oldASRP) break;
+					// Break lines and increase tightening
+					for (var i = 0, n = frame.paragraphs.length; i < n; i++) freezePara(frame.paragraphs[i]);
+					framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
+					break;
+			}
+			frame.fit(FitOptions.FRAME_TO_CONTENT);
+		}
 	}
 
-	// Freeze Paragraphs v1.0.2 | By Harbs, in-tools.com
-	// Freezes the composition of selected text by inserting line breaks and making the contents non-break.
-	function FreezePara(para) {
-		var lineEnds = [];
-		for (var i = 0, n = para.lines.length; i < n - 1; i++) {
-			if (para.lines[i].characters[-1].contents == SpecialCharacters.FORCED_LINE_BREAK) continue;
-			if (para.lines[i].words[-1].lines.length > 1)
-				para.lines[i].characters[-1].insertionPoints[1].contents = "-";
-			lineEnds.push(para.lines[i].insertionPoints[-1].index);
+	// Modified from Freeze Paragraphs v1.0.2 by Harbs, in-tools.com
+	// http://in-tools.com/article/scripts-blog/freeze-composition/
+	function freezePara(paragraph) {
+		for (var i = 0, n = paragraph.lines.length; i < n - 1; i++) {
+			if (/-?\u000A$/g.test(paragraph.lines[i].contents)) continue;
+			if (paragraph.lines[i].words[-1].lines.length > 1) // Forced hyphenation
+				paragraph.lines[i].characters[-1].insertionPoints[1].contents = '-';
+			paragraph.lines[i].characters[-1].insertionPoints[1].contents = SpecialCharacters.FORCED_LINE_BREAK;
 		}
-		for (var i = lineEnds.length - 1; i >= 0; i--) {
-			para.parentStory.insertionPoints.item(lineEnds[i]).contents = SpecialCharacters.FORCED_LINE_BREAK;
-		}
-		// para.noBreak = true;
-		// para.minimumGlyphScaling = 50;
-		// para.lastLineIndent = 0;
-		// para.rightIndent = 0;
 	}
 }

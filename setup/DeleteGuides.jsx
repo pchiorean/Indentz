@@ -11,9 +11,9 @@
 if (!(doc = app.activeDocument)) exit();
 
 app.doScript(
-function() {
-	var g = doc.guides.everyItem().getElements();
-	for (var i = 0; i < g.length; i++) g[i].remove();
-},
-ScriptLanguage.javascript, undefined,
-UndoModes.ENTIRE_SCRIPT, "Delete guides");
+	function () {
+		var g = doc.guides.everyItem().getElements();
+		for (var i = 0; i < g.length; i++) g[i].remove();
+	},
+	ScriptLanguage.JAVASCRIPT, undefined,
+	UndoModes.ENTIRE_SCRIPT, 'Delete guides');

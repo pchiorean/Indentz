@@ -1,6 +1,6 @@
-// See "FitTo.jsxinc" for details.
-// @include "../lib/FitTo.jsxinc";
+// See 'FitTo.jsxinc' for details.
+// @include '../lib/FitTo.jsxinc';
 
-app.doScript(FitTo, ScriptLanguage.javascript,
-	[ "page", "bleed" ],
-	UndoModes.ENTIRE_SCRIPT, "Fit to page bleed");
+app.doScript(fitTo, ScriptLanguage.JAVASCRIPT,
+	[ 'page', 'bleed' ],
+	UndoModes.ENTIRE_SCRIPT, 'Fit to page bleed');

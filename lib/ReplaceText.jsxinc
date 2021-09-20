@@ -1,21 +1,30 @@
-function ReplaceText(/*str*/findWhat, /*str*/changeTo, /*bool*/wholeWord) {
-	wholeWord = wholeWord != undefined ? wholeWord : true;
+/* eslint-disable no-unused-vars */
 
-	app.findTextPreferences   = NothingEnum.NOTHING;
+/**
+ * Replaces a text with another. Unicode characters must be escaped.
+ * @param {String} findWhat - Text to be replaced
+ * @param {String} changeTo - New text
+ * @param {Boolean} [wholeWord=true] - Match whole words
+ * @returns {Boolean} - 'True' if a replacement is made
+ */
+function replaceText(findWhat, changeTo, wholeWord) {
+	wholeWord = (wholeWord === undefined) ? true : wholeWord;
+
+	app.findTextPreferences =   NothingEnum.NOTHING;
 	app.changeTextPreferences = NothingEnum.NOTHING;
 
-	app.findChangeTextOptions.includeHiddenLayers         = true;
-	app.findChangeTextOptions.includeLockedLayersForFind  = true;
+	app.findChangeTextOptions.includeHiddenLayers =         true;
+	app.findChangeTextOptions.includeLockedLayersForFind =  true;
 	app.findChangeTextOptions.includeLockedStoriesForFind = true;
-	app.findChangeTextOptions.includeMasterPages          = true;
-	app.findChangeTextOptions.caseSensitive               = true;
-	app.findChangeTextOptions.wholeWord                   = wholeWord;
+	app.findChangeTextOptions.includeMasterPages =          true;
+	app.findChangeTextOptions.caseSensitive =               true;
+	app.findChangeTextOptions.wholeWord =                   wholeWord;
 
-	app.findTextPreferences.findWhat   = findWhat;
+	app.findTextPreferences.findWhat =   findWhat;
 	app.changeTextPreferences.changeTo = changeTo;
 	var result = doc.changeText();
 
-	app.findTextPreferences   = NothingEnum.NOTHING;
+	app.findTextPreferences =   NothingEnum.NOTHING;
 	app.changeTextPreferences = NothingEnum.NOTHING;
 	return (result.length > 0);
-};
+}
