@@ -1,5 +1,5 @@
 /*
-	Clip v2.6.2 (2021-08-16)
+	Clip v2.7 (2021-09-20)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Clips selected objects in a clipping frame (or releases them if already clipped).
@@ -8,71 +8,85 @@
 	https://choosealicense.com/licenses/mit/
 */
 
-if (!(doc = app.activeDocument)) exit();
-var items = doc.selection;
-if (items.length == 0 || (items[0].constructor.name == "Guide")) {
-	alert("Select an object and try again."); exit();
-}
-// Remember layers for grouping/ungrouping
-var oldURL = app.generalPreferences.ungroupRemembersLayers;
-var oldPRL = app.clipboardPreferences.pasteRemembersLayers;
-app.generalPreferences.ungroupRemembersLayers = true;
-app.clipboardPreferences.pasteRemembersLayers = true;
-var clippingFrameRE = /^\<(auto )?clip(ping)? frame\>$/i;
-var clippingGroupRE = /^\<(auto )?clip(ping)? group\>$/i;
+if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(Clip, ScriptLanguage.javascript, items,
-	UndoModes.ENTIRE_SCRIPT, "Clipping");
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection,
+	UndoModes.ENTIRE_SCRIPT, 'Clipping');
 
-// Restore layer grouping settings
-app.generalPreferences.ungroupRemembersLayers = oldURL;
-app.clipboardPreferences.pasteRemembersLayers = oldPRL;
+function main(selection) {
+	var bounds, outlines, clipFrame;
+	var item = selection[0];
+	var items = [];
+	var clippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
+	var clippingGroupRE = /^<(auto )?clip(ping)? group>$/i;
+	var oldURL = app.generalPreferences.ungroupRemembersLayers;
+	var oldPRL = app.clipboardPreferences.pasteRemembersLayers;
+	app.generalPreferences.ungroupRemembersLayers = true;
+	app.clipboardPreferences.pasteRemembersLayers = true;
 
+	// Exceptions
+	// -- Only clip objects directly on spread
+	if (item.parent.constructor.name !== 'Spread') {
+		alert('Can\'t clip this, try selecting the parent.');
+		cleanupAndExit();
+	}
+	// -- Undo if already clipped
+	if (selection.length === 1 && clippingFrameRE.test(item.name)) {
+		undoClip(item);
+		cleanupAndExit();
+	}
 
-function Clip(items) {
-	// Undo if already clipped
-	if (items.length == 1 && clippingFrameRE.test(items[0].name)) { UndoClip(items[0]); exit() }
-	// Clip
-	try {
-		var obj = items[0];
-		var size = obj.visibleBounds;
-		// If multiple objects are selected, group them
-		if (items.length > 1) {
-			var objects = [];
-			for (var i = 0, n = items.length; i < n; i++) if (!items[i].locked) objects.push(items[i]);
-			obj = doc.groups.add(objects);
-			obj.name = "<auto clipping group>";
-			size = obj.geometricBounds;
-		}
+	// If multiple objects are selected, group them
+	bounds = item.visibleBounds;
+	if (selection.length > 1) {
+		for (var i = 0, n = selection.length; i < n; i++)
+			if (!selection[i].locked) items.push(selection[i]);
+		item = doc.groups.add(items);
+		item.name = '<auto clipping group>';
+		bounds = item.visibleBounds;
+	} else if (selection.length === 1 &&
+			selection[0].constructor.name === 'TextFrame' &&
+			(selection[0].contents.replace(/^\s+|\s+$/g, '')).length > 0) {
 		// Special case: text frames
-		else if (items.length == 1 &&
-			items[0].constructor.name == "TextFrame" &&
-			(items[0].contents.replace(/^\s+|\s+$/g, "")).length > 0) {
-			var outlines = items[0].createOutlines(false);
-			size = [
-				obj.geometricBounds[0], outlines[0].geometricBounds[1],
-				obj.geometricBounds[2], outlines[0].geometricBounds[3]
-			];
-			outlines[0].remove();
+		outlines = selection[0].createOutlines(false);
+		bounds = [
+			item.geometricBounds[0], outlines[0].geometricBounds[1],
+			item.geometricBounds[2], outlines[0].geometricBounds[3]
+		];
+		outlines[0].remove();
+	}
+	clipFrame = doc.rectangles.add(
+		item.itemLayer,
+		LocationOptions.AFTER, item,
+		{
+			name:            '<clipping frame>',
+			label:           item.label,
+			fillColor:       'None',
+			strokeColor:     'None',
+			geometricBounds: bounds
 		}
-		var clipFrame = doc.rectangles.add(
-			obj.itemLayer,
-			LocationOptions.AFTER, obj,
-			{ name: "<clipping frame>", label: obj.label,
-			fillColor: "None", strokeColor: "None",
-			geometricBounds: size });
-		clipFrame.sendToBack(obj);
-		app.select(obj); app.cut(); app.select(clipFrame); app.pasteInto();
-	} catch (e) { alert("Can't clip this object.\nTry selecting the parent."); return }
-}
+	);
+	clipFrame.sendToBack(item);
+	app.select(item); app.cut();
+	app.select(clipFrame); app.pasteInto();
+	cleanupAndExit();
 
-function UndoClip(clipFrame) {
-	var child = clipFrame.pageItems[0].duplicate();
-	child.sendToBack(clipFrame); clipFrame.remove();
-	app.select(child);
-	if (clippingGroupRE.test(child.name)) {
-		var selBAK = child.pageItems.everyItem().getElements();
-		child.ungroup();
-		app.select(selBAK);
+	function undoClip(frame) {
+		var oldSelection;
+		var child = frame.pageItems[0].duplicate();
+		child.sendToBack(frame);
+		frame.remove();
+		app.select(child);
+		if (clippingGroupRE.test(child.name)) {
+			oldSelection = child.pageItems.everyItem().getElements();
+			child.ungroup();
+			app.select(oldSelection);
+		}
+	}
+
+	function cleanupAndExit() {
+		app.generalPreferences.ungroupRemembersLayers = oldURL;
+		app.clipboardPreferences.pasteRemembersLayers = oldPRL;
+		exit();
 	}
 }

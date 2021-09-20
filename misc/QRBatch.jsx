@@ -1,9 +1,9 @@
 /*
-	Batch QR codes v2.6.3 (2021-08-16)
+	Batch QR codes v2.7 (2021-09-20)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
-	The list is a 3-column TSV file named "qr.txt" with the following format:
+	The list is a 3-column TSV file named 'qr.txt' with the following format:
 
 	Filename | Code   | Doc
 	File 1   | Code 1 | +
@@ -14,7 +14,7 @@
 	3. <Doc>: any string: on document; empty: separate file.
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
-	Blank lines and those prefixed with "#" are ignored.
+	Blank lines and those prefixed with '#' are ignored.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -38,577 +38,632 @@
 	SOFTWARE.
 */
 
-app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
-app.scriptPreferences.enableRedraw = false;
-var oldUIL = app.scriptPreferences.userInteractionLevel;
-app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
-var doc, currentPath, errors;
-if (app.documents.length > 0) doc = app.activeDocument;
-if (!!doc && doc.saved) currentPath = doc.filePath;
-const forbiddenFilenameChars = /[#%^{}\\<>*?\/$!'":@`|=]/g;
-const WIN = (File.fs == "Windows");
+var errors = [];
+var currentPath;
+if (app.documents.length > 0) {
+	doc = app.activeDocument;
+	if (doc && doc.saved) currentPath = doc.filePath;
+}
 
 main();
 
 function main() {
-	const LIST = {
-		width: 1200,   // pixels
-		height: 24,    // lines
-		itemHeight: 24 // pixels
+	var dataFile, rawData, validLines, queue, pbWidth;
+	var LIST = {
+		width:      1200, // pixels
+		height:     24,   // lines
+		itemHeight: 24    // pixels
 	};
-	var infoFile, rawData, validLines, queue, pbWidth;
+	var WIN = (File.fs === 'Windows');
+	var forbiddenFilenameCharsRE = /[#%^{}\\<>*?\/$!'":@`|=]/g; // eslint-disable-line no-useless-escape
+	var oldUIL = app.scriptPreferences.userInteractionLevel;
+	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
+	app.scriptPreferences.enableRedraw = false;
+
 	// User interface
-	var ui = new Window("dialog", "Generate QR Codes");
-	ui.orientation = "column";
-	ui.alignChildren = [ "right", "center" ];
-	ui.main = ui.add("group", undefined);
-	ui.main.orientation = "column";
-	ui.main.alignChildren = [ "fill", "center" ];
+	var ui = new Window('dialog', 'Generate QR Codes');
+	ui.orientation = 'column';
+	ui.alignChildren = [ 'right', 'center' ];
+	ui.main = ui.add('group', undefined);
+	ui.main.orientation = 'column';
+	ui.main.alignChildren = [ 'fill', 'center' ];
 	ui.list = ui.main.add('listbox', undefined, undefined, {
 		numberOfColumns: 4,
-		showHeaders: true,
-		columnTitles: [ "#", "Filename", "Code", "Doc" ],
-		columnWidths: [ 25, (LIST.width - 72) * 0.7, (LIST.width - 72) * 0.3, 30 ],
-		multiselect: true
+		showHeaders:     true,
+		columnTitles:    [ '#', 'Filename', 'Code', 'Doc' ],
+		columnWidths:    [ 25, (LIST.width - 72) * 0.7, (LIST.width - 72) * 0.3, 30 ],
+		multiselect:     true
 	});
 	ui.list.itemSize[1] = LIST.itemHeight;
 	ui.list.size = [ LIST.width, (LIST.itemHeight + 1) * LIST.height + 20 ];
 	ui.list.active = true;
-	ui.actions = ui.add("group", undefined);
-	ui.actions.orientation = "row";
-	ui.actions.alignChildren = [ "right", "center" ];
-	ui.actions.white = ui.actions.add("checkbox", undefined, "White text");
-	ui.actions.white.helpTip = "Make text white (only on documents)";
+	ui.actions = ui.add('group', undefined);
+	ui.actions.orientation = 'row';
+	ui.actions.alignChildren = [ 'right', 'center' ];
+	ui.actions.white = ui.actions.add('checkbox', undefined, 'White text');
+	ui.actions.white.helpTip = 'Make text white (only on documents)';
 	ui.actions.white.preferredSize.width = LIST.width - 492;
-	ui.actions.err = ui.actions.add("button", undefined, "Show errors");
+	ui.actions.err = ui.actions.add('button', undefined, 'Show errors');
 	ui.actions.err.visible = false;
-	ui.actions.div1 = ui.actions.add("panel", undefined, undefined);
-	ui.actions.div1.alignment = "fill";
+	ui.actions.div1 = ui.actions.add('panel', undefined, undefined);
+	ui.actions.div1.alignment = 'fill';
 	ui.actions.div1.visible = false;
-	ui.actions.browse = ui.actions.add("button", undefined, "Browse");
-	ui.actions.reload = ui.actions.add("button", undefined, "Reload");
-	ui.actions.div2 = ui.actions.add("panel", undefined, undefined);
-	ui.actions.div2.alignment = "fill";
-	ui.actions.add("button", undefined, "Cancel", { name: "cancel" });
-	ui.actions.start = ui.actions.add("button", undefined, "Start", { name: "ok" });
+	ui.actions.browse = ui.actions.add('button', undefined, 'Browse');
+	ui.actions.reload = ui.actions.add('button', undefined, 'Reload');
+	ui.actions.div2 = ui.actions.add('panel', undefined, undefined);
+	ui.actions.div2.alignment = 'fill';
+	ui.actions.add('button', undefined, 'Cancel', { name: 'cancel' });
+	ui.actions.start = ui.actions.add('button', undefined, 'Start', { name: 'ok' });
+
 	// UI callback functions
-	ui.actions.reload.onClick = function() {
+	ui.actions.reload.onClick = function () {
+		var infoLine, fC, ll;
+		var line = 0;
+		var flgHeader = isEmpty = isComment = isHeader = false;
+		dataFile = '';
+		rawData = [];
+		validLines = [];
+		errors = [];
+		pbWidth = 64;
 		ui.list.removeAll();
-		infoFile = "", rawData = [], validLines = [], errors = [], pbWidth = 64;
 		if (/QR Codes$/g.test(decodeURI(currentPath))) currentPath = currentPath.parent;
-		if (!!currentPath && (
-				(infoFile = File(currentPath + "/_qr.txt")) && infoFile.exists ||
-				(infoFile = File(currentPath + "/_QR.txt")) && infoFile.exists ||
-				(infoFile = File(currentPath + "/qr.txt"))  && infoFile.exists ||
-				(infoFile = File(currentPath + "/QR.txt"))  && infoFile.exists)
+		if (currentPath && (
+				((dataFile = File(currentPath + '/_qr.txt')) && dataFile.exists) ||
+				((dataFile = File(currentPath + '/_QR.txt')) && dataFile.exists) ||
+				((dataFile = File(currentPath + '/qr.txt'))  && dataFile.exists) ||
+				((dataFile = File(currentPath + '/QR.txt'))  && dataFile.exists))
 			) {
-			infoFile.open("r");
-			var infoLine, line = 0, flgHeader = false;
-			while (!infoFile.eof) {
-				var infoLine = "", isEmpty = isComment = isHeader = false;
-				infoLine = infoFile.readln(); line++;
-				if (infoLine.replace(/^\s+|\s+$/g, "") == "") isEmpty = true
-				else if (infoLine.toString().slice(0,1) == "\u0023") isComment = true;
+			dataFile.open('r');
+			while (!dataFile.eof) {
+				infoLine = '';
+				isEmpty = isComment = isHeader = false;
+				infoLine = dataFile.readln(); line++;
+				if (infoLine.replace(/^\s+|\s+$/g, '') === '') isEmpty = true;
+				else if (infoLine.toString().slice(0,1) === '\u0023') isComment = true;
 				infoLine = infoLine.split(/ *\t */);
-				if (!flgHeader) if (!isEmpty && !isComment) { isHeader = flgHeader = true };
+				if (!flgHeader) if (!isEmpty && !isComment) isHeader = flgHeader = true;
 				if (!isEmpty && !isComment && !isHeader) {
-					if (infoLine[0] != "") {
-						if (forbiddenFilenameChars.test(infoLine[0])) {
-							errors.push("Line " + line + ": Forbidden characters in the filename.") };
-						infoLine[0] = /\./g.test(infoLine[0]) &&
-							infoLine[0].slice(0, infoLine[0].lastIndexOf(".")) || infoLine[0];
-						if (!!infoLine[2] && !File(currentPath + "/" + infoLine[0] + ".indd").exists) {
-							errors.push("Line " + line + ": File '" + infoLine[0] + ".indd' not found.") };
-						if (!infoLine[1]) { errors.push("Line " + line + ": Missing code.") };
-						if (!infoLine[2]) infoLine[0] += (/_QR$/ig.test(infoLine[0]) ? "" : "_QR") + ".pdf"
-						else infoLine[0] += ".indd";
-						if (infoLine[0] != "") pbWidth = Math.max(pbWidth, infoLine[0].length);
-					} else { errors.push("Line " + line + ": Missing filename.") };
-					if (errors.length == 0) validLines.push(line);
-				};
+					if (infoLine[0]) {
+						if ((fC = infoLine[0].match(forbiddenFilenameCharsRE))) {
+							errors.push('Line ' + line + ': Forbidden characters in the filename: \'' +
+							fC.join('\', \'') + '\'.');
+						}
+						infoLine[0] = (/\./g.test(infoLine[0]) &&
+							infoLine[0].slice(0, infoLine[0].lastIndexOf('.'))) || infoLine[0];
+						if (infoLine[2] && !File(currentPath + '/' + infoLine[0] + '.indd').exists)
+							errors.push('Line ' + line + ": File '" + infoLine[0] + ".indd' not found.");
+						if (!infoLine[1]) errors.push('Line ' + line + ': Missing code.');
+						if (infoLine[2]) infoLine[0] += '.indd';
+						else infoLine[0] += (/_QR$/ig.test(infoLine[0]) ? '' : '_QR') + '.pdf';
+						if (infoLine[0] !== '') pbWidth = Math.max(pbWidth, infoLine[0].length);
+					} else { errors.push('Line ' + line + ': Missing filename.'); }
+					if (errors.length === 0) validLines.push(line);
+				}
 				rawData.push({
-					fn: infoLine[0],
-					code: infoLine[1],
-					pos: infoLine[2],
-					valid: (!isEmpty && !isComment && !isHeader),
+					fn:       infoLine[0],
+					code:     infoLine[1],
+					pos:      infoLine[2],
+					valid:    (!isEmpty && !isComment && !isHeader),
 					exported: false
 				});
 				if (!isHeader) {
-					var l = ui.list.add("item", line);
-					l.subItems[0].text = rawData[line-1].fn || "";
-					l.subItems[1].text = rawData[line-1].code || "";
-					l.subItems[2].text = rawData[line-1].pos ? "\u25cf" : ""; // ●
-				};
-			};
-			infoFile.close();
-			infoLine = "";
-		};
+					ll = ui.list.add('item', line);
+					ll.subItems[0].text = rawData[line - 1].fn || '';
+					ll.subItems[1].text = rawData[line - 1].code || '';
+					ll.subItems[2].text = rawData[line - 1].pos ? '\u25cf' : ''; // '●'
+				}
+			}
+			dataFile.close();
+			infoLine = '';
+		}
 		ui.list.onChange();
 	};
-	ui.list.onChange = function() {
+	ui.list.onChange = function () {
 		if (ui.list.selection) {
 			queue = [];
 			for (var i = 0, n = ui.list.selection.length; i < n; i++) {
 				for (var j = 0, m = validLines.length; j < m; j++) {
-					if (Number(ui.list.selection[i].toString()) == validLines[j]) {
+					if (Number(ui.list.selection[i].toString()) === validLines[j]) {
 						queue.push(Number(ui.list.selection[i].toString()));
 						break;
-					};
-				};
-			};
-		} else queue = validLines;
-		if (queue.length == 0) {
-			ui.text = !currentPath ?
-				"Select a folder containing the data file" :
-				(infoFile.exists ?
-					(WIN ? decodeURI(infoFile.fsName) : decodeURI(infoFile.fullName)) + " \u2013 0 records" :
-					"No data file in " + decodeURI(currentPath) + "/");
+					}
+				}
+			}
+		} else { queue = validLines; }
+		if (queue.length === 0) {
+			if (currentPath) {
+				ui.text = (dataFile.exists ?
+					(WIN ? decodeURI(dataFile.fsName) : decodeURI(dataFile.fullName)) + ' \u2013 0 records' :
+					'No data file in ' + decodeURI(currentPath) + '/');
+			} else {
+				ui.text = 'Select a folder containing the data file';
+			}
 			if (!currentPath) ui.actions.browse.notify();
 		} else {
-			ui.text = (WIN ? decodeURI(infoFile.fsName) : decodeURI(infoFile.fullName)) + " \u2013 " +
-				queue.length + " record" + (queue.length == 1 ? "" : "s") +
-				(errors.length > 0 ? " | " + errors.length + " error" + (errors.length == 1 ? "" : "s") : "");
-		};
-		ui.actions.start.enabled = queue.length > 0 && (errors.length == 0 || ui.list.selection);
+			ui.text = (WIN ? decodeURI(dataFile.fsName) : decodeURI(dataFile.fullName)) + ' \u2013 ' +
+				queue.length + ' record' + (queue.length === 1 ? '' : 's') +
+				(errors.length > 0 ? ' | ' + errors.length + ' error' + (errors.length === 1 ? '' : 's') : '');
+		}
+		ui.actions.start.enabled = queue.length > 0 && (errors.length === 0 || ui.list.selection);
 		ui.actions.reload.enabled = !!currentPath;
 		ui.actions.err.visible = ui.actions.div1.visible = (errors.length > 0);
-		if (errors.length > 0) { ui.actions.err.active = true }
-		else if (!infoFile.exists) { ui.actions.browse.active = true }
-		else if (queue.length == 0 && !ui.list.selection) { ui.actions.reload.active = true }
+		if (errors.length > 0) ui.actions.err.active = true;
+		else if (!dataFile.exists) ui.actions.browse.active = true;
+		else if (queue.length === 0 && !ui.list.selection) ui.actions.reload.active = true;
 		else ui.list.active = true;
 	};
-	ui.list.onDoubleClick = function() { infoFile.execute() };
-	ui.actions.err.onClick = function() { Report(errors, "Errors") };
-	ui.actions.browse.onClick = function() {
-		var folder = Folder.selectDialog("Select a folder containing the data file:");
-		if (!!folder && folder != currentPath) {
+	ui.list.onDoubleClick = function () { dataFile.execute(); };
+	ui.actions.err.onClick = function () { report(errors, 'Errors'); };
+	ui.actions.browse.onClick = function () {
+		var folder = Folder.selectDialog('Select a folder containing the data file:');
+		if (folder && folder !== currentPath) {
 			if (/QR Codes$/g.test(decodeURI(folder))) folder = folder.parent;
 			currentPath = folder;
 			ui.actions.reload.onClick();
-		};
+		}
 	};
 	ui.onShow = ui.actions.reload.notify();
-	// Processing
-	if (ui.show() == 2) exit();
-	errors = [], isModified = false;
-	if (queue.length > 1) var progressBar = new ProgressBar("Processing", pbWidth);
-	progressBar && progressBar.reset(queue.length);
-	for (var i = 0, n = queue.length; i < n; i++) {
-		var item = rawData[queue[i]-1];
-		if (item.fn == "" || item.fn.toString().slice(0,1) == "\u0023") { progressBar.update(i+1, ""); continue };
-		progressBar && progressBar.update(i+1, item.fn);
-		if ((item.pos && MakeQROnDoc(item.fn, item.code, ui.actions.white.value)) ||
-				(!item.pos && MakeQROnFile(item.fn, item.code))) {
-			item.exported = true; isModified = true;
-		};
-	};
-	// Update data file
-	progressBar && progressBar.close();
-	if (infoFile.exists && isModified && infoFile.open("w")) {
-		infoFile.encoding = "UTF-8";
-		for (var i = 0, n = rawData.length; i < n; i++) {
-			infoFile.writeln(
-				(rawData[i].exported ? "# " : "") +
-				(rawData[i].fn ? rawData[i].fn : "") +
-				(rawData[i].code ? "\t" + rawData[i].code : "") +
-				(rawData[i].pos ? "\t+" : "")
-			);
-		};
-		infoFile.close();
-	};
-	if (errors.length > 0) Report(errors, "Errors");
-	app.scriptPreferences.userInteractionLevel = oldUIL;
-};
 
-function MakeQROnDoc(fn, code, /*bool*/white) {
-	var doc = app.open(File(currentPath + "/" + fn));
-	var idLayer = MakeIDLayer(doc);
-	doc.activeLayer = idLayer;
-	for (var i = 0, n = doc.pages.length; i < n; i++) {
-		var page = doc.pages.item(i);
+	// Processing
+	if (ui.show() === 2) exit();
+	errors = [];
+	isModified = false;
+	if (queue.length > 1) var progressBar = new ProgressBar('Processing', pbWidth);
+	if (progressBar) progressBar.reset(queue.length);
+	for (var i = 0, n = queue.length; i < n; i++) {
+		var item = rawData[queue[i] - 1];
+		if (item.fn === '' || item.fn.toString().slice(0,1) === '\u0023') { progressBar.update(i + 1, ''); continue; }
+		if (progressBar) progressBar.update(i + 1, item.fn);
+		if ((item.pos && makeQROnDoc(item.fn, item.code, ui.actions.white.value)) ||
+				(!item.pos && makeQROnFile(item.fn, item.code))) {
+			item.exported = true; isModified = true;
+		}
+	}
+
+	// Update data file
+	if (progressBar) progressBar.close();
+	if (dataFile.exists && isModified && dataFile.open('w')) {
+		dataFile.encoding = 'UTF-8';
+		for (var j = 0, m = rawData.length; j < m; j++) {
+			dataFile.writeln(
+				(rawData[j].exported ? '# ' : '') +
+				(rawData[j].fn ? rawData[j].fn : '') +
+				(rawData[j].code ? '\t' + rawData[j].code : '') +
+				(rawData[j].pos ? '\t+' : '')
+			);
+		}
+		dataFile.close();
+	}
+	if (errors.length > 0) report(errors, 'Errors');
+	app.scriptPreferences.userInteractionLevel = oldUIL;
+}
+
+function makeQROnDoc(fn, code, /*bool*/white) {
+	var item, items, mgs, page, labelFrame, codeFrame, qrGroup, szLabel, szCode;
+	var target = app.open(File(currentPath + '/' + fn));
+	if (target.converted) { errors.push(decodeURI(target.name) + ' must be converted; skipped.'); return false; }
+	var idLayer = makeIDLayer(target);
+	target.activeLayer = idLayer;
+	for (var i = 0, n = target.pages.length; i < n; i++) {
+		page = target.pages.item(i);
+		mgs = pageMargins(page);
 		// Remove old codes
-		var item, items = page.pageItems.everyItem().getElements();
-		while (item = items.shift()) if (item.label == "QR") { item.itemLayer.locked = false; item.remove() };
+		items = page.pageItems.everyItem().getElements();
+		while ((item = items.shift())) if (item.label === 'QR') { item.itemLayer.locked = false; item.remove(); }
 		// Add label
-		var labelFrame = page.textFrames.add({
-			label: "QR",
-			itemLayer: idLayer.name,
-			fillColor: "None",
-			strokeColor: "None",
-			contents: /\|/g.test(code) ?        // If '|' found
-				code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
-				BalanceText(code, 20)           // else auto balance text
+		labelFrame = page.textFrames.add({
+			label:       'QR',
+			itemLayer:   idLayer.name,
+			fillColor:   'None',
+			strokeColor: 'None',
+			contents:    /\|/g.test(code) ?        // If '|' found
+				code.replace(/\|/g, '\u000A') : // replace it with Forced Line Break
+				balanceText(code, 20)           // else auto balance text
 		});
 		labelFrame.paragraphs.everyItem().properties = {
-			appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
-			pointSize: "5 pt",
-			autoLeading: 100,
+			appliedFont:     app.fonts.item('Helvetica Neue\tRegular'),
+			pointSize:       '5 pt',
+			autoLeading:     100,
 			horizontalScale: 92,
-			tracking: -15,
-			hyphenation: false,
-			capitalization: Capitalization.ALL_CAPS,
-			fillColor: white ? "Paper" : "Black", // White text checkbox
-			strokeColor: "None"
+			tracking:        -15,
+			hyphenation:     false,
+			capitalization:  Capitalization.ALL_CAPS,
+			fillColor:       white ? 'Paper' : 'Black', // White text checkbox
+			strokeColor:     'None'
 		};
 		labelFrame.textFramePreferences.properties = {
-			verticalJustification: VerticalJustification.BOTTOM_ALIGN,
-			firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
-			autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
-			autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
+			verticalJustification:        VerticalJustification.BOTTOM_ALIGN,
+			firstBaselineOffset:          FirstBaseline.CAP_HEIGHT,
+			autoSizingReferencePoint:     AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
+			autoSizingType:               AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
 			useNoLineBreaksForAutoSizing: true,
 			insetSpacing: [
-				UnitValue("3 mm").as("pt"), UnitValue("2.5 mm").as("pt"),
-				UnitValue("1 mm").as("pt"), 0
+				UnitValue('3 mm').as('pt'),
+				UnitValue('2.5 mm').as('pt'),
+				UnitValue('1 mm').as('pt'),
+				0
 			]
 		};
-		doc.align(labelFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
-		doc.align(labelFrame, AlignOptions.TOP_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
+		target.align(labelFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
+		target.align(labelFrame, AlignOptions.TOP_EDGES,  AlignDistributeBounds.PAGE_BOUNDS);
 		// Add code
-		var codeFrame = page.rectangles.add({
-			itemLayer: idLayer.name,
-			label: "QR",
-			fillColor: "Paper",
-			strokeColor: "None"
+		codeFrame = page.rectangles.add({
+			itemLayer:   idLayer.name,
+			label:       'QR',
+			fillColor:   'Paper',
+			strokeColor: 'None'
 		});
 		codeFrame.absoluteRotationAngle = -90;
 		codeFrame.geometricBounds = [
 			labelFrame.geometricBounds[2],
-			page.bounds[1] + UnitValue("2.3 mm").as("pt"),
-			labelFrame.geometricBounds[2] + UnitValue("11.8 mm").as("pt"),
-			page.bounds[1] + UnitValue("14.1 mm").as("pt")
+			page.bounds[1] + UnitValue('2.3 mm').as('pt'),
+			labelFrame.geometricBounds[2] + UnitValue('11.8 mm').as('pt'),
+			page.bounds[1] + UnitValue('14.1 mm').as('pt')
 		];
-		codeFrame.createPlainTextQRCode(code.replace(/\|/g, "")); // Remove manual LB markers
+		codeFrame.createPlainTextQRCode(code.replace(/\|/g, '')); // Remove manual LB markers
 		codeFrame.frameFittingOptions.properties = {
-			fittingAlignment: AnchorPoint.CENTER_ANCHOR,
+			fittingAlignment:    AnchorPoint.CENTER_ANCHOR,
 			fittingOnEmptyFrame: EmptyFrameFittingOptions.PROPORTIONALLY,
-			topCrop: UnitValue("2.7 mm").as("pt"),
-			leftCrop: UnitValue("2.7 mm").as("pt"),
-			bottomCrop: UnitValue("2.7 mm").as("pt"),
-			rightCrop: UnitValue("2.7 mm").as("pt")
+			topCrop:             UnitValue('2.7 mm').as('pt'),
+			leftCrop:            UnitValue('2.7 mm').as('pt'),
+			bottomCrop:          UnitValue('2.7 mm').as('pt'),
+			rightCrop:           UnitValue('2.7 mm').as('pt')
 		};
 		codeFrame.epss[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
 		// Reposition
-		var qrGroup = page.groups.add([labelFrame, codeFrame]);
+		qrGroup = page.groups.add([ labelFrame, codeFrame ]);
 		qrGroup.absoluteRotationAngle = 90;
-		// If possible, put code outside visible area
-		var mgs = Margins(page);
-		var szLabel = {
-			width: labelFrame.geometricBounds[3] - labelFrame.geometricBounds[1],
+		// Try to put code outside visible area
+		szLabel = {
+			width:  labelFrame.geometricBounds[3] - labelFrame.geometricBounds[1],
 			height: labelFrame.geometricBounds[2] - labelFrame.geometricBounds[0]
 		};
-		var szCode = codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1];
-		doc.align(qrGroup, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
-		doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
+		szCode = codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1];
+		target.align(qrGroup, AlignOptions.LEFT_EDGES,   AlignDistributeBounds.PAGE_BOUNDS);
+		target.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
 		if ((szLabel.width > mgs.left && szLabel.height > mgs.bottom) ||
-			((szLabel.width + szCode) > mgs.left && (szCode + UnitValue("2.3 mm").as("pt")) > mgs.bottom)) {
-			doc.align(qrGroup, AlignOptions.LEFT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-			doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		};
+			((szLabel.width + szCode) > mgs.left && (szCode + UnitValue('2.3 mm').as('pt')) > mgs.bottom)) {
+			target.align(qrGroup, AlignOptions.LEFT_EDGES,   AlignDistributeBounds.MARGIN_BOUNDS);
+			target.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		}
 		qrGroup.ungroup();
-	};
-	doc.save(/* File(currentPath + "/" + fn) */);
-	doc.close();
+	}
+	target.save(/* File(currentPath + "/" + fn) */);
+	target.close();
 	return true;
-};
+}
 
-function MakeQROnFile(fn, code) {
+function makeQROnFile(fn, code) {
+	var labelFrame, codeFrame, qrGroup, targetFolder, baseName, ancillaryFile, pdfFile;
 	var target = app.documents.add();
 	var page = target.pages[0];
-	var idLayer = MakeIDLayer(target);
+	var idLayer = makeIDLayer(target);
 	// Add label
-	var labelFrame = page.textFrames.add({
-		label: "QR",
-		itemLayer: idLayer.name,
-		fillColor: "None",
-		strokeColor: "None",
-		contents: /\|/g.test(code) ?        // If '|' found
-			code.replace(/\|/g, "\u000A") : // replace it with Forced Line Break
-			BalanceText(code, 18)           // else auto balance text
+	labelFrame = page.textFrames.add({
+		label:       'QR',
+		itemLayer:   idLayer.name,
+		fillColor:   'None',
+		strokeColor: 'None',
+		contents:    /\|/g.test(code) ?        // If '|' found
+			code.replace(/\|/g, '\u000A') : // replace it with Forced Line Break
+			balanceText(code, 18)           // else auto balance text
 	});
 	labelFrame.paragraphs.everyItem().properties = {
-		appliedFont: app.fonts.item("Helvetica Neue\tRegular"),
-		pointSize: "5 pt",
-		autoLeading: 100,
+		appliedFont:     app.fonts.item('Helvetica Neue\tRegular'),
+		pointSize:       '5 pt',
+		autoLeading:     100,
 		horizontalScale: 92,
-		tracking: -15,
-		capitalization: Capitalization.ALL_CAPS,
-		hyphenation: false,
-		fillColor: "Black"
+		tracking:        -15,
+		capitalization:  Capitalization.ALL_CAPS,
+		hyphenation:     false,
+		fillColor:       'Black'
 	};
 	labelFrame.geometricBounds = [
-		0, 0,
-		UnitValue("5.787 mm").as("pt"), UnitValue("20 mm").as("pt")
+		0,
+		0,
+		UnitValue('5.787 mm').as('pt'),
+		UnitValue('20 mm').as('pt')
 	];
 	labelFrame.textFramePreferences.properties = {
-		verticalJustification: VerticalJustification.BOTTOM_ALIGN,
-		firstBaselineOffset: FirstBaseline.CAP_HEIGHT,
+		verticalJustification:    VerticalJustification.BOTTOM_ALIGN,
+		firstBaselineOffset:      FirstBaseline.CAP_HEIGHT,
 		autoSizingReferencePoint: AutoSizingReferenceEnum.BOTTOM_LEFT_POINT,
-		autoSizingType: AutoSizingTypeEnum.HEIGHT_ONLY,
+		autoSizingType:           AutoSizingTypeEnum.HEIGHT_ONLY,
 		insetSpacing: [
-			UnitValue("1 mm").as("pt"), UnitValue("1 mm").as("pt"),
-			0, UnitValue("0.5 mm").as("pt")
+			UnitValue('1 mm').as('pt'),
+			UnitValue('1 mm').as('pt'),
+			0,
+			UnitValue('0.5 mm').as('pt')
 		]
 	};
 	// Add code
-	var codeFrame = page.rectangles.add({ itemLayer: idLayer.name, label: "QR" });
+	codeFrame = page.rectangles.add({ itemLayer: idLayer.name, label: 'QR' });
 	codeFrame.absoluteRotationAngle = -90;
 	codeFrame.geometricBounds = [
-		UnitValue("5.787 mm").as("pt"), 0,
-		UnitValue("26 mm").as("pt"), UnitValue("20 mm").as("pt")
+		UnitValue('5.787 mm').as('pt'),
+		0,
+		UnitValue('26 mm').as('pt'),
+		UnitValue('20 mm').as('pt')
 	];
-	codeFrame.createPlainTextQRCode(code.replace(/\|/g, "")); // Remove manual LB markers
+	codeFrame.createPlainTextQRCode(code.replace(/\|/g, '')); // Remove manual LB markers
 	codeFrame.frameFittingOptions.properties = {
-		fittingAlignment: AnchorPoint.CENTER_ANCHOR,
+		fittingAlignment:    AnchorPoint.CENTER_ANCHOR,
 		fittingOnEmptyFrame: EmptyFrameFittingOptions.PROPORTIONALLY,
-		topCrop: UnitValue("1.533 mm").as("pt"),
-		leftCrop: UnitValue("1.64 mm").as("pt"),
-		bottomCrop: UnitValue("1.533 mm").as("pt"),
-		rightCrop: UnitValue("1.64 mm").as("pt")
+		topCrop:             UnitValue('1.533 mm').as('pt'),
+		leftCrop:            UnitValue('1.64 mm').as('pt'),
+		bottomCrop:          UnitValue('1.533 mm').as('pt'),
+		rightCrop:           UnitValue('1.64 mm').as('pt')
 	};
 	codeFrame.epss[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
 	// Reposition
-	var qrGroup = page.groups.add([labelFrame, codeFrame]);
+	qrGroup = page.groups.add([ labelFrame, codeFrame ]);
 	qrGroup.absoluteRotationAngle = 90;
 	page.layoutRule = LayoutRuleOptions.OFF;
 	page.reframe(CoordinateSpaces.SPREAD_COORDINATES, [
-		qrGroup.resolve(AnchorPoint.TOP_LEFT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0],
+		qrGroup.resolve(AnchorPoint.TOP_LEFT_ANCHOR,     CoordinateSpaces.SPREAD_COORDINATES)[0],
 		qrGroup.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0]
 	]);
-	target.documentPreferences.pageWidth = page.bounds[3] - page.bounds[1];
+	target.documentPreferences.pageWidth  = page.bounds[3] - page.bounds[1];
 	target.documentPreferences.pageHeight = page.bounds[2] - page.bounds[0];
 	qrGroup.ungroup();
 	target.documentPreferences.documentBleedUniformSize = true;
-	target.documentPreferences.documentBleedTopOffset = UnitValue("3 mm").as("pt");
+	target.documentPreferences.documentBleedTopOffset   = UnitValue('3 mm').as('pt');
 	// Export PDF
-	var targetFolder = Folder(currentPath + "/QR Codes");
+	targetFolder = Folder(currentPath + '/QR Codes');
 	targetFolder.create();
-	var baseName = /\./g.test(fn) && fn.slice(0, fn.lastIndexOf(".")) || fn;
-	var ancillaryFile = File(targetFolder + "/" + baseName + ".indd");
-	var pdfFile = File(targetFolder + "/" + baseName + ".pdf");
+	baseName = (/\./g.test(fn) && fn.slice(0, fn.lastIndexOf('.'))) || fn;
+	ancillaryFile = File(targetFolder + '/' + baseName + '.indd');
+	pdfFile = File(targetFolder + '/' + baseName + '.pdf');
 	if (ancillaryFile.exists) ancillaryFile.remove();
 	if (pdfFile.exists) pdfFile.remove();
-	if (!labelFrame.overflows) {
-		ExportToPDF(target, pdfFile);
-		target.close(SaveOptions.NO);
-		return true;
-	} else { // If text overflows keep file opened
+	if (labelFrame.overflows) {
+		// If text overflows keep file opened
 		target.textPreferences.showInvisibles = true;
 		target.save(ancillaryFile);
-		errors.push(baseName + ".indd: Text overflows.");
+		errors.push(baseName + '.indd: Text overflows.');
 		return false;
-	};
-};
+	}
+	setPDFExportPreferences();
+	target.exportFile(ExportFormat.pdfType, File(pdfFile), false);
+	target.close(SaveOptions.NO);
+	return true;
 
-function ExportToPDF(doc, path) {
-	with(app.pdfExportPreferences) {
+	function setPDFExportPreferences() {
 		// Output options
-		pageRange = PageRange.allPages;
-		acrobatCompatibility = AcrobatCompatibility.ACROBAT_7;
-		exportAsSinglePages = false;
-		exportGuidesAndGrids = false;
-		exportLayers = false;
-		exportWhichLayers = ExportLayerOptions.EXPORT_VISIBLE_PRINTABLE_LAYERS;
-		exportNonprintingObjects = false;
-		exportReaderSpreads = true;
-		pdfMagnification = PdfMagnificationOptions.DEFAULT_VALUE;
-		pdfPageLayout = PageLayoutOptions.DEFAULT_VALUE;
-		generateThumbnails = false;
-		try { ignoreSpreadOverrides = false } catch (e) {};
-		includeBookmarks = false;
-		includeHyperlinks = false;
-		includeICCProfiles = ICCProfiles.INCLUDE_ALL;
-		includeSlugWithPDF = true;
-		includeStructure = false;
-		interactiveElementsOption = InteractiveElementsOptions.APPEARANCE_ONLY;
-		subsetFontsBelow = 100;
+		app.pdfExportPreferences.pageRange                     = PageRange.ALL_PAGES;
+		app.pdfExportPreferences.acrobatCompatibility          = AcrobatCompatibility.ACROBAT_7;
+		app.pdfExportPreferences.exportAsSinglePages           = false;
+		app.pdfExportPreferences.exportGuidesAndGrids          = false;
+		app.pdfExportPreferences.exportLayers                  = false;
+		app.pdfExportPreferences.exportWhichLayers             = ExportLayerOptions.EXPORT_VISIBLE_PRINTABLE_LAYERS;
+		app.pdfExportPreferences.exportNonprintingObjects      = false;
+		app.pdfExportPreferences.exportReaderSpreads           = true;
+		app.pdfExportPreferences.pdfMagnification              = PdfMagnificationOptions.DEFAULT_VALUE;
+		app.pdfExportPreferences.pdfPageLayout                 = PageLayoutOptions.DEFAULT_VALUE;
+		app.pdfExportPreferences.generateThumbnails            = false;
+		try { app.pdfExportPreferences.ignoreSpreadOverrides   = false; } catch (e) {}
+		app.pdfExportPreferences.includeBookmarks              = false;
+		app.pdfExportPreferences.includeHyperlinks             = false;
+		app.pdfExportPreferences.includeICCProfiles            = ICCProfiles.INCLUDE_ALL;
+		app.pdfExportPreferences.includeSlugWithPDF            = true;
+		app.pdfExportPreferences.includeStructure              = false;
+		app.pdfExportPreferences.interactiveElementsOption     = InteractiveElementsOptions.APPEARANCE_ONLY;
+		app.pdfExportPreferences.subsetFontsBelow              = 100;
 		// Quality options
-		colorBitmapCompression = BitmapCompression.AUTO_COMPRESSION;
-		colorBitmapQuality = CompressionQuality.MAXIMUM;
-		colorBitmapSampling = Sampling.BICUBIC_DOWNSAMPLE;
-		colorBitmapSamplingDPI = 350;
-		grayscaleBitmapCompression = BitmapCompression.AUTO_COMPRESSION;
-		grayscaleBitmapQuality = CompressionQuality.MAXIMUM;
-		grayscaleBitmapSampling = Sampling.BICUBIC_DOWNSAMPLE;
-		grayscaleBitmapSamplingDPI = 350;
-		monochromeBitmapCompression = MonoBitmapCompression.CCIT4;
-		monochromeBitmapSampling = Sampling.BICUBIC_DOWNSAMPLE;
-		monochromeBitmapSamplingDPI = 2400;
-		thresholdToCompressColor = 350;
-		thresholdToCompressGray = 350;
-		thresholdToCompressMonochrome = 2400;
-		compressionType = PDFCompressionType.COMPRESS_STRUCTURE;
-		compressTextAndLineArt = true;
-		cropImagesToFrames = true;
-		optimizePDF = false;
+		app.pdfExportPreferences.colorBitmapCompression        = BitmapCompression.AUTO_COMPRESSION;
+		app.pdfExportPreferences.colorBitmapQuality            = CompressionQuality.MAXIMUM;
+		app.pdfExportPreferences.colorBitmapSampling           = Sampling.BICUBIC_DOWNSAMPLE;
+		app.pdfExportPreferences.colorBitmapSamplingDPI        = 350;
+		app.pdfExportPreferences.grayscaleBitmapCompression    = BitmapCompression.AUTO_COMPRESSION;
+		app.pdfExportPreferences.grayscaleBitmapQuality        = CompressionQuality.MAXIMUM;
+		app.pdfExportPreferences.grayscaleBitmapSampling       = Sampling.BICUBIC_DOWNSAMPLE;
+		app.pdfExportPreferences.grayscaleBitmapSamplingDPI    = 350;
+		app.pdfExportPreferences.monochromeBitmapCompression   = MonoBitmapCompression.CCIT4;
+		app.pdfExportPreferences.monochromeBitmapSampling      = Sampling.BICUBIC_DOWNSAMPLE;
+		app.pdfExportPreferences.monochromeBitmapSamplingDPI   = 2400;
+		app.pdfExportPreferences.thresholdToCompressColor      = 350;
+		app.pdfExportPreferences.thresholdToCompressGray       = 350;
+		app.pdfExportPreferences.thresholdToCompressMonochrome = 2400;
+		app.pdfExportPreferences.compressionType               = PDFCompressionType.COMPRESS_STRUCTURE;
+		app.pdfExportPreferences.compressTextAndLineArt        = true;
+		app.pdfExportPreferences.cropImagesToFrames            = true;
+		app.pdfExportPreferences.optimizePDF                   = false;
 		// Printers marks and prepress options
-		useDocumentBleedWithPDF = true;
-		bleedBottom = UnitValue("3 mm").as("pt");
-		bleedTop = UnitValue("3 mm").as("pt");
-		bleedInside = UnitValue("3 mm").as("pt");
-		bleedOutside = UnitValue("3 mm").as("pt");
-		colorBars = false;
-		colorTileSize = 128;
-		grayTileSize = 128;
-		cropMarks = true;
-		omitBitmaps = false;
-		omitEPS = false;
-		omitPDF = false;
-		pageInformationMarks = false;
-		pdfColorSpace = PDFColorSpace.REPURPOSE_CMYK;
-		pdfDestinationProfile = "Coated FOGRA39 (ISO 12647-2:2004)";
-		pdfXProfile = "Coated FOGRA39 (ISO 12647-2:2004)";
-		standardsCompliance = PDFXStandards.PDFX42010_STANDARD;
-		pdfMarkType = MarkTypes.DEFAULT_VALUE;
-		pageMarksOffset = UnitValue("3 mm").as("pt");
-		printerMarkWeight = PDFMarkWeight.P25PT;
-		bleedMarks = false;
-		registrationMarks = false;
-		try { simulateOverprint = false } catch (e) {};
+		app.pdfExportPreferences.useDocumentBleedWithPDF       = true;
+		app.pdfExportPreferences.bleedBottom                   = UnitValue('3 mm').as('pt');
+		app.pdfExportPreferences.bleedTop                      = UnitValue('3 mm').as('pt');
+		app.pdfExportPreferences.bleedInside                   = UnitValue('3 mm').as('pt');
+		app.pdfExportPreferences.bleedOutside                  = UnitValue('3 mm').as('pt');
+		app.pdfExportPreferences.colorBars                     = false;
+		app.pdfExportPreferences.colorTileSize                 = 128;
+		app.pdfExportPreferences.grayTileSize                  = 128;
+		app.pdfExportPreferences.cropMarks                     = true;
+		app.pdfExportPreferences.omitBitmaps                   = false;
+		app.pdfExportPreferences.omitEPS                       = false;
+		app.pdfExportPreferences.omitPDF                       = false;
+		app.pdfExportPreferences.pageInformationMarks          = false;
+		app.pdfExportPreferences.pdfColorSpace                 = PDFColorSpace.REPURPOSE_CMYK;
+		app.pdfExportPreferences.pdfDestinationProfile         = 'Coated FOGRA39 (ISO 12647-2:2004)';
+		app.pdfExportPreferences.pdfXProfile                   = 'Coated FOGRA39 (ISO 12647-2:2004)';
+		app.pdfExportPreferences.standardsCompliance           = PDFXStandards.PDFX42010_STANDARD;
+		app.pdfExportPreferences.pdfMarkType                   = MarkTypes.DEFAULT_VALUE;
+		app.pdfExportPreferences.pageMarksOffset               = UnitValue('3 mm').as('pt');
+		app.pdfExportPreferences.printerMarkWeight             = PDFMarkWeight.P25PT;
+		app.pdfExportPreferences.bleedMarks                    = false;
+		app.pdfExportPreferences.registrationMarks             = false;
+		try { app.pdfExportPreferences.simulateOverprint       = false; } catch (e) {}
 		// Misc
-		pdfDisplayTitle = PdfDisplayTitleOptions.DISPLAY_FILE_NAME;
-		useSecurity = false;
-		viewPDF = false;
-	};
-	doc.exportFile(ExportFormat.pdfType, File(path), false);
-};
+		app.pdfExportPreferences.pdfDisplayTitle               = PdfDisplayTitleOptions.DISPLAY_FILE_NAME;
+		app.pdfExportPreferences.useSecurity                   = false;
+		app.pdfExportPreferences.viewPDF                       = false;
+	}
+}
 
-function BalanceText(txt, length) {
+
+function balanceText(txt, length) {
+	var lineBuffer = '';
+	var lines = [];
+	var word = '';
+	var words = [];
 	// 1st pass: break text into words
-	const wordRE = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})|(?=[([])))|(.+)/g;
-	var words = txt.match(wordRE);
+	var wordRE = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})|(?=[([])))|(.+)/g;
+	words = txt.match(wordRE);
 	// 2nd pass: roughly join words into lines
-	var lines = [], lineBuffer = "", word = "";
-	while (word = words.shift()) {
+	while ((word = words.shift())) {
 		if ((lineBuffer + word).length <= length) {
 			lineBuffer += word;
 		} else {
-			if (lineBuffer != "") lines.push(lineBuffer);
+			if (lineBuffer !== '') lines.push(lineBuffer);
 			lineBuffer = word;
-		};
-	};
-	if (lineBuffer != "") lines.push(lineBuffer);
+		}
+	}
+	if (lineBuffer !== '') lines.push(lineBuffer);
 	// 3rd pass: balance ragged lines
-	if (lines.length > 1) BalanceLines();
-	return lines.join("\u000A");
+	if (lines.length > 1) balanceLines();
+	return lines.join('\u000A');
 
-	function BalanceLines() {
-		// Move the last word on the next line and check improvement;
-		// if better, save and repeat until no improvement
+	// Move the last word on the next line and check improvement;
+	// if better, save and repeat until no improvement
+	function balanceLines() {
+		var delta, line, w, newLine1, newLine2;
 		for (var i = 0; i < lines.length - 1; i++) {
-			var delta = Math.abs(lines[i].length - lines[i+1].length);
-			var line = lines[i].match(wordRE);
-			var word = line.pop();
-			var newLine1 = line.join("");
-			var newLine2 = word + lines[i+1];
-			var newDelta = Math.abs(newLine1.length - newLine2.length);
-			if (newDelta < delta) {
+			delta = Math.abs(lines[i].length - lines[i + 1].length);
+			line = lines[i].match(wordRE);
+			w = line.pop();
+			newLine1 = line.join('');
+			newLine2 = w + lines[i + 1];
+			if (Math.abs(newLine1.length - newLine2.length) < delta) {
 				lines[i] = newLine1;
-				lines[i+1] = newLine2;
-				BalanceLines();
-			};
-		};
-	};
-};
+				lines[i + 1] = newLine2;
+				balanceLines();
+			}
+		}
+	}
+}
 
-function MakeIDLayer(doc) {
-	var idLayerName = "ID", idLayer = doc.layers.item(idLayerName);
-	var hwLayerName = "HW", hwLayer = doc.layers.item(hwLayerName);
+function makeIDLayer(document) {
+	var idLayerName = 'ID';
+	var idLayer = document.layers.item(idLayerName);
+	var hwLayerName = 'HW';
+	var hwLayer = document.layers.item(hwLayerName);
 	if (!idLayer.isValid) {
-		doc.layers.add({
-			name: idLayerName,
+		document.layers.add({
+			name:       idLayerName,
 			layerColor: UIColors.CYAN,
-			visible: true,
-			locked: false,
-			printable: true
-		})
-	} else idLayer.locked = false;
+			visible:    true,
+			locked:     false,
+			printable:  true
+		});
+	}
 	if (hwLayer.isValid)
-		idLayer.move(LocationOptions.BEFORE, hwLayer)
+		idLayer.move(LocationOptions.BEFORE, hwLayer);
 		else idLayer.move(LocationOptions.AT_BEGINNING);
 	return idLayer;
-};
+}
 
-function ProgressBar(title, width) {
-	var pb = new Window("palette", title);
-	pb.bar = pb.add("progressbar", undefined, 0, undefined);
-	if (!!width) { // Mini progress bar if no width
-		pb.msg = pb.add("statictext", undefined, undefined, { truncate: "middle" });
-		pb.msg.characters = Math.max(width, 50);
-		pb.layout.layout();
-		pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
-	} else pb.bar.bounds = [ 12, 12, 476, 24 ];
-	this.reset = function(max) {
-		pb.bar.value = 0;
-		pb.bar.maxvalue = max || 0;
-		pb.bar.visible = !!max;
-		pb.show();
-	};
-	this.update = function(val, msg) {
-		pb.bar.value = val;
-		if (!!width) {
-			pb.msg.visible = !!msg;
-			!!msg && (pb.msg.text = msg);
-		};
-		pb.text = title + " \u2013 " + val + "/" + pb.bar.maxvalue;
-		pb.show(); pb.update();
-	};
-	this.hide = function() { pb.hide() };
-	this.close = function() { pb.close() };
-};
-
-function Margins(page) {
+function pageMargins(page) {
 	return {
 		top: page.marginPreferences.top,
-		left: (page.side == PageSideOptions.LEFT_HAND) ?
+		left: (page.side === PageSideOptions.LEFT_HAND) ?
 			page.marginPreferences.right : page.marginPreferences.left,
 		bottom: page.marginPreferences.bottom,
-		right: (page.side == PageSideOptions.LEFT_HAND) ?
+		right: (page.side === PageSideOptions.LEFT_HAND) ?
 			page.marginPreferences.left : page.marginPreferences.right
 	};
-};
+}
+
+/**
+ * A simple progress bar. Usage:
+ * - create: var progress = new ProgressBar(title, ?maxWidth);
+ * - init:   progress.reset(maxValue);
+ * - update: progress.update(value, ?message);
+ * - close:  progress.close();
+ * @param {String} title - Palette title (a counter will be appended)
+ * @param {Number} maxValue - Number of steps
+ * @param {Number} [maxWidth] - Max message length (characters); if ommitted, no message is shown
+ * @param {Number} value - Updated value
+ * @param {String} message - Message
+ */
+function ProgressBar(title, maxWidth) {
+	var pb = new Window('palette', title);
+	pb.bar = pb.add('progressbar');
+	if (maxWidth) { // Full progress bar
+		pb.msg = pb.add('statictext { properties: { truncate: "middle" } }');
+		pb.msg.characters = Math.max(maxWidth, 50);
+		pb.layout.layout();
+		pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
+	} else { // Mini progress bar
+		pb.bar.bounds = [ 12, 12, 476, 24 ];
+	}
+	this.reset = function (maxValue) {
+		pb.bar.value = 0;
+		pb.bar.maxvalue = maxValue || 0;
+		pb.bar.visible = !!maxValue;
+		pb.show();
+	};
+	this.update = function (value, message) {
+		pb.bar.value = value;
+		if (maxWidth) {
+			pb.msg.visible = !!message;
+			if (message) pb.msg.text = message;
+		}
+		pb.text = title + ' \u2013 ' + value + '/' + pb.bar.maxvalue;
+		pb.show(); pb.update();
+	};
+	this.hide = function () { pb.hide(); };
+	this.close = function () { pb.close(); };
+}
 
 /**
  * Simple scrollable alert inspired by this snippet by Peter Kahrel:
  * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
- * @param {string|string[]} message - Message to be displayed (string or array)
- * @param {string} title - Dialog title
- * @param {boolean} [showFilter] - Shows a filtering field; wildcards: '?' (any char), space and '*' (AND), '|' (OR)
- * @param {boolean} [showCompact] - Sorts message and removes duplicates
+ * @param {String|String[]} message - Message to be displayed (string or array)
+ * @param {String} title - Dialog title
+ * @param {Boolean} [showFilter] - Shows a filtering field; wildcards: '?' (any char), space and '*' (AND), '|' (OR)
+ * @param {Boolean} [showCompact] - Sorts message and removes duplicates
  */
-function Report(message, title, showFilter, showCompact) {
-	if (message instanceof Array) message = message.join("\n"); message = message.split(/\r|\n/g);
-	if (showCompact && message.length > 1) {
-		message = message.sort();
-		for (var i = 1, l = message[0]; i < message.length; l = message[i], i++)
-			if (l == message[i] || message[i] == "") { message.splice(i, 1); i-- };
-	};
+function report(message, title, showFilter, showCompact) {
+	var search, list;
 	var w = new Window('dialog', title);
-	if (showFilter && message.length > 1) var search = w.add('edittext { characters: 40, \
-		helpTip: "Wildcards: \'?\' (any character), space and \'*\' (AND), \'|\' (OR)" }');
-	var list = w.add('edittext', undefined, message.join("\n"), { multiline: true, scrolling: true, readonly: true });
-	w.add('button { text: "Close", properties: { name: "ok" } }');
-	list.characters = function() {
-		for (var i = 0, n = message.length, width = 50; i < n;
-		width = Math.max(width, message[i].toString().length), i++);
-		return width;
-	}();
-	list.minimumSize.width = 600, list.maximumSize.width = 1024;
-	list.minimumSize.height = 100, list.maximumSize.height = 1024;
-	w.ok.active = true;
-	if (search) {
-		search.onChanging = function() {
-			if (this.text == "") { list.text = message.join("\n"); w.text = title; return };
-			var str = this.text.replace(/[.\[\]{+}]/g, "\\$&"); // Pass through '^*()|?'
-			str = str.replace(/\?/g, "."); // '?' -> any character
-			if (/[ *]/g.test(str)) str = "(" + str.replace(/ +|\*/g, ").*(") + ")"; // space or '*' -> AND
-			str = RegExp(str, "gi");
-			for (var i = 0, n = message.length, result = []; i < n; i++) {
-				var line = message[i].toString().replace(/^\s+?/g, "");
-				if (str.test(line)) result.push(line.replace(/\r|\n/g, "\u00b6").replace(/\t/g, "\\t"));
-			};
-			w.text = str + " | " + result.length + " record" + (result.length == 1 ? "" : "s");
-			if (result.length > 0) { list.text = result.join("\n") } else list.text = "";
+	// Convert message to array
+	if (message.constructor.name !== 'Array') message = message.split(/\r|\n/g);
+	if (showCompact && message.length > 1) { // Sort and remove duplicates
+		message = message.sort();
+		for (var i = 1, l = message[0]; i < message.length; l = message[i], i++) {
+			if (l === message[i]) { message.splice(i, 1); i--; }
+			if (message[i] === '') { message.splice(i, 1); i--; }
+		}
+	}
+	if (showFilter && message.length > 1) { // Add a filtering field
+		search = w.add('edittext { characters: 40, helpTip: "Wildcards: \'?\' (any character), space and \'*\' (AND), \'|\' (OR)" }');
+		search.onChanging = function () {
+			var str, line, i, n;
+			var result = [];
+			if (this.text === '') {
+				list.text = message.join('\n'); w.text = title; return;
+			}
+			str = this.text.replace(/[.[\]{+}]/g, '\\$&'); // Pass through '^*()|?'
+			str = str.replace(/\?/g, '.'); // '?' -> any character
+			if (/[ *]/g.test(str)) str = '(' + str.replace(/ +|\*/g, ').*(') + ')'; // space or '*' -> AND
+			str = RegExp(str, 'gi');
+			for (i = 0, n = message.length; i < n; i++) {
+				line = message[i].toString().replace(/^\s+?/g, '');
+				if (str.test(line)) result.push(line.replace(/\r|\n/g, '\u00b6').replace(/\t/g, '\\t'));
+			}
+			w.text = str + ' | ' + result.length + ' record' + (result.length === 1 ? '' : 's');
+			if (result.length > 0) list.text = result.join('\n'); else list.text = '';
 		};
-	};
+	}
+	list = w.add('edittext', undefined, message.join('\n'), { multiline: true, scrolling: true, readonly: true });
+	list.characters = (function () {
+		var width = 50;
+		for (var i = 0, n = message.length; i < n; width = Math.max(width, message[i].toString().length), i++);
+		return width;
+	}());
+	list.minimumSize.width  = 600; list.maximumSize.width  = 1024;
+	list.minimumSize.height = 100; list.maximumSize.height = 1024;
+	w.add('button { text: "Close", properties: { name: "ok" } }');
+	w.ok.active = true;
 	w.show();
-};
+}
