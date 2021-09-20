@@ -6,8 +6,8 @@ C=40 M=5 Y=5 K=100	process	cmyk	40 5 5 100
 
 # Special colors
 Dielines	spot	cmyk	0 100 0 0
-Cut	spot	cmyk	0 100 0 0	Artios_Couper, CUT, Final Cut
-Fold	spot	cmyk	100 0 0 0	Artios_Raineur
+Cut	spot	cmyk	0 100 0 0	CUT, Artios_Couper, Final Cut
+Fold	spot	cmyk	100 0 0 0	FOLD, Artios_Raineur
 Glue	spot	cmyk	0 0 100 0
 White	spot	cmyk	0 10 10 0
 Varnish	spot	cmyk	0 10 70 0
