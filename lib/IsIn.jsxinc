@@ -1,0 +1,17 @@
+/* eslint-disable no-unused-vars */
+
+// Modified from FORWARD.Util functions, by Richard Harrington
+// https://github.com/richardharrington/indesign-scripts
+function isIn(searchValue, array, caseSensitive) {
+	var item;
+	caseSensitive = (caseSensitive === undefined) ? true : caseSensitive;
+	if (!caseSensitive && typeof searchValue === 'string') searchValue = searchValue.toLowerCase();
+	for (var i = 0, n = array.length; i < n; i++) {
+		item = array[i];
+		if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
+		// if (item === searchValue) return true;
+		item = RegExp('^' + item.replace(/\*/g, '.*').replace(/\?/g, '.') + '$', 'g');
+		if (item.test(searchValue)) return true;
+	}
+	return false;
+}
