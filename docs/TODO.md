@@ -1,48 +1,50 @@
-# TO DO
+## TODO
 
-- `fix` Fix static/edittext width (see [#](https://twitter.com/indiscripts/status/1408788941550108674))
-- `upd` `FindFile()`: Use relative paths for includes
+#### Global
 - `upd` Make a custom object style for 'Visible area' frame [#123](https://github.com/pchiorean/Indentz/issues/123)
-- `ref` `?` K&R, 2 spaces
+- `sty` Fix UI static/edittext width (see Marc's [measureString()](https://twitter.com/indiscripts/status/1408788941550108674))
 
-### Bounds
-- `upd` Convert to constructor
+#### Bounds
+- `upd` `?` Convert to constructor
 
-### DefaultSwatches
+#### DefaultSwatches
 - `fix` Check values on parsing
 - `upd` Add tints support
 
-### DocCleanup
+#### DocCleanup
 - `new` Ask to delete empty frames
 - `new` Remove unused masters
 - `new` Remove unused styles and groups [#](https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331)
 
-### FitTo
+#### FindFile
+- `upd` Use relative paths for includes
+
+#### FitTo
 - `fix` Check for transformations [#131](https://github.com/pchiorean/Indentz/issues/131) <!-- ItemTransform = [1 0 0 1 0 0] -->
 - `ref` Refactor snapping (use delta)
 
-### LabelPageRatios
+#### LabelPageRatios
 - `fix` Use spreads ratios
 
-### OffsetPath
+#### OffsetPath
 - `fix` Image frames wrap to content...
 
-### PageMarginsFromSelection
+#### PageMarginsFromSelection
 - `upd` Set the margins of every page of a spread
 
-### PageSizeFromFilename
+#### PageSizeFromFilename
 - `fix` Error on pages set to 1:X scale [#129](https://github.com/pchiorean/Indentz/issues/129)
 - `fix` Limit detected bleed to max values
 
-### PageSizeFromSelection
+#### PageSizeFromSelection
 - `fix` For text frames use outlined text bounds
 - `upd` Without selection fit all pages to their contents
 
-### PrepareForExport
+#### PrepareForExport
 - `fix` Ignore hidden layers
 - `upd` Read layer variants from `layers.txt`, fallback to defaults
 
-### QuickExport
+#### QuickExport
 - `fix` `split` Don't add a counter if doc has a single page/spread
 - `fix` Don't report missing links on the pasteboard
 - `fix` No crop marks if no bleed
@@ -53,45 +55,43 @@
 - `upd` `?` Limit export subfolder to suffix's first word
 - `upd` `?` JSONify preferences (see [JSON-js](https://github.com/douglascrockford/JSON-js))
 
-### QR, QRBatch
+#### QR, QRBatch
 - `fix` Align to page > visible area > margins
 - `fix` Improve line breaking
 - `fix` Remove `preview` & `print` from filenames
 - `fix` Remove `QR` from filenames for on-doc codes
 
-### Report
+#### Report
 - `upd` Improve filtering: quotes for exact word or phrase
 - `upd` Improve filtering: minus for none of these words
 - `new` Add button to save errors to file
 
-### ScaleTo
+#### ScaleTo
 - `upd` Scale to alignDistributeBounds
 
-### SpreadsToFiles
+#### SpreadsToFiles
 - `upd` ABBBCC -> A{1}, B{3}, C{2}
 
-### TextAutoSize
+#### TextAutoSize
 - `upd` Check `baselineShift` [#132](https://github.com/pchiorean/Indentz/issues/132)
 
-### VisibleArea*
+#### VisibleArea*
 - `brk` Mark spread's visible area
 - `upd` Use wildcards for layers' names
 - `upd` Read layer variants from `layers.txt`, fallback to defaults
 
-### New scripts
-- `new` Ctrl+digit: Activate document #digit
+#### New scripts
+- `new` **Ctrl + digit**: Activate document #digit
 - `new` `SeparateSpreadPages.jsx` [#136](https://github.com/pchiorean/Indentz/issues/136)
 - `new` `LayersToFiles.jsx` [#94](https://github.com/pchiorean/Indentz/issues/94)
 
 ---
 
-###### Legend:
-
+`fix` - bug fixes\
 `new` - new features or first release\
 `upd` - changes in existing functionality\
 `brk` - changes in existing functionality that break compatibility\
+`del` - removed features\
 `ref` - code changes that neither fixes a bug or adds a feature\
 `sty` - everything related to styling/formatting\
-`del` - removed features\
-`fix` - bug fixes\
 `doc` - changes in documentation
