@@ -1,5 +1,5 @@
 /*
-	Prepare for export v2.2.1 (2021-09-12)
+	Prepare for export v2.2.2 (2021-09-21)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves items with special colors to separate spreads.
@@ -58,6 +58,7 @@ function prepareForExport() {
 	// Match special layers
 	for (i = 0, n = doc.layers.length; i < n; i++) {
 		l = doc.layers[i];
+		if (!l.visible) continue;
 		if (l.name === infoLayer.name) continue;
 		for (variants in layerNames) {
 			if (isIn(l.name, layerNames[variants], false)) {
