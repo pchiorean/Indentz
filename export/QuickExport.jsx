@@ -1,5 +1,5 @@
 /*
-	Quick export v2.11.1 (2021-09-12)
+	Quick export v2.11.2 (2021-09-21)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -482,7 +482,6 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 				baseName + '_' + zeroPad(extendRange && !(i % 2) ? i / 2 + 1 : i + 1, String(n).length) + suffix,
 				/*folder*/ baseFolder + (subfolder ? '/' + subfolder : ''),
 				/*overwrite flag*/ ui.output.options.overwrite.value);
-			progressBar.update(counter, (baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
 			// Get page range
 			if (asSpreads) {
 				// Export as spreads
@@ -493,6 +492,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 				// Export as pages
 				range = String(target[i].documentOffset + 1);
 			}
+			progressBar.update(counter, (baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
 			exportToPDF(fn, range, app.pdfExportPresets.item(preset));
 		}
 	} else {
@@ -758,6 +758,13 @@ function ProgressBar(title, maxWidth) {
 		pb.bar.maxvalue = maxValue || 0;
 		pb.bar.visible = !!maxValue;
 		pb.show();
+		if (app.windows.length > 0) {
+			var AW = app.activeWindow;
+			pb.frameLocation = [
+				(AW.bounds[1] + AW.bounds[3] - pb.frameSize.width) / 2,
+				(AW.bounds[0] + AW.bounds[2] - pb.frameSize.height) / 2
+			];
+		}
 	};
 	this.update = function (value, message) {
 		pb.bar.value = value;

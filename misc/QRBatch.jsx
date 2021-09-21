@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.7 (2021-09-20)
+	Batch QR codes v2.7.1 (2021-09-21)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -601,6 +601,13 @@ function ProgressBar(title, maxWidth) {
 		pb.bar.maxvalue = maxValue || 0;
 		pb.bar.visible = !!maxValue;
 		pb.show();
+		if (app.windows.length > 0) {
+			var AW = app.activeWindow;
+			pb.frameLocation = [
+				(AW.bounds[1] + AW.bounds[3] - pb.frameSize.width) / 2,
+				(AW.bounds[0] + AW.bounds[2] - pb.frameSize.height) / 2
+			];
+		}
 	};
 	this.update = function (value, message) {
 		pb.bar.value = value;

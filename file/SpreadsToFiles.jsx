@@ -1,5 +1,5 @@
 /*
-	Spreads to files v1.7.8 (2021-09-12)
+	Spreads to files v1.7.9 (2021-09-21)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
@@ -130,6 +130,13 @@ function ProgressBar(title, maxWidth) {
 		pb.bar.maxvalue = maxValue || 0;
 		pb.bar.visible = !!maxValue;
 		pb.show();
+		if (app.windows.length > 0) {
+			var AW = app.activeWindow;
+			pb.frameLocation = [
+				(AW.bounds[1] + AW.bounds[3] - pb.frameSize.width) / 2,
+				(AW.bounds[0] + AW.bounds[2] - pb.frameSize.height) / 2
+			];
+		}
 	};
 	this.update = function (value, message) {
 		pb.bar.value = value;
