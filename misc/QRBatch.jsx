@@ -149,7 +149,7 @@ function main() {
 				});
 				if (!isHeader) {
 					ll = ui.list.add('item', line);
-					ll.subItems[0].text = rawData[line - 1].fn || '';
+					ll.subItems[0].text = rawData[line - 1].fn   || '';
 					ll.subItems[1].text = rawData[line - 1].code || '';
 					ll.subItems[2].text = rawData[line - 1].pos ? '\u25cf' : ''; // '●'
 				}
@@ -257,7 +257,7 @@ function makeQROnDoc(fn, code, /*bool*/white) {
 			itemLayer:   idLayer.name,
 			fillColor:   'None',
 			strokeColor: 'None',
-			contents:    /\|/g.test(code) ?        // If '|' found
+			contents:    /\|/g.test(code) ?     // If '|' found
 				code.replace(/\|/g, '\u000A') : // replace it with Forced Line Break
 				balanceText(code, 20)           // else auto balance text
 		});
@@ -345,7 +345,7 @@ function makeQROnFile(fn, code) {
 		itemLayer:   idLayer.name,
 		fillColor:   'None',
 		strokeColor: 'None',
-		contents:    /\|/g.test(code) ?        // If '|' found
+		contents:    /\|/g.test(code) ?     // If '|' found
 			code.replace(/\|/g, '\u000A') : // replace it with Forced Line Break
 			balanceText(code, 18)           // else auto balance text
 	});
