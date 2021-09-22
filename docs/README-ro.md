@@ -86,7 +86,7 @@ Export | |
 
 Redimensionează obiectele selectate, fără să le scaleze. Cadrele obișnuite sunt redimensionate pur și simplu; obiectele rotite, ovalurile, grupurile etc sunt incluse într‑un container *(clipping frame)* și acesta e redimensionat.
 
-* **`FitToPage`** și **`FitToSpread`**: dacă obiectul este mai mare, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.
+* **`FitToPage...`** și **`FitToSpread...`**: dacă obiectul este mai mare, va fi redus; dacă este mai mic dar intră într‑o zonă „snap” de 1%, va fi mărit.
 
   **`FitTo...Forced`** redimensionează exact la dimensiunile respective.
 
@@ -238,7 +238,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`PageMarginsFromSelection`** setează marginile paginii la dimensiunile selecției.
 
-* **`PageSizeFromFilename`** setează dimensiunea paginii și a ariei vizibile, preluând informațiile din numele fișierului:
+* **`PageSizeFromFilename`** setează dimensiunea paginilor și a ariei vizibile, preluând informațiile din numele fișierului:
 
   Filename | Total size | Visible area | Bleed
   :- | :-: | :-: | :-:
@@ -247,9 +247,9 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   > Caută în numele fișierului perechi de numere de genul `000x000` (unde `000` înseamnă un grup de cel puțin o cifră, urmată sau nu de zecimale, și opțional de `mm` sau `cm`). Dacă găsește doar o pereche, e dimensiunea paginii. Dacă găsește două (de ex. `000x000_000x000`), perechea mai mare e dimensiunea paginii, perechea mai mică aria vizibilă. Dacă sunt urmate de o secvență de una sau două cifre, aceasta va fi bleed.
 
-* **`PageSizeFromMargins`** redimensionează fiecare pagină la marginile acesteia.
+* **`PageSizeFromMargins`** redimensionează pagina curentă la marginile acesteia.
 
-* **`PageSizeFromSelection`** redimensionează pagina curentă la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
+* **`PageSizeFromSelection`** redimensionează pagina la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -351,4 +351,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 14 august 2021
+README-ro.md • 22 septembrie 2021

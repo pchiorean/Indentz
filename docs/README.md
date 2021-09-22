@@ -86,7 +86,7 @@ Export | |
 
 Resize the selected objects, without scaling. Rectangular frames are simply resized; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is resized.
 
-* **`FitToPage`** and **`FitToSpread`**: if the selected object is larger than the target, it will be reduced; if it is smaller but inside a 1% “snap” area, it will be enlarged.
+* **`FitToPage...`** and **`FitToSpread...`**: if the selected object is larger than the target, it will be reduced; if it is smaller but inside a 1% “snap” area, it will be enlarged.
 
   **`FitTo...Forced`** resize exactly to the named dimensions.
 
@@ -238,7 +238,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`PageMarginsFromSelection`** sets the page margins to the selected objects.
 
-* **`PageSizeFromFilename`** sets the page size and margins, retrieving the information from the filename:
+* **`PageSizeFromFilename`** sets the size of the pages and the visible area, retrieving the information from the filename:
 
   Filename | Total size | Visible area | Bleed
   :- | :-: | :-: | :-:
@@ -247,9 +247,9 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   > It searches for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it's the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair it's the page size, the smaller pair the visible area. If followed by a one- or two‑digit sequence, this will be bleed.
 
-* **`PageSizeFromMargins`** resizes each page to its margins.
+* **`PageSizeFromMargins`** resizes the current page to its margins.
 
-* **`PageSizeFromSelection`** resizes the current page to the selected objects (similar to **Artboards > Fit to Selected Art** in Illustrator).
+* **`PageSizeFromSelection`** resizes the page to the selected objects (similar to **Artboards > Fit to Selected Art** in Illustrator).
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -351,4 +351,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • August 14, 2021
+README.md • September 22, 2021

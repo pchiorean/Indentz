@@ -30,7 +30,7 @@
 - `fix` Image frames wrap to content...
 
 #### PageMarginsFromSelection
-- `upd` Set the margins of every page of a spread
+- `upd` Set the margins of every page touched by the selection
 
 #### PageSizeFromFilename
 - `fix` Error on pages set to 1:X scale [#129](https://github.com/pchiorean/Indentz/issues/129)
