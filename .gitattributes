@@ -2,4 +2,4 @@ lib/polyfills/es5-array.jsxinc  linguist-vendored
 lib/polyfills/es5-shim.jsxinc   linguist-vendored
 lib/polyfills/prototypes.jsxinc linguist-vendored
 
-text eol=lf
+* text=auto eol=lf
