@@ -1,5 +1,5 @@
 /*
-	Quick export v2.11.2 (2021-09-21)
+	Quick export v2.11.3 (2021-09-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -519,14 +519,16 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		});
 		// Find the last index
 		var fileIndex;
-		var fileIndexRE = RegExp('^' + filename + (suffix ? '[ _-]*' : '[ _-]+') +
+		var fileIndexRE = RegExp('^' +
+			filename.replace(/[|^$(.)\[\]{*+?}\\]/g, '\\$&') + // Escape regex tokens
+			(suffix ? '[ _-]*' : '[ _-]+') +
 			'(\\d+)([ _-]*v *\\d*)?([ _-]*copy *\\d*)?([ _-]*v *\\d*)?$', 'i');
 		var fileLastIndex = 0;
 		for (var i = 0, n = pdfFiles.length; i < n; i++) {
 			fileIndex = fileIndexRE.exec(decodeURI(pdfFiles[i].name).replace(/\.pdf$/i, ''));
 			if (fileIndex) fileLastIndex = Math.max(fileLastIndex, Number(fileIndex[1]));
 		}
-		// Get unique name
+		// Get unique name: no index means index = 1, so set it to 2, else increment it; add a space if needed
 		if (fileLastIndex === 0) {
 			if (!overwrite)
 				if (File(unique).exists) unique = unique.replace(/\.pdf$/i, '') + (suffix ? '' : ' ') + '2.pdf';
