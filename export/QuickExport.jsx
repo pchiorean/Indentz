@@ -1,5 +1,5 @@
 /*
-	Quick export v2.11.3 (2021-09-23)
+	Quick export v2.12 (2021-09-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -551,7 +551,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			if (Object.prototype.hasOwnProperty.call(pdfPreset, key))
 				try { app.pdfExportPreferences[key] = pdfPreset[key]; } catch (e) {}
 		}
-		// Override some of the settings
+		// Override some settings
 		app.pdfExportPreferences.pageRange = pageRange;
 		app.pdfExportPreferences.exportReaderSpreads = exp.exportSpreads.value;
 		app.pdfExportPreferences.cropMarks = exp.cropMarks.value;
@@ -559,19 +559,29 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		app.pdfExportPreferences.includeSlugWithPDF = exp.slug.value;
 		app.pdfExportPreferences.useDocumentBleedWithPDF = !exp.bleedCustom.value;
 		if (app.pdfExportPreferences.useDocumentBleedWithPDF) {
-			app.pdfExportPreferences.pageMarksOffset = Math.min(Math.max(
-				doc.documentPreferences.properties.documentBleedTopOffset,
-				doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
-				doc.documentPreferences.properties.documentBleedBottomOffset,
-				doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
-			), UnitValue('72 pt').as('mm'));
+			app.pdfExportPreferences.pageMarksOffset = Math.min(
+				Math.max(
+					doc.documentPreferences.properties.documentBleedTopOffset,
+					doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
+					doc.documentPreferences.properties.documentBleedBottomOffset,
+					doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
+				) + 1,                        // Max bleed value + 1 mm
+				UnitValue('72 pt').as('mm')); // But limit to 72 pt
 		} else {
 			app.pdfExportPreferences.bleedTop =
 			app.pdfExportPreferences.bleedBottom =
 			app.pdfExportPreferences.bleedInside =
 			app.pdfExportPreferences.bleedOutside = Number(exp.bleedValue.text);
 			app.pdfExportPreferences.pageMarksOffset =
-				Math.min(app.pdfExportPreferences.bleedTop, UnitValue('72 pt').as('mm'));
+				Math.min(app.pdfExportPreferences.bleedTop + 1, UnitValue('72 pt').as('mm'));
+		}
+		if (doc.documentPreferences.properties.documentBleedTopOffset +
+			doc.documentPreferences.properties.documentBleedInsideOrLeftOffset +
+			doc.documentPreferences.properties.documentBleedBottomOffset +
+			doc.documentPreferences.properties.documentBleedOutsideOrRightOffset === 0 &&
+			!app.pdfExportPreferences.includeSlugWithPDF) {
+			app.pdfExportPreferences.cropMarks = false;
+			app.pdfExportPreferences.pageInformationMarks = false;
 		}
 		doc.exportFile(ExportFormat.PDF_TYPE, File(filename), false);
 	}
