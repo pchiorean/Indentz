@@ -81,7 +81,7 @@ Name                               |    Fn  | Description
 `HW.jsx`                           |   ⇧F10 | Labels 'HW' selected objects and adds a HW bottom guide on all spreads
 `LabelPage.jsx`                    |        | Adds a custom label on the current page's slug
 `LabelPageRatios.jsx`              |        | Adds a label (ratio) on each page's slug
-`OffsetPath.jsx`                   |        | Use InDesign's text wrap feature to create offset/inset paths
+`OffsetPaths.jsx`                  |        | Use InDesign's text wrap feature to create offset/inset paths
 `QR.jsx`                           |     F9 | Adds a QR code to the current document or to a separate file
 `QRBatch.jsx`                      |    ⇧F9 | Adds codes to existing documents or to separate files in batch mode, from a list
 `ShowFonts.jsx`                    |        | Shows all fonts used in the current document
