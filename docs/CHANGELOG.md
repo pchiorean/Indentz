@@ -1,6 +1,12 @@
 ## Changelog
 
-#### [2021-09-22](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-23&type=commits)
+#### [2021-09-23](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-23&type=commits)
+
+- `upd` **QuickExport v2.12** -- Move crop marks at 1 mm from trimbox; don't include printer's marks if no bleed
+- `fix` **QuickExport v2.11.3** -- Fix clash with regex tokens when uniquifying filenames
+- `ref` Rename **OffsetPath** to **OffsetPaths**
+
+#### [2021-09-22](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-22&type=commits)
 
 - `upd` **OffsetPath v2.0** -- Fix container-objects; add option to join contours; streamline logic
 
@@ -44,7 +50,6 @@
 - `upd` **PageMarginsFromSelection** -- Set the margins of every page touched by the selection
 - `upd` **PageSizeFromSelection** -- Without selection fit all pages to their contents
 - `upd` **PrepareForExport, VisibleArea** -- Read layer variants from `layers.txt`, fallback to defaults
-- `upd` **QuickExport** -- Put crop marks at 1 mm from trimbox
 - `upd` **Report** -- Improve filtering: minus for none of these words; quotes for exact word or phrase
 - `upd` **ScaleTo...** -- Scale to `alignDistributeBounds`
 - `upd` **SpreadsToFiles** -- ABBBCC -> A{1}, B{3}, C{2}
@@ -71,8 +76,8 @@
 - `fix` **QR, QRBatch** -- Improve line breaking
 - `fix` **QRBatch** -- Remove `preview` & `print` from filenames for separate codes
 - `fix` **QRBatch** -- Remove `QR` from filenames for on-doc codes
+- `fix` **QuickExport** -- Check for overset text
 - `fix` **QuickExport** -- Don't report missing links from the pasteboard
-- `fix` **QuickExport** -- No crop marks if no bleed
 - `fix` **QuickExport** -- Export separate pages: Don't add a counter if doc has a single page/spread
 - `fix` **ShowFonts** -- Font info not available for missing fonts
 
