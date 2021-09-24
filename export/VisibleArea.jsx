@@ -1,5 +1,5 @@
 /*
-	Visible area v3.2 (2021-09-12)
+	Visible area v3.2.1 (2021-09-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Creates on each page a 'visible area' frame the size of the page margins.
@@ -33,7 +33,7 @@ function main() {
 		'stanzform', 'Stanzform'
 	]);
 	var visSwatchName = 'Visible area';
-	var visibleAreaRE = /^<?(visible|safe) area>?$/i;
+	var visAreaRE = /^<?(visible|safe) area>?$/i;
 
 	for (var i = 0, n = doc.pages.length; i < n; i++) {
 		page = doc.pages[i];
@@ -71,7 +71,7 @@ function main() {
 		// Remove old frames
 		frames = page.rectangles.everyItem().getElements();
 		while ((oldFrame = frames.shift())) {
-			if ((visibleAreaRE.test(oldFrame.label) || visibleAreaRE.test(oldFrame.name))
+			if ((visAreaRE.test(oldFrame.label) || visAreaRE.test(oldFrame.name))
 				/* && oldFrame.itemLayer === visLayer */) {
 				oldFrame.locked = false;
 				oldFrame.remove();

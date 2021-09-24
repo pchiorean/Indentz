@@ -1,5 +1,5 @@
 /*
-	GetBounds v5.1.1 (2021-09-24)
+	GetBounds v5.1.2 (2021-09-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Returns an object containing the geometric bounds of the given page,
@@ -62,7 +62,7 @@ function getBounds(page) {
 		bottom: page.marginPreferences.bottom,
 		right:  page.marginPreferences.right
 	};
-	var visibleAreaRE = /^<?(visible|safe) area>?$/i;
+	var visAreaRE = /^<?(visible|safe) area>?$/i;
 
 	return {
 		page: {
@@ -83,7 +83,7 @@ function getBounds(page) {
 				var bounds = [];
 				var v = [];
 				while ((frame = frames.shift()))
-					if (visibleAreaRE.test(frame.label) || visibleAreaRE.test(frame.name)) v.push(frame);
+					if (visAreaRE.test(frame.label) || visAreaRE.test(frame.name)) v.push(frame);
 				if (v.length === 0) return undefined;
 				bounds = v[0].geometricBounds;
 				for (i = 1, n = v.length; i < n; i++) {
@@ -147,7 +147,7 @@ function getBounds(page) {
 				var bounds = [];
 				var v = [];
 				while ((frame = frames.shift()))
-					if (visibleAreaRE.test(frame.label) || visibleAreaRE.test(frame.name)) v.push(frame);
+					if (visAreaRE.test(frame.label) || visAreaRE.test(frame.name)) v.push(frame);
 				if (v.length === 0) return undefined;
 				bounds = v[0].geometricBounds;
 				for (i = 1, n = v.length; i < n; i++) {

@@ -1,5 +1,5 @@
 /*
-	Page size from filename v2.1.3 (2021-09-18)
+	Page size from filename v2.1.4 (2021-09-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets every page size and margins according to the filename.
@@ -51,7 +51,7 @@ function main() {
 		'stanzform', 'Stanzform'
 	]);
 	var visSwatchName = 'Visible area';
-	var visibleAreaRE = /^<?(visible|safe) area>?$/i;
+	var visAreaRE = /^<?(visible|safe) area>?$/i;
 	var pairsRE = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig;
 	var bleedRE = /\d\s*(?:[cm]m)?[_+](\d{1,2})\s*(?:[cm]m)/i;
 	var ISO216SubsetRE = /A[1-7]\b/;
@@ -218,7 +218,7 @@ function main() {
 		// Remove old frames
 		frames = page.rectangles.everyItem().getElements();
 		while ((oldFrame = frames.shift())) {
-			if (visibleAreaRE.test(oldFrame.label) || visibleAreaRE.test(oldFrame.name)
+			if (visAreaRE.test(oldFrame.label) || visAreaRE.test(oldFrame.name)
 				/* && oldFrame.itemLayer == visLayer */) {
 				oldFrame.locked = false;
 				oldFrame.remove();

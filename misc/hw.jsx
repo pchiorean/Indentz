@@ -1,5 +1,5 @@
 /*
-	HW 2.7 (2021-09-12)
+	HW 2.7.1 (2021-09-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Labels 'HW' selected objects and adds a HW bottom guide on all spreads.
@@ -21,7 +21,7 @@ function main() {
 	var hwLayerName = 'HW';
 	var hwLayer = doc.layers.item(hwLayerName);
 	var HW_PCT = 10; // HW size in percent of visible area
-	var visibleAreaRE = /^<?(visible|safe) area>?$/i;
+	var visAreaRE = /^<?(visible|safe) area>?$/i;
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 	// Make HW layer
@@ -59,7 +59,7 @@ function main() {
 		bottom = target.bounds[2];
 		frames = target/*.parent*/.pageItems.everyItem().getElements();
 		while ((frame = frames.shift())) {
-			if (visibleAreaRE.test(frame.label) || visibleAreaRE.test(frame.name)) {
+			if (visAreaRE.test(frame.label) || visAreaRE.test(frame.name)) {
 				top = frame.geometricBounds[0];
 				bottom = frame.geometricBounds[2];
 				break;
