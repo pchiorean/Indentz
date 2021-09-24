@@ -1,19 +1,26 @@
 ## Changelog
 
+#### [2021-09-24](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-24&type=commits)
+
+- `fix` **Bounds v5.1.1** -- Fixed typo on `page.visible[3]`
+- `ref` **GetBounds v5.1.2, HW 2.7.1, PageSizeFromFilename v2.1.4, VisibleArea v3.2.1** -- Renamed visible area regex
+- `ref` Renamed **Bounds** to **GetBounds** and **FindFile** to **GetDataFile**
+- `sty` **Debug v1.0.1** -- Changed context separator to `::`
+
 #### [2021-09-23](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-23&type=commits)
 
-- `upd` **QuickExport v2.12** -- Move crop marks at 1 mm from trimbox; don't include printer's marks if no bleed
-- `fix` **QuickExport v2.11.3** -- Fix clash with regex tokens when uniquifying filenames
-- `ref` Rename **OffsetPath** to **OffsetPaths**
+- `upd` **QuickExport v2.12** -- Moved crop marks at 1 mm from trimbox; don't include printer's marks if no bleed
+- `fix` **QuickExport v2.11.3** -- Fixed clash with regex tokens when uniquifying filenames
+- `ref` Renamed **OffsetPath** to **OffsetPaths**
 
 #### [2021-09-22](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-22&type=commits)
 
-- `upd` **OffsetPath v2.0** -- Fix container-objects; add option to join contours; streamline logic
+- `upd` **OffsetPath v2.0** -- Fixed container-objects; added option to join contours; streamlined logic
 
 #### [2021-09-21](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-21&type=commits)
 
-- `upd` **ProgressBar, QRBatch v2.7.1, QuickExport v2.11.2, SpreadsToFiles v1.7.9** -- Center progress bar in parent window
-- `fix` **PrepareForExport v2.2.2** -- Ignore hidden layers
+- `upd` **ProgressBar, QRBatch v2.7.1, QuickExport v2.11.2, SpreadsToFiles v1.7.9** -- Centered progress bar in parent window
+- `fix` **PrepareForExport v2.2.2** -- Hidden layers are now ignored
 
 #### [2021-09-20](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-20&type=commits)
 
@@ -25,7 +32,7 @@
 - `upd` **layers.txt** -- Added new variant 'cutcontour' for 'dielines' layer
 - `upd` **swatches.txt** -- Added new variant 'FOLD' for 'Fold' swatch
 - `fix` **Clip v2.7, ClipUndo v2.5** -- Only clip objects directly on spread
-- `fix` **QRBatch v2.7** -- Now converted documents are skipped and reported
+- `fix` **QRBatch v2.7** -- Converted documents are now skipped and reported
 - `sty` `upd` `fix` Autumn cleaning: added ESLint and refactored many scripts (hopefully, there are no new bugs)
 - `doc` Added a changelog
 
@@ -58,7 +65,7 @@
 - `upd` Make a custom object style for 'Visible area' frame [#123](https://github.com/pchiorean/Indentz/issues/123)
 - `ref` **FitTo** -- Refactor snapping to use delta
 - `sty` Fix UI static/edittext width (see Marc's [measureString()](https://twitter.com/indiscripts/status/1408788941550108674))
-- `?` `brk` **Bounds** -- Convert to constructor
+- `?` `brk` **Bounds** -- Convert to pseudo-class (see [Overflow.js](https://github.com/rendertom/Overflow/blob/dce56e9bb82db9a7e0d3864ce1e98afb5c00b586/src/Overflow.js))
 - `?` `upd` **QuickExport** -- Limit export subfolder to suffix's first word
 - `?` `upd` **QuickExport** -- JSONify preferences (see [JSON-js](https://github.com/douglascrockford/JSON-js))
 
