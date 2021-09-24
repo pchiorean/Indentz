@@ -1,5 +1,5 @@
 /*
-	Bounds v5.1 (2021-09-12)
+	Bounds v5.1.1 (2021-09-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Returns an object containing the geometric bounds of the given page,
@@ -9,7 +9,7 @@
 		page: {
 			size:    [ top, left, bottom, right ],
 			margins: [ t, l, b, r ],
-			visible: [ t, l, b, r ] or undefined,
+			visible: [ t, l, b, r ] or undefined[^1],
 			bleed:   [ t, l, b, r ]
 		},
 		spread: {
@@ -19,6 +19,8 @@
 			bleed:   [ t, l, b, r ]
 		}
 	};
+
+	[^1]: Visible area is an area marked by one or more frames named '<visible area>'.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -88,7 +90,7 @@ function Bounds(page) {
 					bounds[0] = Math.min(v[i].geometricBounds[0], bounds[0]);
 					bounds[1] = Math.min(v[i].geometricBounds[1], bounds[1]);
 					bounds[2] = Math.max(v[i].geometricBounds[2], bounds[2]);
-					bounds[3] = Math.max(hhv[i].geometricBounds[3], bounds[3]);
+					bounds[3] = Math.max(v[i].geometricBounds[3], bounds[3]);
 				}
 				return [
 					Math.max(bounds[0], page.bounds[0]),
