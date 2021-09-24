@@ -1,5 +1,5 @@
 /*
-	Debug 1.0 (2021-09-12)
+	Debug 1.0.1 (2021-09-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Appends a debugging line to a file saved on the desktop (e.g. script-name.log):
@@ -60,7 +60,8 @@ function dbg(/*?t,*/ /*?<context>,*/ /*message*/) {
 		if (type) args.shift();
 
 		if (/^<.+>$/g.test(args[0])) {
-			context = '[' + args[0].toString().slice(1, args[0].length - 1) + ']: ';
+			// context = '[' + args[0].toString().slice(1, args[0].length - 1) + ']: ';
+			context = args[0].toString().slice(1, args[0].length - 1) + ' :: ';
 			args.shift();
 		}
 		return ('\n' + now + type + context + args.join(separator));
