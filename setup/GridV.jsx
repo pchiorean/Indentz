@@ -1,9 +1,9 @@
 /*
-	V grid 1.1.2 (2021-09-17)
+	V grid 1.1.3 (2021-09-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 */
 
-// @include '../lib/Bounds.jsxinc';
+// @include '../lib/GetBounds.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
@@ -26,7 +26,7 @@ function main() {
 		// HW at 1/2 margin of bottom
 
 		page = doc.pages[i];
-		tgBounds = Bounds(page).page.visible || Bounds(page).page.size;
+		tgBounds = getBounds(page).page.visible || getBounds(page).page.size;
 		tgSize = { width: tgBounds[3] - tgBounds[1], height: tgBounds[2] - tgBounds[0] };
 		guide = {
 			color:  'Magenta',

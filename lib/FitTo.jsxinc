@@ -1,5 +1,5 @@
 /*
-	FitTo v5.5.2 (2021-09-12)
+	FitTo v5.5.3 (2021-09-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Resizes the selected objects to the page/spread's size/margins/visible area/bleed.
@@ -41,7 +41,7 @@
 
 /* eslint-disable no-unused-vars, no-mixed-spaces-and-tabs */
 
-// @include 'Bounds.jsxinc';
+// @include 'GetBounds.jsxinc';
 
 function fitTo(args) {
 	if (!(doc = app.activeDocument)) exit();
@@ -81,7 +81,7 @@ function fitTo(args) {
 	doc.viewPreferences.rulerOrigin = oldRO;
 
 	function fit2Bounds(obj) {
-		var B = Bounds(page);
+		var B = getBounds(page);
 		var b = {
 			size:   B[SCOPE].size,
 			target: B[SCOPE][TARGET],

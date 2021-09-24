@@ -1,9 +1,9 @@
 /*
-	L grid 2.3.1 (2021-09-17)
+	L grid 2.3.2 (2021-09-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 */
 
-// @include '../lib/Bounds.jsxinc';
+// @include '../lib/GetBounds.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
@@ -20,7 +20,7 @@ function main() {
 
 	for (var i = 0, n = doc.pages.length; i < n; i++) {
 		page = doc.pages[i];
-		tgBounds = Bounds(page).page.visible || Bounds(page).page.size;
+		tgBounds = getBounds(page).page.visible || getBounds(page).page.size;
 		tgSize = { width: tgBounds[3] - tgBounds[1], height: tgBounds[2] - tgBounds[0] };
 		switch (tgSize.width / tgSize.height < 0.95) {
 			case true: // Portrait
@@ -32,9 +32,9 @@ function main() {
 				bdist = 4;
 				logo = MG * 2.857142857142857;
 				// Guides
-				AddGuide('vertical',   tgBounds[1] + tgSize.width / 2, 'middle', UIColors.GRID_GREEN);
-				AddGuide('horizontal', tgBounds[2] - tgSize.height * 0.1 - 2 * MG, '2 x mg');
-				AddGuide('horizontal', tgBounds[2] - tgSize.height * 0.1 - 3 * MG, '3 x mg');
+				addGuide('vertical',   tgBounds[1] + tgSize.width / 2, 'middle', UIColors.GRID_GREEN);
+				addGuide('horizontal', tgBounds[2] - tgSize.height * 0.1 - 2 * MG, '2 x mg');
+				addGuide('horizontal', tgBounds[2] - tgSize.height * 0.1 - 3 * MG, '3 x mg');
 				break;
 			case false: // Landscape
 				// Logo = 14% of format height except HW
@@ -46,7 +46,7 @@ function main() {
 				bdist = 2;
 				logo = MG * 3.333333333333333;
 				// Guides
-				AddGuide('horizontal', tgBounds[0] + tgSize.height * 0.9 / 2, 'middle', UIColors.GRID_GREEN);
+				addGuide('horizontal', tgBounds[0] + tgSize.height * 0.9 / 2, 'middle', UIColors.GRID_GREEN);
 				break;
 		}
 		// Set margins
@@ -59,9 +59,9 @@ function main() {
 			columnGutter: 0
 		};
 		// Common guides
-		AddGuide('horizontal', tgBounds[2] - tgSize.height * 0.1 - MG, 'mg');
-		AddGuide('horizontal',
-			Bounds(page).page.margins[2] -
+		addGuide('horizontal', tgBounds[2] - tgSize.height * 0.1 - MG, 'mg');
+		addGuide('horizontal',
+			getBounds(page).page.margins[2] -
 				(((2 * MG) * 1.18 - (2 * MG)) / 2 + // line inner margin
 				2 * ((2 * MG) * 0.28) +             // space between lines
 				8 * MG),                            // 3 lines + #EMM
@@ -92,7 +92,7 @@ function main() {
 		mgFrame.move(undefined, [ MG, -MG ]);
 	}
 
-	function AddGuide(HorV, location, label, color) {
+	function addGuide(HorV, location, label, color) {
 		page.guides.add(undefined, {
 			itemLayer:   'guides',
 			label:       label,
