@@ -1,5 +1,5 @@
 /*
-	Default layers v3.1.6 (2021-09-15)
+	Default layers v3.1.7 (2021-09-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.txt':
@@ -51,7 +51,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 function main() {
 	var newLayer, tmpLayer, i, n;
 	var oldActiveLayer = doc.activeLayer; // Save active layer
-	var dataFile = findFile('layers.txt');
+	var dataFile = getDataFile('layers.txt');
 	if (!dataFile) { alert('No data file found.'); exit(); }
 	var data = parseInfo(dataFile);
 	if (data.errors.length > 0) { report(data.errors, decodeURI(dataFile.getRelativeURI(doc.filePath))); exit(); }
@@ -142,7 +142,7 @@ function main() {
  * @param {Boolean} [skipLocal] - Don't search locally
  * @returns {File|void} - Found file object or undefined
  */
-function findFile(filename, skipLocal) {
+function getDataFile(filename, skipLocal) {
 	var file = '';
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	if (!skipLocal) {
@@ -181,7 +181,7 @@ function parseInfo(dataFile) {
 		if (infoLine[0].slice(0,1) === '\u0040') { // '@'
 			include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
 			includeFile = /^default(s?)$/i.test(include) ?                   // '@default' ?
-				findFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // include default data file :
+				getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // include default data file :
 				File(include);                                               // include 'path/to/file.txt'
 			if (includeFile && includeFile.exists) {
 				if (includeFile.fullName === dataFile.fullName) continue; // Skip self

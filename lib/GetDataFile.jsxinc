@@ -7,7 +7,7 @@
  * @param {Boolean} [skipLocal] - Don't search locally
  * @returns {File|void} - Found file object or undefined
  */
-function findFile(filename, skipLocal) {
+function getDataFile(filename, skipLocal) {
 	var file = '';
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	if (!skipLocal) {

@@ -1,10 +1,10 @@
 /* eslint-disable no-unused-vars, no-lonely-if */
 
-// @include 'FindFile.jsxinc';
+// @include 'GetDataFile.jsxinc';
 // @include 'Report.jsxinc';
 
 // (This function is just a stub)
-// var dataFile = findFile('data.txt');
+// var dataFile = getDataFile('data.txt');
 // if (!dataFile) { alert('No data file found.'); exit(); }
 // var data = parseInfo(dataFile);
 // if (data.errors.length > 0) { report(data.errors, decodeURI(dataFile.getRelativeURI(doc.filePath))); exit(); }
@@ -38,7 +38,7 @@ function parseInfo(dataFile) {
 		if (infoLine[0].slice(0,1) === '\u0040') { // '@'
 			include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
 			includeFile = /^default(s?)$/i.test(include) ?                   // '@default' ?
-				findFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // include default data file :
+				getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // include default data file :
 				File(include);                                               // include 'path/to/file.txt'
 			if (includeFile && includeFile.exists) {
 				if (includeFile.fullName === dataFile.fullName) continue; // Skip self
