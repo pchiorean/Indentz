@@ -1,5 +1,5 @@
 /*
-	Bounds v5.1.1 (2021-09-24)
+	GetBounds v5.1.1 (2021-09-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Returns an object containing the geometric bounds of the given page,
@@ -46,7 +46,7 @@
 
 /* eslint-disable no-unused-vars */
 
-function Bounds(page) {
+function getBounds(page) {
 	var PSO = PageSideOptions;
 	var fPg = page.parent.pages.firstItem();
 	var lPg = page.parent.pages.lastItem();
