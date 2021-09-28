@@ -1,11 +1,12 @@
-/* eslint-disable no-unused-vars */
-
 /**
  * Replaces a swatch or a list of swatches with a different one.
  * The new swatch is created only if values are provided (CMYK).
  * @param {(String|String[])} oldNames - Swatch name, or a list of swatch names to be replaced
  * @param {String} newName - New swatch name
  * @param {Number[]} [newValues] - Array of 4 values in 0-100 range
+ * @example replaceColors('oldSwatchName', 'newSwatchName');
+ * @example replaceColors('oldSwatchName', 'newSwatchName', newValues);
+ * @example replaceColors([ 'oldSwatchName1', 'oldSwatchName2' ], 'newSwatchName', newSwatchValues);
  */
 function replaceColors(oldNames, newName, newValues) {
 	// Add new color only if newValues provided

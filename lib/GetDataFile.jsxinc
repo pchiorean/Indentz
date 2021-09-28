@@ -1,5 +1,3 @@
-/* eslint-disable no-unused-vars, max-statements-per-line */
-
 /**
  * Returns the first occurrence of a data file, first searching for a local one (in the current
  * folder or the parent folder), then a global one (on the desktop or next to the script).
@@ -9,6 +7,7 @@
  */
 function getDataFile(filename, skipLocal) {
 	var file = '';
+	// eslint-disable-next-line max-statements-per-line
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	if (!skipLocal) {
 		if (doc.saved && (file = File(app.activeDocument.filePath + '/_'    + filename)) && file.exists) return file;

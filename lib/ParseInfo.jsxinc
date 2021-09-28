@@ -1,20 +1,22 @@
-/* eslint-disable no-unused-vars, no-lonely-if */
-
-// @include 'GetDataFile.jsxinc';
-// @include 'Report.jsxinc';
-
-// (This function is just a stub)
-// var dataFile = getDataFile('data.txt');
-// if (!dataFile) { alert('No data file found.'); exit(); }
-// var data = parseInfo(dataFile);
-// if (data.errors.length > 0) { report(data.errors, decodeURI(dataFile.getRelativeURI(doc.filePath))); exit(); }
-// if (data.records.length === 0) exit();
+// (This function is just a stub.)
 
 /**
- * Parses a TSV file, returning an object containing found records and errors. Ignores blank lines and those prefixed
- * with '#'; '@path/to/file.txt' includes records from 'file.txt', '@default' includes the default data file.
+ * Parses a TSV file, returning an object containing found records and errors.
+ * Ignores blank lines and those prefixed with '#'; '@path/to/file.txt' includes
+ * records from 'file.txt', '@default' includes the default data file.
+ * @requires GetDataFile.jsxinc
+ * @requires Report.jsxinc
  * @param {File} dataFile - Tab-separated-values file object
  * @returns {{records: Array, errors: Array}}
+ * @example
+ * // @include 'GetDataFile.jsxinc';
+ * // @include 'Report.jsxinc';
+ * var dataFile = getDataFile('data.txt');
+ * if (!dataFile) { alert('No data file found.'); exit(); }
+ * var data = parseInfo(dataFile);
+ * // <snip>
+ * if (data.errors.length > 0) { report(data.errors, decodeURI(dataFile.getRelativeURI(doc.filePath))); exit(); }
+ * if (data.records.length === 0) exit();
  */
 function parseInfo(dataFile) {
 	var infoLine, header, include, includeFile;
@@ -37,18 +39,23 @@ function parseInfo(dataFile) {
 		// '@include'
 		if (infoLine[0].slice(0,1) === '\u0040') { // '@'
 			include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
-			includeFile = /^default(s?)$/i.test(include) ?                   // '@default' ?
-				getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // include default data file :
-				File(include);                                               // include 'path/to/file.txt'
+			includeFile = /^default(s?)$/i.test(include) ?                      // '@default' ?
+				getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Include default data file :
+				File(include);                                                  // Include 'path/to/file.txt'
 			if (includeFile && includeFile.exists) {
-				if (includeFile.fullName === dataFile.fullName) continue; // Skip self
+				if (includeFile.fullName === dataFile.fullName) continue;       // Skip self
 				buffer = parseInfo(includeFile);
 				records = records.concat(buffer.records);
 			}
 		} else {
-			// Some data validation and defaults here
-			// if (!infoLine[x]) errors.push("Some error");
-			if (errors.length === 0) records.push(infoLine);
+			// Data validation/defaults
+			// if (!infoLine[0]) errors.push('Line ' + line + ': Some error');
+			// if (errors.length === 0) {
+			// 	records.push({
+			// 		key1: infoLine[0],
+			// 		key2: infoLine[1]
+			// 	});
+			// }
 		}
 	}
 	dataFile.close(); infoLine = '';

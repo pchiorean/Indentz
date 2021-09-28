@@ -1,13 +1,15 @@
-/* eslint-disable no-unused-vars */
-
-// Detects the user scripts folder
+/**
+ * Detects the user scripts folder.
+ * @function scriptsFolder
+ * @returns {Folder|void} - Found folder object or undefined
+ * @example
+ * // @includepath scriptsFolder;
+ * // @include 'path/to/script.jsxinc';
+ * @example
+ * $.evalFile(File(scriptsFolder + 'path/to/script.jsxinc'));
+ */
 var scriptsFolder = (function () {
 	for (var i = 0, f = $.includePath.split(';'); i < f.length; i++)
 		if (/Scripts Panel$/.test(localize(f[i]))) return (f[i] + '/');
 	return undefined;
 }());
-
-// @includepath scriptsFolder;
-// @include 'path/to/script.jsxinc';
-// or
-// $.evalFile(File(scriptsFolder + 'path/to/script.jsxinc'));
