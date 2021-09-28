@@ -125,9 +125,9 @@ TextAutosize | |
 
 Scalează proporțional obiectele selectate, ca un bloc unitar.
 
-* **`ScaleToPageSize`** și **`ScaleToPageMargins`** scalează la dimensiunile paginii sau marginii.
+* **`ScaleToPageSize/PageMargins/SpreadBleed`** scalează la dimensiunea paginii, a marginii sau a bleedului spreadului.
 
-* Variantele **`...H`** (height) și **`...W`** (width) scalează la înălțimea, respectiv lățimea paginii sau marginii.
+* Variantele **`...H`** (height) și **`...W`** (width) scalează la înălțimea, respectiv lățimea dimensiunilor corespunzătoare.
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -351,4 +351,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 22 septembrie 2021
+README-ro.md • 28 septembrie 2021

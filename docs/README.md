@@ -125,9 +125,9 @@ TextAutosize | |
 
 Scale the selected objects proportionally, as a block.
 
-* **`ScaleToPageSize`** and **`ScaleToPageMargins`** scale to the page size or page margins.
+* **`ScaleToPageSize/PageMargins/SpreadBleed`** scale to the page size, page margins, or spread bleed.
 
-* The **`...H`** (height) and **`...W`** (width) variants scale to the height or width of the page or page margins.
+* The **`...H`** (height) and **`...W`** (width) variants scale to the height or width of the corresponding bounds.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -351,4 +351,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • September 22, 2021
+README.md • September 28, 2021
