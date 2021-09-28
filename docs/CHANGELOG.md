@@ -1,5 +1,12 @@
 ## Changelog
 
+#### [2021-09-28](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-28&type=commits)
+
+- `new` Added **ScaleToSpreadBleed/H/W**
+- `ref` **IsIn** -- Refactored to full regex matching
+- `doc` **SpreadsToFiles v1.7.10** -- Added an example to the prompt message
+- `doc` Updated description for some of the stubs in `/lib`
+
 #### [2021-09-24](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-24&type=commits)
 
 - `fix` **Bounds v5.1.1** -- Fixed typo on `page.visible[3]`
@@ -51,7 +58,7 @@
 
 ##### Updates
 
-- `brk` **VisibleArea** -- Mark spread's visible area
+- `brk` **VisibleArea** -- Mark the entire spread's visible area instead of individual pages
 - `upd` **DefaultSwatches** -- Add tints support
 - `upd` **FindFile** -- Use relative paths for includes
 - `upd` **PageMarginsFromSelection** -- Set the margins of every page touched by the selection
@@ -78,7 +85,6 @@
 - `fix` **PageSizeFromFilename** -- Error on pages set to 1:X scale [#129](https://github.com/pchiorean/Indentz/issues/129)
 - `fix` **PageSizeFromFilename** -- Limit detected bleed to max values
 - `fix` **PageSizeFromSelection** -- For text frames use outlined text bounds
-- `fix` **PrepareForExport** -- Ignore hidden layers
 - `fix` **QR, QRBatch** -- Align to page > visible area > margins
 - `fix` **QR, QRBatch** -- Improve line breaking
 - `fix` **QRBatch** -- Remove `preview` & `print` from filenames for separate codes
