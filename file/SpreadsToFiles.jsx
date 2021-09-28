@@ -1,5 +1,5 @@
 /*
-	Spreads to files v1.7.9 (2021-09-21)
+	Spreads to files v1.7.10 (2021-09-28)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
@@ -77,11 +77,11 @@ doc.close(SaveOptions.ASK);
 
 
 function getSuffix(str) {
-	// First recursion
 	if (!str) str = detectedSufx || defaultSufx;
 	// Ask user
-	str = prompt('Enter a suffix template.\nThe first character is the separator, ' +
-		'the rest are added sequentially to the file names.', str, 'Enter a suffix');
+	str = prompt('Enter a suffix template.\nThe first character is the separator, the rest ' +
+	'are added sequentially to the file names.\n\nE.g.: \'-ABC\' will split the file into\n\n' +
+	'Filename-A.indd\nFilename-B.indd\nFilename-C.indd', str, 'Enter a suffix template');
 	if (!str) exit();
 	// Sanitize input
 	// -- Length
@@ -90,7 +90,7 @@ function getSuffix(str) {
 		getSuffix(str); // Ask again
 	}
 	// -- Separator
-	if (!/[ ._-]/.test(str[0])) {
+	if (!/[ ._-~]/.test(str[0])) {
 		alert('Invalid separator, please try again.', 'Enter a suffix');
 		getSuffix(str); // Ask again
 	}
