@@ -56,6 +56,9 @@ Name                               |    Fn  | Description
 `ScaleToPageMargins.jsx`           |    ⌥F5 | Scales the selected objects to the page margins
 `ScaleToPageMarginsH.jsx`          |   ^⌥F5 | Scales the selected objects to the page top/bottom margins
 `ScaleToPageMarginsW.jsx`          |        | Scales the selected objects to the page left/right margins
+`ScaleToSpreadSize.jsx`            |        | Scales the selected objects to the spread size
+`ScaleToSpreadSizeH.jsx`           |        | Scales the selected objects to the spread top/bottom size
+`ScaleToSpreadSizeW.jsx`           |        | Scales the selected objects to the spread left/right size
 **Setup**                                   |
 `DefaultPrefs.jsx`                 |        | Sets default preferences
 `DefaultLayers.jsx`                |        | Adds/merges layers from a list
