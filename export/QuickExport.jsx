@@ -743,16 +743,17 @@ function cleanupAndExit() {
 }
 
 /**
- * A simple progress bar. Usage:
- * - create: var progress = new ProgressBar(title, ?maxWidth);
- * - init:   progress.reset(maxValue);
- * - update: progress.update(value, ?message);
- * - close:  progress.close();
+ * A simple progress bar.
  * @param {String} title - Palette title (a counter will be appended)
  * @param {Number} maxValue - Number of steps
  * @param {Number} [maxWidth] - Max message length (characters); if ommitted, no message is shown
  * @param {Number} value - Updated value
- * @param {String} message - Message
+ * @param {String} [message] - Message; if maxWidth is omitted on creation, no message is shown
+ * @example
+ * var progress = new ProgressBar(title, [maxWidth]);
+ * progress.reset(maxValue);
+ * progress.update(value, [message]);
+ * progress.close();
  */
 function ProgressBar(title, maxWidth) {
 	var pb = new Window('palette', title);
@@ -792,8 +793,12 @@ function ProgressBar(title, maxWidth) {
 }
 
 /**
- * Simple scrollable alert inspired by this snippet by Peter Kahrel:
+ * Displays a message in a scrollable list with optional filtering and/or compact mode.
+ * Inspired by this snippet by Peter Kahrel:
  * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
+ * @version 2.0 (2021-09-12)
+ * @author Paul Chiorean <jpeg@basement.ro>
+ * @license MIT
  * @param {String|String[]} message - Message to be displayed (string or array)
  * @param {String} title - Dialog title
  * @param {Boolean} [showFilter] - Shows a filtering field; wildcards: '?' (any char), space and '*' (AND), '|' (OR)

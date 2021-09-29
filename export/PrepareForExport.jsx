@@ -1,5 +1,5 @@
 /*
-	Prepare for export v2.2.2 (2021-09-21)
+	Prepare for export v2.2.3 (2021-09-29)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves items with special colors to separate spreads.
@@ -61,7 +61,7 @@ function prepareForExport() {
 		if (!l.visible) continue;
 		if (l.name === infoLayer.name) continue;
 		for (variants in layerNames) {
-			if (isIn(l.name, layerNames[variants], false)) {
+			if (isIn(l.name, layerNames[variants])) {
 				switch (layerNames[variants][0]) {
 					case layerNames.covered[0]:
 					case layerNames.visible[0]:
@@ -177,18 +177,21 @@ function prepareForExport() {
 		}
 	}
 
-	// Modified from FORWARD.Util functions, by Richard Harrington
-	// https://github.com/richardharrington/indesign-scripts
+	/**
+	* Matches a string against elements of an array, using wildcards and case sensitivity.
+	* @param {String} searchValue - String to be matched
+	* @param {Array} array - An array of strings; wildcards: '*' (zero or more characters), '?' (exactly one character)
+	* @param {Boolean} [caseSensitive=false] - Case sensitivity; default false
+	* @returns {Boolean} - True for match, false for no match
+	*/
 	function isIn(searchValue, array, caseSensitive) {
-		var item;
-		caseSensitive = (caseSensitive === undefined) ? true : caseSensitive;
-		if (!caseSensitive && typeof searchValue === 'string') searchValue = searchValue.toLowerCase();
+		caseSensitive = (caseSensitive === undefined) ? false : caseSensitive;
 		for (var i = 0, n = array.length; i < n; i++) {
-			item = array[i];
-			if (!caseSensitive && typeof item === 'string') item = item.toLowerCase();
-			// if (item === searchValue) return true;
-			item = RegExp('^' + item.replace(/\*/g, '.*').replace(/\?/g, '.') + '$', 'g');
-			if (item.test(searchValue)) return true;
+			if (RegExp('^' + array[i]
+				.replace(/[|^$(.)[\]{+}\\]/g, '\\$&')       // Escape regex tokens, pass '*' and '?'
+				.replace(/\*/g, '.*').replace(/\?/g, '.') + // '*' and '?' wildcards
+				'$', caseSensitive ? '' : 'i'               // Case sensitivity flag
+			).test(searchValue)) return true;
 		}
 		return false;
 	}

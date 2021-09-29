@@ -39,8 +39,12 @@ report(
 );
 
 /**
- * Simple scrollable alert inspired by this snippet by Peter Kahrel:
+ * Displays a message in a scrollable list with optional filtering and/or compact mode.
+ * Inspired by this snippet by Peter Kahrel:
  * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
+ * @version 2.0 (2021-09-12)
+ * @author Paul Chiorean <jpeg@basement.ro>
+ * @license MIT
  * @param {String|String[]} message - Message to be displayed (string or array)
  * @param {String} title - Dialog title
  * @param {Boolean} [showFilter] - Shows a filtering field; wildcards: '?' (any char), space and '*' (AND), '|' (OR)

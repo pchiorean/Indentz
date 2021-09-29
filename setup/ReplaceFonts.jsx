@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 2.1.6 (2021-09-24)
+	Replace fonts 2.1.7 (2021-09-29)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named 'fonts.txt':
@@ -33,8 +33,6 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-
-/* eslint-disable max-statements-per-line */
 
 if (!(doc = app.activeDocument)) exit();
 
@@ -70,6 +68,7 @@ function main() {
  */
 function getDataFile(filename, skipLocal) {
 	var file = '';
+	// eslint-disable-next-line max-statements-per-line
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	if (!skipLocal) {
 		if (doc.saved && (file = File(app.activeDocument.filePath + '/_'    + filename)) && file.exists) return file;
@@ -84,8 +83,9 @@ function getDataFile(filename, skipLocal) {
 }
 
 /**
- * Parses a TSV file, returning an object containing found records and errors. Ignores blank lines and those prefixed
- * with '#'; '@path/to/file.txt' includes records from 'file.txt', '@default' includes the default data file.
+ * Parses a TSV file, returning an object containing found records and errors.
+ * Ignores blank lines and those prefixed with '#'; '@path/to/file.txt' includes
+ * records from 'file.txt', '@default' includes the default data file.
  * @param {File} dataFile - Tab-separated-values file object
  * @returns {{records: Array, errors: Array}}
  */
@@ -106,11 +106,11 @@ function parseInfo(dataFile) {
 		// '@include'
 		if (infoLine[0].slice(0,1) === '\u0040') { // '@'
 			include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
-			includeFile = /^default(s?)$/i.test(include) ?                   // '@default' ?
-				getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // include default data file :
-				File(include);                                               // include 'path/to/file.txt'
+			includeFile = /^default(s?)$/i.test(include) ?                      // '@default' ?
+				getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Include default data file :
+				File(include);                                                  // Include 'path/to/file.txt'
 			if (includeFile && includeFile.exists) {
-				if (includeFile.fullName === dataFile.fullName) continue; // Skip self
+				if (includeFile.fullName === dataFile.fullName) continue;       // Skip self
 				buffer = parseInfo(includeFile);
 				records = records.concat(buffer.records);
 			}
@@ -134,8 +134,12 @@ function parseInfo(dataFile) {
 }
 
 /**
- * Simple scrollable alert inspired by this snippet by Peter Kahrel:
+ * Displays a message in a scrollable list with optional filtering and/or compact mode.
+ * Inspired by this snippet by Peter Kahrel:
  * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
+ * @version 2.0 (2021-09-12)
+ * @author Paul Chiorean <jpeg@basement.ro>
+ * @license MIT
  * @param {String|String[]} message - Message to be displayed (string or array)
  * @param {String} title - Dialog title
  * @param {Boolean} [showFilter] - Shows a filtering field; wildcards: '?' (any char), space and '*' (AND), '|' (OR)
