@@ -1,5 +1,5 @@
 ﻿/*
-	Doc cleanup v2.8.1 (2021-09-16)
+	Doc cleanup v2.9 (2021-09-29)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -55,6 +55,13 @@ app.doScript(function () {
 },
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Unlock items, delete hidden, reset scaling');
+
+// Clear default effects
+app.doScript(function () {
+	if ((menu = app.menuActions.item('$ID/Clear All Transparency')).enabled) menu.invoke();
+},
+ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, 'Clear default effects');
 
 // Delete unused layers
 app.doScript(function () {
