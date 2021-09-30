@@ -1,5 +1,5 @@
 /*
-	Spreads to files v1.7.10 (2021-09-28)
+	Spreads to files v1.7.11 (2021-09-30)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
@@ -26,6 +26,8 @@
 	SOFTWARE.
 */
 
+// @include '../lib/ProgressBar.jsxinc';
+
 if (!(doc = app.activeDocument)) exit();
 if (!doc.saved) { alert('Document is not saved.'); exit(); }
 if (doc.spreads.length === 1) { alert('Document has only one spread.'); exit(); }
@@ -37,7 +39,7 @@ var forbiddenFilenameCharsRE = /[#%^{}\\<>*?\/$!'":@`|=]/g; // eslint-disable-li
 var oldUIL = app.scriptPreferences.userInteractionLevel;
 var currentPath = doc.filePath;
 var baseName = (/\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf('.'))) || doc.name;
-var progressBar = new ProgressBar('Saving');
+var progressBar = new ProgressBar('Saving', doc.spreads.length);
 
 // Detect or ask for a suffix
 var defaultSufx = '-123456789abcdefghijklmnopqrstuvwxyz'.slice(0, doc.spreads.length + 1);
@@ -46,7 +48,6 @@ if (/\d\s*x\s*\d/i.test(detectedSufx)) detectedSufx = null; // Exclude '0x0' suf
 if (ADV) suffix = getSuffix(null);
 else suffix = detectedSufx ? String(detectedSufx) : getSuffix(null);
 // Main loop
-progressBar.reset(doc.spreads.length);
 for (spread = 0; spread < doc.spreads.length; spread++) {
 	// Filter out current spread
 	r = [];
@@ -100,54 +101,4 @@ function getSuffix(str) {
 		getSuffix(str); // Ask again
 	}
 	return str.slice(0, doc.spreads.length + 1);
-}
-
-/**
- * A simple progress bar.
- * @param {String} title - Palette title (a counter will be appended)
- * @param {Number} maxValue - Number of steps
- * @param {Number} [maxWidth] - Max message length (characters); if ommitted, no message is shown
- * @param {Number} value - Updated value
- * @param {String} [message] - Message; if maxWidth is omitted on creation, no message is shown
- * @example
- * var progress = new ProgressBar(title, [maxWidth]);
- * progress.reset(maxValue);
- * progress.update(value, [message]);
- * progress.close();
- */
-function ProgressBar(title, maxWidth) {
-	var pb = new Window('palette', title);
-	pb.bar = pb.add('progressbar');
-	if (maxWidth) { // Full progress bar
-		pb.msg = pb.add('statictext { properties: { truncate: "middle" } }');
-		pb.msg.characters = Math.max(maxWidth, 50);
-		pb.layout.layout();
-		pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
-	} else { // Mini progress bar
-		pb.bar.bounds = [ 12, 12, 476, 24 ];
-	}
-	this.reset = function (maxValue) {
-		pb.bar.value = 0;
-		pb.bar.maxvalue = maxValue || 0;
-		pb.bar.visible = !!maxValue;
-		pb.show();
-		if (app.windows.length > 0) {
-			var AW = app.activeWindow;
-			pb.frameLocation = [
-				(AW.bounds[1] + AW.bounds[3] - pb.frameSize.width) / 2,
-				(AW.bounds[0] + AW.bounds[2] - pb.frameSize.height) / 2
-			];
-		}
-	};
-	this.update = function (value, message) {
-		pb.bar.value = value;
-		if (maxWidth) {
-			pb.msg.visible = !!message;
-			if (message) pb.msg.text = message;
-		}
-		pb.text = title + ' \u2013 ' + value + '/' + pb.bar.maxvalue;
-		pb.show(); pb.update();
-	};
-	this.hide = function () { pb.hide(); };
-	this.close = function () { pb.close(); };
 }

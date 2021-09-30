@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.7.1 (2021-09-21)
+	Batch QR codes v2.7.2 (2021-09-30)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -37,6 +37,9 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
+
+// @include '../lib/ProgressBar.jsxinc';
+// @include '../lib/Report.jsxinc';
 
 var errors = [];
 var currentPath;
@@ -209,12 +212,11 @@ function main() {
 	if (ui.show() === 2) exit();
 	errors = [];
 	isModified = false;
-	if (queue.length > 1) var progressBar = new ProgressBar('Processing', pbWidth);
-	if (progressBar) progressBar.reset(queue.length);
+	var progressBar = new ProgressBar('Processing', queue.length, pbWidth);
 	for (var i = 0, n = queue.length; i < n; i++) {
 		var item = rawData[queue[i] - 1];
 		if (item.fn === '' || item.fn.toString().slice(0,1) === '\u0023') { progressBar.update(i + 1, ''); continue; }
-		if (progressBar) progressBar.update(i + 1, item.fn);
+		progressBar.update(i + 1, item.fn);
 		if ((item.pos && makeQROnDoc(item.fn, item.code, ui.actions.white.value)) ||
 				(!item.pos && makeQROnFile(item.fn, item.code))) {
 			item.exported = true; isModified = true;
@@ -222,7 +224,7 @@ function main() {
 	}
 
 	// Update data file
-	if (progressBar) progressBar.close();
+	progressBar.close();
 	if (dataFile.exists && isModified && dataFile.open('w')) {
 		dataFile.encoding = 'UTF-8';
 		for (var j = 0, m = rawData.length; j < m; j++) {
@@ -500,7 +502,6 @@ function makeQROnFile(fn, code) {
 	}
 }
 
-
 function balanceText(txt, length) {
 	var lineBuffer = '';
 	var lines = [];
@@ -571,111 +572,4 @@ function pageMargins(page) {
 		right: (page.side === PageSideOptions.LEFT_HAND) ?
 			page.marginPreferences.left : page.marginPreferences.right
 	};
-}
-
-/**
- * A simple progress bar.
- * @param {String} title - Palette title (a counter will be appended)
- * @param {Number} maxValue - Number of steps
- * @param {Number} [maxWidth] - Max message length (characters); if ommitted, no message is shown
- * @param {Number} value - Updated value
- * @param {String} [message] - Message; if maxWidth is omitted on creation, no message is shown
- * @example
- * var progress = new ProgressBar(title, [maxWidth]);
- * progress.reset(maxValue);
- * progress.update(value, [message]);
- * progress.close();
- */
-function ProgressBar(title, maxWidth) {
-	var pb = new Window('palette', title);
-	pb.bar = pb.add('progressbar');
-	if (maxWidth) { // Full progress bar
-		pb.msg = pb.add('statictext { properties: { truncate: "middle" } }');
-		pb.msg.characters = Math.max(maxWidth, 50);
-		pb.layout.layout();
-		pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
-	} else { // Mini progress bar
-		pb.bar.bounds = [ 12, 12, 476, 24 ];
-	}
-	this.reset = function (maxValue) {
-		pb.bar.value = 0;
-		pb.bar.maxvalue = maxValue || 0;
-		pb.bar.visible = !!maxValue;
-		pb.show();
-		if (app.windows.length > 0) {
-			var AW = app.activeWindow;
-			pb.frameLocation = [
-				(AW.bounds[1] + AW.bounds[3] - pb.frameSize.width) / 2,
-				(AW.bounds[0] + AW.bounds[2] - pb.frameSize.height) / 2
-			];
-		}
-	};
-	this.update = function (value, message) {
-		pb.bar.value = value;
-		if (maxWidth) {
-			pb.msg.visible = !!message;
-			if (message) pb.msg.text = message;
-		}
-		pb.text = title + ' \u2013 ' + value + '/' + pb.bar.maxvalue;
-		pb.show(); pb.update();
-	};
-	this.hide = function () { pb.hide(); };
-	this.close = function () { pb.close(); };
-}
-
-/**
- * Displays a message in a scrollable list with optional filtering and/or compact mode.
- * Inspired by this snippet by Peter Kahrel:
- * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
- * @version 2.0 (2021-09-12)
- * @author Paul Chiorean <jpeg@basement.ro>
- * @license MIT
- * @param {String|String[]} message - Message to be displayed (string or array)
- * @param {String} title - Dialog title
- * @param {Boolean} [showFilter] - Shows a filtering field; wildcards: '?' (any char), space and '*' (AND), '|' (OR)
- * @param {Boolean} [showCompact] - Sorts message and removes duplicates
- */
-function report(message, title, showFilter, showCompact) {
-	var search, list;
-	var w = new Window('dialog', title);
-	// Convert message to array
-	if (message.constructor.name !== 'Array') message = message.split(/\r|\n/g);
-	if (showCompact && message.length > 1) { // Sort and remove duplicates
-		message = message.sort();
-		for (var i = 1, l = message[0]; i < message.length; l = message[i], i++) {
-			if (l === message[i]) { message.splice(i, 1); i--; }
-			if (message[i] === '') { message.splice(i, 1); i--; }
-		}
-	}
-	if (showFilter && message.length > 1) { // Add a filtering field
-		search = w.add('edittext { characters: 40, helpTip: "Wildcards: \'?\' (any character), space and \'*\' (AND), \'|\' (OR)" }');
-		search.onChanging = function () {
-			var str, line, i, n;
-			var result = [];
-			if (this.text === '') {
-				list.text = message.join('\n'); w.text = title; return;
-			}
-			str = this.text.replace(/[.[\]{+}]/g, '\\$&'); // Pass through '^*()|?'
-			str = str.replace(/\?/g, '.'); // '?' -> any character
-			if (/[ *]/g.test(str)) str = '(' + str.replace(/ +|\*/g, ').*(') + ')'; // space or '*' -> AND
-			str = RegExp(str, 'gi');
-			for (i = 0, n = message.length; i < n; i++) {
-				line = message[i].toString().replace(/^\s+?/g, '');
-				if (str.test(line)) result.push(line.replace(/\r|\n/g, '\u00b6').replace(/\t/g, '\\t'));
-			}
-			w.text = str + ' | ' + result.length + ' record' + (result.length === 1 ? '' : 's');
-			if (result.length > 0) list.text = result.join('\n'); else list.text = '';
-		};
-	}
-	list = w.add('edittext', undefined, message.join('\n'), { multiline: true, scrolling: true, readonly: true });
-	list.characters = (function () {
-		var width = 50;
-		for (var i = 0, n = message.length; i < n; width = Math.max(width, message[i].toString().length), i++);
-		return width;
-	}());
-	list.minimumSize.width  = 600; list.maximumSize.width  = 1024;
-	list.minimumSize.height = 100; list.maximumSize.height = 1024;
-	w.add('button { text: "Close", properties: { name: "ok" } }');
-	w.ok.active = true;
-	w.show();
 }
