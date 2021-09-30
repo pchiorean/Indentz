@@ -234,6 +234,7 @@
 			{
 				"code": 120,
 				"tabWidth": 4,
+				"ignoreComments": true,
 				"ignoreUrls": true,
 				"ignoreRegExpLiterals": true,
 				"ignorePattern": "\\.add\\('|new Window\\("
