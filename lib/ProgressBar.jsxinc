@@ -1,49 +1,45 @@
 /**
- * A simple progress bar.
- * @param {String} title - Palette title (a counter will be appended)
- * @param {Number} maxValue - Number of steps
- * @param {Number} [maxWidth] - Max message length (characters); if ommitted, no message is shown
- * @param {Number} value - Updated value
- * @param {String} [message] - Message; if maxWidth is omitted on creation, no message is shown
+ * Creates a simple progress bar, setting it's width to accomodate a given message length.
+ * @param {string} title - Palette title.
+ * @param {number} maxValue - Number of steps.
+ * @param {number} [maxWidth] - Maximum message length (characters); if ommitted, no message is shown (mini mode).
  * @example
- * var progress = new ProgressBar(title, [maxWidth]);
- * progress.reset(maxValue);
- * progress.update(value, [message]);
- * progress.close();
+ * var progress = new ProgressBar('Progress bar demo', 100, 50);
  */
-function ProgressBar(title, maxWidth) {
+function ProgressBar(title, maxValue, maxWidth) {
 	var pb = new Window('palette', title);
-	pb.bar = pb.add('progressbar');
+	pb.bar = pb.add('progressbar', undefined, 0, (maxValue || 100));
 	if (maxWidth) { // Full progress bar
 		pb.msg = pb.add('statictext { properties: { truncate: "middle" } }');
 		pb.msg.characters = Math.max(maxWidth, 50);
 		pb.layout.layout();
 		pb.bar.bounds = [ 12, 12, pb.msg.bounds[2], 24 ];
-	} else { // Mini progress bar
-		pb.bar.bounds = [ 12, 12, 476, 24 ];
+	} else { pb.bar.bounds = [ 12, 12, 415, 24 ]; } // Mini progress bar
+	pb.show();
+	if (app.windows.length > 0) {
+		pb.frameLocation = [
+			(app.activeWindow.bounds[1] + app.activeWindow.bounds[3] - pb.frameSize.width)  / 2,
+			(app.activeWindow.bounds[0] + app.activeWindow.bounds[2] - pb.frameSize.height) / 2
+		];
 	}
-	this.reset = function (maxValue) {
-		pb.bar.value = 0;
-		pb.bar.maxvalue = maxValue || 0;
-		pb.bar.visible = !!maxValue;
-		pb.show();
-		if (app.windows.length > 0) {
-			var AW = app.activeWindow;
-			pb.frameLocation = [
-				(AW.bounds[1] + AW.bounds[3] - pb.frameSize.width) / 2,
-				(AW.bounds[0] + AW.bounds[2] - pb.frameSize.height) / 2
-			];
-		}
-	};
+	/**
+	 * Updates the value and the message. A counter will be appended to the title.
+	 * @param {number} value - Updated progress bar value.
+	 * @param {string} [message] - Updated message; if ommitted, the previous message is cleared.
+	 * @example
+	 * progress.update(25, 'Progress bar value is 25.');
+	 */
 	this.update = function (value, message) {
 		pb.bar.value = value;
-		if (maxWidth) {
+		if (pb.msg) {
 			pb.msg.visible = !!message;
 			if (message) pb.msg.text = message;
 		}
 		pb.text = title + ' \u2013 ' + value + '/' + pb.bar.maxvalue;
 		pb.show(); pb.update();
 	};
-	this.hide = function () { pb.hide(); };
+	/**
+	 * Closes the progress bar.
+	 */
 	this.close = function () { pb.close(); };
 }

@@ -2,14 +2,14 @@
 	GetBounds v5.1.2 (2021-09-24)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Returns an object containing the geometric bounds of the given page,
-	its parent spread, and miscellaneous page boxes:
+	Returns an object containing the geometric bounds of the given page, its parent spread, and miscellaneous
+	page boxes, using the current measurement units:
 
 	{
 		page: {
 			size:    [ top, left, bottom, right ],
 			margins: [ t, l, b, r ],
-			visible: [ t, l, b, r ] or undefined[^1],
+			visible: [ t, l, b, r ] or undefined,
 			bleed:   [ t, l, b, r ]
 		},
 		spread: {
@@ -20,7 +20,23 @@
 		}
 	};
 
-	[^1]: Visible area is an area marked by one or more frames named '<visible area>'.
+	Note: 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`.
+
+	Examples:
+
+	var pageSize = getBounds(activePage).page.size;           // [ 0,0,297,210 ]
+	var spreadMargins = getBounds(activePage).spread.margins; // [ 20,20,277,400 ] (20 mm margins)
+
+	var BOUNDS = getBounds(activePage);
+	BOUNDS.page.size;      // [ 0,0,297,210 ]
+	BOUNDS.spread.margins; // [ 20,20,277,400 ] (20 mm margins)
+
+	var BOUNDS = getBounds(page);
+	var b = {
+		size:   BOUNDS[SCOPE].size,
+		target: BOUNDS[SCOPE][TARGET],
+		vis:    BOUNDS[SCOPE].visible
+	};
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -43,8 +59,6 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-
-/* eslint-disable no-unused-vars */
 
 function getBounds(page) {
 	var PSO = PageSideOptions;

@@ -1,9 +1,9 @@
 /**
  * Replaces a text with another. Unicode characters must be escaped.
- * @param {String} findWhat - Text to be replaced
- * @param {String} changeTo - New text
- * @param {Boolean} [wholeWord=true] - Match whole words
- * @returns {Boolean} - True if a replacement is made, false if not
+ * @param {string} findWhat - Text to be replaced.
+ * @param {string} changeTo - New text.
+ * @param {boolean} [wholeWord=true] - Match whole words. (Optional.)
+ * @returns {boolean} - Returns `true` if a replacement is made, `false` if not.
  */
 function replaceText(findWhat, changeTo, wholeWord) {
 	wholeWord = (wholeWord === undefined) ? true : wholeWord;

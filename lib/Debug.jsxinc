@@ -1,27 +1,24 @@
-/*
-	Debug 1.0.1 (2021-09-24)
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
-
-	Appends a debugging line to a file saved on the desktop (e.g. script-name.log):
-
-	2021-09-11 12:25:29.611 Type [Context]: Message part1 | part2 | part3
-	----------------------- ---- ---------- -----------------------------
-	Arguments:
-	1. <Type> (optional):
-		- `+`: appends the message to the previous line;
-		- `I|W|E|F|M|N|T| `: `[INFO]`|`[WARN]`|`[ERR]`|`[FAIL]`|`[MARK]`|`[NOTE]`|`[TODO]`|`      `.
-	2. <Context> (optional): a string enclosed in `< >`.
-	3. <Message>: a comma-separated list of message parts (`part1`, `part2`, `part3`, ...).
-
-	If no arguments are given, it just appends an empty line.
-
-	Released under MIT License:
-	https://choosealicense.com/licenses/mit/
-*/
-
-/* eslint-disable no-unused-vars, max-statements-per-line */
-
-function dbg(/*?t,*/ /*?<context>,*/ /*message*/) {
+/**
+ * Appends a debugging line to a file saved on the desktop with the name of the running script
+ * (e.g. `active-script.log`). If no arguments are given, it just appends an empty line.
+ * @version 1.0.1 (2021-09-24)
+ * @author Paul Chiorean <jpeg@basement.ro>
+ * @license MIT
+ * @param {string} [type] - A single character string: <ul> <li>`+` appends `MESSAGE` to the previous line;</li>
+ * <li>`I`, `W`, `E`, `F`, `M`, `N`, `T` or space outputs `[INFO]`, `[WARN]`, `[ERR]`, `[FAIL]`, `[MARK]`, `[NOTE]`,
+ * `[TODO]` or spacer.</li> </ul> (Optional.)
+ * @param {string} [context] - A string enclosed in `<` `>`. (Optional.)
+ * @param {string} message - A comma-separated list of message parts (`part1`, `part2`, `part3`, ...).
+ * @example
+ * dbg('i', '<ParseIF>', 'Open data file: \'' + decodeURI(dataFile.name) + '\'');
+ * // <snip>
+ * if (errors.length === 0) dbg('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
+ * // Output:
+ * // 2021-07-31 18:48:02.609 [INFO] ParseIF :: Open data file: 'test.txt' | Records: 14 | Layouts: 0
+ * // └─────────────────────┘ └────┘ └────────┘ └────────────────────────┘   └─────────┘   └────────┘
+ * //        typestamp         type   context         message part1             part2         part3
+ */
+function dbg(/* ?type, ?context, message */) {
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	var debugFile = File(Folder.desktop + '/' + script.name.slice(0, script.name.lastIndexOf('.')) + '.log');
 	var t = new Date();

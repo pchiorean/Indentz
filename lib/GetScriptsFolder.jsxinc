@@ -1,15 +1,12 @@
 /**
- * Detects the user scripts folder.
- * @function scriptsFolder
- * @returns {Folder|void} - Found folder object or undefined
+ * Detects the user scripts folder searching for the 'Scripts Panel' string in `$.includePath`,
+ * returning a string with the path followed by '/', or `undefined`.
+ * @returns {string|void} - The path to the found folder or `undefined`.
  * @example
- * // @includepath scriptsFolder;
- * // @include 'path/to/script.jsxinc';
- * @example
- * $.evalFile(File(scriptsFolder + 'path/to/script.jsxinc'));
+ * $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
  */
-var scriptsFolder = (function () {
+function getScriptsFolder() {
 	for (var i = 0, f = $.includePath.split(';'); i < f.length; i++)
 		if (/Scripts Panel$/.test(localize(f[i]))) return (f[i] + '/');
 	return undefined;
-}());
+}

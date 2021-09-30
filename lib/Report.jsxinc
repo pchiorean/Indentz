@@ -5,34 +5,35 @@
  * @version 2.0 (2021-09-12)
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
- * @param {String|String[]} message - Message to be displayed (string or array)
- * @param {String} title - Dialog title
- * @param {Boolean} [showFilter] - Shows a filtering field; wildcards: '?' (any char), space and '*' (AND), '|' (OR)
- * @param {Boolean} [showCompact] - Sorts message and removes duplicates
+ * @param {string|string[]} message - Message to be displayed. Can be a string or a strings array.
+ * @param {string} [title] - Dialog title. (Optional.)
+ * @param {boolean} [showFilter=false] - If `true` it shows a filtering field; wildcards: `?` (any character),
+ * space and `*` (AND), `|` (OR). (Optional.)
+ * @param {boolean} [showCompact=false] - If `true` duplicates are removed and the message is sorted. (Optional.)
  */
 function report(message, title, showFilter, showCompact) {
 	var search, list;
-	var w = new Window('dialog', title);
+	var w = new Window('dialog', title || '');
 	// Convert message to array
 	if (message.constructor.name !== 'Array') message = message.split(/\r|\n/g);
-	if (showCompact && message.length > 1) { // Sort and remove duplicates
+	if (showCompact && message.length > 1) {
+		// Sort and remove duplicates
 		message = message.sort();
 		for (var i = 1, l = message[0]; i < message.length; l = message[i], i++) {
 			if (l === message[i]) { message.splice(i, 1); i--; }
 			if (message[i] === '') { message.splice(i, 1); i--; }
 		}
 	}
-	if (showFilter && message.length > 1) { // Add a filtering field
+	if (showFilter && message.length > 1) {
+		// Add a filtering field
 		search = w.add('edittext { characters: 40, helpTip: "Wildcards: \'?\' (any character), space and \'*\' (AND), \'|\' (OR)" }');
 		search.onChanging = function () {
 			var str, line, i, n;
 			var result = [];
-			if (this.text === '') {
-				list.text = message.join('\n'); w.text = title; return;
-			}
-			str = this.text.replace(/[.[\]{+}]/g, '\\$&'); // Pass through '^*()|?'
-			str = str.replace(/\?/g, '.'); // '?' -> any character
-			if (/[ *]/g.test(str)) str = '(' + str.replace(/ +|\*/g, ').*(') + ')'; // space or '*' -> AND
+			if (this.text === '') { list.text = message.join('\n'); w.text = title; return; }
+			str = this.text.replace(/[.[\]{+}]/g, '\\$&');                          // Pass through '^*()|?'
+			str = str.replace(/\?/g, '.');                                          // '?' -> Any character
+			if (/[ *]/g.test(str)) str = '(' + str.replace(/ +|\*/g, ').*(') + ')'; // Space or '*' -> AND
 			str = RegExp(str, 'gi');
 			for (i = 0, n = message.length; i < n; i++) {
 				line = message[i].toString().replace(/^\s+?/g, '');
@@ -46,7 +47,7 @@ function report(message, title, showFilter, showCompact) {
 	list.characters = (function () {
 		var width = 50;
 		for (var i = 0, n = message.length; i < n; width = Math.max(width, message[i].toString().length), i++);
-		return width;
+		return width - 10;
 	}());
 	list.minimumSize.width  = 600; list.maximumSize.width  = 1024;
 	list.minimumSize.height = 100; list.maximumSize.height = 1024;
