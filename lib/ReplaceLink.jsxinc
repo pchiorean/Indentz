@@ -1,13 +1,14 @@
 /**
  * Replaces a link or a list of links with a new one. A selection limits the scope.
- * @param {(String|String[])} oldLinks - Link name, or a list of link names to be replaced
- * @param {String} newLink - New link name (for same folder), or full link path
- * @returns {Boolean} - True if a replacement is made, false if not
- * @example replaceLinks('oldLink', 'newLink');
- * @example replaceLinks('oldLink', 'full/link/path/to/newLink');
- * @example replaceLinks([ 'oldLink1', 'oldLink2', 'oldLink3' ], 'newLink');
+ * @param {(string|string[])} oldLinks - A link name, or an array of link names to be replaced.
+ * @param {string} newLink - New link name (if same folder), or full link path.
+ * @returns {boolean} - Returns `true` if a replacement is made, `false` if not.
+ * @example
+ * replaceLink('link1.jpg', 'link1.psd'); // Both links are in the same folder
+ * replaceLink('link1.jpg', 'path/to/link1.psd');
+ * replaceLink([ 'link1.jpg', 'link1.png' ], 'link1.psd');
  */
-function replaceLinks(oldLinks, newLink) {
+function replaceLink(oldLinks, newLink) {
 	var link;
 	var links = doc.links.everyItem().getElements();
 	var selection = doc.selection;
