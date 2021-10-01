@@ -328,7 +328,7 @@ View | |
 Miscellaneous | | | | | |
 :- | -: | :- | -: | :- | -:
 **Clip.jsx** | Num* | **QR.jsx** | F9 | **HW.jsx** | ⇧F10
-**ClipUndo.jsx** | ⌃Num* | **QRBatch.jsx** | ⇧F9
+**ClipUndo.jsx** | ⌃Num* | **QRBatch.jsx** | ⇧F9 | **ShowProperties.jsx** | F1
 
 </details>
 
@@ -346,9 +346,11 @@ Miscellaneous | | | | | |
 
 Sunt un graphic designer, nu un programator, și am creat acest proiect pentru a‑mi simplifica niște operații monotone, așa că treceți cu vederea dacă unele lucruri nu sunt state‑of‑the‑art. Feedback sau sugestii sunt binevenite.
 
+Am folosit în cea mai mare parte InDesign ExtendScript API 8.0 (compatibil cu InDesign CS6); nu am verificat scripturile în versiuni mai vechi de CC 2020. De asemenea, le-am testat doar ocazional pe Windows.
+
 Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API de [Theunis de Jong](http://jongware.mit.edu) și [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), postări pe bloguri și forumuri, tutoriale și scripturi de [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) și mulți alții.
 
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 28 septembrie 2021
+README-ro.md • 1 octombrie 2021

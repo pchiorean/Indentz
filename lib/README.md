@@ -1,24 +1,24 @@
 ## Helper functions
 
-#### dbg([type], [context], message)
+### dbg([type], [context], message)
+
+| Parameters | Type                 | Description |
+| ---------- | -------------------- | ----------- |
+| [type]     | `string`             | A single character string: <ul> <li>`+` appends `MESSAGE` to the previous line;</li> <li>`I`, `W`, `E`, `F`, `M`, `N`, `T` or space outputs `[INFO]`, `[WARN]`, `[ERR]`, `[FAIL]`, `[MARK]`, `[NOTE]`, `[TODO]` or spacer. (Looks great with [Pragmata Pro Liga](https://fsd.it/shop/fonts/pragmatapro/).)</li> </ul> *(Optional.)* |
+| [context]  | `string`             | A string enclosed in `<` `>`. *(Optional.)* |
+| message    | `string`             | A comma-separated list of message parts (`part1`, `part2`, `part3`, ...). |
 
 Appends a debugging line to a file saved on the desktop with the name of the running script (e.g. `active-script.log`).
 
 ```
-2021-07-31 18:48:02.609 [INFO] ParseIF :: Open data file: "test.txt" | Records: 14 | Layouts: 0
+2021-07-31 18:48:02.609 [INFO] ParseIF :: Open data file: 'test.txt' | Records: 14 | Layouts: 0
 └─────────────────────┘ └────┘ └────────┘ └────────────────────────┘   └─────────┘   └────────┘
        typestamp         type   context         message part1             part2         part3
 ```
 
-| Parameters | Type                 | Description |
-| ---------- | -------------------- | ----------- |
-| [type]     | `string`             | A single character string: <ul> <li>`+` appends `MESSAGE` to the previous line;</li> <li>`I`, `W`, `E`, `F`, `M`, `N`, `T` or space outputs `[INFO]`, `[WARN]`, `[ERR]`, `[FAIL]`, `[MARK]`, `[NOTE]`, `[TODO]` or spacer. (Looks great with [Pragmata Pro Liga](https://fsd.it/shop/fonts/pragmatapro/).)</li> </ul> (Optional.) |
-| [context]  | `string`             | A string enclosed in `<` `>`. (Optional.) |
-| message    | `string`             | A comma-separated list of message parts (`part1`, `part2`, `part3`, ...). |
-
 If no arguments are given, it just appends an empty line.
 
-###### Example
+##### Example
 
 ```js
 dbg('i', '<ParseIF>', 'Open data file: \'' + decodeURI(dataFile.name) + '\'');
@@ -30,19 +30,19 @@ if (errors.length === 0) dbg('+', 'Records: ' + data.length, 'Layouts: ' + layou
 
 ---
 
-#### fitTo(scope, target, [forced])
+### fitTo(scope, target, [forced])
 
-Reframes the selected objects to the page/spread's size/margins/visible area/bleed. If an object is larger than the target, it will be reduced; if it is smaller but inside a 1% 'snap' area, it will be enlarged. Rectangular frames are simply reframed; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is reframed.
+| Parameters | Type      | Default | Description                                                               |
+| ---------- | --------- | ------- | ------------------------------------------------------------------------- |
+| scope      | `string`  |         | `page` or `spread`.                                                       |
+| target     | `string`  |         | `size`, `margins`, `visible` or `bleed`.                                  |
+| [forced]   | `boolean` | `false` | When `true` it just reframes the object without any checks. *(Optional.)* |
 
-| Parameters | Type      | Default | Description                                                             |
-| ---------- | --------- | ------- | ----------------------------------------------------------------------- |
-| scope      | `string`  |         | `page` or `spread`.                                                     |
-| target     | `string`  |         | `size`, `margins`, `visible` or `bleed`.                                |
-| [forced]   | `boolean` | `false` | When `true` it just reframes the object without any checks. (Optional.) |
+Reframes the selected objects to the page/spread's (`scope`) size/margins/visible area/bleed (`target`). If an object is larger than the target, it will be reduced; if it is smaller but inside a 1% 'snap' area, it will be enlarged. Rectangular frames are simply reframed; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is reframed.
 
-**Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`.
+**Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area` (see [VisibleArea](../docs/README.md#export)).
 
-###### Example
+##### Example
 
 ```js
 fitTo('page', 'bleed'); // Fits the selected objects to the page bleed
@@ -60,7 +60,7 @@ app.doScript(
 
 ---
 
-#### getBounds(page) ⇒ `object`
+### getBounds(page) ⇒ `object`
 
 | Parameters | Type     | Description      |
 | ---------- | -------- | ---------------- |
@@ -87,51 +87,32 @@ Returns an object containing the geometric bounds of `page`, its parent spread, 
 
 **Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`.
 
-###### Example
+##### Example
 
 ```js
-var pageSize = getBounds(activePage).page.size;           // [ 0,0,297,210 ]
-var spreadMargins = getBounds(activePage).spread.margins; // [ 20,20,277,400 ] (20 mm margins)
+var pageSize      = getBounds(page).page.size;      // [ 0,0,297,210 ]
+var spreadMargins = getBounds(page).spread.margins; // [ 20,20,277,400 ] (20 mm margins)
 ```
 
 or
 
 ```js
-var BOUNDS = getBounds(activePage);
+var bounds = getBounds(page);
+var scope  = 'spread';
+var target = 'margins';
 
-BOUNDS.page.size;      // [ 0,0,297,210 ]
-BOUNDS.spread.margins; // [ 20,20,277,400 ] (20 mm margins)
-```
-
-or
-
-```js
-var BOUNDS = getBounds(page);
-var b = {
-    size:   BOUNDS[SCOPE].size,
-    target: BOUNDS[SCOPE][TARGET],
-    vis:    BOUNDS[SCOPE].visible
-};
+bounds.page.size;      // [ 0,0,297,210 ]
+bounds.spread.margins; // [ 20,20,277,400 ]
+bounds[scope][target]; // [ 20,20,277,400 ]
 ```
 
 ---
 
-#### getDataFile(filename, [skipLocal]) ⇒ `File` | `undefined`
-
-Returns the first occurrence of `filename`, first searching for a local one (in the current folder or the parent folder of the active document), then a default one (on the desktop or next to the running script). It also matches files starting with `_`.
-
-| Parameters  | Type      | Default | Description                               |
-| ----------- | --------- | ------- | ----------------------------------------- |
-| filename    | `string`  |         | The file name.                            |
-| [skipLocal] | `boolean` | false   | If `true`, don't search for a local file. |
-
----
-
-#### getScriptsFolder() ⇒ `'path/to/folder/'` | `undefined`
+### getScriptsFolder() ⇒ `'path/to/folder/'` | `undefined`
 
 Detects the user scripts folder searching for the 'Scripts Panel' string in `$.includePath`, returning a string with the path followed by '/', or `undefined`.
 
-###### Example
+##### Example
 
 ```js
 $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
@@ -139,56 +120,78 @@ $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
 
 ---
 
-#### isIn(searchValue, array, [caseSensitive]) ⇒ `Boolean`
-
-Matches the string `searchValue` against elements of an `array`, using wildcards and case sensitivity. Returns `true` for match, `false` for no match.
+### isIn(searchValue, array, [caseSensitive]) ⇒ `Boolean`
 
 | Parameters      | Type      | Default | Description                                                                         |
 | --------------- | --------- | ------- | ----------------------------------------------------------------------------------- |
 | searchValue     | `string`  |         | String to be matched.                                                               |
 | array           | `array`   |         | An array of strings; wildcards: `*` (zero or more characters), `?` (any character). |
-| [caseSensitive] | `boolean` | `false` | If `true` the search is case sensitive. (Optional.)                                 |
+| [caseSensitive] | `boolean` | `false` | If `true` the search is case sensitive. *(Optional.)*                               |
 
-###### Example
+Matches the string `searchValue` against elements of `array`, using wildcards and case sensitivity. Returns `true` for match, `false` for no match.
+
+##### Example
 
 ```js
 var searchValue = 'codes';
 var array = [ 'bar*code*', 'code*', 'EAN*' ];
-isIn(searchValue, array) // Matches 2nd array element
+isIn(searchValue, array) // True: matches 2nd array element
 ```
 
 ---
 
-#### parseInfo(dataFile) ⇒ `object`
+### getDataFile(dataFile, [skipLocal]) ⇒ `File` | `undefined`
+
+| Parameters  | Type      | Default | Description                         |
+| ----------- | --------- | ------- | ----------------------------------- |
+| dataFile    | `string`  |         | A tab-separated-values file (name). |
+| [skipLocal] | `boolean` | false   | If `true`, don't search locally.    |
+
+Returns the first occurrence of `dataFile`, first searching for a local one (in the current folder or the parent folder of the active document), then a default one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
+
+- Local file:
+
+  1. `current/folder/_dataFile` or `dataFile`
+  2. `current/folder/../_dataFile` or `dataFile`
+
+- Default file:
+
+  3. `~/Desktop/dataFile`
+  4. `script/folder/dataFile`
+  5. `script/folder/../dataFile`
+
+---
+
+### parseDataFile(dataFile, [flgR]) ⇒ `object`
+
+| Parameters | Type      | Default | Description                                     |
+| ---------- | --------- | ------- | ----------------------------------------------- |
+| dataFile   | `File`    |         | A tab-separated-values file (object).           |
+| [flgR]     | `boolean` | `false` | Internal flag for recursive calls (`@include`). |
 
 Reads a TSV (tab-separated-values) file, returning an object containing found records and errors:
 
 ```js
 {
-    records: [{}],
-    errors:  []
+    records: [ {}, {}, ... ],
+    errors:  [ '', '', ... ]
 };
 ```
 
-| Parameters | Type   | Description                         |
-| ---------- | ------ | ----------------------------------- |
-| dataFile   | `File` | Tab-separated-values file (object). |
+Note:
+- ignores blank lines and those prefixed with `#`;
+- includes records from `@path/to/include.txt` or `@default` data file (see `getDataFile()`).
 
-It ignores blank lines and those prefixed with `#`.
-
-`@path/to/include.txt` includes records from `include.txt`; `@default` includes the default data file (see `getDataFile()`).
-
-###### Example
+##### Example
 
 ```js
 // @include 'GetDataFile.jsxinc';
 // @include 'Report.jsxinc';
 
-var dataFile = getDataFile('data.txt');
-if (!dataFile) { alert('No data file found.'); exit(); }
-var data = parseInfo(dataFile);
-// <snip>
-if (data.errors.length > 0) { report(data.errors, decodeURI(dataFile.getRelativeURI(doc.filePath))); exit(); }
+var file, data;
+if (!(file = getDataFile('data.txt'))) { alert('No data file found.'); exit(); }
+data = parseDataFile(file);
+if (data.errors.length > 0) { report(data.errors, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 if (data.records.length === 0) exit();
 ```
 
@@ -199,10 +202,10 @@ Name        Color         Visible    Printable
 dielines    Magenta       no         yes
 # guides    Grid Green    yes        no
 artwork     Light Blue    yes        yes
-bg          Red           yes        yes
+            Red           yes        yes
 ```
 
-after validation it will return this object
+it will return this object:
 
 ```js
 {
@@ -218,22 +221,17 @@ after validation it will return this object
             color:       UIColors.LIGHT_BLUE
             isVisible:   true
             isPrintable: true
-        },
-        {
-            name:        'bg'
-            color:       UIColors.RED
-            isVisible:   true
-            isPrintable: true
         }
     ],
-    errors: []
+    errors: [ 'Line 5: Missing layer name.' ]
 }
 ```
+
+Of course, the provided function is just a stub, data processing must be customized.
+
 ---
 
-#### ProgressBar(title, maxValue, [maxWidth])
-
-Creates a simple progress bar, setting it's width to accomodate a given message length. Initialized with `new ProgressBar(title, maxValue, [maxWidth])`, updated with `update(value, [message])`, closed with `close()`.
+### ProgressBar(title, maxValue, [maxWidth])
 
 | Parameters | Type       | Description                                                                        |
 | ---------- | ---------- | ---------------------------------------------------------------------------------- |
@@ -245,7 +243,9 @@ Creates a simple progress bar, setting it's width to accomodate a given message 
 | update     | `function` | `update(value, [message])`: Updates the value and the message.                     |
 | close      | `function` | `close()`: Closes the progress bar.                                                |
 
-###### Example
+Creates a simple progress bar, setting it's width to accomodate a given message length. Initialized with `new ProgressBar(title, maxValue, [maxWidth])`, updated with `update(value, [message])`, closed with `close()`.
+
+##### Example
 
 ```js
 var progress = new ProgressBar('Progress bar demo', 100, 50);
@@ -263,16 +263,16 @@ progress.update(25);
 
 ---
 
-#### replaceLink(oldLinks, newLink) ⇒ `Boolean`
-
-Replaces a link or a list of links with a new one. A selection limits the scope. Returns `true` if a replacement is made, `false` if not.
+### replaceLink(oldLinks, newLink) ⇒ `Boolean`
 
 | Parameters | Type                   | Description                                            |
 | ---------- | ---------------------- | ------------------------------------------------------ |
 | oldLinks   | `string` \| `string[]` | A link name, or an array of link names to be replaced. |
 | newLink    | `string`               | New link name (if same folder), or full link path.     |
 
-###### Example
+Replaces a link or a list of links with a different one. A selection limits the scope. Returns `true` if a replacement is made, `false` if not.
+
+##### Example
 
 ```js
 replaceLink('link1.jpg', 'link1.psd'); // Both links are in the same folder
@@ -282,9 +282,7 @@ replaceLink([ 'link1.jpg', 'link1.png' ], 'link1.psd');
 
 ---
 
-#### replaceSwatch(oldNames, newName, [newValues])
-
-Replaces a swatch or a list of swatches with a different one. The new swatch is created only if values (CMYK) are provided and it doesn't already exist.
+### replaceSwatch(oldNames, newName, [newValues]) ⇒ `Boolean`
 
 | Parameters  | Type                   | Description                                                |
 | ----------- | ---------------------- | ---------------------------------------------------------- |
@@ -292,7 +290,9 @@ Replaces a swatch or a list of swatches with a different one. The new swatch is 
 | newName     | `string`               | New swatch name.                                           |
 | [newValues] | `number[]`             | Array of 4 values in 0-100 range (CMYK).                   |
 
-###### Example
+Replaces a swatch or a list of swatches with a different one. The new swatch is created only if values (CMYK) are provided and it doesn't already exist. Returns `true` if a replacement is made, `false` if not.
+
+##### Example
 
 ```js
 replaceSwatch('Red', 'Blue'); // 'Blue' it's supposed to exist
@@ -301,17 +301,17 @@ replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 ```
 ---
 
-#### replaceText(findWhat, changeTo, [wholeWord]) ⇒ `Boolean`
+### replaceText(findWhat, changeTo, [wholeWord]) ⇒ `Boolean`
+
+| Parameters  | Type      | Default | Description                      |
+| ----------- | --------- | ------- | -------------------------------- |
+| findWhat    | `string`  |         | Text to be replaced.             |
+| changeTo    | `string`  |         | New text.                        |
+| [wholeWord] | `boolean` | `true`  | Match whole words. *(Optional.)* |
 
 Replaces a text with another. Unicode characters must be escaped. Returns `true` if a replacement is made, `false` if not.
 
-| Parameters  | Type      | Default | Description                    |
-| ----------- | --------- | ------- | ------------------------------ |
-| findWhat    | `string`  |         | Text to be replaced.           |
-| changeTo    | `string`  |         | New text.                      |
-| [wholeWord] | `boolean` | `true`  | Match whole words. (Optional.) |
-
-###### Example
+##### Example
 
 ```js
 replaceText('11.10.', '13.12.2021');
@@ -320,19 +320,19 @@ replaceText('\\\\', '\u000A', false); // Replace '\\' with Forced Line Break
 
 ---
 
-#### report(message, title, [showFilter], [showCompact])
-
-Displays a message in a scrollable list with optional filtering and/or compact mode.
-Inspired by [this](http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250) snippet by Peter Kahrel.
+### report(message, title, [showFilter], [showCompact])
 
 | Parameters    | Type                   | Default | Description |
 | ------------- | ---------------------- | ------- | ----------- |
 | message       | `string` \| `string[]` |         | Message to be displayed. Can be a string or a strings array. |
-| [title]       | `string`               | `''`    | Dialog title. (Optional.) |
-| [showFilter]  | `boolean`              | `false` | If `true` it shows a filtering field; wildcards: `?` (any character), space and `*` (AND), `|` (OR). (Optional.) |
-| [showCompact] | `boolean`              | `false` | If `true` duplicates are removed and the message is sorted. (Optional.) |
+| [title]       | `string`               | `''`    | Dialog title. *(Optional.)* |
+| [showFilter]  | `boolean`              | `false` | If `true` it shows a filtering field; wildcards: `?` (any character), space and `*` (AND), `|` (OR). *(Optional.)* |
+| [showCompact] | `boolean`              | `false` | If `true` duplicates are removed and the message is sorted. *(Optional.)* |
 
-###### Example
+Displays a message in a scrollable list with optional filtering and/or compact mode.
+Inspired by [this](http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250) snippet by Peter Kahrel.
+
+##### Example
 
 ```js
 report(message, 'Sample alert');

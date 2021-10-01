@@ -328,7 +328,7 @@ View | |
 Miscellaneous | | | | | |
 :- | -: | :- | -: | :- | -:
 **Clip.jsx** | Num* | **QR.jsx** | F9 | **HW.jsx** | ⇧F10
-**ClipUndo.jsx** | ⌃Num* | **QRBatch.jsx** | ⇧F9
+**ClipUndo.jsx** | ⌃Num* | **QRBatch.jsx** | ⇧F9 | **ShowProperties.jsx** | F1
 
 </details>
 
@@ -346,9 +346,11 @@ Miscellaneous | | | | | |
 
 I'm a graphic designer, not a programmer, and I created this project to simplify some monotonous tasks, so please bear with me if some things are not state-of-the-art. Feedback or suggestions are welcome.
 
+I mostly used InDesign ExtendScript API 8.0 (compatible with InDesign CS6); I haven't checked the scripts in versions older than CC 2020. Also, I only tested them occasionally on Windows.
+
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • September 28, 2021
+README.md • October 1, 2021
