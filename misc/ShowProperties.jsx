@@ -1,5 +1,5 @@
 /*
-	Show properties 2.1.7 (2021-09-30)
+	Show properties 2.2 (2021-10-01)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Shows properties and methods of the selected object/active document/the application.
@@ -33,12 +33,12 @@ for (var i = 0, n = methods.length; i < n; i++) {
 }
 report(propsList, target.reflect.name + ' | ' + target.toSource(), true);
 
-function Inspect(obj, prefix, level, maxLevel) {
+function Inspect(obj, prefix, level) {
 	var val, str;
 	var props = obj.reflect.properties.sort();
-	level = level || 1;
-	maxLevel = maxLevel || 3;
 	prefix = prefix || '';
+	level = level || 1;
+	maxLevel = 3;
 
 	if (level > maxLevel) return;
 	for (var i = 0, n = props.length; i < n; i++) {
@@ -70,7 +70,7 @@ function Inspect(obj, prefix, level, maxLevel) {
 		propsList.push((level === 1 && propsList.length > 0 ? '\n' : '') + prefix + props[i] + ' = ' + str);
 		if (val != null && str !== 'N/A' && val.reflect.properties.length > 1) {
 			if (/^parent.*/gi.test(props[i].toString())) continue;
-			Inspect(val, prefix + props[i] + '.', level + 1, maxLevel);
+			Inspect(val, prefix + props[i] + '.', level + 1);
 		}
 	}
 }
