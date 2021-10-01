@@ -2,21 +2,21 @@
 
 /**
  * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
- * It ignores blank lines and those prefixed with `#`. `@path/to/include.txt` includes records
- * from `include.txt`; `@default` includes the default data file (see `getDataFile()`).
- * @param {File} dataFile - Tab-separated-values file (object).
+ * Blank lines and those prefixed with `#` are ignored. Includes records from `@path/to/include.txt`
+ * or `@default` data file (see `getDataFile()`).
+ * @param {File} dataFile - A tab-separated-values file (object).
+ * @param {boolean} flgR - Internal flag for recursive calls (`@include`).
  * @returns {{records: array, errors: array}}
  * @example
  * // @include 'GetDataFile.jsxinc';
  * // @include 'Report.jsxinc';
- * var dataFile = getDataFile('data.txt');
- * if (!dataFile) { alert('No data file found.'); exit(); }
- * var data = parseInfo(dataFile);
- * // <snip>
- * if (data.errors.length > 0) { report(data.errors, decodeURI(dataFile.getRelativeURI(doc.filePath))); exit(); }
+ * var file, data;
+ * if (!(file = getDataFile('data.txt'))) { alert('No data file found.'); exit(); }
+ * data = parseDataFile(file);
+ * if (data.errors.length > 0) { report(data.errors, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
  * if (data.records.length === 0) exit();
  */
-function parseInfo(dataFile) {
+function parseDataFile(dataFile, flgR) {
 	var infoLine, include, includeFile;
 	var buffer = [];
 	var records = [];
@@ -29,8 +29,7 @@ function parseInfo(dataFile) {
 		if (infoLine.replace(/^\s+|\s+$/g, '') === '') continue; // Ignore blank lines
 		if (infoLine.slice(0,1) === '\u0023') continue;          // Ignore lines prefixed with '#'
 		infoLine = infoLine.split(/ *\t */);
-		// Header
-		if (!flgHeader) { flgHeader = true; continue; }
+		if (!flgHeader) { flgHeader = true; continue; } // Header
 		// '@include'
 		if (infoLine[0].slice(0,1) === '\u0040') { // '@'
 			include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
@@ -39,21 +38,23 @@ function parseInfo(dataFile) {
 				File(include);                                                  // Include 'path/to/file.txt'
 			if (includeFile && includeFile.exists) {
 				if (includeFile.fullName === dataFile.fullName) continue;       // Skip self
-				buffer = parseInfo(includeFile);
+				buffer = parseDataFile(includeFile, true);
 				records = records.concat(buffer.records);
+				errors = errors.concat(buffer.errors);
 			}
-		} else {
-			// Data validation/defaults
-			if (!infoLine[0]) errors.push('Line ' + line + ': Some error');
-			// ...
-			if (errors.length === 0) {
-				records.push({
-					key1: infoLine[0]
-					// ...
-				});
-			}
-		}
+		} else { validateRecord(); }
 	}
 	dataFile.close(); infoLine = '';
 	return { records: records, errors: errors };
+
+	function validateRecord() {
+		if (!infoLine[0]) errors.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line + ': Some error');
+		// ...
+		if (errors.length === 0) {
+			records.push({
+				key1: infoLine[0]
+				// ...
+			});
+		}
+	}
 }

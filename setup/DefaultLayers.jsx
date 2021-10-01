@@ -1,5 +1,5 @@
 /*
-	Default layers v3.1.9 (2021-09-30)
+	Default layers v3.2 (2021-10-01)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.txt':
@@ -17,7 +17,7 @@
 	   (case insensitive; '*' and '?' wildcards accepted)
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
-	Blank lines and those prefixed with '#' are ignored; '@file.txt' includes records from 'file.txt'.
+	Blank lines and those prefixed with '#' are ignored; includes records from '@path/to/include.txt'.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -51,12 +51,11 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Default layers');
 
 function main() {
-	var newLayer, tmpLayer, i, n;
+	var file, data, newLayer, tmpLayer, i, n;
 	var oldActiveLayer = doc.activeLayer; // Save active layer
-	var dataFile = getDataFile('layers.txt');
-	if (!dataFile) { alert('No data file found.'); exit(); }
-	var data = parseInfo(dataFile);
-	if (data.errors.length > 0) { report(data.errors, decodeURI(dataFile.getRelativeURI(doc.filePath))); exit(); }
+	if (!(file = getDataFile('layers.txt'))) { alert('No data file found.'); exit(); }
+	data = parseDataFile(file);
+	if (data.errors.length > 0) { report(data.errors, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length === 0) exit();
 
 	doc.layers.everyItem().properties = { locked: false }; // Unlock existing layers
@@ -119,42 +118,51 @@ function main() {
 		}
 		return targetLayer;
 	}
-}
 
-/**
- * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
- * It ignores blank lines and those prefixed with `#`. `@path/to/include.txt` includes records
- * from `include.txt`; `@default` includes the default data file (see `getDataFile()`).
- * @param {File} dataFile - Tab-separated-values file (object).
- * @returns {{records: array, errors: array}}
- */
-function parseInfo(dataFile) {
-	var infoLine, include, includeFile;
-	var buffer = [];
-	var records = [];
-	var errors = [];
-	var flgHeader = false;
-	var line = 0;
-	dataFile.open('r');
-	while (!dataFile.eof) {
-		infoLine = dataFile.readln(); line++;
-		if (infoLine.replace(/^\s+|\s+$/g, '') === '') continue; // Ignore blank lines
-		if (infoLine.slice(0,1) === '\u0023') continue;          // Ignore lines prefixed with '#'
-		infoLine = infoLine.split(/ *\t */);
-		if (!flgHeader) { flgHeader = true; continue; } // Header
-		// '@include'
-		if (infoLine[0].slice(0,1) === '\u0040') { // '@'
-			include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
-			includeFile = /^default(s?)$/i.test(include) ?                      // '@default' ?
-				getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Include default data file :
-				File(include);                                                  // Include 'path/to/file.txt'
-			if (includeFile && includeFile.exists) {
-				if (includeFile.fullName === dataFile.fullName) continue;       // Skip self
-				buffer = parseInfo(includeFile);
-				records = records.concat(buffer.records);
+	/**
+	 * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
+	 * Blank lines and those prefixed with `#` are ignored. Includes records from `@path/to/include.txt`
+	 * or `@default` data file (see `getDataFile()`).
+	 * @param {File} dataFile - A tab-separated-values file (object).
+	 * @param {boolean} flgR - Flag for recursive call (`@include`).
+	 * @returns {{records: array, errors: array}}
+	 */
+	function parseDataFile(dataFile, flgR) {
+		var infoLine, include, includeFile;
+		var buffer = [];
+		var records = [];
+		var errors = [];
+		var flgHeader = false;
+		var line = 0;
+		dataFile.open('r');
+		while (!dataFile.eof) {
+			infoLine = dataFile.readln(); line++;
+			if (infoLine.replace(/^\s+|\s+$/g, '') === '') continue; // Ignore blank lines
+			if (infoLine.slice(0,1) === '\u0023') continue;          // Ignore lines prefixed with '#'
+			infoLine = infoLine.split(/ *\t */);
+			if (!flgHeader) { flgHeader = true; continue; } // Header
+			// '@include'
+			if (infoLine[0].slice(0,1) === '\u0040') { // '@'
+				include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
+				includeFile = /^default(s?)$/i.test(include) ?                      // '@default' ?
+					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Include default data file :
+					File(include);                                                  // Include 'path/to/file.txt'
+				if (includeFile && includeFile.exists) {
+					if (includeFile.fullName === dataFile.fullName) continue;       // Skip self
+					buffer = parseDataFile(includeFile, true);
+					records = records.concat(buffer.records);
+					errors = errors.concat(buffer.errors);
+				}
+			} else { validateRecord(); }
+		}
+		dataFile.close(); infoLine = '';
+		return { records: records, errors: errors };
+
+		function validateRecord() {
+			if (!infoLine[0]) {
+				errors.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
+				': Missing layer name.');
 			}
-		} else {
-			if (!infoLine[0]) errors.push('Line ' + line + ': Missing layer name.');
 			if (errors.length === 0) {
 				records.push({
 					name:        infoLine[0],
@@ -165,50 +173,48 @@ function parseInfo(dataFile) {
 					variants:    infoLine[5] ? (infoLine[0] + ',' + infoLine[5]).split(/ *, */) : ''
 				});
 			}
-		}
-	}
-	dataFile.close(); infoLine = '';
-	return { records: records, errors: errors };
 
-	function getUIColor(color) {
-		return {
-			'Blue':        UIColors.BLUE,
-			'Black':       UIColors.BLACK,
-			'Brick Red':   UIColors.BRICK_RED,
-			'Brown':       UIColors.BROWN,
-			'Burgundy':    UIColors.BURGUNDY,
-			'Charcoal':    UIColors.CHARCOAL,
-			'Cute Teal':   UIColors.CUTE_TEAL,
-			'Cyan':        UIColors.CYAN,
-			'Dark Blue':   UIColors.DARK_BLUE,
-			'Dark Green':  UIColors.DARK_GREEN,
-			'Fiesta':      UIColors.FIESTA,
-			'Gold':        UIColors.GOLD,
-			'Grass Green': UIColors.GRASS_GREEN,
-			'Gray':        UIColors.GRAY,
-			'Green':       UIColors.GREEN,
-			'Grid Blue':   UIColors.GRID_BLUE,
-			'Grid Green':  UIColors.GRID_GREEN,
-			'Grid Orange': UIColors.GRID_ORANGE,
-			'Lavender':    UIColors.LAVENDER,
-			'Light Blue':  UIColors.LIGHT_BLUE,
-			'Light Gray':  UIColors.LIGHT_GRAY,
-			'Light Olive': UIColors.LIGHT_OLIVE,
-			'Lipstick':    UIColors.LIPSTICK,
-			'Magenta':     UIColors.MAGENTA,
-			'Ochre':       UIColors.OCHRE,
-			'Olive Green': UIColors.OLIVE_GREEN,
-			'Orange':      UIColors.ORANGE,
-			'Peach':       UIColors.PEACH,
-			'Pink':        UIColors.PINK,
-			'Purple':      UIColors.PURPLE,
-			'Red':         UIColors.RED,
-			'Sulphur':     UIColors.SULPHUR,
-			'Tan':         UIColors.TAN,
-			'Teal':        UIColors.TEAL,
-			'Violet':      UIColors.VIOLET,
-			'White':       UIColors.WHITE,
-			'Yellow':      UIColors.YELLOW
-		}[color] || UIColors.LIGHT_BLUE;
+			function getUIColor(color) {
+				return {
+					'Blue':        UIColors.BLUE,
+					'Black':       UIColors.BLACK,
+					'Brick Red':   UIColors.BRICK_RED,
+					'Brown':       UIColors.BROWN,
+					'Burgundy':    UIColors.BURGUNDY,
+					'Charcoal':    UIColors.CHARCOAL,
+					'Cute Teal':   UIColors.CUTE_TEAL,
+					'Cyan':        UIColors.CYAN,
+					'Dark Blue':   UIColors.DARK_BLUE,
+					'Dark Green':  UIColors.DARK_GREEN,
+					'Fiesta':      UIColors.FIESTA,
+					'Gold':        UIColors.GOLD,
+					'Grass Green': UIColors.GRASS_GREEN,
+					'Gray':        UIColors.GRAY,
+					'Green':       UIColors.GREEN,
+					'Grid Blue':   UIColors.GRID_BLUE,
+					'Grid Green':  UIColors.GRID_GREEN,
+					'Grid Orange': UIColors.GRID_ORANGE,
+					'Lavender':    UIColors.LAVENDER,
+					'Light Blue':  UIColors.LIGHT_BLUE,
+					'Light Gray':  UIColors.LIGHT_GRAY,
+					'Light Olive': UIColors.LIGHT_OLIVE,
+					'Lipstick':    UIColors.LIPSTICK,
+					'Magenta':     UIColors.MAGENTA,
+					'Ochre':       UIColors.OCHRE,
+					'Olive Green': UIColors.OLIVE_GREEN,
+					'Orange':      UIColors.ORANGE,
+					'Peach':       UIColors.PEACH,
+					'Pink':        UIColors.PINK,
+					'Purple':      UIColors.PURPLE,
+					'Red':         UIColors.RED,
+					'Sulphur':     UIColors.SULPHUR,
+					'Tan':         UIColors.TAN,
+					'Teal':        UIColors.TEAL,
+					'Violet':      UIColors.VIOLET,
+					'White':       UIColors.WHITE,
+					'Yellow':      UIColors.YELLOW
+				}[color] || UIColors.LIGHT_BLUE;
+			}
+		}
 	}
 }

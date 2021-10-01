@@ -10,7 +10,7 @@
 	...
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
-	Blank lines and those prefixed with '#' are ignored; '@file.txt' includes records from 'file.txt'.
+	Blank lines and those prefixed with '#' are ignored; includes records from '@path/to/include.txt'.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -43,10 +43,10 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace fonts');
 
 function main() {
-	var dataFile = getDataFile('fonts.txt');
-	if (!dataFile) { alert('No data file found.'); exit(); }
-	var data = parseInfo(dataFile);
-	if (data.errors.length > 0) { report(data.errors, decodeURI(dataFile.getRelativeURI(doc.filePath))); exit(); }
+	var file, data;
+	if (!(file = getDataFile('fonts.txt'))) { alert('No data file found.'); exit(); }
+	data = parseDataFile(file);
+	if (data.errors.length > 0) { report(data.errors, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length === 0) exit();
 
 	for (var i = 0, n = data.records.length; i < n; i++) {
@@ -60,46 +60,58 @@ function main() {
 		doc.changeText();
 	}
 	app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
-}
 
-/**
- * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
- * It ignores blank lines and those prefixed with `#`. `@path/to/include.txt` includes records
- * from `include.txt`; `@default` includes the default data file (see `getDataFile()`).
- * @param {File} dataFile - Tab-separated-values file (object).
- * @returns {{records: array, errors: array}}
- */
-function parseInfo(dataFile) {
-	var infoLine, include, includeFile;
-	var buffer = [];
-	var records = [];
-	var errors = [];
-	var flgHeader = false;
-	var line = 0;
-	dataFile.open('r');
+	/**
+	 * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
+	 * Blank lines and those prefixed with `#` are ignored. Includes records from `@path/to/include.txt`
+	 * or `@default` data file (see `getDataFile()`).
+	 * @param {File} dataFile - A tab-separated-values file (object).
+	 * @param {boolean} flgR - Flag for recursive call (`@include`).
+	 * @returns {{records: array, errors: array}}
+	 */
+	function parseDataFile(dataFile, flgR) {
+		var infoLine, include, includeFile;
+		var buffer = [];
+		var records = [];
+		var errors = [];
+		var flgHeader = false;
+		var line = 0;
+		dataFile.open('r');
 		while (!dataFile.eof) {
-		infoLine = dataFile.readln(); line++;
-		if (infoLine.replace(/^\s+|\s+$/g, '') === '') continue; // Ignore blank lines
-		if (infoLine.slice(0,1) === '\u0023') continue;          // Ignore lines prefixed with '#'
-		infoLine = infoLine.split(/ *\t */);
-		if (!flgHeader) { flgHeader = true; continue; } // Header
-		// '@include'
-		if (infoLine[0].slice(0,1) === '\u0040') { // '@'
-			include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
-			includeFile = /^default(s?)$/i.test(include) ?                      // '@default' ?
-				getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Include default data file :
-				File(include);                                                  // Include 'path/to/file.txt'
-			if (includeFile && includeFile.exists) {
-				if (includeFile.fullName === dataFile.fullName) continue;       // Skip self
-				buffer = parseInfo(includeFile);
-				records = records.concat(buffer.records);
+			infoLine = dataFile.readln(); line++;
+			if (infoLine.replace(/^\s+|\s+$/g, '') === '') continue; // Ignore blank lines
+			if (infoLine.slice(0,1) === '\u0023') continue;          // Ignore lines prefixed with '#'
+			infoLine = infoLine.split(/ *\t */);
+			if (!flgHeader) { flgHeader = true; continue; } // Header
+			// '@include'
+			if (infoLine[0].slice(0,1) === '\u0040') { // '@'
+				include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
+				includeFile = /^default(s?)$/i.test(include) ?                      // '@default' ?
+					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Include default data file :
+					File(include);                                                  // Include 'path/to/file.txt'
+				if (includeFile && includeFile.exists) {
+					if (includeFile.fullName === dataFile.fullName) continue;       // Skip self
+					buffer = parseDataFile(includeFile, true);
+					records = records.concat(buffer.records);
+					errors = errors.concat(buffer.errors);
+				}
+			} else { validateRecord(); }
+		}
+		dataFile.close(); infoLine = '';
+		return { records: records, errors: errors };
+
+		function validateRecord() {
+			if (!infoLine[0] || !infoLine[2]) {
+				errors.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
+				': Missing font name.');
 			}
-		} else {
-			if (!infoLine[0] || !infoLine[2]) errors.push('Line ' + line + ': Missing font name.');
-			if (!infoLine[1] || !infoLine[3]) errors.push('Line ' + line + ': Missing font style.');
+			if (!infoLine[1] || !infoLine[3]) {
+				errors.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
+				': Missing font style.');
+			}
 			if (app.fonts.item(infoLine[2] + '\t' + infoLine[3]).status !== FontStatus.INSTALLED) {
-				errors.push('Line ' + line + ": Font '" + (infoLine[2] + ' ' + infoLine[3]).replace(/\t/g, ' ') +
-					"' is not installed.");
+				errors.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
+				': Font \'' + (infoLine[2] + ' ' + infoLine[3]).replace(/\t/g, ' ') + '\' is not installed.');
 			}
 			if (errors.length === 0) {
 				records.push([
@@ -109,6 +121,4 @@ function parseInfo(dataFile) {
 			}
 		}
 	}
-	dataFile.close(); infoLine = '';
-	return { records: records, errors: errors };
 }
