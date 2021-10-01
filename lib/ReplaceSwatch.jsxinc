@@ -4,25 +4,35 @@
  * @param {(string|string[])} oldNames - A swatch name, or an array of swatch names to be replaced.
  * @param {string} newName - New swatch name.
  * @param {number[]} [newValues] - Array of 4 values in 0-100 range (CMYK).
+ * @returns {boolean} - Returns `true` if a replacement is made, `false` if not.
  * @example
  * replaceSwatch('Red', 'Blue'); // 'Blue' it's supposed to exist
  * replaceSwatch('Red', 'Blue', [ 100, 70, 0, 0 ]); // 'Blue' will be created if it doesn't exist
  * replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
  */
 function replaceSwatch(oldNames, newName, newValues) {
-	// Add new color only if newValues provided
-	if (newValues) {
-		if (!doc.colors.itemByName(newName).isValid) {
-			doc.colors.add({
-				name:       newName,
-				colorValue: newValues,
-				model:      ColorModel.PROCESS,
-				space:      ColorSpace.CMYK
-			});
-		}
-	}
-	// Replace colors
+	var oldStatus = isReplaced = false;
 	if (oldNames.constructor.name !== 'Array') oldNames = Array(oldNames);
-	for (var i = 0, n = oldNames.length; i < n; i++)
-		try { doc.colors.itemByName(oldNames[i]).remove(newName); } catch (e) {}
+	for (var i = 0, n = oldNames.length; i < n; i++) {
+		oldStatus = isReplaced;
+		try {
+			doc.colors.itemByName(oldNames[i]).remove(addSwatch(newName, newValues));
+			isReplaced = true;
+		} catch (e) { isReplaced = oldStatus; }
+	}
+	return isReplaced;
+
+	function addSwatch(name, values) {
+		if (values) {
+			if (!doc.colors.itemByName(name).isValid) {
+				doc.colors.add({
+					name:       name,
+					colorValue: values,
+					model:      ColorModel.PROCESS,
+					space:      ColorSpace.CMYK
+				});
+			}
+		}
+		return doc.colors.itemByName(name);
+	}
 }
