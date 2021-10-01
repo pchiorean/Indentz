@@ -1,22 +1,22 @@
 /**
- * Returns the first occurrence of `filename`, first searching for a local one (in the current folder
+ * Returns the first occurrence of `dataFile`, first searching for a local one (in the current folder
  * or the parent folder of the active document), then a default one (on the desktop or next to the running
- * script). It also matches files starting with `_`.
- * @param {string} filename - The file name.
- * @param {boolean} [skipLocal=false] - If `true`, don't search for a local file.
- * @returns {File|void} - File object if found, or `undefined`
+ * script). It also matches local files starting with `_`, which take precedence.
+ * @param {string} dataFile - A tab-separated-values file (name).
+ * @param {boolean} [skipLocal=false] - If `true`, don't search locally.
+ * @returns {File|void} - File object if found, else `undefined`.
  */
-function getDataFile(filename, skipLocal) {
+function getDataFile(dataFile, skipLocal) {
 	var file = '';
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	if (!skipLocal) {
-		if (doc.saved && (file = File(app.activeDocument.filePath + '/_'    + filename)) && file.exists) return file;
-		if (doc.saved && (file = File(app.activeDocument.filePath + '/'     + filename)) && file.exists) return file;
-		if (doc.saved && (file = File(app.activeDocument.filePath + '/../_' + filename)) && file.exists) return file;
-		if (doc.saved && (file = File(app.activeDocument.filePath + '/../'  + filename)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + '/_'    + dataFile)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + '/'     + dataFile)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + '/../_' + dataFile)) && file.exists) return file;
+		if (doc.saved && (file = File(app.activeDocument.filePath + '/../'  + dataFile)) && file.exists) return file;
 	}
-	if ((file = File(Folder.desktop + '/'    + filename)) && file.exists) return file;
-	if ((file = File(script.path    + '/'    + filename)) && file.exists) return file;
-	if ((file = File(script.path    + '/../' + filename)) && file.exists) return file;
+	if ((file = File(Folder.desktop + '/'    + dataFile)) && file.exists) return file;
+	if ((file = File(script.path    + '/'    + dataFile)) && file.exists) return file;
+	if ((file = File(script.path    + '/../' + dataFile)) && file.exists) return file;
 	return undefined;
 }

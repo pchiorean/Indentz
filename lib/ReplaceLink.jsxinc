@@ -1,5 +1,5 @@
 /**
- * Replaces a link or a list of links with a new one. A selection limits the scope.
+ * Replaces a link or a list of links with a different one. A selection limits the scope.
  * @param {(string|string[])} oldLinks - A link name, or an array of link names to be replaced.
  * @param {string} newLink - New link name (if same folder), or full link path.
  * @returns {boolean} - Returns `true` if a replacement is made, `false` if not.
