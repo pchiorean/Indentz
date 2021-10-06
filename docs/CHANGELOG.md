@@ -1,5 +1,9 @@
 ## Changelog
 
+#### [2021-10-06](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-06&type=commits)
+
+- `fix` **SpreadsToFiles v1.7.12** -- Fixed separator validation (regex fuckup)
+
 #### [2021-10-01](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-01&type=commits)
 
 - `upd` **ReplaceSwatch** -- Return replacement status (boolean)
@@ -76,7 +80,7 @@
 
 ##### Updates
 
-- `upd` **Debug** -- Add timestamp support
+- `upd` **Debug** -- Add a hires timer
 - `upd` **DefaultSwatches** -- Add tints support
 - `upd` **FindFile** -- Use relative paths for includes
 - `brk` **FitTo** -- Take target as argument, instead of document selection
@@ -84,9 +88,11 @@
 - `upd` **PageMarginsFromSelection** -- Set the margins of every page touched by the selection
 - `upd` **PageSizeFromSelection** -- Without selection fit all pages to their contents
 - `upd` **ParseDataFile** -- Extend reporting granularity (fatal, error, warning, info, etc)
+- `upd` **ParseDataFile** -- Use an ending '\' to concatenate lines
 - `brk` **PrepareForExport, VisibleArea** -- Read layer variants from `layers.txt`, fallback to defaults
 - `upd` **QuickExport** -- Limit export subfolder to suffix's first word
 - `upd` **QuickExport** -- JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
+- `upd` **QuickExport** -- Don't include page information for very small files
 - `upd` **ReplaceFonts** -- Report changed fonts
 - `upd` **ReplaceText** -- Take an array of strings as input
 - `upd` **ReplaceText** -- Add a switch for grep matching
