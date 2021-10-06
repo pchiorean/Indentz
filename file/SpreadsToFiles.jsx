@@ -1,5 +1,5 @@
 /*
-	Spreads to files v1.7.11 (2021-09-30)
+	Spreads to files v1.7.12 (2021-10-06)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
@@ -91,7 +91,7 @@ function getSuffix(str) {
 		getSuffix(str); // Ask again
 	}
 	// -- Separator
-	if (!/[ ._-~]/.test(str[0])) {
+	if (!/[ ._\-~]/.test(str[0])) {
 		alert('Invalid separator, please try again.', 'Enter a suffix');
 		getSuffix(str); // Ask again
 	}
