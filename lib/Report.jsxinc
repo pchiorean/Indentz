@@ -12,20 +12,20 @@
  * @param {boolean} [showCompact=false] - If `true` duplicates are removed and the message is sorted. (Optional.)
  */
 function report(message, title, showFilter, showCompact) {
-	var search, list;
-	var w = new Window('dialog', title || '');
-	// Convert message to array
+	var w, search, list;
 	if (message.constructor.name !== 'Array') message = message.split(/\r|\n/g);
+	if (message.length === 0) return;
+	w = new Window('dialog', title || '');
+	// Sort and remove duplicates
 	if (showCompact && message.length > 1) {
-		// Sort and remove duplicates
-		message = message.sort();
+		message = message.sort(naturalSorter);
 		for (var i = 1, l = message[0]; i < message.length; l = message[i], i++) {
 			if (l === message[i]) { message.splice(i, 1); i--; }
 			if (message[i] === '') { message.splice(i, 1); i--; }
 		}
 	}
+	// Add a filtering field
 	if (showFilter && message.length > 1) {
-		// Add a filtering field
 		search = w.add('edittext { characters: 40, helpTip: "Wildcards: \'?\' (any character), space and \'*\' (AND), \'|\' (OR)" }');
 		search.onChanging = function () {
 			var str, line, i, n;
@@ -54,4 +54,26 @@ function report(message, title, showFilter, showCompact) {
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	w.ok.active = true;
 	w.show();
+
+	// https://stackoverflow.com/questions/2802341/javascript-natural-sort-of-alphanumerical-strings/2802804#2802804
+	function naturalSorter(as, bs) {
+		var a, b, a1, b1, n, L;
+		var i = 0;
+		var rx = /(\.\d+)|(\d+(\.\d+)?)|([^\d.]+)|(\.\D+)|(\.$)/g;
+		if (as === bs) return 0;
+		a = as.toLowerCase().match(rx);
+		b = bs.toLowerCase().match(rx);
+		L = a.length;
+		while (i < L) {
+			if (!b[i]) return 1;
+			a1 = a[i];
+			b1 = b[i++];
+			if (a1 !== b1) {
+				n = a1 - b1;
+				if (!isNaN(n)) return n;
+				return a1 > b1 ? 1 : -1;
+			}
+		}
+		return b[i] ? -1 : 0;
+	}
 }
