@@ -178,9 +178,9 @@ Reads a TSV (tab-separated-values) file, validates the data (the provided functi
 };
 ```
 
-Note:
-- It ignores blank lines and those prefixed with `#`;
-- Includes records from `@path/to/include.txt` or `@default` data file (see `getDataFile()`).
+Blank lines and those prefixed with `#` are ignored. You can use backslash `\` at the end of long lines to split them into multiple lines.
+
+Use `@path/to/include.txt` to includes records from another file or `@default` for default data file (see `getDataFile()`).
 
 #### Example
 
