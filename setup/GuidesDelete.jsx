@@ -1,5 +1,5 @@
 /*
-	Delete guides v1.0 (2021-06-08)
+	Delete guides v1.1 (2021-10-09)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Deletes all guides from the document.
@@ -11,9 +11,7 @@
 if (!(doc = app.activeDocument)) exit();
 
 app.doScript(
-	function () {
-		var g = doc.guides.everyItem().getElements();
-		for (var i = 0; i < g.length; i++) g[i].remove();
-	},
+	'doc.guides.everyItem().remove()',
 	ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Delete guides');
+	UndoModes.ENTIRE_SCRIPT, 'Delete guides'
+);
