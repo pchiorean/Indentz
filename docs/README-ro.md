@@ -210,11 +210,9 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
 
-* **`SaveSwatches`** salvează culorile din document într‑un fișier TSV compatibil cu **`DefaultSwatches`**.
+* **`GuidesAdd`** adaugă linii de ghidaj pe laturile paginilor și centrele interioare sau pe marginile obiectelor selectate. (E mai mult un script demo, pentru a fi personalizat.)
 
-* **`CleanupSwatches`** convertește culorile RGB la CMYK, le redenumește după formula „C= M= Y= K=”, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
-
-* **`DeleteGuides`** șterge toate liniile de ghidaj din document.
+* **`GuidesDelete`** șterge toate liniile de ghidaj din document.
 
 * **`ReplaceFonts`** substituie fonturi dintr‑o listă definită într‑un fișier TSV numit [**`fonts.txt`**](../fonts.txt):
 
@@ -227,6 +225,10 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   Puteți utiliza **`ShowFonts`** din **Misc** pentru a obține o listă a fonturilor din document pentru copy‑paste.
 
   Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
+
+* **`SwatchesSave`** salvează culorile din document într‑un fișier TSV compatibil cu **`DefaultSwatches`**.
+
+* **`SwatchesCleanup`** convertește culorile RGB la CMYK, le redenumește după formula „C= M= Y= K=”, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
 * **`DocDefaults`** rulează **`DefaultPrefs`**, **`DefaultSwatches`**, **`DefaultLayers`**, **`ReplaceFonts`**, **`PageSizeFromFilename`** și extinde pasteboardul.
 
@@ -353,4 +355,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 1 octombrie 2021
+README-ro.md • 9 octombrie 2021

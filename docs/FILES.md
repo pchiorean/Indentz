@@ -63,12 +63,13 @@ Name                               |    Fn  | Description
 `DefaultPrefs.jsx`                 |        | Sets default preferences
 `DefaultLayers.jsx`                |        | Adds/merges layers from a list
 `DefaultSwatches.jsx`              |        | Adds swatches from a list
-`SaveSwatches.jsx`                 |        | Saves document's swatches to a list
-`CleanupSwatches.jsx`              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
-`ReplaceFonts.jsx`                 |        | Replaces fonts from a substitution list
-`DeleteGuides.jsx`                 |        | Deletes all guides from the document
 `DocCleanup.jsx`                   |     F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling
 `DocDefaults.jsx`                  |    ⌥F2 | Adds swatches/layers, cleans up fonts and sets page dimensions from the filename
+`GuidesAdd.jsx`                    |        | Adds guides on pages' edges and inner centers or selected objects' edges
+`GuidesDelete.jsx`                 |        | Deletes all guides from the document
+`ReplaceFonts.jsx`                 |        | Replaces fonts from a substitution list
+`SwatchesSave.jsx`                 |        | Saves document's swatches to a list
+`SwatchesCleanup.jsx`              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 `PageMarginsFromSelection.jsx`     |    ⌥F3 | Sets the page margins to the selected objects bounds
 `PageSizeFromFilename.jsx`         |     F3 | Sets every page size and margins according to the filename
 `PageSizeFromMargins.jsx`          |        | Sets the page size to the page margins

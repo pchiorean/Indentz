@@ -722,13 +722,10 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>SaveSwatches</code></strong> saves document&#x2019;s swatches to a TSV file compatible with <strong><code>DefaultSwatches</code></strong>.</p>
+<p><strong><code>GuidesAdd</code></strong> adds guides on pages&#x2019; edges and inner centers or selected objects&#x2019; edges. (It&#x2019;s mostly a demo script, to be customized.)</p>
 </li>
 <li>
-<p><strong><code>CleanupSwatches</code></strong> converts process RGB swatches to CMYK, renames them to &#x201C;C=&#xA0;M=&#xA0;Y=&#xA0;K=&#x201D; form, removes duplicates and deletes unused. Spot colors are not changed.</p>
-</li>
-<li>
-<p><strong><code>DeleteGuides</code></strong> deletes all guides from the document.</p>
+<p><strong><code>GuidesDelete</code></strong> deletes all guides from the document.</p>
 </li>
 <li>
 <p><strong><code>ReplaceFonts</code></strong> substitute fonts from a list defined in a TSV file named <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
@@ -764,6 +761,12 @@ pre[data-line] .line-highlight[data-end]:after {
 </table>
 <p>You can use <strong><code>ShowFonts</code></strong> from <strong>Miscellaneous</strong> to get a tab delimited list of document fonts for copy&#x2011;pasting.</p>
 <p>The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
+</li>
+<li>
+<p><strong><code>SwatchesSave</code></strong> saves document&#x2019;s swatches to a TSV file compatible with <strong><code>DefaultSwatches</code></strong>.</p>
+</li>
+<li>
+<p><strong><code>SwatchesCleanup</code></strong> converts process RGB swatches to CMYK, renames them to &#x201C;C=&#xA0;M=&#xA0;Y=&#xA0;K=&#x201D; form, removes duplicates and deletes unused. Spot colors are not changed.</p>
 </li>
 <li>
 <p><strong><code>DocDefaults</code></strong> runs <strong><code>DefaultPrefs</code></strong>, <strong><code>DefaultSwatches</code></strong>, <strong><code>DefaultLayers</code></strong>, <strong><code>ReplaceFonts</code></strong>, <strong><code>PageSizeFromFilename</code></strong> and sets loose pasteboard margins.</p>
@@ -1005,7 +1008,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>&#xA9; 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md &#x2022; October 1, 2021</p>
+<p>README.md &#x2022; October 9, 2021</p>
 
       </div>
       

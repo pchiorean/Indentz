@@ -210,11 +210,9 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
 
-* **`SaveSwatches`** saves document's swatches to a TSV file compatible with **`DefaultSwatches`**.
+* **`GuidesAdd`** adds guides on pages' edges and inner centers or selected objects' edges. (It's mostly a demo script, to be customized.)
 
-* **`CleanupSwatches`** converts process RGB swatches to CMYK, renames them to “C= M= Y= K=” form, removes duplicates and deletes unused. Spot colors are not changed.
-
-* **`DeleteGuides`** deletes all guides from the document.
+* **`GuidesDelete`** deletes all guides from the document.
 
 * **`ReplaceFonts`** substitute fonts from a list defined in a TSV file named [**`fonts.txt`**](../fonts.txt):
 
@@ -227,6 +225,10 @@ There are two sets: one related to document preferences, layers, swatches and fo
   You can use **`ShowFonts`** from **Miscellaneous** to get a tab delimited list of document fonts for copy‑pasting.
 
   The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
+
+* **`SwatchesSave`** saves document's swatches to a TSV file compatible with **`DefaultSwatches`**.
+
+* **`SwatchesCleanup`** converts process RGB swatches to CMYK, renames them to “C= M= Y= K=” form, removes duplicates and deletes unused. Spot colors are not changed.
 
 * **`DocDefaults`** runs **`DefaultPrefs`**, **`DefaultSwatches`**, **`DefaultLayers`**, **`ReplaceFonts`**, **`PageSizeFromFilename`** and sets loose pasteboard margins.
 
@@ -353,4 +355,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • October 1, 2021
+README.md • October 9, 2021
