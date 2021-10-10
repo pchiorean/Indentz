@@ -23,6 +23,11 @@ app.doScript(File(script.path + '/ReplaceFonts.jsx'),
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Replace fonts');
 
+// Replace links
+app.doScript(File(script.path + '/ReplaceLinks.jsx'),
+ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, 'Replace links');
+
 doc.textPreferences.showInvisibles = true;
 
 app.doScript(function () {
