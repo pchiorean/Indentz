@@ -240,7 +240,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`SwatchesCleanup`** converts process RGB swatches to CMYK, renames them to “C= M= Y= K=” form, removes duplicates and deletes unused. Spot colors are not changed.
 
-* **`DocDefaults`** runs **`DefaultPrefs`**, **`DefaultSwatches`**, **`DefaultLayers`**, **`ReplaceFonts`**, **`PageSizeFromFilename`** and sets loose pasteboard margins.
+* **`DocDefaults`** runs **`DefaultPrefs`**, **`DefaultSwatches`**, **`DefaultLayers`**, **`ReplaceFonts`**, **`ReplaceLinks`**, **`PageSizeFromFilename`** and sets loose pasteboard margins.
 
 * **`DocCleanup`** runs **`DefaultPrefs`**, cleans up unused swatches, layers and pages, unlocks all items, deletes hidden items, resets scaling to 100%, converts empty text frames to generic frames and sets tight pasteboard margins.
 

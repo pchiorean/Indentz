@@ -240,7 +240,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`SwatchesCleanup`** convertește culorile RGB la CMYK, le redenumește după formula „C= M= Y= K=”, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
 
-* **`DocDefaults`** rulează **`DefaultPrefs`**, **`DefaultSwatches`**, **`DefaultLayers`**, **`ReplaceFonts`**, **`PageSizeFromFilename`** și extinde pasteboardul.
+* **`DocDefaults`** rulează **`DefaultPrefs`**, **`DefaultSwatches`**, **`DefaultLayers`**, **`ReplaceFonts`**, **`ReplaceLinks`**, **`PageSizeFromFilename`** și extinde pasteboardul.
 
 * **`DocCleanup`** rulează **`DefaultPrefs`**, șterge culorile, straturile și paginile neutilizate, deblochează toate obiectele și le resetează scalarea la 100%, convertește cadrele goale de text în cadre generice și compactează pasteboardul.
 
