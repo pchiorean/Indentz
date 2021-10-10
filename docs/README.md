@@ -226,6 +226,16 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
 
+* **`ReplaceLinks`** replaces document links from a list defined in a TSV file named [**`links.txt`**](../links.txt):
+
+  New link | Old links
+  :- | :-
+  **link1.psd** | link1.jpg
+  **path/to/link2.psd** | link2.jpg, link2.png
+  ... |
+
+  The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
+
 * **`SwatchesSave`** saves document's swatches to a TSV file compatible with **`DefaultSwatches`**.
 
 * **`SwatchesCleanup`** converts process RGB swatches to CMYK, renames them to “C= M= Y= K=” form, removes duplicates and deletes unused. Spot colors are not changed.
@@ -355,4 +365,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • October 9, 2021
+README.md • October 10, 2021

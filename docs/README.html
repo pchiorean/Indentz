@@ -763,6 +763,32 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
 </li>
 <li>
+<p><strong><code>ReplaceLinks</code></strong> replaces document links from a list defined in a TSV file named <a href="../links.txt"><strong><code>links.txt</code></strong></a>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">New link</th>
+<th style="text-align:left">Old links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>link1.psd</strong></td>
+<td style="text-align:left">link1.jpg</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>path/to/link2.psd</strong></td>
+<td style="text-align:left">link2.jpg, link2.png</td>
+</tr>
+<tr>
+<td style="text-align:left">&#x2026;</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<p>The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
+</li>
+<li>
 <p><strong><code>SwatchesSave</code></strong> saves document&#x2019;s swatches to a TSV file compatible with <strong><code>DefaultSwatches</code></strong>.</p>
 </li>
 <li>
@@ -1008,7 +1034,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>&#xA9; 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md &#x2022; October 9, 2021</p>
+<p>README.md &#x2022; October 10, 2021</p>
 
       </div>
       

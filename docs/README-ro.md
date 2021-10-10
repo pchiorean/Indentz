@@ -226,6 +226,16 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
 
+* **`ReplaceLinks`** înlocuiește link‑uri din document dintr‑o listă definită într‑un fișier TSV numit [**`links.txt`**](../links.txt):
+
+  New link | Old links
+  :- | :-
+  **link1.psd** | link1.jpg
+  **path/to/link2.psd** | link2.jpg, link2.png
+  ... |
+
+  Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
+
 * **`SwatchesSave`** salvează culorile din document într‑un fișier TSV compatibil cu **`DefaultSwatches`**.
 
 * **`SwatchesCleanup`** convertește culorile RGB la CMYK, le redenumește după formula „C= M= Y= K=”, elimină duplicatele și le șterge pe cele nefolosite. Culorile spot rămân neschimbate.
@@ -355,4 +365,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 9 octombrie 2021
+README-ro.md • 10 octombrie 2021

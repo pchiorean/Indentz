@@ -68,6 +68,7 @@ Name                               |    Fn  | Description
 `GuidesAdd.jsx`                    |        | Adds guides on pages' edges and inner centers or selected objects' edges
 `GuidesDelete.jsx`                 |        | Deletes all guides from the document
 `ReplaceFonts.jsx`                 |        | Replaces fonts from a substitution list
+`ReplaceLinks.jsx`                 |        | Replaces document links from a substitution list
 `SwatchesSave.jsx`                 |        | Saves document's swatches to a list
 `SwatchesCleanup.jsx`              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 `PageMarginsFromSelection.jsx`     |    ⌥F3 | Sets the page margins to the selected objects bounds
