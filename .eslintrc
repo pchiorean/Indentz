@@ -249,7 +249,7 @@
 		"max-statements-per-line": [
 			"warn",
 			{
-				"max": 3
+				"max": 4
 			}
 		],
 		"max-statements": "off",

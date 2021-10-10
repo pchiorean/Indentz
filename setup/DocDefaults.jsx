@@ -1,6 +1,4 @@
-﻿/* eslint-disable max-statements-per-line */
-
-if (!(doc = app.activeDocument)) exit();
+﻿if (!(doc = app.activeDocument)) exit();
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 
 // Set preferences

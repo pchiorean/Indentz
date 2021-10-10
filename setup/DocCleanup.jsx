@@ -8,8 +8,6 @@
 	https://choosealicense.com/licenses/mit/
 */
 
-/* eslint-disable max-statements-per-line */
-
 if (!(doc = app.activeDocument)) exit();
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 
@@ -107,7 +105,7 @@ doc.textPreferences.showInvisibles = false;
 
 // Set pasteboard
 app.doScript(function () {
-	var P = { width: 150, height: 50 }; // Defaults (mm)
+	var P = { width: 150, height: 25 }; // Defaults (mm)
 	var size = {
 		width:  doc.spreads[0].pages.lastItem().bounds[3] - doc.spreads[0].pages.firstItem().bounds[1],
 		height: doc.spreads[0].pages.lastItem().bounds[2] - doc.spreads[0].pages.firstItem().bounds[0]
