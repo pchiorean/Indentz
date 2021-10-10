@@ -1,8 +1,8 @@
 /**
  * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
- * Blank lines and those prefixed with `#` are ignored. Includes records from `@path/to/include.txt`
- * or `@default` data file (see `getDataFile()`).
- * @version 2.0 (2021-10-09)
+ * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+ * Includes records from `@path/to/include.txt` or `@default` data file (see `getDataFile()`).
+ * @version 2.1 (2021-10-10)
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {File} dataFile - A tab-separated-values file (object).
@@ -18,7 +18,7 @@
  * if (data.records.length === 0) exit();
  */
 function parseDataFile(dataFile, flgR) {
-	var infoLine, include, includeFile;
+	var infoLine, previousLine, include, includeFile;
 	var buffer = [];
 	var records = [];
 	var errors = { info: [], warn: [], fail: [] };
@@ -26,7 +26,9 @@ function parseDataFile(dataFile, flgR) {
 	var line = 0;
 	dataFile.open('r');
 	while (!dataFile.eof) {
-		infoLine = dataFile.readln(); line++;
+		line++;
+		infoLine = (previousLine ? previousLine.slice(0,-1) : '') + dataFile.readln();
+		if (infoLine.slice(-1) === '\\') { previousLine = infoLine; continue; } else { previousLine = ''; }
 		if (infoLine.replace(/^\s+|\s+$/g, '') === '') continue; // Ignore blank lines
 		if (infoLine.slice(0,1) === '\u0023') continue;          // Ignore lines prefixed with '#'
 		infoLine = infoLine.split(/ *\t */);
