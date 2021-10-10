@@ -2,7 +2,7 @@
  * Displays a message in a scrollable list with optional filtering and/or compact mode.
  * Inspired by this snippet by Peter Kahrel:
  * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
- * @version 2.0 (2021-09-12)
+ * @version 2.1 (2021-10-09)
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string|string[]} message - Message to be displayed. Can be a string or a strings array.
