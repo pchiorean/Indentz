@@ -1,26 +1,27 @@
-// (This function is just a stub.)
-
 /**
  * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
  * Blank lines and those prefixed with `#` are ignored. Includes records from `@path/to/include.txt`
  * or `@default` data file (see `getDataFile()`).
+ * @version 2.0 (2021-10-09)
+ * @author Paul Chiorean <jpeg@basement.ro>
+ * @license MIT
  * @param {File} dataFile - A tab-separated-values file (object).
  * @param {boolean} flgR - Internal flag for recursive calls (`@include`).
- * @returns {{records: array, errors: array}}
+ * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
  * @example
  * // @include 'GetDataFile.jsxinc';
  * // @include 'Report.jsxinc';
  * var file, data;
  * if (!(file = getDataFile('data.txt'))) { alert('No data file found.'); exit(); }
  * data = parseDataFile(file);
- * if (data.errors.length > 0) { report(data.errors, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
+ * if (data.errors.fail.length > 0) { report(data.errors.fail, 'Errors'); exit(); }
  * if (data.records.length === 0) exit();
  */
 function parseDataFile(dataFile, flgR) {
 	var infoLine, include, includeFile;
 	var buffer = [];
 	var records = [];
-	var errors = [];
+	var errors = { info: [], warn: [], fail: [] };
 	var flgHeader = false;
 	var line = 0;
 	dataFile.open('r');
@@ -40,17 +41,21 @@ function parseDataFile(dataFile, flgR) {
 				if (includeFile.fullName === dataFile.fullName) continue;       // Skip self
 				buffer = parseDataFile(includeFile, true);
 				records = records.concat(buffer.records);
-				errors = errors.concat(buffer.errors);
+				errors = {
+					info: errors.info.concat(buffer.errors.info),
+					warn: errors.warn.concat(buffer.errors.warn),
+					fail: errors.fail.concat(buffer.errors.fail)
+				};
 			}
 		} else { validateRecord(); }
 	}
 	dataFile.close(); infoLine = '';
-	return { records: records, errors: errors };
+	return { records: records, errors: { info: errors.info, warn: errors.warn, fail: errors.fail } };
 
 	function validateRecord() {
-		if (!infoLine[0]) errors.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line + ': Some error');
+		if (!infoLine[0]) errors.fail.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line + ': Some error');
 		// ...
-		if (errors.length === 0) {
+		if (errors.fail.length === 0) {
 			records.push({
 				key1: infoLine[0]
 				// ...
