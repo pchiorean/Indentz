@@ -1,5 +1,16 @@
 ## Changelog
 
+#### [2021-10-10](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-10&type=commits)
+
+- `new` Added **GuidesAdd** -- Adds guides on pages' edges and inner centers or on selected objects' edges (mostly a demo script)
+- `new` Added **ReplaceLinks** -- Replaces document links from a substitution list
+- `upd` **ParseDataFile v2.0** -- Extend reporting granularity (fatal, warning, info, etc)
+- `sty` Renamed **DeleteGuides** to **GuidesDelete** and **CleanupSwatches** to **SwatchesCleanup**
+
+#### [2021-10-09](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-09&type=commits)
+
+- `upd` **Report v2.1** -- Update sorting to ['natural ordering'](https://github.com/litejs/natural-compare-lite)
+
 #### [2021-10-06](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-06&type=commits)
 
 - `fix` **SpreadsToFiles v1.7.12** -- Fixed separator validation (regex fuckup)
@@ -87,16 +98,15 @@
 - `ref` **FitTo** -- Refactor snapping to use deltas
 - `upd` **PageMarginsFromSelection** -- Set the margins of every page touched by the selection
 - `upd` **PageSizeFromSelection** -- Without selection fit all pages to their contents
-- `upd` **ParseDataFile** -- Extend reporting granularity (fatal, error, warning, info, etc)
 - `upd` **ParseDataFile** -- Use an ending '\' to concatenate lines
+- `upd` **ParseDataFile** -- Keep the record index in the returned object
 - `brk` **PrepareForExport, VisibleArea** -- Read layer variants from `layers.txt`, fallback to defaults
+- `upd` **QuickExport** -- Don't include page information for very small files
 - `upd` **QuickExport** -- Limit export subfolder to suffix's first word
 - `upd` **QuickExport** -- JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
-- `upd` **QuickExport** -- Don't include page information for very small files
 - `upd` **ReplaceFonts** -- Report changed fonts
 - `upd` **ReplaceText** -- Take an array of strings as input
 - `upd` **ReplaceText** -- Add a switch for grep matching
-- `ref` **Replace\*** -- Refactor to use a local data file
 - `upd` **Report** -- Improve filtering: `-` for none of these words, `"` for exact word or phrase (or use regex and be done with it)
 - `brk` **ScaleTo...** -- Scale to `alignDistributeBounds`
 - `upd` **SpreadsToFiles** -- Split 'ABBBCC' to 'A', 'BBB', 'CC'
