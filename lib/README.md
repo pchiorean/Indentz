@@ -18,7 +18,7 @@ Appends a debugging line to a file saved on the desktop with the name of the run
 
 If no arguments are given, it just appends an empty line.
 
-##### Example
+#### Example
 
 ```js
 dbg('i', '<ParseIF>', 'Open data file: \'' + decodeURI(dataFile.name) + '\'');
@@ -42,7 +42,7 @@ Reframes the selected objects to the page/spread's (`scope`) size/margins/visibl
 
 **Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area` (see [VisibleArea](../docs/README.md#export)).
 
-##### Example
+#### Example
 
 ```js
 fitTo('page', 'bleed'); // Fits the selected objects to the page bleed
@@ -87,7 +87,7 @@ Returns an object containing the geometric bounds of `page`, its parent spread, 
 
 **Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`.
 
-##### Example
+#### Example
 
 ```js
 var pageSize      = getBounds(page).page.size;      // [ 0,0,297,210 ]
@@ -112,7 +112,7 @@ bounds[scope][target]; // [ 20,20,277,400 ]
 
 Detects the user scripts folder searching for the 'Scripts Panel' string in `$.includePath`, returning a string with the path followed by '/', or `undefined`.
 
-##### Example
+#### Example
 
 ```js
 $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
@@ -130,7 +130,7 @@ $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
 
 Matches the string `searchValue` against elements of `array`, using wildcards and case sensitivity. Returns `true` for match, `false` for no match.
 
-##### Example
+#### Example
 
 ```js
 var searchValue = 'codes';
@@ -169,20 +169,20 @@ Returns the first occurrence of `dataFile`, first searching for a local one (in 
 | dataFile   | `File`    |         | A tab-separated-values file (object).           |
 | [flgR]     | `boolean` | `false` | Internal flag for recursive calls (`@include`). |
 
-Reads a TSV (tab-separated-values) file, returning an object containing found records and errors:
+Reads a TSV (tab-separated-values) file, validates the data (the provided function is just a stub) and returns an object containing found records and errors:
 
 ```js
 {
     records: [ {}, {}, ... ],
-    errors:  [ '', '', ... ]
+    errors:  { info: [], warn: [], fail: [] }
 };
 ```
 
 Note:
-- ignores blank lines and those prefixed with `#`;
-- includes records from `@path/to/include.txt` or `@default` data file (see `getDataFile()`).
+- It ignores blank lines and those prefixed with `#`;
+- Includes records from `@path/to/include.txt` or `@default` data file (see `getDataFile()`).
 
-##### Example
+#### Example
 
 ```js
 // @include 'GetDataFile.jsxinc';
@@ -205,7 +205,7 @@ artwork     Light Blue    yes        yes
             Red           yes        yes
 ```
 
-it will return this object:
+it will return an object like this:
 
 ```js
 {
@@ -223,11 +223,13 @@ it will return this object:
             isPrintable: true
         }
     ],
-    errors: [ 'Line 5: Missing layer name.' ]
+    errors: {
+        info: [],
+        warn: [],
+        fail: [ 'Line 5: Missing layer name.' ]
+    }
 }
 ```
-
-Of course, the provided function is just a stub, data processing must be customized.
 
 ---
 
@@ -245,7 +247,7 @@ Of course, the provided function is just a stub, data processing must be customi
 
 Creates a simple progress bar, setting it's width to accomodate a given message length. Initialized with `new ProgressBar(title, maxValue, [maxWidth])`, updated with `update(value, [message])`, closed with `close()`.
 
-##### Example
+#### Example
 
 ```js
 var progress = new ProgressBar('Progress bar demo', 100, 50);
@@ -270,9 +272,9 @@ progress.update(25);
 | oldLinks   | `string` \| `string[]` | A link name, or an array of link names to be replaced. |
 | newLink    | `string`               | New link name (if same folder), or full link path.     |
 
-Replaces a link or a list of links with a different one. A selection limits the scope. Returns `true` if a replacement is made, `false` if not.
+Replaces a link or a list of links with a different one. A selection limits the scope. Returns `true` if a replacement was made, `false` if not.
 
-##### Example
+#### Example
 
 ```js
 replaceLink('link1.jpg', 'link1.psd'); // Both links are in the same folder
@@ -290,9 +292,9 @@ replaceLink([ 'link1.jpg', 'link1.png' ], 'link1.psd');
 | newName     | `string`               | New swatch name.                                           |
 | [newValues] | `number[]`             | Array of 4 values in 0-100 range (CMYK).                   |
 
-Replaces a swatch or a list of swatches with a different one. The new swatch is created only if values (CMYK) are provided and it doesn't already exist. Returns `true` if a replacement is made, `false` if not.
+Replaces a swatch or a list of swatches with a different one. The new swatch is created only if values (CMYK) are provided and it doesn't already exist. Returns `true` if a replacement was made, `false` if not.
 
-##### Example
+#### Example
 
 ```js
 replaceSwatch('Red', 'Blue'); // 'Blue' it's supposed to exist
@@ -309,9 +311,9 @@ replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 | changeTo    | `string`  |         | New text.                        |
 | [wholeWord] | `boolean` | `true`  | Match whole words. *(Optional.)* |
 
-Replaces a text with another. Unicode characters must be escaped. Returns `true` if a replacement is made, `false` if not.
+Replaces a text with another. Unicode characters must be escaped. Returns `true` if a replacement was made, `false` if not.
 
-##### Example
+#### Example
 
 ```js
 replaceText('11.10.', '13.12.2021');
@@ -332,7 +334,7 @@ replaceText('\\\\', '\u000A', false); // Replace '\\' with Forced Line Break
 Displays a message in a scrollable list with optional filtering and/or compact mode.
 Inspired by [this](http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250) snippet by Peter Kahrel.
 
-##### Example
+#### Example
 
 ```js
 report(message, 'Sample alert');
