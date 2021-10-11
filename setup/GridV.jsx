@@ -1,5 +1,5 @@
 /*
-	V grid 1.1.3 (2021-09-24)
+	V grid 1.1.4 (2021-10-07)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 */
 
@@ -54,20 +54,22 @@ function main() {
 		arrowTip = tgBounds[1] + (tgBounds[3] - tgBounds[1]) / 2 + bigSKUsize * 0.25033;
 		if (tgSize.width / tgSize.height <= 0.95) { // Portrait
 			addGuide('vertical', tgBounds[0] + MG * 5, '5 x mg');
-			addGuide('vertical', tgBounds[0] + MG * 6, '6 x mg');
+			// addGuide('vertical', tgBounds[0] + MG * 6, '6 x mg');
 		} else { // Landscape
 			addGuide('horizontal', tgBounds[0] + MG * 5, '5 x mg');
-			addGuide('horizontal', tgBounds[0] + MG * 6, '6 x mg');
+			// addGuide('horizontal', tgBounds[0] + MG * 6, '6 x mg');
+			addGuide('vertical', (tgBounds[3] - tgBounds[1]) * 0.225, 'middle of 45% section');
+			addGuide('vertical', (tgBounds[3] - tgBounds[1]) * 0.45, '45%');
 		}
 		// addGuide('vertical', arrowTip, 'arrow tip', UIColors.GRID_GREEN);
 		// addGuide('vertical', tgBounds[3] - MG * 0.5, 'half mg');
-		addGuide('vertical', (tgBounds[3] - tgBounds[1]) * 3 / 4, '3/4');
+		// addGuide('vertical', (tgBounds[3] - tgBounds[1]) * 3 / 4, '3/4');
 		// addGuide('vertical', tgBounds[3] - MG * 1.5, 'SKU right (with pouch)');
 		addGuide('horizontal', tgBounds[0] + tgSize.height / 2, 'middle', UIColors.GRID_GREEN);
 		// addGuide('horizontal', tgBounds[2] - MG * 3, 'SKU bottom');
 		// addGuide('horizontal', tgBounds[2] - MG * 4.338711, 'product range top', UIColors.GRID_BLUE);
 		// addGuide('horizontal', tgBounds[2] - MG * 2.4, 'product range bottom', UIColors.GRID_BLUE);
-		addGuide('horizontal', tgBounds[2] - MG / 2, 'HW bottom', UIColors.GREEN);
+		// addGuide('horizontal', tgBounds[2] - MG / 2, 'HW bottom', UIColors.GREEN);
 
 		// SKUs
 		// bigSKU = page.ovals.add({
