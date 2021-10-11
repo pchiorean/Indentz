@@ -667,7 +667,8 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Order</strong>: <code>above</code> or <code>below</code> existing layers (default <code>above</code>) <br>
 <strong>Variants</strong>: a list of layers that will be merged with the base layer (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
 </blockquote>
-<p>The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
+<p>Blank lines and those prefixed with <code>#</code> are ignored. You can use backslash (<code>\</code>) at the end of long lines to split them into multiple lines.</p>
+<p>The TSV file can be saved locally (in the current folder or the parent folder of the active document), or as a default (on the desktop or next to the running script). Local files and files starting with <code>_</code> take precedence. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
 </li>
 <li>
 <p><strong><code>DefaultSwatches</code></strong> adds a set of swatches defined in a TSV file named <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
@@ -719,7 +720,8 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Values</strong>: 3 values in 0&#x2013;255 range for RGB; 4 values in 0&#x2013;100 range for CMYK; 3 values in 0&#x2013;100 (L), -128&#x2013;127 (A and B) range for Lab <br>
 <strong>Variants</strong>: a list of swatches that will be replaced by the base swatch (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
 </blockquote>
-<p>The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
+<p>Blank lines and those prefixed with <code>#</code> are ignored. You can use backslash (<code>\</code>) at the end of long lines to split them into multiple lines.</p>
+<p>The TSV file can be saved locally (in the current folder or the parent folder of the active document), or as a default (on the desktop or next to the running script). Local files and files starting with <code>_</code> take precedence. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
 </li>
 <li>
 <p><strong><code>GuidesAdd</code></strong> adds guides on pages&#x2019; edges and inner centers or selected objects&#x2019; edges. (It&#x2019;s mostly a demo script, to be customized.)</p>
@@ -760,7 +762,8 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 <p>You can use <strong><code>ShowFonts</code></strong> from <strong>Miscellaneous</strong> to get a tab delimited list of document fonts for copy&#x2011;pasting.</p>
-<p>The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
+<p>Blank lines and those prefixed with <code>#</code> are ignored. You can use backslash (<code>\</code>) at the end of long lines to split them into multiple lines.</p>
+<p>The TSV file can be saved locally (in the current folder or the parent folder of the active document), or as a default (on the desktop or next to the running script). Local files and files starting with <code>_</code> take precedence. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
 </li>
 <li>
 <p><strong><code>ReplaceLinks</code></strong> replaces document links from a list defined in a TSV file named <a href="../links.txt"><strong><code>links.txt</code></strong></a>:</p>
@@ -786,7 +789,8 @@ pre[data-line] .line-highlight[data-end]:after {
 </tr>
 </tbody>
 </table>
-<p>The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with <code>#</code> are ignored. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
+<p>Blank lines and those prefixed with <code>#</code> are ignored. You can use backslash (<code>\</code>) at the end of long lines to split them into multiple lines.</p>
+<p>The TSV file can be saved locally (in the current folder or the parent folder of the active document), or as a default (on the desktop or next to the running script). Local files and files starting with <code>_</code> take precedence. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
 </li>
 <li>
 <p><strong><code>SwatchesSave</code></strong> saves document&#x2019;s swatches to a TSV file compatible with <strong><code>DefaultSwatches</code></strong>.</p>
@@ -1034,7 +1038,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>&#xA9; 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md &#x2022; October 10, 2021</p>
+<p>README.md &#x2022; October 11, 2021</p>
 
       </div>
       

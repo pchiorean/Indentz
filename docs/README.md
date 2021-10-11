@@ -191,7 +191,9 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Order**: `above` or `below` existing layers (default `above`) \
   > **Variants**: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards accepted)
 
-  The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
+  Blank lines and those prefixed with `#` are ignored. You can use backslash (`\`) at the end of long lines to split them into multiple lines.
+
+  The TSV file can be saved locally (in the current folder or the parent folder of the active document), or as a default (on the desktop or next to the running script). Local files and files starting with `_` take precedence. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
 
 * **`DefaultSwatches`** adds a set of swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
 
@@ -208,7 +210,9 @@ There are two sets: one related to document preferences, layers, swatches and fo
   > **Values**: 3 values in 0–255 range for RGB; 4 values in 0–100 range for CMYK; 3 values in 0–100 (L), -128–127 (A and B) range for Lab \
   > **Variants**: a list of swatches that will be replaced by the base swatch (case insensitive; `*` and `?` wildcards accepted)
 
-  The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
+  Blank lines and those prefixed with `#` are ignored. You can use backslash (`\`) at the end of long lines to split them into multiple lines.
+
+  The TSV file can be saved locally (in the current folder or the parent folder of the active document), or as a default (on the desktop or next to the running script). Local files and files starting with `_` take precedence. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
 
 * **`GuidesAdd`** adds guides on pages' edges and inner centers or selected objects' edges. (It's mostly a demo script, to be customized.)
 
@@ -224,7 +228,9 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   You can use **`ShowFonts`** from **Miscellaneous** to get a tab delimited list of document fonts for copy‑pasting.
 
-  The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
+  Blank lines and those prefixed with `#` are ignored. You can use backslash (`\`) at the end of long lines to split them into multiple lines.
+
+  The TSV file can be saved locally (in the current folder or the parent folder of the active document), or as a default (on the desktop or next to the running script). Local files and files starting with `_` take precedence. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
 
 * **`ReplaceLinks`** replaces document links from a list defined in a TSV file named [**`links.txt`**](../links.txt):
 
@@ -234,7 +240,9 @@ There are two sets: one related to document preferences, layers, swatches and fo
   **path/to/link2.psd** | link2.jpg, link2.png
   ... |
 
-  The TSV file can be saved in the current folder, on the desktop, or next to the script. Blank lines and those prefixed with `#` are ignored. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
+  Blank lines and those prefixed with `#` are ignored. You can use backslash (`\`) at the end of long lines to split them into multiple lines.
+
+  The TSV file can be saved locally (in the current folder or the parent folder of the active document), or as a default (on the desktop or next to the running script). Local files and files starting with `_` take precedence. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
 
 * **`SwatchesSave`** saves document's swatches to a TSV file compatible with **`DefaultSwatches`**.
 
@@ -365,4 +373,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • October 10, 2021
+README.md • October 11, 2021

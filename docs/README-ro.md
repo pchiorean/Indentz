@@ -191,7 +191,9 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Order**: `above` sau `below` (deasupra sau sub straturile existente; implicit `above`) \
   > **Variants**: o listă de straturi care vor fi combinate cu stratul de bază (case insensitive; sunt acceptate metacaracterele `*` și `?`)
 
-  Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
+  Liniile goale și cele care încep cu `#` sunt ignorate. Puteți utiliza backslash (`\`) la sfârșitul liniilor lungi pentru a le rupe în mai multe.
+
+  Fișierul TSV poate fi salvat local (în folderul curent sau în folderul părinte al documentului activ), sau ca implicit (pe desktop sau lângă scriptul care rulează). Fișierele locale și cele care încep cu `_` au prioritate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
 
 * **`DefaultSwatches`** creează un set de culori definite într‑un fișier TSV numit [**`swatches.txt`**](../swatches.txt):
 
@@ -208,7 +210,9 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   > **Values**: 3 valori în intervalul 0–255 pentru RGB; 4 valori în intervalul 0–100 pentru CMYK; 3 valori în intervalul 0–100 (L), -128–127 (A și B) pentru Lab \
   > **Variants**: o listă de culori care vor fi combinate cu culoarea de bază (case insensitive; sunt acceptate metacaracterele `*` și `?`)
 
-  Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
+  Liniile goale și cele care încep cu `#` sunt ignorate. Puteți utiliza backslash (`\`) la sfârșitul liniilor lungi pentru a le rupe în mai multe.
+
+  Fișierul TSV poate fi salvat local (în folderul curent sau în folderul părinte al documentului activ), sau ca implicit (pe desktop sau lângă scriptul care rulează). Fișierele locale și cele care încep cu `_` au prioritate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
 
 * **`GuidesAdd`** adaugă linii de ghidaj pe laturile paginilor și centrele interioare sau pe marginile obiectelor selectate. (E mai mult un script demo, pentru a fi personalizat.)
 
@@ -224,7 +228,9 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   Puteți utiliza **`ShowFonts`** din **Misc** pentru a obține o listă a fonturilor din document pentru copy‑paste.
 
-  Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
+  Liniile goale și cele care încep cu `#` sunt ignorate. Puteți utiliza backslash (`\`) la sfârșitul liniilor lungi pentru a le rupe în mai multe.
+
+  Fișierul TSV poate fi salvat local (în folderul curent sau în folderul părinte al documentului activ), sau ca implicit (pe desktop sau lângă scriptul care rulează). Fișierele locale și cele care încep cu `_` au prioritate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
 
 * **`ReplaceLinks`** înlocuiește link‑uri din document dintr‑o listă definită într‑un fișier TSV numit [**`links.txt`**](../links.txt):
 
@@ -234,7 +240,9 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
   **path/to/link2.psd** | link2.jpg, link2.png
   ... |
 
-  Fișierul poate fi plasat în folderul curent, pe desktop sau lângă script. Liniile goale și cele care încep cu `#` sunt ignorate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
+  Liniile goale și cele care încep cu `#` sunt ignorate. Puteți utiliza backslash (`\`) la sfârșitul liniilor lungi pentru a le rupe în mai multe.
+
+  Fișierul TSV poate fi salvat local (în folderul curent sau în folderul părinte al documentului activ), sau ca implicit (pe desktop sau lângă scriptul care rulează). Fișierele locale și cele care încep cu `_` au prioritate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
 
 * **`SwatchesSave`** salvează culorile din document într‑un fișier TSV compatibil cu **`DefaultSwatches`**.
 
@@ -365,4 +373,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 10 octombrie 2021
+README-ro.md • 11 octombrie 2021
