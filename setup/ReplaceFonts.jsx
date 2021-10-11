@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 2.1.8 (2021-09-30)
+	Replace fonts 2.2 (2021-10-11)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named 'fonts.txt':
@@ -10,7 +10,8 @@
 	...
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
-	Blank lines and those prefixed with '#' are ignored; includes records from '@path/to/include.txt'.
+	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+	Include records from another file with `@path/to/include.txt` or the `@default` data file.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -43,82 +44,110 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace fonts');
 
 function main() {
-	var file, data;
+	var VERBOSITY = 1; // 0: FAIL, 1: +WARN, 2: +INFO
+	var file, data, messages;
+	var counter = 0;
 	if (!(file = getDataFile('fonts.txt'))) { alert('No data file found.'); exit(); }
 	data = parseDataFile(file);
-	if (data.errors.length > 0) { report(data.errors, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
+	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length === 0) exit();
 
 	for (var i = 0, n = data.records.length; i < n; i++) {
-		app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
+		app.findTextPreferences = app.changeTextPreferences   = NothingEnum.NOTHING;
 		app.findChangeTextOptions.includeHiddenLayers         = true;
 		app.findChangeTextOptions.includeLockedLayersForFind  = true;
 		app.findChangeTextOptions.includeLockedStoriesForFind = true;
 		app.findChangeTextOptions.includeMasterPages          = true;
 		app.findTextPreferences.appliedFont                   = data.records[i][0];
 		app.changeTextPreferences.appliedFont                 = data.records[i][1];
-		doc.changeText();
+		if (doc.changeText().length > 0) {
+			counter++;
+			data.errors.info.push('Replaced \'' +
+				data.records[i][0].replace('\t', ' ') + '\' with \'' +
+				data.records[i][1].replace('\t', ' ') + '\'.');
+		} else {
+			// data.errors.info.push('Skipped \'' +
+			// 	data.records[i][0].replace('\t', ' ') + '\', not in document.');
+		}
 	}
 	app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
 
+	if (VERBOSITY > 0) {
+		messages = data.errors.warn;
+		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
+		if (messages.length > 0) report(messages, 'Fonts: ' + counter + ' replaced');
+	}
+
 	/**
 	 * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
-	 * Blank lines and those prefixed with `#` are ignored. Includes records from `@path/to/include.txt`
-	 * or `@default` data file (see `getDataFile()`).
+	 * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+	 * Include records from another file with `@path/to/include.txt` or the `@default` data file.
 	 * @param {File} dataFile - A tab-separated-values file (object).
-	 * @param {boolean} flgR - Flag for recursive call (`@include`).
-	 * @returns {{records: array, errors: array}}
+	 * @param {boolean} flgR - Internal flag for recursive calls (`@include`).
+	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
 	 */
 	function parseDataFile(dataFile, flgR) {
-		var infoLine, include, includeFile;
-		var buffer = [];
+		var record, part, include, includeFile;
 		var records = [];
-		var errors = [];
-		var flgHeader = false;
+		var errors = { info: [], warn: [], fail: [] };
+		var tmpData = [];
+		var isHeaderFound = false;
 		var line = 0;
 		dataFile.open('r');
 		while (!dataFile.eof) {
-			infoLine = dataFile.readln(); line++;
-			if (infoLine.replace(/^\s+|\s+$/g, '') === '') continue; // Ignore blank lines
-			if (infoLine.slice(0,1) === '\u0023') continue;          // Ignore lines prefixed with '#'
-			infoLine = infoLine.split(/ *\t */);
-			if (!flgHeader) { flgHeader = true; continue; } // Header
-			// '@include'
-			if (infoLine[0].slice(0,1) === '\u0040') { // '@'
-				include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
-				includeFile = /^default(s?)$/i.test(include) ?                      // '@default' ?
-					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Include default data file :
-					File(include);                                                  // Include 'path/to/file.txt'
+			line++;
+			record = (part ? part.slice(0,-1) : '') + dataFile.readln();
+			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
+			if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line, skip
+			if (record.slice(0,1) === '\u0023') continue;          // '#': Comment line, skip
+			if (record.slice(0,1) === '\u0040') {                  // '@': Include directive, parse file
+				include = record.slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
+				includeFile = /^default(s?)$/i.test(include) ?
+					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Default data file
+					File(include); // 'path/to/file.txt'
 				if (includeFile && includeFile.exists) {
-					if (includeFile.fullName === dataFile.fullName) continue;       // Skip self
-					buffer = parseDataFile(includeFile, true);
-					records = records.concat(buffer.records);
-					errors = errors.concat(buffer.errors);
+					if (includeFile.fullName === dataFile.fullName) continue; // Skip self
+					tmpData = parseDataFile(includeFile, true);
+					records = records.concat(tmpData.records);
+					errors = {
+						info: errors.info.concat(tmpData.errors.info),
+						warn: errors.warn.concat(tmpData.errors.warn),
+						fail: errors.fail.concat(tmpData.errors.fail)
+					};
+				} else {
+					errors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
+					': \'' + include + '\' not found.');
 				}
-			} else { validateRecord(); }
+				continue;
+			}
+			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
+			record = record.split(/ *\t */);
+			checkRecord();
 		}
-		dataFile.close(); infoLine = '';
-		return { records: records, errors: errors };
+		dataFile.close(); record = '';
+		return { records: records, errors: { info: errors.info, warn: errors.warn, fail: errors.fail } };
 
-		function validateRecord() {
-			if (!infoLine[0] || !infoLine[2]) {
-				errors.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-				': Missing font name.');
+		function checkRecord() {
+			var tmpErrors = { info: [], warn: [], fail: [] };
+			if (!record[0] || !record[2])
+				tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line + ': Missing font name.');
+			if (!record[1] || !record[3])
+				tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line + ': Missing font style.');
+			if (app.fonts.item(record[2] + '\t' + record[3]).status !== FontStatus.INSTALLED) {
+				tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
+				': Font \'' + (record[2] + ' ' + record[3]).replace(/\t/g, ' ') + '\' is not installed.');
 			}
-			if (!infoLine[1] || !infoLine[3]) {
-				errors.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-				': Missing font style.');
-			}
-			if (app.fonts.item(infoLine[2] + '\t' + infoLine[3]).status !== FontStatus.INSTALLED) {
-				errors.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-				': Font \'' + (infoLine[2] + ' ' + infoLine[3]).replace(/\t/g, ' ') + '\' is not installed.');
-			}
-			if (errors.length === 0) {
+			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) {
 				records.push([
-					infoLine[0] + '\t' + infoLine[1],
-					infoLine[2] + '\t' + infoLine[3]
+					record[0] + '\t' + record[1],
+					record[2] + '\t' + record[3]
 				]);
 			}
+			errors = {
+				info: errors.info.concat(tmpErrors.info),
+				warn: errors.warn.concat(tmpErrors.warn),
+				fail: errors.fail.concat(tmpErrors.fail)
+			};
 		}
 	}
 }

@@ -1,5 +1,5 @@
 /*
-	Replace links 1.0 (2021-10-09)
+	Replace links 1.1 (2021-10-11)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
@@ -10,7 +10,8 @@
 	...
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
-	Blank lines and those prefixed with '#' are ignored; includes records from '@path/to/include.txt'.
+	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+	Include records from another file with `@path/to/include.txt` or the `@default` data file.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -43,14 +44,13 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace links');
 
 function main() {
-	var VERBOSITY = 0; // 0: FAIL, 1: +WARN, 2: +INFO
+	var VERBOSITY = 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, data, messages, link, links;
 	var counter = 0;
 	if (!(file = getDataFile('links.txt'))) { alert('No data file found.'); exit(); }
 	data = parseDataFile(file);
-	if (data.errors.fail.length > 0) {
-		report(data.errors.fail, 'Errors', false, true); exit();
-	}
+	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
+	if (data.records.length === 0) exit();
 
 	for (var r = 0; r < data.records.length; r++) {
 		links = doc.links.everyItem().getElements();
@@ -63,58 +63,66 @@ function main() {
 				data.records[r].newLink.slice(data.records[r].newLink.lastIndexOf('/') + 1) + '\'.');
 		}
 	}
+
 	if (VERBOSITY > 0) {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
-		if (messages.length > 0) report(messages, counter + ' relinked', false, true);
+		if (messages.length > 0) report(messages, 'Links: ' + counter + ' changed');
 	}
 
 	/**
 	 * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
-	 * Blank lines and those prefixed with `#` are ignored. Includes records from `@path/to/include.txt`
-	 * or `@default` data file (see `getDataFile()`).
+	 * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+	 * Include records from another file with `@path/to/include.txt` or the `@default` data file.
 	 * @param {File} dataFile - A tab-separated-values file (object).
-	 * @param {boolean} flgR - Flag for recursive call (`@include`).
+	 * @param {boolean} flgR - Internal flag for recursive calls (`@include`).
 	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
 	 */
 	function parseDataFile(dataFile, flgR) {
-		var infoLine, include, includeFile;
-		var buffer = [];
+		var record, part, include, includeFile;
 		var records = [];
 		var errors = { info: [], warn: [], fail: [] };
-		var flgHeader = false;
+		var tmpData = [];
+		var isHeaderFound = false;
 		var line = 0;
 		dataFile.open('r');
 		while (!dataFile.eof) {
-			infoLine = dataFile.readln(); line++;
-			if (infoLine.replace(/^\s+|\s+$/g, '') === '') continue; // Ignore blank lines
-			if (infoLine.slice(0,1) === '\u0023') continue;          // Ignore lines prefixed with '#'
-			infoLine = infoLine.split(/ *\t */);
-			if (!flgHeader) { flgHeader = true; continue; } // Header
-			// '@include'
-			if (infoLine[0].slice(0,1) === '\u0040') { // '@'
-				include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
-				includeFile = /^default(s?)$/i.test(include) ?                      // '@default' ?
-					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Include default data file :
-					File(include);                                                  // Include 'path/to/file.txt'
+			line++;
+			record = (part ? part.slice(0,-1) : '') + dataFile.readln();
+			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
+			if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line, skip
+			if (record.slice(0,1) === '\u0023') continue;          // '#': Comment line, skip
+			if (record.slice(0,1) === '\u0040') {                  // '@': Include directive, parse file
+				include = record.slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
+				includeFile = /^default(s?)$/i.test(include) ?
+					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Default data file
+					File(include); // 'path/to/file.txt'
 				if (includeFile && includeFile.exists) {
-					if (includeFile.fullName === dataFile.fullName) continue;       // Skip self
-					buffer = parseDataFile(includeFile, true);
-					records = records.concat(buffer.records);
+					if (includeFile.fullName === dataFile.fullName) continue; // Skip self
+					tmpData = parseDataFile(includeFile, true);
+					records = records.concat(tmpData.records);
 					errors = {
-						info: errors.info.concat(buffer.errors.info),
-						warn: errors.warn.concat(buffer.errors.warn),
-						fail: errors.fail.concat(buffer.errors.fail)
+						info: errors.info.concat(tmpData.errors.info),
+						warn: errors.warn.concat(tmpData.errors.warn),
+						fail: errors.fail.concat(tmpData.errors.fail)
 					};
+				} else {
+					errors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
+					': \'' + include + '\' not found.');
 				}
-			} else { validateRecord(); }
+				continue;
+			}
+			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
+			record = record.split(/ *\t */);
+			checkRecord();
 		}
-		dataFile.close(); infoLine = '';
+		dataFile.close(); record = '';
 		return { records: records, errors: { info: errors.info, warn: errors.warn, fail: errors.fail } };
 
-		function validateRecord() {
-			var oldLinks = infoLine[1] ? infoLine[1].split(/ *, */) : '';
-			var newLink = /\//g.test(infoLine[0]) ? infoLine[0] : doc.filePath + '/Links/' + infoLine[0];
+		function checkRecord() {
+			var tmpErrors = { info: [], warn: [], fail: [] };
+			var oldLinks = record[1] ? record[1].split(/ *, */) : '';
+			var newLink = /\//g.test(record[0]) ? record[0] : doc.filePath + '/Links/' + record[0];
 			if (function () { // Check if document has at least one link from oldLinks
 					for (var i = 0; i < oldLinks.length; i++)
 						if (isIn(oldLinks[i], doc.links.everyItem().getElements())) return true;
@@ -124,13 +132,18 @@ function main() {
 				if (File(newLink).exists) {
 					records.push({ newLink:  newLink, oldLinks: oldLinks });
 				} else {
-					errors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-					': Skipped \'' + newLink.slice(newLink.lastIndexOf('/') + 1) + '\': file not found.');
+					tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
+					': Skipped \'' + newLink.slice(newLink.lastIndexOf('/') + 1) + '\', file not found.');
 				}
 			} else {
-				errors.info.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-				': Skipped \'' + newLink.slice(newLink.lastIndexOf('/') + 1) + '\': link not found.');
+				// tmpErrors.info.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
+				// ': Skipped \'' + newLink.slice(newLink.lastIndexOf('/') + 1) + '\', link not found.');
 			}
+			errors = {
+				info: errors.info.concat(tmpErrors.info),
+				warn: errors.warn.concat(tmpErrors.warn),
+				fail: errors.fail.concat(tmpErrors.fail)
+			};
 		}
 	}
 

@@ -1,5 +1,5 @@
 /*
-	Default layers v3.2 (2021-10-01)
+	Default layers v3.3 (2021-10-11)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.txt':
@@ -17,7 +17,8 @@
 	   (case insensitive; '*' and '?' wildcards accepted)
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
-	Blank lines and those prefixed with '#' are ignored; includes records from '@path/to/include.txt'.
+	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+	Include records from another file with `@path/to/include.txt` or the `@default` data file.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -51,11 +52,13 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Default layers');
 
 function main() {
-	var file, data, newLayer, tmpLayer, i, n;
+	var VERBOSITY = 1; // 0: FAIL, 1: +WARN, 2: +INFO
+	var file, data, messages, newLayer, tmpLayer, i, n;
+	var counter = { add: 0, merge: 0 };
 	var oldActiveLayer = doc.activeLayer; // Save active layer
 	if (!(file = getDataFile('layers.txt'))) { alert('No data file found.'); exit(); }
 	data = parseDataFile(file);
-	if (data.errors.length > 0) { report(data.errors, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
+	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length === 0) exit();
 
 	doc.layers.everyItem().properties = { locked: false }; // Unlock existing layers
@@ -87,8 +90,14 @@ function main() {
 	}
 	doc.activeLayer = oldActiveLayer; // Restore active layer
 
+	if (VERBOSITY > 0) {
+		messages = data.errors.warn;
+		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
+		if (messages.length > 0) report(messages, 'Layers: ' + counter.add + ' added | ' + counter.merge + ' merged');
+	}
+
 	function makeLayer(name, color, isVisible, isPrintable, variants) {
-		var targetLayer, docLayers, candidateLayer, oldLayerVisibility;
+		var targetLayer, l, oldName, layers, oldLayerVisibility;
 		targetLayer = doc.layers.item(name);
 		if (targetLayer.isValid) {
 			targetLayer.properties = {
@@ -98,22 +107,27 @@ function main() {
 			};
 		} else {
 			doc.activeLayer = doc.layers.firstItem();
-			doc.layers.add({
+			targetLayer = doc.layers.add({
 				name:       name,
 				layerColor: color,
 				visible:    isVisible,
 				printable:  isPrintable
 			});
+			counter.add++;
+			data.errors.info.push('Added \'' + targetLayer.name + '\'.');
 		}
 		// Merge variants
-		docLayers = doc.layers.everyItem().getElements();
-		while ((candidateLayer = docLayers.shift())) {
-			if (candidateLayer === targetLayer) continue;
-			if (isIn(candidateLayer.name, variants)) {
-				oldLayerVisibility = candidateLayer.visible;
-				if (candidateLayer === oldActiveLayer) oldActiveLayer = targetLayer;
-				targetLayer.merge(candidateLayer);
+		layers = doc.layers.everyItem().getElements();
+		while ((l = layers.shift())) {
+			if (l === targetLayer) continue;
+			if (isIn(l.name, variants)) {
+				oldLayerVisibility = l.visible;
+				if (l === oldActiveLayer) oldActiveLayer = targetLayer;
+				oldName = l.name;
+				targetLayer.merge(l);
 				targetLayer.visible = oldLayerVisibility;
+				counter.merge++;
+				data.errors.info.push('Merged \'' + oldName + '\' with \'' + targetLayer.name + '\'.');
 			}
 		}
 		return targetLayer;
@@ -121,58 +135,74 @@ function main() {
 
 	/**
 	 * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
-	 * Blank lines and those prefixed with `#` are ignored. Includes records from `@path/to/include.txt`
-	 * or `@default` data file (see `getDataFile()`).
+	 * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+	 * Include records from another file with `@path/to/include.txt` or the `@default` data file.
 	 * @param {File} dataFile - A tab-separated-values file (object).
-	 * @param {boolean} flgR - Flag for recursive call (`@include`).
-	 * @returns {{records: array, errors: array}}
+	 * @param {boolean} flgR - Internal flag for recursive calls (`@include`).
+	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
 	 */
 	function parseDataFile(dataFile, flgR) {
-		var infoLine, include, includeFile;
-		var buffer = [];
+		var record, part, include, includeFile;
 		var records = [];
-		var errors = [];
-		var flgHeader = false;
+		var errors = { info: [], warn: [], fail: [] };
+		var tmpData = [];
+		var isHeaderFound = false;
 		var line = 0;
 		dataFile.open('r');
 		while (!dataFile.eof) {
-			infoLine = dataFile.readln(); line++;
-			if (infoLine.replace(/^\s+|\s+$/g, '') === '') continue; // Ignore blank lines
-			if (infoLine.slice(0,1) === '\u0023') continue;          // Ignore lines prefixed with '#'
-			infoLine = infoLine.split(/ *\t */);
-			if (!flgHeader) { flgHeader = true; continue; } // Header
-			// '@include'
-			if (infoLine[0].slice(0,1) === '\u0040') { // '@'
-				include = infoLine[0].slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
-				includeFile = /^default(s?)$/i.test(include) ?                      // '@default' ?
-					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Include default data file :
-					File(include);                                                  // Include 'path/to/file.txt'
+			line++;
+			record = (part ? part.slice(0,-1) : '') + dataFile.readln();
+			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
+			if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line, skip
+			if (record.slice(0,1) === '\u0023') continue;          // '#': Comment line, skip
+			if (record.slice(0,1) === '\u0040') {                  // '@': Include directive, parse file
+				include = record.slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
+				includeFile = /^default(s?)$/i.test(include) ?
+					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Default data file
+					File(include); // 'path/to/file.txt'
 				if (includeFile && includeFile.exists) {
-					if (includeFile.fullName === dataFile.fullName) continue;       // Skip self
-					buffer = parseDataFile(includeFile, true);
-					records = records.concat(buffer.records);
-					errors = errors.concat(buffer.errors);
+					if (includeFile.fullName === dataFile.fullName) continue; // Skip self
+					tmpData = parseDataFile(includeFile, true);
+					records = records.concat(tmpData.records);
+					errors = {
+						info: errors.info.concat(tmpData.errors.info),
+						warn: errors.warn.concat(tmpData.errors.warn),
+						fail: errors.fail.concat(tmpData.errors.fail)
+					};
+				} else {
+					errors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
+					': \'' + include + '\' not found.');
 				}
-			} else { validateRecord(); }
+				continue;
+			}
+			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
+			record = record.split(/ *\t */);
+			checkRecord();
 		}
-		dataFile.close(); infoLine = '';
-		return { records: records, errors: errors };
+		dataFile.close(); record = '';
+		return { records: records, errors: { info: errors.info, warn: errors.warn, fail: errors.fail } };
 
-		function validateRecord() {
-			if (!infoLine[0]) {
-				errors.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
+		function checkRecord() {
+			var tmpErrors = { info: [], warn: [], fail: [] };
+			if (!record[0]) {
+				tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
 				': Missing layer name.');
 			}
-			if (errors.length === 0) {
+			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) {
 				records.push({
-					name:        infoLine[0],
-					color:       infoLine[1] ? getUIColor(infoLine[1]) : UIColors.LIGHT_BLUE,
-					isVisible:   infoLine[2] ? (infoLine[2].toLowerCase() === 'yes')   : true,
-					isPrintable: infoLine[3] ? (infoLine[3].toLowerCase() === 'yes')   : true,
-					isBelow:     infoLine[4] ? (infoLine[4].toLowerCase() === 'below') : false,
-					variants:    infoLine[5] ? (infoLine[0] + ',' + infoLine[5]).split(/ *, */) : ''
+					name:        record[0],
+					color:       record[1] ? getUIColor(record[1]) : UIColors.LIGHT_BLUE,
+					isVisible:   record[2] ? (record[2].toLowerCase() === 'yes')   : true,
+					isPrintable: record[3] ? (record[3].toLowerCase() === 'yes')   : true,
+					isBelow:     record[4] ? (record[4].toLowerCase() === 'below') : false,
+					variants:    record[5] ? (record[0] + ',' + record[5]).split(/ *, */) : ''
 				});
 			}
+			errors = {
+				info: errors.info.concat(tmpErrors.info),
+				warn: errors.warn.concat(tmpErrors.warn),
+				fail: errors.fail.concat(tmpErrors.fail)
+			};
 
 			function getUIColor(color) {
 				return {
