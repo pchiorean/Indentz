@@ -2,6 +2,7 @@
 
 #### [2021-10-12](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-12&type=commits)
 
+- `fix` **DefaultLayers v3.3.1, DefaultSwatches v4.5.1, ReplaceFonts v2.2.1, ReplaceLinks v1.1.1** - Change 'No data file found' alert verbosity level to `info`
 - `upd` **QuickExport v2.13** - When exporting files to subfolders, a `+` in the suffix will truncate the subfolder name
 
 #### [2021-10-11](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-11&type=commits)

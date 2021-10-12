@@ -1,5 +1,5 @@
 /*
-	Default layers v3.3 (2021-10-11)
+	Default layers v3.3.1 (2021-10-11)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.txt':
@@ -53,14 +53,14 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 
 function main() {
 	var VERBOSITY = 1; // 0: FAIL, 1: +WARN, 2: +INFO
-	var file, data, messages, newLayer, tmpLayer, i, n;
+	var file, data, messages, oldActiveLayer, newLayer, tmpLayer, i, n;
 	var counter = { add: 0, merge: 0 };
-	var oldActiveLayer = doc.activeLayer; // Save active layer
-	if (!(file = getDataFile('layers.txt'))) { alert('No data file found.'); exit(); }
+	if (!(file = getDataFile('layers.txt'))) { if (VERBOSITY > 1) alert('No data file found.'); exit(); }
 	data = parseDataFile(file);
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length === 0) exit();
 
+	oldActiveLayer = doc.activeLayer; // Save active layer
 	doc.layers.everyItem().properties = { locked: false }; // Unlock existing layers
 	// Top layers
 	for (i = data.records.length - 1; i >= 0 ; i--) {

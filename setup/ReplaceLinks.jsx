@@ -1,5 +1,5 @@
 /*
-	Replace links 1.1 (2021-10-11)
+	Replace links 1.1.1 (2021-10-11)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
@@ -47,7 +47,7 @@ function main() {
 	var VERBOSITY = 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, data, messages, link, links;
 	var counter = 0;
-	if (!(file = getDataFile('links.txt'))) { alert('No data file found.'); exit(); }
+	if (!(file = getDataFile('links.txt'))) { if (VERBOSITY > 1) alert('No data file found.'); exit(); }
 	data = parseDataFile(file);
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length === 0) exit();
@@ -150,8 +150,8 @@ function main() {
 	function isIn(item, array) {
 		for (var i = 0, n = array.length; i < n; i++) {
 			if (item.constructor.name === 'String') {
-				if ((array[i].constructor.name === 'Link' ? array[i].name : array[i])
-					.lastIndexOf(item) !== -1) return true;
+				if ((array[i].constructor.name === 'Link' ? array[i].name : array[i]).lastIndexOf(item) !== -1)
+					return true;
 			} else if (item === array[i]) { return true; }
 		}
 		return false;
