@@ -1,5 +1,9 @@
 ## Changelog
 
+#### [2021-10-12](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-12&type=commits)
+
+- `upd` **QuickExport v2.13** - When exporting files to subfolders, a `+` in the suffix will truncate the subfolder name
+
 #### [2021-10-11](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-11&type=commits)
 
 - `fix` **ParseDataFile v2.2** - Fixed an overlap between general errors and record checking errors
@@ -107,9 +111,9 @@
 - `upd` **ParseDataFile** - Keep the record index in the returned object
 - `brk` **PrepareForExport, VisibleArea** - Read layer variants from `layers.txt`, fallback to defaults
 - `upd` **QuickExport** - Don't include page information for very small files
-- `upd` **QuickExport** - Limit export subfolder to suffix's first word
 - `upd` **QuickExport** - JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 - `upd` **ReplaceFonts** - Report changed fonts
+- `upd` **ReplaceLinks** - Use wildcards for old links
 - `upd` **ReplaceText** - Take an array of strings as input
 - `upd` **ReplaceText** - Add a switch for grep matching
 - `upd` **Report** - Add auto filtering mode (`true`|`false`|`auto`)
@@ -118,7 +122,8 @@
 - `upd` **SpreadsToFiles** - Split 'ABBBCC' to 'A', 'BBB', 'CC'
 - `upd` **TextAutoSize** - Check `baselineShift` ([#132](https://github.com/pchiorean/Indentz/issues/132))
 - `brk` **VisibleArea** - Mark the entire spread's visible area, not individual pages
-- `upd` **VisibleArea** - Use wildcards for layers' names
+- `upd` **VisibleArea** - Use wildcards for layer names
+- `upd` Add an optionally verbosity argument to DefaultLayers/Swatches & ReplaceFonts/Links
 - `upd` Use a custom object style for 'Visible area' frame ([#123](https://github.com/pchiorean/Indentz/issues/123))
 - `sty` Fix UI static/edittext width (see Marc's [measureString()](https://twitter.com/indiscripts/status/1408788941550108674))
 
@@ -130,6 +135,7 @@
 - `fix` **LabelPageRatios** - Use spreads' ratio
 - `fix` **PageSizeFromFilename** - Error on pages set to 1:X scale ([#129](https://github.com/pchiorean/Indentz/issues/129))
 - `fix` **PageSizeFromFilename** - Limit detected bleed to max values
+- `fix` **PageSizeFromFilename** - Dimensions in pixels
 - `fix` **PageSizeFromSelection** - For text frames use outlined text bounds
 - `fix` **QR, QRBatch** - Align to page > visible area > margins
 - `fix` **QR, QRBatch** - Improve line breaking

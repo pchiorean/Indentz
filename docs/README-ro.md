@@ -50,7 +50,7 @@ Proxy | | | | | |
 
   ![Quick export](img/quickexport.png)
 
-  Textul din câmpul **Suffix** va fi adăugat la numele fișierului exportat (e autodetectat dacă numele presetului se termină cu „_*sufix*”). Dacă **Export in subfolders** e activ, sufixul va fi folosit și pentru numele subfolderului.
+  Textul din câmpul **Suffix** va fi adăugat la numele fișierului exportat (e autodetectat dacă numele presetului se termină cu „_*sufix*”). Dacă **Export in subfolders** e activ, sufixul (până la primul `+`) va fi folosit și pentru numele subfolderului.
 
   Pentru comoditate, câteva opțiuni de export sunt direct accesibile: export ca pagini/spreaduri, crop mark‑uri, page information, slug area; de asemenea, se poate seta un alt bleed.
 
@@ -373,4 +373,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 11 octombrie 2021
+README-ro.md • 12 octombrie 2021

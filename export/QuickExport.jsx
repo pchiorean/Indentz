@@ -1,5 +1,5 @@
 /*
-	Quick export v2.12.1 (2021-09-30)
+	Quick export v2.13 (2021-10-12)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -38,7 +38,7 @@ var VER = '2';
 var forbiddenFilenameCharsRE = /[#%^{}\\<>*?\/$!'":@`|=]/g; // eslint-disable-line no-useless-escape
 var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
-var settingsFile = File(Folder.userData + '/' + script.name.slice(0, script.name.lastIndexOf('.')) + '.prefs');
+var settingsFile = File(Folder.userData + '/' + script.name.replace(/.[^.]+$/, '') + '.prefs');
 var presets = app.pdfExportPresets.everyItem().name.sort();
 var folderMode = (app.documents.length === 0);
 var old = {
@@ -224,7 +224,7 @@ ui.preset1.preset.onChange = function () {
 	// Auto-set suffix
 	var str = this.selection.text;
 	var pdfExpPreset = app.pdfExportPresets.item(str);
-	ui.preset1.suffix.text = (/_/g.test(str) && str.slice(str.lastIndexOf('_'))) || '';
+	ui.preset1.suffix.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
 	// Populate preset options
 	ui.preset1.exportSpreads.value = pdfExpPreset.exportReaderSpreads;
 	ui.preset1.cropMarks.value = pdfExpPreset.cropMarks;
@@ -279,7 +279,7 @@ ui.preset2.preset.onChange = function () {
 	// Auto-set suffix
 	var str = this.selection.text;
 	var pdfExpPreset = app.pdfExportPresets.item(str);
-	ui.preset2.suffix.text = (/_/g.test(str) && str.slice(str.lastIndexOf('_'))) || '';
+	ui.preset2.suffix.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
 	// Populate preset options
 	ui.preset2.exportSpreads.value = pdfExpPreset.exportReaderSpreads;
 	ui.preset2.cropMarks.value = pdfExpPreset.cropMarks;
@@ -291,6 +291,7 @@ ui.preset1.suffix.onChange =
 ui.preset2.suffix.onChange = function () {
 	var str = this.text.replace(/^\s+|\s+$/g, '');   // Trim
 	str = str.replace(forbiddenFilenameCharsRE, ''); // Sanitize suffix
+	str = str.replace(/^_/, '');                     // Delete separator
 	if (this.text !== str) this.text = str;
 };
 if (folderMode) {
@@ -389,10 +390,10 @@ while ((doc = docs.shift())) {
 		exp = ui['preset' + step]; // Current export preset
 		if (!exp.isOn.value) continue;
 		// Create subfolder
-		suffix = exp.suffix.text ? ('_' + exp.suffix.text.replace(/^_/, '')) : '';
+		suffix = exp.suffix.text ? ('_' + exp.suffix.text) : '';
 		subfolder = '';
 		if (ui.output.options.subfolders.value && suffix) {
-			subfolder = suffix.replace(/^_/, '');
+			subfolder = suffix.replace(/^_/, '').replace(/\+.*$/, '').replace(/^\s+|\s+$/g, '');
 			if (!Folder(baseFolder + '/' + subfolder).exists) Folder(baseFolder + '/' + subfolder).create();
 		}
 		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) runScript(exp.script.path);
@@ -451,7 +452,7 @@ function updateLinks() {
 }
 
 function runScript(path) {
-	var ext = path.fsName.slice(path.fsName.lastIndexOf('.') + 1);
+	var ext = path.fsName.replace(/^.*\./, '');
 	app.doScript(path,
 		(function (str) {
 			return {

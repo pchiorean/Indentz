@@ -50,7 +50,7 @@ Proxy | | | | | |
 
   ![Quick export](img/quickexport.png)
 
-  The text from the **Suffix** field will be appended to the exported file name (it's autodetected if the preset ends with “_*suffix*”). If **Export in subfolders** is checked, the suffix will also be used for the subfolder name.
+  The text from the **Suffix** field will be appended to the exported file name (it's autodetected if the preset ends with “_*suffix*”). If **Export in subfolders** is checked, the suffix (up to the first `+`) will also be used for the subfolder name.
 
   For convenience, some export options are directly accessible: export as pages/spreads, crop marks, page information, slug area; also, you can set a custom bleed.
 
@@ -373,4 +373,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • October 11, 2021
+README.md • October 12, 2021
