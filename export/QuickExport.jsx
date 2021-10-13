@@ -1,5 +1,5 @@
 /*
-	Quick export v2.13 (2021-10-12)
+	Quick export v2.14 (2021-10-13)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -478,12 +478,17 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		fileSufx = RegExp('([ ._-])([a-zA-Z]{' +
 			(extendRange ? target.length / 2 : target.length) + '})$', 'i').exec(baseName);
 		for (var i = 0, n = target.length; i < n; i++) {
-			fn = uniqueName(fileSufx ?
-				/*filename*/ baseName.replace(RegExp(fileSufx[0] + '$'), '') + fileSufx[1] +
-				fileSufx[2][extendRange && !(i % 2) ? i / 2 : i] + suffix :
-				baseName + '_' + zeroPad(extendRange && !(i % 2) ? i / 2 + 1 : i + 1, String(n).length) + suffix,
-				/*folder*/ baseFolder + (subfolder ? '/' + subfolder : ''),
-				/*overwrite flag*/ ui.output.options.overwrite.value);
+			// Add a page/spread index
+			fn = baseName;
+			if (fileSufx) { // The target already has an index
+				fn = fn.replace(RegExp(fileSufx[0] + '$'), '') +
+					fileSufx[1] + fileSufx[2][extendRange && !(i % 2) ? i / 2 : i];
+			} else if (target.length > 1) { // Add index only if needed
+				fn += '_' + zeroPad(extendRange && !(i % 2) ? i / 2 + 1 : i + 1, String(n).length);
+			}
+			// Get unique export filename
+			fn = uniqueName(fn + suffix, baseFolder + (subfolder ? '/' + subfolder : ''),
+				ui.output.options.overwrite.value);
 			// Get page range
 			if (asSpreads) {
 				// Export as spreads
