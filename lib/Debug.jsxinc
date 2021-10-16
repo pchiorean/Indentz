@@ -1,7 +1,7 @@
 /**
  * Appends a debugging line to a file saved on the desktop with the name of the running script
  * (e.g. `active-script.log`). If no arguments are given, it just appends an empty line.
- * @version 1.0.1 (2021-09-24)
+ * @version 1.1 (2021-10-16)
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} [type] - A single character string: <ul> <li>`+` appends `MESSAGE` to the previous line;</li>
@@ -43,7 +43,7 @@ function dbg(/* ?type, ?context, message */) {
 		if (args.length === 0) return (debugFile.length === 0 ? (now + 'Log created') : '\n');
 
 		switch (args[0].toString().toLowerCase()) {
-			case '+': return (args.shift(), separator + args.join(separator));
+			case '+': return (args.shift(), separator + args.join(separator).replace(/\r|\n/g, '\u00B6'));
 			case 'i': type = '[INFO] '; break;
 			case 'w': type = '[WARN] '; break;
 			case 'e': type = ' [ERR] '; break;
@@ -57,11 +57,10 @@ function dbg(/* ?type, ?context, message */) {
 		if (type) args.shift();
 
 		if (/^<.+>$/g.test(args[0])) {
-			// context = '[' + args[0].toString().slice(1, args[0].length - 1) + ']: ';
 			context = args[0].toString().slice(1, args[0].length - 1) + ' :: ';
 			args.shift();
 		}
-		return ('\n' + now + type + context + args.join(separator));
+		return ('\n' + now + type + context + args.join(separator).replace(/\r|\n/g, '\u00B6'));
 	}
 
 	function pad(string, /*number*/padLength, /*string*/padChar) {
