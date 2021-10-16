@@ -3,6 +3,8 @@
 
 #### [2021-10-16](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-16&type=commits)
 
+- [`upd`](https://github.com/pchiorean/Indentz/commit/b8df97aaa527928efb83bdb3b5541632b5e275a9)
+  **Debug v1.1**: Display new lines as paragraph marks
 - [`upd`](https://github.com/pchiorean/Indentz/commit/04d1189abba4fbd8bc2202e048a685f7b71be878)
   **QuickExport v2.15**: Report overflowed text; don't report missing links from the pasteboard
 
@@ -138,8 +140,8 @@
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
   **QRBatch v2.7**: Converted documents are now skipped and reported
 - [`sty`](https://github.com/pchiorean/Indentz/commit/51bb19d2d7074181c5acacc8dd52931bfd3263c5)
-- [`upd`](https://github.com/pchiorean/Indentz/commit/8982a3fde7956ac83372ba140a773a05dff929e2)
-- [`fix`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
+  [`upd`](https://github.com/pchiorean/Indentz/commit/8982a3fde7956ac83372ba140a773a05dff929e2)
+  [`fix`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
   Autumn cleaning: added ESLint and refactored many scripts (hopefully, there are no new bugs)
 - [`doc`](https://github.com/pchiorean/Indentz/commit/c8dd950b8167d4a30148c866da25e91694f9416c)
   Added a changelog
