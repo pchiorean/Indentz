@@ -1,5 +1,5 @@
 /*
-	Quick export v2.14 (2021-10-13)
+	Quick export v2.15 (2021-10-16)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -383,6 +383,7 @@ while ((doc = docs.shift())) {
 		baseFolder = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
 	}
 	checkFonts();
+	checkTextOverflow();
 	if (ui.output.options.updateLinks.value) updateLinks();
 	// Export preset loop
 	old.docSpreads = doc.spreads.length; // Save initial spreads count for extendRange hack (see Export())
@@ -438,8 +439,20 @@ function checkFonts() {
 	}
 }
 
+function checkTextOverflow() {
+	for (var i = 0; i < doc.allPageItems.length; i++) {
+		if (doc.allPageItems[i].constructor.name === 'TextFrame') {
+			if (doc.allPageItems[i].overflows && doc.allPageItems[i].parentPage) {
+				errors.push(doc.name + ': Text overflows.');
+				return;
+			}
+		}
+	}
+}
+
 function updateLinks() {
 	for (var i = 0, n = doc.links.length; i < n; i++) {
+		if (doc.links[i].parent.parent.parentPage == null) continue;
 		switch (doc.links[i].status) {
 			case LinkStatus.LINK_OUT_OF_DATE:
 				doc.links[i].update();
