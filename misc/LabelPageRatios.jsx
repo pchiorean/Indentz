@@ -1,5 +1,5 @@
 /*
-	Page ratios v2.1.3 (2021-09-13)
+	Page ratios v2.2 (2021-10-17)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a label (ratio) on each page's slug.
@@ -74,26 +74,37 @@ function main() {
 			useNoLineBreaksForAutoSizing: true
 		};
 		// Move frame in position
+		var pageMarksHeight = 15 + UnitValue('1 mm').as('pt');
 		switch (isOnTop) {
-			case false:
-				if (doc.documentPreferences.slugBottomOffset < 9) {
-					doc.documentPreferences.slugBottomOffset = 9 +
-					doc.documentPreferences.properties.documentBleedBottomOffset;
-				}
-				infoFrame.move([
-					page.bounds[1] + 10,
-					page.bounds[2] + doc.documentPreferences.properties.documentBleedBottomOffset + 3.5
-				]);
-				break;
-			default:
-				if (doc.documentPreferences.slugTopOffset < 9) {
-					doc.documentPreferences.slugTopOffset = 9 +
+			case true:
+				if (doc.documentPreferences.slugTopOffset < pageMarksHeight +
+					doc.documentPreferences.properties.documentBleedTopOffset) {
+					doc.documentPreferences.slugTopOffset = pageMarksHeight +
 					doc.documentPreferences.properties.documentBleedTopOffset;
 				}
 				infoFrame.move([
 					page.bounds[1] + 10,
-					-4.2 - infoFrame.geometricBounds[2] - doc.documentPreferences.properties.documentBleedTopOffset
+					page.bounds[0] -
+						doc.documentPreferences.properties.documentBleedTopOffset -
+						UnitValue('1 mm').as('pt') -
+						(15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2 -
+						(infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])
 				]);
+				break;
+			case false:
+				if (doc.documentPreferences.slugBottomOffset < pageMarksHeight +
+					doc.documentPreferences.properties.documentBleedBottomOffset) {
+					doc.documentPreferences.slugBottomOffset = pageMarksHeight +
+					doc.documentPreferences.properties.documentBleedBottomOffset;
+				}
+				infoFrame.move([
+					page.bounds[1] + 10,
+					page.bounds[2] +
+						UnitValue('1 mm').as('pt') +
+						doc.documentPreferences.properties.documentBleedBottomOffset +
+						(15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2
+				]);
+				break;
 		}
 	}
 
