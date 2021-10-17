@@ -19,11 +19,11 @@ placement	Black	no	yes	above
 placeholder	Magenta	no	yes	above
 
 # Artwork
-HW	Light Gray	no	yes	above	*hw*, legal, wh
+HW	Light Gray	no	yes	above	*hw*, legal, todesbalken, wh
 disclaimer	Gray	no	yes	above	legal text
 text and logos	Green	no	yes	above	copy, dots, headline*, hl, logo, text*, txt, typ?
-codes	Grid Green	no	yes	above	code*, bar*code*, EAN*
-price	Gold	no	yes	above	preis
+codes	Grid Green	no	yes	above	code*, bar*code*, ean*
+offer	Gold	no	yes	above	preis, price
 products	Blue	no	yes	above	device*, pack*, packshot*, product*, tin*
 new	Grid Green	no	yes	above
 ring	Fiesta	no	yes	above	bullseye, inner frame dot
