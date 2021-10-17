@@ -2,7 +2,7 @@
  * Displays a message in a scrollable list with optional filtering and/or compact mode.
  * Inspired by this snippet by Peter Kahrel:
  * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
- * @version 2.1 (2021-10-09)
+ * @version 2.1.1 (2021-10-17)
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string|string[]} message - Message to be displayed. Can be a string or a strings array.
@@ -14,7 +14,7 @@
 function report(message, title, showFilter, showCompact) {
 	var w, search, list;
 	if (message.constructor.name !== 'Array') message = message.split(/\r|\n/g);
-	if (message.length === 0) return;
+	// if (message.length === 0) return;
 	w = new Window('dialog', title || '');
 	// Sort and remove duplicates
 	if (showCompact && message.length > 1) {
@@ -49,7 +49,7 @@ function report(message, title, showFilter, showCompact) {
 		for (var i = 0, n = message.length; i < n; width = Math.max(width, message[i].toString().length), i++);
 		return width - 10;
 	}());
-	list.minimumSize.width  = 600; list.maximumSize.width  = 1024;
+	list.minimumSize.width  = 100; list.maximumSize.width  = 1024;
 	list.minimumSize.height = 100; list.maximumSize.height = 1024;
 	w.add('button { text: "Close", properties: { name: "ok" } }');
 	w.ok.active = true;
