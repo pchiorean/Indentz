@@ -1,5 +1,5 @@
 /*
-	Show used fonts 1.4.5 (2021-09-30)
+	Show used fonts v1.4.6 (2021-10-17)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Shows all fonts used in the current document.
@@ -12,11 +12,12 @@
 
 if (app.documents.length === 0) exit();
 
+var messages = '';
 var f = {
 	installed: [],
 	substituted: [],
 	fauxed: [],
-	notAvailable: [],
+	unavailable: [],
 	unknown: []
 };
 var usedFonts = app.activeDocument.fonts.everyItem().getElements();
@@ -26,16 +27,15 @@ for (var i = 0, n = usedFonts.length; i < n; i++) {
 		case 'INSTALLED':     f.installed.push(usedFonts[i].fontFamily    + '\t' + usedFonts[i].fontStyleName); break;
 		case 'SUBSTITUTED':   f.substituted.push(usedFonts[i].fontFamily  + '\t' + usedFonts[i].fontStyleName); break;
 		case 'FAUXED':        f.fauxed.push(usedFonts[i].fontFamily       + '\t' + usedFonts[i].fontStyleName); break;
-		case 'NOT_AVAILABLE': f.notAvailable.push(usedFonts[i].fontFamily + '\t' + usedFonts[i].fontStyleName); break;
-		case 'UNKNOWN':       f.unknown.push(usedFonts[i].fontFamily      + '\t' + usedFonts[i].fontStyleName); break;
+		case 'NOT_AVAILABLE': f.unavailable.push(usedFonts[i].name); break;
+		case 'UNKNOWN':       f.unknown.push(usedFonts[i].name); break;
 	}
 }
 
-report(
-	'INSTALLED:\n\n'     + f.installed.join('\n')    + '\n\n' +
-	'SUBSTITUTED:\n\n'   + f.substituted.join('\n')  + '\n\n' +
-	'FAUXED:\n\n'        + f.fauxed.join('\n')       + '\n\n' +
-	'NOT_AVAILABLE:\n\n' + f.notAvailable.join('\n') + '\n\n' +
-	'UNKNOWN:\n\n'       + f.unknown.join('\n'),
-	'Document fonts'
-);
+if (f.installed.length   > 0) messages +=     'FontStatus.INSTALLED:\n'     + f.installed.sort().join('\n');
+if (f.substituted.length > 0) messages += '\n\nFontStatus.SUBSTITUTED:\n'   + f.substituted.sort().join('\n');
+if (f.fauxed.length      > 0) messages += '\n\nFontStatus.FAUXED:\n'        + f.fauxed.sort().join('\n');
+if (f.unavailable.length > 0) messages += '\n\nFontStatus.NOT_AVAILABLE:\n' + f.unavailable.sort().join('\n');
+if (f.unknown.length     > 0) messages += '\n\nFontStatus.UNKNOWN:\n'       + f.unknown.sort().join('\n');
+
+if (messages.length > 0) report(messages, 'Document fonts'); else alert('0 fonts in document.');
