@@ -6,7 +6,7 @@
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ba80564a179e9664f582efddd3fe132c8a07fb6b)
   **QuickExport v2.16**: Don't include page information when pages/spreads widths are less than 335 pt
 - [`fix`](https://github.com/pchiorean/Indentz/commit/6895b3b0136908211a2a07983579916d4f4f00ac)
-  Added a white outline to labels
+  **LabelPage v1.3.1, LabelPageRatios v2.2.1, PrepareForExport v2.3.1** Added a white outline to labels
 #### [2021-10-17](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-17&type=commits)
 
 - [`fix`](https://github.com/pchiorean/Indentz/commit/70b7ac39278a7974143ce58516b140cb4d9f5930)
@@ -31,7 +31,8 @@
 #### [2021-10-12](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-12&type=commits)
 
 - [`fix`](https://github.com/pchiorean/Indentz/commit/5661ea64bf4dbdf14900448bcd68796fbbc55eae)
-  **DefaultLayers v3.3.1, DefaultSwatches v4.5.1, ReplaceFonts v2.2.1, ReplaceLinks v1.1.1**: Change 'No data file found' alert verbosity level to `info`
+  **DefaultLayers v3.3.1, DefaultSwatches v4.5.1, ReplaceFonts v2.2.1, ReplaceLinks v1.1.1**:
+  Change 'No data file found' alert verbosity level to `info`
 - [`upd`](https://github.com/pchiorean/Indentz/commit/f42cda93e86b35d8874c6d7224ca960c88d815ba)
   **QuickExport v2.13**: When exporting files to subfolders, a `+` in the suffix will truncate the subfolder name
 
@@ -137,7 +138,8 @@
 #### [2021-09-20](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-20&type=commits)
 
 - [`new`](https://github.com/pchiorean/Indentz/commit/dc2e515a744d3ace9beedbfb0362765088c31857)
-  Added **OffsetPath v1.2** by [Olav Martin Kvern](https://www.siliconpublishing.com/blog/free-indesign-scripts/) to `/misc` (it uses InDesign's text wrap feature to create offset/inset paths)
+  Added **OffsetPath v1.2** by [Olav Martin Kvern](https://www.siliconpublishing.com/blog/free-indesign-scripts/) 
+  to `/misc` (it uses InDesign's text wrap feature to create offset/inset paths)
 - [`new`](https://github.com/pchiorean/Indentz/commit/793b29ad840c757da623c7478c1151da8c02a4c0)
   Added **FindFile**, **IsIn** to `/lib`; renamed **Relink** to **ReplaceLinks**
 - [`upd`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
@@ -169,7 +171,8 @@
 
 - `new` **DocCleanup**: Ask to delete empty frames
 - `new` **DocCleanup**: Remove unused masters
-- `new` **DocCleanup**: Remove unused styles and groups (see [this](https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331) discussion)
+- `new` **DocCleanup**: Remove unused styles and groups
+  (see [this](https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331) discussion)
 - `new` **QuickExport**: Add history for dropdowns
 - `new` **QuickExport**: Add JPG & `?`TIFF export profiles
 - `new` **Report**: Add a button to save errors to file
@@ -192,9 +195,10 @@
 - `upd` **ReplaceText**: Take an array of strings as input
 - `upd` **ReplaceText**: Add a switch for grep matching
 - `upd` **Report**: Add auto filtering mode (`true`|`false`|`auto`)
-- `upd` **Report**: Improve filtering: `-` for none of these words, `"` for exact word or phrase (or use regex and be done with it)
+- `upd` **Report**: Improve filtering: `-` for none of these words, `"` for exact word or phrase
+  (or use regex and be done with it)
 - `brk` **ScaleTo...**: Scale to `alignDistributeBounds`
-- `upd` **SpreadsToFiles**: Split 'ABBBCC' to 'A', 'BBB', 'CC'
+- `upd` **SpreadsToFiles**: Split '-ABBBCC' to '-A', '-BBB', '-CC'
 - `upd` **TextAutoSize**: Check `baselineShift` ([#132](https://github.com/pchiorean/Indentz/issues/132))
 - `brk` **VisibleArea**: Mark the entire spread's visible area, not individual pages
 - `upd` **VisibleArea**: Use wildcards for layer names
@@ -216,7 +220,6 @@
 - `fix` **QR, QRBatch**: Improve line breaking
 - `fix` **QRBatch**: Remove `preview` & `print` from filenames for separate codes
 - `fix` **QRBatch**: Remove `QR` from filenames for on-doc codes
-- `fix` **ReplaceFonts**: Don't report unavailable fonts that are not in document
 
 ##### New scripts
 
