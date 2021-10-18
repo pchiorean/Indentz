@@ -1,10 +1,25 @@
 
 ## Changelog
 
+#### [2021-10-18](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-18&type=commits)
+
+- [`fix`](https://github.com/pchiorean/Indentz/commit/ba80564a179e9664f582efddd3fe132c8a07fb6b)
+  **QuickExport v2.16**: Don't include page information when pages/spreads widths are less than 335 pt
+- [`fix`](https://github.com/pchiorean/Indentz/commit/6895b3b0136908211a2a07983579916d4f4f00ac)
+  Added a white outline to labels
+#### [2021-10-17](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-17&type=commits)
+
+- [`fix`](https://github.com/pchiorean/Indentz/commit/70b7ac39278a7974143ce58516b140cb4d9f5930)
+  **ShowFonts v1.4.6**: Fixed name reporting for missing fonts
+- [`upd`](https://github.com/pchiorean/Indentz/commit/614255fcf2c98b63fa22d2e4cb1ecef00162b796)
+  **LabelPage v1.3, LabelPageRatios v2.2, PrepareForExport v2.3**: Aligned page label to crop marks
+- [`sty`](https://github.com/pchiorean/Indentz/commit/3b48f362a0b451f959da7bbea8ef83fb736e0e30)
+  **Report 2.1.1**: Relaxed minimum window width for very small messages
+
 #### [2021-10-16](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-16&type=commits)
 
 - [`upd`](https://github.com/pchiorean/Indentz/commit/b8df97aaa527928efb83bdb3b5541632b5e275a9)
-  **Debug v1.1**: Display new lines as paragraph marks
+  **Debug v1.1**: Display NL/CRs as paragraph marks
 - [`upd`](https://github.com/pchiorean/Indentz/commit/04d1189abba4fbd8bc2202e048a685f7b71be878)
   **QuickExport v2.15**: Report overflowed text; don't report missing links from the pasteboard
 
@@ -173,7 +188,6 @@
 - `brk` **PrepareForExport, VisibleArea**: Read layer variants from `layers.txt`, fallback to defaults
 - `upd` **QuickExport**: Add `+diecut` to names when files contain a `dielines` layer
 - `upd` **QuickExport**: JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
-- `upd` **ReplaceFonts**: Report changed fonts
 - `upd` **ReplaceLinks**: Use wildcards for old links
 - `upd` **ReplaceText**: Take an array of strings as input
 - `upd` **ReplaceText**: Add a switch for grep matching
@@ -191,20 +205,18 @@
 ##### Bug fixes
 
 - `fix` **DefaultSwatches**: Check values on parsing
-- `fix` **FitTo**: Check for transformations ([#131](https://github.com/pchiorean/Indentz/issues/131)) <!- ItemTransform = [1 0 0 1 0 0] ->
-- `fix` **FitTo**: Forced-fit lines are moved to [0,0]
+- `fix` **FitTo**: Check for transformations ([#131](https://github.com/pchiorean/Indentz/issues/131)) <!-- ItemTransform = [1 0 0 1 0 0] -->
+- `fix` **FitTo**: Forced-fit lines are moved to [0, 0]
 - `fix` **LabelPageRatios**: Use spreads' ratio
 - `fix` **PageSizeFromFilename**: Error on pages set to 1:X scale ([#129](https://github.com/pchiorean/Indentz/issues/129))
 - `fix` **PageSizeFromFilename**: Limit detected bleed to max values
 - `fix` **PageSizeFromFilename**: Dimensions in pixels
 - `fix` **PageSizeFromSelection**: For text frames use outlined text bounds
-- `fix` **QR, QRBatch**: Align to page > visible area > margins
+- `fix` **QR, QRBatch**: Align to page ⏵ visible area ⏵ margins
 - `fix` **QR, QRBatch**: Improve line breaking
 - `fix` **QRBatch**: Remove `preview` & `print` from filenames for separate codes
 - `fix` **QRBatch**: Remove `QR` from filenames for on-doc codes
-- `fix` **QuickExport**: Don't include page information for very small files
 - `fix` **ReplaceFonts**: Don't report unavailable fonts that are not in document
-- `fix` **ShowFonts**: Font info not available for missing fonts
 
 ##### New scripts
 
