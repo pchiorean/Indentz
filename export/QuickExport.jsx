@@ -1,5 +1,5 @@
 /*
-	Quick export v2.15 (2021-10-16)
+	Quick export v2.16 (2021-10-18)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -34,7 +34,6 @@
 var doc, settings, baseFolder, subfolder, suffix, exp, name, progressBar, maxCounter;
 var ADV = ScriptUI.environment.keyboardState.altKey;
 var WIN = (File.fs === 'Windows');
-var VER = '2';
 var forbiddenFilenameCharsRE = /[#%^{}\\<>*?\/$!'":@`|=]/g; // eslint-disable-line no-useless-escape
 var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
@@ -52,6 +51,7 @@ var docs = [];
 var pbWidth = 50;
 var counter = 1;
 
+var VER = '2';
 var defaults = {
 	presets: {
 		preset1: {
@@ -481,12 +481,12 @@ function runScript(path) {
 }
 
 function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
-	var baseName, fileSufx, fn, extendRange, range, target;
+	var baseName, fileSufx, fn, extendRange, range;
+	var target = asSpreads ? doc.spreads : doc.pages;
 	if (split) {
 		// Export separate pages
 		// Note: if a script doubles the number of pages/spreads, the extendRange hack exports them as pairs
 		extendRange = (doc.spreads.length === old.docSpreads * 2) && exp.exportSpreads.value;
-		target = asSpreads ? doc.spreads : doc.pages;
 		baseName = decodeURI(doc.name).replace(/\.indd$/i, '');
 		fileSufx = RegExp('([ ._-])([a-zA-Z]{' +
 			(extendRange ? target.length / 2 : target.length) + '})$', 'i').exec(baseName);
@@ -566,6 +566,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 	}
 
 	function exportToPDF(/*string*/filename, /*string|Enum*/pageRange, /*pdfExportPreset*/pdfPreset) {
+		var fPg, lPg, spreadWidth;
 		// Load preset settings
 		for (var key in pdfPreset) {
 			if (Object.prototype.hasOwnProperty.call(pdfPreset, key))
@@ -578,6 +579,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		app.pdfExportPreferences.pageInformationMarks = exp.pageInfo.value;
 		app.pdfExportPreferences.includeSlugWithPDF = exp.slug.value;
 		app.pdfExportPreferences.useDocumentBleedWithPDF = !exp.bleedCustom.value;
+		// Custom bleed value
 		if (app.pdfExportPreferences.useDocumentBleedWithPDF) {
 			app.pdfExportPreferences.pageMarksOffset = Math.min(
 				Math.max(
@@ -585,7 +587,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 					doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
 					doc.documentPreferences.properties.documentBleedBottomOffset,
 					doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
-				) + 1,                        // Max bleed value + 1 mm
+				) + 1, // Max bleed value + 1 mm
 				UnitValue('72 pt').as('mm')); // But limit to 72 pt
 		} else {
 			app.pdfExportPreferences.bleedTop =
@@ -595,6 +597,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			app.pdfExportPreferences.pageMarksOffset =
 				Math.min(app.pdfExportPreferences.bleedTop + 1, UnitValue('72 pt').as('mm'));
 		}
+		// Don't include printer's marks if no bleed
 		if (doc.documentPreferences.properties.documentBleedTopOffset +
 			doc.documentPreferences.properties.documentBleedInsideOrLeftOffset +
 			doc.documentPreferences.properties.documentBleedBottomOffset +
@@ -603,6 +606,20 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			app.pdfExportPreferences.cropMarks = false;
 			app.pdfExportPreferences.pageInformationMarks = false;
 		}
+		// Don't include page information for small widths
+		fPg = (pageRange === PageRange.ALL_PAGES) ?
+			(target.constructor.name === 'Spreads' ? target[0].pages[0] : target[0]) :
+			(/-/.test(pageRange) ?
+				doc.pages.item(pageRange.slice(0, pageRange.lastIndexOf('-'))) :
+				doc.pages.item(pageRange));
+		lPg = (pageRange === PageRange.ALL_PAGES) ?
+			(target.constructor.name === 'Spreads' ? target[0].pages[-1] : target[0]) :
+			(/-/.test(pageRange) ?
+				doc.pages.item(pageRange.slice(-pageRange.lastIndexOf('-'))) :
+				doc.pages.item(pageRange));
+		spreadWidth = (target.constructor.name === 'Spreads' ? lPg.bounds[3] : fPg.bounds[3]) - fPg.bounds[1];
+		if (spreadWidth < UnitValue('335 pt').as('mm')) app.pdfExportPreferences.pageInformationMarks = false;
+
 		doc.exportFile(ExportFormat.PDF_TYPE, File(filename), false);
 	}
 }
