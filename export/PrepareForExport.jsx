@@ -1,5 +1,5 @@
 /*
-	Prepare for export v2.3 (2021-10-17)
+	Prepare for export v2.3.1 (2021-10-18)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves items with special colors to separate spreads.
@@ -162,6 +162,9 @@ function prepareForExport() {
 					appliedFont:    app.fonts.item('Helvetica\tRegular'),
 					pointSize:      6,
 					fillColor:      'Registration',
+					strokeWeight:   '0.4 pt',
+					strokeColor:    'Paper',
+					// endJoin:        EndJoin.ROUND_END_JOIN,
 					capitalization: Capitalization.ALL_CAPS
 				};
 				infoFrame.fit(FitOptions.FRAME_TO_CONTENT);

@@ -1,5 +1,5 @@
 /*
-	Page ratios v2.2 (2021-10-17)
+	Page ratios v2.2.1 (2021-10-18)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a label (ratio) on each page's slug.
@@ -63,6 +63,9 @@ function main() {
 			appliedFont:    app.fonts.item('Helvetica\tRegular'),
 			pointSize:      6,
 			fillColor:      'Registration',
+			strokeWeight:   '0.4 pt',
+			strokeColor:    'Paper',
+			// endJoin:        EndJoin.ROUND_END_JOIN,
 			capitalization: isCaps ? Capitalization.ALL_CAPS : Capitalization.NORMAL
 		};
 		infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
