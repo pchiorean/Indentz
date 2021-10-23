@@ -1,5 +1,5 @@
 /*
-	FitTo v5.5.4 (2021-10-23)
+	FitTo v5.5.5 (2021-10-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Reframes the selected objects to the page/spread's size/margins/visible area/bleed. If an object is larger
@@ -98,7 +98,7 @@ function fitTo(args) {
 			vis:    B[SCOPE].visible
 		};
 		if (!b.target) return obj;
-		if (FORCED) { obj.geometricBounds = b.target; return obj; }
+		if (FORCED && obj.constructor.name !== 'GraphicLine') { obj.geometricBounds = b.target; return obj; }
 
 		// Initialization
 		var o = {
@@ -227,15 +227,15 @@ function fitTo(args) {
 			(obj.paths[0].entirePath[0].length === 2 || obj.paths[0].entirePath[1].length === 2));
 		if (isOrthoLine && o.geo[0] === o.geo[2]) { // horizontal
 			obj.paths[0].entirePath = [
-				[ b.expand[1], obj.paths[0].entirePath[0][1] ],
-				[ b.expand[3], obj.paths[0].entirePath[1][1] ]
+				[ FORCED ? b.target[1] : b.expand[1], obj.paths[0].entirePath[0][1] ],
+				[ FORCED ? b.target[3] : b.expand[3], obj.paths[0].entirePath[1][1] ]
 			];
 			return obj;
 		}
 		if (isOrthoLine && o.geo[1] === o.geo[3]) { // vertical
 			obj.paths[0].entirePath = [
-				[ obj.paths[0].entirePath[0][0], b.expand[0] ],
-				[ obj.paths[0].entirePath[1][0], b.expand[2] ]
+				[ obj.paths[0].entirePath[0][0], FORCED ? b.target[0] : b.expand[0] ],
+				[ obj.paths[0].entirePath[1][0], FORCED ? b.target[2] : b.expand[2] ]
 			];
 			return obj;
 		}
