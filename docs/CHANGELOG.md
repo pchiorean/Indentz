@@ -1,6 +1,13 @@
 
 ## Changelog
 
+#### [2021-10-23](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-23&type=commits)
+
+- [`fix`](https://github.com/pchiorean/Indentz/commit/f40cdc1e437a43f68b7e4ae3188d1ba8b5300c69)
+  **FitTo v5.5.4**: Transformed containers and text frames are now clipped
+- [`fix`](https://github.com/pchiorean/Indentz/commit/ce1cf13f2750d04d9cf83fcd82e0759ef674309d)
+  **FitTo v5.5.5**: Don't move forced-fit lines to [0, 0]
+
 #### [2021-10-18](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-18&type=commits)
 
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ba80564a179e9664f582efddd3fe132c8a07fb6b)
@@ -179,6 +186,7 @@
 
 ##### Updates
 
+<!-- - `brk` **Debug**: LOG.debug / LOG.info / LOG.error etc -->
 - `upd` **Debug**: Add a hires timer
 - `upd` **DefaultSwatches**: Add tints support
 - `upd` **FindFile**: Use relative paths for includes
@@ -209,8 +217,6 @@
 ##### Bug fixes
 
 - `fix` **DefaultSwatches**: Check values on parsing
-- `fix` **FitTo**: Check for transformations ([#131](https://github.com/pchiorean/Indentz/issues/131)) <!-- ItemTransform = [1 0 0 1 0 0] -->
-- `fix` **FitTo**: Forced-fit lines are moved to [0, 0]
 - `fix` **LabelPageRatios**: Use spreads' ratio
 - `fix` **PageSizeFromFilename**: Error on pages set to 1:X scale ([#129](https://github.com/pchiorean/Indentz/issues/129))
 - `fix` **PageSizeFromFilename**: Limit detected bleed to max values
