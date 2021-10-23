@@ -191,7 +191,7 @@ Use `@path/to/include.txt` to includes records from another file or `@default` f
 var file, data;
 if (!(file = getDataFile('data.txt'))) { alert('No data file found.'); exit(); }
 data = parseDataFile(file);
-if (data.errors.length > 0) { report(data.errors, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
+if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 if (data.records.length === 0) exit();
 ```
 
@@ -225,8 +225,8 @@ it will return an object like this:
     ],
     errors: {
         info: [],
-        warn: [],
-        fail: [ 'Line 5: Missing layer name.' ]
+        warn: [ 'Line 5: Missing layer name.' ],
+        fail: []
     }
 }
 ```
