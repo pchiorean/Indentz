@@ -8,21 +8,21 @@
 function replaceText(findWhat, changeTo, wholeWord) {
 	wholeWord = (wholeWord === undefined) ? true : wholeWord;
 
-	app.findTextPreferences =   NothingEnum.NOTHING;
+	app.findTextPreferences   = NothingEnum.NOTHING;
 	app.changeTextPreferences = NothingEnum.NOTHING;
 
-	app.findChangeTextOptions.includeHiddenLayers =         true;
-	app.findChangeTextOptions.includeLockedLayersForFind =  true;
+	app.findChangeTextOptions.includeHiddenLayers         = true;
+	app.findChangeTextOptions.includeLockedLayersForFind  = true;
 	app.findChangeTextOptions.includeLockedStoriesForFind = true;
-	app.findChangeTextOptions.includeMasterPages =          true;
-	app.findChangeTextOptions.caseSensitive =               true;
-	app.findChangeTextOptions.wholeWord =                   wholeWord;
+	app.findChangeTextOptions.includeMasterPages          = true;
+	app.findChangeTextOptions.caseSensitive               = true;
+	app.findChangeTextOptions.wholeWord                   = wholeWord;
 
-	app.findTextPreferences.findWhat =   findWhat;
+	app.findTextPreferences.findWhat   = findWhat;
 	app.changeTextPreferences.changeTo = changeTo;
 	var result = doc.changeText();
 
-	app.findTextPreferences =   NothingEnum.NOTHING;
+	app.findTextPreferences   = NothingEnum.NOTHING;
 	app.changeTextPreferences = NothingEnum.NOTHING;
 	return (result.length > 0);
 }

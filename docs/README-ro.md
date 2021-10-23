@@ -1,6 +1,6 @@
 # Indentz
 
-Colecție de scripturi InDesign pentru operații simple și repetitive. Ideal, o parte din ele ar trebui invocate printr‑un shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; sugestii sub fiecare secțiune).
+Colecție de scripturi InDesign pentru operații simple și repetitive. Ideal, o parte din ele ar trebui invocate printr‑un shortcut (**Edit ⏵ Keyboard Shortcuts... ⏵ Product Area ⏵ Scripts**; sugestii sub fiecare secțiune).
 
 ---
 
@@ -56,7 +56,7 @@ Proxy | | | | | |
 
   Opțional, poate rula un JavaScript sau AppleScript înainte de export, de exemplu unul din următoarele:
 
-* **`PrepareForExport`** ascunde stratul **visible area** și mută ștanțele și marcajele pentru alb, foil și lac UV de pe **dielines** / **white** / **foil** / **varnish** pe spreaduri separate.
+* **`PrepareForExport`** ascunde stratul **visible area** și mută ștanțele și marcajele pentru alb, foil și lac UV de pe straturile **dielines** / **white** / **foil** / **varnish** pe spreaduri separate.
 
 * **`VisibleArea`** creează un cadru de dimensiunea marginilor paginii pe stratul **visible area**. Folosește culoarea **Visible area**, care dacă nu există va fi creată cu valoarea „C=0 M=100 Y=0 K=0”.
 
@@ -90,7 +90,7 @@ Redimensionează obiectele selectate, fără să le scaleze. Cadrele obișnuite 
 
   **`FitTo...Forced`** redimensionează exact la dimensiunile respective.
 
-* **`TextAutosize`** setează dimensionarea automată a cadrului de text de la **None** la **Height Only** și de la **Height Only** la **Height and Width** (rândurile singulare sunt setate întotdeauna **Height and Width**). Alinierea primului paragraf stabilește alinierea orizontală a cadrului; **Text Frame Options > Vertical Justification** stabilește alinierea verticală:
+* **`TextAutosize`** setează dimensionarea automată a cadrului de text de la **None** la **Height Only** și de la **Height Only** la **Height and Width** (rândurile singulare sunt setate întotdeauna **Height and Width**). Alinierea primului paragraf stabilește alinierea orizontală a cadrului; **Text Frame Options ⏵ Vertical Justification** stabilește alinierea verticală:
 
   | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
   :-: | :-: | :-: | :-:
@@ -269,7 +269,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`PageSizeFromMargins`** redimensionează pagina curentă la marginile acesteia.
 
-* **`PageSizeFromSelection`** redimensionează pagina la obiectele selectate (similar cu **Artboards > Fit to Selected Art** din Illustrator).
+* **`PageSizeFromSelection`** redimensionează pagina la obiectele selectate (similar cu **Artboards ⏵ Fit to Selected Art** din Illustrator).
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -285,7 +285,7 @@ Setup | | | |
 
 ### **View**
 
-* **`TileAll`** invocă **Window > Arrange > Tile All Vertically** sau **Tile All Horizontally**, în funcție de orientarea spreadului curent.
+* **`TileAll`** invocă **Window ⏵ Arrange ⏵ Tile All Vertically** sau **Tile All Horizontally**, în funcție de orientarea spreadului curent.
 
 * **`ZoomToSelection`** e asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
 
@@ -356,7 +356,7 @@ Miscellaneous | | | | | |
 
 ## Instalare
 
-1. Deschideți **Window > Utilities > Scripts**.
+1. Deschideți **Window ⏵ Utilities ⏵ Scripts**.
 2. Faceți clic dreapta pe folderul **User** și selectați **Reveal in Finder/Explorer**.
 3. Copiați fișierele în acest folder.
 

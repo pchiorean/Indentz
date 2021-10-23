@@ -1,6 +1,6 @@
 # Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (**Edit > Keyboard Shortcuts... > Product Area > Scripts**; suggestions below each section).
+Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (**Edit ⏵ Keyboard Shortcuts... ⏵ Product Area ⏵ Scripts**; suggestions below each section).
 
 ---
 
@@ -56,7 +56,7 @@ Proxy | | | | | |
 
   Optionally, it can run a JavaScript or AppleScript before exporting, e.g., one of the following:
 
-* **`PrepareForExport`** hides the **visible area** layer and moves the dielines, white, foil and UV markings from **dielines** / **white** / **foil** / **varnish** to separate spreads.
+* **`PrepareForExport`** hides the **visible area** layer and moves the dielines, white, foil and UV markings from **dielines** / **white** / **foil** / **varnish** layers to separate spreads.
 
 * **`VisibleArea`** creates a frame the size of the page margins on the **visible area** layer. It uses the **Visible area** swatch, which if it does not exist will be created with the value “C=0 M=100 Y=0 K=0”.
 
@@ -90,7 +90,7 @@ Resize the selected objects, without scaling. Rectangular frames are simply resi
 
   **`FitTo...Forced`** resize exactly to the named dimensions.
 
-* **`TextAutosize`** auto-sizes the text frame to the content from **None** to **Height Only** and from **Height Only** to **Height and Width** (single lines are always auto-sized **Height and Width**). The first paragraph's alignment sets the frame's horizontal alignment; **Text Frame Options > Vertical Justification** sets the vertical alignment:
+* **`TextAutosize`** auto-sizes the text frame to the content from **None** to **Height Only** and from **Height Only** to **Height and Width** (single lines are always auto-sized **Height and Width**). The first paragraph's alignment sets the frame's horizontal alignment; **Text Frame Options ⏵ Vertical Justification** sets the vertical alignment:
 
   | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
   :-: | :-: | :-: | :-:
@@ -269,7 +269,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`PageSizeFromMargins`** resizes the current page to its margins.
 
-* **`PageSizeFromSelection`** resizes the page to the selected objects (similar to **Artboards > Fit to Selected Art** in Illustrator).
+* **`PageSizeFromSelection`** resizes the page to the selected objects (similar to **Artboards ⏵ Fit to Selected Art** in Illustrator).
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -285,7 +285,7 @@ Setup | | | |
 
 ### **View**
 
-* **`TileAll`** invokes **Window > Arrange > Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
+* **`TileAll`** invokes **Window ⏵ Arrange ⏵ Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
 
 * **`ZoomToSelection`** resembles **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
@@ -356,7 +356,7 @@ Miscellaneous | | | | | |
 
 ## Installation
 
-1. Open **Window > Utilities > Scripts**.
+1. Open **Window ⏵ Utilities ⏵ Scripts**.
 2. Right‑click on folder **User** and select **Reveal in Finder/Explorer**.
 3. Copy files to this folder.
 
