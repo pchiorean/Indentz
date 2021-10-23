@@ -1,5 +1,5 @@
 /*
-	Cleanup swatches v1.5.2 (2021-09-15)
+	Cleanup swatches v1.5.3 (2021-10-12)
 	Paul Chiorean (jpeg@basement.ro)
 
 	Converts RGB swatches to CMYK, renames them to 'C= M= Y= K=' format, deletes unused.
@@ -8,7 +8,7 @@
 if (!(doc = app.activeDocument)) exit();
 
 app.doScript(addUnnamedColors, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Add Unnamed Colors');
+	UndoModes.ENTIRE_SCRIPT, 'Add unnamed colors');
 app.doScript(convertRGB2CMYK, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Convert RGB process colors to CMYK');
 app.doScript(normalizeCMYK, ScriptLanguage.JAVASCRIPT, undefined,
@@ -19,6 +19,8 @@ app.doScript(deleteUnusedSwatches, ScriptLanguage.JAVASCRIPT, undefined,
 // Add Unnamed Colors
 function addUnnamedColors() {
 	if ((menu = app.menuActions.item('$ID/Add Unnamed Colors')).enabled) menu.invoke();
+	try { doc.colors.itemByName('C=0 M=0 Y=0 K=0').remove('Paper'); } catch (e) {}
+	try { doc.colors.itemByName('C=0 M=0 Y=0 K=100').remove('Black'); } catch (e) {}
 }
 
 // Modified from ConvertRGBtoCMYK.jsx by Dave Saunders
