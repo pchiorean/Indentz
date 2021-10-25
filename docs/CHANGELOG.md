@@ -1,5 +1,9 @@
-
 ## Changelog
+
+#### [2021-10-25](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-25&type=commits)
+
+- [`fix`](https://github.com/pchiorean/Indentz/commit/2492a2f1c1dd3efc4c17172bf056f40613531401)
+  **FitTo v5.5.6**: Relaxed 'object is transformed' rule to not clip 90°-rotated objects (fix regression from v5.5.4)
 
 #### [2021-10-23](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-23&type=commits)
 
@@ -60,7 +64,7 @@
   **ParseDataFile v2.0**: Extended reporting granularity (fatal, warning, info, etc)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2813627388fe29db705688f4e942141d0e86d7f3)
   **ParseDataFile v2.1**: You can now use backslash at the end of a line to split long lines
-- [`sty`](https://github.com/pchiorean/Indentz/commit/4d6fb7b23ef5f9fdd336d7534289a35a125a52aa)
+- [`ref`](https://github.com/pchiorean/Indentz/commit/4d6fb7b23ef5f9fdd336d7534289a35a125a52aa)
   Renamed **DeleteGuides** to **GuidesDelete** and **CleanupSwatches** to **SwatchesCleanup**
 
 #### [2021-10-09](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-09&type=commits)
@@ -193,6 +197,7 @@
 - `brk` **FitTo**: Take target as argument, instead of document selection
 - `ref` **FitTo**: Refactor snapping to use deltas
 - `upd` **IsIn**: Add regex matching to searchValue
+- `ref` Rename **IsIn** to **isInArray**
 - `upd` **PageMarginsFromSelection**: Set the margins of every page touched by the selection
 - `upd` **PageSizeFromSelection**: Without selection fit all pages to their contents
 - `upd` **ParseDataFile**: Keep the record index in the returned object
@@ -226,6 +231,7 @@
 - `fix` **QR, QRBatch**: Improve line breaking
 - `fix` **QRBatch**: Remove `preview` & `print` from filenames for separate codes
 - `fix` **QRBatch**: Remove `QR` from filenames for on-doc codes
+- `fix` `transform()` and `app.transformPreferences.whenScaling`
 
 ##### New scripts
 
