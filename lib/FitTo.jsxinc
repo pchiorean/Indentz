@@ -1,5 +1,5 @@
 /*
-	FitTo v5.5.5 (2021-10-23)
+	FitTo v5.5.6 (2021-10-25)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Reframes the selected objects to the page/spread's size/margins/visible area/bleed. If an object is larger
@@ -108,15 +108,12 @@ function fitTo(args) {
 			       obj.pageItems[0].visibleBounds : undefined,
 			hit:   []
 		};
-		var isStraight = Boolean(obj.absoluteRotationAngle === 0 ||
+		var isStraight = Boolean(
+			obj.absoluteRotationAngle === 0 ||
 			Math.abs(obj.absoluteRotationAngle) === 90 ||
-			Math.abs(obj.absoluteRotationAngle) === 180);
-		var isNotTransformed = Boolean(
-			obj.transformValuesOf(CoordinateSpaces.PARENT_COORDINATES)[0].matrixValues[0] === 1 &&
-			obj.transformValuesOf(CoordinateSpaces.PARENT_COORDINATES)[0].matrixValues[1] === 0 &&
-			obj.transformValuesOf(CoordinateSpaces.PARENT_COORDINATES)[0].matrixValues[2] === 0 &&
-			obj.transformValuesOf(CoordinateSpaces.PARENT_COORDINATES)[0].matrixValues[3] === 1
+			Math.abs(obj.absoluteRotationAngle) === 180
 		);
+		var isNotSkewed = Boolean(obj.absoluteShearAngle === 0);
 		// Snap zones: target and visible area; visible area takes precedence
 		var snapDist = b.vis ?
 			Math.min(b.vis[2] - b.vis[0], b.vis[3] - b.vis[1]) * SNAP_PCT / 100 :
@@ -208,16 +205,15 @@ function fitTo(args) {
 			return obj;
 		}
 		// -- Simple rectangles and containers
-		if (obj.constructor.name === 'Rectangle' &&
+		if (obj.constructor.name === 'Rectangle' && isStraight && isNotSkewed &&
 			(obj.pageItems.length === 0 || obj.pageItems.length === 1) &&
 			// (obj.strokeWeight === 0 || obj.strokeAlignment === StrokeAlignment.INSIDE_ALIGNMENT) &&
-			obj.strokeWeight < 1 &&
-			isStraight && isNotTransformed) {
+			obj.strokeWeight < 1) {
 			obj.geometricBounds = b.expand;
 			return obj;
 		}
 		// -- Text frames
-		if (obj.constructor.name === 'TextFrame' && isStraight && isNotTransformed) {
+		if (obj.constructor.name === 'TextFrame' && isStraight && isNotSkewed) {
 			obj.geometricBounds = b.expand;
 			return obj;
 		}
