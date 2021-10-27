@@ -1,5 +1,10 @@
 ## Changelog
 
+#### [2021-10-27](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-27&type=commits)
+
+- [`upd`](https://github.com/pchiorean/Indentz/commit/f512575295740bed67d12fe24210aefc77ab4f58)
+  **ReplaceLinks v1.2**: Update out-of-date links
+
 #### [2021-10-25](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-25&type=commits)
 
 - [`fix`](https://github.com/pchiorean/Indentz/commit/2492a2f1c1dd3efc4c17172bf056f40613531401)
@@ -235,7 +240,7 @@
 
 ##### New scripts
 
-- `new` **ActivateDoc1/2/3...**: Quickly activate documents with Ctrl + #1, 2, 3...
+- `new` **ActivateDoc1/2/3...**: Quickly activate document tabs with Ctrl + #1, 2, 3...
 - `new` **SeparateSpreadPages** ([#136](https://github.com/pchiorean/Indentz/issues/136))
 - `new` **LayersToFiles** ([#94](https://github.com/pchiorean/Indentz/issues/94))
 
