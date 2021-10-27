@@ -1,5 +1,5 @@
 /*
-	Replace links 1.1.1 (2021-10-11)
+	Replace links 1.2 (2021-10-27)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
@@ -56,7 +56,8 @@ function main() {
 		links = doc.links.everyItem().getElements();
 		while ((link = links.shift())) {
 			if (!isIn(link.name, data.records[r].oldLinks)) continue; // Skip not matched
-			if (File(link.filePath).fullName === File(data.records[r].newLink).fullName) continue; // Skip self
+			if (File(link.filePath).fullName === File(data.records[r].newLink).fullName &&
+				link.status !== LinkStatus.LINK_OUT_OF_DATE) continue; // Skip self
 			link.relink(File(data.records[r].newLink));
 			counter++;
 			data.errors.info.push('Relinked \'' + decodeURI(link.name) + '\' with \'' +
