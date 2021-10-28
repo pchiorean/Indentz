@@ -12,7 +12,7 @@ varnish	Yellow	no	yes	above	uv
 white	Cute Teal	no	yes	above
 
 # Info
-guides	Magenta	yes	no	above	grid, masuratori
+guides	Magenta	yes	no	above	abstände, grid, masuratori
 info	Cyan	no	yes	above	info copy, ratio
 media	Cyan	no	yes	above
 placement	Black	no	yes	above
