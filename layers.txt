@@ -1,7 +1,7 @@
 Name	Color	Visible	Printable	Order	Variants
 
 # Technical
-visible area	Yellow	yes	yes	above	rahmen, safe area, sicht*, *vi?ib*, vis?*
+visible area	Yellow	yes	yes	above	nicht sicht*, rahmen, safe area, sicht*, *vi?ib*, vis?*
 safety margins	Grid Green	yes	yes	above
 segmentation	Grid Green	yes	yes	above	split
 covered area	Red	yes	yes	above	covered area*
