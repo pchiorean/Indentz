@@ -1,6 +1,6 @@
 # Indentz
 
-Colecție de scripturi InDesign pentru operații simple și repetitive. Ideal, o parte din ele ar trebui invocate printr‑un shortcut (**Edit ⏵ Keyboard Shortcuts... ⏵ Product Area ⏵ Scripts**; sugestii sub fiecare secțiune).
+Colecție de scripturi InDesign pentru operații simple și repetitive. Ideal, o parte din ele ar trebui invocate printr‑un shortcut (**Edit ⏵ Keyboard Shortcuts... ⏵ Product Area ⏵ Scripts**; sugestii pentru macOS sub fiecare secțiune).
 
 ---
 
@@ -373,4 +373,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 12 octombrie 2021
+README-ro.md • 29 octombrie 2021

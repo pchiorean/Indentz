@@ -1,6 +1,6 @@
 # Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (**Edit ⏵ Keyboard Shortcuts... ⏵ Product Area ⏵ Scripts**; suggestions below each section).
+Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (**Edit ⏵ Keyboard Shortcuts... ⏵ Product Area ⏵ Scripts**; suggestions for macOS below each section).
 
 ---
 
@@ -373,4 +373,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • October 12, 2021
+README.md • October 29, 2021
