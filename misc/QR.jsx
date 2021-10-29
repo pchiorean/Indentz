@@ -1,5 +1,5 @@
 /*
-	QR code v3.5.8 (2021-09-30)
+	QR code v3.6 (2021-10-29)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -26,6 +26,7 @@
 	SOFTWARE.
 */
 
+// @include '../lib/GetBounds.jsxinc';
 // @include '../lib/Report.jsxinc';
 
 doc = (app.documents.length === 0) ? app.documents.add() : app.activeDocument;
@@ -67,12 +68,16 @@ function main() {
 }
 
 function makeQROnDoc(code, /*bool*/white) {
-	var item, items, mgs, page, labelFrame, codeFrame, qrGroup, szLabel, szCode;
+	var item, items, page, tgBounds, tgSize, labelFrame, codeFrame, qrGroup, labelSize, codeSize;
 	var idLayer = makeIDLayer(doc);
 	doc.activeLayer = idLayer;
 	for (var i = 0, n = doc.pages.length; i < n; i++) {
 		page = doc.pages.item(i);
-		mgs = pageMargins(page);
+		tgBounds = getBounds(page).page.visible || getBounds(page).page.size;
+		tgSize = {
+			width: tgBounds[1] - page.bounds[1],
+			height: page.bounds[2] - tgBounds[2]
+		};
 		// Remove old codes
 		items = page.pageItems.everyItem().getElements();
 		while ((item = items.shift())) if (item.label === 'QR') { item.itemLayer.locked = false; item.remove(); }
@@ -95,7 +100,9 @@ function makeQROnDoc(code, /*bool*/white) {
 			hyphenation:     false,
 			capitalization:  Capitalization.ALL_CAPS,
 			fillColor:       white ? 'Paper' : 'Black', // White text checkbox
-			strokeColor:     'None'
+			strokeColor:     white ? 'Black' : 'Paper', // White text checkbox
+			strokeWeight:    '0.4 pt',
+			endJoin:         EndJoin.ROUND_END_JOIN
 		};
 		labelFrame.textFramePreferences.properties = {
 			verticalJustification:        VerticalJustification.BOTTOM_ALIGN,
@@ -140,18 +147,16 @@ function makeQROnDoc(code, /*bool*/white) {
 		qrGroup = page.groups.add([ labelFrame, codeFrame ]);
 		qrGroup.absoluteRotationAngle = 90;
 		// Try to put code outside visible area
-		szLabel = {
+		labelSize = {
 			width:  labelFrame.geometricBounds[3] - labelFrame.geometricBounds[1],
 			height: labelFrame.geometricBounds[2] - labelFrame.geometricBounds[0]
 		};
-		szCode = codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1];
+		codeSize = codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1];
 		doc.align(qrGroup, AlignOptions.LEFT_EDGES,   AlignDistributeBounds.PAGE_BOUNDS);
 		doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
-		if ((szLabel.width > mgs.left && szLabel.height > mgs.bottom) ||
-			((szLabel.width + szCode) > mgs.left && (szCode + UnitValue('2.3 mm').as('pt')) > mgs.bottom)) {
-			doc.align(qrGroup, AlignOptions.LEFT_EDGES,   AlignDistributeBounds.MARGIN_BOUNDS);
-			doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		}
+		if ((labelSize.width > tgSize.width && labelSize.height > tgSize.height) ||
+			((labelSize.width + codeSize) > tgSize.width && (codeSize + UnitValue('2.3 mm').as('pt')) > tgSize.height))
+			qrGroup.move(undefined, [ tgSize.width, -tgSize.height ]);
 		qrGroup.ungroup();
 	}
 }
@@ -382,15 +387,4 @@ function makeIDLayer(document) {
 		idLayer.move(LocationOptions.BEFORE, hwLayer);
 		else idLayer.move(LocationOptions.AT_BEGINNING);
 	return idLayer;
-}
-
-function pageMargins(page) {
-	return {
-		top: page.marginPreferences.top,
-		left: (page.side === PageSideOptions.LEFT_HAND) ?
-			page.marginPreferences.right : page.marginPreferences.left,
-		bottom: page.marginPreferences.bottom,
-		right: (page.side === PageSideOptions.LEFT_HAND) ?
-			page.marginPreferences.left : page.marginPreferences.right
-	};
 }

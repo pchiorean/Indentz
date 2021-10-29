@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.7.2 (2021-09-30)
+	Batch QR codes v2.8 (2021-10-29)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -38,6 +38,7 @@
 	SOFTWARE.
 */
 
+// @include '../lib/GetBounds.jsxinc';
 // @include '../lib/ProgressBar.jsxinc';
 // @include '../lib/Report.jsxinc';
 
@@ -242,14 +243,18 @@ function main() {
 }
 
 function makeQROnDoc(fn, code, /*bool*/white) {
-	var item, items, mgs, page, labelFrame, codeFrame, qrGroup, szLabel, szCode;
+	var item, items, page, tgBounds, tgSize, labelFrame, codeFrame, qrGroup, labelSize, codeSize;
 	var target = app.open(File(currentPath + '/' + fn));
 	if (target.converted) { errors.push(decodeURI(target.name) + ' must be converted; skipped.'); return false; }
 	var idLayer = makeIDLayer(target);
 	target.activeLayer = idLayer;
 	for (var i = 0, n = target.pages.length; i < n; i++) {
 		page = target.pages.item(i);
-		mgs = pageMargins(page);
+		tgBounds = getBounds(page).page.visible || getBounds(page).page.size;
+		tgSize = {
+			width: tgBounds[1] - page.bounds[1],
+			height: page.bounds[2] - tgBounds[2]
+		};
 		// Remove old codes
 		items = page.pageItems.everyItem().getElements();
 		while ((item = items.shift())) if (item.label === 'QR') { item.itemLayer.locked = false; item.remove(); }
@@ -272,7 +277,9 @@ function makeQROnDoc(fn, code, /*bool*/white) {
 			hyphenation:     false,
 			capitalization:  Capitalization.ALL_CAPS,
 			fillColor:       white ? 'Paper' : 'Black', // White text checkbox
-			strokeColor:     'None'
+			strokeColor:     white ? 'Black' : 'Paper', // White text checkbox
+			strokeWeight:    '0.4 pt',
+			endJoin:         EndJoin.ROUND_END_JOIN
 		};
 		labelFrame.textFramePreferences.properties = {
 			verticalJustification:        VerticalJustification.BOTTOM_ALIGN,
@@ -317,18 +324,16 @@ function makeQROnDoc(fn, code, /*bool*/white) {
 		qrGroup = page.groups.add([ labelFrame, codeFrame ]);
 		qrGroup.absoluteRotationAngle = 90;
 		// Try to put code outside visible area
-		szLabel = {
+		labelSize = {
 			width:  labelFrame.geometricBounds[3] - labelFrame.geometricBounds[1],
 			height: labelFrame.geometricBounds[2] - labelFrame.geometricBounds[0]
 		};
-		szCode = codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1];
+		codeSize = codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1];
 		target.align(qrGroup, AlignOptions.LEFT_EDGES,   AlignDistributeBounds.PAGE_BOUNDS);
 		target.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
-		if ((szLabel.width > mgs.left && szLabel.height > mgs.bottom) ||
-			((szLabel.width + szCode) > mgs.left && (szCode + UnitValue('2.3 mm').as('pt')) > mgs.bottom)) {
-			target.align(qrGroup, AlignOptions.LEFT_EDGES,   AlignDistributeBounds.MARGIN_BOUNDS);
-			target.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		}
+		if ((labelSize.width > tgSize.width && labelSize.height > tgSize.height) ||
+			((labelSize.width + codeSize) > tgSize.width && (codeSize + UnitValue('2.3 mm').as('pt')) > tgSize.height))
+			qrGroup.move(undefined, [ tgSize.width, -tgSize.height ]);
 		qrGroup.ungroup();
 	}
 	target.save(/* File(currentPath + "/" + fn) */);
@@ -561,15 +566,4 @@ function makeIDLayer(document) {
 		idLayer.move(LocationOptions.BEFORE, hwLayer);
 		else idLayer.move(LocationOptions.AT_BEGINNING);
 	return idLayer;
-}
-
-function pageMargins(page) {
-	return {
-		top: page.marginPreferences.top,
-		left: (page.side === PageSideOptions.LEFT_HAND) ?
-			page.marginPreferences.right : page.marginPreferences.left,
-		bottom: page.marginPreferences.bottom,
-		right: (page.side === PageSideOptions.LEFT_HAND) ?
-			page.marginPreferences.left : page.marginPreferences.right
-	};
 }
