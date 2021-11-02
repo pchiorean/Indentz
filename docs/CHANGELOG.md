@@ -1,5 +1,12 @@
 ## Changelog
 
+#### [2021-11-02](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-11-02&type=commits)
+- [`upd`](https://github.com/pchiorean/Indentz/commit/4442267f8e239e1721eeba8cbfb4513199d3761b)
+  **DefaultLayers v3.4, DefaultSwatches v4.6, ReplaceFonts v2.3, ReplaceLinks v1.3**:
+  Improved the error alert for missing data files; added a check for converted documents
+- [`upd`](https://github.com/pchiorean/Indentz/commit/fd7aa42014aa30da5763db74ade92da2c66a7c33)
+  **DefaultPrefs v1.5**: Disabled layout adjustment
+
 #### [2021-10-29](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-29&type=commits)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/30f24d7d4e40d29c3f5af26d80e8a4c21baea8fe)
   **GetBounds v5.1.3**: Get the parent doc from the `page` argument, don't rely on the global `doc` variable (d'oh!)
@@ -32,7 +39,7 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/614255fcf2c98b63fa22d2e4cb1ecef00162b796)
   **LabelPage v1.3, LabelPageRatios v2.2, PrepareForExport v2.3**: Aligned page label to crop marks
 - [`sty`](https://github.com/pchiorean/Indentz/commit/3b48f362a0b451f959da7bbea8ef83fb736e0e30)
-  **Report 2.1.1**: Relaxed minimum window width for very small messages
+  **Report v2.1.1**: Relaxed minimum window width for very small messages
 
 #### [2021-10-16](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-16&type=commits)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/b8df97aaa527928efb83bdb3b5541632b5e275a9)
