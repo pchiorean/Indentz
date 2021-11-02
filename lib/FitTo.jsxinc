@@ -1,5 +1,5 @@
 /*
-	FitTo v5.5.6 (2021-10-25)
+	FitTo v5.5.7 (2021-11-02)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Reframes the selected objects to the page/spread's size/margins/visible area/bleed. If an object is larger
@@ -58,12 +58,12 @@ function fitTo(args) {
 	var selection = doc.selection;
 	if (selection.length === 0 || (selection[0].constructor.name === 'Guide')) exit();
 
-	var SCOPE    = args[0] || 'page';
-	var TARGET   = args[1] || 'size';
-	var FORCED   = args[2] || false;
+	var SCOPE  = args[0] || 'page';
+	var TARGET = args[1] || 'size';
+	var FORCED = args[2] || false;
 	var SNAP_PCT = 1;  // Snap distance in percent of target
-	var HW_PCT   = 10; // HW size in percent of visible area
-	var DEBUG    = false;
+	var HW_PCT = 10; // HW size in percent of visible area
+	var DEBUG = false;
 	var clippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
 	var item, page, pages, fitted;
 	var newSelection = [];
@@ -93,19 +93,24 @@ function fitTo(args) {
 	function fit2Bounds(obj) {
 		var B = getBounds(page);
 		var b = {
-			size:   B[SCOPE].size,
+			size: B[SCOPE].size,
 			target: B[SCOPE][TARGET],
-			vis:    B[SCOPE].visible
+			vis: B[SCOPE].visible
 		};
 		if (!b.target) return obj;
 		if (FORCED && obj.constructor.name !== 'GraphicLine') { obj.geometricBounds = b.target; return obj; }
 
-		// Initialization
 		var o = {
-			geo:   obj.geometricBounds,
-			vis:   obj.visibleBounds,
+			// Object bounds
+			geo: obj.geometricBounds,
+			vis: obj.visibleBounds,
+			// Adjusted bounds
+			clip: [],
+			fit: [],
+			// Containers: get the visible bounds of the child object, if any
 			child: (obj.pageItems.length === 1 && obj.fillColor.name === 'None') ?
 			       obj.pageItems[0].visibleBounds : undefined,
+			// Track obj's sides that touch visible area snap zone - [ t, l, b, r], all booleans
 			hit:   []
 		};
 		var isStraight = Boolean(
@@ -133,7 +138,7 @@ function fitTo(args) {
 				  b.size[2] - snapDist, b.size[3] - snapDist ]
 		};
 
-		// HW has predefined dimensions, so skip the nasty stuff
+		// Exception: HW has predefined dimensions, so skip the nasty stuff
 		if (/hw/gi.test(obj.label) &&
 			(obj.constructor.name === 'TextFrame' || obj.constructor.name === 'Rectangle')) {
 			var hwRef = (TARGET === 'margins') ? b.target : b.size;
@@ -156,11 +161,13 @@ function fitTo(args) {
 		}
 
 		// Compute new bounds
-		// -- Cancel if obj is outside bounds
+
+		// Cancel if obj is outside bounds
 		if (o.vis[2] <= b.target[0] || o.vis[3] <= b.target[1] ||
 			o.vis[0] >= b.target[2] || o.vis[1] >= b.target[3]) return undefined;
-		// -- Cancel if obj is inside bounds, but not into target snap zone
-		o.hit = [ // Remember obj's sides that touch visible area snap zone
+
+		// Cancel if obj is inside bounds, but not into target snap zone
+		o.hit = [ // Flag sides that touch visible area snap zone
 			(o.geo[0] <= snapZone.vis[0] && o.geo[2] >= snapZone.vis[0] &&
 			 o.geo[1] <= snapZone.vis[3] && o.geo[3] >= snapZone.vis[1]),
 			(o.geo[1] <= snapZone.vis[1] && o.geo[3] >= snapZone.vis[1] &&
@@ -173,72 +180,81 @@ function fitTo(args) {
 		if (!(o.hit[0] || o.hit[1] || o.hit[2] || o.hit[3]) &&
 			(o.vis[0] >= snapZone.target[0] && o.vis[1] >= snapZone.target[1] &&
 			 o.vis[2] <= snapZone.target[2] && o.vis[3] <= snapZone.target[3])) return undefined;
-		// -- Adjusted bounds: if larger than target, reduce
-		b.reduce = [
+
+		// Adjust bounds: if larger, reduce to target
+		o.clip = [
 			o.geo[2] > b.target[0] ? Math.max(o.vis[0], b.target[0]) : o.geo[0],
 			o.geo[3] > b.target[1] ? Math.max(o.vis[1], b.target[1]) : o.geo[1],
 			o.geo[0] < b.target[2] ? Math.min(o.vis[2], b.target[2]) : o.geo[2],
 			o.geo[1] < b.target[3] ? Math.min(o.vis[3], b.target[3]) : o.geo[3]
 		];
-		// -- If smaller than target & into snap zone, expand
-		b.expand = [
-			b.reduce[0] < snapZone.target[0] ? b.target[0] : (o.hit[0] ? b.target[0] : b.reduce[0]),
-			b.reduce[1] < snapZone.target[1] ? b.target[1] : (o.hit[1] ? b.target[1] : b.reduce[1]),
-			b.reduce[2] > snapZone.target[2] ? b.target[2] : (o.hit[2] ? b.target[2] : b.reduce[2]),
-			b.reduce[3] > snapZone.target[3] ? b.target[3] : (o.hit[3] ? b.target[3] : b.reduce[3])
+
+		// If smaller but into snap zone, fit to target
+		o.fit = [
+			o.clip[0] < snapZone.target[0] ? b.target[0] : (o.hit[0] ? b.target[0] : o.clip[0]),
+			o.clip[1] < snapZone.target[1] ? b.target[1] : (o.hit[1] ? b.target[1] : o.clip[1]),
+			o.clip[2] > snapZone.target[2] ? b.target[2] : (o.hit[2] ? b.target[2] : o.clip[2]),
+			o.clip[3] > snapZone.target[3] ? b.target[3] : (o.hit[3] ? b.target[3] : o.clip[3])
 		];
-		// -- but not past content's bounds
+		// But not past content's bounds
 		if (o.child) {
-			b.expand = [
-				o.child[0] > b.target[0] ? Math.max(o.child[0], b.expand[0]) : b.expand[0],
-				o.child[1] > b.target[1] ? Math.max(o.child[1], b.expand[1]) : b.expand[1],
-				o.child[2] < b.target[2] ? Math.min(o.child[2], b.expand[2]) : b.expand[2],
-				o.child[3] < b.target[3] ? Math.min(o.child[3], b.expand[3]) : b.expand[3]
+			o.fit = [
+				o.child[0] > b.target[0] ? Math.max(o.child[0], o.fit[0]) : o.fit[0],
+				o.child[1] > b.target[1] ? Math.max(o.child[1], o.fit[1]) : o.fit[1],
+				o.child[2] < b.target[2] ? Math.min(o.child[2], o.fit[2]) : o.fit[2],
+				o.child[3] < b.target[3] ? Math.min(o.child[3], o.fit[3]) : o.fit[3]
 			];
 		}
+
 		if (DEBUG) showDebugFrames();
 
-		// Fit obj to new bounds
-		// -- Already clipped
+		// Fit obj to the adjusted bounds
+
+		// Is already clipped
 		if (clippingFrameRE.test(obj.name) && obj.pageItems[0].isValid) {
-			obj.geometricBounds = b.expand;
+			obj.geometricBounds = o.fit;
 			return obj;
 		}
-		// -- Simple rectangles and containers
+
+		// Simple rectangles and containers
 		if (obj.constructor.name === 'Rectangle' && isStraight && isNotSkewed &&
 			(obj.pageItems.length === 0 || obj.pageItems.length === 1) &&
 			// (obj.strokeWeight === 0 || obj.strokeAlignment === StrokeAlignment.INSIDE_ALIGNMENT) &&
 			obj.strokeWeight < 1) {
-			obj.geometricBounds = b.expand;
+			obj.geometricBounds = o.fit;
 			return obj;
 		}
-		// -- Text frames
+
+		// Text frames
 		if (obj.constructor.name === 'TextFrame' && isStraight && isNotSkewed) {
-			obj.geometricBounds = b.expand;
+			obj.geometricBounds = o.fit;
 			return obj;
 		}
-		// -- Orthogonal lines
+
+		// Orthogonal lines
 		var isOrthoLine = (obj.constructor.name === 'GraphicLine' &&
 			obj.paths[0].entirePath.length === 2 &&
 			(obj.paths[0].entirePath[0].length === 2 || obj.paths[0].entirePath[1].length === 2));
-		if (isOrthoLine && o.geo[0] === o.geo[2]) { // horizontal
+		if (isOrthoLine && o.geo[0] === o.geo[2]) { // Horizontal line
 			obj.paths[0].entirePath = [
-				[ FORCED ? b.target[1] : b.expand[1], obj.paths[0].entirePath[0][1] ],
-				[ FORCED ? b.target[3] : b.expand[3], obj.paths[0].entirePath[1][1] ]
+				[ FORCED ? b.target[1] : o.fit[1], obj.paths[0].entirePath[0][1] ],
+				[ FORCED ? b.target[3] : o.fit[3], obj.paths[0].entirePath[1][1] ]
 			];
 			return obj;
 		}
-		if (isOrthoLine && o.geo[1] === o.geo[3]) { // vertical
+		if (isOrthoLine && o.geo[1] === o.geo[3]) { // Vertical line
 			obj.paths[0].entirePath = [
-				[ obj.paths[0].entirePath[0][0], FORCED ? b.target[0] : b.expand[0] ],
-				[ obj.paths[0].entirePath[1][0], FORCED ? b.target[2] : b.expand[2] ]
+				[ obj.paths[0].entirePath[0][0], FORCED ? b.target[0] : o.fit[0] ],
+				[ obj.paths[0].entirePath[1][0], FORCED ? b.target[2] : o.fit[2] ]
 			];
 			return obj;
 		}
-		// -- Groups
-		if (obj.constructor.name === 'Group') return clipObject(b.reduce);
-		// -- Other cases
-		return clipObject(b.expand);
+
+		// Groups
+		if (obj.constructor.name === 'Group') return clipObject(o.clip); // Groups are always reduced
+
+		// Clip other types
+		return clipObject(o.fit);
 
 		function clipObject(fitMode) {
 			if (o.vis[0] >= b.target[0] && o.vis[1] >= b.target[1] &&
@@ -264,8 +280,8 @@ function fitTo(args) {
 			var layer = doc.layers.item('.debug');
 			if (layer.isValid) { layer.locked = false; layer.remove(); }
 			layer = doc.layers.add({ name: '.debug', layerColor: UIColors.BLACK }).move(LocationOptions.AT_END);
-			// createDebugFrame('Black',   false, b.expand,        'b.expand');
-			// createDebugFrame('Black',   false, b.reduce,        'b.reduce');
+			// createDebugFrame('Black',   false, o.fit,           'o.fit');
+			// createDebugFrame('Black',   false, o.clip,          'o.clip');
 			if (o.child) createDebugFrame('Yellow', false, o.child, 'o.child');
 			createDebugFrame('Black',   false, b.target,        'b.target');
 			createDebugFrame('Cyan',    true,  snapZone.target, 'snapZone.target');
