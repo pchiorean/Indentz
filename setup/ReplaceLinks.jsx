@@ -1,5 +1,5 @@
 /*
-	Replace links 1.2 (2021-10-27)
+	Replace links 1.2.1 (2021-11-02)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
@@ -47,7 +47,10 @@ function main() {
 	var VERBOSITY = 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, data, messages, link, links;
 	var counter = 0;
-	if (!(file = getDataFile('links.txt'))) { if (VERBOSITY > 1) alert('No data file found.'); exit(); }
+	if (!(file = getDataFile('links.txt'))) {
+		if (VERBOSITY > 1) alert('Can\'t locate a link substitution list.');
+		exit();
+	}
 	data = parseDataFile(file);
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length === 0) exit();
