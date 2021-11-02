@@ -1,5 +1,5 @@
 /*
-	Default preferences v1.4.1 (2021-09-15)
+	Default preferences v1.5 (2021-11-02)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Sets default preferences.
@@ -42,6 +42,12 @@ app.doScript(function () {
 		}
 	};
 	doc.properties = {
+		adjustLayoutPreferences: {
+			enableAdjustLayout: false,
+			allowFontSizeAndLeadingAdjustment: false,
+			allowLockedObjectsToAdjust: false,
+			enableAutoAdjustMargins: false
+		},
 		cmykProfile: 'ISO Coated v2 (ECI)',
 		documentPreferences: {
 			allowPageShuffle: false,
@@ -52,6 +58,9 @@ app.doScript(function () {
 			guidesLocked: false,
 			guidesShown: true,
 			guidesSnapto: true
+		},
+		layoutAdjustmentPreferences: {
+			enableLayoutAdjustment: false
 		},
 		pageItemDefaults: {
 			fillColor: 'None',
