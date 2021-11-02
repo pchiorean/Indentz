@@ -1,5 +1,5 @@
 /*
-	Replace links 1.2.1 (2021-11-02)
+	Replace links 1.3 (2021-11-02)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
@@ -47,8 +47,15 @@ function main() {
 	var VERBOSITY = 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, data, messages, link, links;
 	var counter = 0;
+	if (doc.converted && VERBOSITY > 0) {
+		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
+			'The default link substitution list\nwill be used, if found.');
+	}
 	if (!(file = getDataFile('links.txt'))) {
-		if (VERBOSITY > 1) alert('Can\'t locate a link substitution list.');
+		if (VERBOSITY > 1) {
+			alert('Can\'t locate a link substitution list.\nThe file must be saved in the current folder,' +
+				'\non the desktop, or next to the script.\nCheck docs for details.');
+		}
 		exit();
 	}
 	data = parseDataFile(file);

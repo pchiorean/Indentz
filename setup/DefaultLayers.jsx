@@ -1,5 +1,5 @@
 /*
-	Default layers v3.3.2 (2021-11-02)
+	Default layers v3.4 (2021-11-02)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.txt':
@@ -55,8 +55,15 @@ function main() {
 	var VERBOSITY = 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, data, messages, oldActiveLayer, newLayer, tmpLayer, i, n;
 	var counter = { add: 0, merge: 0 };
+	if (doc.converted && VERBOSITY > 0) {
+		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
+			'The default layer substitution list\nwill be used, if found.');
+	}
 	if (!(file = getDataFile('layers.txt'))) {
-		if (VERBOSITY > 1) alert('Can\'t locate a layer substitution list.');
+		if (VERBOSITY > 1) {
+			alert('Can\'t locate a layer substitution list.\nThe file must be saved in the current folder,' +
+				'\non the desktop, or next to the script.\nCheck docs for details.');
+		}
 		exit();
 	}
 	data = parseDataFile(file);
