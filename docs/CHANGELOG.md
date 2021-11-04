@@ -1,7 +1,7 @@
 ## Changelog
 
 #### [2021-11-04](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-11-04&type=commits)
-- [`brk`]()
+- [`brk`](https://github.com/pchiorean/Indentz/commit/f27f115aef8e122a05eccb0720bd359dfc11fae8#diff-0e70c2dc31abbf14f06d436fe1ed2bef11090416ae8c43bbfc1c17e48e9dae3c)
   **FitTo v6.0**: Changed input (the objects to fit) to a page items array argument instead of the current document selection
 
 #### [2021-11-02](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-11-02&type=commits)
