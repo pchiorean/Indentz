@@ -30,30 +30,31 @@ if (errors.length === 0) dbg('+', 'Records: ' + data.length, 'Layouts: ' + layou
 
 ---
 
-### fitTo(scope, target, [forced])
+### fitTo(items, [scope], [target], [forced])
 
-| Parameters | Type      | Default | Description                                                               |
-| ---------- | --------- | ------- | ------------------------------------------------------------------------- |
-| scope      | `string`  |         | `page` or `spread`.                                                       |
-| target     | `string`  |         | `size`, `margins`, `visible` or `bleed`.                                  |
-| [forced]   | `boolean` | `false` | When `true` it just reframes the object without any checks. *(Optional.)* |
+| Parameters | Type                       | Default | Description                                                               |
+| ---------- | -------------------------- | ------- | ------------------------------------------------------------------------- |
+| items      | `pageItem` \| `pageItem[]` |         | A page item, or an array of page items to be reframed.                    |
+| [scope]    | `string`                   | `page`  | `page` or `spread`. *(Optional.)*                                         |
+| [target]   | `string`                   | `size`  | `size`, `margins`, `visible` or `bleed`. *(Optional.)*                    |
+| [forced]   | `boolean`                  | `false` | When `true` it just reframes the object without any checks. *(Optional.)* |
 
-Reframes the selected objects to the page/spread's (`scope`) size/margins/visible area/bleed (`target`). If an object is larger than the target, it will be reduced; if it is smaller but inside a 1% 'snap' area, it will be enlarged. Rectangular frames are simply reframed; rotated objects, ovals, groups, etc. are inserted in a clipping frame that is reframed.
+Reframes the given items to the page/spread's (`scope`) size/margins/visible area/bleed (`target`). If an item is larger than the target, it will be reduced; if it is smaller but inside a 1% 'snap' area, it will be enlarged. Rectangular frames are simply reframed; rotated items, ovals, groups, etc. are inserted in a clipping frame that is reframed.
 
 **Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area` (see [VisibleArea](../docs/README.md#export)).
 
 #### Example
 
 ```js
-fitTo('page', 'bleed'); // Fits the selected objects to the page bleed
+fitTo(doc.selection, 'page', 'bleed'); // Fits the selected objects to the page bleed
 ```
 
 or
 
 ```js
 app.doScript(
-    fitTo, ScriptLanguage.JAVASCRIPT,
-    [ 'page', 'bleed' ],
+    "fitTo(doc.selection, 'page', 'bleed')",
+    ScriptLanguage.JAVASCRIPT, undefined,
     UndoModes.ENTIRE_SCRIPT, 'Fit to page bleed'
 );
 ```
