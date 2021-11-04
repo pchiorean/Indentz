@@ -1,5 +1,9 @@
 ## Changelog
 
+#### [2021-11-04](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-11-04&type=commits)
+- [`brk`]()
+  **FitTo v6.0**: Changed input (the objects to fit) to a page items array argument instead of the current document selection
+
 #### [2021-11-02](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-11-02&type=commits)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/4442267f8e239e1721eeba8cbfb4513199d3761b)
   **DefaultLayers v3.4, DefaultSwatches v4.6, ReplaceFonts v2.3, ReplaceLinks v1.3**:
@@ -192,8 +196,6 @@
 - `upd` **Debug**: Add a hires timer
 - `upd` **DefaultSwatches**: Add tints support
 - `upd` **FindFile**: Use relative paths for includes
-- `brk` **FitTo**: Take target as argument, instead of document selection
-- `ref` **FitTo**: Refactor snapping to use deltas
 - `upd` **IsIn**: Add regex matching to searchValue
 - `ref` Rename **isIn** to **isInArray**
 - `upd` **PageMarginsFromSelection**: Set the margins of every page touched by the selection
