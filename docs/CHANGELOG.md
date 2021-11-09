@@ -1,5 +1,11 @@
 ## Changelog
 
+#### [2021-11-09](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-11-09&type=commits)
+- [`upd`](https://github.com/pchiorean/Indentz/commit/832e27f6050f82b3e52d7a901bfa40be93974077)
+  **QR v3.6.1, QRBatch v2.8.1**: The on-page label now has insets on both left and right sides
+- [`upd`](https://github.com/pchiorean/Indentz/commit/111a3d78ecd478439ae568d6d045e04ecaa6acfd)
+  **QR v3.7, QRBatch v2.9**: Added a checkbox for uppercase text
+
 #### [2021-11-04](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-11-04&type=commits)
 - [`brk`](https://github.com/pchiorean/Indentz/commit/f27f115aef8e122a05eccb0720bd359dfc11fae8#diff-0e70c2dc31abbf14f06d436fe1ed2bef11090416ae8c43bbfc1c17e48e9dae3c)
   **FitTo v6.0**: Changed input (the objects to fit) to a page items array argument instead of the current document selection
@@ -230,6 +236,7 @@
 - `fix` **PageSizeFromSelection**: For text frames use outlined text bounds
 - `fix` **QuickExport**: Link '\[As\] Spreads' and 'Export separate pages' checkboxes
 - `fix` **QR, QRBatch**: Improve line breaking
+- `fix` **QRBatch**: Check for converted documents
 - `fix` **QRBatch**: Remove `preview` & `print` from filenames for separate codes
 - `fix` **QRBatch**: Remove `QR` from filenames for on-doc codes
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
