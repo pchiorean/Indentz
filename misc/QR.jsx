@@ -1,5 +1,5 @@
 /*
-	QR code v3.6 (2021-10-29)
+	QR code v3.6.1 (2021-11-09)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -114,7 +114,7 @@ function makeQROnDoc(code, /*bool*/white) {
 				UnitValue('3 mm').as('pt'),
 				UnitValue('2.5 mm').as('pt'),
 				UnitValue('1 mm').as('pt'),
-				0
+				UnitValue('2.5 mm').as('pt')
 			]
 		};
 		doc.align(labelFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
