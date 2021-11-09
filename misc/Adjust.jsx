@@ -1,5 +1,5 @@
 /*
-	Adjust items v0.1.1 (2021-09-12)
+	Adjust items v0.1.2 (2021-11-08)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Released under MIT License:
@@ -31,21 +31,22 @@ function main() {
 			doc.align(item, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
 
 		if (/\bhw\b/ig.test(item.label)) {
-			app.doScript(fitTo, ScriptLanguage.JAVASCRIPT,
-				[ 'spread', 'bleed' ],
+			app.doScript("fitTo(item, 'spread', 'bleed')",
+				ScriptLanguage.JAVASCRIPT, undefined,
 				UndoModes.ENTIRE_SCRIPT, 'Fit HW to spread bleed');
 			continue;
 		}
 
 		if (/\bfitV\b/ig.test(item.label)) {
 			item.fit(FitOptions.FRAME_TO_CONTENT);
-			app.doScript(fitTo, ScriptLanguage.JAVASCRIPT,
-				[ 'page', 'size' ],
+			app.doScript("fitTo(item, 'page', 'size')",
+				ScriptLanguage.JAVASCRIPT, undefined,
 				UndoModes.ENTIRE_SCRIPT, 'Fit to page');
+			continue;
 		}
 		if (/\bfitB\b/ig.test(item.label)) {
-			app.doScript(fitTo, ScriptLanguage.JAVASCRIPT,
-				[ 'spread', 'bleed' ],
+			app.doScript("fitTo(item, 'spread', 'bleed')",
+				ScriptLanguage.JAVASCRIPT, undefined,
 				UndoModes.ENTIRE_SCRIPT, 'Fit to spread bleed');
 		}
 	}
