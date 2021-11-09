@@ -1,5 +1,5 @@
 /*
-	QR code v3.6.1 (2021-11-09)
+	QR code v3.7 (2021-11-09)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -47,9 +47,10 @@ function main() {
 	ui.qpanel.add('statictext { properties: { name: "st" }, text: "Enter QR code text:" }');
 		ui.label = ui.qpanel.add('edittext { active: true, characters: 56, helpTip: "Use \'|\' for manual line breaks", properties: { enterKeySignalsOnChange: true } }');
 		ui.options = ui.qpanel.add('group { margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 15 }');
-			ui.white = ui.options.add('checkbox { helpTip: "Make text white (only on document)", text: "White text" }');
+			ui.white = ui.options.add('checkbox { helpTip: "Make text white (only when placing on document)", text: "White text" }');
+			ui.uppercase = ui.options.add('checkbox { helpTip: "Make text uppercase (only when placing on document)", text: "Uppercase text" }');
 	ui.actions = ui.add('group { alignChildren: [ "fill", "top" ], orientation: "column" }');
-		ui.ondoc = ui.actions.add('button { helpTip: "Bottom-left corner of each page", text: "On doc", properties: { name: "ok" } }');
+		ui.ondoc = ui.actions.add('button { helpTip: "Place the code on the bottom-left corner of each page", text: "On doc", properties: { name: "ok" } }');
 		ui.onfile = ui.actions.add('button { text: "Separate" }');
 		ui.onfile.helpTip = currentPath ? 'QR Codes/' +
 			((/\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf('.'))) || doc.name) + '_QR.indd' :
@@ -63,11 +64,11 @@ function main() {
 	// Processing
 	code = ui.label.text.replace(/^\s+|\s+$/g, '');
 	if (!code) { main(); exit(); }
-	if (onFile) makeQROnFile(code); else makeQROnDoc(code, ui.white.value);
+	if (onFile) makeQROnFile(code, ui.uppercase.value); else makeQROnDoc(code, ui.uppercase.value, ui.white.value);
 	if (errors.length > 0) report(errors, 'Errors');
 }
 
-function makeQROnDoc(code, /*bool*/white) {
+function makeQROnDoc(code, /*bool*/uppercase, /*bool*/white) {
 	var item, items, page, tgBounds, tgSize, labelFrame, codeFrame, qrGroup, labelSize, codeSize;
 	var idLayer = makeIDLayer(doc);
 	doc.activeLayer = idLayer;
@@ -98,7 +99,7 @@ function makeQROnDoc(code, /*bool*/white) {
 			horizontalScale: 92,
 			tracking:        -15,
 			hyphenation:     false,
-			capitalization:  Capitalization.ALL_CAPS,
+			capitalization:  uppercase ? Capitalization.ALL_CAPS : Capitalization.NORMAL,
 			fillColor:       white ? 'Paper' : 'Black', // White text checkbox
 			strokeColor:     white ? 'Black' : 'Paper', // White text checkbox
 			strokeWeight:    '0.4 pt',
@@ -161,7 +162,7 @@ function makeQROnDoc(code, /*bool*/white) {
 	}
 }
 
-function makeQROnFile(code) {
+function makeQROnFile(code, /*bool*/uppercase) {
 	var labelFrame, codeFrame, qrGroup, targetFolder, baseName, ancillaryFile, pdfFile;
 	var target = app.documents.add();
 	var page = target.pages[0];
@@ -182,7 +183,7 @@ function makeQROnFile(code) {
 		autoLeading:     100,
 		horizontalScale: 92,
 		tracking:        -15,
-		capitalization:  Capitalization.ALL_CAPS,
+		capitalization:  uppercase ? Capitalization.ALL_CAPS : Capitalization.NORMAL,
 		hyphenation:     false,
 		fillColor:       'Black'
 	};

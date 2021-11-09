@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.8.1 (2021-11-09)
+	Batch QR codes v2.9 (2021-11-09)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -82,26 +82,28 @@ function main() {
 	ui.list.itemSize[1] = LIST.itemHeight;
 	ui.list.size = [ LIST.width, (LIST.itemHeight + 1) * LIST.height + 20 ];
 	ui.list.active = true;
-	ui.actions = ui.add('group', undefined);
-	ui.actions.orientation = 'row';
-	ui.actions.alignChildren = [ 'right', 'center' ];
-	ui.actions.white = ui.actions.add('checkbox', undefined, 'White text');
-	ui.actions.white.helpTip = 'Make text white (only on documents)';
-	ui.actions.white.preferredSize.width = LIST.width - 492;
-	ui.actions.err = ui.actions.add('button', undefined, 'Show errors');
-	ui.actions.err.visible = false;
-	ui.actions.div1 = ui.actions.add('panel', undefined, undefined);
-	ui.actions.div1.alignment = 'fill';
-	ui.actions.div1.visible = false;
-	ui.actions.browse = ui.actions.add('button', undefined, 'Browse');
-	ui.actions.reload = ui.actions.add('button', undefined, 'Reload');
-	ui.actions.div2 = ui.actions.add('panel', undefined, undefined);
-	ui.actions.div2.alignment = 'fill';
-	ui.actions.add('button', undefined, 'Cancel', { name: 'cancel' });
-	ui.actions.start = ui.actions.add('button', undefined, 'Start', { name: 'ok' });
+	ui.options = ui.add('group', undefined);
+	ui.options.orientation = 'row';
+	ui.options.alignChildren = [ 'right', 'center' ];
+	ui.options.white = ui.options.add('checkbox', undefined, 'White text');
+	ui.options.white.helpTip = 'Make text white (only on documents)';
+	ui.options.uppercase = ui.options.add('checkbox', undefined, 'Uppercase text');
+	ui.options.uppercase.helpTip = 'Make text uppercase (only when placing on document)';
+	ui.options.uppercase.preferredSize.width = LIST.width - 579;
+	ui.options.err = ui.options.add('button', undefined, 'Show errors');
+	ui.options.err.visible = false;
+	ui.options.div1 = ui.options.add('panel', undefined, undefined);
+	ui.options.div1.alignment = 'fill';
+	ui.options.div1.visible = false;
+	ui.options.browse = ui.options.add('button', undefined, 'Browse');
+	ui.options.reload = ui.options.add('button', undefined, 'Reload');
+	ui.options.div2 = ui.options.add('panel', undefined, undefined);
+	ui.options.div2.alignment = 'fill';
+	ui.options.add('button', undefined, 'Cancel', { name: 'cancel' });
+	ui.options.start = ui.options.add('button', undefined, 'Start', { name: 'ok' });
 
 	// UI callback functions
-	ui.actions.reload.onClick = function () {
+	ui.options.reload.onClick = function () {
 		var infoLine, fC, ll;
 		var line = 0;
 		var flgHeader = isEmpty = isComment = isHeader = false;
@@ -183,31 +185,31 @@ function main() {
 			} else {
 				ui.text = 'Select a folder containing the data file';
 			}
-			if (!currentPath) ui.actions.browse.notify();
+			if (!currentPath) ui.options.browse.notify();
 		} else {
 			ui.text = (WIN ? decodeURI(dataFile.fsName) : decodeURI(dataFile.fullName)) + ' \u2013 ' +
 				queue.length + ' record' + (queue.length === 1 ? '' : 's') +
 				(errors.length > 0 ? ' | ' + errors.length + ' error' + (errors.length === 1 ? '' : 's') : '');
 		}
-		ui.actions.start.enabled = queue.length > 0 && (errors.length === 0 || ui.list.selection);
-		ui.actions.reload.enabled = !!currentPath;
-		ui.actions.err.visible = ui.actions.div1.visible = (errors.length > 0);
-		if (errors.length > 0) ui.actions.err.active = true;
-		else if (!dataFile.exists) ui.actions.browse.active = true;
-		else if (queue.length === 0 && !ui.list.selection) ui.actions.reload.active = true;
+		ui.options.start.enabled = queue.length > 0 && (errors.length === 0 || ui.list.selection);
+		ui.options.reload.enabled = !!currentPath;
+		ui.options.err.visible = ui.options.div1.visible = (errors.length > 0);
+		if (errors.length > 0) ui.options.err.active = true;
+		else if (!dataFile.exists) ui.options.browse.active = true;
+		else if (queue.length === 0 && !ui.list.selection) ui.options.reload.active = true;
 		else ui.list.active = true;
 	};
 	ui.list.onDoubleClick = function () { dataFile.execute(); };
-	ui.actions.err.onClick = function () { report(errors, 'Errors'); };
-	ui.actions.browse.onClick = function () {
+	ui.options.err.onClick = function () { report(errors, 'Errors'); };
+	ui.options.browse.onClick = function () {
 		var folder = Folder.selectDialog('Select a folder containing the data file:');
 		if (folder && folder !== currentPath) {
 			if (/QR Codes$/g.test(decodeURI(folder))) folder = folder.parent;
 			currentPath = folder;
-			ui.actions.reload.onClick();
+			ui.options.reload.onClick();
 		}
 	};
-	ui.onShow = ui.actions.reload.notify();
+	ui.onShow = ui.options.reload.notify();
 
 	// Processing
 	if (ui.show() === 2) exit();
@@ -218,7 +220,7 @@ function main() {
 		var item = rawData[queue[i] - 1];
 		if (item.fn === '' || item.fn.toString().slice(0,1) === '\u0023') { progressBar.update(i + 1, ''); continue; }
 		progressBar.update(i + 1, item.fn);
-		if ((item.pos && makeQROnDoc(item.fn, item.code, ui.actions.white.value)) ||
+		if ((item.pos && makeQROnDoc(item.fn, item.code, ui.options.white.value)) ||
 				(!item.pos && makeQROnFile(item.fn, item.code))) {
 			item.exported = true; isModified = true;
 		}
@@ -242,7 +244,7 @@ function main() {
 	app.scriptPreferences.userInteractionLevel = oldUIL;
 }
 
-function makeQROnDoc(fn, code, /*bool*/white) {
+function makeQROnDoc(fn, code, /*bool*/uppercase, /*bool*/white) {
 	var item, items, page, tgBounds, tgSize, labelFrame, codeFrame, qrGroup, labelSize, codeSize;
 	var target = app.open(File(currentPath + '/' + fn));
 	if (target.converted) { errors.push(decodeURI(target.name) + ' must be converted; skipped.'); return false; }
@@ -275,7 +277,7 @@ function makeQROnDoc(fn, code, /*bool*/white) {
 			horizontalScale: 92,
 			tracking:        -15,
 			hyphenation:     false,
-			capitalization:  Capitalization.ALL_CAPS,
+			capitalization:  uppercase ? Capitalization.ALL_CAPS : Capitalization.NORMAL,
 			fillColor:       white ? 'Paper' : 'Black', // White text checkbox
 			strokeColor:     white ? 'Black' : 'Paper', // White text checkbox
 			strokeWeight:    '0.4 pt',
@@ -291,7 +293,7 @@ function makeQROnDoc(fn, code, /*bool*/white) {
 				UnitValue('3 mm').as('pt'),
 				UnitValue('2.5 mm').as('pt'),
 				UnitValue('1 mm').as('pt'),
-				UnitValue('2.5 mm').as('pt')
+				0
 			]
 		};
 		target.align(labelFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
@@ -341,7 +343,7 @@ function makeQROnDoc(fn, code, /*bool*/white) {
 	return true;
 }
 
-function makeQROnFile(fn, code) {
+function makeQROnFile(fn, code, /*bool*/uppercase) {
 	var labelFrame, codeFrame, qrGroup, targetFolder, baseName, ancillaryFile, pdfFile;
 	var target = app.documents.add();
 	var page = target.pages[0];
@@ -362,7 +364,7 @@ function makeQROnFile(fn, code) {
 		autoLeading:     100,
 		horizontalScale: 92,
 		tracking:        -15,
-		capitalization:  Capitalization.ALL_CAPS,
+		capitalization:  uppercase ? Capitalization.ALL_CAPS : Capitalization.NORMAL,
 		hyphenation:     false,
 		fillColor:       'Black'
 	};
