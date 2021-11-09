@@ -1,5 +1,5 @@
 /*
-	Label page v1.3.1 (2021-10-18)
+	Label page v1.3.2 (2021-11-09)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a custom label on the current page's slug.
@@ -25,7 +25,7 @@ function main() {
 	ui.label = ui.main.add('edittext', undefined, '', { enterKeySignalsOnChange: true });
 	ui.label.characters = 40;
 	ui.label.active = true;
-	ui.caps = ui.main.add('checkbox', undefined, 'Make label uppercase');
+	ui.caps = ui.main.add('checkbox', undefined, 'Uppercase text');
 	ui.caps.value = true;
 	ui.actions = ui.add('group', undefined);
 	ui.actions.orientation = 'column';
