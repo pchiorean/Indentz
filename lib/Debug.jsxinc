@@ -22,7 +22,7 @@ function dbg(/* ?type, ?context, message */) {
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	var debugFile = File(Folder.desktop + '/' + script.name.slice(0, script.name.lastIndexOf('.')) + '.log');
 	var t = new Date();
-	var now = t.getFullYear()       + '-' +
+	var now = t.getFullYear()            + '-' +
 		pad(t.getMonth() + 1,    2, '0') + '-' +
 		pad(t.getDate(),         2, '0') + ' ' +
 		pad(t.getHours(),        2, '0') + ':' +
