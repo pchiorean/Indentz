@@ -228,6 +228,7 @@
 - `fix` **PageSizeFromFilename**: Limit detected bleed to max values
 - `fix` **PageSizeFromFilename**: Dimensions in pixels
 - `fix` **PageSizeFromSelection**: For text frames use outlined text bounds
+- `fix` **QuickExport**: Link '\[As\] Spreads' and 'Export separate pages' checkboxes
 - `fix` **QR, QRBatch**: Improve line breaking
 - `fix` **QRBatch**: Remove `preview` & `print` from filenames for separate codes
 - `fix` **QRBatch**: Remove `QR` from filenames for on-doc codes
