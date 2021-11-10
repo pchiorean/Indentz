@@ -1,5 +1,5 @@
 /*
-	Quick export v2.16 (2021-10-18)
+	Quick export v2.16.1 (2021-11-10)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -25,6 +25,9 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
+
+// @include '../lib/Debug.jsxinc';
+dbg();
 
 // @include '../lib/ProgressBar.jsxinc';
 // @include '../lib/Report.jsxinc';
@@ -572,7 +575,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			if (Object.prototype.hasOwnProperty.call(pdfPreset, key))
 				try { app.pdfExportPreferences[key] = pdfPreset[key]; } catch (e) {}
 		}
-		// Override some settings
+		// Override some of the settings
 		app.pdfExportPreferences.pageRange = pageRange;
 		app.pdfExportPreferences.exportReaderSpreads = exp.exportSpreads.value;
 		app.pdfExportPreferences.cropMarks = exp.cropMarks.value;
@@ -587,7 +590,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 					doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
 					doc.documentPreferences.properties.documentBleedBottomOffset,
 					doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
-				) + 1, // Max bleed value + 1 mm
+				) + 1, // Offset page marks at bleed value + 1 mm
 				UnitValue('72 pt').as('mm')); // But limit to 72 pt
 		} else {
 			app.pdfExportPreferences.bleedTop =
@@ -606,20 +609,17 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			app.pdfExportPreferences.cropMarks = false;
 			app.pdfExportPreferences.pageInformationMarks = false;
 		}
-		// Don't include page information for small widths
-		fPg = (pageRange === PageRange.ALL_PAGES) ?
-			(target.constructor.name === 'Spreads' ? target[0].pages[0] : target[0]) :
-			(/-/.test(pageRange) ?
-				doc.pages.item(pageRange.slice(0, pageRange.lastIndexOf('-'))) :
-				doc.pages.item(pageRange));
-		lPg = (pageRange === PageRange.ALL_PAGES) ?
-			(target.constructor.name === 'Spreads' ? target[0].pages[-1] : target[0]) :
-			(/-/.test(pageRange) ?
-				doc.pages.item(pageRange.slice(-pageRange.lastIndexOf('-'))) :
-				doc.pages.item(pageRange));
+		// Don't include page information on pages with very small widths
+		if (pageRange === PageRange.ALL_PAGES) {
+			fPg = target.constructor.name === 'Spreads' ? target[0].pages[0]  : target[0];
+			lPg = target.constructor.name === 'Spreads' ? target[0].pages[-1] : target[0];
+		} else if (/-/.test(pageRange)) {
+			fPg = doc.pages.item(pageRange.slice(0, pageRange.lastIndexOf('-')));
+			lPg = doc.pages.item(pageRange.slice(pageRange.lastIndexOf('-') + 1));
+		} else { fPg = lPg = doc.pages.item(pageRange); }
 		spreadWidth = (target.constructor.name === 'Spreads' ? lPg.bounds[3] : fPg.bounds[3]) - fPg.bounds[1];
 		if (spreadWidth < UnitValue('335 pt').as('mm')) app.pdfExportPreferences.pageInformationMarks = false;
-
+		// Export
 		doc.exportFile(ExportFormat.PDF_TYPE, File(filename), false);
 	}
 }
