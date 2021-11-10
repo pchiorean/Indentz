@@ -1,5 +1,8 @@
 ## Changelog
 
+- [`fix`](https://github.com/pchiorean/Indentz/commit/a96c262e49cbd6bdd4c109d1babb5edf95b12baf)
+  **QuickExport v2.16.1**: Fixed a bug when skipping page information on pages with small widths
+
 #### [2021-11-09](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-11-09&type=commits)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/832e27f6050f82b3e52d7a901bfa40be93974077)
   **QR v3.6.1, QRBatch v2.8.1**: The on-page label now has insets on both left and right sides
@@ -208,7 +211,7 @@
 - `upd` **PageSizeFromSelection**: Without selection fit all pages to their contents
 - `upd` **ParseDataFile**: Keep the record index in the returned object
 - `brk` **PrepareForExport, VisibleArea**: Read layer variants from `layers.txt`, fallback to defaults
-- `upd` **QuickExport**: Add `+diecut` to names when files contain a `dielines` layer
+- `upd` **QuickExport**: Add 'Save as' checkbox
 - `upd` **QuickExport**: JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 - `upd` **ReplaceLinks**: Use wildcards for old links
 - `upd` **ReplaceText**: Take an array of strings as input
