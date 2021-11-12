@@ -1,5 +1,5 @@
 /*
-	Quick export v2.16.1 (2021-11-10)
+	Quick export v2.16.2 (2021-11-12)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -25,9 +25,6 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-
-// @include '../lib/Debug.jsxinc';
-dbg();
 
 // @include '../lib/ProgressBar.jsxinc';
 // @include '../lib/Report.jsxinc';
