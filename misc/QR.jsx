@@ -1,5 +1,5 @@
 /*
-	QR code v3.7 (2021-11-09)
+	QR code v3.7.1 (2021-11-17)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -49,6 +49,7 @@ function main() {
 		ui.options = ui.qpanel.add('group { margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 15 }');
 			ui.white = ui.options.add('checkbox { helpTip: "Make text white (only when placing on document)", text: "White text" }');
 			ui.uppercase = ui.options.add('checkbox { helpTip: "Make text uppercase (only when placing on document)", text: "Uppercase text" }');
+			ui.uppercase.value = true;
 	ui.actions = ui.add('group { alignChildren: [ "fill", "top" ], orientation: "column" }');
 		ui.ondoc = ui.actions.add('button { helpTip: "Place the code on the bottom-left corner of each page", text: "On doc", properties: { name: "ok" } }');
 		ui.onfile = ui.actions.add('button { text: "Separate" }');

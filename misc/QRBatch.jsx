@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.9 (2021-11-09)
+	Batch QR codes v2.9.1 (2021-11-17)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -90,6 +90,7 @@ function main() {
 	ui.options.uppercase = ui.options.add('checkbox', undefined, 'Uppercase text');
 	ui.options.uppercase.helpTip = 'Make text uppercase (only when placing on document)';
 	ui.options.uppercase.preferredSize.width = LIST.width - 579;
+	ui.options.uppercase.value = true;
 	ui.options.err = ui.options.add('button', undefined, 'Show errors');
 	ui.options.err.visible = false;
 	ui.options.div1 = ui.options.add('panel', undefined, undefined);
