@@ -1,5 +1,5 @@
 /*
-	Quick export v2.18 (2021-11-23)
+	Quick export v2.19 (2021-11-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -33,6 +33,7 @@
 
 var doc, settings, baseFolder, subfolder, suffix, exp, name, progressBar, maxCounter;
 var ADV = ScriptUI.environment.keyboardState.altKey;
+// var ESC = ScriptUI.environment.keyboardState.keyName;
 var WIN = (File.fs === 'Windows');
 var forbiddenFilenameCharsRE = /[#%^{}\\<>*?\/$!'":@`|=]/g; // eslint-disable-line no-useless-escape
 var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
@@ -421,6 +422,7 @@ while ((doc = docs.shift())) {
 		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) runScript(exp.script.path);
 		app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 		app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+		if (ScriptUI.environment.keyboardState.keyName === 'Escape') cleanupAndExit();
 		doExport(exp.exportSpreads.value, ui.output.options.split.value, exp.preset.selection.text);
 	}
 	// Restore measurement units
