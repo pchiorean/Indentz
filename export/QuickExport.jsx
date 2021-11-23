@@ -1,5 +1,5 @@
 /*
-	Quick export v2.17 (2021-11-23)
+	Quick export v2.18 (2021-11-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -38,7 +38,7 @@ var forbiddenFilenameCharsRE = /[#%^{}\\<>*?\/$!'":@`|=]/g; // eslint-disable-li
 var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 var settingsFile = File(Folder.userData + '/' + script.name.replace(/.[^.]+$/, '') + '.prefs');
-var presets = app.pdfExportPresets.everyItem().name.sort();
+var presets = app.pdfExportPresets.everyItem().name.sort(naturalSorter);
 var folderMode = (app.documents.length === 0);
 var old = {
 	measurementUnit:      app.scriptPreferences.measurementUnit,
@@ -365,8 +365,8 @@ app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERAC
 // Get a sorted document list
 if (folderMode) {
 	docs = ui.input.options.subfolders.value ?
-		getFilesRecursively(ui.input.source.path).sort() :
-		ui.input.source.path.getFiles('*.indd').sort();
+		getFilesRecursively(ui.input.source.path).sort(naturalSorter) :
+		ui.input.source.path.getFiles('*.indd').sort(naturalSorter);
 	if (docs.length === 0) { alert('No InDesign documents found.'); cleanupAndExit(); }
 } else {
 	docs = app.documents.everyItem().getElements();
@@ -798,6 +798,28 @@ function saveSettings() {
 	settingsFile.open('w');
 	settingsFile.write(settings.toSource());
 	settingsFile.close();
+}
+
+// https://stackoverflow.com/questions/2802341/javascript-natural-sort-of-alphanumerical-strings/2802804#2802804
+function naturalSorter(as, bs) {
+	var a, b, a1, b1, n, L;
+	var i = 0;
+	var rx = /(\.\d+)|(\d+(\.\d+)?)|([^\d.]+)|(\.\D+)|(\.$)/g;
+	if (as === bs) return 0;
+	a = as.toString().toLowerCase().match(rx);
+	b = bs.toString().toLowerCase().match(rx);
+	L = a.length;
+	while (i < L) {
+		if (!b[i]) return 1;
+		a1 = a[i];
+		b1 = b[i++];
+		if (a1 !== b1) {
+			n = a1 - b1;
+			if (!isNaN(n)) return n;
+			return a1 > b1 ? 1 : -1;
+		}
+	}
+	return b[i] ? -1 : 0;
 }
 
 function cleanupAndExit() {
