@@ -1,5 +1,5 @@
 /*
-	L grid 2.3.2 (2021-09-24)
+	L grid 2.3.3 (2021-11-17)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 */
 
@@ -60,24 +60,24 @@ function main() {
 		};
 		// Common guides
 		addGuide('horizontal', tgBounds[2] - tgSize.height * 0.1 - MG, 'mg');
-		addGuide('horizontal',
-			getBounds(page).page.margins[2] -
-				(((2 * MG) * 1.18 - (2 * MG)) / 2 + // line inner margin
-				2 * ((2 * MG) * 0.28) +             // space between lines
-				8 * MG),                            // 3 lines + #EMM
-			'HL (3 rows)', UIColors.GREEN);
+		// addGuide('horizontal',
+		// 	getBounds(page).page.margins[2] -
+		// 		(((2 * MG) * 1.18 - (2 * MG)) / 2 + // line inner margin
+		// 		2 * ((2 * MG) * 0.28) +             // space between lines
+		// 		8 * MG),                            // 3 lines + #EMM
+		// 	'HL (3 rows)', UIColors.GREEN);
 		// Placeholders for logo etc.
-		logoFrame = page.ovals.add({
-			itemLayer:       'guides',
-			label:           'logo',
-			geometricBounds: [ tgBounds[0], tgBounds[1], tgBounds[0] + logo, tgBounds[1] + logo ],
-			contentType:     ContentType.UNASSIGNED,
-			fillColor:       'Magenta',
-			strokeColor:     'None'
-		});
-		logoFrame.transparencySettings.blendingSettings.opacity = 66;
-		doc.align(logoFrame, AlignOptions.RIGHT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		doc.align(logoFrame, AlignOptions.TOP_EDGES,   AlignDistributeBounds.MARGIN_BOUNDS);
+		// logoFrame = page.ovals.add({
+		// 	itemLayer:       'guides',
+		// 	label:           'logo',
+		// 	geometricBounds: [ tgBounds[0], tgBounds[1], tgBounds[0] + logo, tgBounds[1] + logo ],
+		// 	contentType:     ContentType.UNASSIGNED,
+		// 	fillColor:       'Magenta',
+		// 	strokeColor:     'None'
+		// });
+		// logoFrame.transparencySettings.blendingSettings.opacity = 66;
+		// doc.align(logoFrame, AlignOptions.RIGHT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		// doc.align(logoFrame, AlignOptions.TOP_EDGES,   AlignDistributeBounds.MARGIN_BOUNDS);
 		mgFrame = page.rectangles.add({
 			itemLayer:       'guides',
 			label:           'mg',
