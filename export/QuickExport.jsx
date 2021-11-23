@@ -1,5 +1,5 @@
 /*
-	Quick export v2.19 (2021-11-23)
+	Quick export v2.19.1 (2021-11-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -172,14 +172,14 @@ ui.output = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 1
 			ui.output.options.docSave = ui.output.opt1.add('group');
 				ui.output.options.docSave.isOn = ui.output.options.docSave.add('checkbox { text: "Save docs" }');
 				ui.output.options.docSave.scope = ui.output.options.docSave.add('group');
-					ui.output.options.docSave.scope.mod = ui.output.options.docSave.scope.add('radiobutton { text: "modified" }');
+					ui.output.options.docSave.scope.mod = ui.output.options.docSave.scope.add('radiobutton { helpTip: "Save only modified documents", text: "modified" }');
 					ui.output.options.docSave.scope.mod.value = true;
-					ui.output.options.docSave.scope.all = ui.output.options.docSave.scope.add('radiobutton { text: "all" }');
-			ui.output.options.docSaveAs = ui.output.opt1.add('checkbox { helpTip: "Documents will be saved as new to remove cruft and reduce their size", text: "Using \'Save as\u2026\' to reduce size" }');
+					ui.output.options.docSave.scope.all = ui.output.options.docSave.scope.add('radiobutton { helpTip: "Save all documents (using \'Save as\u2026\')", text: "all" }');
+			ui.output.options.docSaveAs = ui.output.opt1.add('checkbox { helpTip: "Documents will be saved as new to remove cruft and reduce their size", text: "Use \'Save as\u2026\' to reduce size" }');
 			ui.output.options.docClose = ui.output.opt1.add('checkbox { text: "Close docs after export" }');
 			ui.output.options.docClose.enabled = !folderMode;
 		ui.output.opt2 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
-			ui.output.options.subfolders = ui.output.opt2.add('checkbox { helpTip: "Use \'suffix\' fields as subfolders", text: "Export in subfolders" }');
+			ui.output.options.subfolders = ui.output.opt2.add('checkbox { helpTip: "Use the \'suffix\' fields for subfolders (up to the first \'+\')", text: "Export in subfolders" }');
 			ui.output.options.split = ui.output.opt2.add('checkbox { text: "Export separate pages/spreads" }');
 			ui.output.options.overwrite = ui.output.opt2.add('checkbox { text: "Overwrite existing files" }');
 		// -- Actions
@@ -313,6 +313,7 @@ if (folderMode) {
 			ui.actions.ok.enabled = (ui.preset1.isOn.value || ui.preset2.isOn.value) && !!ui.input.source.path;
 		}
 	};
+	ui.output.options.docClose.helpTip = 'In batch mode documents are always closed after export';
 }
 ui.output.dest.isOn.onClick = function () {
 	ui.output.dest.folder.enabled = ui.output.dest.browse.enabled = this.value;
