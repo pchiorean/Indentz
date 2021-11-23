@@ -1,5 +1,5 @@
 /*
-	Quick export v2.16.2 (2021-11-12)
+	Quick export v2.17 (2021-11-23)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -166,16 +166,22 @@ ui.output = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 1
 		ui.output.dest.folder = ui.output.dest.add('edittext { preferredSize: [ 340, 24 ], properties: { readonly: true } }');
 		ui.output.dest.browse = ui.output.dest.add('button { preferredSize: [ 100, 24 ], text: "Browse" }');
 	ui.output.options = ui.output.add('group { alignChildren: "top", margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 0 }');
-		ui.output.opt1 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", preferredSize: [ 200, -1 ], spacing: 5 }');
-			ui.output.options.subfolders = ui.output.opt1.add('checkbox { helpTip: "Use \'suffix\' fields as subfolders", text: "Export in subfolders" }');
-			ui.output.options.split = ui.output.opt1.add('checkbox { text: "Export separate pages" }');
-			ui.output.options.overwrite = ui.output.opt1.add('checkbox { text: "Overwrite existing files" }');
-		ui.output.opt2 = ui.output.options.add('group { alignChildren: "left", orientation: "column", margins: 0, spacing: 5 }');
-			ui.output.options.updateLinks = ui.output.opt2.add('checkbox { text: "Update links" }');
-			ui.output.options.docSave = ui.output.opt2.add('checkbox { text: "Save exported documents" }');
-			ui.output.options.docClose = ui.output.opt2.add('checkbox { text: "Close exported documents" }');
+		ui.output.opt1 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", preferredSize: [ 230, -1 ], spacing: 5 }');
+			ui.output.options.updateLinks = ui.output.opt1.add('checkbox { text: "Update out of date links" }');
+			ui.output.options.docSave = ui.output.opt1.add('group');
+				ui.output.options.docSave.isOn = ui.output.options.docSave.add('checkbox { text: "Save docs" }');
+				ui.output.options.docSave.scope = ui.output.options.docSave.add('group');
+					ui.output.options.docSave.scope.mod = ui.output.options.docSave.scope.add('radiobutton { text: "modified" }');
+					ui.output.options.docSave.scope.mod.value = true;
+					ui.output.options.docSave.scope.all = ui.output.options.docSave.scope.add('radiobutton { text: "all" }');
+			ui.output.options.docSaveAs = ui.output.opt1.add('checkbox { helpTip: "Documents will be saved as new to remove cruft and reduce their size", text: "Using \'Save as\u2026\' to reduce size" }');
+			ui.output.options.docClose = ui.output.opt1.add('checkbox { text: "Close docs after export" }');
 			ui.output.options.docClose.enabled = !folderMode;
-// -- Actions
+		ui.output.opt2 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
+			ui.output.options.subfolders = ui.output.opt2.add('checkbox { helpTip: "Use \'suffix\' fields as subfolders", text: "Export in subfolders" }');
+			ui.output.options.split = ui.output.opt2.add('checkbox { text: "Export separate pages/spreads" }');
+			ui.output.options.overwrite = ui.output.opt2.add('checkbox { text: "Overwrite existing files" }');
+		// -- Actions
 ui.actions = ui.add('group { orientation: "row" }');
 if (ADV) {
 	ui.actions.savePrefs = ui.actions.add('button { preferredSize: [ 80, -1 ], text: "Save prefs" }');
@@ -321,6 +327,21 @@ ui.output.dest.browse.onClick = function () {
 		ui.output.dest.folder.helpTip = ff;
 	}
 };
+ui.output.options.docSave.isOn.onClick = function () {
+	ui.output.options.docSave.scope.enabled = this.value;
+	ui.output.options.docSaveAs.enabled = this.value;
+};
+ui.output.options.docSave.scope.mod.onClick = function () {
+	if (this.value) ui.output.options.docSave.isOn.value = true;
+};
+ui.output.options.docSave.scope.all.onClick = function () {
+	if (this.value) ui.output.options.docSave.isOn.value = true;
+	ui.output.options.docSaveAs.enabled = this.value;
+	ui.output.options.docSaveAs.value = this.value;
+};
+ui.output.options.docSaveAs.onClick = function () {
+	if (!this.value) ui.output.options.docSave.scope.mod.value = true;
+};
 if (ADV) {
 	ui.actions.savePrefs.onClick = function () { saveSettings(); };
 	ui.actions.resetPrefs.onClick = function () {
@@ -406,7 +427,15 @@ while ((doc = docs.shift())) {
 	doc.viewPreferences.horizontalMeasurementUnits = old.horizontalMeasurementUnits;
 	doc.viewPreferences.verticalMeasurementUnits = old.verticalMeasurementUnits;
 	// Save and close
-	if (ui.output.options.docSave.value && doc.saved && doc.modified) doc.save();
+	if (ui.output.options.docSave.isOn.value) {
+		if (ui.output.options.docSave.scope.mod.value) {
+			if (doc.modified) {
+				if (ui.output.options.docSaveAs.enabled && ui.output.options.docSaveAs.value)
+					doc.save(File(doc.fullName));
+				else doc.save();
+			}
+		} else { doc.save(File(doc.fullName)); }
+	}
 	if (folderMode) doc.close(SaveOptions.NO);
 	else if (ui.output.options.docClose.value) doc.close(SaveOptions.NO);
 }
@@ -676,11 +705,13 @@ function readSettings() {
 	ui.output.options.split.value = settings.output.options.split;
 	ui.output.options.overwrite.value = false; // settings.output.options.overwrite;
 	ui.output.options.updateLinks.value = settings.output.options.updatelinks;
-	ui.output.options.docSave.value = settings.output.options.save;
+	ui.output.options.docSave.isOn.value = settings.output.options.save;
+	ui.output.options.docSaveAs.value = false;
 	ui.output.options.docClose.value = settings.output.options.close;
 	ui.preset1.isOn.onClick();
 	ui.preset2.isOn.onClick();
 	ui.output.dest.isOn.onClick();
+	ui.output.options.docSave.isOn.onClick();
 
 	function findPresetIndex(/*string*/presetName, /*array*/presetsArray) {
 		if (app.pdfExportPresets.itemByName(presetName).isValid) {
@@ -753,7 +784,7 @@ function saveSettings() {
 				split: ui.output.options.split.value,
 				overwrite: false, // ui.output.options.overwrite.value,
 				updatelinks: ui.output.options.updateLinks.value,
-				save: ui.output.options.docSave.value,
+				save: ui.output.options.docSave.isOn.value,
 				close: ui.output.options.docClose.value
 			}
 		},
