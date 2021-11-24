@@ -62,7 +62,7 @@
   **LabelPage 1.3, LabelPageRatios 2.2, PrepareForExport 2.3**: Aligned page label to crop marks
 - [`fix`](https://github.com/pchiorean/Indentz/commit/70b7ac39278a7974143ce58516b140cb4d9f5930)
   **ShowFonts 1.4.6**: Fixed name reporting for missing fonts
-- [`sty`](https://github.com/pchiorean/Indentz/commit/3b48f362a0b451f959da7bbea8ef83fb736e0e30)
+- [`ref`](https://github.com/pchiorean/Indentz/commit/3b48f362a0b451f959da7bbea8ef83fb736e0e30)
   **Report 2.1.1**: Relaxed minimum window width for very small messages
 
 #### [2021-10-16](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-16&type=commits)
@@ -122,7 +122,7 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/f54c8a108c1fa9e00d979dd12d8995b6e6f320fd)
   Linked helper functions by `#include` preprocessor directive
 - [`doc`](https://github.com/pchiorean/Indentz/commit/b5d8404218f7f643052f5cab7e4da4b4f7d3ff67)
-  Added a `README.md` for helper functions in `/lib`
+  Added a [`README.md`](../lib/README.md) for helper functions in `/lib`
 
 #### [2021-09-29](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-29&type=commits)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/06f2e5c3dfa7ee2076c2373e7b7dc990c95f727f)
@@ -143,12 +143,12 @@
 #### [2021-09-24](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-24&type=commits)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ec0903a428aa608a66acf8716b90ec94dd790ca6)
   **Bounds 5.1.1**: Fixed typo on `page.visible[3]`
-- [`ref`](https://github.com/pchiorean/Indentz/commit/6cee3420533728fb3c117ba8928389edf3a5ed1e)
-  **GetBounds 5.1.2, HW 2.7.1, PageSizeFromFilename 2.1.4, VisibleArea 3.2.1**: Renamed visible area regex
 - [`ref`](https://github.com/pchiorean/Indentz/commit/63d365a6b1931cbe2ba0d7b0d6009437acac4bd6)
   [`ref`](https://github.com/pchiorean/Indentz/commit/a4fe6767f5dc757fd8aa28173b90c32adb38fb0a)
   Renamed **Bounds** to **GetBounds** and **FindFile** to **GetDataFile**
-- [`sty`](https://github.com/pchiorean/Indentz/commit/6e897670752ff918136c540a57a4a46cd78ab786)
+- [`ref`](https://github.com/pchiorean/Indentz/commit/6cee3420533728fb3c117ba8928389edf3a5ed1e)
+  **GetBounds 5.1.2, HW 2.7.1, PageSizeFromFilename 2.1.4, VisibleArea 3.2.1**: Renamed visible area regex
+- [`ref`](https://github.com/pchiorean/Indentz/commit/6e897670752ff918136c540a57a4a46cd78ab786)
   **Debug 1.0.1**: Changed context separator to `::`
 
 #### [2021-09-23](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-09-23&type=commits)
@@ -181,15 +181,11 @@
   **HW 2.7**: Also match old `<safe area>` frames as visible area marks
 - [`upd`](ShowProfiles)
   **ShowProfiles 1.5**: Profiles are only available with a document opened, so create a temporary one
-- [`upd`](https://github.com/pchiorean/Indentz/commit/13983402a1604f0587bf1a9d44eaf6063b613b19)
-  **layers.txt**: Added new variant 'cutcontour' for 'dielines' layer
-- [`upd`](https://github.com/pchiorean/Indentz/commit/f72c9057b9748a4f3ef9bed87c84d6f5d1be33bd)
-  **swatches.txt**: Added new variant 'FOLD' for 'Fold' swatch
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
   **Clip 2.7, ClipUndo 2.5**: Only clip objects directly on spread
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
   **QRBatch 2.7**: Converted documents are now skipped and reported
-- [`sty`](https://github.com/pchiorean/Indentz/commit/51bb19d2d7074181c5acacc8dd52931bfd3263c5)
+- [`ref`](https://github.com/pchiorean/Indentz/commit/51bb19d2d7074181c5acacc8dd52931bfd3263c5)
   [`upd`](https://github.com/pchiorean/Indentz/commit/8982a3fde7956ac83372ba140a773a05dff929e2)
   [`fix`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
   Autumn cleaning: added ESLint and refactored many scripts (hopefully, there are no new bugs)
@@ -235,14 +231,14 @@
 - `upd` **TextAutoSize**: Check `baselineShift` ([#132](https://github.com/pchiorean/Indentz/issues/132))
 - `brk` **VisibleArea**: Mark the entire spread's visible area, not individual pages
 - `upd` **VisibleArea**: Use wildcards for layer names
-- `upd` **DefaultLayers/Swatches/ReplaceFonts/Links**: Optional arguments: data file, verbosity level
+- `brk` **DefaultLayers/Swatches/ReplaceFonts/Links**: Optional arguments: data file, verbosity level
 - `upd` Use a custom object style for 'Visible area' frame ([#123](https://github.com/pchiorean/Indentz/issues/123))
-- `sty` Fix UI static/edittext width (see Marc's [measureString()](https://twitter.com/indiscripts/status/1408788941550108674))
+- `ref` Fix UI static/edittext width (see Marc's [measureString()](https://twitter.com/indiscripts/status/1408788941550108674))
 
 ##### Bug fixes
 
 - `fix` **DefaultSwatches**: Check values on parsing
-- `fix` **FitTo**: Properly enforce-fit orthogonal lines
+- `fix` **FitTo**: Properly enforce-fit orthogonal lines (fix regression from v5.5.5)
 - `fix` **LabelPageRatios**: Use spreads' ratio
 - `fix` **PageSizeFromFilename**: Error on pages set to 1:X scale ([#129](https://github.com/pchiorean/Indentz/issues/129))
 - `fix` **PageSizeFromFilename**: Limit detected bleed to max values
@@ -250,14 +246,13 @@
 - `fix` **PageSizeFromSelection**: For text frames use outlined text bounds
 - `fix` **QuickExport**: Link 'Spreads' and 'Export separate pages' checkboxes
 - `fix` **QR, QRBatch**: Improve line breaking
-- `fix` **QRBatch**: Check for converted documents
 - `fix` **QRBatch**: Remove `preview` & `print` from filenames for separate codes
 - `fix` **QRBatch**: Remove `QR` from filenames for on-doc codes
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
 
 ##### New scripts
 
-- `new` **ActivateDoc1/2/3...**: Quickly activate document tabs with Ctrl + #1, 2, 3...
+- `new` **ActivateDoc1/2/3...**: Quickly activate document tabs with Ctrl + 1, 2, 3...
 - `new` **SeparateSpreadPages** ([#136](https://github.com/pchiorean/Indentz/issues/136))
 - `new` **LayersToFiles** ([#94](https://github.com/pchiorean/Indentz/issues/94))
 
@@ -273,5 +268,4 @@
 `del` - removed features\
 `fix` - bug fixes\
 `ref` - code changes that neither fixes a bug or adds a feature\
-`sty` - everything related to styling/formatting\
 `doc` - changes in documentation
