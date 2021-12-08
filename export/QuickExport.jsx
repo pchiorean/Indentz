@@ -1,5 +1,5 @@
 /*
-	Quick export v2.19.1 (2021-11-23)
+	Quick export v2.20 (2021-12-08)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -26,14 +26,13 @@
 	SOFTWARE.
 */
 
-// @include '../lib/ProgressBar.jsxinc';
+// @include '../lib/ProgressBar2.jsxinc';
 // @include '../lib/Report.jsxinc';
 
 // Initialisation
 
 var doc, settings, baseFolder, subfolder, suffix, exp, name, progressBar, maxCounter;
 var ADV = ScriptUI.environment.keyboardState.altKey;
-// var ESC = ScriptUI.environment.keyboardState.keyName;
 var WIN = (File.fs === 'Windows');
 var forbiddenFilenameCharsRE = /[#%^{}\\<>*?\/$!'":@`|=]/g; // eslint-disable-line no-useless-escape
 var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
@@ -182,7 +181,7 @@ ui.output = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 1
 			ui.output.options.subfolders = ui.output.opt2.add('checkbox { helpTip: "Use the \'suffix\' fields for subfolders (up to the first \'+\')", text: "Export in subfolders" }');
 			ui.output.options.split = ui.output.opt2.add('checkbox { text: "Export separate pages/spreads" }');
 			ui.output.options.overwrite = ui.output.opt2.add('checkbox { text: "Overwrite existing files" }');
-		// -- Actions
+// -- Actions
 ui.actions = ui.add('group { orientation: "row" }');
 if (ADV) {
 	ui.actions.savePrefs = ui.actions.add('button { preferredSize: [ 80, -1 ], text: "Save prefs" }');
@@ -380,7 +379,7 @@ if (folderMode) {
 // Init progress bar
 maxCounter = docs.length * ((ui.preset1.isOn.value ? 1 : 0) + (ui.preset2.isOn.value ? 1 : 0));
 for (i = 0, n = docs.length; i < n; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
-progressBar = new ProgressBar('Exporting', maxCounter, pbWidth + 10);
+progressBar = new ProgressBar2('Exporting', maxCounter, pbWidth + 10);
 // Documents loop
 while ((doc = docs.shift())) {
 	if (folderMode) {
@@ -544,7 +543,8 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 				// Export as pages
 				range = String(target[i].documentOffset + 1);
 			}
-			progressBar.update(counter, (baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
+			progressBar.update(counter, i + 1, n,
+				(baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
 			exportToPDF(fn, range, app.pdfExportPresets.item(preset));
 		}
 	} else {
@@ -553,7 +553,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		fn = uniqueName(baseName,
 			baseFolder + (subfolder ? '/' + subfolder : ''),
 			ui.output.options.overwrite.value);
-		progressBar.update(counter, (baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
+		progressBar.update(counter, 0, 0, (baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
 		exportToPDF(fn, PageRange.ALL_PAGES, app.pdfExportPresets.item(preset));
 	}
 	counter++;
