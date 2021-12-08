@@ -24,8 +24,8 @@ function ProgressBar(title, maxValue, maxWidth) {
 	}
 	/**
 	 * Updates the value and the message. A counter will be appended to the title.
-	 * @param {number} value - Updated progress bar value.
-	 * @param {string} [message] - Updated message; if ommitted, the previous message is cleared.
+	 * @param {number} value - Progress bar value.
+	 * @param {string} [message] - Message; if ommitted, the previous message is cleared.
 	 * @example
 	 * progress.update(25, 'Progress bar value is 25.');
 	 */
