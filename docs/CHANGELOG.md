@@ -1,12 +1,16 @@
 ## Changelog
 
+#### [2021-12-08](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-12-08&type=commits)
+- [`upd`](https://github.com/pchiorean/Indentz/commit/2b8e886f04ebaf4fb912540a2183fe1a941ba403)
+  **QuickExport 2.20**: Added a second progress bar when exporting separate pages
+
 #### [2021-11-23](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-11-23&type=commits)
-- [`upd`](https://github.com/pchiorean/Indentz/commit/0fc73f2d1574cd5cc5747276a3fd544e6028e103)
-  **QuickExport 2.17**: Added a 'Save as…' option for removing cruft and reducing documents size
-- [`upd`](https://github.com/pchiorean/Indentz/commit/b0cec7208c5c08d82bd5efeb48850e01e2fc8677)
-  **QuickExport 2.18**: Input files are now sorted in natural order
 - [`upd`](https://github.com/pchiorean/Indentz/commit/21e174597e2a5409f5536616be6ee7c6bebb9774)
   **QuickExport 2.19**: Cancel export if 'Esc' is kept pressed
+- [`upd`](https://github.com/pchiorean/Indentz/commit/b0cec7208c5c08d82bd5efeb48850e01e2fc8677)
+  **QuickExport 2.18**: Input files are now sorted in natural order
+- [`upd`](https://github.com/pchiorean/Indentz/commit/0fc73f2d1574cd5cc5747276a3fd544e6028e103)
+  **QuickExport 2.17**: Added a 'Save as…' option for removing cruft and reducing documents size
 - [`fix`](https://github.com/pchiorean/Indentz/commit/c0a3cdb490067d57a54997ee4b702146223483c4)
   **QR 3.7.1, QRBatch 2.9.1**: Made the label uppercase by default
 
@@ -46,10 +50,10 @@
   **FitTo 5.5.6**: Relaxed 'object is transformed' rule to not clip 90°-rotated objects (fix regression from v5.5.4)
 
 #### [2021-10-23](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-23&type=commits)
-- [`fix`](https://github.com/pchiorean/Indentz/commit/f40cdc1e437a43f68b7e4ae3188d1ba8b5300c69)
-  **FitTo 5.5.4**: Transformed containers and text frames are now clipped
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ce1cf13f2750d04d9cf83fcd82e0759ef674309d)
   **FitTo 5.5.5**: Don't move forced-fit lines to [0, 0]
+- [`fix`](https://github.com/pchiorean/Indentz/commit/f40cdc1e437a43f68b7e4ae3188d1ba8b5300c69)
+  **FitTo 5.5.4**: Transformed containers and text frames are now clipped
 
 #### [2021-10-18](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-18&type=commits)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ba80564a179e9664f582efddd3fe132c8a07fb6b)
@@ -93,10 +97,10 @@
   Added **GuidesAdd**: Adds guides on pages' edges and inner centers or on selected objects' edges (mostly a template script)
 - [`new`](https://github.com/pchiorean/Indentz/commit/3d4e0ad39ff33bf1da6adb89c222788a8b821086)
   Added **ReplaceLinks**: Replaces document links from a substitution list
-- [`brk`](https://github.com/pchiorean/Indentz/commit/3151eda817f88cc2e83e97e3f3c2f4edc222f073)
-  **ParseDataFile 2.0**: Extended reporting granularity (fatal, warning, info, etc)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2813627388fe29db705688f4e942141d0e86d7f3)
   **ParseDataFile 2.1**: You can now use backslash at the end of a line to split long lines
+- [`brk`](https://github.com/pchiorean/Indentz/commit/3151eda817f88cc2e83e97e3f3c2f4edc222f073)
+  **ParseDataFile 2.0**: Extended reporting granularity (fatal, warning, info, etc)
 - [`ref`](https://github.com/pchiorean/Indentz/commit/4d6fb7b23ef5f9fdd336d7534289a35a125a52aa)
   Renamed **DeleteGuides** to **GuidesDelete** and **CleanupSwatches** to **SwatchesCleanup**
 
@@ -202,13 +206,12 @@
 - `new` **DocCleanup**: Remove unused masters
 - `new` **DocCleanup**: Remove unused styles and groups
   (see [this](https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331) discussion)
-- `new` **QuickExport**: Add history for dropdowns
+- `new` **QuickExport**: Add history for dropdowns (see page 43 of ScriptUI by PK)
 - `new` **QuickExport**: Add JPG & `?`TIFF export profiles
 - `new` **Report**: Add a button to save errors to file
 
 ##### Updates
 
-<!-- - `brk` **Debug**: LOG.debug / LOG.info / LOG.error etc -->
 - `upd` **Debug**: Add a hires timer
 - `upd` **DefaultSwatches**: Add tints support
 - `upd` **FindFile**: Use relative paths for includes
@@ -218,6 +221,7 @@
 - `upd` **PageSizeFromSelection**: Without selection fit all pages to their contents
 - `upd` **ParseDataFile**: Keep the record index in the returned object
 - `brk` **PrepareForExport, VisibleArea**: Read layer variants from `layers.txt`, fallback to defaults
+- `upd` **QR**: Add a placeholder for current page number
 - `upd` **QuickExport**: JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 - `upd` **ReplaceLinks**: Use wildcards for old links
 - `upd` **ReplaceText**: Take an array of strings as input
@@ -244,6 +248,7 @@
 - `fix` **PageSizeFromFilename**: Limit detected bleed to max values
 - `fix` **PageSizeFromFilename**: Dimensions in pixels
 - `fix` **PageSizeFromSelection**: For text frames use outlined text bounds
+- `fix` **QuickExport**: Check if the PDF is writable before exporting
 - `fix` **QuickExport**: Link 'Spreads' and 'Export separate pages' checkboxes
 - `fix` **QR, QRBatch**: Improve line breaking
 - `fix` **QRBatch**: Remove `preview` & `print` from filenames for separate codes
