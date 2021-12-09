@@ -1,6 +1,6 @@
 # Indentz
 
-Colecție de scripturi InDesign pentru operații simple și repetitive. Ideal, o parte din ele ar trebui invocate printr‑un shortcut (**Edit ⏵ Keyboard Shortcuts... ⏵ Product Area ⏵ Scripts**; sugestii pentru macOS sub fiecare secțiune).
+Colecție de scripturi InDesign pentru operații simple și repetitive. Ideal, o parte din ele ar trebui invocate printr‑un shortcut (**Edit ‣ Keyboard Shortcuts... ‣ Product Area ‣ Scripts**; sugestii pentru macOS sub fiecare secțiune).
 
 ---
 
@@ -90,7 +90,7 @@ Redimensionează obiectele selectate, fără să le scaleze. Cadrele obișnuite 
 
   **`FitTo...Forced`** redimensionează exact la dimensiunile respective.
 
-* **`TextAutosize`** setează dimensionarea automată a cadrului de text de la **None** la **Height Only** și de la **Height Only** la **Height and Width** (rândurile singulare sunt setate întotdeauna **Height and Width**). Alinierea primului paragraf stabilește alinierea orizontală a cadrului; **Text Frame Options ⏵ Vertical Justification** stabilește alinierea verticală:
+* **`TextAutosize`** setează dimensionarea automată a cadrului de text de la **None** la **Height Only** și de la **Height Only** la **Height and Width** (rândurile singulare sunt setate întotdeauna **Height and Width**). Alinierea primului paragraf stabilește alinierea orizontală a cadrului; **Text Frame Options ‣ Vertical Justification** stabilește alinierea verticală:
 
   | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
   :-: | :-: | :-: | :-:
@@ -232,7 +232,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
   Fișierul TSV poate fi salvat local (în folderul curent sau în folderul părinte al documentului activ), sau ca implicit (pe desktop sau lângă scriptul care rulează). Fișierele locale și cele care încep cu `_` au prioritate. Puteți include un alt fișier inserând **`@path/to/file.txt`** în poziția dorită, ori fișierul implicit cu **`@default`**.
 
-* **`ReplaceLinks`** înlocuiește link‑uri din document dintr‑o listă definită într‑un fișier TSV numit [**`links.txt`**](../links.txt):
+* **`ReplaceLinks`** înlocuiește link‑uri din document dintr‑o listă definită într‑un fișier TSV numit **`links.txt`**:
 
   New link | Old links
   :- | :-
@@ -269,7 +269,7 @@ Sunt două seturi: unul legat de preferințele documentului, straturi, culori ș
 
 * **`PageSizeFromMargins`** redimensionează pagina curentă la marginile acesteia.
 
-* **`PageSizeFromSelection`** redimensionează pagina la obiectele selectate (similar cu **Artboards ⏵ Fit to Selected Art** din Illustrator).
+* **`PageSizeFromSelection`** redimensionează pagina la obiectele selectate (similar cu **Artboards ‣ Fit to Selected Art** din Illustrator).
 
 <details><summary><strong>Shortcuturi</strong></summary>
 
@@ -285,7 +285,7 @@ Setup | | | |
 
 ### **View**
 
-* **`TileAll`** invocă **Window ⏵ Arrange ⏵ Tile All Vertically** sau **Tile All Horizontally**, în funcție de orientarea spreadului curent.
+* **`TileAll`** invocă **Window ‣ Arrange ‣ Tile All Vertically** sau **Tile All Horizontally**, în funcție de orientarea spreadului curent.
 
 * **`ZoomToSelection`** e asemănător cu **Fit Selection in Window** (⌥⌘=), dar cu câteva îmbunătățiri:
 
@@ -356,9 +356,9 @@ Miscellaneous | | | | | |
 
 ## Instalare
 
-1. Deschideți **Window ⏵ Utilities ⏵ Scripts**.
+1. Deschideți **Window ‣ Utilities ‣ Scripts**.
 2. Faceți clic dreapta pe folderul **User** și selectați **Reveal in Finder/Explorer**.
-3. Copiați fișierele în acest folder.
+3. Copiați **Indentz** în acest folder.
 
 ---
 
@@ -373,4 +373,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 29 octombrie 2021
+README-ro.md • 9 decembrie 2021

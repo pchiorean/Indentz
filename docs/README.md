@@ -1,6 +1,6 @@
 # Indentz
 
-Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (**Edit ⏵ Keyboard Shortcuts... ⏵ Product Area ⏵ Scripts**; suggestions for macOS below each section).
+Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (**Edit ‣ Keyboard Shortcuts... ‣ Product Area ‣ Scripts**; suggestions for macOS below each section).
 
 ---
 
@@ -90,7 +90,7 @@ Resize the selected objects, without scaling. Rectangular frames are simply resi
 
   **`FitTo...Forced`** resize exactly to the named dimensions.
 
-* **`TextAutosize`** auto-sizes the text frame to the content from **None** to **Height Only** and from **Height Only** to **Height and Width** (single lines are always auto-sized **Height and Width**). The first paragraph's alignment sets the frame's horizontal alignment; **Text Frame Options ⏵ Vertical Justification** sets the vertical alignment:
+* **`TextAutosize`** auto-sizes the text frame to the content from **None** to **Height Only** and from **Height Only** to **Height and Width** (single lines are always auto-sized **Height and Width**). The first paragraph's alignment sets the frame's horizontal alignment; **Text Frame Options ‣ Vertical Justification** sets the vertical alignment:
 
   | | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png)
   :-: | :-: | :-: | :-:
@@ -232,7 +232,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
   The TSV file can be saved locally (in the current folder or the parent folder of the active document), or as a default (on the desktop or next to the running script). Local files and files starting with `_` take precedence. You can include another file by inserting **`@path/to/file.txt`** in the desired position, or the default file with **`@default`**.
 
-* **`ReplaceLinks`** replaces document links from a list defined in a TSV file named [**`links.txt`**](../links.txt):
+* **`ReplaceLinks`** replaces document links from a list defined in a TSV file named **`links.txt`**:
 
   New link | Old links
   :- | :-
@@ -269,7 +269,7 @@ There are two sets: one related to document preferences, layers, swatches and fo
 
 * **`PageSizeFromMargins`** resizes the current page to its margins.
 
-* **`PageSizeFromSelection`** resizes the page to the selected objects (similar to **Artboards ⏵ Fit to Selected Art** in Illustrator).
+* **`PageSizeFromSelection`** resizes the page to the selected objects (similar to **Artboards ‣ Fit to Selected Art** in Illustrator).
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -285,7 +285,7 @@ Setup | | | |
 
 ### **View**
 
-* **`TileAll`** invokes **Window ⏵ Arrange ⏵ Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
+* **`TileAll`** invokes **Window ‣ Arrange ‣ Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
 
 * **`ZoomToSelection`** resembles **Fit Selection in Window** (⌥⌘=), but with some improvements:
 
@@ -356,9 +356,9 @@ Miscellaneous | | | | | |
 
 ## Installation
 
-1. Open **Window ⏵ Utilities ⏵ Scripts**.
+1. Open **Window ‣ Utilities ‣ Scripts**.
 2. Right‑click on folder **User** and select **Reveal in Finder/Explorer**.
-3. Copy files to this folder.
+3. Copy **Indentz** to this folder.
 
 ---
 
@@ -373,4 +373,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • October 29, 2021
+README.md • December 9, 2021

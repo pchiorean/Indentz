@@ -263,7 +263,7 @@ pre[data-line] .line-highlight[data-end]:after {
       <div class="mume markdown-preview  ">
       <h1 class="mume-header" id="indentz">Indentz</h1>
 
-<p>Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (<strong>Edit &#x23F5; Keyboard Shortcuts&#x2026; &#x23F5; Product Area &#x23F5; Scripts</strong>; suggestions for macOS below each section).</p>
+<p>Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of them should be invoked by a keyboard shortcut (<strong>Edit &#x2023; Keyboard Shortcuts&#x2026; &#x2023; Product Area &#x2023; Scripts</strong>; suggestions for macOS below each section).</p>
 <hr>
 <h6 class="mume-header" id="alignmentproxyalignmentproxy-exportexport-filefile-fittingfitting-scalingscaling-setupsetup-viewview-miscellaneousmiscellaneous-installationinstallation-aboutabout"><a href="#alignmentproxy">Alignment/Proxy</a> | <a href="#export">Export</a> | <a href="#file">File</a> | <a href="#fitting">Fitting</a> | <a href="#scaling">Scaling</a> | <a href="#setup">Setup</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#installation">Installation</a> | <a href="#about">About</a></h6>
 
@@ -434,7 +434,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><strong><code>FitTo...Forced</code></strong> resize exactly to the named dimensions.</p>
 </li>
 <li>
-<p><strong><code>TextAutosize</code></strong> auto-sizes the text frame to the content from <strong>None</strong> to <strong>Height Only</strong> and from <strong>Height Only</strong> to <strong>Height and Width</strong> (single lines are always auto-sized <strong>Height and Width</strong>). The first paragraph&#x2019;s alignment sets the frame&#x2019;s horizontal alignment; <strong>Text Frame Options &#x23F5; Vertical Justification</strong> sets the vertical alignment:</p>
+<p><strong><code>TextAutosize</code></strong> auto-sizes the text frame to the content from <strong>None</strong> to <strong>Height Only</strong> and from <strong>Height Only</strong> to <strong>Height and Width</strong> (single lines are always auto-sized <strong>Height and Width</strong>). The first paragraph&#x2019;s alignment sets the frame&#x2019;s horizontal alignment; <strong>Text Frame Options &#x2023; Vertical Justification</strong> sets the vertical alignment:</p>
 <table>
 <thead>
 <tr>
@@ -766,7 +766,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The TSV file can be saved locally (in the current folder or the parent folder of the active document), or as a default (on the desktop or next to the running script). Local files and files starting with <code>_</code> take precedence. You can include another file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the default file with <strong><code>@default</code></strong>.</p>
 </li>
 <li>
-<p><strong><code>ReplaceLinks</code></strong> replaces document links from a list defined in a TSV file named <a href="../links.txt"><strong><code>links.txt</code></strong></a>:</p>
+<p><strong><code>ReplaceLinks</code></strong> replaces document links from a list defined in a TSV file named <strong><code>links.txt</code></strong>:</p>
 <table>
 <thead>
 <tr>
@@ -846,7 +846,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><strong><code>PageSizeFromMargins</code></strong> resizes the current page to its margins.</p>
 </li>
 <li>
-<p><strong><code>PageSizeFromSelection</code></strong> resizes the page to the selected objects (similar to <strong>Artboards &#x23F5; Fit to Selected Art</strong> in Illustrator).</p>
+<p><strong><code>PageSizeFromSelection</code></strong> resizes the page to the selected objects (similar to <strong>Artboards &#x2023; Fit to Selected Art</strong> in Illustrator).</p>
 </li>
 </ul>
 <details><summary><strong>Shortcuts</strong></summary>
@@ -886,7 +886,7 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <ul>
 <li>
-<p><strong><code>TileAll</code></strong> invokes <strong>Window &#x23F5; Arrange &#x23F5; Tile All Vertically</strong> or <strong>Tile All Horizontally</strong>, depending on the current spread orientation.</p>
+<p><strong><code>TileAll</code></strong> invokes <strong>Window &#x2023; Arrange &#x2023; Tile All Vertically</strong> or <strong>Tile All Horizontally</strong>, depending on the current spread orientation.</p>
 </li>
 <li>
 <p><strong><code>ZoomToSelection</code></strong> resembles <strong>Fit Selection in Window</strong> (&#x2325;&#x2318;=), but with some improvements:</p>
@@ -1026,9 +1026,9 @@ pre[data-line] .line-highlight[data-end]:after {
 <h2 class="mume-header" id="installation">Installation</h2>
 
 <ol>
-<li>Open <strong>Window &#x23F5; Utilities &#x23F5; Scripts</strong>.</li>
+<li>Open <strong>Window &#x2023; Utilities &#x2023; Scripts</strong>.</li>
 <li>Right&#x2011;click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
-<li>Copy files to this folder.</li>
+<li>Copy <strong>Indentz</strong> to this folder.</li>
 </ol>
 <hr>
 <h2 class="mume-header" id="about">About</h2>
@@ -1038,7 +1038,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>&#xA9; 2020-2021 Paul Chiorean &lt;jpeg AT basement.ro&gt;. <br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md &#x2022; October 29, 2021</p>
+<p>README.md &#x2022; December 9, 2021</p>
 
       </div>
       

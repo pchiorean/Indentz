@@ -232,11 +232,11 @@
 - `brk` **ScaleTo...**: Scale to `alignDistributeBounds`
 - `upd` **SpreadsToFiles**: Use a template for custom positioning
 - `upd` **SpreadsToFiles**: Split '-ABBBCC' to '-A', '-BBB', '-CC'
-- `upd` **TextAutoSize**: Check `baselineShift` ([#132](https://github.com/pchiorean/Indentz/issues/132))
+- `upd` **TextAutoSize**: Check `baselineShift`
 - `brk` **VisibleArea**: Mark the entire spread's visible area, not individual pages
 - `upd` **VisibleArea**: Use wildcards for layer names
 - `brk` **DefaultLayers/Swatches/ReplaceFonts/Links**: Optional arguments: data file, verbosity level
-- `upd` Use a custom object style for 'Visible area' frame ([#123](https://github.com/pchiorean/Indentz/issues/123))
+- `upd` Use a custom object style for 'Visible area' frame
 - `ref` Fix UI static/edittext width (see Marc's [measureString()](https://twitter.com/indiscripts/status/1408788941550108674))
 
 ##### Bug fixes
@@ -244,7 +244,7 @@
 - `fix` **DefaultSwatches**: Check values on parsing
 - `fix` **FitTo**: Properly enforce-fit orthogonal lines (fix regression from v5.5.5)
 - `fix` **LabelPageRatios**: Use spreads' ratio
-- `fix` **PageSizeFromFilename**: Error on pages set to 1:X scale ([#129](https://github.com/pchiorean/Indentz/issues/129))
+- `fix` **PageSizeFromFilename**: Error on pages set to 1:X scale
 - `fix` **PageSizeFromFilename**: Limit detected bleed to max values
 - `fix` **PageSizeFromFilename**: Dimensions in pixels
 - `fix` **PageSizeFromSelection**: For text frames use outlined text bounds
@@ -258,8 +258,8 @@
 ##### New scripts
 
 - `new` **ActivateDoc1/2/3...**: Quickly activate document tabs with Ctrl + 1, 2, 3...
-- `new` **SeparateSpreadPages** ([#136](https://github.com/pchiorean/Indentz/issues/136))
-- `new` **LayersToFiles** ([#94](https://github.com/pchiorean/Indentz/issues/94))
+- `new` **SeparateSpreadPages**
+- `new` **LayersToFiles**
 
 </details>
 
