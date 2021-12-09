@@ -813,7 +813,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><strong><code>PageMarginsFromSelection</code></strong> seteaz&#x103; marginile paginii la dimensiunile selec&#x21B;iei.</p>
 </li>
 <li>
-<p><strong><code>PageSizeFromFilename</code></strong> seteaz&#x103; dimensiunea paginilor &#x219;i a ariei vizibile, prelu&#xE2;nd informa&#x21B;iile din numele fi&#x219;ierului:</p>
+<p><strong><code>PageSizeFromFilename</code></strong> seteaz&#x103; dimensiunea paginilor &#x219;i a ariei vizibile, prelu&#xE2;nd informa&#x21B;iile din numele fi&#x219;ierului. Caut&#x103; &#xEE;n numele fi&#x219;ierului perechi de numere de genul <code>000x000</code> (unde <code>000</code> &#xEE;nseamn&#x103; un grup de cel pu&#x21B;in o cifr&#x103;, urmat&#x103; sau nu de zecimale, &#x219;i op&#x21B;ional de <code>mm</code> sau <code>cm</code>). Dac&#x103; g&#x103;se&#x219;te doar o pereche, e dimensiunea paginii. Dac&#x103; g&#x103;se&#x219;te dou&#x103; (de ex. <code>000x000_000x000</code>), perechea mai mare e dimensiunea paginii, perechea mai mic&#x103; aria vizibil&#x103;. Dac&#x103; sunt urmate de o secven&#x21B;&#x103; de una sau dou&#x103; cifre, aceasta va fi bleed:</p>
 <table>
 <thead>
 <tr>
@@ -825,22 +825,19 @@ pre[data-line] .line-highlight[data-end]:after {
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">File1_<code>1400x400</code>_<code>700x137</code>_<code>5</code>mm.indd</td>
+<td style="text-align:left"><strong>File1_1400x400_700x137_5mm.indd</strong></td>
 <td style="text-align:center">1400x400</td>
 <td style="text-align:center">700x137</td>
 <td style="text-align:center">5</td>
 </tr>
 <tr>
-<td style="text-align:left">File2_<code>597x517</code>_<code>577x500.5</code>_<code>3</code>mm V4.indd</td>
+<td style="text-align:left"><strong>File2_597x517_577x500.5_3mm V4.indd</strong></td>
 <td style="text-align:center">597x517</td>
 <td style="text-align:center">577x500.5</td>
 <td style="text-align:center">3</td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p>Caut&#x103; &#xEE;n numele fi&#x219;ierului perechi de numere de genul <code>000x000</code> (unde <code>000</code> &#xEE;nseamn&#x103; un grup de cel pu&#x21B;in o cifr&#x103;, urmat&#x103; sau nu de zecimale, &#x219;i op&#x21B;ional de <code>mm</code> sau <code>cm</code>). Dac&#x103; g&#x103;se&#x219;te doar o pereche, e dimensiunea paginii. Dac&#x103; g&#x103;se&#x219;te dou&#x103; (de ex. <code>000x000_000x000</code>), perechea mai mare e dimensiunea paginii, perechea mai mic&#x103; aria vizibil&#x103;. Dac&#x103; sunt urmate de o secven&#x21B;&#x103; de una sau dou&#x103; cifre, aceasta va fi bleed.</p>
-</blockquote>
 </li>
 <li>
 <p><strong><code>PageSizeFromMargins</code></strong> redimensioneaz&#x103; pagina curent&#x103; la marginile acesteia.</p>

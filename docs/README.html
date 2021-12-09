@@ -813,7 +813,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><strong><code>PageMarginsFromSelection</code></strong> sets the page margins to the selected objects.</p>
 </li>
 <li>
-<p><strong><code>PageSizeFromFilename</code></strong> sets the size of the pages and the visible area, retrieving the information from the filename:</p>
+<p><strong><code>PageSizeFromFilename</code></strong> sets the size of the pages and the visible area, retrieving the information from the filename. It searches for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it&#x2019;s the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair it&#x2019;s the page size, the smaller pair the visible area. If followed by a one- or two&#x2011;digit sequence, this will be bleed:</p>
 <table>
 <thead>
 <tr>
@@ -825,22 +825,19 @@ pre[data-line] .line-highlight[data-end]:after {
 </thead>
 <tbody>
 <tr>
-<td style="text-align:left">File1_<code>1400x400</code>_<code>700x137</code>_<code>5</code>mm.indd</td>
+<td style="text-align:left"><strong>File1_1400x400_700x137_5mm.indd</strong></td>
 <td style="text-align:center">1400x400</td>
 <td style="text-align:center">700x137</td>
 <td style="text-align:center">5</td>
 </tr>
 <tr>
-<td style="text-align:left">File2_<code>597x517</code>_<code>577x500.5</code>_<code>3</code>mm V4.indd</td>
+<td style="text-align:left"><strong>File2_597x517_577x500.5_3mm V4.indd</strong></td>
 <td style="text-align:center">597x517</td>
 <td style="text-align:center">577x500.5</td>
 <td style="text-align:center">3</td>
 </tr>
 </tbody>
 </table>
-<blockquote>
-<p>It searches for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it&#x2019;s the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair it&#x2019;s the page size, the smaller pair the visible area. If followed by a one- or two&#x2011;digit sequence, this will be bleed.</p>
-</blockquote>
 </li>
 <li>
 <p><strong><code>PageSizeFromMargins</code></strong> resizes the current page to its margins.</p>
