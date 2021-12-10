@@ -358,6 +358,8 @@ Miscellaneous | | | | | |
 2. Faceți clic dreapta pe folderul **User** și selectați **Reveal in Finder/Explorer**.
 3. Copiați **Indentz** în acest folder.
 
+**Notă:** Deși puteți pune oricare script oriunde doriți, unele sunt legate de fișiere din folderul **lib/**.
+
 ---
 
 ## Despre
@@ -371,4 +373,4 @@ Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API d
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 9 decembrie 2021
+README-ro.md • 10 decembrie 2021

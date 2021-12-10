@@ -358,6 +358,8 @@ Miscellaneous | | | | | |
 2. Right‑click on folder **User** and select **Reveal in Finder/Explorer**.
 3. Copy **Indentz** to this folder.
 
+**Note:** Although you can put any script wherever you want, some are linked to files in the **lib/** folder.
+
 ---
 
 ## About
@@ -371,4 +373,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • December 9, 2021
+README.md • December 10, 2021
