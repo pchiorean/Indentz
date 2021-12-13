@@ -1,5 +1,5 @@
 /*
-	Quick export v2.20 (2021-12-08)
+	Quick export v2.20.1 (2021-12-13)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -26,7 +26,7 @@
 	SOFTWARE.
 */
 
-// @include '../lib/ProgressBar2.jsxinc';
+// @include '../lib/ProgressBar.jsxinc';
 // @include '../lib/Report.jsxinc';
 
 // Initialisation
@@ -379,7 +379,7 @@ if (folderMode) {
 // Init progress bar
 maxCounter = docs.length * ((ui.preset1.isOn.value ? 1 : 0) + (ui.preset2.isOn.value ? 1 : 0));
 for (i = 0, n = docs.length; i < n; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
-progressBar = new ProgressBar2('Exporting', maxCounter, pbWidth + 10);
+progressBar = new ProgressBar('Exporting', maxCounter, pbWidth + 10);
 // Documents loop
 while ((doc = docs.shift())) {
 	if (folderMode) {
@@ -543,8 +543,8 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 				// Export as pages
 				range = String(target[i].documentOffset + 1);
 			}
-			progressBar.update(counter, i + 1, n,
-				(baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
+			progressBar.update(counter, (baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
+			progressBar.update2(i + 1, n);
 			exportToPDF(fn, range, app.pdfExportPresets.item(preset));
 		}
 	} else {
@@ -553,7 +553,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		fn = uniqueName(baseName,
 			baseFolder + (subfolder ? '/' + subfolder : ''),
 			ui.output.options.overwrite.value);
-		progressBar.update(counter, 0, 0, (baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
+		progressBar.update(counter, (baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
 		exportToPDF(fn, PageRange.ALL_PAGES, app.pdfExportPresets.item(preset));
 	}
 	counter++;
