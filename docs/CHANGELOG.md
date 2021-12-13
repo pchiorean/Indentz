@@ -1,5 +1,9 @@
 ## Changelog
 
+#### [2021-12-13](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-12-13&type=commits)
+- [`upd`](https://github.com/pchiorean/Indentz/commit/bcdc2ad7b12709b748396a9f0104b36c710953d1)
+  **ProgressBar**: Added a second (optional) progress bar
+
 #### [2021-12-08](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-12-08&type=commits)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2b8e886f04ebaf4fb912540a2183fe1a941ba403)
   **QuickExport 2.20**: Added a second progress bar when exporting separate pages
