@@ -1,7 +1,7 @@
 /**
  * Creates a dual progress bar, setting it's width to accomodate a given message length.
  * @param {string} title - Palette title.
- * @param {number} maxValue - Number of steps.
+ * @param {number} maxValue - Number of steps for the principal progress bar.
  * @param {number} [maxWidth] - Maximum message length (characters); if ommitted, no message is shown (mini mode).
  * @example
  * var progress = new ProgressBar('Progress bar demo', 100, 50);
@@ -22,7 +22,7 @@ function ProgressBar(title, maxValue, maxWidth) {
 		pb.bar1.size.width = pb.bar2.size.width = pb.bars.size.width;
 	} else { // Mini progress bar
 		pb.layout.layout();
-		pb.bars.size = [ 420, 16 ];
+		pb.bars.size = [ 415, 16 ];
 		pb.bar1.size.width = pb.bar2.size.width = pb.bars.size.width;
 	}
 	pb.show();
