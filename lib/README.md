@@ -234,35 +234,61 @@ it will return an object like this:
 
 ---
 
-### ProgressBar(title, maxValue, [maxWidth])
+### ProgressBar
+
+Creates a dual progress bar palette.
+
+#### var pb = new ProgressBar(title, maxValue, [maxWidth])
 
 | Parameters | Type       | Description                                                                        |
 | ---------- | ---------- | ---------------------------------------------------------------------------------- |
 | title      | `string`   | Palette title (a counter will be appended).                                        |
-| maxValue   | `number`   | Number of steps.                                                                   |
-| [maxWidth] | `number`   | Maximum message length (characters); if ommitted, no message is shown (mini mode). |
-| value      | `number`   | Updated progress bar value.                                                        |
-| [message]  | `string`   | Updated message; if ommitted, the previous message is cleared.                     |
-| update     | `function` | `update(value, [message])`: Updates the value and the message.                     |
-| close      | `function` | `close()`: Closes the progress bar.                                                |
+| maxValue   | `number`   | Number of steps for the primary progress bar.                                      |
+| [maxWidth] | `number`   | Maximum message length (characters).                                               |
 
-Creates a simple progress bar, setting it's width to accomodate a given message length. Initialized with `new ProgressBar(title, maxValue, [maxWidth])`, updated with `update(value, [message])`, closed with `close()`.
+Initializes and shows the palette. On creation you can set it's width to accomodate a given message length (if ommitted, no message is shown, aka mini mode). The secondary progress bar is by default hidden.
+
+#### pb.update(value, [message])
+
+| Parameters | Type       | Description                                                                        |
+| ---------- | ---------- | ---------------------------------------------------------------------------------- |
+| value      | `number`   | New value of the primary progress bar.                                             |
+| [message]  | `string`   | Message; if ommitted, the previous message is cleared.                             |
+
+Updates the primary progress bar and the message, and hides the secondary progress bar.
+
+#### [pb.update2(value2, maxValue2)] *(Optional)*
+
+| Parameters | Type       | Description                                                                        |
+| ---------- | ---------- | ---------------------------------------------------------------------------------- |
+| value2     | `number`   | New value of the secondary progress bar.                                           |
+| maxValue2  | `number`   | Number of steps for the secondary progress bar.                                    |
+
+Updates the secondary progress bar. You must set the maximum number of steps (the progress bar is not shown if the max value is less then 2).
+
+#### pb.close()
+
+Closes the progress bar.
 
 #### Example
 
 ```js
 var progress = new ProgressBar('Progress bar demo', 100, 50);
 progress.update(25, 'Progress bar value is 25.');
+progress.update2(2, 3);
 ```
 
 ![](../docs/img/lib/progress-bar.png)
+![](../docs/img/lib/progress-bar2.png)
 
 ```js
 var progress = new ProgressBar('Progress bar demo', 100);
 progress.update(25);
+progress.update2(2, 3);
 ```
 
 ![](../docs/img/lib/progress-bar-mini.png)
+![](../docs/img/lib/progress-bar2-mini.png)
 
 ---
 
