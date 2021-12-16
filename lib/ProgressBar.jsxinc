@@ -2,7 +2,7 @@
  * Creates a dual progress bar, setting it's width to accomodate a given message length.
  * @param {string} title - Palette title.
  * @param {number} maxValue - Number of steps for the principal progress bar.
- * @param {number} [maxWidth] - Maximum message length (characters); if ommitted, no message is shown (mini mode).
+ * @param {number} [maxWidth] - Maximum message length (characters); if omitted, no message is shown (mini mode).
  * @example
  * var progress = new ProgressBar('Progress bar demo', 100, 50);
  */
@@ -35,7 +35,7 @@ function ProgressBar(title, maxValue, maxWidth) {
 	/**
 	 * Updates the primary progress bar and the message. A counter will be appended to the title.
 	 * @param {number} value - New value.
-	 * @param {string} [message] - Message; if ommitted, the previous message is cleared.
+	 * @param {string} [message] - Message; if omitted, the previous message is cleared.
 	 * @example
 	 * progress.update(25, 'Primary value is 25.');
 	 */
