@@ -1,5 +1,5 @@
 /*
-	Fit frame to text v2.5.1 (2021-09-18)
+	Fit frame to text v2.5.2 (2021-12-19)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Auto-sizes the text frame to the content from 'None' to 'Height Only' to 'Height and Width'
@@ -192,11 +192,12 @@ function main(selection) {
 	// Modified from Freeze Paragraphs v1.0.2 by Harbs, in-tools.com
 	// http://in-tools.com/article/scripts-blog/freeze-composition/
 	function freezePara(paragraph) {
-		for (var i = 0, n = paragraph.lines.length; i < n - 1; i++) {
-			if (/-?\u000A$/g.test(paragraph.lines[i].contents)) continue;
-			if (paragraph.lines[i].words[-1].lines.length > 1) // Forced hyphenation
-				paragraph.lines[i].characters[-1].insertionPoints[1].contents = '-';
-			paragraph.lines[i].characters[-1].insertionPoints[1].contents = SpecialCharacters.FORCED_LINE_BREAK;
+		for (var i = 0, n = paragraph.lines.length, line; i < n - 1; i++) {
+			line = paragraph.lines[i];
+			if (/-?\u000A$/.test(line.contents)) continue;
+			if (line.words[-1].lines.length > 1 && line.characters[-1].contents !== '-')
+				line.characters[-1].insertionPoints[1].contents = '-\u000A';
+			else line.characters[-1].insertionPoints[1].contents = '\u000A';
 		}
 	}
 }
