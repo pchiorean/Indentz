@@ -1,5 +1,9 @@
 ## Changelog
 
+#### [2021-12-19](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-12-19&type=commits)
+- [`fix`](https://github.com/pchiorean/Indentz/commit/43439885e332b7b44e1b759c4e87b95eb9fe9799)
+  **TextAutosize 2.5.2**: Hopefully fixed hyphenated lines breaking
+
 #### [2021-12-13](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-12-13&type=commits)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/bcdc2ad7b12709b748396a9f0104b36c710953d1)
   **ProgressBar**: Added a second (optional) progress bar
@@ -210,6 +214,7 @@
 - `new` **DocCleanup**: Remove unused masters
 - `new` **DocCleanup**: Remove unused styles and groups
   (see [this](https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331) discussion)
+- `new` **QuickExport**: Add a checkbox for 'Show report'
 - `new` **QuickExport**: Add history for dropdowns (see page 43 of ScriptUI by PK)
 - `new` **QuickExport**: Add JPG & `?`TIFF export profiles
 - `new` **Report**: Add a button to save errors to file
@@ -261,6 +266,7 @@
 
 ##### New scripts
 
+- `new` Convert **lib/ReplaceText** to standalone script <!-- see [this](https://twitter.com/indiscripts/status/1463152851908276230) -->
 - `new` **ActivateDoc1/2/3...**: Quickly activate document tabs with Ctrl + 1, 2, 3...
 - `new` **SeparateSpreadPages**
 - `new` **LayersToFiles**
