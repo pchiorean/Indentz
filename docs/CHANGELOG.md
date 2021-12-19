@@ -1,5 +1,9 @@
 ## Changelog
 
+#### [2021-12-20](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-12-20&type=commits)
+- [`fix`](https://github.com/pchiorean/Indentz/commit/bdd052c38198a876b8682bc04f34e0da6bc2711c)
+  **QRBatch 2.9.2**: Forgot to pass along the uppercase checkbox value (d'oh!)
+
 #### [2021-12-19](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-12-19&type=commits)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/43439885e332b7b44e1b759c4e87b95eb9fe9799)
   **TextAutosize 2.5.2**: Hopefully fixed hyphenated lines breaking
