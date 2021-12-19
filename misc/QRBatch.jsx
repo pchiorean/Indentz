@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v2.9.1 (2021-11-17)
+	Batch QR codes v2.9.2 (2021-12-19)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -85,10 +85,10 @@ function main() {
 	ui.options = ui.add('group', undefined);
 	ui.options.orientation = 'row';
 	ui.options.alignChildren = [ 'right', 'center' ];
-	ui.options.white = ui.options.add('checkbox', undefined, 'White text');
-	ui.options.white.helpTip = 'Make text white (only on documents)';
-	ui.options.uppercase = ui.options.add('checkbox', undefined, 'Uppercase text');
-	ui.options.uppercase.helpTip = 'Make text uppercase (only when placing on document)';
+	ui.options.white = ui.options.add('checkbox', undefined, 'White label');
+	ui.options.white.helpTip = 'Make label white (only when placing on documents)';
+	ui.options.uppercase = ui.options.add('checkbox', undefined, 'Uppercase label');
+	ui.options.uppercase.helpTip = 'Make label uppercase';
 	ui.options.uppercase.preferredSize.width = LIST.width - 579;
 	ui.options.uppercase.value = true;
 	ui.options.err = ui.options.add('button', undefined, 'Show errors');
@@ -221,8 +221,8 @@ function main() {
 		var item = rawData[queue[i] - 1];
 		if (item.fn === '' || item.fn.toString().slice(0,1) === '\u0023') { progressBar.update(i + 1, ''); continue; }
 		progressBar.update(i + 1, item.fn);
-		if ((item.pos && makeQROnDoc(item.fn, item.code, ui.options.white.value)) ||
-				(!item.pos && makeQROnFile(item.fn, item.code))) {
+		if ((item.pos && makeQROnDoc(item.fn, item.code, ui.options.uppercase.value, ui.options.white.value)) ||
+				(!item.pos && makeQROnFile(item.fn, item.code, ui.options.uppercase.value))) {
 			item.exported = true; isModified = true;
 		}
 	}
