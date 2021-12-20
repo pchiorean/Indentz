@@ -1,5 +1,5 @@
 /*
-	V grid 1.2 (2021-10-28)
+	V grid 1.2.1 (2021-12-20)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 */
 
@@ -58,18 +58,18 @@ function main() {
 		// addGuide('horizontal', tgBounds[2] - MG / 2, 'HW bottom', UIColors.GREEN);
 
 		// Margin size square
-		mgFrame = page.rectangles.add({
-			itemLayer:       'guides',
-			label:           'mg',
-			geometricBounds: [ tgBounds[0], tgBounds[1], tgBounds[0] + MG, tgBounds[1] + MG ] ,
-			contentType:     ContentType.UNASSIGNED,
-			fillColor:       'Magenta',
-			strokeColor:     'None'
-		});
-		mgFrame.transparencySettings.blendingSettings.opacity = 90;
-		doc.align(mgFrame, AlignOptions.RIGHT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
-		doc.align(mgFrame, AlignOptions.TOP_EDGES,   AlignDistributeBounds.MARGIN_BOUNDS);
-		mgFrame.move(undefined, [ MG, -MG ]);
+		// mgFrame = page.rectangles.add({
+		// 	itemLayer:       'guides',
+		// 	label:           'mg',
+		// 	geometricBounds: [ tgBounds[0], tgBounds[1], tgBounds[0] + MG, tgBounds[1] + MG ] ,
+		// 	contentType:     ContentType.UNASSIGNED,
+		// 	fillColor:       'Magenta',
+		// 	strokeColor:     'None'
+		// });
+		// mgFrame.transparencySettings.blendingSettings.opacity = 90;
+		// doc.align(mgFrame, AlignOptions.RIGHT_EDGES, AlignDistributeBounds.MARGIN_BOUNDS);
+		// doc.align(mgFrame, AlignOptions.TOP_EDGES,   AlignDistributeBounds.MARGIN_BOUNDS);
+		// mgFrame.move(undefined, [ MG, -MG ]);
 	}
 
 	function addGuide(HorV, location, label, color) {

@@ -1,5 +1,5 @@
 /*
-	L grid 2.3.4 (2021-12-10)
+	L grid 2.3.5 (2021-12-20)
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 */
 
@@ -34,8 +34,8 @@ function main() {
 				logo = MG * 2.857142857142857;
 				// Guides
 				addGuide('vertical',   tgBounds[1] + tgSize.width / 2, 'middle', UIColors.GRID_GREEN);
-				addGuide('horizontal', tgBounds[2] - tgSize.height * 0.1 - 2 * MG, '2 x mg');
-				addGuide('horizontal', tgBounds[2] - tgSize.height * 0.1 - 3 * MG, '3 x mg');
+				// addGuide('horizontal', tgBounds[2] - tgSize.height * 0.1 - 2 * MG, '2 x mg');
+				// addGuide('horizontal', tgBounds[2] - tgSize.height * 0.1 - 3 * MG, '3 x mg');
 				break;
 			case false: // Landscape
 				// Logo = 14% of format height except HW
