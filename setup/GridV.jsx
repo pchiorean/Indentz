@@ -1,8 +1,3 @@
-/*
-	V grid 1.2.1 (2021-12-20)
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
-*/
-
 // @include '../lib/GetBounds.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
@@ -42,6 +37,7 @@ function main() {
 		if (tgSize.width / tgSize.height <= 0.95) { // Portrait
 			// addGuide('vertical', tgBounds[1] + MG * 5, '5 x mg');
 			// addGuide('vertical', tgBounds[1] + MG * 6, '6 x mg');
+			addGuide('vertical', tgBounds[1] + MG * 1.5, '1.5 x mg');
 			addGuide('horizontal', tgBounds[0] + tgSize.height * 0.225, 'middle of 45% section');
 			addGuide('horizontal', tgBounds[0] + tgSize.height * 0.45, '45%');
 		} else { // Landscape
@@ -49,6 +45,7 @@ function main() {
 			// addGuide('horizontal', tgBounds[0] + MG * 6, '6 x mg');
 			addGuide('vertical', tgBounds[1] + tgSize.width * 0.225, 'middle of 45% section');
 			addGuide('vertical', tgBounds[1] + tgSize.width * 0.45, '45%');
+			addGuide('vertical', tgBounds[1] + tgSize.width / 3, '1/3');
 		}
 		// addGuide('vertical', tgBounds[1] + tgSize.width * 3 / 4, '3/4');
 		addGuide('horizontal', tgBounds[0] + tgSize.height / 2, 'middle', UIColors.GRID_GREEN);
