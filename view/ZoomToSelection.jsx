@@ -1,6 +1,6 @@
 /*
-	Zoom to selection v2.2.2 (2021-09-19)
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Zoom to selection v2.2.3 (2022-01-27)
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the selected objects. If no selection, it zooms to the current spread.
 
@@ -30,7 +30,7 @@ if (!(doc = app.activeDocument)) exit();
 
 var items, item, zoom, i, n;
 var window = app.activeWindow;
-var page = app.activeWindow.activePage;
+var page = window.activePage;
 var oldSelection = doc.selection;
 var targetBounds = [];
 var TL = AnchorPoint.TOP_LEFT_ANCHOR;
