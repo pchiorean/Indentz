@@ -4,7 +4,7 @@ Colecție de scripturi InDesign pentru operații simple și repetitive. Ideal, o
 
 ---
 
-###### [Alignment/Proxy](#alignmentproxy) | [Export](#export) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [Instalare](#instalare) | [Despre](#about)
+[**Alignment/Proxy**](#alignmentproxy) | [**Export**](#export) | [**File**](#file) | [**Fitting**](#fitting) | [**Scaling**](#scaling) | [**Setup**](#setup) | [**View**](#view) | [**Miscellaneous**](#miscellaneous) | [**Instalare**](#instalare) | [**Despre**](#about)
 
 ---
 
@@ -78,7 +78,7 @@ Export | |
 
 * **`FilesToSpreads`** combină documentele deschise, sortate alfabetic.
 
-* **`SpreadsToFiles`** salvează fiecare spread al documentului activ într‑un fișier separat. Sufixul va fi autodetectat dacă numele documentului se termină cu un separator (spațiu, punct, linie de subliniere sau cratimă) urmat de o secvență de cifre sau litere egală cu numărul de spreaduri (de exemplu, un document `file_ABC.indd` cu trei spreaduri va fi separat în `file_A.indd`, `file_B.indd` și `file_C.indd`).
+* **`SpreadsToFiles`** salvează fiecare spread al documentului activ într‑un fișier separat. Sufixul va fi autodetectat dacă numele documentului se termină cu un separator (spațiu/punct/linie de subliniere/cratimă) urmat de o secvență de cifre sau litere egală cu numărul de spreaduri (de exemplu, un document `file_ABC.indd` cu trei spreaduri va fi separat în `file_A.indd`, `file_B.indd` și `file_C.indd`).
 
 ---
 
@@ -319,7 +319,7 @@ View | |
 
 * **`LabelPageRatios`** adaugă pe slugul fiecărei pagini o etichetă cu raportul acesteia, pe stratul **info**.
 
-* **`QR`** adaugă un cod QR pe fiecare pagină a documentului activ sau într‑un fișier separat cu același nume și sufixul „_QR”.
+* **`QR`** adaugă un cod QR pe fiecare pagină a documentului activ sau într‑un fișier separat cu același nume și sufixul „_QR”. Dacă numele documentului se termină cu un sufix (spațiu/punct/linie de subliniere/cratimă urmată de o secvență de cifre sau litere egală cu numărul de spreaduri), codul va fi adaptat pentru fiecare spread.
 
   **`QRBatch`** preia o listă de coduri QR dintr‑un fișier TSV numit **`qr.txt`**, pe care le adaugă unor documente existente sau creează fișiere separate:
 
@@ -370,7 +370,7 @@ Am folosit în cea mai mare parte InDesign ExtendScript API 8.0 (compatibil cu I
 
 Codul din acest proiect nu ar fi fost posibil fără InDesign ExtendScript API de [Theunis de Jong](http://jongware.mit.edu) și [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), postări pe bloguri și forumuri, tutoriale și scripturi de [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) și mulți alții.
 
-© 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
+© 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>. \
 Codul este publicat sub licența MIT (v. [LICENSE.txt](LICENSE.txt)).
 
-README-ro.md • 10 decembrie 2021
+README-ro.md • 27 ianuarie 2022

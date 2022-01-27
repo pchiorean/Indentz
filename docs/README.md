@@ -4,7 +4,7 @@ Collection of InDesign scripts for simple and repetitive tasks. Ideally, some of
 
 ---
 
-###### [Alignment/Proxy](#alignmentproxy) | [Export](#export) | [File](#file) | [Fitting](#fitting) | [Scaling](#scaling) | [Setup](#setup) | [View](#view) | [Miscellaneous](#miscellaneous) | [Installation](#installation) | [About](#about)
+[**Alignment/Proxy**](#alignmentproxy) | [**Export**](#export) | [**File**](#file) | [**Fitting**](#fitting) | [**Scaling**](#scaling) | [**Setup**](#setup) | [**View**](#view) | [**Miscellaneous**](#miscellaneous) | [**Installation**](#installation) | [**About**](#about)
 
 ---
 
@@ -78,7 +78,7 @@ Export | |
 
 * **`FilesToSpreads`** combines the open documents, sorted alphabetically.
 
-* **`SpreadsToFiles`** saves each spread of the active document to a separate file. The suffix will be autodetected if the document name ends with a separator (space, dot, underscore or hyphen) followed by a sequence of digits or letters equal with the number of spreads (e.g., a document `file_ABC.indd` with three spreads will be split in `file_A.indd`, `file_B.indd` and `file_C.indd`).
+* **`SpreadsToFiles`** saves each spread of the active document to a separate file. The suffix will be autodetected if the document name ends with a separator (space/dot/underscore/hyphen) followed by a sequence of digits or letters equal to the number of spreads (e.g., a document `file_ABC.indd` with three spreads will be split in `file_A.indd`, `file_B.indd` and `file_C.indd`).
 
 ---
 
@@ -319,7 +319,7 @@ View | |
 
 * **`LabelPageRatios`** adds on the slug of each page a label with its aspect ratio, on the **info** layer.
 
-* **`QR`** adds a QR code on each page of the active document or a separate file with the same name and the suffix “_QR”.
+* **`QR`** adds a QR code on each page of the active document or a separate file with the same name and the suffix “_QR”. If the document name ends with a suffix (space/dot/underscore/hyphen followed by a sequence of digits or letters equal to the number of spreads), the code will be adjusted for every spread.
 
   **`QRBatch`** retrieves a list of codes from a TSV file named **`qr.txt`** and adds them to existing documents or creates separate files:
 
@@ -370,7 +370,7 @@ I mostly used InDesign ExtendScript API 8.0 (compatible with InDesign CS6); I ha
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-© 2020-2021 Paul Chiorean \<jpeg AT basement.ro\>. \
+© 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>. \
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • December 10, 2021
+README.md • January 27, 2022
