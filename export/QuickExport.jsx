@@ -1,6 +1,6 @@
 /*
-	Quick export v2.20.1 (2021-12-13)
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Quick export v2.21 (2022-01-27)
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
 
@@ -41,9 +41,9 @@ var settingsFile = File(Folder.userData + '/' + script.name.replace(/.[^.]+$/, '
 var presets = app.pdfExportPresets.everyItem().name.sort(naturalSorter);
 var folderMode = (app.documents.length === 0);
 var old = {
-	measurementUnit:      app.scriptPreferences.measurementUnit,
+	measurementUnit: app.scriptPreferences.measurementUnit,
 	userInteractionLevel: app.scriptPreferences.userInteractionLevel,
-	viewPDF:              app.pdfExportPreferences.viewPDF
+	viewPDF: app.pdfExportPreferences.viewPDF
 };
 var errors = [];
 var names = [];
@@ -103,9 +103,9 @@ var defaults = {
 	version: VER
 };
 
-app.scriptPreferences.measurementUnit      = MeasurementUnits.MILLIMETERS;
+app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
-app.pdfExportPreferences.viewPDF           = false;
+app.pdfExportPreferences.viewPDF = false;
 
 // User interface
 
@@ -184,9 +184,8 @@ ui.output = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 1
 // -- Actions
 ui.actions = ui.add('group { orientation: "row" }');
 if (ADV) {
-	ui.actions.savePrefs = ui.actions.add('button { preferredSize: [ 80, -1 ], text: "Save prefs" }');
-	ui.actions.resetPrefs = ui.actions.add('button { preferredSize: [ 80, -1 ], text: "Reset prefs" }');
-	ui.actions.add('group { preferredSize: [ 140, -1 ] }');
+	ui.actions.resetPrefs = ui.actions.add('button { preferredSize: [ 130, -1 ], text: "Reset preferences" }');
+	ui.actions.add('group { preferredSize: [ 180, -1 ] }');
 } else {
 	ui.actions.savePrefs = ui.actions.add('checkbox { preferredSize: [ 320, -1 ], text: "Save preferences" }');
 	ui.actions.savePrefs.value = true;
@@ -344,7 +343,6 @@ ui.output.options.docSaveAs.onClick = function () {
 	if (!this.value) ui.output.options.docSave.scope.mod.value = true;
 };
 if (ADV) {
-	ui.actions.savePrefs.onClick = function () { saveSettings(); };
 	ui.actions.resetPrefs.onClick = function () {
 		try { settingsFile.remove(); } catch (e) {}
 		readSettings();
@@ -495,7 +493,7 @@ function updateLinks() {
 	}
 }
 
-function runScript(path) {
+function runScript(/*string*/path) {
 	var ext = path.fsName.replace(/^.*\./, '');
 	app.doScript(path,
 		(function (str) {
@@ -534,13 +532,11 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			fn = uniqueName(fn + suffix, baseFolder + (subfolder ? '/' + subfolder : ''),
 				ui.output.options.overwrite.value);
 			// Get page range
-			if (asSpreads) {
-				// Export as spreads
+			if (asSpreads) { // Export as spreads
 				range = String(target[i].pages[0].documentOffset + 1) + '-' +
 					String(target[extendRange ? i + 1 : i].pages[-1].documentOffset + 1);
 				if (extendRange && !(i % 2)) i++;
-			} else {
-				// Export as pages
+			} else { // Export as pages
 				range = String(target[i].documentOffset + 1);
 			}
 			progressBar.update(counter, (baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
@@ -826,8 +822,8 @@ function naturalSorter(as, bs) {
 }
 
 function cleanupAndExit() {
-	app.scriptPreferences.measurementUnit      = old.measurementUnit;
+	app.scriptPreferences.measurementUnit = old.measurementUnit;
 	app.scriptPreferences.userInteractionLevel = old.userInteractionLevel;
-	app.pdfExportPreferences.viewPDF           = old.viewPDF;
+	app.pdfExportPreferences.viewPDF = old.viewPDF;
 	exit();
 }
