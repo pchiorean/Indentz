@@ -1,5 +1,11 @@
 ## Changelog
 
+#### [2022-01-27](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-01-27&type=commits)
+- [`brk`](https://github.com/pchiorean/Indentz/commit/3e49e0e84168940d265b77f541bb967f441c7d8e)
+  **QR 4.0, QRBatch 3.0**: Added suffix support (see [`SpreadsToFiles`](README.md#file))
+- [`ref`](https://github.com/pchiorean/Indentz/commit/1b87d73e8725849e2828e1381ed4e5aa97a9375e)
+  **QuickExport 2.21**: Removed advanced mode 'Save prefs' button
+
 #### [2021-12-19](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-12-19&type=commits)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/bdd052c38198a876b8682bc04f34e0da6bc2711c)
   **QRBatch 2.9.2**: Forgot to pass along the uppercase checkbox value (d'oh!)
@@ -232,7 +238,6 @@
 - `upd` **PageSizeFromSelection**: Without selection fit all pages to their contents
 - `upd` **ParseDataFile**: Keep the record index in the returned object
 - `brk` **PrepareForExport, VisibleArea**: Read layer variants from `layers.txt`, fallback to defaults
-- `upd` **QR**: Add a placeholder for current page number
 - `upd` **QuickExport**: JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 - `upd` **ReplaceLinks**: Use wildcards for old links
 - `upd` **ReplaceText**: Take an array of strings as input
@@ -259,17 +264,16 @@
 - `fix` **PageSizeFromFilename**: Limit detected bleed to max values
 - `fix` **PageSizeFromFilename**: Dimensions in pixels
 - `fix` **PageSizeFromSelection**: For text frames use outlined text bounds
+- `fix` **ProgressBar**: Center in current window
 - `fix` **QuickExport**: Check if the PDF is writable before exporting
 - `fix` **QuickExport**: Link 'Spreads' and 'Export separate pages' checkboxes
 - `fix` **QR, QRBatch**: Improve line breaking
-- `fix` **QRBatch**: Remove `preview` & `print` from filenames for separate codes
-- `fix` **QRBatch**: Remove `QR` from filenames for on-doc codes
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
 
 ##### New scripts
 
-- `new` Convert **lib/ReplaceText** to standalone script <!-- see [this](https://twitter.com/indiscripts/status/1463152851908276230) -->
-- `new` **ActivateDoc1/2/3...**: Quickly activate document tabs with Ctrl + 1, 2, 3...
+- `new` Convert **lib/ReplaceText** to standalone script <!-- (see [this](https://twitter.com/indiscripts/status/1463152851908276230)) -->
+- `new` **ActivateDoc1/2/3...**: Quickly activate document tabs with Ctrl + 1, 2, 3... <!-- (see [this](https://aiscripts.medium.com/showing-artboard-order-ef213c91b858)) -->
 - `new` **SeparateSpreadPages**
 - `new` **LayersToFiles**
 
