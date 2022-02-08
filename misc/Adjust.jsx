@@ -1,5 +1,5 @@
 /*
-	Adjust items v0.1.2 (2021-11-08)
+	Adjust items 21.11.8
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Released under MIT License:

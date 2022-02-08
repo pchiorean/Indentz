@@ -1,11 +1,11 @@
 /*
-	FitTo v6.0 (2021-11-04)
+	FitTo 21.11.4
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
-	Reframes the given items to the page/spread's size/margins/visible area/bleed. If an item is larger
-	than the target, it will be reduced; if it is smaller but inside a 1% 'snap' area, it will be enlarged.
-	Rectangular frames are simply reframed; rotated items, ovals, groups, etc. are inserted in a clipping
-	frame that is reframed.
+	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of an item or
+	clipping frame that cross the target will be reduced; ones that touch it or are very close (1% snap zone)
+	will be extended. Rectangular frames and orthogonal lines are directly resized; rotated objects, ovals,
+	groups, etc. are inserted into a clipping frame that is resized.
 
 	It's called internally by the other 'fitTo' scripts.
 

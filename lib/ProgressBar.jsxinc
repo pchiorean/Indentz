@@ -1,5 +1,8 @@
 /**
  * Creates a dual progress bar, setting it's width to accomodate a given message length.
+ * @version 21.12.16
+ * @author Paul Chiorean <jpeg@basement.ro>
+ * @license MIT
  * @param {string} title - Palette title.
  * @param {number} maxValue - Number of steps for the principal progress bar.
  * @param {number} [maxWidth] - Maximum message length (characters); if omitted, no message is shown (mini mode).

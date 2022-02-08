@@ -1,7 +1,7 @@
 /**
  * Appends a debugging line to a file saved on the desktop with the name of the running script
  * (e.g. `active-script.log`). If no arguments are given, it just appends an empty line.
- * @version 1.1.1 (2022-01-28)
+ * @version 22.1.28
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} [type] - A single character string: <ul> <li>`+` appends `MESSAGE` to the previous line;</li>

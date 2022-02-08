@@ -1,5 +1,5 @@
 /*
-	Page ratios v2.2.1 (2021-10-18)
+	Page ratios 21.10.18
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a label (ratio) on each page's slug.

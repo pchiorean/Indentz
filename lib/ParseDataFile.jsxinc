@@ -2,7 +2,7 @@
  * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
  * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
  * Include records from another file with `@path/to/include.txt` or the `@default` data file.
- * @version 2.2 (2021-10-11)
+ * @version 21.10.11
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {File} dataFile - A tab-separated-values file (object).

@@ -1,5 +1,5 @@
 /*
-	QR code v4.0 (2022-001-27)
+	QR code 22.1.27
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.

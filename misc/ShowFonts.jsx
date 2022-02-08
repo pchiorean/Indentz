@@ -1,5 +1,5 @@
 /*
-	Show used fonts v1.4.6 (2021-10-17)
+	Show used fonts 21.10.17
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Shows all fonts used in the current document.

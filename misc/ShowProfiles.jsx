@@ -1,5 +1,5 @@
 /*
-	Show color profiles 1.5.1 (2021-05-30)
+	Show color profiles 21.5.30
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Shows all color profiles available to a document.

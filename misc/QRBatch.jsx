@@ -1,5 +1,5 @@
 /*
-	Batch QR codes v3.0 (2022-001-27)
+	Batch QR codes 22.1.27
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.

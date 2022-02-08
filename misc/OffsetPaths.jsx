@@ -1,5 +1,5 @@
 /*
-	Offset Paths v2.0 (2021-09-22)
+	Offset Paths 21.9.22
 
 	Use InDesign's text wrap feature to create offset/inset paths.
 

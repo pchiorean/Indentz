@@ -1,5 +1,8 @@
 /**
  * Replaces a link or a list of links with a different one. A selection limits the scope.
+ * @version 21.11.12
+ * @author Paul Chiorean <jpeg@basement.ro>
+ * @license MIT
  * @param {(string|string[])} oldLinks - A link name, or an array of link names to be replaced.
  * @param {string} newLink - New link name (if same folder), or full link path.
  * @returns {boolean} - Returns `true` if a replacement was made, `false` if not.

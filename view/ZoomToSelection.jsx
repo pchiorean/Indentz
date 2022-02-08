@@ -1,5 +1,5 @@
 /*
-	Zoom to selection v2.2.3 (2022-01-27)
+	Zoom to selection 22.1.27
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the selected objects. If no selection, it zooms to the current spread.

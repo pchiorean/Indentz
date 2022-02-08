@@ -1,5 +1,5 @@
 /*
-	Prepare for export v2.3.1 (2021-10-18)
+	Prepare for export 21.10.18
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves items with special colors to separate spreads.

@@ -1,5 +1,5 @@
 /*
-	Files to spreads v1.0.2 (2021-09-12)
+	Files to spreads 21.9.12
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Combines the open documents, sorted alphabetically.

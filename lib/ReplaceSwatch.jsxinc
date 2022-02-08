@@ -1,6 +1,9 @@
 /**
  * Replaces a swatch or a list of swatches with a different one. The new swatch is created only if
  * values (CMYK) are provided and it doesn't already exist.
+ * @version 21.11.12
+ * @author Paul Chiorean <jpeg@basement.ro>
+ * @license MIT
  * @param {(string|string[])} oldNames - A swatch name, or an array of swatch names to be replaced.
  * @param {string} newName - New swatch name.
  * @param {number[]} [newValues] - Array of 4 values in 0-100 range (CMYK).

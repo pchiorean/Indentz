@@ -1,5 +1,5 @@
 /*
-	Quick export v2.21 (2022-01-27)
+	Quick export 22.1.27
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.

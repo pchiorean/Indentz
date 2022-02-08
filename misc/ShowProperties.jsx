@@ -1,5 +1,5 @@
 /*
-	Show properties 2.2 (2021-10-01)
+	Show properties 21.10.1
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Shows properties and methods of the selected object/active document/the application.

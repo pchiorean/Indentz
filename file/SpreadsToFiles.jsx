@@ -1,5 +1,5 @@
 /*
-	Spreads to files v1.7.12 (2021-10-06)
+	Spreads to files 21.10.6
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
