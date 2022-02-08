@@ -1,5 +1,9 @@
 ## Changelog
 
+#### [2022-02-08](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-02-08&type=commits)
+- [`ref`](https://github.com/pchiorean/Indentz/commit/99a3027821968396503e42a95e4d3e6a472ebfd9)
+  Changed order & switched to calendar versioning
+
 #### [2022-01-27](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-01-27&type=commits)
 - [`brk`](https://github.com/pchiorean/Indentz/commit/3e49e0e84168940d265b77f541bb967f441c7d8e)
   **QR 4.0, QRBatch 3.0**: Added suffix support (see [`SpreadsToFiles`](README.md#file))
@@ -223,7 +227,7 @@
 - `new` **DocCleanup**: Remove unused styles and groups
   (see [this](https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331) discussion)
 - `new` **QuickExport**: Add a checkbox for 'Show report'
-- `new` **QuickExport**: Add history for dropdowns (see page 43 of ScriptUI by PK)
+- `new` **QuickExport**: Add dropdown history (see page 43 of ScriptUI by PK)
 - `new` **QuickExport**: Add JPG & `?`TIFF export profiles
 - `new` **Report**: Add a button to save errors to file
 
@@ -231,9 +235,10 @@
 
 - `upd` **Debug**: Add a hires timer
 - `upd` **DefaultSwatches**: Add tints support
-- `upd` **FindFile**: Use relative paths for includes
+- `upd` **FindFile**: Use relative paths for includes <!-- (VSC: Paths starting with `/` are resolved relative to the current workspace; paths staring with `./` or without any prefix are resolved relative to the current file.) -->
 - `upd` **IsIn**: Add regex matching to searchValue
 - `ref` Rename **isIn** to **isInArray**
+- `upd` **LabelPageRatios**: Mark outer/inner ratios
 - `upd` **PageMarginsFromSelection**: Set the margins of every page touched by the selection
 - `upd` **PageSizeFromSelection**: Without selection fit all pages to their contents
 - `upd` **ParseDataFile**: Keep the record index in the returned object
@@ -259,7 +264,6 @@
 
 - `fix` **DefaultSwatches**: Check values on parsing
 - `fix` **FitTo**: Properly enforce-fit orthogonal lines (fix regression from v5.5.5)
-- `fix` **LabelPageRatios**: Use spreads' ratio
 - `fix` **PageSizeFromFilename**: Error on pages set to 1:X scale
 - `fix` **PageSizeFromFilename**: Limit detected bleed to max values
 - `fix` **PageSizeFromFilename**: Dimensions in pixels
