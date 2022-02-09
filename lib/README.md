@@ -179,7 +179,7 @@ Reads a TSV (tab-separated-values) file, validates the data (the provided functi
 };
 ```
 
-Blank lines and those prefixed with `#` are ignored. You can use backslash `\` at the end of long lines to split them into multiple lines.
+Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
 Use `@path/to/include.txt` to include records from another file or `@default` for default data file (see `getDataFile()`).
 
@@ -240,11 +240,11 @@ Creates a dual progress bar palette.
 
 #### var pb = new ProgressBar(title, maxValue, [maxWidth])
 
-| Parameters | Type       | Description                                   |
-| ---------- | ---------- | --------------------------------------------- |
-| title      | `string`   | Palette title (a counter will be appended).   |
-| maxValue   | `number`   | Number of steps for the primary progress bar. |
-| [maxWidth] | `number`   | Maximum message length (characters).          |
+| Parameters | Type       | Description                                 |
+| ---------- | ---------- | ------------------------------------------- |
+| title      | `string`   | Palette title (a counter will be appended). |
+| maxValue   | `number`   | Number of steps for the main progress bar.  |
+| [maxWidth] | `number`   | Maximum message length (characters).        |
 
 Initializes and shows the palette. On creation you can set it's width to accomodate a given message length (if omitted, no message is shown, aka mini mode). The secondary progress bar is by default hidden.
 
@@ -252,10 +252,10 @@ Initializes and shows the palette. On creation you can set it's width to accomod
 
 | Parameters | Type       | Description                                                         |
 | ---------- | ---------- | ------------------------------------------------------------------- |
-| value      | `number`   | New value of the primary progress bar.                              |
+| value      | `number`   | New value of the main progress bar.                                 |
 | [message]  | `string`   | Message; if omitted, the previous message is cleared. *(Optional.)* |
 
-Updates the primary progress bar and the message, and hides the secondary progress bar.
+Updates the main progress bar and the message, and hides the secondary progress bar.
 
 #### [pb.update2(value2, maxValue2)] *(Optional)*
 
