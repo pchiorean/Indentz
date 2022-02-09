@@ -1,19 +1,19 @@
-Name	Color Model	Color Space	Values	Variants
+Name                 	Color Model 	Color Space 	Values       	Variants
 
 # Rich blacks
-C=60 M=40 Y=40 K=100	process	cmyk	60 40 40 100
-C=40 M=5 Y=5 K=100	process	cmyk	40 5 5 100
+C=60 M=40 Y=40 K=100 	process     	cmyk        	60 40 40 100
+C=40 M=5 Y=5 K=100   	process     	cmyk        	40 5 5 100
 
 # Special colors
-Dielines	spot	cmyk	0 100 0 0
-Cut	spot	cmyk	0 100 0 0	CUT, Artios_Couper, Final Cut
-Fold	spot	cmyk	100 0 0 0	FOLD, Artios_Raineur
-Glue	spot	cmyk	0 0 100 0
-White	spot	cmyk	0 10 10 0
-Varnish	spot	cmyk	0 10 70 0
-Covered area	spot	cmyk	0 100 0 0
-Visible area	spot	cmyk	0 33 100 0	Safe area, Visible Mark
-Safety margins	spot	cmyk	100 0 0 0
-Segmentation	spot	cmyk	0 100 0 0	Split
-Placeholder	process	cmyk	0 100 0 0
-Placement	process	cmyk	0 0 0 100
+Dielines             	spot        	cmyk        	0 100 0 0
+Cut                  	spot        	cmyk        	0 100 0 0    	CUT, Artios_Couper, Final Cut
+Fold                 	spot        	cmyk        	100 0 0 0    	FOLD, Artios_Raineur
+Glue                 	spot        	cmyk        	0 0 100 0
+White                	spot        	cmyk        	0 10 10 0
+Varnish              	spot        	cmyk        	0 10 70 0
+Covered area         	spot        	cmyk        	0 100 0 0
+Visible area         	spot        	cmyk        	0 33 100 0   	Safe area, Visible Mark
+Safety margins       	spot        	cmyk        	100 0 0 0
+Segmentation         	spot        	cmyk        	0 100 0 0    	Split
+Placeholder          	process     	cmyk        	0 100 0 0
+Placement            	process     	cmyk        	0 0 0 100
