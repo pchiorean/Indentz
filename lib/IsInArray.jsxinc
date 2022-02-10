@@ -1,13 +1,16 @@
 /**
  * Matches a string against elements of an array, using wildcards and case sensitivity.
+ * @version 22.2.10
+ * @author Paul Chiorean <jpeg@basement.ro>
+ * @license MIT
  * @param {string} searchValue - String to be matched.
  * @param {array} array - An array of strings; wildcards: '*' (zero or more characters), '?' (any character).
  * @param {boolean} [caseSensitive=false] - If `true` the search is case sensitive. (Optional.)
  * @returns {boolean} - Returns `true` for match, `false` for no match.
  * @example
- * isIn('codes', [ 'bar*code*', 'code*', 'EAN*' ]) // Matches 2nd array element
+ * isInArray('codes', [ 'bar*code*', 'code*', 'EAN*' ]) // Matches 2nd array element
  */
-function isIn(searchValue, array, caseSensitive) {
+function isInArray(searchValue, array, caseSensitive) {
 	caseSensitive = (caseSensitive === undefined) ? false : caseSensitive;
 	for (var i = 0, n = array.length; i < n; i++) {
 		if (RegExp('^' + array[i]

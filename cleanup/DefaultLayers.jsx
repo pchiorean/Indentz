@@ -1,6 +1,6 @@
 /*
-	Default layers 21.11.2
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Default layers 22.2.10
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.txt':
 
@@ -43,7 +43,7 @@
 */
 
 // @include '../lib/GetDataFile.jsxinc';
-// @include '../lib/IsIn.jsxinc';
+// @include '../lib/IsInArray.jsxinc';
 // @include '../lib/Report.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
@@ -130,7 +130,7 @@ function main() {
 		layers = doc.layers.everyItem().getElements();
 		while ((l = layers.shift())) {
 			if (l === targetLayer) continue;
-			if (isIn(l.name, variants)) {
+			if (isInArray(l.name, variants)) {
 				oldLayerVisibility = l.visible;
 				if (l === oldActiveLayer) oldActiveLayer = targetLayer;
 				oldName = l.name;

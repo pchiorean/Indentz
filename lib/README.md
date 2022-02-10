@@ -121,7 +121,7 @@ $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
 
 ---
 
-### isIn(searchValue, array, [caseSensitive]) ⇒ `Boolean`
+### isInArray(searchValue, array, [caseSensitive]) ⇒ `Boolean`
 
 | Parameters      | Type      | Default | Description                                                                         |
 | --------------- | --------- | ------- | ----------------------------------------------------------------------------------- |
@@ -136,7 +136,7 @@ Matches the string `searchValue` against elements of `array`, using wildcards an
 ```js
 var searchValue = 'codes';
 var array = [ 'bar*code*', 'code*', 'EAN*' ];
-isIn(searchValue, array) // True: matches 2nd array element
+isInArray(searchValue, array) // True: matches 2nd array element
 ```
 
 ---

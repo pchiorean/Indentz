@@ -1,6 +1,6 @@
 /*
-	Replace links 21.11.2
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Replace links 22.2.10
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
 
@@ -65,7 +65,7 @@ function main() {
 	for (var r = 0; r < data.records.length; r++) {
 		links = doc.links.everyItem().getElements();
 		while ((link = links.shift())) {
-			if (!isIn(link.name, data.records[r].oldLinks)) continue; // Skip not matched
+			if (!isInArray(link.name, data.records[r].oldLinks)) continue; // Skip not matched
 			if (File(link.filePath).fullName === File(data.records[r].newLink).fullName &&
 				link.status !== LinkStatus.LINK_OUT_OF_DATE) continue; // Skip self
 			link.relink(File(data.records[r].newLink));
@@ -136,7 +136,7 @@ function main() {
 			var newLink = /\//g.test(record[0]) ? record[0] : doc.filePath + '/Links/' + record[0];
 			if (function () { // Check if document has at least one link from oldLinks
 					for (var i = 0; i < oldLinks.length; i++)
-						if (isIn(oldLinks[i], doc.links.everyItem().getElements())) return true;
+						if (isInArray(oldLinks[i], doc.links.everyItem().getElements())) return true;
 					return false;
 				}()) {
 				// Check if newLink is valid
@@ -158,7 +158,7 @@ function main() {
 		}
 	}
 
-	function isIn(item, array) {
+	function isInArray(item, array) {
 		for (var i = 0, n = array.length; i < n; i++) {
 			if (item.constructor.name === 'String') {
 				if ((array[i].constructor.name === 'Link' ? array[i].name : array[i]).lastIndexOf(item) !== -1)

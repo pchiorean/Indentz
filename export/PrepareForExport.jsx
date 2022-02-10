@@ -1,6 +1,6 @@
 /*
-	Prepare for export 21.10.18
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Prepare for export 22.2.10
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves items with special colors to separate spreads.
 
@@ -26,7 +26,7 @@
 	SOFTWARE.
 */
 
-// @include '../lib/IsIn.jsxinc';
+// @include '../lib/IsInArray.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
 
@@ -63,7 +63,7 @@ function prepareForExport() {
 		if (!l.visible) continue;
 		if (l.name === infoLayer.name) continue;
 		for (variants in layerNames) {
-			if (isIn(l.name, layerNames[variants])) {
+			if (isInArray(l.name, layerNames[variants])) {
 				switch (layerNames[variants][0]) {
 					case layerNames.covered[0]:
 					case layerNames.visible[0]:

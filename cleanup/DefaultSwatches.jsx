@@ -1,6 +1,6 @@
 /*
-	Default swatches 21.11.2
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Default swatches 22.2.10
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 5-column TSV file named 'swatches.txt':
 
@@ -45,7 +45,7 @@
 */
 
 // @include '../lib/GetDataFile.jsxinc';
-// @include '../lib/IsIn.jsxinc';
+// @include '../lib/IsInArray.jsxinc';
 // @include '../lib/Report.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
@@ -112,7 +112,7 @@ function main() {
 			colors = doc.colors.everyItem().getElements();
 			while ((c = colors.shift())) {
 				if (c === newColor) continue;
-				if (isIn(c.name, variants)) {
+				if (isInArray(c.name, variants)) {
 					try {
 						oldName = c.name;
 						c.remove(newColor);

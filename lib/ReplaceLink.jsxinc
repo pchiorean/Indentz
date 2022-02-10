@@ -1,6 +1,6 @@
 /**
  * Replaces a link or a list of links with a different one. A selection limits the scope.
- * @version 21.11.12
+ * @version 22.2.10
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {(string|string[])} oldLinks - A link name, or an array of link names to be replaced.
@@ -19,7 +19,7 @@ function replaceLink(oldLinks, newLink) {
 	// Check if document has at least one of oldLinks
 	if (oldLinks.constructor.name !== 'Array') oldLinks = Array(oldLinks);
 	for (var i = 0, n = oldLinks.length; i < n; i++)
-		if (isIn(oldLinks[i], links)) { isFound = true; break; }
+		if (isInArray(oldLinks[i], links)) { isFound = true; break; }
 	if (!isFound) return false;
 	// Check if newLink is valid
 	newLink = /\//g.test(newLink) ? newLink : doc.filePath + '/Links/' + newLink;
@@ -29,14 +29,14 @@ function replaceLink(oldLinks, newLink) {
 	}
 	// Relink
 	while ((link = links.shift())) {
-		if (selection.length > 0 && !isIn(link.parent.parent, selection)) continue; // Skip not selected
-		else if (!isIn(link.name, oldLinks)) continue;                              // Skip not matched
+		if (selection.length > 0 && !isInArray(link.parent.parent, selection)) continue; // Skip not selected
+		else if (!isInArray(link.name, oldLinks)) continue;                              // Skip not matched
 		if (File(link.filePath).fullName === File(newLink).fullName) continue;      // Skip self
 		link.relink(File(newLink));
 	}
 	return true;
 
-	function isIn(item, array) {
+	function isInArray(item, array) {
 		for (var i = 0, n = array.length; i < n; i++) {
 			if (item.constructor.name === 'String') {
 				if ((array[i].constructor.name === 'Link' ? array[i].name : array[i])

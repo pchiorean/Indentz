@@ -1,5 +1,5 @@
 /*
-	Hide DNP layers 22.2.2
+	Hide DNP layers 22.2.10
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Hides DO-NOT-PRINT layers.
@@ -20,7 +20,7 @@ if (app.documents.length === 0) exit();
 	];
 
 	for (var i = 0, n = doc.layers.length; i < n; i++)
-		if (isIn(doc.layers[i].name, layerNames)) doc.layers[i].visible = false;
+		if (isInArray(doc.layers[i].name, layerNames)) doc.layers[i].visible = false;
 
 	/**
 	* Matches a string against elements of an array, using wildcards and case sensitivity.
@@ -29,7 +29,7 @@ if (app.documents.length === 0) exit();
 	* @param {boolean} [caseSensitive=false] - If `true` the search is case sensitive. (Optional.)
 	* @returns {boolean} - Returns `true` for match, `false` for no match.
 	*/
-	function isIn(searchValue, array, caseSensitive) {
+	function isInArray(searchValue, array, caseSensitive) {
 		caseSensitive = (caseSensitive === undefined) ? false : caseSensitive;
 		for (var i = 0, n = array.length; i < n; i++) {
 			if (RegExp('^' + array[i]
