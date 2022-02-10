@@ -57,13 +57,13 @@ Adds a set of layers defined in a TSV *(tab-separated values)* file named [**`la
 | ...          |         |         |           |       |                                        |
 
 > **Name**: layer name \
-> **Color**: layer color (see [**`UIColors.txt`**](UIColors.txt); default `Light Blue`) \
-> **Visible**: `yes` or `no` (default `yes`) \
-> **Printable**: `yes` or `no` (default `yes`) \
-> **Order**: `above` or `below` existing layers (default `above`) \
+> **Color**: layer color (see [**`UIColors.txt`**](UIColors.txt); defaults to `Light Blue`) \
+> **Visible**: `yes` or `no` (defaults to `yes`) \
+> **Printable**: `yes` or `no` (defaults to `yes`) \
+> **Order**: `above` or `below` existing layers (defaults to `above`) \
 > **Variants**: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards accepted)
 
-**Note:** The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
 #### **`DefaultSwatches`**
 Adds swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
@@ -76,12 +76,12 @@ Adds swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
 | ...            |             |             |              |                |
 
 > **Name**: swatch name \
-> **Color Model**: `process` or `spot` (default `process`) \
-> **Color Space**: `cmyk`, `rgb` or `lab` (default `cmyk`) \
+> **Color Model**: `process` or `spot` (defaults to `process`) \
+> **Color Space**: `cmyk`, `rgb` or `lab` (defaults to `cmyk`) \
 > **Values**: 3 values in 0-255 range for RGB; 4 values in 0-100 range for CMYK; 3 values in 0-100 (L), -128-127 (A and B) range for Lab \
 > **Variants**: a list of swatches that will be replaced by the base swatch (case insensitive; `*` and `?` wildcards accepted)
 
-**Note:** The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
 #### **`ReplaceFonts`**
 Replaces document fonts using a TSV substitution file named [**`fonts.txt`**](../fonts.txt):
@@ -94,23 +94,24 @@ Replaces document fonts using a TSV substitution file named [**`fonts.txt`**](..
 
 You can use [**`ShowFonts`**](#showfonts) from [**Miscellaneous**](#miscellaneous) to get a tab delimited list of document fonts for copy-pasting.
 
-**Note:** The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
 #### **`ReplaceLinks`**
 Replaces document links using a TSV substitution file named **`links.txt`**:
 
-| New link              | Old links            |
-| :-                    | :-                   |
-| **link1.psd**         | link1.jpg            |
-| **path/to/link2.psd** | link2.jpg, link2.png |
-| ...                   |                      |
+| New link             | Old links          |
+| :-                   | :-                 |
+| **path/to/img1.psd** | img1.jpg, img1.png |
+| **img2-cmyk.tif**    | img2-rgb.jpg       |
+| ...                  |                    |
 
-If the new link has no path, it's assumed it's in the same folder.
+> **New link**: new link's absolute path; if no path is given, it's assumed to be in the same folder \
+> **Old links**: a list of links (with no paths) that will be relinked
 
-**Note:** The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
 #### **`DocDefaults`** <small>⌥F2</small>
-It runs [**`DefaultPrefs`**](#defaultprefs), [**`DefaultSwatches`**](#defaultswatches), [**`DefaultLayers`**](#defaultlayers), [**`ReplaceFonts`**](#replacefonts), [**`ReplaceLinks`**](#replacelinks), [**`PageSizeFromFilename`**](#pagesizefromfilename) and sets loose pasteboard margins.
+It runs [**`DefaultPrefs`**](#defaultprefs), [**`DefaultSwatches`**](#defaultswatches), [**`DefaultLayers`**](#defaultlayers), [**`ReplaceFonts`**](#replacefonts), [**`ReplaceLinks`**](#replacelinks), [**`PageSizeFromFilename`**](#pagesizefromfilename-f3) and sets loose pasteboard margins.
 
 #### **`DocCleanup`** <small>F2</small>
 It runs [**`DefaultPrefs`**](#defaultprefs), deletes unused swatches, layers and spreads, unlocks all items and resets their scaling to 100%, deletes hidden items, resets default transparency effects, converts empty text frames to generic frames and sets tight pasteboard margins.
@@ -381,4 +382,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • February 8, 2022
+README.md • February 10, 2022
