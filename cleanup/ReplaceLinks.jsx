@@ -1,12 +1,12 @@
 /*
-	Replace links 22.2.10
+	Replace links 22.2.13
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
 
-	New link          | Old links
-	link1.psd         | link1.jpg
-	path/to/link2.psd | link2.jpg, link2.png
+	New link         | Old links
+	path/to/img1.psd | img1.jpg, img1.png
+	img2-cmyk.tif    | img2-rgb.jpg
 	...
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
@@ -44,7 +44,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace links');
 
 function main() {
-	var VERBOSITY = 1; // 0: FAIL, 1: +WARN, 2: +INFO
+	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, data, messages, link, links;
 	var counter = 0;
 	if (doc.converted && VERBOSITY > 0) {

@@ -1,6 +1,6 @@
 ﻿/*
-	Replace fonts 21.11.2
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Replace fonts 22.2.13
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named 'fonts.txt':
 
@@ -44,7 +44,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace fonts');
 
 function main() {
-	var VERBOSITY = 1; // 0: FAIL, 1: +WARN, 2: +INFO
+	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, data, messages;
 	var counter = 0;
 	if (doc.converted && VERBOSITY > 0) {

@@ -1,5 +1,5 @@
 /*
-	Default layers 22.2.10
+	Default layers 22.2.13
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.txt':
@@ -52,7 +52,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Default layers');
 
 function main() {
-	var VERBOSITY = 1; // 0: FAIL, 1: +WARN, 2: +INFO
+	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, data, messages, oldActiveLayer, newLayer, tmpLayer, i, n;
 	var counter = { add: 0, merge: 0 };
 	if (doc.converted && VERBOSITY > 0) {
