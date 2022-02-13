@@ -1,6 +1,6 @@
 /*
-	GetBounds 21.10.29
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	GetBounds 22.02.13
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Returns an object containing the geometric bounds of the given page, its parent spread, and miscellaneous
 	page boxes, using the current measurement units:
@@ -9,18 +9,19 @@
 		page: {
 			size:    [ top, left, bottom, right ],
 			margins: [ t, l, b, r ],
-			visible: [ t, l, b, r ] or undefined,
+			visible: [ t, l, b, r ],
 			bleed:   [ t, l, b, r ]
 		},
 		spread: {
 			size:    [ t, l, b, r ],
 			margins: [ t, l, b, r ],
-			visible: [ t, l, b, r ] or undefined,
+			visible: [ t, l, b, r ],
 			bleed:   [ t, l, b, r ]
 		}
 	};
 
 	Note: 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`.
+	If margins or visible area are undefined, they fallback to page/spread size.
 
 	Examples:
 
@@ -62,6 +63,7 @@
 
 function getBounds(page) {
 	var PSO = PageSideOptions;
+	var visAreaRE = /^<?(visible|safe) area>?$/i;
 	var fPg = page.parent.pages.firstItem();
 	var lPg = page.parent.pages.lastItem();
 	var bleed = {
@@ -76,20 +78,15 @@ function getBounds(page) {
 		bottom: page.marginPreferences.bottom,
 		right:  page.marginPreferences.right
 	};
-	var visAreaRE = /^<?(visible|safe) area>?$/i;
 
 	return {
 		page: {
 			size: page.bounds,
 			margins: [
 				page.bounds[0] + margins.top,
-				(page.side === PSO.LEFT_HAND) ?
-					page.bounds[1] + margins.right :
-					page.bounds[1] + margins.left,
+				(page.side === PSO.LEFT_HAND) ? page.bounds[1] + margins.right : page.bounds[1] + margins.left,
 				page.bounds[2] - margins.bottom,
-				(page.side === PSO.LEFT_HAND) ?
-					page.bounds[3] - margins.left :
-					page.bounds[3] - margins.right
+				(page.side === PSO.LEFT_HAND) ? page.bounds[3] - margins.left : page.bounds[3] - margins.right
 			],
 			visible: (function () {
 				var frame, i, n;
@@ -98,30 +95,30 @@ function getBounds(page) {
 				var v = [];
 				while ((frame = frames.shift()))
 					if (visAreaRE.test(frame.label) || visAreaRE.test(frame.name)) v.push(frame);
-				if (v.length === 0) return undefined;
-				bounds = v[0].geometricBounds;
-				for (i = 1, n = v.length; i < n; i++) {
-					bounds[0] = Math.min(v[i].geometricBounds[0], bounds[0]);
-					bounds[1] = Math.min(v[i].geometricBounds[1], bounds[1]);
-					bounds[2] = Math.max(v[i].geometricBounds[2], bounds[2]);
-					bounds[3] = Math.max(v[i].geometricBounds[3], bounds[3]);
-				}
-				return [
-					Math.max(bounds[0], page.bounds[0]),
-					Math.max(bounds[1], page.bounds[1]),
-					Math.min(bounds[2], page.bounds[2]),
-					Math.min(bounds[3], page.bounds[3])
-				];
+				if (v.length > 0) { // Found visible area frame(s)
+					bounds = v[0].geometricBounds;
+					for (i = 1, n = v.length; i < n; i++) {
+						bounds[0] = Math.min(v[i].geometricBounds[0], bounds[0]);
+						bounds[1] = Math.min(v[i].geometricBounds[1], bounds[1]);
+						bounds[2] = Math.max(v[i].geometricBounds[2], bounds[2]);
+						bounds[3] = Math.max(v[i].geometricBounds[3], bounds[3]);
+					}
+					bounds = [ // Intersect with page bounds
+						Math.max(bounds[0], page.bounds[0]),
+						Math.max(bounds[1], page.bounds[1]),
+						Math.min(bounds[2], page.bounds[2]),
+						Math.min(bounds[3], page.bounds[3])
+					];
+				} else { bounds = page.bounds; } // Fallback to page bounds
+				return bounds;
 			}()),
 			bleed: [
 				page.bounds[0] - bleed.top,
 				page.bounds[1] - ((page === fPg) ?
-					((fPg.side === PSO.LEFT_HAND) ? bleed.right : bleed.left) :
-					0),
+					((fPg.side === PSO.LEFT_HAND) ? bleed.right : bleed.left) : 0),
 				page.bounds[2] + bleed.bottom,
 				page.bounds[3] + ((fPg === lPg) ?
-					((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right) :
-					(page === lPg ? bleed.right : 0))
+					((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right) : (page === lPg ? bleed.right : 0))
 			]
 		},
 		spread: {
@@ -162,13 +159,16 @@ function getBounds(page) {
 				var v = [];
 				while ((frame = frames.shift()))
 					if (visAreaRE.test(frame.label) || visAreaRE.test(frame.name)) v.push(frame);
-				if (v.length === 0) return undefined;
-				bounds = v[0].geometricBounds;
-				for (i = 1, n = v.length; i < n; i++) {
-					bounds[0] = Math.min(v[i].geometricBounds[0], bounds[0]);
-					bounds[1] = Math.min(v[i].geometricBounds[1], bounds[1]);
-					bounds[2] = Math.max(v[i].geometricBounds[2], bounds[2]);
-					bounds[3] = Math.max(v[i].geometricBounds[3], bounds[3]);
+				if (v.length > 0) { // Found visible area frame(s)
+					bounds = v[0].geometricBounds;
+					for (i = 1, n = v.length; i < n; i++) {
+						bounds[0] = Math.min(v[i].geometricBounds[0], bounds[0]);
+						bounds[1] = Math.min(v[i].geometricBounds[1], bounds[1]);
+						bounds[2] = Math.max(v[i].geometricBounds[2], bounds[2]);
+						bounds[3] = Math.max(v[i].geometricBounds[3], bounds[3]);
+					}
+				} else { // Fallback to spread bounds
+					bounds = [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ];
 				}
 				return bounds;
 			}()),

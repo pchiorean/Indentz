@@ -1,6 +1,6 @@
 /*
-	FitTo 21.11.4
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	FitTo 22.02.13
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of an item or
 	clipping frame that cross the target will be reduced; ones that touch it or are very close (1% snap zone)
@@ -97,23 +97,18 @@ function fitTo(items, scope, target, enforced) {
 			visible: b[scope].visible
 		};
 		if (!B.target) return obj;
-		// Snap zones: target and visible area; visible area takes precedence
-		var snapDist = B.visible ?
-			Math.min(B.visible[2] - B.visible[0], B.visible[3] - B.visible[1]) * SNAP_PCT / 100 :
-			(target === 'margins' ?
-				Math.min(B.target[2] - B.target[0], B.target[3] - B.target[1]) * SNAP_PCT / 100 :
-				Math.min(B.size[2] - B.size[0], B.size[3] - B.size[1]) * SNAP_PCT / 100);
+		// Target and visible area snap zones
+		var snapDist = Math.min(B.visible[2] - B.visible[0], B.visible[3] - B.visible[1]) * SNAP_PCT / 100;
 		var Z = {
 			target: (target === 'margins') ?
 				[ B.target[0] + snapDist, B.target[1] + snapDist,
 				  B.target[2] - snapDist, B.target[3] - snapDist ] :
 				[ B.size[0] + snapDist, B.size[1] + snapDist,
 				  B.size[2] - snapDist, B.size[3] - snapDist ],
-			visible: B.visible ?
-				[ B.visible[0] + snapDist, B.visible[1] + snapDist,
-				  B.visible[2] - snapDist, B.visible[3] - snapDist ] :
-				[ B.size[0] + snapDist, B.size[1] + snapDist,
-				  B.size[2] - snapDist, B.size[3] - snapDist ]
+			visible: [
+				B.visible[0] + snapDist, B.visible[1] + snapDist,
+				B.visible[2] - snapDist, B.visible[3] - snapDist
+			]
 		};
 		// Misc object properties
 		var O = {

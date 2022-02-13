@@ -41,7 +41,7 @@ if (errors.length === 0) dbg('+', 'Records: ' + data.length, 'Layouts: ' + layou
 
 Reframes the given items to the page/spread's (`scope`) size/margins/visible area/bleed (`target`). If an item is larger than the target, it will be reduced; if it is smaller but inside a 1% 'snap' area, it will be enlarged. Rectangular frames are simply reframed; rotated items, ovals, groups, etc. are inserted in a clipping frame that is reframed.
 
-**Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area` (see [VisibleArea](../docs/README.md#export)).
+**Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`. If margins or visible area are undefined, they fallback to page/spread size.
 
 #### Example
 
@@ -74,19 +74,19 @@ Returns an object containing the geometric bounds of `page`, its parent spread, 
     page: {
         size:    [ top, left, bottom, right ],
         margins: [ t, l, b, r ],
-        visible: [ t, l, b, r ] or undefined,
+        visible: [ t, l, b, r ],
         bleed:   [ t, l, b, r ]
     },
     spread: {
         size:    [ t, l, b, r ],
         margins: [ t, l, b, r ],
-        visible: [ t, l, b, r ] or undefined,
+        visible: [ t, l, b, r ],
         bleed:   [ t, l, b, r ]
     }
 };
 ```
 
-**Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`.
+**Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`. If margins or visible area are undefined, they fallback to page/spread size.
 
 #### Example
 
