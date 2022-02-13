@@ -31,7 +31,7 @@ function replaceLink(oldLinks, newLink) {
 	while ((link = links.shift())) {
 		if (selection.length > 0 && !isInArray(link.parent.parent, selection)) continue; // Skip not selected
 		else if (!isInArray(link.name, oldLinks)) continue;                              // Skip not matched
-		if (File(link.filePath).fullName === File(newLink).fullName) continue;      // Skip self
+		if (File(link.filePath).fullName === File(newLink).fullName) continue;           // Skip self
 		link.relink(File(newLink));
 	}
 	return true;
