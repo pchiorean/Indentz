@@ -1,5 +1,19 @@
 ## Changelog
 
+#### [2022-02-13](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-02-13&type=commits)
+- [`new`](https://github.com/pchiorean/Indentz/commit/ae70c878cc579c3a1714e67a5756e519597bb3ea)
+  **MoveToLayers**: Move items to layers, optionally setting front/back order
+- [`brk`](https://github.com/pchiorean/Indentz/commit/c7420f394c72661ca1f0f459fc8b882dae80576d)
+  **FitTo, GetBounds**: The visible area will now fallback to page/spread size
+- [`upd`](https://github.com/pchiorean/Indentz/commit/2cbdc230c18ec232078d4e61928640fae793e772)
+  **DefaultLayers/Swatches/ReplaceFonts/Links**: Set verbosity to INFO when **Ctrl** is pressed
+- [`upd`](https://github.com/pchiorean/Indentz/commit/41bc44c5e4c47cc25054f15d6be0f66af8470eda)
+  **SwatchesCleanup**: Merged 'R=0 G=0 B=0' to the default Black swatch
+
+#### [2022-02-10](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-02-10&type=commits)
+- [`ref`](https://github.com/pchiorean/Indentz/commit/5fbd56abfeb7a46fd5e8bec0bb2e48d419573a90)
+  Renamed **isIn** to **isInArray**
+
 #### [2022-02-08](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-02-08&type=commits)
 - [`ref`](https://github.com/pchiorean/Indentz/commit/99a3027821968396503e42a95e4d3e6a472ebfd9)
   Changed order & switched to calendar versioning
@@ -104,7 +118,7 @@
   **QuickExport 2.13**: When exporting files to subfolders, a `+` in the suffix will truncate the subfolder name
 - [`fix`](https://github.com/pchiorean/Indentz/commit/5661ea64bf4dbdf14900448bcd68796fbbc55eae)
   **DefaultLayers 3.3.1, DefaultSwatches 4.5.1, ReplaceFonts 2.2.1, ReplaceLinks 1.1.1**:
-  Change 'No data file found' alert verbosity level to `info`
+  Changed 'No data file found' alert verbosity level to `info`
 
 #### [2021-10-11](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2021-10-11&type=commits)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/3d884512a1fd6afb74691951486090cd49840cad)
@@ -222,6 +236,8 @@
 
 ##### New features
 
+- `new` **Debug**: Add a hires timer
+- `new` **DefaultSwatches**: Add tints support
 - `new` **DocCleanup**: Ask to delete empty frames
 - `new` **DocCleanup**: Remove unused masters
 - `new` **DocCleanup**: Remove unused styles and groups
@@ -233,59 +249,52 @@
 
 ##### Updates
 
-- `upd` **Debug**: Add a hires timer
-- `upd` **DefaultSwatches**: Add tints support
-- `upd` **FindFile**: Use relative paths for includes <!-- (VSC: Paths starting with `/` are resolved relative to the current workspace; paths staring with `./` or without any prefix are resolved relative to the current file.) -->
-- `upd` **IsIn**: Add regex matching to searchValue
-- `ref` Rename **isIn** to **isInArray**
+- `brk` **DefaultLayers/Swatches/ReplaceFonts/Links**: Optional arguments: data file, verbosity level
+- `upd` **FindFile**: Use relative paths for includes <!-- (VSC: Paths starting with `/` are resolved relative to the current workspace; paths starting with `./` or without any prefix are resolved relative to the current file.) -->
+- `upd` **IsInArray**: Add regex matching to searchValue
 - `upd` **LabelPageRatios**: Mark outer/inner ratios
+- `brk` **MarkVisibleArea**: Mark the entire spread's visible area, not individual pages
+- `upd` **MarkVisibleArea**: Use wildcards for layer names
+- `brk` **MarkVisibleArea, PrepareForExport**: Read layer variants from `layers.txt`, fallback to defaults
 - `upd` **PageMarginsFromSelection**: Set the margins of every page touched by the selection
+- `upd` **PageSizeFromFilename**: Use real units (mm, cm, px)
 - `upd` **PageSizeFromSelection**: Without selection fit all pages to their contents
 - `upd` **ParseDataFile**: Keep the record index in the returned object
-- `brk` **PrepareForExport, VisibleArea**: Read layer variants from `layers.txt`, fallback to defaults
 - `upd` **QuickExport**: JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 - `upd` **ReplaceLinks**: Use wildcards for old links
 - `upd` **ReplaceText**: Take an array of strings as input
 - `upd` **ReplaceText**: Add a switch for grep matching
 - `upd` **Report**: Add auto filtering mode (`true`|`false`|`auto`)
-- `upd` **Report**: Improve filtering: `-` for none of these words, `"` for exact word or phrase
-  (or use regex and be done with it)
+- `upd` **Report**: Improve filtering: `-` for none of these words, `"` for exact word or phrase (or use regex and be done with it)
 - `brk` **ScaleTo...**: Scale to `alignDistributeBounds`
-- `upd` **SpreadsToFiles**: Use a template for custom positioning
 - `upd` **SpreadsToFiles**: Split '-ABBBCC' to '-A', '-BBB', '-CC'
+- `upd` **SpreadsToFiles**: Use a template for custom positioning
 - `upd` **TextAutoSize**: Check `baselineShift`
-- `brk` **VisibleArea**: Mark the entire spread's visible area, not individual pages
-- `upd` **VisibleArea**: Use wildcards for layer names
-- `brk` **DefaultLayers/Swatches/ReplaceFonts/Links**: Optional arguments: data file, verbosity level
 - `upd` Use a custom object style for 'Visible area' frame
 - `ref` Fix UI static/edittext width (see Marc's [measureString()](https://twitter.com/indiscripts/status/1408788941550108674))
 
 ##### Bug fixes
 
 - `fix` **DefaultSwatches**: Check values on parsing
-- `fix` **FitTo**: Properly enforce-fit orthogonal lines (fix regression from v5.5.5)
 - `fix` **PageSizeFromFilename**: Error on pages set to 1:X scale
 - `fix` **PageSizeFromFilename**: Limit detected bleed to max values
-- `fix` **PageSizeFromFilename**: Dimensions in pixels
 - `fix` **PageSizeFromSelection**: For text frames use outlined text bounds
-- `fix` **ProgressBar**: Center in current window
-- `fix` **QuickExport**: Check if the PDF is writable before exporting
-- `fix` **QuickExport**: Link 'Spreads' and 'Export separate pages' checkboxes
 - `fix` **QR, QRBatch**: Improve line breaking
+- `fix` **QuickExport**: Check if the PDF is writable before exporting
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
 
 ##### New scripts
 
-- `new` Convert **lib/ReplaceText** to standalone script <!-- (see [this](https://twitter.com/indiscripts/status/1463152851908276230)) -->
 - `new` **ActivateDoc1/2/3...**: Quickly activate document tabs with Ctrl + 1, 2, 3... <!-- (see [this](https://aiscripts.medium.com/showing-artboard-order-ef213c91b858)) -->
-- `new` **SeparateSpreadPages**
 - `new` **LayersToFiles**
+- `new` Convert **lib/ReplaceText** to standalone script <!-- (see [this](https://twitter.com/indiscripts/status/1463152851908276230)) -->
+- `new` **SeparateSpreadPages**
 
 </details>
 
 ---
 
-###### Legend:
+##### Legend:
 
 `new` - new features or first release\
 `brk` - changes in existing functionality that break compatibility\
