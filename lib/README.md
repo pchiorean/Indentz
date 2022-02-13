@@ -109,6 +109,28 @@ bounds[scope][target]; // [ 20,20,277,400 ]
 
 ---
 
+### getDataFile(dataFile, [skipLocal]) ⇒ `File` | `undefined`
+
+| Parameters  | Type      | Default | Description                         |
+| ----------- | --------- | ------- | ----------------------------------- |
+| dataFile    | `string`  |         | A tab-separated-values file (name). |
+| [skipLocal] | `boolean` | false   | If `true`, don't search locally.    |
+
+Returns the first occurrence of `dataFile`, first searching for a local one (in the current folder or the parent folder of the active document), then a default one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
+
+- Local file:
+
+  1. `current/folder/_dataFile` or `dataFile`
+  2. `current/folder/../_dataFile` or `dataFile`
+
+- Default file:
+
+  3. `~/Desktop/dataFile`
+  4. `script/folder/dataFile`
+  5. `script/folder/../dataFile`
+
+---
+
 ### getScriptsFolder() ⇒ `'path/to/folder/'` | `undefined`
 
 Detects the user scripts folder searching for the 'Scripts Panel' string in `$.includePath`, returning a string with the path followed by '/', or `undefined`.
@@ -141,25 +163,15 @@ isInArray(searchValue, array) // True: matches 2nd array element
 
 ---
 
-### getDataFile(dataFile, [skipLocal]) ⇒ `File` | `undefined`
+### moveToLayer(item, layer, [position]) ⇒ `item`
 
-| Parameters  | Type      | Default | Description                         |
-| ----------- | --------- | ------- | ----------------------------------- |
-| dataFile    | `string`  |         | A tab-separated-values file (name). |
-| [skipLocal] | `boolean` | false   | If `true`, don't search locally.    |
+| Parameters | Type       | Description                                             |
+| ---------- | ---------- | ------------------------------------------------------- |
+| item       | `pageItem` | The page item to be moved.                              |
+| layer      | `object`   | The target layer.                                       |
+| [position] | `string`   | `front` or `back`: sends the item to the front or back. |
 
-Returns the first occurrence of `dataFile`, first searching for a local one (in the current folder or the parent folder of the active document), then a default one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
-
-- Local file:
-
-  1. `current/folder/_dataFile` or `dataFile`
-  2. `current/folder/../_dataFile` or `dataFile`
-
-- Default file:
-
-  3. `~/Desktop/dataFile`
-  4. `script/folder/dataFile`
-  5. `script/folder/../dataFile`
+Moves an item to another layer, optionally sending it to the front or back, and returns the item.
 
 ---
 

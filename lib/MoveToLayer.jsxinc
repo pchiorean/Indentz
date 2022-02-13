@@ -1,3 +1,10 @@
+/**
+ * Moves an item to another layer, optionally sending it to the front or back
+ * @param {pageItem} item - The page item to be moved
+ * @param {object} layer - The target layer
+ * @param {string} [position] - `front` or `back`: sends the item to the front or back
+ * @returns {pageItem} - `item`
+ */
 function moveToLayer(item, layer, position) {
 	while (item.parent.constructor.name !== 'Spread') item = item.parent;
 	if (item.parent.parent.layers.item(layer).isValid) {
