@@ -1,0 +1,11 @@
+function moveToLayer(item, layer, position) {
+	while (item.parent.constructor.name !== 'Spread') item = item.parent;
+	if (item.parent.parent.layers.item(layer).isValid) {
+		if (item.itemLayer !== layer) item.itemLayer = layer;
+		switch (position) {
+			case 'front': item.bringToFront(); break;
+			case 'back': item.sendToBack(); break;
+		}
+	}
+	return item;
+}
