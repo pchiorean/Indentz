@@ -6,29 +6,23 @@ safety margins 	Grid Green 	yes     	yes       	above
 segmentation   	Grid Green 	yes     	yes       	above 	split
 covered area   	Red        	yes     	yes       	above 	covered area*
 dielines       	Red        	yes     	yes       	above 	cut, cutcontour, cut*line*, decoupe, die, die*cut*, mark, stanz*, StaFo
-
-# Finishing
 varnish        	Yellow     	no      	yes       	above 	uv
 white          	Cute Teal  	no      	yes       	above
 
 # Info
 guides         	Magenta    	yes     	no        	above 	abstände, grid, masuratori
-info           	Cyan       	no      	yes       	above 	info copy, ratio
-media          	Cyan       	no      	yes       	above
-placement      	Black      	no      	yes       	above
+info           	Cyan       	no      	yes       	above 	info copy, media, ratio
+placement      	Gray       	no      	yes       	above
 placeholder    	Magenta    	no      	yes       	above
 
 # Artwork
-HW             	Light Gray 	no      	yes       	above 	*hw*, legal, todesbalken, wh
-disclaimer     	Gray       	no      	yes       	above 	legal text
-text and logos 	Green      	no      	yes       	above 	copy, dots, headline*, hl, logo, text*, txt, typ?
-codes          	Grid Green 	no      	yes       	above 	code*, bar*code*, ean*
+HW             	Light Gray 	no      	yes       	above 	*hw*, todesbalken, wh
+text & logos   	Green      	no      	yes       	above 	copy, dots, headline*, hl, logo, tab, text*, txt, typ?
+terms          	Gray       	no      	yes       	above 	disclaimer*, legal*
 offer          	Gold       	no      	yes       	above 	preis, price
+codes          	Grid Green 	no      	yes       	above 	code*, bar*code*, ean*
 products       	Blue       	no      	yes       	above 	device*, pack*, packshot*, product*, tin*
 new            	Grid Green 	no      	yes       	above
-ring           	Fiesta     	no      	yes       	above 	bullseye, inner frame dot
-artwork        	Light Blue 	no      	yes       	above 	aw, design, element?, layout*
+artwork        	Light Blue 	no      	yes       	above 	aw, bullseye, design, element?, inner frame dot, layout*
 bg             	Red        	no      	yes       	below 	back, *background*, bgg, hg, hintergrund*
-
-# Template
 template       	Black      	no      	no        	below 	referinta
