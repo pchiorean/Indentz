@@ -1,5 +1,9 @@
 ## Changelog
 
+#### [2022-02-22](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-02-22&type=commits)
+- [`fix`](https://github.com/pchiorean/Indentz/commit/667ad41564a566736e6b8433874287899367e593)
+  Fixed suffix regexp matching nothing (bug from 01/27 commit)
+
 #### [2022-02-13](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-02-13&type=commits)
 - [`new`](https://github.com/pchiorean/Indentz/commit/ae70c878cc579c3a1714e67a5756e519597bb3ea)
   **MoveToLayers**: Move items to layers, optionally setting front/back order
