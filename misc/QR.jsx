@@ -1,5 +1,5 @@
 /*
-	QR code 22.1.27
+	QR code 22.2.22
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -42,7 +42,7 @@ function main() {
 	baseName = /\./g.test(doc.name) ? doc.name.slice(0, doc.name.lastIndexOf('.')) : doc.name;
 	// baseName = baseName.replace(/_QR$/i, '');
 	suffix = RegExp('[ ._-][a-zA-Z0-9]{' + doc.spreads.length + '}$', 'i').exec(baseName);
-	suffix = suffix[0] || '';
+	suffix = suffix == null ? '' : String(suffix);
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 	app.scriptPreferences.enableRedraw = false;
 
@@ -80,7 +80,7 @@ function main() {
 		for (i = 0; i < doc.spreads.length; i++) {
 			spread = doc.spreads[i];
 			page = spread.pages[0];
-			tgBounds = getBounds(page).spread.visible || getBounds(page).spread.size;
+			tgBounds = getBounds(page).spread.visible;
 			tgSize = {
 				width: tgBounds[1] - page.bounds[1],
 				height: page.bounds[2] - tgBounds[2]
