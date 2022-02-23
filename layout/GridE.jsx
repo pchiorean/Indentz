@@ -15,7 +15,7 @@ function main() {
 
 	for (var i = 0, n = doc.pages.length; i < n; i++) {
 		page = doc.pages[i];
-		tgBounds = getBounds(page).page.visible || getBounds(page).page.size;
+		tgBounds = getBounds(page).page.visible;
 		tgSize = { width: tgBounds[3] - tgBounds[1], height: tgBounds[2] - tgBounds[0] };
 		switch (tgSize.width / tgSize.height <= 1) {
 			case true: // Portrait

@@ -19,7 +19,7 @@ function main() {
 		// Small SKU is 23% smaller than big SKU
 		// HW at 1/2 margin of bottom
 		page = doc.pages[i];
-		tgBounds = getBounds(page).page.visible || getBounds(page).page.size;
+		tgBounds = getBounds(page).page.visible;
 		tgSize = { width: tgBounds[3] - tgBounds[1], height: tgBounds[2] - tgBounds[0] };
 		MG = Math.min(tgSize.height, tgSize.width) / 19;
 

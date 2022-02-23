@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 22.2.22
+	Batch QR codes 22.2.23
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -253,7 +253,7 @@ function main() {
 		for (i = 0; i < target.spreads.length; i++) {
 			spread = target.spreads[i];
 			page = spread.pages[0];
-			tgBounds = getBounds(page).spread.visible || getBounds(page).spread.size;
+			tgBounds = getBounds(page).spread.visible;
 			tgSize = {
 				width: tgBounds[1] - page.bounds[1],
 				height: page.bounds[2] - tgBounds[2]
