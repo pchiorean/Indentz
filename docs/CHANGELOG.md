@@ -1,5 +1,13 @@
 ## Changelog
 
+#### [2022-03-05](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-05&type=commits)
+- [`upd`](https://github.com/pchiorean/Indentz/commit/4b100ce6490f374b8047d2cf9f9e5b239e6351bb)
+  **ReplaceLinks**: Old links list now accepts '*' and '?' wildcards
+
+#### [2022-02-23](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-02-23&type=commits)
+- [`ref`](https://github.com/pchiorean/Indentz/commit/b804940a29d841ead53543b87acbf0f94424c6f9)
+  Removed bounds fallback (it's done in the lib now)
+
 #### [2022-02-22](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-02-22&type=commits)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/667ad41564a566736e6b8433874287899367e593)
   Fixed suffix regexp matching nothing (bug from 01/27 commit)
@@ -265,14 +273,13 @@
 - `upd` **PageSizeFromSelection**: Without selection fit all pages to their contents
 - `upd` **ParseDataFile**: Keep the record index in the returned object
 - `upd` **QuickExport**: JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
-- `upd` **ReplaceLinks**: Use wildcards for old links
 - `upd` **ReplaceText**: Take an array of strings as input
 - `upd` **ReplaceText**: Add a switch for grep matching
 - `upd` **Report**: Add auto filtering mode (`true`|`false`|`auto`)
 - `upd` **Report**: Improve filtering: `-` for none of these words, `"` for exact word or phrase (or use regex and be done with it)
 - `brk` **ScaleTo...**: Scale to `alignDistributeBounds`
 - `upd` **SpreadsToFiles**: Split '-ABBBCC' to '-A', '-BBB', '-CC'
-- `upd` **SpreadsToFiles**: Use a template for custom positioning
+- `upd` **SpreadsToFiles**: Placeholder character for custom positioning
 - `upd` **TextAutoSize**: Check `baselineShift`
 - `upd` Use a custom object style for 'Visible area' frame
 - `ref` Fix UI static/edittext width (see Marc's [measureString()](https://twitter.com/indiscripts/status/1408788941550108674))
