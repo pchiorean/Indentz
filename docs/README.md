@@ -99,14 +99,14 @@ The TSV file can be saved locally (in the current folder or the parent folder of
 #### **`ReplaceLinks`**
 Replaces document links using a TSV substitution file named **`links.txt`**:
 
-| New link             | Old links          |
-| :-                   | :-                 |
-| **path/to/img1.psd** | img1.jpg, img1.png |
-| **img2-cmyk.tif**    | img2-rgb.jpg       |
-| ...                  |                    |
+| New link             | Old links                     |
+| :-                   | :-                            |
+| **path/to/img1.psd** | img1.*                        |
+| **img2-cmyk.tif**    | img2_lowres.jpg, img2-rgb.jpg |
+| ...                  |                               |
 
 > **New link**: new link's absolute path; if no path is given, it's assumed to be in the same folder \
-> **Old links**: a list of links (with no paths) that will be relinked
+> **Old links**: a list of links (with no paths) that will be relinked (defaults to new link's name); case insensitive; '*' and '?' wildcards accepted
 
 The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
@@ -223,7 +223,7 @@ The level is increased from **None** to **Height Only** and from **Height Only**
 | ![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png) |
 | ![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png) |
 
-**Note:** If just the alignment is different, a second run will only change the reference point and not increase/tighten auto-sizing.
+**Note:** A second run will preserve the current auto-sizing if only the alignment is different.
 
 ---
 
@@ -382,4 +382,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • February 10, 2022
+README.md • March 5, 2022

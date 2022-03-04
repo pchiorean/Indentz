@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.13.18/dist/katex.min.css">
+      <link rel="stylesheet" href="file:////Users/paul.chiorean/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.6.2/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
       
       
       
@@ -452,11 +452,11 @@ pre[data-line] .line-highlight[data-end]:after {
 <tbody>
 <tr>
 <td style="text-align:left"><strong>path/to/img1.psd</strong></td>
-<td style="text-align:left">img1.jpg, img1.png</td>
+<td style="text-align:left">img1.*</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>img2-cmyk.tif</strong></td>
-<td style="text-align:left">img2-rgb.jpg</td>
+<td style="text-align:left">img2_lowres.jpg, img2-rgb.jpg</td>
 </tr>
 <tr>
 <td style="text-align:left">&#x2026;</td>
@@ -466,7 +466,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </table>
 <blockquote>
 <p><strong>New link</strong>: new link&#x2019;s absolute path; if no path is given, it&#x2019;s assumed to be in the same folder <br>
-<strong>Old links</strong>: a list of links (with no paths) that will be relinked</p>
+<strong>Old links</strong>: a list of links (with no paths) that will be relinked (defaults to new link&#x2019;s name); case insensitive; &#x2018;*&#x2019; and &#x2018;?&#x2019; wildcards accepted</p>
 </blockquote>
 <p>The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with <code>_</code> take precedence. Also, you can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</p>
 <h4 class="mume-header" id="docdefaults-smallf2small"><strong><code>DocDefaults</code></strong> <small>&#x2325;F2</small></h4>
@@ -696,7 +696,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> If just the alignment is different, a second run will only change the reference point and not increase/tighten auto-sizing.</p>
+<p><strong>Note:</strong> A second run will preserve the current auto-sizing if only the alignment is different.</p>
 <hr>
 <h3 class="mume-header" id="scale">Scale</h3>
 
@@ -915,7 +915,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>&#xA9; 2020-2022 Paul Chiorean &lt;jpeg AT basement.ro&gt;.<br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md &#x2022; February 10, 2022</p>
+<p>README.md &#x2022; March 5, 2022</p>
 
       </div>
       
