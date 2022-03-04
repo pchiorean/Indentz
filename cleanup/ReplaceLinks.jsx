@@ -1,13 +1,16 @@
 /*
-	Replace links 22.2.13
+	Replace links 22.3.5
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
 
 	New link         | Old links
-	path/to/img1.psd | img1.jpg, img1.png
-	img2-cmyk.tif    | img2-rgb.jpg
+	path/to/img1.psd | img1.*
+	img2-cmyk.tif    | img2_lowres.jpg, img2-rgb.jpg
 	...
+	1. <New link>: new link's full path (or just the name if it's in the same folder)
+	2. <Old links>: a list of links to be replaced (optional; defaults to new link's name)
+	   (case insensitive; '*' and '?' wildcards accepted)
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
@@ -36,6 +39,7 @@
 */
 
 // @include '../lib/GetDataFile.jsxinc';
+// @include '../lib/IsInArray.jsxinc';
 // @include '../lib/Report.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
@@ -45,7 +49,14 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 
 function main() {
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
-	var file, data, messages, link, links;
+	var i, r, file, data, messages;
+	var links = doc.links.everyItem().getElements();
+	var linkS = (function () {
+		var s = [];
+		for (i = 0; i < links.length; i++) s.push(decodeURI(links[i].name));
+		return s;
+	}());
+
 	var counter = 0;
 	if (doc.converted && VERBOSITY > 0) {
 		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
@@ -62,15 +73,14 @@ function main() {
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length === 0) exit();
 
-	for (var r = 0; r < data.records.length; r++) {
-		links = doc.links.everyItem().getElements();
-		while ((link = links.shift())) {
-			if (!isInArray(link.name, data.records[r].oldLinks)) continue; // Skip not matched
-			if (File(link.filePath).fullName === File(data.records[r].newLink).fullName &&
-				link.status !== LinkStatus.LINK_OUT_OF_DATE) continue; // Skip self
-			link.relink(File(data.records[r].newLink));
+	for (i = 0; i < links.length; i++) {
+		for (r = 0; r < data.records.length; r++) {
+			if (!isInArray(links[i].name, data.records[r].oldLinks)) continue; // Skip not matched
+			if (File(links[i].filePath).fullName === File(data.records[r].newLink).fullName &&
+				links[i].status !== LinkStatus.LINK_OUT_OF_DATE) continue; // Skip self
+			links[i].relink(File(data.records[r].newLink));
 			counter++;
-			data.errors.info.push('Relinked \'' + decodeURI(link.name) + '\' with \'' +
+			data.errors.info.push('Relinked \'' + decodeURI(links[i].name) + '\' with \'' +
 				data.records[r].newLink.slice(data.records[r].newLink.lastIndexOf('/') + 1) + '\'.');
 		}
 	}
@@ -132,16 +142,24 @@ function main() {
 
 		function checkRecord() {
 			var tmpErrors = { info: [], warn: [], fail: [] };
-			var oldLinks = record[1] ? record[1].split(/ *, */) : '';
 			var newLink = /\//g.test(record[0]) ? record[0] : doc.filePath + '/Links/' + record[0];
-			if (function () { // Check if document has at least one link from oldLinks
-					for (var i = 0; i < oldLinks.length; i++)
-						if (isInArray(oldLinks[i], doc.links.everyItem().getElements())) return true;
-					return false;
-				}()) {
-				// Check if newLink is valid
+			var oldLinks = (function () {
+				var o = newLink.slice(newLink.lastIndexOf('/') + 1);
+				if (record[1]) o += ',' + record[1];
+				return unique(o.split(/ *, */));
+			}());
+			// Check if document has at least one link from oldLinks
+			var docHasLink = (function () {
+				if (linkS.length > 0) {
+					for (var i = 0; i < linkS.length; i++)
+						if (isInArray(linkS[i], oldLinks)) return true;
+				}
+				return false;
+			}());
+			// Check if newLink is valid
+			if (docHasLink) {
 				if (File(newLink).exists) {
-					records.push({ newLink:  newLink, oldLinks: oldLinks });
+					records.push({ newLink: newLink, oldLinks: oldLinks });
 				} else {
 					tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
 					': Skipped \'' + newLink.slice(newLink.lastIndexOf('/') + 1) + '\', file not found.');
@@ -158,13 +176,15 @@ function main() {
 		}
 	}
 
-	function isInArray(item, array) {
-		for (var i = 0, n = array.length; i < n; i++) {
-			if (item.constructor.name === 'String') {
-				if ((array[i].constructor.name === 'Link' ? array[i].name : array[i]).lastIndexOf(item) !== -1)
-					return true;
-			} else if (item === array[i]) { return true; }
+	// Get unique array elements
+	// http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/
+	function unique(/*array*/array) {
+		var i, j;
+		var r = [];
+		o: for (i = 0; i < array.length; i++) {
+			for (j = 0; j < r.length; j++) if (r[j] === array[i]) continue o;
+			if (array[i] !== '') r[r.length] = array[i];
 		}
-		return false;
+		return r;
 	}
 }
