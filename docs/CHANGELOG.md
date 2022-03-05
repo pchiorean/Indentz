@@ -1,6 +1,6 @@
 ## Changelog
 
-#### [2022-03-05](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-05&type=commits)
+#### [2022-03-04](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-04&type=commits)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/4b100ce6490f374b8047d2cf9f9e5b239e6351bb)
   **ReplaceLinks**: Old links list now accepts '*' and '?' wildcards
 
