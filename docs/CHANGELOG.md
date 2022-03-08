@@ -4,7 +4,7 @@
 - [`fix`](https://github.com/pchiorean/Indentz/commit/da98c89349cae6b159f8d9c8b20910064e1401ee)
   Don't resize (**PageSizeFromFilename**) or don't split (**QuickExport**) documents with a mixture of sizes (e.g., 210x297 + 297x210)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/e8470e8aceaa8664e8c0d35c355c9dfb4c0a7a52)
-  Added a progress bar
+  **DocDefaults.jsx**: Added a progress bar
 
 ##### [2022-03-04](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-04&type=commits)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/4b100ce6490f374b8047d2cf9f9e5b239e6351bb)
