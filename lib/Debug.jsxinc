@@ -1,7 +1,7 @@
 /**
  * Appends a debugging line to a file saved on the desktop with the name of the running script
  * (e.g. `active-script.log`). If no arguments are given, it just appends an empty line.
- * @version 22.1.28
+ * @version 22.3.3
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} [type] - A single character string: <ul> <li>`+` appends `MESSAGE` to the previous line;</li>
@@ -40,7 +40,7 @@ function dbg(/* ?type, ?context, message */) {
 		var context = '';
 		var separator = ' | ';
 
-		if (args.length === 0) return (debugFile.length === 0 ? (now + 'Log created') : '\n');
+		if (args.length === 0) return (debugFile.length === 0 ? '' : '\n');
 
 		switch (args[0].toString().toLowerCase()) {
 			case '+': return (args.shift(), separator + args.join(separator).replace(/\r|\n/g, '\u00B6'));
@@ -52,7 +52,7 @@ function dbg(/* ?type, ?context, message */) {
 			case 'n': type = '[NOTE] '; break;
 			case 't': type = '[TODO] '; break;
 			case ' ': type = '       '; break;
-			case '' : type = '       '; break;
+			case '' : type = '  '; break;
 		}
 		if (type) args.shift();
 
