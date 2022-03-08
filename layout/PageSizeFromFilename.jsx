@@ -1,6 +1,6 @@
 /*
-	Page size from filename 21.9.24
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Page size from filename 22.3.8
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -33,7 +33,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Set page dimensions');
 
 function main() {
-	var baseName, dimensions, firstPair, secondPair,
+	var dimensions, firstPair, secondPair,
 		newPgSize, newMgSize, newBleed, newMargins, page, i, n;
 	var visLayerName = findLayer([
 		'visible area',
@@ -55,6 +55,8 @@ function main() {
 	var pairsRE = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig;
 	var bleedRE = /\d\s*(?:[cm]m)?[_+](\d{1,2})\s*(?:[cm]m)/i;
 	var ISO216SubsetRE = /A[1-7]\b/;
+	var baseName = (/\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf('.'))) || doc.name;
+	var isCombo = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*\+\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig.test(decodeURI(doc.name));
 	var isSpread = false;
 	var old = {
 		horizontalMeasurementUnits: doc.viewPreferences.horizontalMeasurementUnits,
@@ -70,7 +72,6 @@ function main() {
 	doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 	app.generalPreferences.objectsMoveWithPage = false;
 
-	baseName = (/\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf('.'))) || doc.name;
 	// Dimensions: match '_000[.0] [mm] x 000[.0] [mm]' pairs
 	dimensions = baseName.match(pairsRE);
 		// 1. [_-]                  // '_' or '-' separator between pairs
@@ -97,6 +98,8 @@ function main() {
 			case 'A6': newPgSize = { width: 105, height: 148 }; break;
 			case 'A7': newPgSize = { width:  74, height: 105 }; break;
 		}
+	} else if (isCombo) {
+		cleanupAndExit();
 	} else {
 		// Sanitize dimensions array
 		for (i = 0, n = dimensions.length; i < n; i++) {

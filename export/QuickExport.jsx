@@ -1,5 +1,5 @@
 /*
-	Quick export 22.1.27
+	Quick export 22.3.8
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -510,13 +510,14 @@ function runScript(/*string*/path) {
 }
 
 function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
-	var baseName, fileSufx, fn, extendRange, range;
+	var fileSufx, fn, extendRange, range;
 	var target = asSpreads ? doc.spreads : doc.pages;
-	if (split) {
+	var baseName = decodeURI(doc.name).replace(/\.indd$/i, '');
+	var isCombo = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*\+\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig.test(decodeURI(doc.name));
+	if (split && !isCombo) {
 		// Export separate pages
 		// Note: if a script doubles the number of pages/spreads, the extendRange hack exports them as pairs
 		extendRange = (doc.spreads.length === old.docSpreads * 2) && exp.exportSpreads.value;
-		baseName = decodeURI(doc.name).replace(/\.indd$/i, '');
 		fileSufx = RegExp('([ ._-])([a-zA-Z]{' +
 			(extendRange ? target.length / 2 : target.length) + '})$', 'i').exec(baseName);
 		for (var i = 0, n = target.length; i < n; i++) {
@@ -545,7 +546,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		}
 	} else {
 		// Export all pages
-		baseName = decodeURI(doc.name).replace(/\.indd$/i, '') + suffix;
+		baseName += suffix;
 		fn = uniqueName(baseName,
 			baseFolder + (subfolder ? '/' + subfolder : ''),
 			ui.output.options.overwrite.value);
