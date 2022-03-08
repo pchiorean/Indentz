@@ -1,6 +1,6 @@
 Name                               |    Fn  | Description
 :-                                 |     -: | :-
-**Cleanup**                                   |
+**Cleanup**                                 |
 `DefaultPrefs.jsx`                 |        | Sets default preferences
 `DefaultLayers.jsx`                |        | Adds/merges layers from a list
 `DefaultSwatches.jsx`              |        | Adds swatches from a list
@@ -10,7 +10,7 @@ Name                               |    Fn  | Description
 `DocDefaults.jsx`                  |    ⌥F2 | Adds swatches/layers, cleans up fonts and sets page dimensions from the filename
 `SwatchesCleanup.jsx`              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 `SwatchesSave.jsx`                 |        | Saves document's swatches to a list
-**Layout**                                   |
+**Layout**                                  |
 `PageSizeFromFilename.jsx`         |     F3 | Sets every page size and margins according to the filename
 `PageSizeFromMargins.jsx`          |        | Sets the page size to the page margins
 `PageSizeFromSelection.jsx`        |    ⇧F3 | Sets the page size to the selected objects bounds
