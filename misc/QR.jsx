@@ -1,5 +1,5 @@
 /*
-	QR code 22.2.22
+	QR code 22.3.10
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -90,7 +90,7 @@ function main() {
 			while ((p = pp.shift())) if (p.label === 'QR') { p.itemLayer.locked = false; p.remove(); }
 			// Add label
 			if (suffix.length === doc.spreads.length + 1)
-				labelText = codeText.replace(suffix, '') + suffix[0] + suffix[i + 1];
+				labelText = codeText.replace(RegExp(suffix + '$'), '') + suffix[0] + suffix[i + 1];
 			else labelText = codeText;
 			labelFrame = page.textFrames.add({
 				label: 'QR',
