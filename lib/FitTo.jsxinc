@@ -1,5 +1,5 @@
 /*
-	FitTo 22.02.13
+	FitTo 22.3.10
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of an item or
@@ -68,7 +68,7 @@ function fitTo(items, scope, target, enforced) {
 	while (doc.constructor.name !== 'Document') doc = doc.parent;
 	var oldRO = doc.viewPreferences.rulerOrigin;
 	doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
-	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
+	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 	while ((item = items.shift())) {
 		if (!Object.prototype.hasOwnProperty.call(item, 'parentPage')) continue;
@@ -122,7 +122,7 @@ function fitTo(items, scope, target, enforced) {
 				Math.abs(obj.absoluteRotationAngle) === 90 ||
 				Math.abs(obj.absoluteRotationAngle) === 180),
 			isNotSkewed: Boolean(obj.absoluteShearAngle === 0),
-			itHits: [ // Track sides that cross the visible area snap zone
+			itHits: [ // Track sides that touch the visible area snap zone
 				Boolean(obj.geometricBounds[0] <= Z.visible[0]),
 				Boolean(obj.geometricBounds[1] <= Z.visible[1]),
 				Boolean(obj.geometricBounds[2] >= Z.visible[2]),
@@ -135,7 +135,7 @@ function fitTo(items, scope, target, enforced) {
 
 		// Compute the new bounds
 
-		// Forced fit simply reframes the objects, except for orthogonal lines, which will be resized below
+		// Forced fit simply reframes the objects, except for orthogonal lines, which will be resized later
 		if (enforced && obj.constructor.name !== 'GraphicLine') { obj.geometricBounds = B.target; return obj; }
 
 		// HW has predefined dimensions
@@ -179,7 +179,7 @@ function fitTo(items, scope, target, enforced) {
 			O.geo[1] < B.target[3] ? Math.min(O.vis[3], B.target[3]) : O.geo[3]
 		];
 
-		// If smaller but into the snap zone, fit to the target
+		// If smaller but into the snap zone, snap to the target
 		O.fitted = [
 			O.reduced[0] < Z.target[0] ? B.target[0] : (O.itHits[0] ? B.target[0] : O.reduced[0]),
 			O.reduced[1] < Z.target[1] ? B.target[1] : (O.itHits[1] ? B.target[1] : O.reduced[1]),
