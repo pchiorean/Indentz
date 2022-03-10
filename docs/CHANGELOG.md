@@ -1,10 +1,14 @@
 ## Changelog
 
+##### [2022-03-10](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-10&type=commits)
+- [`fix`](https://github.com/pchiorean/Indentz/commit/a9199d8ca043d2daee502979c0dbd54ab52f37b5)
+  **QR, QRBatch**: The suffix was incorrectly matched inside label text for on-doc codes; fixed (another bug from 01/27 commit)
+
 ##### [2022-03-08](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-08&type=commits)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/da98c89349cae6b159f8d9c8b20910064e1401ee)
   Don't resize (**PageSizeFromFilename**) or don't split (**QuickExport**) documents with a mixture of sizes (e.g., 210x297 + 297x210)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/e8470e8aceaa8664e8c0d35c355c9dfb4c0a7a52)
-  **DocDefaults.jsx**: Added a progress bar
+  **DocDefaults**: Added a progress bar
 
 ##### [2022-03-04](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-04&type=commits)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/4b100ce6490f374b8047d2cf9f9e5b239e6351bb)
@@ -257,52 +261,47 @@
 - `new` **Debug**: Add a hires timer
 - `new` **DefaultSwatches**: Add tints support
 - `new` **DocCleanup**: Ask to delete empty frames
-- `new` **DocCleanup**: Remove unused masters
-- `new` **DocCleanup**: Remove unused styles and groups
-  (see [this](https://community.adobe.com/t5/indesign/delete-unused-paragraph-styles/m-p/1089672#M165331) discussion)
-- `new` **QuickExport**: Add a checkbox for 'Show report'
-- `new` **QuickExport**: Add dropdown history (see page 43 of ScriptUI by PK)
+- `new` **QuickExport**: Add dropdown history (see page 43 of **ScriptUI** by PK)
 - `new` **QuickExport**: Add JPG & `?`TIFF export profiles
-- `new` **Report**: Add a button to save errors to file
+- `new` **Report**: Add a button to save report to file
 
 ##### Updates
 
 - `brk` **DefaultLayers/Swatches/ReplaceFonts/Links**: Optional arguments: data file, verbosity level
-- `upd` **FindFile**: Use relative paths for includes <!-- (VSC: Paths starting with `/` are resolved relative to the current workspace; paths starting with `./` or without any prefix are resolved relative to the current file.) -->
-- `upd` **IsInArray**: Add regex matching to searchValue
+- `upd` **GetDataFile**: Use relative paths for includes <!-- (VSC: Paths starting with `/` are resolved relative to the current workspace; paths starting with `./` or without any prefix are resolved relative to the current file.) -->
+- `upd` **IsInArray**: Add regex matching to `searchValue`
 - `upd` **LabelPageRatios**: Mark outer/inner ratios
 - `brk` **MarkVisibleArea**: Mark the entire spread's visible area, not individual pages
 - `upd` **MarkVisibleArea**: Use wildcards for layer names
 - `brk` **MarkVisibleArea, PrepareForExport**: Read layer variants from `layers.txt`, fallback to defaults
 - `upd` **PageMarginsFromSelection**: Set the margins of every page touched by the selection
-- `upd` **PageSizeFromFilename**: Use real units (mm, cm, px)
+- `upd` **PageSizeFromFilename**: Use real units (mm, cm, px) if detected
 - `upd` **PageSizeFromSelection**: Without selection fit all pages to their contents
 - `upd` **ParseDataFile**: Keep the record index in the returned object
 - `upd` **QuickExport**: JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 - `upd` **ReplaceText**: Take an array of strings as input
 - `upd` **ReplaceText**: Add a switch for grep matching
-- `upd` **Report**: Add auto filtering mode (`true`|`false`|`auto`)
-- `upd` **Report**: Improve filtering: `-` for none of these words, `"` for exact word or phrase (or use regex and be done with it)
+- `upd` **Report**: Add auto filtering mode (`true`|`false`|`auto`, default `false`)
+- `upd` **Report**: Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
 - `brk` **ScaleTo...**: Scale to `alignDistributeBounds`
-- `upd` **SpreadsToFiles**: Split '-ABBBCC' to '-A', '-BBB', '-CC'
-- `upd` **SpreadsToFiles**: Placeholder character for custom positioning
+- `upd` **SpreadsToFiles**: Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
+- `upd` **SpreadsToFiles**: Add a placeholder character for custom positioning
 - `upd` **TextAutoSize**: Check `baselineShift`
-- `upd` Use a custom object style for 'Visible area' frame
+- `upd` Use a custom object style for visible area frame
 - `ref` Fix UI static/edittext width (see Marc's [measureString()](https://twitter.com/indiscripts/status/1408788941550108674))
 
 ##### Bug fixes
 
-- `fix` **DefaultSwatches**: Check values on parsing
+- `fix` **DefaultSwatches**: Check color values on parsing
 - `fix` **PageSizeFromFilename**: Error on pages set to 1:X scale
 - `fix` **PageSizeFromFilename**: Limit detected bleed to max values
-- `fix` **PageSizeFromSelection**: For text frames use outlined text bounds
+- `fix` **PageSizeFromSelection**: Use outlined text bounds for text frames
 - `fix` **QR, QRBatch**: Improve line breaking
 - `fix` **QuickExport**: Check if the PDF is writable before exporting
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
 
 ##### New scripts
 
-- `new` **ActivateDoc1/2/3...**: Quickly activate document tabs with Ctrl + 1, 2, 3... <!-- (see [this](https://aiscripts.medium.com/showing-artboard-order-ef213c91b858)) -->
 - `new` **LayersToFiles**
 - `new` Convert **lib/ReplaceText** to standalone script <!-- (see [this](https://twitter.com/indiscripts/status/1463152851908276230)) -->
 - `new` **SeparateSpreadPages**
