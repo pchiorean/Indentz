@@ -17,7 +17,6 @@ Name                               |    Fn  | Description
 `PageMarginsFromSelection.jsx`     |    ⌥F3 | Sets the page margins to the selected objects bounds
 `GuidesAdd.jsx`                    |        | Adds guides on pages' edges and inner centers or selected objects' edges
 `GuidesDelete.jsx`                 |        | Deletes all guides from the document
-`HW.jsx`                           |   ⇧F10 | Labels the selected objects 'HW' and adds a 10% bottom guide on all spreads
 **Align**                                   |
 `AlignToTL.jsx`                    |   Num7 | Aligns the selected objects to the top-left of the **Align To** setting
 `AlignToT.jsx`                     |   Num8 | Aligns the selected objects to the top of the **Align To** setting

@@ -146,9 +146,6 @@ Resizes the page to the selected items (similar to **Artboards ‣ Fit to Select
 #### **`PageMarginsFromSelection`** <small>⌥F3</small>
 Sets the page margins to the selected items.
 
-#### **`HW`** <small>⇧F10</small>
-Adds a bottom guide at 10% of the height of the visible area and labels with “HW” the selected items.
-
 #### **`GuidesAdd`**
 If any page items are selected, it adds spread guides around them.
 
@@ -382,4 +379,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • March 5, 2022
+README.md • March 10, 2022
