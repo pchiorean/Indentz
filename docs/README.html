@@ -304,7 +304,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </details>
 <h4 class="mume-header" id="defaultlayers"><strong><code>DefaultLayers</code></strong></h4>
 
-<p>Adds a set of layers defined in a TSV <em>(tab-separated values)</em> file named <a href="../layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
+<p>Adds a set of layers defined in a TSV <em>(tab-separated values)</em> file named <a href="samples/layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -345,16 +345,16 @@ pre[data-line] .line-highlight[data-end]:after {
 </table>
 <blockquote>
 <p><strong>Name</strong>: layer name <br>
-<strong>Color</strong>: layer color (see <a href="UIColors.txt"><strong><code>UIColors.txt</code></strong></a>; defaults to <code>Light Blue</code>) <br>
+<strong>Color</strong>: layer color (see <a href="misc/UIColors.txt"><strong><code>UIColors.txt</code></strong></a>; defaults to <code>Light Blue</code>) <br>
 <strong>Visible</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>) <br>
 <strong>Printable</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>) <br>
 <strong>Order</strong>: <code>above</code> or <code>below</code> existing layers (defaults to <code>above</code>) <br>
 <strong>Variants</strong>: a list of layers that will be merged with the base layer (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
 </blockquote>
-<p>The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with <code>_</code> take precedence. Also, you can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</p>
+<p>The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in <code>Indentz</code> root); local files and files starting with <code>_</code> take precedence. You can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</p>
 <h4 class="mume-header" id="defaultswatches"><strong><code>DefaultSwatches</code></strong></h4>
 
-<p>Adds swatches defined in a TSV file named <a href="../swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
+<p>Adds swatches defined in a TSV file named <a href="samples/swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -403,16 +403,16 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Values</strong>: 3 values in 0-255 range for RGB; 4 values in 0-100 range for CMYK; 3 values in 0-100 (L), -128-127 (A and B) range for Lab <br>
 <strong>Variants</strong>: a list of swatches that will be replaced by the base swatch (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
 </blockquote>
-<p>The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with <code>_</code> take precedence. Also, you can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</p>
+<p>The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in <code>Indentz</code> root); local files and files starting with <code>_</code> take precedence. You can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</p>
 <h4 class="mume-header" id="replacefonts"><strong><code>ReplaceFonts</code></strong></h4>
 
-<p>Replaces document fonts using a TSV substitution file named <a href="../fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
+<p>Replaces document fonts using a TSV substitution file named <a href="samples/fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Old font</th>
+<th style="text-align:left">Old font family</th>
 <th style="text-align:left">Style</th>
-<th style="text-align:left">New font</th>
+<th style="text-align:left">New font family</th>
 <th style="text-align:left">Style</th>
 </tr>
 </thead>
@@ -438,15 +438,15 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 <p>You can use <a href="#showfonts"><strong><code>ShowFonts</code></strong></a> from <a href="#miscellaneous"><strong>Miscellaneous</strong></a> to get a tab delimited list of document fonts for copy-pasting.</p>
-<p>The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with <code>_</code> take precedence. Also, you can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</p>
+<p>The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in <code>Indentz</code> root); local files and files starting with <code>_</code> take precedence. You can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</p>
 <h4 class="mume-header" id="replacelinks"><strong><code>ReplaceLinks</code></strong></h4>
 
-<p>Replaces document links using a TSV substitution file named <strong><code>links.txt</code></strong>:</p>
+<p>Replaces document links using a TSV substitution file named <a href="samples/links.txt"><strong><code>links.txt</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">New link</th>
-<th style="text-align:left">Old links</th>
+<th style="text-align:left">Link path</th>
+<th style="text-align:left">Document links</th>
 </tr>
 </thead>
 <tbody>
@@ -456,7 +456,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </tr>
 <tr>
 <td style="text-align:left"><strong>img2-cmyk.tif</strong></td>
-<td style="text-align:left">img2_lowres.jpg, img2-rgb.jpg</td>
+<td style="text-align:left">img2_lowres.jpg, img2-rgb.*</td>
 </tr>
 <tr>
 <td style="text-align:left">&#x2026;</td>
@@ -465,10 +465,10 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 <blockquote>
-<p><strong>New link</strong>: new link&#x2019;s absolute path; if no path is given, it&#x2019;s assumed to be in the same folder <br>
-<strong>Old links</strong>: a list of links (with no paths) that will be relinked (defaults to new link&#x2019;s name); case insensitive; &#x2018;*&#x2019; and &#x2018;?&#x2019; wildcards accepted</p>
+<p><strong>Link path</strong>: new link&#x2019;s absolute path, or just its name if it&#x2019;s in the same folder <br>
+<strong>Document links</strong>: a list of document links that will be relinked if found (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
 </blockquote>
-<p>The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with <code>_</code> take precedence. Also, you can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</p>
+<p>The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in <code>Indentz</code> root); local files and files starting with <code>_</code> take precedence. You can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</p>
 <h4 class="mume-header" id="docdefaults-smallf2small"><strong><code>DocDefaults</code></strong> <small>&#x2325;F2</small></h4>
 
 <p>It runs <a href="#defaultprefs"><strong><code>DefaultPrefs</code></strong></a>, <a href="#defaultswatches"><strong><code>DefaultSwatches</code></strong></a>, <a href="#defaultlayers"><strong><code>DefaultLayers</code></strong></a>, <a href="#replacefonts"><strong><code>ReplaceFonts</code></strong></a>, <a href="#replacelinks"><strong><code>ReplaceLinks</code></strong></a>, <a href="#pagesizefromfilename-f3"><strong><code>PageSizeFromFilename</code></strong></a> and sets loose pasteboard margins.</p>
@@ -848,10 +848,10 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <p>Adds a QR code on each spread of the active document or to separate PDF files.</p>
 <p>If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, the code of each spread will have the appropriate suffix; when separate files are generated, they will be named in the same way (e.g., for <strong><code>Document_ABC.indd</code></strong> with three spreads, <strong><code>Document_A_QR.pdf</code></strong>, <strong><code>Document_B_QR.pdf</code></strong> and <strong><code>Document_C_QR.pdf</code></strong> will be generated).</p>
-<p><strong>Note:</strong> You can insert &#x201C;|&#x201D; for manually splitting the label into several lines.</p>
+<p>You can insert &#x201C;|&#x201D; for manually splitting the label into several lines.</p>
 <h4 class="mume-header" id="qrbatch-smallf9small"><strong><code>QRBatch</code></strong> <small>&#x21E7;F9</small></h4>
 
-<p>Does the same thing as <strong><code>QR</code></strong> but in a non-interactive way: retrieves a list of codes from a TSV file named <strong><code>qr.txt</code></strong> and adds them to existing documents or creates separate files (the suffix thing applies here as well):</p>
+<p>Does the same thing as <strong><code>QR</code></strong> but in a non-interactive way: retrieves a list of codes from a TSV file named <a href="samples/qr.txt"><strong><code>qr.txt</code></strong></a> and adds them to existing documents or creates separate files (the suffix thing applies here as well):</p>
 <table>
 <thead>
 <tr>
@@ -888,7 +888,8 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Code</strong>: any string <br>
 <strong>On doc</strong>: any string: on existing document; empty or missing: on separate file</p>
 </blockquote>
-<p><strong>Note:</strong> You can insert &#x201C;|&#x201D; for manually splitting the label into several lines.</p>
+<p>You can insert &#x201C;|&#x201D; for manually splitting the label into several lines.</p>
+<p>The TSV file must be saved locally (in the active document folder); files starting with <code>_</code> take precedence. Blank lines and those prefixed with <code>#</code> are ignored.</p>
 <h4 class="mume-header" id="showfonts"><strong><code>ShowFonts</code></strong></h4>
 
 <p>Shows all fonts used in the current document.</p>
@@ -912,7 +913,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>&#xA9; 2020-2022 Paul Chiorean &lt;jpeg AT basement.ro&gt;.<br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md &#x2022; March 10, 2022</p>
+<p>README.md &#x2022; March 11, 2022</p>
 
       </div>
       

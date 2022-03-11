@@ -48,7 +48,7 @@ Sets some preferences for the current document.
 </details>
 
 #### **`DefaultLayers`**
-Adds a set of layers defined in a TSV *(tab-separated values)* file named [**`layers.txt`**](../layers.txt):
+Adds a set of layers defined in a TSV *(tab-separated values)* file named [**`layers.txt`**](samples/layers.txt):
 
 | Name         | Color   | Visible | Printable | Order | Variants                               |
 | :-           | :-      | :-      | :-        | :-    | :-                                     |
@@ -57,16 +57,16 @@ Adds a set of layers defined in a TSV *(tab-separated values)* file named [**`la
 | ...          |         |         |           |       |                                        |
 
 > **Name**: layer name \
-> **Color**: layer color (see [**`UIColors.txt`**](UIColors.txt); defaults to `Light Blue`) \
+> **Color**: layer color (see [**`UIColors.txt`**](misc/UIColors.txt); defaults to `Light Blue`) \
 > **Visible**: `yes` or `no` (defaults to `yes`) \
 > **Printable**: `yes` or `no` (defaults to `yes`) \
 > **Order**: `above` or `below` existing layers (defaults to `above`) \
 > **Variants**: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards accepted)
 
-The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
 #### **`DefaultSwatches`**
-Adds swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
+Adds swatches defined in a TSV file named [**`swatches.txt`**](samples/swatches.txt):
 
 | Name           | Color Model | Color Space | Values       | Variants       |
 | :-             | :-          | :-          | :-           | :-             |
@@ -81,34 +81,34 @@ Adds swatches defined in a TSV file named [**`swatches.txt`**](../swatches.txt):
 > **Values**: 3 values in 0-255 range for RGB; 4 values in 0-100 range for CMYK; 3 values in 0-100 (L), -128-127 (A and B) range for Lab \
 > **Variants**: a list of swatches that will be replaced by the base swatch (case insensitive; `*` and `?` wildcards accepted)
 
-The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
 #### **`ReplaceFonts`**
-Replaces document fonts using a TSV substitution file named [**`fonts.txt`**](../fonts.txt):
+Replaces document fonts using a TSV substitution file named [**`fonts.txt`**](samples/fonts.txt):
 
-| Old font  | Style   | New font           | Style   |
-| :-        | :-      | :-                 | :-      |
-| **Arial** | Regular | **Helvetica Neue** | Regular |
-| **Arial** | Bold    | **Helvetica Neue** | Bold    |
-| ...       |         |                    |         |
+| Old font family | Style   | New font family    | Style   |
+| :-              | :-      | :-                 | :-      |
+| **Arial**       | Regular | **Helvetica Neue** | Regular |
+| **Arial**       | Bold    | **Helvetica Neue** | Bold    |
+| ...             |         |                    |         |
 
 You can use [**`ShowFonts`**](#showfonts) from [**Miscellaneous**](#miscellaneous) to get a tab delimited list of document fonts for copy-pasting.
 
-The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
 #### **`ReplaceLinks`**
-Replaces document links using a TSV substitution file named **`links.txt`**:
+Replaces document links using a TSV substitution file named [**`links.txt`**](samples/links.txt):
 
-| New link             | Old links                     |
-| :-                   | :-                            |
-| **path/to/img1.psd** | img1.*                        |
-| **img2-cmyk.tif**    | img2_lowres.jpg, img2-rgb.jpg |
-| ...                  |                               |
+| Link path            | Document links              |
+| :-                   | :-                          |
+| **path/to/img1.psd** | img1.*                      |
+| **img2-cmyk.tif**    | img2_lowres.jpg, img2-rgb.* |
+| ...                  |                             |
 
-> **New link**: new link's absolute path; if no path is given, it's assumed to be in the same folder \
-> **Old links**: a list of links (with no paths) that will be relinked (defaults to new link's name); case insensitive; '*' and '?' wildcards accepted
+> **Link path**: new link's absolute path, or just its name if it's in the same folder \
+> **Document links**: a list of document links that will be relinked if found (case insensitive; `*` and `?` wildcards accepted)
 
-The TSV file can be saved locally (in the current folder or the parent folder of the active document) or as a global default (on the desktop or next to the running script); local files and files starting with `_` take precedence. Also, you can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
 #### **`DocDefaults`** <small>⌥F2</small>
 It runs [**`DefaultPrefs`**](#defaultprefs), [**`DefaultSwatches`**](#defaultswatches), [**`DefaultLayers`**](#defaultlayers), [**`ReplaceFonts`**](#replacefonts), [**`ReplaceLinks`**](#replacelinks), [**`PageSizeFromFilename`**](#pagesizefromfilename-f3) and sets loose pasteboard margins.
@@ -336,10 +336,10 @@ Adds a QR code on each spread of the active document or to separate PDF files.
 
 If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, the code of each spread will have the appropriate suffix; when separate files are generated, they will be named in the same way (e.g., for **`Document_ABC.indd`** with three spreads, **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`** and **`Document_C_QR.pdf`** will be generated).
 
-**Note:** You can insert “|” for manually splitting the label into several lines.
+You can insert “|” for manually splitting the label into several lines.
 
 #### **`QRBatch`** <small>⇧F9</small>
-Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV file named **`qr.txt`** and adds them to existing documents or creates separate files (the suffix thing applies here as well):
+Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV file named [**`qr.txt`**](samples/qr.txt) and adds them to existing documents or creates separate files (the suffix thing applies here as well):
 
 | Filename       | Code   | On doc |
 | :-             | :-     | :-:    |
@@ -352,7 +352,9 @@ Does the same thing as **`QR`** but in a non-interactive way: retrieves a list o
 > **Code**: any string \
 > **On doc**: any string: on existing document; empty or missing: on separate file
 
-**Note:** You can insert “|” for manually splitting the label into several lines.
+You can insert “|” for manually splitting the label into several lines.
+
+The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence. Blank lines and those prefixed with `#` are ignored.
 
 #### **`ShowFonts`**
 Shows all fonts used in the current document.
@@ -379,4 +381,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • March 10, 2022
+README.md • March 11, 2022
