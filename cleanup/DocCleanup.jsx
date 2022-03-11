@@ -13,7 +13,7 @@ if (!(doc = app.activeDocument)) exit();
 // @include '../lib/ProgressBar.jsxinc';
 
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
-var progressBar = new ProgressBar('Cleanup document', 10);
+var progressBar = new ProgressBar('Cleanup document', 11);
 
 progressBar.update(1, 'Set preferences');
 app.doScript(File(script.path + '/DefaultPrefs.jsx'),
@@ -106,7 +106,19 @@ app.doScript(function () {
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Convert empty text frames to generic frames');
 
-progressBar.update(10, 'Set pasteboard size');
+progressBar.update(10, 'Convert empty frames to graphic frames');
+app.doScript(function () {
+	var item;
+	var items = doc.allPageItems;
+	while ((item = items.shift())) {
+		if (/Oval|Rectangle|Polygon/.test(item.constructor.name) && item.allPageItems.length === 0)
+			item.contentType = ContentType.GRAPHIC_TYPE;
+	}
+},
+ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, 'Convert empty frames to graphic frames');
+
+progressBar.update(11, 'Set pasteboard size');
 app.doScript(function () {
 	var P = { width: 150, height: 25 }; // Defaults (mm)
 	var size = {
