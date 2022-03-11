@@ -299,7 +299,7 @@
 				]
 			}
 		],
-		"no-mixed-spaces-and-tabs": "error",
+		"no-mixed-spaces-and-tabs": "warn",
 		"no-multiple-empty-lines": [
 			"warn",
 			{
@@ -333,10 +333,10 @@
 			"warn",
 			"always"
 		],
-		"operator-linebreak": [
-			"warn",
-			"after"
-		],
+		// "operator-linebreak": [
+		// 	"warn",
+		// 	"after"
+		// ],
 		"padded-blocks": [
 			"warn",
 			"never"
