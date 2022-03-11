@@ -1,6 +1,6 @@
 /*
-	Adjust items 21.11.8
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Adjust items 22.3.11
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -39,9 +39,9 @@ function main() {
 
 		if (/\bfitV\b/ig.test(item.label)) {
 			item.fit(FitOptions.FRAME_TO_CONTENT);
-			app.doScript("fitTo(item, 'page', 'size')",
+			app.doScript("fitTo(item, 'spread', 'visible')",
 				ScriptLanguage.JAVASCRIPT, undefined,
-				UndoModes.ENTIRE_SCRIPT, 'Fit to page');
+				UndoModes.ENTIRE_SCRIPT, 'Fit to spread visible area');
 			continue;
 		}
 		if (/\bfitB\b/ig.test(item.label)) {
