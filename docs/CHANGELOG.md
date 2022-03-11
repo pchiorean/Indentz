@@ -1,6 +1,8 @@
 ## Changelog
 
 ##### [2022-03-11](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-11&type=commits)
+- [`new`](https://github.com/pchiorean/Indentz/commit/fd40557b6a81caa4342884132746c75120f64f52)
+  **DocCleanup**: Empty non-text frames will be converted to graphic frames to make them visible on complex layouts
 - [`upd`](https://github.com/pchiorean/Indentz/commit/ca8bf04cc4561838f7cfa6ff0563a46d5a3cbacd)
   **DocCleanup**: Added a progress bar
 - [`doc`](https://github.com/pchiorean/Indentz/commit/71016890effb5e838d88e1d07a9551a018a064e6)
