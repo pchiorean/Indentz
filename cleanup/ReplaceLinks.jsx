@@ -1,15 +1,15 @@
 /*
-	Replace links 22.3.5
+	Replace links 22.3.11
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
 
-	New link         | Old links
+	Link path        | Document links
 	path/to/img1.psd | img1.*
-	img2-cmyk.tif    | img2_lowres.jpg, img2-rgb.jpg
+	img2-cmyk.tif    | img2_lowres.jpg, img2-rgb.*
 	...
-	1. <New link>: new link's full path (or just the name if it's in the same folder)
-	2. <Old links>: a list of links to be replaced (optional; defaults to new link's name)
+	1. <Link path>: new link's absolute path, or just its name if it's in the same folder
+	2. <Document links>: a list of document links that will be relinked if found
 	   (case insensitive; '*' and '?' wildcards accepted)
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
