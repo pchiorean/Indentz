@@ -1,0 +1,18 @@
+Filename   	Code   	On doc
+File 1     	Code 1 	+
+File 2_ABC 	Code 2 	+
+File 3_AC  	Code 3 	
+
+# Filename: document name
+# Code: any string
+# On doc: any string: on existing document; empty or missing: on separate file
+
+# You can insert '|' for manually splitting the label into several lines.
+#
+# If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters
+# equal to the number of spreads, the code of each spread will have the appropriate suffix; when separate files are
+# generated, they will be named in the same way (e.g., for 'Document_ABC.indd' with three spreads, 'Document_A_QR.pdf',
+# 'Document_B_QR.pdf' and 'Document_C_QR.pdf' will be generated).
+#
+# The TSV file must be saved locally (in the active document folder).
+# Files starting with '_' take precedence. Blank lines and those prefixed with # are ignored.
