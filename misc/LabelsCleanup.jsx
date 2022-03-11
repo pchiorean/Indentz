@@ -1,5 +1,5 @@
 /*
-	Cleanup labels 21.09.12
+	Cleanup labels 21.9.12
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Removes all labels from the document.

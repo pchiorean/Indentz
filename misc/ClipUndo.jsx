@@ -1,5 +1,5 @@
 /*
-	Undo clipping 21.09.20
+	Undo clipping 21.9.20
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Releases selected objects from their clipping frames.

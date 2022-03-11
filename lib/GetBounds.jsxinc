@@ -1,5 +1,5 @@
 /*
-	GetBounds 22.02.13
+	GetBounds 22.2.13
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Returns an object containing the geometric bounds of the given page, its parent spread, and miscellaneous

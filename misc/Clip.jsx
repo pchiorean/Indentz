@@ -1,5 +1,5 @@
 /*
-	Clip 21.09.20
+	Clip 21.9.20
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Clips selected objects in a clipping frame (or releases them if already clipped).
