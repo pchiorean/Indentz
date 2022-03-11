@@ -2,9 +2,9 @@
 
 A collection of InDesign scripts for various simple and repetitive tasks.
 
-As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home in the Covid era finally provided me the extra time needed to learn to write some scripts, and over time the collection grew. I made them public in the hope that they could help others, too. I'm a graphic designer, not a programmer, so please bear with me if some things are not state-of-the-art (feedback or suggestions are welcome). Note that I mostly used InDesign ExtendScript API 8.0 (compatible with InDesign CS6), but the scripts were not tested in versions older than CC 2020. I work on macOS, so expect various bugs on Windows.
+As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home in the Covid era finally provided me some extra time to learn a little scripting, and over time the collection grew. I made them public in the hope that they could help others, too. I'm a graphic designer, not a programmer, so please bear with me if things are not state-of-the-art. I mostly used InDesign ExtendScript API 8.0 (compatible with InDesign CS6); the scripts were not tested in versions older than CC 2020. I work on macOS, so expect various bugs on Windows.
 
-I mostly use shortcuts to launch them (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**), so I've suggested a few for macOS below.
+I mainly use shortcuts to launch them (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**), so I've suggested a few for macOS below.
 
 ---
 
