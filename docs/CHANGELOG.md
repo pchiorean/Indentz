@@ -1,5 +1,11 @@
 ## Changelog
 
+##### [2022-03-11](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-11&type=commits)
+- [`upd`](https://github.com/pchiorean/Indentz/commit/ca8bf04cc4561838f7cfa6ff0563a46d5a3cbacd)
+  **DocCleanup**: Added a progress bar
+- [`doc`](https://github.com/pchiorean/Indentz/commit/71016890effb5e838d88e1d07a9551a018a064e6)
+  Added sample TSV files
+
 ##### [2022-03-10](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-10&type=commits)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/a9199d8ca043d2daee502979c0dbd54ab52f37b5)
   **QR, QRBatch**: The suffix was incorrectly matched inside label text for on-doc codes; fixed (another bug from 01/27 commit)
@@ -252,8 +258,6 @@
 - [`doc`](https://github.com/pchiorean/Indentz/commit/c8dd950b8167d4a30148c866da25e91694f9416c)
   Added a changelog
 
----
-
 ## Backlog
 
 ##### New features
@@ -289,6 +293,7 @@
 - `upd` **TextAutoSize**: Check `baselineShift`
 - `upd` Use a custom object style for visible area frame
 - `ref` Fix UI static/edittext width (see Marc's [measureString()](https://twitter.com/indiscripts/status/1408788941550108674))
+- `ref` Add fallback paths to `#include`: '#includepath "../lib; lib"'
 
 ##### Bug fixes
 
