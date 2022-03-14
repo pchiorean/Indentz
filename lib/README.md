@@ -248,35 +248,41 @@ it will return an object like this:
 
 ### ProgressBar
 
-Creates a dual progress bar palette.
+Creates a palette with two progress bars and a message; the second bar (optional) may be used for microsteps.
 
 #### var pb = new ProgressBar(title, maxValue, [maxWidth])
 
-| Parameters | Type       | Description                                 |
-| ---------- | ---------- | ------------------------------------------- |
-| title      | `string`   | Palette title (a counter will be appended). |
-| maxValue   | `number`   | Number of steps for the main progress bar.  |
-| [maxWidth] | `number`   | Maximum message length (characters).        |
+| Parameters | Type       | Description                                        |
+| ---------- | ---------- | -------------------------------------------------- |
+| title      | `string`   | Palette title.                                     |
+| maxValue   | `number`   | Number of steps for the main progress bar.         |
+| [maxWidth] | `number`   | Maximum message length (characters). *(Optional.)* |
 
-Initializes and shows the palette. On creation you can set it's width to accomodate a given message length (if omitted, no message is shown, aka mini mode). The secondary progress bar is by default hidden.
+Initializes and shows the palette. On creation you can set it's width to accomodate a given message length; if omitted, no message is shown (aka mini mode). The secondary progress bar is hidden by default.
 
-#### pb.update(value, [message])
+#### pb.msg([message]) *(Optional)*
 
-| Parameters | Type       | Description                                                         |
-| ---------- | ---------- | ------------------------------------------------------------------- |
-| value      | `number`   | New value of the main progress bar.                                 |
-| [message]  | `string`   | Message; if omitted, the previous message is cleared. *(Optional.)* |
+| Parameters | Type       | Description            |
+| ---------- | ---------- | ---------------------- |
+| [message]  | `string`   | Message. *(Optional.)* |
 
-Updates the main progress bar and the message, and hides the secondary progress bar.
+Updates the message. If omitted, the previous message is cleared.
 
-#### [pb.update2(value2, maxValue2)] *(Optional)*
+#### pb.update()
+
+Increases the value of the main progress bar and updates the counter (not shown in mini mode). Also resets & hides the secondary progress bar.
+
+#### pb.init2(maxValue2) *(Optional)*
 
 | Parameters | Type       | Description                                     |
 | ---------- | ---------- | ----------------------------------------------- |
-| value2     | `number`   | New value of the secondary progress bar.        |
 | maxValue2  | `number`   | Number of steps for the secondary progress bar. |
 
-Updates the secondary progress bar. You must set the maximum number of steps (the progress bar is not shown if the max value is less then 2).
+Sets the number of steps for the secondary progress bar (the bar is shown only if the number is greater than 2).
+
+#### pb.update2() *(Optional)*
+
+Increases the value of the secondary progress bar.
 
 #### pb.close()
 
@@ -285,22 +291,24 @@ Closes the progress bar.
 #### Example
 
 ```js
-var progress = new ProgressBar('Progress bar demo', 100, 50);
-progress.update(25, 'Progress bar value is 25.');
-progress.update2(2, 3);
+var steps = 100;
+var steps2 = 10;
+var progressBar = new ProgressBar('Dual progress bar demo', steps, 50);
+for (var i = 0; i < steps; i++) {
+	progressBar.update();
+	progressBar.init2(steps2);
+	for (var j = 0; j < steps2; j++) {
+		progressBar.update2();
+		progressBar.msg('Main value is ' + (i+1) + '. Secondary value is ' + (j+1) + '/' + steps2 + '.');
+		if (i === 24 && j === 5) $.sleep(2500);
+	}
+}
+progressBar.close();
 ```
 
-![](../docs/img/lib/progress-bar.png)
-![](../docs/img/lib/progress-bar2.png)
-
-```js
-var progress = new ProgressBar('Progress bar demo', 100);
-progress.update(25);
-progress.update2(2, 3);
-```
-
+![](../docs/img/lib/progress-bar.png)\
+![](../docs/img/lib/progress-bar-dual.png)\
 ![](../docs/img/lib/progress-bar-mini.png)
-![](../docs/img/lib/progress-bar2-mini.png)
 
 ---
 
