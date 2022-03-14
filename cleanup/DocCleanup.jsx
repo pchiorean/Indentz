@@ -111,7 +111,9 @@ app.doScript(function () {
 	var item;
 	var items = doc.allPageItems;
 	while ((item = items.shift())) {
-		if (/Oval|Rectangle|Polygon/.test(item.constructor.name) && item.allPageItems.length === 0)
+		if (/Oval|Rectangle|Polygon/.test(item.constructor.name)
+			&& item.allPageItems.length === 0
+			&& item.strokeWeight === 0)
 			item.contentType = ContentType.GRAPHIC_TYPE;
 	}
 },
