@@ -1,5 +1,11 @@
 ## Changelog
 
+##### [2022-03-14](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-14&type=commits)
+- [`brk`](https://github.com/pchiorean/Indentz/commit/937f8db5656296e4dcee4d2261540252a7210173)
+  **ProgressBar**: Refactored methods – message update is now separate from value update; values are simpler to increment
+- [`fix`](https://github.com/pchiorean/Indentz/commit/0d38de1cd6d3a6c42292f1d9fdb2b81220929e69)
+  **DocCleanup**: Don't change empty frames with strokes to graphic frames
+
 ##### [2022-03-11](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-11&type=commits)
 - [`new`](https://github.com/pchiorean/Indentz/commit/fd40557b6a81caa4342884132746c75120f64f52)
   **DocCleanup**: Empty non-text frames will be converted to graphic frames to make them visible on complex layouts
