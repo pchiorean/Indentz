@@ -1,5 +1,5 @@
 /*
-	Quick export 22.3.8
+	Quick export 22.3.14
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -49,7 +49,6 @@ var errors = [];
 var names = [];
 var docs = [];
 var pbWidth = 50;
-var counter = 1;
 
 var VER = '2';
 var defaults = {
@@ -520,7 +519,9 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		extendRange = (doc.spreads.length === old.docSpreads * 2) && exp.exportSpreads.value;
 		fileSufx = RegExp('([ ._-])([a-zA-Z]{' +
 			(extendRange ? target.length / 2 : target.length) + '})$', 'i').exec(baseName);
-		for (var i = 0, n = target.length; i < n; i++) {
+			progressBar.update();
+			progressBar.init2(target.length);
+			for (var i = 0, n = target.length; i < n; i++) {
 			// Add a page/spread index
 			fn = baseName;
 			if (fileSufx) { // The target already has an index
@@ -540,8 +541,8 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			} else { // Export as pages
 				range = String(target[i].documentOffset + 1);
 			}
-			progressBar.update(counter, (baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
-			progressBar.update2(i + 1, n);
+			progressBar.update2();
+			progressBar.msg(baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn);
 			exportToPDF(fn, range, app.pdfExportPresets.item(preset));
 		}
 	} else {
@@ -550,10 +551,10 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		fn = uniqueName(baseName,
 			baseFolder + (subfolder ? '/' + subfolder : ''),
 			ui.output.options.overwrite.value);
-		progressBar.update(counter, (baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn));
+		progressBar.update();
+		progressBar.msg(baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn);
 		exportToPDF(fn, PageRange.ALL_PAGES, app.pdfExportPresets.item(preset));
 	}
-	counter++;
 
 	function uniqueName(/*string*/filename, /*string*/folder, /*bool*/overwrite) {
 		var pdfName = filename + '.pdf';

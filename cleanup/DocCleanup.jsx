@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 22.3.11
+	Document cleanup 22.3.14
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -15,12 +15,12 @@ if (!(doc = app.activeDocument)) exit();
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 var progressBar = new ProgressBar('Cleanup document', 11);
 
-progressBar.update(1, 'Set preferences');
+progressBar.update();
 app.doScript(File(script.path + '/DefaultPrefs.jsx'),
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Set preferences');
 
-progressBar.update(2, 'Turn off auto update URLs');
+progressBar.update();
 app.doScript(function () {
 	var setAUU = app.menuActions.itemByName('$ID/AutoUpdateURLStatus');
 	var hyperLinksPanel = app.panels.itemByName('$ID/Hyperlinks');
@@ -32,7 +32,7 @@ app.doScript(function () {
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Turn off auto update URLs');
 
-progressBar.update(3, 'Show guides');
+progressBar.update();
 app.doScript(function () {
 	var layer;
 	if ((layer = doc.layers.item('guides')).isValid) layer.visible = true;
@@ -42,7 +42,7 @@ app.doScript(function () {
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Show guides');
 
-progressBar.update(4, 'Unlock items, delete hidden, reset scaling');
+progressBar.update();
 app.doScript(function () {
 	doc.layers.everyItem().locked = false;
 	var item, askd, delHidden;
@@ -59,21 +59,21 @@ app.doScript(function () {
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Unlock items, delete hidden, reset scaling');
 
-progressBar.update(5, 'Clear default effects');
+progressBar.update();
 app.doScript(function () {
 	if ((menu = app.menuActions.item('$ID/Clear All Transparency')).enabled) menu.invoke();
 },
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Clear default effects');
 
-progressBar.update(6, 'Delete unused layers');
+progressBar.update();
 app.doScript(function () {
 	if ((menu = app.menuActions.item('$ID/Delete Unused Layers')).enabled) menu.invoke();
 },
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Delete unused layers');
 
-progressBar.update(7, 'Delete empty spreads');
+progressBar.update();
 app.doScript(function () {
 	var spread;
 	var spreads = doc.spreads.everyItem().getElements();
@@ -83,7 +83,7 @@ app.doScript(function () {
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Delete empty spreads');
 
-progressBar.update(8, 'Delete unused swatches');
+progressBar.update();
 app.doScript(function () {
 	var swatch;
 	var swatches = doc.unusedSwatches;
@@ -93,7 +93,7 @@ app.doScript(function () {
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Delete unused swatches');
 
-progressBar.update(9, 'Convert empty text frames to generic frames');
+progressBar.update();
 app.doScript(function () {
 	var frame;
 	var frames = doc.textFrames.everyItem().getElements();
@@ -106,7 +106,7 @@ app.doScript(function () {
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Convert empty text frames to generic frames');
 
-progressBar.update(10, 'Convert empty frames to graphic frames');
+progressBar.update();
 app.doScript(function () {
 	var item;
 	var items = doc.allPageItems;
@@ -118,7 +118,7 @@ app.doScript(function () {
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Convert empty frames to graphic frames');
 
-progressBar.update(11, 'Set pasteboard size');
+progressBar.update();
 app.doScript(function () {
 	var P = { width: 150, height: 25 }; // Defaults (mm)
 	var size = {

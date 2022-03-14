@@ -1,6 +1,6 @@
 /*
-	Spreads to files 21.10.6
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Spreads to files 22.3.14
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
 
@@ -63,7 +63,7 @@ for (spread = 0; spread < doc.spreads.length; spread++) {
 		inc++;
 	} while (targetFile.exists);
 	// Disable user interaction and open a copy
-	progressBar.update(spread + 1);
+	progressBar.update();
 	doc.saveACopy(targetFile);
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 	target = app.open(targetFile, false);
