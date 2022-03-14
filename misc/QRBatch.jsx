@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 22.3.10
+	Batch QR codes 22.3.14
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -217,8 +217,11 @@ function main() {
 	progressBar = new ProgressBar('Processing', queue.length, pbWidth);
 	for (i = 0, n = queue.length; i < n; i++) {
 		item = rawData[queue[i] - 1];
-		if (item.fn === '' || item.fn.toString().slice(0,1) === '\u0023') { progressBar.update(i + 1, ''); continue; }
-		if ((item.onDoc && putCodeOnDocument(i + 1)) || (!item.onDoc && saveCodeOnSeparateFile(i + 1))) {
+		if (item.fn === '' || item.fn.toString().slice(0,1) === '\u0023') {
+			progressBar.update(); progressBar.msg();
+			continue;
+		}
+		if ((item.onDoc && putCodeOnDocument()) || (!item.onDoc && saveCodeOnSeparateFile())) {
 			item.exported = true; isModified = true;
 		}
 	}
@@ -240,7 +243,7 @@ function main() {
 	if (errors.length > 0) report(errors, 'Errors');
 	app.scriptPreferences.userInteractionLevel = oldUIL;
 
-	function putCodeOnDocument(step) {
+	function putCodeOnDocument() {
 		var i, p, pp, page, tgBounds, tgSize, labelFrame, codeFrame, qrGroup, labelSize, codeSize, labelText, suffix;
 		var target = app.open(File(currentPath + '/' + item.fn));
 		if (target.converted) { errors.push(decodeURI(target.name) + ' must be converted; skipped.'); return false; }
@@ -249,7 +252,9 @@ function main() {
 		suffix = RegExp('[ ._-][a-zA-Z0-9]{' + target.spreads.length + '}$', 'i')
 			.exec((/\./g.test(target.name) && target.name.slice(0, target.name.lastIndexOf('.'))) || target.name);
 		suffix = suffix == null ? '' : String(suffix);
-		progressBar.update(step, decodeURI(target.name));
+		progressBar.update();
+		progressBar.msg(decodeURI(target.name));
+		progressBar.init2(target.spreads.length);
 		for (i = 0; i < target.spreads.length; i++) {
 			spread = target.spreads[i];
 			page = spread.pages[0];
@@ -265,7 +270,10 @@ function main() {
 			if (suffix.length === target.spreads.length + 1)
 				labelText = item.code.replace(RegExp(suffix + '$'), '') + suffix[0] + suffix[i + 1];
 			else labelText = item.code;
-			if (target.spreads.length > 1) progressBar.update2(i + 1, target.spreads.length);
+			if (target.spreads.length > 1) {
+				progressBar.update2();
+				progressBar.msg(decodeURI(target.name) + ' \u2022 ' + (i + 1));
+			}
 			labelFrame = page.textFrames.add({
 				label: 'QR',
 				itemLayer: idLayer.name,
@@ -349,19 +357,24 @@ function main() {
 		return true;
 	}
 
-	function saveCodeOnSeparateFile(step) {
+	function saveCodeOnSeparateFile() {
 		var i, labelText, baseName, targetName, suffix;
 		var ret = true;
 		baseName = (/\./g.test(item.fn) && item.fn.slice(0, item.fn.lastIndexOf('.'))) || item.fn;
 		baseName = baseName.replace(/_QR$/i, '');
 		suffix = /[ ._-][a-zA-Z0-9]{1,3}$/i.exec(baseName);
 		suffix = suffix[0] || '';
-		progressBar.update(step, item.fn);
+		progressBar.update();
+		progressBar.msg(baseName + '_QR.pdf');
+		if (suffix.length > 2) progressBar.init2(suffix.length - 1);
 		if (suffix.length > 1) {
 			for (i = 0; i < suffix.length - 1; i++) {
 				targetName = baseName.replace(RegExp(suffix + '$'), '') + suffix[0] + suffix[i + 1];
 				labelText = item.code.replace(RegExp(suffix + '$'), '') + suffix[0] + suffix[i + 1];
-				if (suffix.length > 2) progressBar.update2(i + 1, suffix.length - 1);
+				if (suffix.length > 2) {
+					progressBar.update2();
+					progressBar.msg(targetName + '_QR.pdf');
+				}
 				if (!makeQRFile()) ret = false;
 			}
 		} else {

@@ -1,5 +1,5 @@
 ﻿/*
-	Document defaults 22.3.11
+	Document defaults 22.3.14
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Sets default layers/swatches/links/fonts and sets page dimensions from the filename.
@@ -15,35 +15,35 @@ if (!(doc = app.activeDocument)) exit();
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 var progressBar = new ProgressBar('Set document defaults', 7);
 
-progressBar.update(1, 'Set preferences');
+progressBar.update();
 app.doScript(File(script.path + '/DefaultPrefs.jsx'),
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Set preferences');
 
-progressBar.update(2, 'Set default layers');
+progressBar.update();
 app.doScript(File(script.path + '/DefaultLayers.jsx'),
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Default layers');
 
-progressBar.update(3, 'Set default swatches');
+progressBar.update();
 app.doScript(File(script.path + '/DefaultSwatches.jsx'),
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Default swatches');
 
-progressBar.update(4, 'Replace links');
+progressBar.update();
 app.doScript(File(script.path + '/ReplaceLinks.jsx'),
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Replace links');
 
-progressBar.update(5, 'Replace fonts');
+progressBar.update();
 app.doScript(File(script.path + '/ReplaceFonts.jsx'),
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Replace fonts');
 
-progressBar.update(6, 'Show invisibles');
+progressBar.update();
 doc.textPreferences.showInvisibles = true;
 
-progressBar.update(7, 'Set page/pasteboard size');
+progressBar.update();
 app.doScript(function () {
 	app.doScript(File(script.path + '/../layout/PageSizeFromFilename.jsx'),
 	ScriptLanguage.JAVASCRIPT, undefined,

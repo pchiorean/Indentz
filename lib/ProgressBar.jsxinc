@@ -1,13 +1,11 @@
 /**
- * Creates a dual progress bar, setting it's width to accomodate a given message length.
- * @version 21.12.16
+ * Creates a palette with two progress bars and a message; the second bar (optional) may be used for microsteps.
+ * @version 22.3.14
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} title - Palette title.
  * @param {number} maxValue - Number of steps for the main progress bar.
- * @param {number} [maxWidth] - Maximum message length (characters); if omitted, no message is shown (mini mode).
- * @example
- * var progress = new ProgressBar('Progress bar demo', 100, 50);
+ * @param {number} [maxWidth] - Maximum message length (characters); if omitted, no message is shown (aka mini mode).
  */
 function ProgressBar(title, maxValue, maxWidth) {
 	var pb = new Window('palette', title);
@@ -17,62 +15,67 @@ function ProgressBar(title, maxValue, maxWidth) {
 	pb.bar1.preferredSize.height = 12;
 	pb.bar2.preferredSize.height = 3;
 	pb.bar2.visible = false;
-	if (maxWidth) { // Full progress bar
+	if (maxWidth) { // Full palette with message and counter
 		pb.msg = pb.add('statictext { properties: { truncate: "middle" } }');
 		pb.msg.characters = Math.max(maxWidth, 50);
 		pb.layout.layout();
 		pb.bars.size = [ pb.msg.bounds[2], 16 ];
 		pb.bar1.size.width = pb.bar2.size.width = pb.bars.size.width;
-	} else { // Mini progress bar
+	} else { // Mini-palette with progress bars only
 		pb.layout.layout();
 		pb.bars.size = [ 415, 16 ];
 		pb.bar1.size.width = pb.bar2.size.width = pb.bars.size.width;
 	}
 	pb.show();
-	if (app.windows.length > 0) {
+	if (app.windows.length > 0) { // Center in current window
 		pb.frameLocation = [
 			(app.activeWindow.bounds[1] + app.activeWindow.bounds[3] - pb.frameSize.width) / 2,
 			(app.activeWindow.bounds[0] + app.activeWindow.bounds[2] - pb.frameSize.height) / 2
 		];
 	}
 	/**
-	 * Updates the main progress bar and the message. A counter will be appended to the title.
-	 * @param {number} value - New value.
+	 * Updates the message.
 	 * @param {string} [message] - Message; if omitted, the previous message is cleared.
-	 * @example
-	 * progress.update(25, 'Primary value is 25.');
 	 */
-	this.update = function (value, message) {
-		pb.bar1.value = value;
-		pb.bar2.maxvalue = 0;
-		pb.bar2.value = 0;
-		pb.bar2.visible = false;
+	this.msg = function (message) {
 		if (pb.msg) {
-			pb.msg.visible = !!message;
 			if (message) pb.msg.text = message;
+			pb.msg.visible = !!message;
 		}
-		pb.text = title + ' \u2013 ' + value + '/' + pb.bar1.maxvalue;
 		pb.update();
 	};
 	/**
-	 * Updates the secondary progress bar.
-	 * @param {number} value2 - New value.
-	 * @param {number} maxValue2 - Number of steps for the secondary bar.
-	 * @example
-	 * progress.update2(1, 3);
+	 * Increases the value of the main progress bar and updates the counter.
 	 */
-	this.update2 = function (value2, maxValue2) {
-		if (maxValue2 > 1) {
-			pb.bar2.visible = true;
-			pb.bar2.maxvalue = maxValue2;
-			pb.bar2.value = value2;
-		} else {
-			pb.bar2.visible = false;
-		}
+	this.update = function () {
+		pb.bar1.value++;
+		pb.bar2.maxvalue = 0;
+		pb.bar2.visible = false;
+		pb.text = title;
+		if (maxWidth) pb.text += ' \u2013 ' + pb.bar1.value + '/' + pb.bar1.maxvalue;
+		pb.update();
+	};
+	/**
+	 * Sets the number of steps for the secondary progress bar.
+	 * @param {number} maxValue2 - Number of steps.
+	 */
+	this.init2 = function (maxValue2) {
+		pb.bar2.value = 0;
+		pb.bar2.maxvalue = maxValue2 > 1 ? maxValue2 : 0;
+		pb.bar2.visible = (pb.bar2.maxvalue > 1);
+		pb.update();
+	};
+	/**
+	 * Increases the value of the secondary progress bar.
+	 */
+	this.update2 = function () {
+		if (pb.bar2.maxvalue < 2) return;
+		pb.bar2.visible = true;
+		pb.bar2.value++;
 		pb.update();
 	};
 	/**
 	 * Closes the progress bar.
 	 */
-	this.close = function () { pb.close(); };
+	this.close = function () { $.sleep(100); pb.close(); };
 }
