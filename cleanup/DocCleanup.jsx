@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 22.3.14
+	Document cleanup 22.3.16
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -13,7 +13,7 @@ if (!(doc = app.activeDocument)) exit();
 // @include '../lib/ProgressBar.jsxinc';
 
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
-var progressBar = new ProgressBar('Cleanup document', 11);
+var progressBar = new ProgressBar('Cleanup document', 12);
 
 progressBar.update();
 app.doScript(File(script.path + '/DefaultPrefs.jsx'),
@@ -34,24 +34,21 @@ UndoModes.ENTIRE_SCRIPT, 'Turn off auto update URLs');
 
 progressBar.update();
 app.doScript(function () {
-	var layer;
-	if ((layer = doc.layers.item('guides')).isValid) layer.visible = true;
-	if ((layer = doc.layers.item('Guides')).isValid) layer.visible = true;
-	doc.textPreferences.showInvisibles = false;
-},
-ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.ENTIRE_SCRIPT, 'Show guides');
-
-progressBar.update();
-app.doScript(function () {
 	doc.layers.everyItem().locked = false;
-	var item, askd, delHidden;
-	var items = doc.pageItems.everyItem().getElements();
+	var item, delHidden, delEmpty;
+	// var items = doc.pageItems.everyItem().getElements();
+	var items = doc.allPageItems;
 	while ((item = items.shift())) {
 		if (item.locked) item.locked = false;
 		if (!item.visible) {
-			if (!askd) { delHidden = confirm('Delete hidden items?'); askd = true; }
+			if (delHidden === undefined) delHidden = confirm('Delete hidden items?');
 			if (delHidden) { item.remove(); continue; }
+		}
+		if (/Oval|Rectangle|Polygon/.test(item.constructor.name)
+				&& item.allPageItems.length === 0
+				&& item.strokeWeight === 0 && item.fillColor.name === 'None') {
+			if (delEmpty === undefined) delEmpty = confirm('Delete empty frames?');
+			if (delEmpty) { item.remove(); continue; }
 		}
 		try { item.redefineScaling(); } catch (e) {}
 	}
@@ -98,8 +95,9 @@ app.doScript(function () {
 	var frame;
 	var frames = doc.textFrames.everyItem().getElements();
 	while ((frame = frames.shift())) {
-		if (/\s+$/g.test(frame.contents) && !frame.nextTextFrame)
+		if (/\s+$/g.test(frame.contents) && !frame.nextTextFrame && !frame.overflows)
 			frame.contents = frame.contents.replace(/\s+$/g, '');
+		if (frame.lines.length === 1) frame.lines[0].hyphenation = false;
 		if (frame.contents.length === 0) frame.contentType = ContentType.UNASSIGNED;
 	}
 },
@@ -113,12 +111,26 @@ app.doScript(function () {
 	while ((item = items.shift())) {
 		if (/Oval|Rectangle|Polygon/.test(item.constructor.name)
 			&& item.allPageItems.length === 0
-			&& item.strokeWeight === 0)
-			item.contentType = ContentType.GRAPHIC_TYPE;
+			&& item.strokeWeight === 0
+		) item.contentType = ContentType.GRAPHIC_TYPE;
 	}
 },
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Convert empty frames to graphic frames');
+
+progressBar.update();
+app.doScript(function () {
+	var layer;
+	if ((layer = doc.layers.itemByName('visible area')).isValid)   { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('safety margins')).isValid) { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('dielines')).isValid)       { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('guides')).isValid)         { layer.visible = true; layer.locked = false; }
+},
+ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, 'Show/hide layers');
+
+progressBar.update();
+doc.textPreferences.showInvisibles = false;
 
 progressBar.update();
 app.doScript(function () {
