@@ -60,28 +60,27 @@ function main() {
 	}
 	data = parseDataFile(file);
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
-	if (data.records.length === 0) exit();
-
-	for (i = 0, n = data.records.length; i < n; i++) {
-		app.findTextPreferences = app.changeTextPreferences   = NothingEnum.NOTHING;
-		app.findChangeTextOptions.includeHiddenLayers         = true;
-		app.findChangeTextOptions.includeLockedLayersForFind  = true;
-		app.findChangeTextOptions.includeLockedStoriesForFind = true;
-		app.findChangeTextOptions.includeMasterPages          = true;
-		app.findTextPreferences.appliedFont                   = data.records[i][0];
-		app.changeTextPreferences.appliedFont                 = data.records[i][1];
-		if (doc.changeText().length > 0) {
-			counter++;
-			data.errors.info.push('Replaced \'' +
-				data.records[i][0].replace('\t', ' ') + '\' with \'' +
-				data.records[i][1].replace('\t', ' ') + '\'.');
-		} else {
-			// data.errors.info.push('Skipped \'' +
-			// 	data.records[i][0].replace('\t', ' ') + '\', not in document.');
+	if (data.records.length > 0) {
+		for (i = 0, n = data.records.length; i < n; i++) {
+			app.findTextPreferences = app.changeTextPreferences   = NothingEnum.NOTHING;
+			app.findChangeTextOptions.includeHiddenLayers         = true;
+			app.findChangeTextOptions.includeLockedLayersForFind  = true;
+			app.findChangeTextOptions.includeLockedStoriesForFind = true;
+			app.findChangeTextOptions.includeMasterPages          = true;
+			app.findTextPreferences.appliedFont                   = data.records[i][0];
+			app.changeTextPreferences.appliedFont                 = data.records[i][1];
+			if (doc.changeText().length > 0) {
+				counter++;
+				data.errors.info.push('Replaced \'' +
+					data.records[i][0].replace('\t', ' ') + '\' with \'' +
+					data.records[i][1].replace('\t', ' ') + '\'.');
+			} else {
+				// data.errors.info.push('Skipped \'' +
+				// 	data.records[i][0].replace('\t', ' ') + '\', not in document.');
+			}
 		}
+		app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
 	}
-	app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
-
 	if (VERBOSITY > 0) {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);

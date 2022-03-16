@@ -71,20 +71,19 @@ function main() {
 	}
 	data = parseDataFile(file);
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
-	if (data.records.length === 0) exit();
-
-	for (i = 0; i < links.length; i++) {
-		for (r = 0; r < data.records.length; r++) {
-			if (!isInArray(links[i].name, data.records[r].oldLinks)) continue; // Skip not matched
-			if (File(links[i].filePath).fullName === File(data.records[r].newLink).fullName &&
-				links[i].status !== LinkStatus.LINK_OUT_OF_DATE) continue; // Skip self
-			links[i].relink(File(data.records[r].newLink));
-			counter++;
-			data.errors.info.push('Relinked \'' + decodeURI(links[i].name) + '\' with \'' +
-				data.records[r].newLink.slice(data.records[r].newLink.lastIndexOf('/') + 1) + '\'.');
+	if (data.records.length > 0) {
+		for (i = 0; i < links.length; i++) {
+			for (r = 0; r < data.records.length; r++) {
+				if (!isInArray(links[i].name, data.records[r].oldLinks)) continue; // Skip not matched
+				if (File(links[i].filePath).fullName === File(data.records[r].newLink).fullName &&
+					links[i].status !== LinkStatus.LINK_OUT_OF_DATE) continue; // Skip self
+				links[i].relink(File(data.records[r].newLink));
+				counter++;
+				data.errors.info.push('Relinked \'' + decodeURI(links[i].name) + '\' with \'' +
+					data.records[r].newLink.slice(data.records[r].newLink.lastIndexOf('/') + 1) + '\'.');
+			}
 		}
 	}
-
 	if (VERBOSITY > 0) {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);

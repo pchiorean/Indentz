@@ -70,18 +70,17 @@ function main() {
 	}
 	data = parseDataFile(file);
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
-	if (data.records.length === 0) exit();
-
-	for (i = 0, n = data.records.length; i < n; i++) {
-		addSwatch(
-			data.records[i].name,
-			data.records[i].model,
-			data.records[i].space,
-			data.records[i].values,
-			data.records[i].variants
-		);
+	if (data.records.length > 0) {
+		for (i = 0, n = data.records.length; i < n; i++) {
+			addSwatch(
+				data.records[i].name,
+				data.records[i].model,
+				data.records[i].space,
+				data.records[i].values,
+				data.records[i].variants
+			);
+		}
 	}
-
 	if (VERBOSITY > 0) {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);

@@ -68,38 +68,37 @@ function main() {
 	}
 	data = parseDataFile(file);
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
-	if (data.records.length === 0) exit();
-
-	oldActiveLayer = doc.activeLayer; // Save active layer
-	doc.layers.everyItem().properties = { locked: false }; // Unlock existing layers
-	// Top layers
-	for (i = data.records.length - 1; i >= 0 ; i--) {
-		if (data.records[i].isBelow) continue;
-		newLayer = makeLayer(
-			data.records[i].name,
-			data.records[i].color,
-			data.records[i].isVisible,
-			data.records[i].isPrintable,
-			data.records[i].variants);
-		if (i < data.records.length - 1) {
-			tmpLayer = doc.layers.item(data.records[i + 1].name);
-			if (tmpLayer.isValid && (newLayer.index > tmpLayer.index))
-				newLayer.move(LocationOptions.BEFORE,doc.layers.item(data.records[i + 1].name));
+	if (data.records.length > 0) {
+		oldActiveLayer = doc.activeLayer; // Save active layer
+		doc.layers.everyItem().properties = { locked: false }; // Unlock existing layers
+		// Top layers
+		for (i = data.records.length - 1; i >= 0 ; i--) {
+			if (data.records[i].isBelow) continue;
+			newLayer = makeLayer(
+				data.records[i].name,
+				data.records[i].color,
+				data.records[i].isVisible,
+				data.records[i].isPrintable,
+				data.records[i].variants);
+			if (i < data.records.length - 1) {
+				tmpLayer = doc.layers.item(data.records[i + 1].name);
+				if (tmpLayer.isValid && (newLayer.index > tmpLayer.index))
+					newLayer.move(LocationOptions.BEFORE,doc.layers.item(data.records[i + 1].name));
+			}
 		}
+		// Bottom layers
+		for (i = 0, n = data.records.length; i < n; i++) {
+			if (!data.records[i].isBelow) continue;
+			makeLayer(
+				data.records[i].name,
+				data.records[i].color,
+				data.records[i].isVisible,
+				data.records[i].isPrintable,
+				data.records[i].variants)
+			.move(LocationOptions.AT_END);
+		}
+		doc.activeLayer = oldActiveLayer; // Restore active layer
 	}
-	// Bottom layers
-	for (i = 0, n = data.records.length; i < n; i++) {
-		if (!data.records[i].isBelow) continue;
-		makeLayer(
-			data.records[i].name,
-			data.records[i].color,
-			data.records[i].isVisible,
-			data.records[i].isPrintable,
-			data.records[i].variants)
-		.move(LocationOptions.AT_END);
-	}
-	doc.activeLayer = oldActiveLayer; // Restore active layer
-
 	if (VERBOSITY > 0) {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
