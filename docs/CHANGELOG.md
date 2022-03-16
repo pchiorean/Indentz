@@ -1,10 +1,17 @@
 ## Changelog
 
+##### [2022-03-16](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-16&type=commits)
+- [`new` `upd` `fix`](https://github.com/pchiorean/Indentz/commit/880aa8ec0a66dbff191be1af103a493c4b7ce1d5)
+  **DocCleanup**: Added a prompt to delete empty frames; now shows & locks some technical layers (e.g., 'dielines'); fixed an overzealous trimming of overflowed text
+- [`ref`](https://github.com/pchiorean/Indentz/commit/98623ed89d2e82d4b138c071d3d33db659236345)
+  [`upd`](https://github.com/pchiorean/Indentz/commit/bb12fb85da5f0a780b8962b379da86f4c8dc3ba9)
+  **DefaultLayers/Swatches/ReplaceFonts/Links**: Tweaked messages for BigSur's vertical alerts; don't skip error reporting when there are no records
+
 ##### [2022-03-14](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-14&type=commits)
 - [`brk`](https://github.com/pchiorean/Indentz/commit/937f8db5656296e4dcee4d2261540252a7210173)
   **ProgressBar**: Refactored methods – message update is now separate from value update; values are simpler to increment
 - [`fix`](https://github.com/pchiorean/Indentz/commit/0d38de1cd6d3a6c42292f1d9fdb2b81220929e69)
-  **DocCleanup**: Don't change empty frames with strokes to graphic frames
+  **DocCleanup**: Skip frames with strokes when converting empty frames to graphic frames
 
 ##### [2022-03-11](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-11&type=commits)
 - [`new`](https://github.com/pchiorean/Indentz/commit/fd40557b6a81caa4342884132746c75120f64f52)
@@ -12,7 +19,7 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/ca8bf04cc4561838f7cfa6ff0563a46d5a3cbacd)
   **DocCleanup**: Added a progress bar
 - [`doc`](https://github.com/pchiorean/Indentz/commit/71016890effb5e838d88e1d07a9551a018a064e6)
-  Added sample TSV files
+  Added a folder with sample data files
 
 ##### [2022-03-10](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-03-10&type=commits)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/a9199d8ca043d2daee502979c0dbd54ab52f37b5)
@@ -30,11 +37,11 @@
 
 ##### [2022-02-23](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-02-23&type=commits)
 - [`ref`](https://github.com/pchiorean/Indentz/commit/b804940a29d841ead53543b87acbf0f94424c6f9)
-  Removed bounds fallback (it's done in the `GetBounds` lib now)
+  **QRBatch**: Removed bounds fallback (it's done in the `GetBounds` lib now)
 
 ##### [2022-02-22](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-02-22&type=commits)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/667ad41564a566736e6b8433874287899367e593)
-  Fixed suffix regexp matching nothing (bug from 01/27 commit)
+  **QR, QRBatch**: Fixed suffix regexp matching nothing (bug from 01/27 commit)
 
 ##### [2022-02-13](https://github.com/pchiorean/Indentz/search?q=committer-date%3A2022-02-13&type=commits)
 - [`new`](https://github.com/pchiorean/Indentz/commit/ae70c878cc579c3a1714e67a5756e519597bb3ea)
@@ -272,7 +279,6 @@
 
 - `new` **Debug**: Add a hires timer
 - `new` **DefaultSwatches**: Add tints support
-- `new` **DocCleanup**: Ask to delete empty frames
 - `new` **QuickExport**: Add dropdown history (see page 43 of **ScriptUI** by PK)
 - `new` **QuickExport**: Add JPG & `?`TIFF export profiles
 - `new` **Report**: Add a button to save report to file
