@@ -1,5 +1,5 @@
 /*
-	Default swatches 22.2.13
+	Default swatches 22.3.16
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 5-column TSV file named 'swatches.txt':
@@ -55,16 +55,16 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 
 function main() {
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
-	var file, data, messages;
+	var file, data, messages, i, n;
 	var counter = { add: 0, merge: 0 };
 	if (doc.converted && VERBOSITY > 0) {
 		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
-			'The default swatch substitution list\nwill be used, if found.');
+		'The default swatch substitution list will be used.');
 	}
 	if (!(file = getDataFile('swatches.txt'))) {
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate a swatch substitution list.\nThe file must be saved in the current folder,' +
-				'\non the desktop, or next to the script.\nCheck docs for details.');
+			alert('Can\'t locate a swatch substitution list.\nThe file must be saved in the current folder, ' +
+			'on the desktop, or next to the script. Check docs for details.');
 		}
 		exit();
 	}
@@ -72,7 +72,7 @@ function main() {
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length === 0) exit();
 
-	for (var i = 0, n = data.records.length; i < n; i++) {
+	for (i = 0, n = data.records.length; i < n; i++) {
 		addSwatch(
 			data.records[i].name,
 			data.records[i].model,
