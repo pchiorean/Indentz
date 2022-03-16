@@ -53,7 +53,7 @@ function main(selection) {
 		var oldASRP = framePrefs.autoSizingReferencePoint;
 
 		// Trim ending whitespace
-		if (/\s+$/g.test(frame.contents) && frame.nextTextFrame == null && !frame.overflows)
+		if (/\s+$/g.test(frame.contents) && !frame.nextTextFrame && !frame.overflows)
 			frame.contents = frame.contents.replace(/\s+$/g, '');
 		// Disable hyphenation for single lines
 		if (frame.lines.length === 1) frame.lines[0].hyphenation = false;
