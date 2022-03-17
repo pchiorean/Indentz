@@ -13,13 +13,13 @@ Glue                 	spot        	rgb         	255 222 0
 White                	spot        	rgb         	255 255 200
 Varnish              	spot        	rgb         	200 255 100
 
-# Name: swatch name
-# Color Model: 'process' or 'spot' (defaults to 'process')
-# Color Space: 'cmyk', 'rgb' or 'lab' (defaults to 'cmyk')
-# Values: 3 values in 0-255 range for RGB;
-#         4 values in 0-100 range for CMYK;
-#         3 values in 0-100 (L), -128-127 (A and B) range for Lab
-# Variants: a list of swatches that will be replaced by the base swatch (case insensitive; '*' and '?' wildcards accepted)
+# <Name>: swatch name
+# <Color Model>: 'process' or 'spot' (defaults to 'process')
+# <Color Space>: 'cmyk', 'rgb' or 'lab' (defaults to 'cmyk')
+# <Values>: 3 values in 0-255 range for RGB;
+#           4 values in 0-100 range for CMYK;
+#           3 values in 0-100 (L), -128-127 (A and B) range for Lab
+# <Variants>: a list of swatches that will be replaced by the base swatch (case insensitive; '*' and '?' wildcards accepted)
 #
 # The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default
 # (on the desktop, next to the script or in Indentz root); local files and files starting with '_' take precedence.

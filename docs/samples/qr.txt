@@ -3,9 +3,9 @@ File 1     	Code 1 	+
 File 2_ABC 	Code 2 	+
 File 3_AC  	Code 3 	
 
-# Filename: document name
-# Code: any string
-# On doc: any string: on existing document; empty or missing: on separate file
+# <Filename>: document name
+# <Code>: any string
+# <On doc>: any string: on existing document; empty or missing: on separate file
 
 # You can insert '|' for manually splitting the label into several lines.
 #

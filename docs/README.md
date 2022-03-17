@@ -57,7 +57,7 @@ Adds a set of layers defined in a TSV *(tab-separated values)* file named [**`la
 | ...          |         |         |           |       |                                        |
 
 > **Name**: layer name \
-> **Color**: layer color (see [**`UIColors.txt`**](misc/UIColors.txt); defaults to `Light Blue`) \
+> **Color**: layer color (defaults to `Light Blue`; see [**`UIColors.txt`**](misc/UIColors.txt) for color names) \
 > **Visible**: `yes` or `no` (defaults to `yes`) \
 > **Printable**: `yes` or `no` (defaults to `yes`) \
 > **Order**: `above` or `below` existing layers (defaults to `above`) \
@@ -99,13 +99,13 @@ The TSV file can be saved locally (in the active document folder or its parent f
 #### **`ReplaceLinks`**
 Replaces document links using a TSV substitution file named [**`links.txt`**](samples/links.txt):
 
-| Link path            | Document links              |
+| New link path        | Document links              |
 | :-                   | :-                          |
 | **path/to/img1.psd** | img1.*                      |
 | **img2-cmyk.tif**    | img2_lowres.jpg, img2-rgb.* |
 | ...                  |                             |
 
-> **Link path**: new link's absolute path, or just its name if it's in the same folder \
+> **New link path**: new link's absolute path, or just its name if it's in the same folder \
 > **Document links**: a list of document links that will be relinked if found (case insensitive; `*` and `?` wildcards accepted)
 
 The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
@@ -114,7 +114,7 @@ The TSV file can be saved locally (in the active document folder or its parent f
 It runs [**`DefaultPrefs`**](#defaultprefs), [**`DefaultSwatches`**](#defaultswatches), [**`DefaultLayers`**](#defaultlayers), [**`ReplaceFonts`**](#replacefonts), [**`ReplaceLinks`**](#replacelinks), [**`PageSizeFromFilename`**](#pagesizefromfilename-f3) and sets loose pasteboard margins.
 
 #### **`DocCleanup`** <small>F2</small>
-It runs [**`DefaultPrefs`**](#defaultprefs), deletes unused swatches, layers and spreads, unlocks all items and resets their scaling to 100%, deletes hidden items, resets default transparency effects, converts empty text frames to generic frames and sets tight pasteboard margins.
+It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and spreads; unlocks all items and resets their scaling to 100%; optionally deletes hidden items; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
 
 #### **`SwatchesCleanup`** <small>⇧F2</small>
 Converts process RGB swatches to CMYK and renames them to “C= M= Y= K=” format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.
@@ -149,7 +149,7 @@ Sets the page margins to the selected items.
 #### **`GuidesAdd`**
 If any page items are selected, it adds spread guides around them.
 
-If nothing is selected, it adds guides on page edges and inner centers (that is, the page without margins); on the second run it deletes them.
+If nothing is selected, it adds guides on page edges and inner centers (that is, the page without margins); a second run deletes them.
 
 #### **`GuidesDelete`**
 Deletes all guides from the document.
@@ -381,4 +381,4 @@ The code in this project would not have been possible without the InDesign Exten
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • March 11, 2022
+README.md • March 17, 2022
