@@ -1,5 +1,5 @@
 /*
-	Replace links 22.3.17
+	Replace links 22.3.23
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
@@ -38,18 +38,20 @@
 	SOFTWARE.
 */
 
+if (!(doc = app.activeDocument)) exit();
+
 // @include '../lib/GetDataFile.jsxinc';
 // @include '../lib/IsInArray.jsxinc';
 // @include '../lib/Report.jsxinc';
-
-if (!(doc = app.activeDocument)) exit();
+// @include '../lib/ProgressBar.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace links');
 
 function main() {
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
-	var file, data, messages, i, r;
+	var file, data, messages, i, r, progressBar;
+	var counter = 0;
 	var links = doc.links.everyItem().getElements();
 	var linkS = (function () {
 		var s = [];
@@ -57,7 +59,6 @@ function main() {
 		return s;
 	}());
 
-	var counter = 0;
 	if (doc.converted && VERBOSITY > 0) {
 		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
 		'The default link substitution list will be used.');
@@ -69,10 +70,13 @@ function main() {
 		}
 		exit();
 	}
+
 	data = parseDataFile(file);
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length > 0) {
+		if (links.length > 2) progressBar = new ProgressBar('Replace links', links.length);
 		for (i = 0; i < links.length; i++) {
+			if (progressBar) progressBar.update();
 			for (r = 0; r < data.records.length; r++) {
 				if (!isInArray(links[i].name, data.records[r].oldLinks)) continue; // Skip not matched
 				if (File(links[i].filePath).fullName === File(data.records[r].newLink).fullName &&
@@ -84,6 +88,8 @@ function main() {
 			}
 		}
 	}
+	if (progressBar) progressBar.close();
+
 	if (VERBOSITY > 0) {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);

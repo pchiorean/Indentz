@@ -1,5 +1,5 @@
 /*
-	Default swatches 22.3.16
+	Default swatches 22.3.27
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 5-column TSV file named 'swatches.txt':
@@ -44,23 +44,25 @@
 	SOFTWARE.
 */
 
+if (!(doc = app.activeDocument)) exit();
+
 // @include '../lib/GetDataFile.jsxinc';
 // @include '../lib/IsInArray.jsxinc';
 // @include '../lib/Report.jsxinc';
-
-if (!(doc = app.activeDocument)) exit();
+// @include '../lib/ProgressBar.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Default swatches');
 
 function main() {
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
-	var file, data, messages, i, n;
+	var file, data, messages, i, n, progressBar;
 	var counter = { add: 0, merge: 0 };
 	if (doc.converted && VERBOSITY > 0) {
 		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
 		'The default swatch substitution list will be used.');
 	}
+
 	if (!(file = getDataFile('swatches.txt'))) {
 		if (VERBOSITY > 1) {
 			alert('Can\'t locate a swatch substitution list.\nThe file must be saved in the current folder, ' +
@@ -68,10 +70,13 @@ function main() {
 		}
 		exit();
 	}
+
 	data = parseDataFile(file);
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length > 0) {
+		if (data.records.length > 9) progressBar = new ProgressBar('Default swatches', data.records.length);
 		for (i = 0, n = data.records.length; i < n; i++) {
+			if (progressBar) progressBar.update();
 			addSwatch(
 				data.records[i].name,
 				data.records[i].model,
@@ -81,6 +86,8 @@ function main() {
 			);
 		}
 	}
+	if (progressBar) progressBar.close();
+
 	if (VERBOSITY > 0) {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
