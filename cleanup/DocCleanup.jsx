@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 22.3.16
+	Document cleanup 22.3.24
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -125,6 +125,9 @@ app.doScript(function () {
 	if ((layer = doc.layers.itemByName('safety margins')).isValid) { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('dielines')).isValid)       { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('guides')).isValid)         { layer.visible = true; layer.locked = false; }
+	if ((layer = doc.layers.itemByName('HW')).isValid)             { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('bg')).isValid)             { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('text & logos')).isValid)   { layer.visible = true; doc.activeLayer = layer; }
 },
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Show/hide layers');
