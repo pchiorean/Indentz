@@ -367,9 +367,11 @@ Shows properties and methods of a selected object.
 ---
 
 ## Install
+Many scripts from the repository use linked libraries from the **`lib/`** folder, so it's preferable to download the latest release, which is statically linked (the scripts are stand-alone).
+
 1. Open **Window ‣ Utilities ‣ Scripts**.
 2. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
-3. Copy **Indentz** to this folder (although you can put any script wherever you want, many use libraries from the **`lib/`** folder, so it's simpler to get the entire folder as it is).
+3. Copy **Indentz** to this folder.
 
 ---
 
