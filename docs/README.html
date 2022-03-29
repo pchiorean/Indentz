@@ -403,6 +403,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Values</strong>: 3 values in 0-255 range for RGB; 4 values in 0-100 range for CMYK; 3 values in 0-100 (L), -128-127 (A and B) range for Lab <br>
 <strong>Variants</strong>: a list of swatches that will be replaced by the base swatch (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
 </blockquote>
+<p>You can use <a href="#swatchessave"><strong><code>SwatchesSave</code></strong></a> to get a tab delimited list of swatches from any document.</p>
 <p>The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in <code>Indentz</code> root); local files and files starting with <code>_</code> take precedence. You can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</p>
 <h4 class="mume-header" id="replacefonts"><strong><code>ReplaceFonts</code></strong></h4>
 
@@ -469,9 +470,6 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Document links</strong>: a list of document links that will be relinked if found (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
 </blockquote>
 <p>The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in <code>Indentz</code> root); local files and files starting with <code>_</code> take precedence. You can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</p>
-<h4 class="mume-header" id="docdefaults-smallf2small"><strong><code>DocDefaults</code></strong> <small>&#x2325;F2</small></h4>
-
-<p>It runs <a href="#defaultprefs"><strong><code>DefaultPrefs</code></strong></a>, <a href="#defaultswatches"><strong><code>DefaultSwatches</code></strong></a>, <a href="#defaultlayers"><strong><code>DefaultLayers</code></strong></a>, <a href="#replacefonts"><strong><code>ReplaceFonts</code></strong></a>, <a href="#replacelinks"><strong><code>ReplaceLinks</code></strong></a>, <a href="#pagesizefromfilename-f3"><strong><code>PageSizeFromFilename</code></strong></a> and sets loose pasteboard margins.</p>
 <h4 class="mume-header" id="doccleanup-smallf2small"><strong><code>DocCleanup</code></strong> <small>F2</small></h4>
 
 <p>It runs <a href="#defaultprefs"><strong><code>DefaultPrefs</code></strong></a>; deletes unused swatches, layers and spreads; unlocks all items and resets their scaling to 100%; optionally deletes hidden items; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.</p>
@@ -911,9 +909,10 @@ pre[data-line] .line-highlight[data-end]:after {
 <h2 class="mume-header" id="license">License</h2>
 
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
+<p>All scripts are created by me unless otherwise noted.</p>
 <p>&#xA9; 2020-2022 Paul Chiorean &lt;jpeg AT basement.ro&gt;.<br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md &#x2022; March 17, 2022</p>
+<p>README.md &#x2022; March 29, 2022</p>
 
       </div>
       

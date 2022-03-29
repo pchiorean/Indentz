@@ -7,7 +7,6 @@ Name                               |    Fn  | Description
 `ReplaceFonts.jsx`                 |        | Replaces fonts from a substitution list
 `ReplaceLinks.jsx`                 |        | Replaces document links from a substitution list
 `DocCleanup.jsx`                   |     F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling
-`DocDefaults.jsx`                  |    ⌥F2 | Sets default layers/swatches/links/fonts and sets page dimensions from the filename
 `SwatchesCleanup.jsx`              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 `SwatchesSave.jsx`                 |        | Saves document's swatches to a list
 **Layout**                                  |

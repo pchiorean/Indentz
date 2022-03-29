@@ -81,6 +81,8 @@ Adds swatches defined in a TSV file named [**`swatches.txt`**](samples/swatches.
 > **Values**: 3 values in 0-255 range for RGB; 4 values in 0-100 range for CMYK; 3 values in 0-100 (L), -128-127 (A and B) range for Lab \
 > **Variants**: a list of swatches that will be replaced by the base swatch (case insensitive; `*` and `?` wildcards accepted)
 
+You can use [**`SwatchesSave`**](#swatchessave) to get a tab delimited list of swatches from any document.
+
 The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
 #### **`ReplaceFonts`**
@@ -109,9 +111,6 @@ Replaces document links using a TSV substitution file named [**`links.txt`**](sa
 > **Document links**: a list of document links that will be relinked if found (case insensitive; `*` and `?` wildcards accepted)
 
 The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
-
-#### **`DocDefaults`** <small>⌥F2</small>
-It runs [**`DefaultPrefs`**](#defaultprefs), [**`DefaultSwatches`**](#defaultswatches), [**`DefaultLayers`**](#defaultlayers), [**`ReplaceFonts`**](#replacefonts), [**`ReplaceLinks`**](#replacelinks), [**`PageSizeFromFilename`**](#pagesizefromfilename-f3) and sets loose pasteboard margins.
 
 #### **`DocCleanup`** <small>F2</small>
 It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and spreads; unlocks all items and resets their scaling to 100%; optionally deletes hidden items; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
@@ -378,7 +377,9 @@ Shows properties and methods of a selected object.
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
+All scripts are created by me unless otherwise noted.
+
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • March 17, 2022
+README.md • March 29, 2022
