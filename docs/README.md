@@ -185,7 +185,7 @@ Use the numeric keypad to instantly align the selected object to the **Align To*
 ### Fit
 
 #### **`FitToPage...`** / **`FitToSpread...`**
-These scripts reframe the selected items to the page/spread or their margins/bleed by reducing the edges of an object or clipping frame that cross the target and extending ones that touch it or are very close (1% snap zone).
+These scripts reframe the selected items to the page/spread or their margins/bleed by reducing the edges of objects or clipping frames that cross the target and extending ones that touch it or are very close (1% snap zone).
 
 Rectangular frames and orthogonal lines are directly resized; rotated items, ovals, groups, etc. are inserted into a clipping frame that is resized.
 
@@ -384,4 +384,4 @@ All scripts are created by me unless otherwise noted.
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • March 29, 2022
+README.md • April 1, 2022
