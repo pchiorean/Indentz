@@ -2,8 +2,10 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.3.11...master)
 
+- [`ref`]()
+  **QRBatch**: Processed lines are commented with just a '#', no space; works better when aligning columns with 'Rainbow CSV'
 - [`upd`](https://github.com/pchiorean/Indentz/commit/8ab105997d7dbc64e3e1aaf485d463fc3939fa1c)
-  **DocCleanup**: Improve pasteboard setting
+  **DocCleanup**: Improved pasteboard setting logic
 - [`del`](https://github.com/pchiorean/Indentz/commit/7b768b5f8cce9c6c975beed0c00977e1d8428122)
   Removed `DocDefaults` stub
 - [`upd`](https://github.com/pchiorean/Indentz/commit/7e850f53bd693a7cf44fa3917e019f96f56dd282)
