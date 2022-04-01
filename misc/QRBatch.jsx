@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 22.3.17
+	Batch QR codes 22.4.1
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -217,7 +217,7 @@ function main() {
 	progressBar = new ProgressBar('Processing', queue.length, pbWidth);
 	for (i = 0, n = queue.length; i < n; i++) {
 		item = rawData[queue[i] - 1];
-		if (item.fn === '' || item.fn.toString().slice(0,1) === '\u0023') {
+		if (item.fn === '' || item.fn.toString().slice(0,1) === '\u0023') { // '#'
 			progressBar.update(); progressBar.msg();
 			continue;
 		}
@@ -232,7 +232,7 @@ function main() {
 		dataFile.encoding = 'UTF-8';
 		for (i = 0, n = rawData.length; i < n; i++) {
 			dataFile.writeln(
-				(rawData[i].exported ? '# ' : '') +
+				(rawData[i].exported ? '#' : '') +
 				(rawData[i].fn ? rawData[i].fn : '') +
 				(rawData[i].code ? '\t' + rawData[i].code : '') +
 				(rawData[i].onDoc ? '\t+' : '')
