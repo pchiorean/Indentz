@@ -1,9 +1,9 @@
 /*
-	FitTo 22.3.10
+	FitTo 22.4.1
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
-	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of an item or
-	clipping frame that cross the target will be reduced; ones that touch it or are very close (1% snap zone)
+	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
+	clipping frames that cross the target will be reduced; ones that touch it or are very close (1% snap zone)
 	will be extended. Rectangular frames and orthogonal lines are directly resized; rotated objects, ovals,
 	groups, etc. are inserted into a clipping frame that is resized.
 
