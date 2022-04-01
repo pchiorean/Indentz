@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 22.3.24
+	Document cleanup 22.3.31
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -92,13 +92,14 @@ UndoModes.ENTIRE_SCRIPT, 'Delete unused swatches');
 
 progressBar.update();
 app.doScript(function () {
-	var frame;
-	var frames = doc.textFrames.everyItem().getElements();
-	while ((frame = frames.shift())) {
-		if (/\s+$/g.test(frame.contents) && !frame.nextTextFrame && !frame.overflows)
-			frame.contents = frame.contents.replace(/\s+$/g, '');
-		if (frame.lines.length === 1) frame.lines[0].hyphenation = false;
-		if (frame.contents.length === 0) frame.contentType = ContentType.UNASSIGNED;
+	var item;
+	var items = doc.allPageItems;
+	while ((item = items.shift())) {
+		if (item.constructor.name !== 'TextFrame') continue;
+		if (/\s+$/g.test(item.contents) && !item.nextTextFrame && !item.overflows)
+			item.contents = item.contents.replace(/\s+$/g, '');
+		if (item.lines.length === 1 && !item.overflows) item.lines[0].hyphenation = false;
+		if (item.contents.length === 0 && !item.overflows) item.contentType = ContentType.UNASSIGNED;
 	}
 },
 ScriptLanguage.JAVASCRIPT, undefined,
@@ -137,16 +138,26 @@ doc.textPreferences.showInvisibles = false;
 
 progressBar.update();
 app.doScript(function () {
-	var P = { width: 150, height: 25 }; // Defaults (mm)
-	var size = {
-		width:  doc.spreads[0].pages.lastItem().bounds[3] - doc.spreads[0].pages.firstItem().bounds[1],
-		height: doc.spreads[0].pages.lastItem().bounds[2] - doc.spreads[0].pages.firstItem().bounds[0]
+	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
+	var pbMargins = { w: 50, h: 50 };
+	var spread = {
+		w: doc.spreads[0].pages.lastItem().bounds[3] - doc.spreads[0].pages.firstItem().bounds[1],
+		h: doc.spreads[0].pages.lastItem().bounds[2] - doc.spreads[0].pages.firstItem().bounds[0]
 	};
-	var K = (size.width > 594 && size.height > 594) ? 10 : 1;
-	doc.pasteboardPreferences.pasteboardMargins = [
-		(size.width / size.height < 1.95) ? P.width  * K + 'mm' : P.width  / 1.5 * K + 'mm',
-		(size.width / size.height < 1.95) ? P.height * K + 'mm' : P.height / 2.5 * K + 'mm'
-	];
+	spread.aspect = spread.w / spread.h;
+	// Fix large sizes
+	var mult1K = {
+		w: Math.min(Math.max(Math.floor((spread.w / 1000) % 1000), 1.0), 2),
+		h: Math.min(Math.max(Math.floor((spread.h / 1000) % 1000), 0.5), 1)
+	};
+	pbMargins.w *= (spread.w >= 1000 ? mult1K.w * 5 : 3);
+	pbMargins.h *= (spread.h >= 1000 ? 1 : mult1K.h);
+	// Fix leaderboards
+	if (spread.aspect > 9.95) {
+		pbMargins.w /= 3;
+		pbMargins.h /= 5;
+	} else if (spread.aspect > 4.95) { pbMargins.h /= 2.5; }
+	doc.pasteboardPreferences.pasteboardMargins = [ pbMargins.w, pbMargins.h ];
 },
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Set pasteboard size');
