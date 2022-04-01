@@ -2,8 +2,10 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.3.11...master)
 
+- [`upd`](https://github.com/pchiorean/Indentz/commit/8ab105997d7dbc64e3e1aaf485d463fc3939fa1c)
+  **DocCleanup**: Improve pasteboard setting
 - [`del`](https://github.com/pchiorean/Indentz/commit/7b768b5f8cce9c6c975beed0c00977e1d8428122)
-  **DocDefaults**: Removed `DocDefaults` stub
+  Removed `DocDefaults` stub
 - [`upd`](https://github.com/pchiorean/Indentz/commit/7e850f53bd693a7cf44fa3917e019f96f56dd282)
   **DefaultSwatches, ReplaceLinks**: Added progress bars
 - [`fix`](https://github.com/pchiorean/Indentz/commit/bb12fb85da5f0a780b8962b379da86f4c8dc3ba9)
