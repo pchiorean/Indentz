@@ -1,5 +1,5 @@
 /*
-	Default layers 22.3.16
+	Default layers 22.4.4
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.txt':
@@ -83,7 +83,7 @@ function main() {
 			if (i < data.records.length - 1) {
 				tmpLayer = doc.layers.item(data.records[i + 1].name);
 				if (tmpLayer.isValid && (newLayer.index > tmpLayer.index))
-					newLayer.move(LocationOptions.BEFORE,doc.layers.item(data.records[i + 1].name));
+					newLayer.move(LocationOptions.BEFORE,tmpLayer);
 			}
 		}
 		// Bottom layers
@@ -128,15 +128,16 @@ function main() {
 		// Merge variants
 		layers = doc.layers.everyItem().getElements();
 		while ((l = layers.shift())) {
-			if (l === targetLayer) continue;
-			if (isInArray(l.name, variants)) {
+			if (l.name !== variants[0] && isInArray(l.name, variants)) {
 				oldLayerVisibility = l.visible;
 				if (l === oldActiveLayer) oldActiveLayer = targetLayer;
 				oldName = l.name;
 				targetLayer.merge(l);
 				targetLayer.visible = oldLayerVisibility;
-				counter.merge++;
-				data.errors.info.push('Merged \'' + oldName + '\' with \'' + targetLayer.name + '\'.');
+				if (oldName !== targetLayer.name) {
+					counter.merge++;
+					data.errors.info.push('Merged \'' + oldName + '\' with \'' + targetLayer.name + '\'.');
+				}
 			}
 		}
 		return targetLayer;
@@ -193,20 +194,21 @@ function main() {
 
 		function checkRecord() {
 			var tmpErrors = { info: [], warn: [], fail: [] };
-			if (!record[0]) {
+			var tmpRecord = {
+				name:        record[0],
+				color:       record[1] ? getUIColor(record[1]) : UIColors.LIGHT_BLUE,
+				isVisible:   record[2] ? (record[2].toLowerCase() === 'yes')   : true,
+				isPrintable: record[3] ? (record[3].toLowerCase() === 'yes')   : true,
+				isBelow:     record[4] ? (record[4].toLowerCase() === 'below') : false,
+				variants:    record[5] ? unique((record[0] + ',' + record[5]).split(/ *, */)) : [ record[0] ]
+			};
+
+			if (!tmpRecord.name) {
 				tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-				': Missing layer name.');
+					': Skipped: missing layer name.');
 			}
-			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) {
-				records.push({
-					name:        record[0],
-					color:       record[1] ? getUIColor(record[1]) : UIColors.LIGHT_BLUE,
-					isVisible:   record[2] ? (record[2].toLowerCase() === 'yes')   : true,
-					isPrintable: record[3] ? (record[3].toLowerCase() === 'yes')   : true,
-					isBelow:     record[4] ? (record[4].toLowerCase() === 'below') : false,
-					variants:    record[5] ? (record[0] + ',' + record[5]).split(/ *, */) : ''
-				});
-			}
+
+			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) records.push(tmpRecord);
 			errors = {
 				info: errors.info.concat(tmpErrors.info),
 				warn: errors.warn.concat(tmpErrors.warn),
@@ -253,6 +255,18 @@ function main() {
 					'White':       UIColors.WHITE,
 					'Yellow':      UIColors.YELLOW
 				}[color] || UIColors.LIGHT_BLUE;
+			}
+
+			// Get unique array elements
+			// http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/
+			function unique(/*array*/array) {
+				var i, j;
+				var r = [];
+				o: for (i = 0; i < array.length; i++) {
+					for (j = 0; j < r.length; j++) if (r[j] === array[i]) continue o;
+					if (array[i] !== '') r[r.length] = array[i];
+				}
+				return r;
 			}
 		}
 	}
