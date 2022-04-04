@@ -1,5 +1,5 @@
 /*
-	Default swatches 22.3.27
+	Default swatches 22.4.4
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 5-column TSV file named 'swatches.txt':
@@ -48,8 +48,8 @@ if (!(doc = app.activeDocument)) exit();
 
 // @include '../lib/GetDataFile.jsxinc';
 // @include '../lib/IsInArray.jsxinc';
-// @include '../lib/Report.jsxinc';
 // @include '../lib/ProgressBar.jsxinc';
+// @include '../lib/Report.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Default swatches');
@@ -114,19 +114,20 @@ function main() {
 			data.errors.info.push('Added \'' + newColor.name + '\'.');
 		}
 		// Merge variants
-		if (variants.length > 0) {
-			colors = doc.colors.everyItem().getElements();
-			while ((c = colors.shift())) {
-				if (c === newColor) continue;
-				if (isInArray(c.name, variants)) {
-					try {
-						oldName = c.name;
-						c.remove(newColor);
-						counter.merge++;
-						data.errors.info.push('Merged \'' + oldName + '\' with \'' + newColor.name + '\'.');
-					} catch (e) {
-						data.errors.warn.push('Could not merge \'' + c.name + '\' with \'' + newColor.name + '\'.');
-					}
+		colors = doc.colors.everyItem().getElements();
+		while ((c = colors.shift())) {
+			if (c === newColor) continue;
+			if (/^(Registration|Paper|Black|Cyan|Magenta|Yellow)$/ // Skip standard colors
+				.test($.global.localize(c.name))) continue;
+			if (c.name === '') continue; // Skip unnamed colors
+			if (isInArray(c.name, variants)) {
+				try {
+					oldName = c.name;
+					c.remove(newColor);
+					counter.merge++;
+					data.errors.info.push('Merged \'' + oldName + '\' with \'' + newColor.name + '\'.');
+				} catch (e) {
+					data.errors.warn.push('Could not merge \'' + c.name + '\' with \'' + newColor.name + '\'.');
 				}
 			}
 		}
@@ -184,46 +185,69 @@ function main() {
 
 		function checkRecord() {
 			var tmpErrors = { info: [], warn: [], fail: [] };
-			if (!record[0]) {
+			var tmpRecord = {
+				name:   record[0],
+				model:  getColorModel(record[1]),
+				space:  getColorSpace(record[2]),
+				values: getColorValues(record[3])
+			};
+			tmpRecord.variants = unique((getCVName(record[2], tmpRecord.values) +
+				(record[4] ? ',' + record[4] : '')).split(/ *, */));
+
+			// [TODO] Add model/space/values validation
+			if (!tmpRecord.name) {
 				tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-				': Missing swatch name.');
+					': Skipped: missing swatch name.');
 			}
-			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) {
-				records.push({
-					name:     record[0],
-					model:    getColorModel(record[1]),
-					space:    getColorSpace(record[2]),
-					values:   getColorValues(record[3]),
-					variants: record[4] ? record[4].split(/ *, */) : ''
-				});
-			}
+
+			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) records.push(tmpRecord);
 			errors = {
 				info: errors.info.concat(tmpErrors.info),
 				warn: errors.warn.concat(tmpErrors.warn),
 				fail: errors.fail.concat(tmpErrors.fail)
 			};
 
-			function getColorModel(model) {
+			function getColorModel(cModel) {
 				return {
 					process: ColorModel.PROCESS,
 					spot:    ColorModel.SPOT
-				}[model] || ColorModel.PROCESS;
+				}[cModel] || ColorModel.PROCESS;
 			}
 
-			function getColorSpace(space) {
+			function getColorSpace(cSpace) {
 				return {
 					cmyk: ColorSpace.CMYK,
 					rgb:  ColorSpace.RGB,
 					lab:  ColorSpace.LAB
-				}[space] || ColorSpace.CMYK;
+				}[cSpace] || ColorSpace.CMYK;
 			}
 
-			function getColorValues(values) {
+			function getColorValues(cVal) {
 				var v;
 				var array = [];
-				values = /[,|]/.test(values) ? values.split(/ *[,|] */) : values.split(/ +/);
-				while ((v = values.shift())) array.push(Number(v));
+				cVal = /[,|]/.test(cVal) ? cVal.split(/ *[,|] */) : cVal.split(/ +/);
+				while ((v = cVal.shift())) array.push(Number(v));
 				return array;
+			}
+
+			function getCVName(cSpace, cVal) {
+				return {
+					cmyk: $.global.localize('C=%1 M=%2 Y=%3 K=%4', cVal[0], cVal[1], cVal[2], cVal[3]),
+					rgb:  $.global.localize('R=%1 G=%2 B=%3', cVal[0], cVal[1], cVal[2]),
+					lab:  $.global.localize('L=%1 a=%2 b=%3', cVal[0], cVal[1], cVal[2], cVal[3])
+				}[cSpace];
+			}
+
+			// Get unique array elements
+			// http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/
+			function unique(/*array*/array) {
+				var i, j;
+				var r = [];
+				o: for (i = 0; i < array.length; i++) {
+					for (j = 0; j < r.length; j++) if (r[j] === array[i]) continue o;
+					if (array[i] !== '') r[r.length] = array[i];
+				}
+				return r;
 			}
 		}
 	}
