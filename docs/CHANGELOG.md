@@ -2,7 +2,11 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.3.11...master)
 
-- [`ref`]()
+- [`upd`](https://github.com/pchiorean/Indentz/commit/220c047ee848b37714094be138ec93e31e3a67cd)
+  **DefaultLayers**: Layers get themselves as the first variant
+- [`upd`](https://github.com/pchiorean/Indentz/commit/bcf0ca00315b766d7c366cd17d20ff0ea53a0f57)
+  **DefaultSwatches**: Swatches get their Color Value Name as the first variant
+- [`ref`](https://github.com/pchiorean/Indentz/commit/015098b840418e3700a3499df0d0fbd49243ef05)
   **QRBatch**: Processed lines are commented with just a '#', no space; works better when aligning columns with 'Rainbow CSV'
 - [`upd`](https://github.com/pchiorean/Indentz/commit/8ab105997d7dbc64e3e1aaf485d463fc3939fa1c)
   **DocCleanup**: Improved pasteboard setting logic
@@ -15,7 +19,7 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/98623ed89d2e82d4b138c071d3d33db659236345)
   **DefaultLayers/Swatches/ReplaceFonts/Links**: Tweaked messages for BigSur's vertical alerts
 - [`upd`](https://github.com/pchiorean/Indentz/commit/880aa8ec0a66dbff191be1af103a493c4b7ce1d5)
-  **DocCleanup**: Now shows & locks some technical layers (e.g., 'dielines')
+  **DocCleanup**: Changed visibility and locked state of some technical layers (e.g., 'dielines')
 - [`fix`](https://github.com/pchiorean/Indentz/commit/880aa8ec0a66dbff191be1af103a493c4b7ce1d5)
   **DocCleanup**: Fixed an overzealous trimming of overflowed text
 - [`new`](https://github.com/pchiorean/Indentz/commit/880aa8ec0a66dbff191be1af103a493c4b7ce1d5)
@@ -25,7 +29,7 @@
 - [`brk`](https://github.com/pchiorean/Indentz/commit/937f8db5656296e4dcee4d2261540252a7210173)
   **lib/ProgressBar**: Refactored methods – message update is now separate from value update; values are simpler to increment
 
-### [Release 22.3.11](https://github.com/pchiorean/Indentz/compare/22.2.9...22.3.11)
+### [Release 22.3.11](https://github.com/pchiorean/Indentz/releases/tag/22.3.11)
 
 ##### New features
 
@@ -65,7 +69,7 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/5fbd56abfeb7a46fd5e8bec0bb2e48d419573a90)
   Renamed **lib/isIn** to **isInArray**
 
-### Release 22.2.9
+### [Release 22.2.9](https://github.com/pchiorean/Indentz/releases/tag/22.2.9)
 
 ##### New features
 
@@ -229,12 +233,15 @@
   Renamed **OffsetPath** to **OffsetPaths**
 - [`ref`](https://github.com/pchiorean/Indentz/commit/793b29ad840c757da623c7478c1151da8c02a4c0)
   Renamed **lib/Relink** to **ReplaceLinks**
+- [`doc`](https://github.com/pchiorean/Indentz/commit/c8dd950b8167d4a30148c866da25e91694f9416c)
+  Added a changelog
+
+### [21.9.20](https://github.com/pchiorean/Indentz/tree/723c2fe6c71c9d5a4586f2b7685628fe0d788258)
+
 - [`ref`](https://github.com/pchiorean/Indentz/commit/51bb19d2d7074181c5acacc8dd52931bfd3263c5)
   [`upd`](https://github.com/pchiorean/Indentz/commit/8982a3fde7956ac83372ba140a773a05dff929e2)
   [`fix`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
   Autumn cleaning: added ESLint and refactored many scripts (hopefully, there are no new bugs)
-- [`doc`](https://github.com/pchiorean/Indentz/commit/c8dd950b8167d4a30148c866da25e91694f9416c)
-  Added a changelog
 
 ## Backlog
 
