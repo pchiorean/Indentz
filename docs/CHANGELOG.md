@@ -2,6 +2,10 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.3.11...master)
 
+- [`fix`](https://github.com/pchiorean/Indentz/commit/5b0f0f8c16283ab59765857efa9ff4e97ae4cf2a)
+  **TextAutosize**: Added a check for overflown text when disabling hyphenation for one-liners
+- [`upd`](https://github.com/pchiorean/Indentz/commit/2cc1c2aff82ac6c490b94a59a4f719f94a9b564b)
+  **QuickExport**: Check cancel request more often (between each export instead of between documents)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/220c047ee848b37714094be138ec93e31e3a67cd)
   **DefaultLayers**: Layers get themselves as the first variant
 - [`upd`](https://github.com/pchiorean/Indentz/commit/bcf0ca00315b766d7c366cd17d20ff0ea53a0f57)
