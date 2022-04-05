@@ -1,5 +1,5 @@
 /*
-	Quick export 22.3.14
+	Quick export 22.4.5
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -419,7 +419,6 @@ while ((doc = docs.shift())) {
 		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) runScript(exp.script.path);
 		app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 		app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
-		if (ScriptUI.environment.keyboardState.keyName === 'Escape') cleanupAndExit();
 		doExport(exp.exportSpreads.value, ui.output.options.split.value, exp.preset.selection.text);
 	}
 	// Restore measurement units
@@ -596,6 +595,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 	}
 
 	function exportToPDF(/*string*/filename, /*string|Enum*/pageRange, /*pdfExportPreset*/pdfPreset) {
+		if (ScriptUI.environment.keyboardState.keyName === 'Escape') cleanupAndExit();
 		var fPg, lPg, spreadWidth;
 		// Load preset settings
 		for (var key in pdfPreset) {
