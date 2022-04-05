@@ -1,5 +1,5 @@
 /*
-	Fit frame to text 21.12.19
+	Fit frame to text 22.4.5
 	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
 
 	Auto-sizes the text frame to the content from 'None' to 'Height Only' to 'Height and Width'
@@ -53,10 +53,10 @@ function main(selection) {
 		var oldASRP = framePrefs.autoSizingReferencePoint;
 
 		// Trim ending whitespace
-		if (/\s+$/g.test(frame.contents) && !frame.nextTextFrame && !frame.overflows)
+		if (!frame.overflows && /\s+$/g.test(frame.contents) && !frame.nextTextFrame)
 			frame.contents = frame.contents.replace(/\s+$/g, '');
 		// Disable hyphenation for single lines
-		if (frame.lines.length === 1) frame.lines[0].hyphenation = false;
+		if (!frame.overflows && frame.lines.length === 1) frame.lines[0].hyphenation = false;
 		// Skip 'HW' frames, they are already set
 		if (/hw/gi.test(frame.label)) return;
 
