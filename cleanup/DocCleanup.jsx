@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 22.3.31
+	Document cleanup 22.4.5
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -96,10 +96,10 @@ app.doScript(function () {
 	var items = doc.allPageItems;
 	while ((item = items.shift())) {
 		if (item.constructor.name !== 'TextFrame') continue;
-		if (/\s+$/g.test(item.contents) && !item.nextTextFrame && !item.overflows)
+		if (!item.overflows && /\s+$/g.test(item.contents) && !item.nextTextFrame)
 			item.contents = item.contents.replace(/\s+$/g, '');
-		if (item.lines.length === 1 && !item.overflows) item.lines[0].hyphenation = false;
-		if (item.contents.length === 0 && !item.overflows) item.contentType = ContentType.UNASSIGNED;
+		if (!item.overflows && item.lines.length === 1) item.lines[0].hyphenation = false;
+		if (!item.overflows && item.contents.length === 0) item.contentType = ContentType.UNASSIGNED;
 	}
 },
 ScriptLanguage.JAVASCRIPT, undefined,
