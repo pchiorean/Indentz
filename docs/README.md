@@ -101,14 +101,15 @@ The TSV file can be saved locally (in the active document folder or its parent f
 #### **`ReplaceLinks`**
 Replaces document links using a TSV substitution file named [**`links.txt`**](samples/links.txt):
 
-| New link path        | Document links              |
-| :-                   | :-                          |
-| **path/to/img1.psd** | img1.*                      |
-| **img2-cmyk.tif**    | img2_lowres.jpg, img2-rgb.* |
-| ...                  |                             |
+| New link path             | Document links              |
+| :-                        | :-                          |
+| **path/to/img1.psd**      | img1.*                      |
+| **path/to/img2-cmyk.tif** | img2_lowres.jpg, img2-rgb.* |
+| **path/to/img3.tif**      | [img3.tif]                  |
+| ...                       |                             |
 
-> **New link path**: new link's absolute path, or just its name if it's in the same folder \
-> **Document links**: a list of document links that will be relinked if found (case insensitive; `*` and `?` wildcards accepted)
+> **New link path**: new link's absolute path\
+> **Document links**: a list of document links that will be relinked if found (case insensitive; `*` and `?` wildcards accepted); if the list is empty, the new link's name will be used.
 
 The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
@@ -367,7 +368,7 @@ Shows properties and methods of a selected object.
 ---
 
 ## Install
-Many scripts from the repository use linked libraries from the **`lib/`** folder, so it's preferable to download the latest release, which is statically linked (the scripts are stand-alone).
+Many scripts from the repository use linked libraries from the **`lib/`** folder; the [releases](https://github.com/pchiorean/Indentz/releases) are statically linked (the scripts are stand-alone).
 
 1. Open **Window ‣ Utilities ‣ Scripts**.
 2. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
@@ -384,4 +385,4 @@ All scripts are created by me unless otherwise noted.
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • April 1, 2022
+README.md • April 8, 2022

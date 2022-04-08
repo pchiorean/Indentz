@@ -1,10 +1,10 @@
 /**
  * Replaces a link or a list of links with a different one. A selection limits the scope.
- * @version 22.2.10
+ * @version 22.4.8
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
- * @param {(string|string[])} oldLinks - A link name, or an array of link names to be replaced.
- * @param {string} newLink - New link name (if same folder), or full link path.
+ * @param {(string|string[])} oldLinks - A link name, or an array of document links that will be relinked if found.
+ * @param {string} newLink - New link's absolute path (or just the name if it's in the same 'Links' subfolder).
  * @returns {boolean} - Returns `true` if a replacement was made, `false` if not.
  * @example
  * replaceLink('link1.jpg', 'link1.psd'); // Both links are in the same folder
@@ -24,7 +24,7 @@ function replaceLink(oldLinks, newLink) {
 	// Check if newLink is valid
 	newLink = /\//g.test(newLink) ? newLink : doc.filePath + '/Links/' + newLink;
 	if (!File(newLink).exists) {
-		errors.push("Link '" + newLink + "' not found.");
+		errors.push("Link '" + decodeURI(newLink) + "' not found.");
 		return false;
 	}
 	// Relink

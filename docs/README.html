@@ -456,8 +456,12 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:left">img1.*</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong>img2-cmyk.tif</strong></td>
+<td style="text-align:left"><strong>path/to/img2-cmyk.tif</strong></td>
 <td style="text-align:left">img2_lowres.jpg, img2-rgb.*</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>path/to/img3.tif</strong></td>
+<td style="text-align:left">[img3.tif]</td>
 </tr>
 <tr>
 <td style="text-align:left">&#x2026;</td>
@@ -466,8 +470,8 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 <blockquote>
-<p><strong>New link path</strong>: new link&#x2019;s absolute path, or just its name if it&#x2019;s in the same folder <br>
-<strong>Document links</strong>: a list of document links that will be relinked if found (case insensitive; <code>*</code> and <code>?</code> wildcards accepted)</p>
+<p><strong>New link path</strong>: new link&#x2019;s absolute path<br>
+<strong>Document links</strong>: a list of document links that will be relinked if found (case insensitive; <code>*</code> and <code>?</code> wildcards accepted); if the list is empty, the new link&#x2019;s name will be used.</p>
 </blockquote>
 <p>The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in <code>Indentz</code> root); local files and files starting with <code>_</code> take precedence. You can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</p>
 <h4 class="mume-header" id="doccleanup-smallf2small"><strong><code>DocCleanup</code></strong> <small>F2</small></h4>
@@ -900,7 +904,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <hr>
 <h2 class="mume-header" id="install">Install</h2>
 
-<p>Many scripts from the repository use linked libraries from the <strong><code>lib/</code></strong> folder, so it&#x2019;s preferable to download the latest release, which is statically linked (the scripts are stand-alone).</p>
+<p>Many scripts from the repository use linked libraries from the <strong><code>lib/</code></strong> folder; the <a href="https://github.com/pchiorean/Indentz/releases">releases</a> are statically linked (the scripts are stand-alone).</p>
 <ol>
 <li>Open <strong>Window &#x2023; Utilities &#x2023; Scripts</strong>.</li>
 <li>Right-click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
@@ -913,7 +917,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>All scripts are created by me unless otherwise noted.</p>
 <p>&#xA9; 2020-2022 Paul Chiorean &lt;jpeg AT basement.ro&gt;.<br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md &#x2022; April 1, 2022</p>
+<p>README.md &#x2022; April 8, 2022</p>
 
       </div>
       
