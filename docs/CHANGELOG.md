@@ -27,6 +27,8 @@
   **DocCleanup**: Changed visibility and locked state of some technical layers (e.g., 'dielines')
 
 ##### Bug fixes
+- [`fix`](https://github.com/pchiorean/Indentz/commit/a0278cdce29715ee9934266fde3e7a024e9c331c)
+  **lib/ReplaceLink**: Removed `errors.push()`, we already return boolean status
 - [`fix`](https://github.com/pchiorean/Indentz/commit/5b0f0f8c16283ab59765857efa9ff4e97ae4cf2a)
   **TextAutosize**: Added a check for overflown text when disabling hyphenation for one-liners
 - [`fix`](https://github.com/pchiorean/Indentz/commit/bb12fb85da5f0a780b8962b379da86f4c8dc3ba9)
