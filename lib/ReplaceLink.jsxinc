@@ -23,10 +23,7 @@ function replaceLink(oldLinks, newLink) {
 	if (!isFound) return false;
 	// Check if newLink is valid
 	newLink = /\//g.test(newLink) ? newLink : doc.filePath + '/Links/' + newLink;
-	if (!File(newLink).exists) {
-		errors.push("Link '" + decodeURI(newLink) + "' not found.");
-		return false;
-	}
+	if (!File(newLink).exists) return false;
 	// Relink
 	while ((link = links.shift())) {
 		if (selection.length > 0 && !isInArray(link.parent.parent, selection)) continue; // Skip not selected
