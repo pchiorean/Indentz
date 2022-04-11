@@ -1,6 +1,6 @@
 /*
-	Default preferences 21.11.2
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Default preferences 222.4.11
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Sets default preferences.
 
@@ -97,7 +97,11 @@ app.doScript(function () {
 			horizontalMeasurementUnits: MeasurementUnits.MILLIMETERS,
 			verticalMeasurementUnits: MeasurementUnits.MILLIMETERS,
 			showFrameEdges: true,
-			showRulers: true
+			showRulers: true,
+			rulerOrigin: RulerOrigin.SPREAD_ORIGIN,
+			strokeMeasurementUnits: MeasurementUnits.POINTS,
+			textSizeMeasurementUnits: MeasurementUnits.POINTS,
+			typographicMeasurementUnits: MeasurementUnits.POINTS
 		},
 		zeroPoint: [ 0, 0 ]
 	};
