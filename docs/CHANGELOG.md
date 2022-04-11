@@ -1,37 +1,50 @@
 ## Changelog
 
-### [Current version](https://github.com/pchiorean/Indentz/compare/22.3.11...master)
+<!-- ### [Current version](https://github.com/pchiorean/Indentz/compare/22.4.11...master) -->
 
-- [`fix`](https://github.com/pchiorean/Indentz/commit/5b0f0f8c16283ab59765857efa9ff4e97ae4cf2a)
-  **TextAutosize**: Added a check for overflown text when disabling hyphenation for one-liners
+### [Release 22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
+
+##### New features
+
+- [`new`](https://github.com/pchiorean/Indentz/commit/880aa8ec0a66dbff191be1af103a493c4b7ce1d5)
+  **DocCleanup**: Added a prompt to delete empty frames
+
+##### Updates
+
+- [`brk`](https://github.com/pchiorean/Indentz/commit/937f8db5656296e4dcee4d2261540252a7210173)
+  **lib/ProgressBar**: Refactored methods – message update is now separate from value update; values are simpler to increment
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2cc1c2aff82ac6c490b94a59a4f719f94a9b564b)
   **QuickExport**: Check cancel request more often (between each export instead of between documents)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/220c047ee848b37714094be138ec93e31e3a67cd)
   **DefaultLayers**: Layers get themselves as the first variant
 - [`upd`](https://github.com/pchiorean/Indentz/commit/bcf0ca00315b766d7c366cd17d20ff0ea53a0f57)
-  **DefaultSwatches**: Swatches get their Color Value Name as the first variant
-- [`ref`](https://github.com/pchiorean/Indentz/commit/015098b840418e3700a3499df0d0fbd49243ef05)
-  **QRBatch**: Processed lines are commented with just a '#', no space; works better when aligning columns with 'Rainbow CSV'
+  **DefaultSwatches**: Swatches get their 'Color Value Name' as the first variant
 - [`upd`](https://github.com/pchiorean/Indentz/commit/8ab105997d7dbc64e3e1aaf485d463fc3939fa1c)
   **DocCleanup**: Improved pasteboard setting logic
-- [`del`](https://github.com/pchiorean/Indentz/commit/7b768b5f8cce9c6c975beed0c00977e1d8428122)
-  Removed `DocDefaults` stub
 - [`upd`](https://github.com/pchiorean/Indentz/commit/7e850f53bd693a7cf44fa3917e019f96f56dd282)
   **DefaultSwatches, ReplaceLinks**: Added progress bars
-- [`fix`](https://github.com/pchiorean/Indentz/commit/bb12fb85da5f0a780b8962b379da86f4c8dc3ba9)
-  **DefaultLayers/Swatches/ReplaceFonts/Links**: Don't skip error reporting when there are no records
-- [`ref`](https://github.com/pchiorean/Indentz/commit/98623ed89d2e82d4b138c071d3d33db659236345)
-  **DefaultLayers/Swatches/ReplaceFonts/Links**: Tweaked messages for BigSur's vertical alerts
 - [`upd`](https://github.com/pchiorean/Indentz/commit/880aa8ec0a66dbff191be1af103a493c4b7ce1d5)
   **DocCleanup**: Changed visibility and locked state of some technical layers (e.g., 'dielines')
+
+##### Bug fixes
+- [`fix`](https://github.com/pchiorean/Indentz/commit/5b0f0f8c16283ab59765857efa9ff4e97ae4cf2a)
+  **TextAutosize**: Added a check for overflown text when disabling hyphenation for one-liners
+- [`fix`](https://github.com/pchiorean/Indentz/commit/bb12fb85da5f0a780b8962b379da86f4c8dc3ba9)
+  **DefaultLayers/Swatches/ReplaceFonts/Links**: Don't skip error reporting when there are no records
 - [`fix`](https://github.com/pchiorean/Indentz/commit/880aa8ec0a66dbff191be1af103a493c4b7ce1d5)
   **DocCleanup**: Fixed an overzealous trimming of overflowed text
-- [`new`](https://github.com/pchiorean/Indentz/commit/880aa8ec0a66dbff191be1af103a493c4b7ce1d5)
-  **DocCleanup**: Added a prompt to delete empty frames
 - [`fix`](https://github.com/pchiorean/Indentz/commit/0d38de1cd6d3a6c42292f1d9fdb2b81220929e69)
   **DocCleanup**: Skip frames with strokes when converting empty frames to graphic frames
-- [`brk`](https://github.com/pchiorean/Indentz/commit/937f8db5656296e4dcee4d2261540252a7210173)
-  **lib/ProgressBar**: Refactored methods – message update is now separate from value update; values are simpler to increment
+
+##### Miscellaneous
+- [`del`](https://github.com/pchiorean/Indentz/commit/7b768b5f8cce9c6c975beed0c00977e1d8428122)
+  Removed `DocDefaults` stub
+- [`ref`](https://github.com/pchiorean/Indentz/commit/015098b840418e3700a3499df0d0fbd49243ef05)
+  **QRBatch**: Processed lines are commented with just a '#', no space; works better when aligning columns with 'Rainbow CSV'
+- [`ref`](https://github.com/pchiorean/Indentz/commit/98623ed89d2e82d4b138c071d3d33db659236345)
+  **DefaultLayers/Swatches/ReplaceFonts/Links**: Tweaked messages for BigSur's vertical alerts
+- [`doc`](https://github.com/pchiorean/Indentz/commit/14f7688731f5ba609c84530fee67600a55248e0b)
+  **lib/ReplaceLink, ReplaceLinks**: Clarified/removed a mention about local links
 
 ### [Release 22.3.11](https://github.com/pchiorean/Indentz/releases/tag/22.3.11)
 
@@ -82,6 +95,8 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/bcdc2ad7b12709b748396a9f0104b36c710953d1)
   **lib/ProgressBar**: Added a second (optional) progress bar
 - [`upd`](https://github.com/pchiorean/Indentz/commit/0fc73f2d1574cd5cc5747276a3fd544e6028e103)
+  **QuickExport 2.19**: Cancel export if 'Esc' is kept pressed
+- [`new`](https://github.com/pchiorean/Indentz/commit/b0cec7208c5c08d82bd5efeb48850e01e2fc8677)
   **QuickExport 2.17**: Added a 'Save as…' option for removing cruft and reducing documents size
 - [`upd`](https://github.com/pchiorean/Indentz/commit/111a3d78ecd478439ae568d6d045e04ecaa6acfd)
   **QR 3.7, QRBatch 2.9**: Added a checkbox for uppercase text
@@ -112,8 +127,6 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2b8e886f04ebaf4fb912540a2183fe1a941ba403)
   **QuickExport 2.20**: Added a second progress bar when exporting separate pages
 - [`upd`](https://github.com/pchiorean/Indentz/commit/21e174597e2a5409f5536616be6ee7c6bebb9774)
-  **QuickExport 2.19**: Cancel export if 'Esc' is kept pressed
-- [`upd`](https://github.com/pchiorean/Indentz/commit/b0cec7208c5c08d82bd5efeb48850e01e2fc8677)
   **QuickExport 2.18**: Input files are now sorted in natural order
 - [`upd`](https://github.com/pchiorean/Indentz/commit/832e27f6050f82b3e52d7a901bfa40be93974077)
   **QR 3.6.1, QRBatch 2.8.1**: The on-page label now has insets on both left and right sides
