@@ -1,9 +1,11 @@
-New link path    	Document links
-path/to/img1.psd 	img1.*
-img2-cmyk.tif    	img2_lowres.jpg, img2-rgb.*
+New link path          	Document links
+path/to/img1.psd       	img1.*
+path/to/img2-cmyk.tif	img2_lowres.jpg, img2-rgb.*
+path/to/img3.tif
 
 # <New link path>: new link's absolute path, or just its name if it's in the same folder
-# <Document links>: a list of document links that will be relinked if found (case insensitive; '*' and '?' wildcards accepted)
+# <Document links>: a list of document links that will be relinked if found (case insensitive;
+#   '*' and '?' wildcards accepted); if the list is empty, the new link's name will be used.
 #
 # The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default
 # (on the desktop, next to the script or in Indentz root); local files and files starting with '_' take precedence.
