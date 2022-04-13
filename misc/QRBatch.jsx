@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 22.4.1
+	Batch QR codes 22.4.13
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -122,6 +122,7 @@ function main() {
 				((dataFile = File(currentPath + '/QR.txt'))  && dataFile.exists))
 			) {
 			dataFile.open('r');
+			dataFile.encoding = 'UTF-8';
 			while (!dataFile.eof) {
 				infoLine = '';
 				isEmpty = isComment = isHeader = false;
