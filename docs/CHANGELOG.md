@@ -1,6 +1,9 @@
 ## Changelog
 
-<!-- ### [Current version](https://github.com/pchiorean/Indentz/compare/22.4.11...master) -->
+### [Current version](https://github.com/pchiorean/Indentz/compare/22.4.11...master)
+
+- [`fix`](https://github.com/pchiorean/Indentz/commit/9858c669dc00ff0ec353796373935aae1c758faf)
+  **QRBatch:** Enforced UTF-8 encoding on opening the data file
 
 ### [Release 22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
 
@@ -12,7 +15,7 @@
 ##### Updates
 
 - [`brk`](https://github.com/pchiorean/Indentz/commit/937f8db5656296e4dcee4d2261540252a7210173)
-  **lib/ProgressBar**: Refactored methods – message update is now separate from value update; values are simpler to increment
+  **lib/ProgressBar**: Refactored methods – values are updated separately from messages (values are simpler to increment)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2cc1c2aff82ac6c490b94a59a4f719f94a9b564b)
   **QuickExport**: Check cancel request more often (between each export instead of between documents)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/220c047ee848b37714094be138ec93e31e3a67cd)
