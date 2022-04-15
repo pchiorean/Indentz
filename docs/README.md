@@ -2,9 +2,11 @@
 
 A collection of InDesign scripts for various simple and repetitive tasks.
 
-As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home in the Covid era finally provided me some extra time to learn a little scripting, and over time the collection grew. I made them public in the hope that they could help others, too. I'm a graphic designer, not a programmer, so please bear with me if things are not state-of-the-art. I mostly used InDesign ExtendScript API 8.0 (compatible with InDesign CS6); the scripts were not tested in versions older than CC 2020. I work on macOS, so expect various bugs on Windows.
+## About
 
-I mainly use shortcuts to launch them (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**), so I've suggested a few for macOS below.
+As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown, I had some extra time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow, but I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). The code was developed and tested in Adobe CC 2020 (and later) on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one).
+
+I mainly use shortcuts to launch them (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**), so I've suggested a few below (for Mac).
 
 ---
 
@@ -23,26 +25,26 @@ Sets some preferences for the current document.
 
 <details><summary><strong>Preferences</strong></summary>
 
-> **Rulers:** Reset Zero Point \
-> **Rulers Units:** Millimeters \
-> **View:** Show Rulers \
-> **View:** Show Frame Edges \
-> **Document Intent:** Print \
-> **Transparency Blend Space:** CMYK \
-> **CMYK Profile:** ISO Coated v2 (ECI) \
-> **RGB Profile:** sRGB IEC61966-2.1 \
-> **Grids & Guides:** Show Guides \
-> **Grids & Guides:** Unlock Guides \
-> **Guides & Pasteboard: Preview Background:** Light Gray \
-> **Keyboard Increments: Cursor Key:** 0.2 mm \
-> **Keyboard Increments: Size/Leading:** 0.5 pt \
-> **Keyboard Increments: Baseline Shift:** 0.1 pt \
-> **Keyboard Increments: Kerning/Tracking:** 5/1000 em \
-> **Pages:** Allow Document Pages to Shuffle \
-> **Layers:** Ungroup Remembers Layers \
-> **Layers:** Paste Remembers Layers \
-> **Transform Reference Point:** Center \
-> **Type Options:** Use Typographer's Quotes \
+> **Rulers:** Reset Zero Point\
+> **Rulers Units:** Millimeters\
+> **View:** Show Rulers\
+> **View:** Show Frame Edges\
+> **Document Intent:** Print\
+> **Transparency Blend Space:** CMYK\
+> **CMYK Profile:** ISO Coated v2 (ECI) (fallback to Coated FOGRA39 (ISO 12647-2:2004)\
+> **RGB Profile:** sRGB IEC61966-2.1\
+> **Grids & Guides:** Show Guides\
+> **Grids & Guides:** Unlock Guides\
+> **Guides & Pasteboard: Preview Background:** Light Gray\
+> **Keyboard Increments: Cursor Key:** 0.2 mm\
+> **Keyboard Increments: Size/Leading:** 0.5 pt\
+> **Keyboard Increments: Baseline Shift:** 0.1 pt\
+> **Keyboard Increments: Kerning/Tracking:** 5/1000 em\
+> **Pages:** Allow Document Pages to Shuffle\
+> **Layers:** Ungroup Remembers Layers\
+> **Layers:** Paste Remembers Layers\
+> **Transform Reference Point:** Center\
+> **Type Options:** Use Typographer's Quotes\
 > **Type Options:** Apply Leading to Entire Paragraphs
 
 </details>
@@ -368,7 +370,7 @@ Shows properties and methods of a selected object.
 ---
 
 ## Install
-Many scripts from the repository use linked libraries from the **`lib/`** folder; the [releases](https://github.com/pchiorean/Indentz/releases) are statically linked (the scripts are stand-alone).
+The repository uses dynamically linked libraries from **`lib/`**, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked.
 
 1. Open **Window ‣ Utilities ‣ Scripts**.
 2. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
@@ -385,4 +387,4 @@ All scripts are created by me unless otherwise noted.
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • April 8, 2022
+README.md • April 15, 2022
