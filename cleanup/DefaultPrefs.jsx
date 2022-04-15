@@ -1,5 +1,5 @@
 /*
-	Default preferences 222.4.11
+	Default preferences 22.4.15
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Sets default preferences.
@@ -48,7 +48,7 @@ app.doScript(function () {
 			allowLockedObjectsToAdjust: false,
 			enableAutoAdjustMargins: false
 		},
-		cmykProfile: 'ISO Coated v2 (ECI)',
+		// cmykProfile: 'ISO Coated v2 (ECI)',
 		documentPreferences: {
 			allowPageShuffle: false,
 			preserveLayoutWhenShuffling: true,
@@ -105,6 +105,11 @@ app.doScript(function () {
 		},
 		zeroPoint: [ 0, 0 ]
 	};
+	try {
+		doc.cmykProfile = 'ISO Coated v2 (ECI)';
+	} catch (e) {
+		doc.cmykProfile = 'Coated FOGRA39 (ISO 12647-2:2004)';
+	}
 },
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Set preferences');
