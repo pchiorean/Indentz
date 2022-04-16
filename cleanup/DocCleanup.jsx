@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 22.4.5
+	Document cleanup 22.4.15
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -13,7 +13,7 @@ if (!(doc = app.activeDocument)) exit();
 // @include '../lib/ProgressBar.jsxinc';
 
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
-var progressBar = new ProgressBar('Cleanup document', 12);
+var progressBar = new ProgressBar('Cleanup document', 14);
 
 progressBar.update();
 app.doScript(File(script.path + '/DefaultPrefs.jsx'),
@@ -35,26 +35,44 @@ UndoModes.ENTIRE_SCRIPT, 'Turn off auto update URLs');
 progressBar.update();
 app.doScript(function () {
 	doc.layers.everyItem().locked = false;
-	var item, delHidden, delEmpty;
-	// var items = doc.pageItems.everyItem().getElements();
+	var item;
 	var items = doc.allPageItems;
 	while ((item = items.shift())) {
 		if (item.locked) item.locked = false;
-		if (!item.visible) {
-			if (delHidden === undefined) delHidden = confirm('Delete hidden items?');
-			if (delHidden) { item.remove(); continue; }
-		}
-		if (/Oval|Rectangle|Polygon/.test(item.constructor.name)
-				&& item.allPageItems.length === 0
-				&& item.strokeWeight === 0 && item.fillColor.name === 'None') {
-			if (delEmpty === undefined) delEmpty = confirm('Delete empty frames?');
-			if (delEmpty) { item.remove(); continue; }
-		}
 		try { item.redefineScaling(); } catch (e) {}
 	}
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.ENTIRE_SCRIPT, 'Unlock items, delete hidden, reset scaling');
+UndoModes.ENTIRE_SCRIPT, 'Unlock items and reset scaling');
+
+progressBar.update();
+app.doScript(function () {
+	var item, delHidden;
+	var items = doc.pageItems.everyItem().getElements();
+	while ((item = items.shift())) {
+		if (item.visible) continue;
+		if (delHidden === undefined) delHidden = confirm('Delete hidden items?');
+		if (delHidden) item.remove();
+	}
+},
+ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, 'Delete hidden items');
+
+progressBar.update();
+app.doScript(function () {
+	var item, delEmpty;
+	var items = doc.pageItems.everyItem().getElements();
+	while ((item = items.shift())) {
+		if (/Oval|Rectangle|Polygon/.test(item.constructor.name)
+				&& item.allPageItems.length === 0
+				&& item.strokeWeight === 0 && item.fillColor.name === 'None') {
+			if (delEmpty === undefined) delEmpty = confirm('Delete empty frames?');
+			if (delEmpty) item.remove();
+		}
+	}
+},
+ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, 'Delete empty frames');
 
 progressBar.update();
 app.doScript(function () {
