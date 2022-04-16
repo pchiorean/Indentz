@@ -2,8 +2,13 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.4.11...master)
 
+- [`upd`](https://github.com/pchiorean/Indentz/commit/c7459d5d0044b30edb875af724d718671f249b74)
+  ** ** Split step 3 into separate steps
+- [`fix`](https://github.com/pchiorean/Indentz/commit/f06e68d91e8abab4e08933162f4676b8fceaafa6)
+  **DefPrefs:** Added 'Coated FOGRA39' as CMYK profile fallback
 - [`fix`](https://github.com/pchiorean/Indentz/commit/9858c669dc00ff0ec353796373935aae1c758faf)
-  **QRBatch:** Enforced UTF-8 encoding on opening the data file
+  [`fix`](https://github.com/pchiorean/Indentz/commit/97bf0b591a66e7790c218477fcc388053e4fbdc8)
+  **lib/ParseDataFile, DefaultLayers/Swatches/ReplaceFonts/Links:** Enforced UTF-8 encoding on opening the data file
 
 ### [Release 22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
 
