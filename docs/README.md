@@ -6,7 +6,7 @@ A collection of InDesign scripts for various simple and repetitive tasks.
 
 As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown, I had some extra time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow, but I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). The code was developed and tested in Adobe CC 2020 (and later) on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one).
 
-I mainly use shortcuts to launch them (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**), so I've suggested a few below (for Mac).
+I mainly use shortcuts to launch them (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**), so I suggest a few below (for Mac).
 
 ---
 
@@ -31,7 +31,7 @@ Sets some preferences for the current document.
 > **View:** Show Frame Edges\
 > **Document Intent:** Print\
 > **Transparency Blend Space:** CMYK\
-> **CMYK Profile:** ISO Coated v2 (ECI) (fallback to Coated FOGRA39 (ISO 12647-2:2004)\
+> **CMYK Profile:** ISO Coated v2 (ECI) (fallback to Coated FOGRA39 (ISO 12647-2:2004))\
 > **RGB Profile:** sRGB IEC61966-2.1\
 > **Grids & Guides:** Show Guides\
 > **Grids & Guides:** Unlock Guides\
@@ -387,4 +387,4 @@ All scripts are created by me unless otherwise noted.
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • April 15, 2022
+README.md • April 16, 2022
