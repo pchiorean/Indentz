@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 22.3.16
+	Replace fonts 22.4.16
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named 'fonts.txt':
@@ -103,6 +103,7 @@ function main() {
 		var isHeaderFound = false;
 		var line = 0;
 		dataFile.open('r');
+		dataFile.encoding = 'UTF-8';
 		while (!dataFile.eof) {
 			line++;
 			record = (part ? part.slice(0,-1) : '') + dataFile.readln();

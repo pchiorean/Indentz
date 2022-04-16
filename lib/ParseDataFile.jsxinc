@@ -2,7 +2,7 @@
  * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
  * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
  * Include records from another file with `@path/to/include.txt` or the `@default` data file.
- * @version 21.10.11
+ * @version 22.4.16
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {File} dataFile - A tab-separated-values file (object).
@@ -17,6 +17,7 @@ function parseDataFile(dataFile, flgR) {
 	var isHeaderFound = false;
 	var line = 0;
 	dataFile.open('r');
+	dataFile.encoding = 'UTF-8';
 	while (!dataFile.eof) {
 		line++;
 		record = (part ? part.slice(0,-1) : '') + dataFile.readln();
