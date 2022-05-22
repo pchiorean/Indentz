@@ -23,7 +23,7 @@ Preferences, defaults, cleanup.
 #### **`DefaultPrefs`**
 Sets some preferences for the current document.
 
-<details><summary><strong>Preferences</strong></summary>
+<details><summary><strong>Details</strong></summary>
 
 > **Rulers:** Reset Zero Point\
 > **Rulers Units:** Millimeters\
@@ -50,7 +50,7 @@ Sets some preferences for the current document.
 </details>
 
 #### **`DefaultLayers`**
-Adds a set of layers defined in a TSV *(tab-separated values)* file named [**`layers.txt`**](samples/layers.txt):
+Adds a set of layers defined in a TSV *(tab-separated values)* file[^1] named [**`layers.txt`**](samples/layers.txt):
 
 | Name         | Color   | Visible | Printable | Order | Variants                               |
 | :-           | :-      | :-      | :-        | :-    | :-                                     |
@@ -58,37 +58,33 @@ Adds a set of layers defined in a TSV *(tab-separated values)* file named [**`la
 | **template** | Gray    | no      | no        | below |                                        |
 | ...          |         |         |           |       |                                        |
 
-> **Name**: layer name \
-> **Color**: layer color (defaults to `Light Blue`; see [**`UIColors.txt`**](misc/UIColors.txt) for color names) \
-> **Visible**: `yes` or `no` (defaults to `yes`) \
-> **Printable**: `yes` or `no` (defaults to `yes`) \
-> **Order**: `above` or `below` existing layers (defaults to `above`) \
+> **Name**: layer name\
+> **Color**: layer color (defaults to `Light Blue`; see [**`UIColors.txt`**](misc/UIColors.txt) for color names)\
+> **Visible**: `yes` or `no` (defaults to `yes`)\
+> **Printable**: `yes` or `no` (defaults to `yes`)\
+> **Order**: `above` or `below` existing layers (defaults to `above`)\
 > **Variants**: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards accepted)
 
-The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
-
 #### **`DefaultSwatches`**
-Adds swatches defined in a TSV file named [**`swatches.txt`**](samples/swatches.txt):
+Adds swatches defined in a TSV file[^1] named [**`swatches.txt`**](samples/swatches.txt):
 
-| Name           | Color Model | Color Space | Values       | Variants       |
+| Name           | Color model | Color space | Values       | Variants       |
 | :-             | :-          | :-          | :-           | :-             |
 | **Rich Black** | process     | cmyk        | 60 40 40 100 |                |
 | **RGB Grey**   | process     | rgb         | 128 128 128  |                |
 | **Cut**        | spot        | cmyk        | 0 100 0 0    | couper, diecut |
 | ...            |             |             |              |                |
 
-> **Name**: swatch name \
-> **Color Model**: `process` or `spot` (defaults to `process`) \
-> **Color Space**: `cmyk`, `rgb` or `lab` (defaults to `cmyk`) \
-> **Values**: 3 values in 0-255 range for RGB; 4 values in 0-100 range for CMYK; 3 values in 0-100 (L), -128-127 (A and B) range for Lab \
+> **Name**: swatch name\
+> **Color model**: `process` or `spot` (defaults to `process`)\
+> **Color space**: `cmyk`, `rgb` or `lab` (defaults to `cmyk`)\
+> **Values**: 3 values in 0-255 range for RGB; 4 values in 0-100 range for CMYK; 3 values in 0-100 (L), -128-127 (A and B) range for Lab\
 > **Variants**: a list of swatches that will be replaced by the base swatch (case insensitive; `*` and `?` wildcards accepted)
 
 You can use [**`SwatchesSave`**](#swatchessave) to get a tab delimited list of swatches from any document.
 
-The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
-
 #### **`ReplaceFonts`**
-Replaces document fonts using a TSV substitution file named [**`fonts.txt`**](samples/fonts.txt):
+Replaces document fonts using a TSV substitution file[^1] named [**`fonts.txt`**](samples/fonts.txt):
 
 | Old font family | Style   | New font family    | Style   |
 | :-              | :-      | :-                 | :-      |
@@ -98,10 +94,8 @@ Replaces document fonts using a TSV substitution file named [**`fonts.txt`**](sa
 
 You can use [**`ShowFonts`**](#showfonts) from [**Miscellaneous**](#miscellaneous) to get a tab delimited list of document fonts for copy-pasting.
 
-The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
-
 #### **`ReplaceLinks`**
-Replaces document links using a TSV substitution file named [**`links.txt`**](samples/links.txt):
+Replaces document links using a TSV substitution file[^1] named [**`links.txt`**](samples/links.txt):
 
 | New link path             | Document links              |
 | :-                        | :-                          |
@@ -113,10 +107,23 @@ Replaces document links using a TSV substitution file named [**`links.txt`**](sa
 > **New link path**: new link's absolute path\
 > **Document links**: a list of document links that will be relinked if found (case insensitive; `*` and `?` wildcards accepted); if the list is empty, the new link's name will be used.
 
-The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+#### **`ReplaceSnippets`**
+Replaces a list of text snippets using a TSV substitution file[^1] named [**`snippets.txt`**](samples/snippets.txt):
+
+| Find what              | Change to                | Case sensitive | Whole word |
+| :-                     | :-                       | :-             | :-         |
+| English instruction    | Deutsche anleitung       | yes            | yes        |
+| The sample is for free | Das Sample ist kostenlos | yes            | yes        |
+| 12.06.22               | 13.11.2022               |                |            |
+| ...                    |                          |                |            |
+
+> **Find what**: text to be replaced\
+> **Change to**: the new text\
+> **Case sensitive**: `yes` or `no` (defaults to `no`)\
+> **Whole word**: `yes` or `no` (defaults to `yes`)
 
 #### **`DocCleanup`** <small>F2</small>
-It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and spreads; unlocks all items and resets their scaling to 100%; optionally deletes hidden items; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
+It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
 
 #### **`SwatchesCleanup`** <small>⇧F2</small>
 Converts process RGB swatches to CMYK and renames them to “C= M= Y= K=” format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.
@@ -143,13 +150,13 @@ Sets the size of the page and the margins/visible area, getting dimensions from 
 Resizes the current page to its margins.
 
 #### **`PageSizeFromSelection`** <small>⇧F3</small>
-Resizes the page to the selected items (similar to **Artboards ‣ Fit to Selected Art** in Illustrator).
+Resizes the page to the selected objects (similar to **Artboards ‣ Fit to Selected Art** in Illustrator).
 
 #### **`PageMarginsFromSelection`** <small>⌥F3</small>
-Sets the page margins to the selected items.
+Sets the page margins to the selected objects.
 
 #### **`GuidesAdd`**
-If any page items are selected, it adds spread guides around them.
+If any page objects are selected, it adds spread guides around them.
 
 If nothing is selected, it adds guides on page edges and inner centers (that is, the page without margins); a second run deletes them.
 
@@ -160,7 +167,7 @@ Deletes all guides from the document.
 
 ### Align
 
-Align page items with ease using the numeric keypad.
+Align page objects with ease using the numeric keypad.
 
 #### **`ToggleAlignTo`** <small>Num0</small>
 Toggles **Align To** between selection, margins, page or spread (just run it repeatedly).
@@ -188,9 +195,9 @@ Use the numeric keypad to instantly align the selected object to the **Align To*
 ### Fit
 
 #### **`FitToPage...`** / **`FitToSpread...`**
-These scripts reframe the selected items to the page/spread or their margins/bleed by reducing the edges of objects or clipping frames that cross the target and extending ones that touch it or are very close (1% snap zone).
+These scripts reframe the selected objects to the page/spread or their margins/bleed by reducing the edges of objects or clipping frames that cross the target and extending ones that touch it or are very close (1% snap zone).
 
-Rectangular frames and orthogonal lines are directly resized; rotated items, ovals, groups, etc. are inserted into a clipping frame that is resized.
+Rectangular frames and orthogonal lines are directly resized; rotated objects, ovals, groups, etc. are inserted into a clipping frame that is resized.
 
 **`FitTo...Forced`** bluntly reframes an object to the target.
 
@@ -229,7 +236,7 @@ The level is increased from **None** to **Height Only** and from **Height Only**
 ### Scale
 
 #### **`ScaleToPageSize`** / **`ScaleToPageMargins`** / **`ScaleToSpreadBleed`**
-Scales the selected items to the page size, page margins, or spread bleed. All items are scaled together, as a group.
+Scales the selected objects to the page size, page margins, or spread bleed. All objects are scaled together, as a group.
 
 The **`ScaleTo...H`** and **`ScaleTo...W`** variants scale to the height or width of their target.
 
@@ -287,7 +294,7 @@ The text from the **Suffix** field will be appended to the exported file name (i
 It can run a JavaScript or AppleScript before exporting, e.g., one of the following:
 
 #### **`PrepareForExport`**
-Hides `covered areas`, `visible area`, `safety margins`, `safe area`, `segmentation` and `guides` layers and moves all page items from `dielines`, `die cut`, `varnish`, `uv`, `foil`, `silver` and `white` to separate spreads.
+Hides `covered areas`, `visible area`, `safety margins`, `safe area`, `segmentation` and `guides` layers and moves all page objects from `dielines`, `die cut`, `varnish`, `uv`, `foil`, `silver` and `white` to separate spreads.
 
 #### **`MarkVisibleArea`**
 Creates a frame the size of the page margins on the `visible area` layer. It will use the `Visible area` swatch, which will be created with the value “C=0 M=100 Y=0 K=0” if it doesn't exist.
@@ -317,12 +324,12 @@ Zooms on the first 3 spreads.
 ### Miscellaneous
 
 #### **`Clip`** <small>Num\*</small>
-To handle some items it is sometimes useful to temporarily insert them into a container (clipping frame). The script inserts the selected items into a clipping frame or restores them if they are already clipped.
+To handle some objects it is sometimes useful to temporarily insert them into a container (clipping frame). The script inserts the selected objects into a clipping frame or restores them if they are already clipped.
 
 **Note:** It uses the clipboard, so make sure you don't lose anything important.
 
 #### **`ClipUndo`** <small>⌃Num\*</small>
-Releases one or several items from their clipping frames (you can select any items, it will only release the clipped ones). If nothing is selected, it will release all clipped items.
+Releases one or several objects from their clipping frames (you can select any objects, it will only release the clipped ones). If nothing is selected, it will release all clipped objects.
 
 #### **`LabelPage`**
 Adds a custom label on the current page slug, on the **info** layer.
@@ -331,7 +338,7 @@ Adds a custom label on the current page slug, on the **info** layer.
 Adds a label with the page aspect ratio, on the slug of each page, on the **info** layer.
 
 #### **`LabelsCleanup`**
-Sometimes items that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected items or all items in the document if nothing is selected.
+Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
 
 #### **`QR`** <small>F9</small>
 Adds a QR code on each spread of the active document or to separate PDF files.
@@ -350,8 +357,8 @@ Does the same thing as **`QR`** but in a non-interactive way: retrieves a list o
 | **File 3_AC**  | Code 3 |        |
 | ...            |        |        |
 
-> **Filename**: document name \
-> **Code**: any string \
+> **Filename**: document name\
+> **Code**: any string\
 > **On doc**: any string: on existing document; empty or missing: on separate file
 
 You can insert “|” for manually splitting the label into several lines.
@@ -387,4 +394,6 @@ All scripts are created by me unless otherwise noted.
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • April 16, 2022
+README.md • May 22, 2022
+
+[^1]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
