@@ -2,7 +2,7 @@
 	Prepare for export 22.2.10
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
-	Hides some layers and moves items with special colors to separate spreads.
+	Hides some layers and moves objects with special colors to separate spreads.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
