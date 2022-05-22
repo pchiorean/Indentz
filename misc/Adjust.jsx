@@ -1,5 +1,5 @@
 /*
-	Adjust items 22.3.11
+	Adjust layout 22.3.11
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Released under MIT License:
@@ -11,7 +11,7 @@
 if (!(doc = app.activeDocument)) exit();
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Adjust items');
+	UndoModes.ENTIRE_SCRIPT, 'Adjust layout');
 
 function main() {
 	var item;
