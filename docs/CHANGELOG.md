@@ -3,6 +3,8 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.4.11...master)
 
+- [`upd`](https://github.com/pchiorean/Indentz/commit/2d43649c6fcb012b8ab4ed28901059245415829a)
+  **lib/Report**: Increased maximum width
 - [`new`](https://github.com/pchiorean/Indentz/commit/e9012199d92ba0bef97acdbc9720a85de0ae07ab)
   **ReplaceSnippets**: Converted **lib/ReplaceText** to a standalone script
 - [`upd`](https://github.com/pchiorean/Indentz/commit/c7459d5d0044b30edb875af724d718671f249b74)
