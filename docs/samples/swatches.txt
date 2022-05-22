@@ -1,4 +1,4 @@
-Name                 	Color Model 	Color Space 	Values       	Variants
+Name                 	Color model 	Color space 	Values       	Variants
 # Rich blacks
 C=60 M=40 Y=40 K=100 	process     	cmyk        	60 40 40 100
 C=40 M=5 Y=5 K=100   	process     	cmyk        	40 5 5 100
@@ -14,8 +14,8 @@ White                	spot        	rgb         	255 255 200
 Varnish              	spot        	rgb         	200 255 100
 
 # <Name>: swatch name
-# <Color Model>: 'process' or 'spot' (defaults to 'process')
-# <Color Space>: 'cmyk', 'rgb' or 'lab' (defaults to 'cmyk')
+# <Color model>: 'process' or 'spot' (defaults to 'process')
+# <Color space>: 'cmyk', 'rgb' or 'lab' (defaults to 'cmyk')
 # <Values>: 3 values in 0-255 range for RGB;
 #           4 values in 0-100 range for CMYK;
 #           3 values in 0-100 (L), -128-127 (A and B) range for Lab
