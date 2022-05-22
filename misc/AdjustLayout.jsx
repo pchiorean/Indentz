@@ -1,5 +1,5 @@
 /*
-	Adjust layout 22.3.11
+	Adjust layout 22.5.22
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Released under MIT License:
