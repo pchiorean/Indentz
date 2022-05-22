@@ -1,9 +1,12 @@
 ## Changelog
 
+
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.4.11...master)
 
+- [`new`](https://github.com/pchiorean/Indentz/commit/e9012199d92ba0bef97acdbc9720a85de0ae07ab)
+  **ReplaceSnippets**: Converted **lib/ReplaceText** to a standalone script
 - [`upd`](https://github.com/pchiorean/Indentz/commit/c7459d5d0044b30edb875af724d718671f249b74)
-  **DocCleanup** Split step 3 into separate steps
+  **DocCleanup:** Split step 3 into separate steps
 - [`fix`](https://github.com/pchiorean/Indentz/commit/f06e68d91e8abab4e08933162f4676b8fceaafa6)
   **DefPrefs:** Added 'Coated FOGRA39' as CMYK profile fallback
 - [`fix`](https://github.com/pchiorean/Indentz/commit/9858c669dc00ff0ec353796373935aae1c758faf)
@@ -105,7 +108,7 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/bcdc2ad7b12709b748396a9f0104b36c710953d1)
   **lib/ProgressBar**: Added a second (optional) progress bar
 - [`upd`](https://github.com/pchiorean/Indentz/commit/0fc73f2d1574cd5cc5747276a3fd544e6028e103)
-  **QuickExport 2.19**: Cancel export if 'Esc' is kept pressed
+  **QuickExport 2.19**: Cancel exporting if 'Esc' is kept pressed
 - [`new`](https://github.com/pchiorean/Indentz/commit/b0cec7208c5c08d82bd5efeb48850e01e2fc8677)
   **QuickExport 2.17**: Added a 'Save as…' option for removing cruft and reducing documents size
 - [`upd`](https://github.com/pchiorean/Indentz/commit/111a3d78ecd478439ae568d6d045e04ecaa6acfd)
@@ -317,7 +320,6 @@
 ##### New scripts
 
 - `new` **LayersToFiles**
-- `new` Convert **lib/ReplaceText** to standalone script <!-- (see [this](https://twitter.com/indiscripts/status/1463152851908276230)) -->
 
 ---
 
