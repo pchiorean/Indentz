@@ -1,5 +1,5 @@
 /*
-	Page size from filename 22.3.8
+	Page size from filename 22.5.23
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Sets every page size and margins according to the filename.
@@ -50,7 +50,14 @@ function main() {
 		'stanz', 'Stanz', 'stanze', 'Stanze',
 		'stanzform', 'Stanzform'
 	]);
-	var visSwatchName = 'Visible area';
+	var visFrame = {
+		swatchName: 'Visible area',
+		swatchModel: ColorModel.SPOT,
+		swatchSpace: ColorSpace.RGB,
+		swatchValue: [ 255, 180, 0 ],
+		strokeWeight: '0.75 pt',
+		strokeType: '$ID/Canned Dashed 3x2'
+	};
 	var visAreaRE = /^<?(visible|safe) area>?$/i;
 	var pairsRE = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig;
 	var bleedRE = /\d\s*(?:[cm]m)?[_+](\d{1,2})\s*(?:[cm]m)/i;
@@ -190,12 +197,12 @@ function main() {
 		var PM = page.marginPreferences;
 		if (PM.top + PM.left + PM.bottom + PM.right === 0) return;
 		// Make swatch
-		if (!doc.colors.itemByName(visSwatchName).isValid) {
+		if (!doc.colors.itemByName(visFrame.swatchName).isValid) {
 			doc.colors.add({
-				name:       visSwatchName,
-				model:      ColorModel.SPOT,
-				space:      ColorSpace.CMYK,
-				colorValue: [ 0, 100, 0, 0 ]
+				name:       visFrame.swatchName,
+				model:      visFrame.swatchModel,
+				space:      visFrame.swatchSpace,
+				colorValue: visFrame.swatchValue
 			});
 		}
 		// Make layer
@@ -233,10 +240,10 @@ function main() {
 			label:           'visible area',
 			contentType:     ContentType.UNASSIGNED,
 			fillColor:      'None',
-			strokeColor:     visSwatchName,
-			strokeWeight:    '0.75pt',
+			strokeColor:     visFrame.swatchName,
+			strokeWeight:    visFrame.strokeWeight,
 			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
-			strokeType:      '$ID/Canned Dashed 3x2',
+			strokeType:      visFrame.strokeType,
 			overprintStroke: false,
 			itemLayer:       visLayerName,
 			geometricBounds: [

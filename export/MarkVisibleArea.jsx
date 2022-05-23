@@ -1,6 +1,6 @@
 /*
-	Mark visible area 21.9.24
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Mark visible area 22.5.23
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Creates on each page a 'visible area' frame the size of the page margins.
 
@@ -14,7 +14,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Visible area');
 
 function main() {
-	var page, PM,
+	var page, mgs,
 		visLayer, dieLayer,
 		oldFrame, frames;
 	var visLayerName = findLayer([
@@ -32,20 +32,27 @@ function main() {
 		'stanz', 'Stanz', 'stanze', 'Stanze',
 		'stanzform', 'Stanzform'
 	]);
-	var visSwatchName = 'Visible area';
+	var visFrame = {
+		swatchName:  'Visible area',
+		swatchModel: ColorModel.SPOT,
+		swatchSpace: ColorSpace.RGB,
+		swatchValue: [ 255, 180, 0 ],
+		strokeWeight: '0.75 pt',
+		strokeType: '$ID/Canned Dashed 3x2'
+	};
 	var visAreaRE = /^<?(visible|safe) area>?$/i;
 
 	for (var i = 0, n = doc.pages.length; i < n; i++) {
 		page = doc.pages[i];
-		PM = page.marginPreferences;
-		if (PM.top + PM.left + PM.bottom + PM.right === 0) continue;
+		mgs = page.marginPreferences;
+		if (mgs.top + mgs.left + mgs.bottom + mgs.right === 0) continue;
 		// Make swatch
-		if (!doc.colors.itemByName(visSwatchName).isValid) {
+		if (!doc.colors.itemByName(visFrame.swatchName).isValid) {
 			doc.colors.add({
-				name: visSwatchName,
-				model: ColorModel.SPOT,
-				space: ColorSpace.CMYK,
-				colorValue: [ 0, 100, 0, 0 ]
+				name: visFrame.swatchName,
+				model: visFrame.swatchModel,
+				space: visFrame.swatchSpace,
+				colorValue: visFrame.swatchValue
 			});
 		}
 		// Make layer
@@ -83,19 +90,19 @@ function main() {
 			label: 'visible area',
 			contentType: ContentType.UNASSIGNED,
 			fillColor: 'None',
-			strokeColor: visSwatchName,
-			strokeWeight: '0.75pt',
+			strokeColor: visFrame.swatchName,
+			strokeWeight: visFrame.strokeWeight,
 			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
-			strokeType: '$ID/Canned Dashed 3x2',
+			strokeType: visFrame.strokeType,
 			overprintStroke: false,
 			itemLayer: visLayerName,
 			geometricBounds: [
-				page.bounds[0] + PM.top,
+				page.bounds[0] + mgs.top,
 				(page.side === PageSideOptions.LEFT_HAND) ?
-					page.bounds[1] + PM.right : page.bounds[1] + PM.left,
-				page.bounds[2] - PM.bottom,
+					page.bounds[1] + mgs.right : page.bounds[1] + mgs.left,
+				page.bounds[2] - mgs.bottom,
 				(page.side === PageSideOptions.LEFT_HAND) ?
-					page.bounds[3] - PM.left : page.bounds[3] - PM.right
+					page.bounds[3] - mgs.left : page.bounds[3] - mgs.right
 			]
 		});
 		visLayer.locked = true;
