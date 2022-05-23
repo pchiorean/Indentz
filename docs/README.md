@@ -293,11 +293,11 @@ The text from the **Suffix** field will be appended to the exported file name (i
 
 It can run a JavaScript or AppleScript before exporting, e.g., one of the following:
 
+#### **`MarkVisibleArea`**
+Creates a frame the size of the page margins on the `visible area` layer. It will use the `Visible area` swatch, which will be created with the values R=255 G=180 B=0 if it doesn't exist.
+
 #### **`PrepareForExport`**
 Hides `covered areas`, `visible area`, `safety margins`, `safe area`, `segmentation` and `guides` layers and moves all page objects from `dielines`, `die cut`, `varnish`, `uv`, `foil`, `silver` and `white` to separate spreads.
-
-#### **`MarkVisibleArea`**
-Creates a frame the size of the page margins on the `visible area` layer. It will use the `Visible area` swatch, which will be created with the value “C=0 M=100 Y=0 K=0” if it doesn't exist.
 
 #### **`ShowDNPLayers`** / **`HideDNPLayers`**
 Shows or hides the following 'do-not-print' layers: `covered areas`, `visible area`, `*vi?ib*`, `vis?*`, `safety margins`, `safe area`, `segmentation`, `rahmen` and `sicht*`.
@@ -394,6 +394,6 @@ All scripts are created by me unless otherwise noted.
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • May 22, 2022
+README.md • May 23, 2022
 
 [^1]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
