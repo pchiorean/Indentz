@@ -1,18 +1,20 @@
 ﻿/*
-	Replace text snippets 22.5.22
+	Replace text snippets 22.5.24
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces a list of snippets from a 4-column TSV file named 'snippets.txt':
 
-	Find what              | Change to                | Case sensitive | Whole word
-	English instruction    | Deutsche anleitung       | yes            | yes
-	The sample is for free | Das Sample ist kostenlos | yes            | yes
+	Find what              | Change to                 | Case sensitive | Whole word | Scope
+	English instructions   | Deutsche anleitung        | yes            | yes
+	The sample is for free | Das Sample ist kostenlos  | yes            | yes        | _DE$
+	The sample is for free | L'échantillon est gratuit | yes            | yes        | _FR$
 	12.06.22               | 13.11.2022
 	...
 	1. <Find what>: text to be replaced
 	2. <Change to>: the new text
-	3. <Case sensitive>: 'yes' or 'no' (default 'no')
+	3. <Case sensitive>: 'yes' or 'no' (default 'yes')
 	4. <Whole word>: 'yes' or 'no' (default 'yes')
+	5. <Scope>: replacement will only be done if this string appears in the filename (regex)
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
@@ -41,6 +43,7 @@
 */
 
 // @include '../lib/GetDataFile.jsxinc';
+// @include '../lib/ReplaceText.jsxinc';
 // @include '../lib/Report.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
@@ -52,6 +55,7 @@ function main() {
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, data, messages, i, n;
 	var counter = 0;
+
 	if (doc.converted && VERBOSITY > 0) {
 		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
 		'The default snippet substitution list will be used.');
@@ -63,28 +67,23 @@ function main() {
 		}
 		exit();
 	}
+
 	data = parseDataFile(file);
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length > 0) {
 		for (i = 0, n = data.records.length; i < n; i++) {
-			app.findTextPreferences   = NothingEnum.NOTHING;
-			app.changeTextPreferences = NothingEnum.NOTHING;
-			app.findChangeTextOptions.includeHiddenLayers         = true;
-			app.findChangeTextOptions.includeLockedLayersForFind  = true;
-			app.findChangeTextOptions.includeLockedStoriesForFind = true;
-			app.findChangeTextOptions.includeMasterPages          = true;
-			app.findChangeTextOptions.caseSensitive = data.records[i].caseSensitive;
-			app.findChangeTextOptions.wholeWord     = data.records[i].wholeWord;
-			app.findTextPreferences.findWhat        = data.records[i].findWhat;
-			app.changeTextPreferences.changeTo      = data.records[i].changeTo;
-			if (doc.changeText().length > 0) {
+			if (data.records[i].scope && !data.records[i].scope.test(decodeURI(doc.name))) continue;
+			if (replaceText(
+					data.records[i].findWhat,
+					data.records[i].changeTo,
+					data.records[i].caseSensitive,
+					data.records[i].wholeWord
+				)) {
 				counter++;
 				data.errors.info.push('Replaced \'' + data.records[i].findWhat +
 					'\' with \'' + data.records[i].changeTo + '\'.');
 			}
 		}
-		app.findTextPreferences   = NothingEnum.NOTHING;
-		app.changeTextPreferences = NothingEnum.NOTHING;
 	}
 	if (VERBOSITY > 0) {
 		messages = data.errors.warn;
@@ -136,6 +135,7 @@ function main() {
 				continue;
 			}
 			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
+			record = record.replace(/^\s+|\s+$/g, '');
 			record = record.split(/ *\t */);
 			checkRecord();
 		}
@@ -152,8 +152,9 @@ function main() {
 				records.push({
 					findWhat: record[0],
 					changeTo: record[1],
-					caseSensitive: record[2] ? (record[2].toLowerCase() === 'yes') : false,
-					wholeWord:     record[3] ? (record[3].toLowerCase() === 'yes') : true
+					caseSensitive: record[2] ? (record[2].toLowerCase() === 'yes') : true,
+					wholeWord:     record[3] ? (record[3].toLowerCase() === 'yes') : true,
+					scope:         record[4] ? RegExp(record[4], 'g') : ''
 				});
 			}
 			errors = {
