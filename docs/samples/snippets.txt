@@ -1,9 +1,9 @@
 Find what              	Change to                 	Case sensitive 	Whole word 	Scope
-English instructions   	Deutsche anleitung        	yes            	yes        
+English instructions   	Deutsche anleitung        	yes            	yes
 The sample is for free 	Das Sample ist kostenlos  	yes            	yes        	_DE$
 The sample is for free 	L'échantillon est gratuit 	yes            	yes        	_FR$
-12.06.22               	13.11.2022                
-                       
+12.06.22               	13.11.2022
+
 # <Find what>: text to be replaced
 # <Change to>: the new text
 # <Case sensitive>: 'yes' or 'no' (defaults to 'no')
