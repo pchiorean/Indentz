@@ -3,6 +3,8 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.4.11...master)
 
+- [`new`](https://github.com/pchiorean/Indentz/commit/01003af9e7d6a59f6b8a59c4626c4bf85a3db6f1)
+  **ReplaceSnippets**: Added a scope limiting column – replacement will only be done if a string appears in the filename (regex)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/f82d55a4d1c7b17d6c8b00e9669770e04aac441b)
   **MarkVisibleArea, PageSizeFromFilename**: Updated 'Visible area' swatch
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2d43649c6fcb012b8ab4ed28901059245415829a)
