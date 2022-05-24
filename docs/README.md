@@ -110,17 +110,19 @@ Replaces document links using a TSV substitution file[^1] named [**`links.txt`**
 #### **`ReplaceSnippets`**
 Replaces a list of text snippets using a TSV substitution file[^1] named [**`snippets.txt`**](samples/snippets.txt):
 
-| Find what              | Change to                | Case sensitive | Whole word |
-| :-                     | :-                       | :-             | :-         |
-| English instruction    | Deutsche anleitung       | yes            | yes        |
-| The sample is for free | Das Sample ist kostenlos | yes            | yes        |
-| 12.06.22               | 13.11.2022               |                |            |
-| ...                    |                          |                |            |
+| Find what              | Change to                 | Case sensitive | Whole word | Scope
+| :-                     | :-                        | :-             | :-         | :-
+| English instructions   | Deutsche anleitung        | yes            | yes        |
+| The sample is for free | Das Sample ist kostenlos  | yes            | yes        | _DE$
+| The sample is for free | L'échantillon est gratuit | yes            | yes        | _FR$
+| 12.06.22               | 13.11.2022                |                |            |
+| ...                    |                           |                |            |
 
 > **Find what**: text to be replaced\
 > **Change to**: the new text\
-> **Case sensitive**: `yes` or `no` (defaults to `no`)\
-> **Whole word**: `yes` or `no` (defaults to `yes`)
+> **Case sensitive**: `yes` or `no` (defaults to `yes`)\
+> **Whole word**: `yes` or `no` (defaults to `yes`)\
+> **Scope**: replacement will only be done if this string appears in the filename (regex)
 
 #### **`DocCleanup`** <small>F2</small>
 It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
@@ -394,6 +396,6 @@ All scripts are created by me unless otherwise noted.
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • May 23, 2022
+README.md • May 24, 2022
 
 [^1]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
