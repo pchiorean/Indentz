@@ -1,5 +1,5 @@
 /*
-	Default swatches 22.4.16
+	Default swatches 22.5.24
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 5-column TSV file named 'swatches.txt':
@@ -178,6 +178,7 @@ function main() {
 				continue;
 			}
 			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
+			record = record.replace(/^\s+|\s+$/g, '');
 			record = record.split(/ *\t */);
 			checkRecord();
 		}

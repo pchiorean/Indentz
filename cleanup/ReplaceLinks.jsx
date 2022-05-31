@@ -1,5 +1,5 @@
 /*
-	Replace links 22.4.16
+	Replace links 22.5.24
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
@@ -141,6 +141,7 @@ function main() {
 				continue;
 			}
 			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
+			record = record.replace(/^\s+|\s+$/g, '');
 			record = record.split(/ *\t */);
 			checkRecord();
 		}
