@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 22.4.13
+	Batch QR codes 22.6.8
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -105,7 +105,7 @@ function main() {
 
 	// UI callback functions
 	ui.options.reload.onClick = function () {
-		var infoLine, fC, ll;
+		var record, fC, ll;
 		var line = 0;
 		var flgHeader = isEmpty = isComment = isHeader = false;
 		dataFile = '';
@@ -124,31 +124,32 @@ function main() {
 			dataFile.open('r');
 			dataFile.encoding = 'UTF-8';
 			while (!dataFile.eof) {
-				infoLine = '';
+				record = '';
 				isEmpty = isComment = isHeader = false;
-				infoLine = dataFile.readln(); line++;
-				if (infoLine.replace(/^\s+|\s+$/g, '') === '') isEmpty = true;
-				else if (infoLine.toString().slice(0,1) === '\u0023') isComment = true;
-				infoLine = infoLine.split(/ *\t */);
+				record = dataFile.readln(); line++;
+				if (record.replace(/^\s+|\s+$/g, '') === '') isEmpty = true;
+				else if (record.toString().slice(0,1) === '\u0023') isComment = true;
+				record = record.replace(/^\s+|\s+$/g, '');
+				record = record.split(/ *\t */);
 				if (!flgHeader) if (!isEmpty && !isComment) isHeader = flgHeader = true;
 				if (!isEmpty && !isComment && !isHeader) {
-					if (infoLine[0]) {
-						if ((fC = infoLine[0].match(forbiddenFilenameCharsRE))) {
+					if (record[0]) {
+						if ((fC = record[0].match(forbiddenFilenameCharsRE))) {
 							errors.push('Line ' + line + ': Forbidden characters in the filename: \'' +
 							fC.join('\', \'') + '\'.');
 						}
-						if (!/\.indd$/i.test(infoLine[0])) infoLine[0] += '.indd';
-						if (infoLine[2] && !File(currentPath + '/' + infoLine[0]).exists)
-							errors.push('Line ' + line + ": File '" + infoLine[0] + "' not found.");
-						if (!infoLine[1]) errors.push('Line ' + line + ': Missing code.');
-						pbWidth = Math.max(pbWidth, infoLine[0].length);
+						if (!/\.indd$/i.test(record[0])) record[0] += '.indd';
+						if (record[2] && !File(currentPath + '/' + record[0]).exists)
+							errors.push('Line ' + line + ": File '" + record[0] + "' not found.");
+						if (!record[1]) errors.push('Line ' + line + ': Missing code.');
+						pbWidth = Math.max(pbWidth, record[0].length);
 					} else { errors.push('Line ' + line + ': Missing filename.'); }
 					if (errors.length === 0) validLines.push(line);
 				}
 				rawData.push({
-					fn: infoLine[0],
-					code: infoLine[1],
-					onDoc: infoLine[2],
+					fn: record[0],
+					code: record[1],
+					onDoc: record[2],
 					valid: (!isEmpty && !isComment && !isHeader),
 					exported: false
 				});
@@ -160,7 +161,7 @@ function main() {
 				}
 			}
 			dataFile.close();
-			infoLine = '';
+			record = '';
 		}
 		ui.list.onChange();
 	};
