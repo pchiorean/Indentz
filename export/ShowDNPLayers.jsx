@@ -1,5 +1,5 @@
 /*
-	Show DNP layers 22.2.10
+	Show DNP layers 22.6.8
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Shows DO-NOT-PRINT layers.
@@ -12,6 +12,7 @@ if (app.documents.length === 0) exit();
 
 (function (doc) {
 	var layerNames = [
+		'-*', '.*',
 		'covered area*',
 		'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*',
 		'safety margins', 'safe area', 'segmentation',
