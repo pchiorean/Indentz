@@ -12,8 +12,8 @@ function replaceText(findWhat, changeTo, wholeWord) {
 	app.changeTextPreferences = NothingEnum.NOTHING;
 
 	app.findChangeTextOptions.includeHiddenLayers         = true;
-	app.findChangeTextOptions.includeLockedLayersForFind  = true;
-	app.findChangeTextOptions.includeLockedStoriesForFind = true;
+	app.findChangeTextOptions.includeLockedLayersForFind  = false;
+	app.findChangeTextOptions.includeLockedStoriesForFind = false;
 	app.findChangeTextOptions.includeMasterPages          = true;
 	app.findChangeTextOptions.caseSensitive               = true;
 	app.findChangeTextOptions.wholeWord                   = wholeWord;
