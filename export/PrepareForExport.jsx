@@ -1,5 +1,5 @@
 /*
-	Prepare for export 22.5.22
+	Prepare for export 22.6.8
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves objects with special colors to separate spreads.
@@ -37,6 +37,7 @@ function prepareForExport() {
 	var i, n, l, variants;
 	var infoLayer = doc.layers.item('info');
 	var layerNames = {
+		hidden:   [ '-*', '.*' ],
 		covered:  [ 'covered area*' ],
 		visible:  [ 'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ],
 		safe:     [ 'safety margins', 'safe area', 'segmentation' ],
@@ -65,6 +66,7 @@ function prepareForExport() {
 		for (variants in layerNames) {
 			if (isInArray(l.name, layerNames[variants])) {
 				switch (layerNames[variants][0]) {
+					case layerNames.hidden[0]:
 					case layerNames.covered[0]:
 					case layerNames.visible[0]:
 					case layerNames.safe[0]:
