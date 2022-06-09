@@ -1,5 +1,5 @@
 ﻿/*
-	Replace text snippets 22.5.24
+	Replace text snippets 22.6.8
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces a list of snippets from a 4-column TSV file named 'snippets.txt':
@@ -14,7 +14,7 @@
 	2. <Change to>: the new text
 	3. <Case sensitive>: 'yes' or 'no' (default 'yes')
 	4. <Whole word>: 'yes' or 'no' (default 'yes')
-	5. <Scope>: replacement will only be done if this string appears in the filename (regex)
+	5. <Scope>: replacement will only be done if the filename matches this regular expression
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
