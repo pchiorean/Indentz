@@ -3,10 +3,6 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.4.11...master)
 
-- [`TODO`]() Check (c) years
-- [`TODO`]() **ScaleTo**: When scaling use the proxy reference
-- [`brk`]() `?` **ScaleTo...**: Scale to `alignDistributeBounds`
-
 - [`upd`](https://github.com/pchiorean/Indentz/commit/46c84c90a44341c32226db552eb246ffa55bdc70)
   [`upd`](https://github.com/pchiorean/Indentz/commit/820c66f426c004b1a0fbf5faf54bce502b3d7d39)
   **PrepareForExport, Show/HideDNPLayers**: All layers starting with hyphen or dot are now included in the 'do-not-print' list
