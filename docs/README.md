@@ -4,9 +4,9 @@ A collection of InDesign scripts for various simple and repetitive tasks.
 
 ## About
 
-As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown, I had some extra time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow, but I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). The code was developed and tested in Adobe CC 2020 (and later) on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one).
+As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown I found some time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow, but I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). The code was developed and tested in Adobe CC 2020 (and later) on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one).
 
-I mainly use shortcuts to launch them (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**), so I suggest a few below (for Mac).
+I mainly use shortcuts to launch them (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**), so I've suggested a few below (for Mac).
 
 ---
 
@@ -52,11 +52,13 @@ Sets some preferences for the current document.
 #### **`DefaultLayers`**
 Adds a set of layers defined in a TSV *(tab-separated values)* file[^1] named [**`layers.txt`**](samples/layers.txt):
 
-| Name         | Color   | Visible | Printable | Order | Variants                               |
-| :-           | :-      | :-      | :-        | :-    | :-                                     |
-| **dielines** | Magenta | yes     | yes       | above | cut\*, decoupe, die, die\*cut, stanz\* |
-| **template** | Gray    | no      | no        | below |                                        |
-| ...          |         |         |           |       |                                        |
+| Name         | Color   | Visible | Printable | Order | Variants                                           |
+|:-------------|:--------|:--------|:----------|:------|:---------------------------------------------------|
+| **dielines** | Magenta | yes     | yes       | above | cut\*, decoupe, die, die\*cut, stanz\*             |
+| **text**     | Green   |         |           |       | copy, headline\*, hl, text\*, txt, typ?            |
+| **bg**       | Red     |         |           | below | back, \*background\*, bgg, fond, hg, hintergrund\* |
+| **template** | Gray    | no      | no        | below |                                                    |
+| ...          |         |         |           |       |                                                    |
 
 > **Name**: layer name\
 > **Color**: layer color (defaults to `Light Blue`; see [**`UIColors.txt`**](misc/UIColors.txt) for color names)\
@@ -68,12 +70,12 @@ Adds a set of layers defined in a TSV *(tab-separated values)* file[^1] named [*
 #### **`DefaultSwatches`**
 Adds swatches defined in a TSV file[^1] named [**`swatches.txt`**](samples/swatches.txt):
 
-| Name           | Color model | Color space | Values       | Variants       |
-| :-             | :-          | :-          | :-           | :-             |
-| **Rich Black** | process     | cmyk        | 60 40 40 100 |                |
-| **RGB Grey**   | process     | rgb         | 128 128 128  |                |
-| **Cut**        | spot        | cmyk        | 0 100 0 0    | couper, diecut |
-| ...            |             |             |              |                |
+| Name           | Color model | Color space | Values       | Variants         |
+|:---------------|:------------|:------------|:-------------|:-----------------|
+| **Rich Black** | process     | cmyk        | 60 40 40 100 |                  |
+| **RGB Grey**   | process     | rgb         | 128 128 128  |                  |
+| **Cut**        | spot        | cmyk        | 0 100 0 0    | couper, die\*cut |
+| ...            |             |             |              |                  |
 
 > **Name**: swatch name\
 > **Color model**: `process` or `spot` (defaults to `process`)\
@@ -87,7 +89,7 @@ You can use [**`SwatchesSave`**](#swatchessave) to get a tab delimited list of s
 Replaces document fonts using a TSV substitution file[^1] named [**`fonts.txt`**](samples/fonts.txt):
 
 | Old font family | Style   | New font family    | Style   |
-| :-              | :-      | :-                 | :-      |
+|:----------------|:--------|:-------------------|:--------|
 | **Arial**       | Regular | **Helvetica Neue** | Regular |
 | **Arial**       | Bold    | **Helvetica Neue** | Bold    |
 | ...             |         |                    |         |
@@ -98,10 +100,10 @@ You can use [**`ShowFonts`**](#showfonts) from [**Miscellaneous**](#miscellaneou
 Replaces document links using a TSV substitution file[^1] named [**`links.txt`**](samples/links.txt):
 
 | New link path             | Document links              |
-| :-                        | :-                          |
+|:--------------------------|:----------------------------|
 | **path/to/img1.psd**      | img1.*                      |
 | **path/to/img2-cmyk.tif** | img2_lowres.jpg, img2-rgb.* |
-| **path/to/img3.tif**      | [img3.tif]                  |
+| **path/to/img3.tif**      |                             |
 | ...                       |                             |
 
 > **New link path**: new link's absolute path\
@@ -110,19 +112,19 @@ Replaces document links using a TSV substitution file[^1] named [**`links.txt`**
 #### **`ReplaceSnippets`**
 Replaces a list of text snippets using a TSV substitution file[^1] named [**`snippets.txt`**](samples/snippets.txt):
 
-| Find what              | Change to                 | Case sensitive | Whole word | Scope
-| :-                     | :-                        | :-             | :-         | :-
-| English instructions   | Deutsche anleitung        | yes            | yes        |
-| The sample is for free | Das Sample ist kostenlos  | yes            | yes        | _DE$
-| The sample is for free | L'échantillon est gratuit | yes            | yes        | _FR$
-| 12.06.22               | 13.11.2022                |                |            |
-| ...                    |                           |                |            |
+| Find what              | Change to                 | Case sensitive | Whole word | Scope |
+|:-----------------------|:--------------------------|:---------------|:-----------|:------|
+| English instructions   | Deutsche anleitung        | yes            | yes        |       |
+| The sample is for free | Das Sample ist kostenlos  | yes            | yes        | _DE$  |
+| The sample is for free | L'échantillon est gratuit | yes            | yes        | _FR$  |
+| 12.06.22               | 13.11.2022                |                |            |       |
+| ...                    |                           |                |            |       |
 
 > **Find what**: text to be replaced\
 > **Change to**: the new text\
 > **Case sensitive**: `yes` or `no` (defaults to `yes`)\
 > **Whole word**: `yes` or `no` (defaults to `yes`)\
-> **Scope**: replacement will only be done if this string appears in the filename (regex)
+> **Scope**: replacement will only be done if the filename matches this [regular expression](https://regex101.com)[^2]
 
 #### **`DocCleanup`** <small>F2</small>
 It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
@@ -142,20 +144,20 @@ Document setup – page size, margins & columns, guides.
 #### **`PageSizeFromFilename`** <small>F3</small>
 Sets the size of the page and the margins/visible area, getting dimensions from the filename. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
 
-| Filename                                    | Total size | Visible area | Bleed |
-| :-                                          | :-         | :-           | :-    |
-| **File1\_315x55\.indd**                     | 315x55     | –            | –     |
-| **File2\_1400x400\_700x137mm\.indd**        | 1400x400   | 700x137      | –     |
-| **File3\_597x517\_577x500.5\_3mm V4\.indd** | 597x517    | 577x500.5    | 3     |
+| Filename                                        | Total size | Visible area | Bleed |
+|:------------------------------------------------|:-----------|:-------------|:------|
+| **Document1\_315x55\.indd**                     | 315×55     | –            | –     |
+| **Document2\_1400x400\_700x137mm\.indd**        | 1400×400   | 700×137      | –     |
+| **Document3\_597x517\_577x500.5\_3mm V4\.indd** | 597×517    | 577×500.5    | 3     |
 
 #### **`PageSizeFromMargins`**
 Resizes the current page to its margins.
 
 #### **`PageSizeFromSelection`** <small>⇧F3</small>
-Resizes the page to the selected objects (similar to **Artboards ‣ Fit to Selected Art** in Illustrator).
+Resizes the page to the selected objects.
 
 #### **`PageMarginsFromSelection`** <small>⌥F3</small>
-Sets the page margins to the selected objects.
+Sets the page margins from the selected objects.
 
 #### **`GuidesAdd`**
 If any page objects are selected, it adds spread guides around them.
@@ -172,7 +174,7 @@ Deletes all guides from the document.
 Align page objects with ease using the numeric keypad.
 
 #### **`ToggleAlignTo`** <small>Num0</small>
-Toggles **Align To** between selection, margins, page or spread (just run it repeatedly).
+Toggles **Align To** between selection, margins, page or spread (just run it repeatedly):
 
 ![Align Panel screenshot](img/alignto.png)
 
@@ -184,8 +186,8 @@ Use the numeric keypad to instantly align the selected object to the **Align To*
 
 <details><summary><strong>Shortcuts</strong></summary>
 
-| Left              |   Fn | Center           |   Fn | Right             |   Fn |
-| :-                |   -: | :-               |   -: | :-                |   -: |
+| Left              |  Key | Center           |  Key | Right             |  Key |
+|:------------------|-----:|:-----------------|-----:|:------------------|-----:|
 | **AlignToTL.jsx** | Num7 | **AlignToT.jsx** | Num8 | **AlignToTR.jsx** | Num9 |
 | **AlignToL.jsx**  | Num4 | **AlignToC.jsx** | Num5 | **AlignToR.jsx**  | Num6 |
 | **AlignToBL.jsx** | Num1 | **AlignToB.jsx** | Num2 | **AlignToBR.jsx** | Num3 |
@@ -197,7 +199,7 @@ Use the numeric keypad to instantly align the selected object to the **Align To*
 ### Fit
 
 #### **`FitToPage...`** / **`FitToSpread...`**
-These scripts reframe the selected objects to the page/spread or their margins/bleed by reducing the edges of objects or clipping frames that cross the target and extending ones that touch it or are very close (1% snap zone).
+These scripts reframe the selected objects to the page/spread or their margins/bleed by reducing the edges of objects or clipping frames that cross the target and extending ones that touch it or are very close (in a 1% snap zone).
 
 Rectangular frames and orthogonal lines are directly resized; rotated objects, ovals, groups, etc. are inserted into a clipping frame that is resized.
 
@@ -205,8 +207,8 @@ Rectangular frames and orthogonal lines are directly resized; rotated objects, o
 
 <details><summary><strong>Shortcuts</strong></summary>
 
-| Page                               |     Fn | Spread                               |     Fn |
-| :-                                 |     -: | :-                                   |     -: |
+| Page                               |    Key | Spread                               |    Key |
+|:-----------------------------------|-------:|:-------------------------------------|-------:|
 | **FitToPage.jsx**                  |    F11 | **FitToSpread.jsx**                  |    F12 |
 | **FitToPageMargins.jsx**           |   ⌥F11 | **FitToSpreadMargins.jsx**           |   ⌥F12 |
 | **FitToPageVisibleArea.jsx**       |  ⌥⇧F11 | **FitToSpreadVisibleArea.jsx**       |  ⌥⇧F12 |
@@ -244,8 +246,8 @@ The **`ScaleTo...H`** and **`ScaleTo...W`** variants scale to the height or widt
 
 <details><summary><strong>Shortcuts</strong></summary>
 
-| Page                     |  Fn | Page margins                |   Fn | Spread bleed                |   Fn |
-| :-                       |  -: | :-                          |   -: | :-                          |   -: |
+| Page                     | Key | Page margins                |  Key | Spread bleed                |  Key |
+|:-------------------------|----:|:----------------------------|-----:|:----------------------------|-----:|
 | **ScaleToPageSize.jsx**  |  F5 | **ScaleToPageMargins.jsx**  |  ⌥F5 | **ScaleToSpreadBleed.jsx**  |  ⇧F5 |
 | **ScaleToPageSizeH.jsx** | ⌃F5 | **ScaleToPageMarginsH.jsx** | ⌃⌥F5 | **ScaleToSpreadBleedH.jsx** | ⌃⇧F5 |
 
@@ -256,12 +258,14 @@ The **`ScaleTo...H`** and **`ScaleTo...W`** variants scale to the height or widt
 ### Proxy
 
 #### **`SetRefPoint...`**
-Use the numeric keypad to quickly set the reference point used for transformations (similar to clicking the little proxy squares in the **Transform** palette).
+Use the numeric keypad to quickly set the reference point used for transformations (similar to clicking the little proxy squares in the **Control** palette):
+
+![Proxy](img/proxy.png)
 
 <details><summary><strong>Shortcuts</strong></summary>
 
-| Left                  |    Fn | Center               |    Fn | Right                 |    Fn |
-| :-                    |    -: | :-                   |    -: | :-                    |    -: |
+| Left                  |   Key | Center               |   Key | Right                 |   Key |
+|:----------------------|------:|:---------------------|------:|:----------------------|------:|
 | **SetRefPointTL.jsx** | ⌃Num7 | **SetRefPointT.jsx** | ⌃Num8 | **SetRefPointTR.jsx** | ⌃Num9 |
 | **SetRefPointL.jsx**  | ⌃Num4 | **SetRefPointC.jsx** | ⌃Num5 | **SetRefPointR.jsx**  | ⌃Num6 |
 | **SetRefPointBL.jsx** | ⌃Num1 | **SetRefPointB.jsx** | ⌃Num2 | **SetRefPointBR.jsx** | ⌃Num3 |
@@ -289,20 +293,20 @@ Exports to PDF all opened documents or, with nothing opened, all documents from 
 
 For convenience, some export options are directly accessible: export as pages/spreads, include crop marks, page information, slug area, you can set a custom bleed. There are two export presets that can be used simultaneously or one at a time:
 
-![Quick export](img/quickexport.png)
+![Quick export](img/script-quickexport.png)
 
-The text from the **Suffix** field will be appended to the exported file name (it's autodetected if the preset ends with `_suffix`). If **Export in subfolders** is checked, the suffix (up to the first `+`) will also be used for the subfolder name.
+The text from the **Suffix** field will be appended to the exported file name (it's autodetected if the preset ends with `_suffix`). If **Export in subfolders** is checked, the suffix (up to the first `+`[^3]) will also be used for the subfolder name.
 
 It can run a JavaScript or AppleScript before exporting, e.g., one of the following:
 
 #### **`MarkVisibleArea`**
-Creates a frame the size of the page margins on the `visible area` layer. It will use the `Visible area` swatch, which will be created with the values R=255 G=180 B=0 if it doesn't exist.
+Creates a frame the size of the page margins on the **visible area** layer. It will use the **Visible area** swatch, which will be created with the values R=255 G=180 B=0 if it doesn't exist.
 
 #### **`PrepareForExport`**
-Hides `covered areas`, `visible area`, `safety margins`, `safe area`, `segmentation` and `guides` layers and moves all page objects from `dielines`, `die cut`, `varnish`, `uv`, `foil`, `silver` and `white` to separate spreads.
+Hides **covered areas**, **visible area**, **safety margins**, **safe area**, **segmentation** and **guides** layers and moves all page objects from **dielines**, **die cut**, **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads.
 
 #### **`ShowDNPLayers`** / **`HideDNPLayers`**
-Shows or hides the following 'do-not-print' layers: `covered areas`, `visible area`, `*vi?ib*`, `vis?*`, `safety margins`, `safe area`, `segmentation`, `rahmen` and `sicht*`.
+Shows or hides the following “do-not-print” layers: **covered areas**, **visible area**, **\*vi?ib\***, **vis?\***, **safety margins**, **safe area**, **segmentation**, **rahmen** and **sicht\***, and all layers starting with either a dot or a hyphen.
 
 ---
 
@@ -343,29 +347,37 @@ Adds a label with the page aspect ratio, on the slug of each page, on the **info
 Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
 
 #### **`QR`** <small>F9</small>
-Adds a QR code on each spread of the active document or to separate PDF files.
 
-If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, the code of each spread will have the appropriate suffix; when separate files are generated, they will be named in the same way (e.g., for **`Document_ABC.indd`** with three spreads, **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`** and **`Document_C_QR.pdf`** will be generated).
+Adds a QR code on each spread of the active document or to separate PDF files[^4]:
 
-You can insert “|” for manually splitting the label into several lines.
+![QR](img/script-qr.png)
+
+The code looks like this:
+
+|             On document             |             On file              |
+|:-----------------------------------:|:--------------------------------:|
+| ![QR on document](img/qr-ondoc.png) | ![QR on file](img/qr-onfile.png) |
+
+If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, the code of each spread will have the appropriate suffix; when separate files are generated, they will be named appropriately (e.g., for **`Document_ABC.indd`** with three spreads, **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`** and **`Document_C_QR.pdf`** will be generated).
+
+You can insert `|` for manually splitting the label into several lines.
 
 #### **`QRBatch`** <small>⇧F9</small>
-Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV file named [**`qr.txt`**](samples/qr.txt) and adds them to existing documents or creates separate files (the suffix thing applies here as well):
+Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV file[^5] named [**`qr.txt`**](samples/qr.txt) and adds them to existing documents or creates separate files (the suffix thing applies here as well):
 
-| Filename       | Code   | On doc |
-| :-             | :-     | :-:    |
-| **File 1**     | Code 1 | +      |
-| **File 2_ABC** | Code 2 | +      |
-| **File 3_AC**  | Code 3 |        |
-| ...            |        |        |
+| Filename           | Code   | On doc |
+|:-------------------|:-------|:------:|
+| **Document 1**     | Code 1 |   +    |
+| **Document 2_ABC** | Code 2 |   +    |
+| **Document 3_AC**  | Code 3 |        |
+| ...                |        |        |
 
 > **Filename**: document name\
 > **Code**: any string\
 > **On doc**: any string: on existing document; empty or missing: on separate file
 
-You can insert “|” for manually splitting the label into several lines.
+You can insert `|` for manually splitting the label into several lines.
 
-The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence. Blank lines and those prefixed with `#` are ignored.
 
 #### **`ShowFonts`**
 Shows all fonts used in the current document.
@@ -396,6 +408,10 @@ All scripts are created by me unless otherwise noted.
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • May 24, 2022
+README.md • June 9, 2022
 
-[^1]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in `Indentz` root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+[^1]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in **`Indentz`** root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+[^2]: For example, in **`Document_DE.indd`** “The sample is for free” will be replaced with “Das Sample ist kostenlos”, and for **`Document_FR.indd`** with “L'échantillon est gratuit”.
+[^3]: For example, if the suffix is `print+diecut`, the document will be saved as **`Document_print+diecut.pdf`** in a subfolder named **`print`**.
+[^4]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
+[^5]: The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence. Blank lines and those prefixed with `#` are ignored.

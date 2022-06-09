@@ -3,6 +3,18 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.4.11...master)
 
+- [`TODO`]() Check (c) years
+- [`TODO`]() **ScaleTo**: When scaling use the proxy reference
+- [`brk`]() `?` **ScaleTo...**: Scale to `alignDistributeBounds`
+
+- [`upd`](https://github.com/pchiorean/Indentz/commit/46c84c90a44341c32226db552eb246ffa55bdc70)
+  [`upd`](https://github.com/pchiorean/Indentz/commit/820c66f426c004b1a0fbf5faf54bce502b3d7d39)
+  **PrepareForExport, Show/HideDNPLayers**: All layers starting with hyphen or dot are now included in the 'do-not-print' list
+- [`upd`](https://github.com/pchiorean/Indentz/commit/7e34318775191b4c6256e6f43711bcd4a3687bab)
+  **lib/ReplaceText**: Skip locked layers & stories
+- [`upd`](https://github.com/pchiorean/Indentz/commit/41af4aafd86e5137f2764d6ca34476bd79bcec9d)
+  [`upd`](https://github.com/pchiorean/Indentz/commit/2783324ef151b8416c7ea306886b17e6f69b73be)
+  **lib/ParseDataFile, DefaultLayers/Swatches/ReplaceFonts/Links, QRBatch**: Trimmed trailing whitespace on import
 - [`new`](https://github.com/pchiorean/Indentz/commit/01003af9e7d6a59f6b8a59c4626c4bf85a3db6f1)
   **ReplaceSnippets**: Added a scope limiting column – replacement will only be done if a string appears in the filename (regex)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/f82d55a4d1c7b17d6c8b00e9669770e04aac441b)
@@ -44,6 +56,7 @@
   **DocCleanup**: Changed visibility and locked state of some technical layers (e.g., 'dielines')
 
 ##### Bug fixes
+
 - [`fix`](https://github.com/pchiorean/Indentz/commit/a0278cdce29715ee9934266fde3e7a024e9c331c)
   **lib/ReplaceLink**: Removed `errors.push()`, we already return boolean status
 - [`fix`](https://github.com/pchiorean/Indentz/commit/5b0f0f8c16283ab59765857efa9ff4e97ae4cf2a)
@@ -56,6 +69,7 @@
   **DocCleanup**: Skip frames with strokes when converting empty frames to graphic frames
 
 ##### Miscellaneous
+
 - [`del`](https://github.com/pchiorean/Indentz/commit/7b768b5f8cce9c6c975beed0c00977e1d8428122)
   Removed `DocDefaults` stub
 - [`ref`](https://github.com/pchiorean/Indentz/commit/015098b840418e3700a3499df0d0fbd49243ef05)
@@ -307,12 +321,11 @@
 - `upd` **ReplaceText**: Add a switch for grep matching
 - `upd` **Report**: Add auto filtering mode (`true`|`false`|`auto`, default `false`)
 - `upd` **Report**: Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
-- `brk` `?` **ScaleTo...**: Scale to `alignDistributeBounds`
 - `upd` **SpreadsToFiles**: Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
 - `upd` **SpreadsToFiles**: Add a placeholder character for custom positioning
 - `upd` **TextAutoSize**: Check `baselineShift`
 - `upd` Use a custom object style for visible area frame
-- `ref` Add `#include` fallback paths ('#includepath')
+- `ref` Add `#include` fallback paths (`#includepath`)
 - `ref` Fix UI static/edittext width (see Marc's [measureString()](https://twitter.com/indiscripts/status/1408788941550108674))
 
 ##### Bug fixes

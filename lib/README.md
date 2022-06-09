@@ -358,7 +358,7 @@ replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 | changeTo    | `string`  |         | New text.                        |
 | [wholeWord] | `boolean` | `true`  | Match whole words. *(Optional.)* |
 
-Replaces a text with another. Unicode characters must be escaped. Returns `true` if a replacement was made, `false` if not.
+Replaces a text with another. Returns `true` if a replacement was made, `false` if not.
 
 #### Example
 
