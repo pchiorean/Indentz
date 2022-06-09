@@ -1,8 +1,9 @@
 ## Changelog
 
-
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.4.11...master)
 
+- [`upd`](https://github.com/pchiorean/Indentz/commit/9b2af349305547bf016d77372cf744445f3617e1)
+  **ScaleTo**: Scaling now takes into account the transformations reference point
 - [`upd`](https://github.com/pchiorean/Indentz/commit/46c84c90a44341c32226db552eb246ffa55bdc70)
   [`upd`](https://github.com/pchiorean/Indentz/commit/820c66f426c004b1a0fbf5faf54bce502b3d7d39)
   **PrepareForExport, Show/HideDNPLayers**: All layers starting with hyphen or dot are now included in the 'do-not-print' list
@@ -322,7 +323,7 @@
 - `upd` **TextAutoSize**: Check `baselineShift`
 - `upd` Use a custom object style for visible area frame
 - `ref` Add `#include` fallback paths (`#includepath`)
-- `ref` Fix UI static/edittext width (see Marc's [measureString()](https://twitter.com/indiscripts/status/1408788941550108674))
+- `ref` Fix UI static/edittext width (see Marc's [measureString](https://twitter.com/indiscripts/status/1408788941550108674))
 
 ##### Bug fixes
 
