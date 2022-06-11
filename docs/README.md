@@ -284,6 +284,11 @@ Saves each spread of the active document to a separate file.
 
 If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, each file will have the appropriate suffix (e.g., **`Document_ABC.indd`** with three spreads will be split in **`Document_A.indd`**, **`Document_B.indd`** and **`Document_C.indd`**).
 
+#### **`LayersToSpreads`**
+Moves all layers of the active document to separate spreads (document must have a single spread).
+
+You can use **`SpreadsToFiles`** to save them in separate documents.
+
 ---
 
 ### Export
@@ -408,7 +413,7 @@ All scripts are created by me unless otherwise noted.
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • June 9, 2022
+README.md • June 11, 2022
 
 [^1]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in **`Indentz`** root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 [^2]: For example, in **`Document_DE.indd`** “The sample is for free” will be replaced with “Das Sample ist kostenlos”, and for **`Document_FR.indd`** with “L'échantillon est gratuit”.

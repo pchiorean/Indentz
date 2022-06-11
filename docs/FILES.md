@@ -70,6 +70,7 @@ Name                               |    Fn  | Description
 **File**                           |        | **File management**
 `FilesToSpreads.jsx`               |        | Combines the open documents, sorted alphabetically
 `SpreadsToFiles.jsx`               |        | Saves the spreads of the active document in separate files
+`LayersToSpreads.jsx`              |        | Moves layers of the active document to separate spreads
 **Export**                         |        | **Document export and related**
 `QuickExport.jsx`                  |        | Exports open .indd documents or a folder with several configurable PDF presets
 `PrepareForExport.jsx`             |        | Hides some layers and moves objects with special colors to separate spreads
