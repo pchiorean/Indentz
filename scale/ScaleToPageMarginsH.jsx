@@ -1,6 +1,6 @@
 /*
 	Scale to page margins (top/bottom) 22.6.9
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Scales the selected objects to the page top/bottom margins.
 

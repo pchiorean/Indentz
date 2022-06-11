@@ -1,6 +1,6 @@
 /*
 	Fit frame to text 22.4.5
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Auto-sizes the text frame to the content from 'None' to 'Height Only' to 'Height and Width'
 	(single lines are always auto-sized 'Height and Width'). A second run tightens auto-sizing.

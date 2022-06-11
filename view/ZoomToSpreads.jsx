@@ -1,6 +1,6 @@
 /*
 	Zoom to spreads 22.1.27
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the current spread (if N = 1) or the first N spreads (if N > 1).
 

@@ -1,6 +1,6 @@
 /*
 	Replace links 22.5.24
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
 

@@ -1,6 +1,6 @@
 /*
 	Adjust layout 22.5.22
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

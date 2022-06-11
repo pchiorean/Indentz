@@ -1,6 +1,6 @@
 /*
 	Scale to spread bleed (top/bottom) 22.6.9
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Scales the selected objects to the spread bleed top/bottom size.
 
