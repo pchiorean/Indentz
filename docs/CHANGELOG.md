@@ -2,7 +2,8 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.4.11...master)
 
-<!-- - [`TODO`]() Check (c) years -->
+- [`new`](https://github.com/pchiorean/Indentz/commit/a5104648fd99949bef989d579bbaceabcffc802a)
+  **LayersToSpreads**: Moves layers of the active document to separate spreads
 - [`fix`](https://github.com/pchiorean/Indentz/commit/9858c669dc00ff0ec353796373935aae1c758faf)
   [`fix`](https://github.com/pchiorean/Indentz/commit/97bf0b591a66e7790c218477fcc388053e4fbdc8)
   **lib/ParseDataFile, DefaultLayers/Swatches/ReplaceFonts/Links**: Enforced UTF-8 encoding on opening the data file
@@ -82,7 +83,7 @@
 ##### New features
 
 - [`new`](https://github.com/pchiorean/Indentz/commit/ae70c878cc579c3a1714e67a5756e519597bb3ea)
-  **lib/MoveToLayers**: Move items to layers, optionally setting front/back order
+  **lib/MoveToLayers**: Moves items to layers, optionally setting front/back order
 - [`new`](https://github.com/pchiorean/Indentz/commit/fd40557b6a81caa4342884132746c75120f64f52)
   **DocCleanup**: Empty non-text frames will be converted to graphic frames to make them visible on complex layouts
 - [`new`](https://github.com/pchiorean/Indentz/commit/4b100ce6490f374b8047d2cf9f9e5b239e6351bb)
@@ -297,7 +298,8 @@
 
 - `new` **Debug**: Add a hires timer
 - `new` **DefaultSwatches**: Add tints support
-- `new` **QuickExport**: Add dropdown history (see page 43 of **ScriptUI** by PK)
+- `new` **QuickExport**: Add history to inputs (see page 43 of **ScriptUI** by PK)
+- `new` **QuickExport**: Add a resolution field
 - `new` **QuickExport**: Add JPG & `?`TIFF export profiles
 - `new` **Report**: Add a button to save report to file
 
@@ -335,8 +337,7 @@
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
 
 ##### New scripts
-
-- `new` **LayersToFiles**
+- `new` **SpreadsToLayers**
 
 ---
 
