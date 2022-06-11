@@ -53,7 +53,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 
 function main() {
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
-	var file, data, messages, oldActiveLayer, newLayer, tmpLayer, i, n;
+	var file, data, messages, oldActiveLayer, newLayer, tmpLayer, i;
 	var counter = { add: 0, merge: 0 };
 	if (doc.converted && VERBOSITY > 0) {
 		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
@@ -72,7 +72,7 @@ function main() {
 		oldActiveLayer = doc.activeLayer; // Save active layer
 		doc.layers.everyItem().properties = { locked: false }; // Unlock existing layers
 		// Top layers
-		for (i = data.records.length - 1; i >= 0 ; i--) {
+		for (i = data.records.length - 1; i >= 0; i--) {
 			if (data.records[i].isBelow) continue;
 			newLayer = makeLayer(
 				data.records[i].name,
@@ -87,7 +87,7 @@ function main() {
 			}
 		}
 		// Bottom layers
-		for (i = 0, n = data.records.length; i < n; i++) {
+		for (i = 0; i < data.records.length; i++) {
 			if (!data.records[i].isBelow) continue;
 			makeLayer(
 				data.records[i].name,

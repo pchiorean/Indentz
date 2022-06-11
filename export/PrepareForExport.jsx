@@ -132,7 +132,7 @@ function prepareForExport() {
 		}
 		// if (layer.allPageItems.length == 0) layer.remove();
 
-		function layerHasItems(spread) {
+		function layerHasItems(/*object*/spread) {
 			for (var i = 0, n = spread.pageItems.length; i < n; i++) {
 				if (!spread.pageItems.item(i).visible) continue;
 				if (spread.pageItems.item(i).itemLayer.name === layer.name) return true;
