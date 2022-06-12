@@ -1,6 +1,6 @@
 ## Changelog
 
-<!-- ### [Current version](https://github.com/pchiorean/Indentz/compare/22.6.11...master) -->
+### [Current version](https://github.com/pchiorean/Indentz/compare/22.6.11...master)
 
 ### [Release 22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
@@ -8,8 +8,6 @@
 
 - [`new`](https://github.com/pchiorean/Indentz/commit/e9012199d92ba0bef97acdbc9720a85de0ae07ab)
   **ReplaceSnippets**: Converted **lib/ReplaceText** to a standalone script
-- [`new`](https://github.com/pchiorean/Indentz/commit/01003af9e7d6a59f6b8a59c4626c4bf85a3db6f1)
-  **ReplaceSnippets**: Added a scope limiting column – replacement will only be done if a string appears in the filename (regex)
 - [`new`](https://github.com/pchiorean/Indentz/commit/a5104648fd99949bef989d579bbaceabcffc802a)
   **LayersToSpreads**: Moves layers of the active document to separate spreads
 
@@ -22,8 +20,8 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/41af4aafd86e5137f2764d6ca34476bd79bcec9d)
   [`upd`](https://github.com/pchiorean/Indentz/commit/2783324ef151b8416c7ea306886b17e6f69b73be)
   **lib/ParseDataFile, DefaultLayers/Swatches/ReplaceFonts/Links, QRBatch**: Trimmed trailing whitespace on import
-- [`upd`](https://github.com/pchiorean/Indentz/commit/7e34318775191b4c6256e6f43711bcd4a3687bab)
-  **lib/ReplaceText**: Skip locked layers & stories
+- [`upd`](https://github.com/pchiorean/Indentz/commit/01003af9e7d6a59f6b8a59c4626c4bf85a3db6f1)
+  **ReplaceSnippets**: Added a scope limiting column – replacement will only be done if a string appears in the filename (regex)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/46c84c90a44341c32226db552eb246ffa55bdc70)
   [`upd`](https://github.com/pchiorean/Indentz/commit/820c66f426c004b1a0fbf5faf54bce502b3d7d39)
   **PrepareForExport, Show/HideDNPLayers**: All layers starting with hyphen or dot are now included in the 'do-not-print' list
@@ -37,6 +35,8 @@
   **lib/ParseDataFile, DefaultLayers/Swatches/ReplaceFonts/Links**: Enforced UTF-8 encoding on opening the data file
 - [`fix`](https://github.com/pchiorean/Indentz/commit/f06e68d91e8abab4e08933162f4676b8fceaafa6)
   **DefPrefs**: Added 'Coated FOGRA39' as CMYK profile fallback
+- [`fix`](https://github.com/pchiorean/Indentz/commit/7e34318775191b4c6256e6f43711bcd4a3687bab)
+  **lib/ReplaceText**: Skip locked layers & stories
 
 ##### Miscellaneous
 
