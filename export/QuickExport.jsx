@@ -1,5 +1,5 @@
 /*
-	Quick export 22.4.5
+	Quick export 22.6.16
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -34,7 +34,7 @@
 var doc, settings, baseFolder, subfolder, suffix, exp, name, progressBar, maxCounter;
 var ADV = ScriptUI.environment.keyboardState.altKey;
 var WIN = (File.fs === 'Windows');
-var forbiddenFilenameCharsRE = /[#%^{}\\<>*?\/$!'":@`|=]/g; // eslint-disable-line no-useless-escape
+var invalidFilenameChars = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
 var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 var settingsFile = File(Folder.userData + '/' + script.name.replace(/.[^.]+$/, '') + '.prefs');
@@ -293,9 +293,9 @@ ui.preset2.preset.onChange = function () {
 };
 ui.preset1.suffix.onChange =
 ui.preset2.suffix.onChange = function () {
-	var str = this.text.replace(/^\s+|\s+$/g, '');   // Trim
-	str = str.replace(forbiddenFilenameCharsRE, ''); // Sanitize suffix
-	str = str.replace(/^_/, '');                     // Delete separator
+	var str = this.text.replace(/^\s+|\s+$/g, ''); // Trim
+	str = str.replace(invalidFilenameChars, '');   // Sanitize suffix
+	str = str.replace(/^_/, '');                   // Delete separator
 	if (this.text !== str) this.text = str;
 };
 if (folderMode) {
