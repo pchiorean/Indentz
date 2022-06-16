@@ -2,6 +2,9 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.6.11...master)
 
+- [`upd`](https://github.com/pchiorean/Indentz/commit/d5f2a4c5f3cc42a26a8b63bd90539645f60ba464)
+  **SpreadsToFiles**: Added a custom positioning placeholder character – if the filename contains a `#`, the index will be placed in that position
+
 ### [Release 22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
 ##### New features
@@ -335,7 +338,6 @@
 - `upd` **Report**: Add auto filtering mode (`true`|`false`|`auto`, default `false`)
 - `upd` **Report**: Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
 - `upd` **SpreadsToFiles**: Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
-- `upd` **SpreadsToFiles**: Add a placeholder character for custom positioning
 - `upd` **TextAutoSize**: Check `baselineShift`
 - `upd` Use a custom object style for visible area frame
 - `ref` Add `#include` fallback paths (`#includepath`)
