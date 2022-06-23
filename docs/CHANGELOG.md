@@ -4,6 +4,8 @@
 
 - [`upd`](https://github.com/pchiorean/Indentz/commit/d5f2a4c5f3cc42a26a8b63bd90539645f60ba464)
   **SpreadsToFiles**: Added a custom positioning placeholder character – if the filename contains a `#`, the index will be placed in that position
+- [`upd`](https://github.com/pchiorean/Indentz/commit/17a1faec009dbf69e301196defe8c454ddbbbd97)
+  **QuickExport, QRBatch**: Relaxed the list of invalid filename characters (`<` `>` `:` `"` `\` `/` `\` `|` `?` `*`)
 
 ### [Release 22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
@@ -321,9 +323,11 @@
 
 ##### Updates
 
+- `new` **DefaultLayers**: Add `top/bottom` order keyword
+- `new` **DefaultLayers/Swatches/ReplaceFonts/Links**: Add `@includepath` directive
 - `brk` **DefaultLayers/Swatches/ReplaceFonts/Links**: Optional arguments: data file, verbosity level
-- `upd` **GetDataFile**: Use relative paths for `@include` <!-- (VSC: Paths starting with `/` are resolved relative to the current workspace; paths starting with `./` or without any prefix are resolved relative to the current file.) -->
-- `upd` `?` **IsInArray**: Add regex matching to `searchValue`
+- `upd` **lib/GetDataFile**: Use relative paths for `@include` <!-- (VSC: Paths starting with `/` are resolved relative to the current workspace; paths starting with `./` or without any prefix are resolved relative to the current file.) -->
+- `upd` `?` **lib/IsInArray**: Add regex matching to `searchValue`
 - `upd` **LabelPageRatios**: Mark outer/inner ratios
 - `brk` **MarkVisibleArea**: Mark the entire spread's visible area, not individual pages
 - `upd` **MarkVisibleArea**: Use wildcards for layer names
