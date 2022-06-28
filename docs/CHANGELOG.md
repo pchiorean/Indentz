@@ -2,6 +2,8 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.6.11...master)
 
+- [`fix`](https://github.com/pchiorean/Indentz/commit/bf0173fd6c2f4c264c202e7a3a6ac8411609e3b1)
+  Enforced straight corners to new rectangles and text frames
 - [`upd`](https://github.com/pchiorean/Indentz/commit/d5f2a4c5f3cc42a26a8b63bd90539645f60ba464)
   **SpreadsToFiles**: Added a custom positioning placeholder character – if the filename contains a `#`, the index will be placed in that position
 - [`upd`](https://github.com/pchiorean/Indentz/commit/17a1faec009dbf69e301196defe8c454ddbbbd97)
