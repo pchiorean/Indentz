@@ -1,5 +1,5 @@
 /*
-	Mark visible area 22.5.23
+	Mark visible area 22.6.28
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Creates on each page a 'visible area' frame the size of the page margins.
@@ -33,7 +33,7 @@ function main() {
 		'stanzform', 'Stanzform'
 	]);
 	var visFrame = {
-		swatchName:  'Visible area',
+		swatchName: 'Visible area',
 		swatchModel: ColorModel.SPOT,
 		swatchSpace: ColorSpace.RGB,
 		swatchValue: [ 255, 180, 0 ],
@@ -49,7 +49,7 @@ function main() {
 		// Make swatch
 		if (!doc.colors.itemByName(visFrame.swatchName).isValid) {
 			doc.colors.add({
-				name: visFrame.swatchName,
+				name:  visFrame.swatchName,
 				model: visFrame.swatchModel,
 				space: visFrame.swatchSpace,
 				colorValue: visFrame.swatchValue
@@ -86,16 +86,20 @@ function main() {
 		}
 		// Add frames
 		page.rectangles.add({
-			name: '<visible area>',
+			name:  '<visible area>',
 			label: 'visible area',
 			contentType: ContentType.UNASSIGNED,
 			fillColor: 'None',
-			strokeColor: visFrame.swatchName,
+			strokeColor:  visFrame.swatchName,
 			strokeWeight: visFrame.strokeWeight,
 			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 			strokeType: visFrame.strokeType,
 			overprintStroke: false,
 			itemLayer: visLayerName,
+			bottomLeftCornerOption:  CornerOptions.NONE,
+			bottomRightCornerOption: CornerOptions.NONE,
+			topLeftCornerOption:     CornerOptions.NONE,
+			topRightCornerOption:    CornerOptions.NONE,
 			geometricBounds: [
 				page.bounds[0] + mgs.top,
 				(page.side === PageSideOptions.LEFT_HAND) ?

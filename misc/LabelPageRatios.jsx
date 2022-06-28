@@ -1,6 +1,6 @@
 /*
-	Page ratios 21.10.18
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Page ratios 22.6.28
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a label (ratio) on each page's slug.
 
@@ -56,6 +56,10 @@ function main() {
 		infoFrame = page.textFrames.add({
 			itemLayer: infoLayer.name,
 			name:      '<page label>',
+			bottomLeftCornerOption:  CornerOptions.NONE,
+			bottomRightCornerOption: CornerOptions.NONE,
+			topLeftCornerOption:     CornerOptions.NONE,
+			topRightCornerOption:    CornerOptions.NONE,
 			contents:  label
 		});
 		infoText = infoFrame.parentStory.paragraphs.everyItem();

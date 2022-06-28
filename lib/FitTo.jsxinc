@@ -1,5 +1,5 @@
 /*
-	FitTo 22.4.1
+	FitTo 22.6.28
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
@@ -254,8 +254,12 @@ function fitTo(items, scope, target, enforced) {
 				{
 					name: '<clipping frame>',
 					label: obj.label,
-					fillColor: 'None',
+					fillColor:   'None',
 					strokeColor: 'None',
+					bottomLeftCornerOption:  CornerOptions.NONE,
+					bottomRightCornerOption: CornerOptions.NONE,
+					topLeftCornerOption:     CornerOptions.NONE,
+					topRightCornerOption:    CornerOptions.NONE,
 					geometricBounds: fitMode
 				}
 			);
@@ -272,10 +276,10 @@ function fitTo(items, scope, target, enforced) {
 			// createDebugFrame('Black', false, O.fitted, 'O.fitted');
 			// createDebugFrame('Black', false, O.reduced, 'O.reduced');
 			if (O.child) createDebugFrame('Yellow', false, O.child, 'child');
-			createDebugFrame('Black', false, B.target, 'target');
-			createDebugFrame('Cyan', true,  Z.target, 'target SZ');
+			createDebugFrame('Black',   false, B.target, 'target');
+			createDebugFrame('Cyan',    true,  Z.target, 'target SZ');
 			createDebugFrame('Magenta', true,  Z.visible, 'visible SZ');
-			createDebugFrame('Cyan', false, b.page.margins, 'page margins');
+			createDebugFrame('Cyan',    false, b.page.margins, 'page margins');
 			layer.locked = true;
 
 			function createDebugFrame(color, /*bool*/isZone, bounds, label) {
@@ -285,14 +289,18 @@ function fitTo(items, scope, target, enforced) {
 					{
 						name: '<debug frame>',
 						label: label || '',
-						geometricBounds: bounds,
 						contentType: ContentType.UNASSIGNED,
 						fillColor: 'None',
 						strokeColor: color,
 						strokeWeight: isZone ? snapDist : '1.5 pt',
 						strokeAlignment: isZone ? StrokeAlignment.OUTSIDE_ALIGNMENT : StrokeAlignment.INSIDE_ALIGNMENT,
 						strokeType: isZone ? '$ID/Solid' : '$ID/Canned Dashed 3x2',
-						transparencySettings: { blendingSettings: { opacity: isZone ? 25 : 100 }}
+						transparencySettings: { blendingSettings: { opacity: isZone ? 25 : 100 }},
+						bottomLeftCornerOption:  CornerOptions.NONE,
+						bottomRightCornerOption: CornerOptions.NONE,
+						topLeftCornerOption:     CornerOptions.NONE,
+						topRightCornerOption:    CornerOptions.NONE,
+						geometricBounds: bounds
 					}
 				);
 			}

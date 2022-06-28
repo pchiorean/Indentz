@@ -1,5 +1,5 @@
 /*
-	Page size from filename 22.5.23
+	Page size from filename 22.6.28
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Sets every page size and margins according to the filename.
@@ -172,7 +172,7 @@ function main() {
 	}
 	// Set document size and bleed
 	if (!isSpread) {
-		doc.documentPreferences.pageWidth = newPgSize.width;
+		doc.documentPreferences.pageWidth  = newPgSize.width;
 		doc.documentPreferences.pageHeight = newPgSize.height;
 	}
 	if (newBleed) {
@@ -211,16 +211,16 @@ function main() {
 		if (visLayer.isValid) {
 			visLayer.properties = {
 				layerColor: UIColors.YELLOW,
-				visible:    true,
-				locked:     false
+				visible: true,
+				locked: false
 			};
 			if (dieLayer.isValid) visLayer.move(LocationOptions.before, dieLayer);
 		} else {
 			visLayer = doc.layers.add({
 				name: visLayerName,
 				layerColor: UIColors.YELLOW,
-				visible:    true,
-				locked:     false
+				visible: true,
+				locked: false
 			});
 			if (dieLayer.isValid) visLayer.move(LocationOptions.before, dieLayer);
 			else visLayer.move(LocationOptions.AT_BEGINNING);
@@ -236,16 +236,20 @@ function main() {
 		}
 		// Add frames
 		page.rectangles.add({
-			name:            '<visible area>',
-			label:           'visible area',
-			contentType:     ContentType.UNASSIGNED,
-			fillColor:      'None',
-			strokeColor:     visFrame.swatchName,
-			strokeWeight:    visFrame.strokeWeight,
+			name:  '<visible area>',
+			label: 'visible area',
+			contentType: ContentType.UNASSIGNED,
+			fillColor: 'None',
+			strokeColor:  visFrame.swatchName,
+			strokeWeight: visFrame.strokeWeight,
 			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
-			strokeType:      visFrame.strokeType,
+			strokeType: visFrame.strokeType,
 			overprintStroke: false,
-			itemLayer:       visLayerName,
+			itemLayer: visLayerName,
+			bottomLeftCornerOption:  CornerOptions.NONE,
+			bottomRightCornerOption: CornerOptions.NONE,
+			topLeftCornerOption:     CornerOptions.NONE,
+			topRightCornerOption:    CornerOptions.NONE,
 			geometricBounds: [
 				page.bounds[0] + PM.top,
 				(page.side === PageSideOptions.LEFT_HAND) ?

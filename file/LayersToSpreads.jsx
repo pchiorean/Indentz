@@ -1,5 +1,5 @@
 /*
-	Layers to spreads 22.6.11
+	Layers to spreads 22.6.28
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
 	Moves layers of the active document to separate spreads.
@@ -88,6 +88,10 @@ function main() {
 			infoFrame = spread.pages[0].textFrames.add({
 				itemLayer: infoLayer.name,
 				name:      '<page label>',
+				bottomLeftCornerOption:  CornerOptions.NONE,
+				bottomRightCornerOption: CornerOptions.NONE,
+				topLeftCornerOption:     CornerOptions.NONE,
+				topRightCornerOption:    CornerOptions.NONE,
 				contents:  label
 			});
 

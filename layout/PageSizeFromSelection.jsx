@@ -1,6 +1,6 @@
 /*
-	Page size from selection 21.9.17
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Page size from selection 22.6.28
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Sets the page size to the selected objects bounds.
 
@@ -18,7 +18,7 @@ function main(selection) {
 	var page, size, newPgSize, tmpFrame, i, n, mm, pp, p, s;
 	var old = {
 		objectsMoveWithPage: app.generalPreferences.objectsMoveWithPage,
-		enableAdjustLayout: doc.adjustLayoutPreferences.enableAdjustLayout,
+		enableAdjustLayout:      doc.adjustLayoutPreferences.enableAdjustLayout,
 		enableAutoAdjustMargins: doc.adjustLayoutPreferences.enableAutoAdjustMargins
 	};
 	app.generalPreferences.objectsMoveWithPage = false;
@@ -40,12 +40,16 @@ function main(selection) {
 	}
 	// Set page size
 	page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
-	doc.marginPreferences.properties =  { top: 0, left: 0, bottom: 0, right: 0 };
+	doc.marginPreferences.properties  = { top: 0, left: 0, bottom: 0, right: 0 };
 	page.layoutRule = LayoutRuleOptions.OFF;
 	tmpFrame = page.rectangles.add({
 		contentType: ContentType.UNASSIGNED,
-		fillColor: 'None',
+		fillColor:   'None',
 		strokeColor: 'None',
+		bottomLeftCornerOption:  CornerOptions.NONE,
+		bottomRightCornerOption: CornerOptions.NONE,
+		topLeftCornerOption:     CornerOptions.NONE,
+		topRightCornerOption:    CornerOptions.NONE,
 		geometricBounds: size
 	});
 	page.reframe(CoordinateSpaces.SPREAD_COORDINATES, [
@@ -57,7 +61,7 @@ function main(selection) {
 	if (doc.pages.length === 1) {
 		newPgSize = { width: size[3] - size[1], height: size[2] - size[0] };
 		try {
-			doc.documentPreferences.pageWidth =  newPgSize.width;
+			doc.documentPreferences.pageWidth  = newPgSize.width;
 			doc.documentPreferences.pageHeight = newPgSize.height;
 		} catch (e) {
 			mm = doc.masterSpreads.everyItem().getElements();
@@ -66,12 +70,12 @@ function main(selection) {
 				while ((p = pp.shift()))
 					p.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
 			}
-			doc.documentPreferences.pageWidth =  newPgSize.width;
+			doc.documentPreferences.pageWidth  = newPgSize.width;
 			doc.documentPreferences.pageHeight = newPgSize.height;
 		}
 	}
 	// Restore settings
-	app.generalPreferences.objectsMoveWithPage = old.objectsMoveWithPage;
-	doc.adjustLayoutPreferences.enableAdjustLayout = old.enableAdjustLayout;
+	app.generalPreferences.objectsMoveWithPage          = old.objectsMoveWithPage;
+	doc.adjustLayoutPreferences.enableAdjustLayout      = old.enableAdjustLayout;
 	doc.adjustLayoutPreferences.enableAutoAdjustMargins = old.enableAutoAdjustMargins;
 }

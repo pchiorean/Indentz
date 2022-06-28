@@ -1,6 +1,6 @@
 /*
-	Label page 21.11.9
-	(c) 2021 Paul Chiorean (jpeg@basement.ro)
+	Label page 22.6.28
+	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a custom label on the current page's slug.
 
@@ -71,6 +71,10 @@ function main() {
 		infoFrame = page.textFrames.add({
 			itemLayer: infoLayer.name,
 			name:      '<page label>',
+			bottomLeftCornerOption:  CornerOptions.NONE,
+			bottomRightCornerOption: CornerOptions.NONE,
+			topLeftCornerOption:     CornerOptions.NONE,
+			topRightCornerOption:    CornerOptions.NONE,
 			contents:  label
 		});
 		infoText = infoFrame.parentStory.paragraphs.everyItem();

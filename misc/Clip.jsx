@@ -1,6 +1,6 @@
 /*
-	Clip 21.9.20
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Clip 22.6.28
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Clips selected objects in a clipping frame (or releases them if already clipped).
 
@@ -59,10 +59,14 @@ function main(selection) {
 		item.itemLayer,
 		LocationOptions.AFTER, item,
 		{
-			name:            '<clipping frame>',
-			label:           item.label,
-			fillColor:       'None',
-			strokeColor:     'None',
+			name: '<clipping frame>',
+			label: item.label,
+			fillColor:   'None',
+			strokeColor: 'None',
+			bottomLeftCornerOption:  CornerOptions.NONE,
+			bottomRightCornerOption: CornerOptions.NONE,
+			topLeftCornerOption:     CornerOptions.NONE,
+			topRightCornerOption:    CornerOptions.NONE,
 			geometricBounds: bounds
 		}
 	);

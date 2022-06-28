@@ -1,5 +1,5 @@
 /*
-	Prepare for export 22.6.8
+	Prepare for export 22.6.28
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves objects with special colors to separate spreads.
@@ -157,6 +157,10 @@ function prepareForExport() {
 				infoFrame = spread.pages[0].textFrames.add({
 					itemLayer: infoLayer.name,
 					name:      '<page label>',
+					bottomLeftCornerOption:  CornerOptions.NONE,
+					bottomRightCornerOption: CornerOptions.NONE,
+					topLeftCornerOption:     CornerOptions.NONE,
+					topRightCornerOption:    CornerOptions.NONE,
 					contents:  label
 				});
 				infoText = infoFrame.parentStory.paragraphs.everyItem();

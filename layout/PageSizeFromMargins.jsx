@@ -1,6 +1,6 @@
 /*
-	Page size from margins 21.9.18
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Page size from margins 22.6.28
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Sets the page size to the page margins.
 
@@ -19,18 +19,22 @@ function main() {
 	var PM = page.marginPreferences;
 	if (PM.top + PM.left + PM.bottom + PM.right === 0) return;
 	var old = {
-		objectsMoveWithPage:     app.generalPreferences.objectsMoveWithPage,
+		objectsMoveWithPage: app.generalPreferences.objectsMoveWithPage,
 		enableAdjustLayout:      doc.adjustLayoutPreferences.enableAdjustLayout,
 		enableAutoAdjustMargins: doc.adjustLayoutPreferences.enableAutoAdjustMargins
 	};
-	app.generalPreferences.objectsMoveWithPage          = false;
-	doc.adjustLayoutPreferences.enableAdjustLayout      = false;
+	app.generalPreferences.objectsMoveWithPage = false;
+	doc.adjustLayoutPreferences.enableAdjustLayout = false;
 	doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 	// Set page size
 	tmpFrame = page.rectangles.add({
 		contentType: ContentType.UNASSIGNED,
-		fillColor: 'None',
+		fillColor:   'None',
 		strokeColor: 'None',
+		bottomLeftCornerOption:  CornerOptions.NONE,
+		bottomRightCornerOption: CornerOptions.NONE,
+		topLeftCornerOption:     CornerOptions.NONE,
+		topRightCornerOption:    CornerOptions.NONE,
 		geometricBounds: [
 			page.bounds[0] + PM.top,
 			page.bounds[1] + (page.side === PageSideOptions.LEFT_HAND ? PM.right : PM.left),
@@ -52,7 +56,7 @@ function main() {
 			width:  (page.bounds[3] - page.bounds[1]),
 			height: (page.bounds[2] - page.bounds[0]) };
 		try {
-			doc.documentPreferences.pageWidth =  newPgSize.width;
+			doc.documentPreferences.pageWidth  = newPgSize.width;
 			doc.documentPreferences.pageHeight = newPgSize.height;
 		} catch (e) {
 			mm = doc.masterSpreads.everyItem().getElements();

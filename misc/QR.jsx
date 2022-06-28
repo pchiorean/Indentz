@@ -1,5 +1,5 @@
 /*
-	QR code 22.3.14
+	QR code 22.6.28
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -95,8 +95,12 @@ function main() {
 			labelFrame = page.textFrames.add({
 				label: 'QR',
 				itemLayer: idLayer.name,
-				fillColor: 'None',
+				fillColor:   'None',
 				strokeColor: 'None',
+				bottomLeftCornerOption:  CornerOptions.NONE,
+				bottomRightCornerOption: CornerOptions.NONE,
+				topLeftCornerOption:     CornerOptions.NONE,
+				topRightCornerOption:    CornerOptions.NONE,
 				contents: /\|/g.test(labelText) ?        // If '|' found
 					labelText.replace(/\|/g, '\u000A') : // replace it with Forced Line Break
 					balanceText(labelText, 18)           // else auto balance text
@@ -109,7 +113,7 @@ function main() {
 				tracking: -15,
 				hyphenation: false,
 				capitalization: ui.uppercase.value ? Capitalization.ALL_CAPS : Capitalization.NORMAL,
-				fillColor: ui.white.value ? 'Paper' : 'Black',
+				fillColor:   ui.white.value ? 'Paper' : 'Black',
 				strokeColor: ui.white.value ? 'Black' : 'Paper',
 				strokeWeight: '0.4 pt',
 				endJoin: EndJoin.ROUND_END_JOIN
@@ -133,16 +137,20 @@ function main() {
 			codeFrame = page.rectangles.add({
 				itemLayer: idLayer.name,
 				label: 'QR',
-				fillColor: 'Paper',
-				strokeColor: 'None'
+				fillColor:   'Paper',
+				strokeColor: 'None',
+				bottomLeftCornerOption:  CornerOptions.NONE,
+				bottomRightCornerOption: CornerOptions.NONE,
+				topLeftCornerOption:     CornerOptions.NONE,
+				topRightCornerOption:    CornerOptions.NONE,
+				absoluteRotationAngle: -90,
+				geometricBounds: [
+					labelFrame.geometricBounds[2],
+					page.bounds[1] + UnitValue('2.3 mm').as('pt'),
+					labelFrame.geometricBounds[2] + UnitValue('11.8 mm').as('pt'),
+					page.bounds[1] + UnitValue('14.1 mm').as('pt')
+				]
 			});
-			codeFrame.absoluteRotationAngle = -90;
-			codeFrame.geometricBounds = [
-				labelFrame.geometricBounds[2],
-				page.bounds[1] + UnitValue('2.3 mm').as('pt'),
-				labelFrame.geometricBounds[2] + UnitValue('11.8 mm').as('pt'),
-				page.bounds[1] + UnitValue('14.1 mm').as('pt')
-			];
 			codeFrame.createPlainTextQRCode(labelText.replace(/[|\u000A]/g, '')); // Remove LB markers
 			codeFrame.frameFittingOptions.properties = {
 				fittingAlignment: AnchorPoint.CENTER_ANCHOR,
@@ -200,6 +208,10 @@ function main() {
 				itemLayer: idLayer.name,
 				fillColor: 'None',
 				strokeColor: 'None',
+				bottomLeftCornerOption:  CornerOptions.NONE,
+				bottomRightCornerOption: CornerOptions.NONE,
+				topLeftCornerOption:     CornerOptions.NONE,
+				topRightCornerOption:    CornerOptions.NONE,
 				contents: /\|/g.test(labelText) ?        // If '|' found
 					labelText.replace(/\|/g, '\u000A') : // replace it with Forced Line Break
 					balanceText(labelText, 18)           // else auto balance text
@@ -233,14 +245,21 @@ function main() {
 				]
 			};
 			// Add code
-			codeFrame = page.rectangles.add({ itemLayer: idLayer.name, label: 'QR' });
-			codeFrame.absoluteRotationAngle = -90;
-			codeFrame.geometricBounds = [
-				UnitValue('5.787 mm').as('pt'),
-				0,
-				UnitValue('26 mm').as('pt'),
-				UnitValue('20 mm').as('pt')
-			];
+			codeFrame = page.rectangles.add({
+				itemLayer: idLayer.name,
+				label: 'QR',
+				bottomLeftCornerOption:  CornerOptions.NONE,
+				bottomRightCornerOption: CornerOptions.NONE,
+				topLeftCornerOption:     CornerOptions.NONE,
+				topRightCornerOption:    CornerOptions.NONE,
+				absoluteRotationAngle: -90,
+				geometricBounds: [
+					UnitValue('5.787 mm').as('pt'),
+					0,
+					UnitValue('26 mm').as('pt'),
+					UnitValue('20 mm').as('pt')
+				]
+			});
 			codeFrame.createPlainTextQRCode(labelText.replace(/[|\u000A]/g, '')); // Remove LB markers
 			codeFrame.frameFittingOptions.properties = {
 				fittingAlignment: AnchorPoint.CENTER_ANCHOR,
@@ -360,10 +379,9 @@ function main() {
 		var lines = [];
 		var word = '';
 		var words = [];
-		// 1st pass: break text into words
+		// 1st pass: break text into words and roughly join them into lines
 		var wordRE = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})|(?=[([])))|(.+)/g;
 		words = txt.match(wordRE);
-		// 2nd pass: roughly join words into lines
 		while ((word = words.shift())) {
 			if ((lineBuffer + word).length <= length) {
 				lineBuffer += word;
@@ -373,7 +391,7 @@ function main() {
 			}
 		}
 		if (lineBuffer !== '') lines.push(lineBuffer);
-		// 3rd pass: balance ragged lines
+		// 2nd pass: balance ragged lines
 		if (lines.length > 1) balanceLines();
 		return lines.join('\u000A');
 
