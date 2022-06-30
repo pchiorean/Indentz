@@ -1,5 +1,5 @@
 /*
-	QR code 22.6.28
+	QR code 22.6.30
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -142,15 +142,15 @@ function main() {
 				bottomLeftCornerOption:  CornerOptions.NONE,
 				bottomRightCornerOption: CornerOptions.NONE,
 				topLeftCornerOption:     CornerOptions.NONE,
-				topRightCornerOption:    CornerOptions.NONE,
-				absoluteRotationAngle: -90,
-				geometricBounds: [
-					labelFrame.geometricBounds[2],
-					page.bounds[1] + UnitValue('2.3 mm').as('pt'),
-					labelFrame.geometricBounds[2] + UnitValue('11.8 mm').as('pt'),
-					page.bounds[1] + UnitValue('14.1 mm').as('pt')
-				]
+				topRightCornerOption:    CornerOptions.NONE
 			});
+			codeFrame.absoluteRotationAngle = -90;
+			codeFrame.geometricBounds = [
+				labelFrame.geometricBounds[2],
+				page.bounds[1] + UnitValue('2.3 mm').as('pt'),
+				labelFrame.geometricBounds[2] + UnitValue('11.8 mm').as('pt'),
+				page.bounds[1] + UnitValue('14.1 mm').as('pt')
+			];
 			codeFrame.createPlainTextQRCode(labelText.replace(/[|\u000A]/g, '')); // Remove LB markers
 			codeFrame.frameFittingOptions.properties = {
 				fittingAlignment: AnchorPoint.CENTER_ANCHOR,
@@ -251,15 +251,15 @@ function main() {
 				bottomLeftCornerOption:  CornerOptions.NONE,
 				bottomRightCornerOption: CornerOptions.NONE,
 				topLeftCornerOption:     CornerOptions.NONE,
-				topRightCornerOption:    CornerOptions.NONE,
-				absoluteRotationAngle: -90,
-				geometricBounds: [
-					UnitValue('5.787 mm').as('pt'),
-					0,
-					UnitValue('26 mm').as('pt'),
-					UnitValue('20 mm').as('pt')
-				]
+				topRightCornerOption:    CornerOptions.NONE
 			});
+			codeFrame.absoluteRotationAngle = -90;
+			codeFrame.geometricBounds = [
+				UnitValue('5.787 mm').as('pt'),
+				0,
+				UnitValue('26 mm').as('pt'),
+				UnitValue('20 mm').as('pt')
+			];
 			codeFrame.createPlainTextQRCode(labelText.replace(/[|\u000A]/g, '')); // Remove LB markers
 			codeFrame.frameFittingOptions.properties = {
 				fittingAlignment: AnchorPoint.CENTER_ANCHOR,
