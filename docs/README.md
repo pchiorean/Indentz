@@ -4,7 +4,7 @@ A collection of InDesign scripts for various simple and repetitive tasks.
 
 ## About
 
-As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown I found some time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow[^1], but I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). The code was developed and tested in Adobe CC 2020 (and later) on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one).
+As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown I found some time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow[^1], but I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). The code was developed and tested in Adobe CC 2020 (and later) on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though).
 
 I mainly use shortcuts to launch them (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**), so I've suggested a few below (for Mac).
 
@@ -120,7 +120,7 @@ Replaces a list of text snippets using a TSV substitution file[^2] named [**`sni
 | 12.06.22               | 13.11.2022                |                |            |       |
 | ...                    |                           |                |            |       |
 
-> **Find what**: text to be replaced\
+> **Find what**: text to be replaced (you can use find and replace [special characters](https://helpx.adobe.com/indesign/using/find-change.html#metacharacters_for_searching))\
 > **Change to**: the new text\
 > **Case sensitive**: `yes` or `no` (defaults to `yes`)\
 > **Whole word**: `yes` or `no` (defaults to `yes`)\
@@ -417,7 +417,7 @@ All scripts are created by me unless otherwise noted.
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • June 17, 2022
+README.md • July 5, 2022
 
 [^1]: Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text.
 [^2]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in **`Indentz`** root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.

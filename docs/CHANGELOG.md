@@ -2,12 +2,15 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.6.11...master)
 
-- [`fix`](https://github.com/pchiorean/Indentz/commit/bf0173fd6c2f4c264c202e7a3a6ac8411609e3b1)
-  Enforced straight corners to new rectangles and text frames
 - [`upd`](https://github.com/pchiorean/Indentz/commit/d5f2a4c5f3cc42a26a8b63bd90539645f60ba464)
   **SpreadsToFiles**: Added a custom positioning placeholder character – if the filename contains a `#`, the index will be placed in that position
 - [`upd`](https://github.com/pchiorean/Indentz/commit/17a1faec009dbf69e301196defe8c454ddbbbd97)
   **QuickExport, QRBatch**: Relaxed the list of invalid filename characters (`<` `>` `:` `"` `\` `/` `\` `|` `?` `*`)
+- [`fix`](https://github.com/pchiorean/Indentz/commit/bf0173fd6c2f4c264c202e7a3a6ac8411609e3b1)
+  [`fix`](https://github.com/pchiorean/Indentz/commit/6aecbbe07748946fb3b097dceac49ee609479a5e)
+  Enforced straight corners to new rectangles and text frames
+- [`fix`](https://github.com/pchiorean/Indentz/commit/9cb2db6c9a113e8008122993fadb62e57424c2d9)
+  **ReplaceSnippets**: Embedded the helper function into the main script and fixed a replacement quirk
 
 ### [Release 22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
