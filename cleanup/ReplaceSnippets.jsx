@@ -1,5 +1,5 @@
 ﻿/*
-	Replace text snippets 22.6.8
+	Replace text snippets 22.7.5
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces a list of snippets from a 4-column TSV file named 'snippets.txt':
@@ -72,23 +72,34 @@ function main() {
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length > 0) {
 		for (i = 0, n = data.records.length; i < n; i++) {
-			if (data.records[i].scope && !data.records[i].scope.test(decodeURI(doc.name))) continue;
-			if (replaceText(
-					data.records[i].findWhat,
-					data.records[i].changeTo,
-					data.records[i].caseSensitive,
-					data.records[i].wholeWord
-				)) {
+			if (data.records[i].scope && !data.records[i].scope.test(decodeURI(doc.name))) {
+				data.errors.info.push('\'' + data.records[i].findWhat + '\' not replaced (out of scope).');
+				continue;
+			}
+			app.findTextPreferences   = NothingEnum.NOTHING;
+			app.changeTextPreferences = NothingEnum.NOTHING;
+			app.findChangeTextOptions.includeLockedLayersForFind  = false;
+			app.findChangeTextOptions.includeLockedStoriesForFind = false;
+			app.findChangeTextOptions.includeHiddenLayers = true;
+			app.findChangeTextOptions.includeMasterPages  = true;
+			app.findChangeTextOptions.includeFootnotes    = true;
+			app.findChangeTextOptions.caseSensitive = data.records[i].caseSensitive;
+			app.findChangeTextOptions.wholeWord     = data.records[i].wholeWord;
+			app.findTextPreferences.findWhat   = data.records[i].findWhat;
+			app.changeTextPreferences.changeTo = data.records[i].changeTo;
+			if (doc.changeText().length > 0) {
 				counter++;
-				data.errors.info.push('Replaced \'' + data.records[i].findWhat +
-					'\' with \'' + data.records[i].changeTo + '\'.');
+				data.errors.info.push('\'' + data.records[i].findWhat +
+					'\' replaced with \'' + data.records[i].changeTo + '\'.');
+			} else {
+				data.errors.info.push('\'' + data.records[i].findWhat + '\' not found.');
 			}
 		}
 	}
 	if (VERBOSITY > 0) {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
-		if (messages.length > 0) report(messages, 'Text: ' + counter + ' replaced');
+		if (messages.length > 0) report(messages, 'Snippets: ' + counter + ' replaced');
 	}
 
 	/**
