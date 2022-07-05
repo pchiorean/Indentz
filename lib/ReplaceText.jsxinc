@@ -11,10 +11,11 @@ function replaceText(findWhat, changeTo, wholeWord) {
 	app.findTextPreferences   = NothingEnum.NOTHING;
 	app.changeTextPreferences = NothingEnum.NOTHING;
 
-	app.findChangeTextOptions.includeHiddenLayers         = true;
 	app.findChangeTextOptions.includeLockedLayersForFind  = false;
 	app.findChangeTextOptions.includeLockedStoriesForFind = false;
+	app.findChangeTextOptions.includeHiddenLayers         = true;
 	app.findChangeTextOptions.includeMasterPages          = true;
+	app.findChangeTextOptions.includeFootnotes            = true;
 	app.findChangeTextOptions.caseSensitive               = true;
 	app.findChangeTextOptions.wholeWord                   = wholeWord;
 
