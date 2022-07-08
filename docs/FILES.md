@@ -1,4 +1,4 @@
-Name                               |    Fn  | Description
+Name                               |     Fn | Description
 :-                                 |     -: | :-
 **Cleanup**                        |        | **Preferences, defaults, cleanup**
 `DefaultPrefs.jsx`                 |        | Sets default preferences
@@ -52,7 +52,7 @@ Name                               |    Fn  | Description
 `ScaleToPageSizeH.jsx`             |    ^F5 | Scales the selected objects to the page top/bottom size
 `ScaleToPageSizeW.jsx`             |        | Scales the selected objects to the page left/right size
 `ScaleToPageMargins.jsx`           |    ⌥F5 | Scales the selected objects to the page margins
-`ScaleToPageMarginsH.jsx`          |   ^⌥F5 | Scales the selected objects to the page top/bottom margins
+`ScaleToPageMarginsH.jsx`          |   ⌃⌥F5 | Scales the selected objects to the page top/bottom margins
 `ScaleToPageMarginsW.jsx`          |        | Scales the selected objects to the page left/right margins
 `ScaleToSpreadBleed.jsx`           |    ⇧F5 | Scales the selected objects to the spread bleed
 `ScaleToSpreadBleedH.jsx`          |   ⌃⇧F5 | Scales the selected objects to the spread bleed top/bottom size
