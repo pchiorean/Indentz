@@ -1,0 +1,21 @@
+/**
+ * Adds a standard ruler guide.
+ * @param {Object} target - A `Document`, `Spread`, `Page` or a `MasterSpread`.
+ * @param {Layer} [layer=activeLayer] - A target layer; defaults to the active layer. (Optional.)
+ * @param {boolean} [HorV=false] - If `true`, the guide is horizontal; defaults to vertical. (Optional.)
+ * @param {number} location - The location at which to place the guide relative to the current ruler zero point.
+ * @param {string} [label] - The label of the guide. (Optional.)
+ * @param {Array|Enum} [color=UIColors.LIGHT_GRAY] - The color of the guide, specified either as [ R, G, B ], or as a UIColors enumerator; defaults to `UIColors.LIGHT_GRAY`. (Optional.)
+ */
+function addGuide(target, layer, HorV, location, label, color) {
+	target.guides.add(
+		undefined,
+		{
+			itemLayer:   layer || target.activeLayer,
+			label:       label || '',
+			guideColor:  color || UIColors.LIGHT_GRAY,
+			orientation: (HorV === 'h') ? HorizontalOrVertical.HORIZONTAL : HorizontalOrVertical.VERTICAL,
+			location:    location
+		}
+	);
+}
