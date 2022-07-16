@@ -1,15 +1,17 @@
 ## Helper functions
 
-### addGuide(target, [layer], [HorV], location, [label], [color])
+### addGuide(target, [layer], HorV, location, [label], [type])
 
-| Parameters | Type              | Default       | Description                                                                                                                            |
-|------------|-------------------|---------------|----------------------------------------------------------------------------------------------------------------------------------------|
-| target     | `object`          |               | A `Document`, `Spread`, `Page` or a `MasterSpread`.                                                                                    |
-| [layer]    | `layer`           | `activeLayer` | A target layer; defaults to the active layer. *(Optional.)*                                                                            |
-| [HorV]     | `boolean`         | `false`       | If `true`, the guide is horizontal; defaults to vertical. *(Optional.)*                                                                |
-| location   | `number`          |               | The location at which to place the guide relative to the current ruler zero point.                                                     |
-| [label]    | `string`          |               | The label of the guide. *(Optional.)*                                                                                                  |
-| [color]    | `array` \| `enum` | `false`       | The color of the guide, specified either as [ R, G, B ], or as a UIColors enumerator; defaults to `UIColors.LIGHT_GRAY`. *(Optional.)* |
+| Parameters | Type     | Default       | Description                                                                        |
+|------------|----------|---------------|------------------------------------------------------------------------------------|
+| target     | `object` |               | A `Document`, `Spread`, `Page` or a `MasterSpread`.                                |
+| [layer]    | `layer`  | `activeLayer` | A target layer; defaults to the active layer. *(Optional.)*                        |
+| HorV       | `string` |               | If the string begins with `v`, the guide is vertical, else horizontal.             |
+| location   | `number` |               | The location at which to place the guide relative to the current ruler zero point. |
+| [label]    | `string` |               | The label of the guide. *(Optional.)*                                              |
+| [preset]   | `number` |               | A customized set of properties, see source. *(Optional.)*                          |
+
+Adds a custom ruler guide. I use it for some scripts that make grids for several brands, for which I have a hard time remembering the properties of the different guide lines. With the `preset` parameter I standardize guide types: symmetry axes, sections and subsections, product alignment and so on.
 
 ### dbg([type], [context], message)
 

@@ -1,21 +1,38 @@
 /**
- * Adds a standard ruler guide.
+ * Adds a custom ruler guide.
  * @param {Object} target - A `Document`, `Spread`, `Page` or a `MasterSpread`.
  * @param {Layer} [layer=activeLayer] - A target layer; defaults to the active layer. (Optional.)
- * @param {boolean} [HorV=false] - If `true`, the guide is horizontal; defaults to vertical. (Optional.)
+ * @param {string} HorV - If the string begins with `v`, the guide is vertical, else horizontal.
  * @param {number} location - The location at which to place the guide relative to the current ruler zero point.
  * @param {string} [label] - The label of the guide. (Optional.)
- * @param {Array|Enum} [color=UIColors.LIGHT_GRAY] - The color of the guide, specified either as [ R, G, B ], or as a UIColors enumerator; defaults to `UIColors.LIGHT_GRAY`. (Optional.)
+ * @param {number} [preset] - A customized set of properties. WIP. (Optional.)
  */
-function addGuide(target, layer, HorV, location, label, color) {
-	target.guides.add(
+function addGuide(target, layer, HorV, location, label, preset) {
+	var g = target.guides.add(
 		undefined,
 		{
-			itemLayer:   layer || target.activeLayer,
+			itemLayer:   layer || app.activeDocument.activeLayer,
 			label:       label || '',
-			guideColor:  color || UIColors.LIGHT_GRAY,
-			orientation: (HorV === 'h') ? HorizontalOrVertical.HORIZONTAL : HorizontalOrVertical.VERTICAL,
+			orientation: (/^v/i.test(HorV)) ? HorizontalOrVertical.VERTICAL : HorizontalOrVertical.HORIZONTAL,
 			location:    location
 		}
 	);
+	switch (preset) {
+		case '-': g.guideColor = app.activeDocument.guidePreferences.rulerGuidesColor; break; // Standard guide
+		case 'x': g.guideColor = UIColors.MAGENTA; break; // Center
+		case 's': g.guideColor = UIColors.GREEN; break; // Section
+		case 'g': g.guideColor = app.smartGuidePreferences.guideColor; g.viewThreshold = 200; break; // Subsection
+		case 'p': g.guideColor = app.activeDocument.pasteboardPreferences.slugGuideColor; g.viewThreshold = 200; break; // Product
+		default:  g.guideColor = UIColors.LIGHT_GRAY; g.viewThreshold = 200; break; // Miscellaneous
+	}
 }
+
+/*
+app.smartGuidePreferences.guideColor:  UIColors.GRID_GREEN
+documentPreferences.columnGuideColor:  UIColors.VIOLET
+documentPreferences.marginGuideColor:  UIColors.MAGENTA
+gridPreferences.baselineColor:         [ 215, 215, 215 ]
+gridPreferences.gridColor:             UIColors.LIGHT_GRAY
+pasteboardPreferences.bleedGuideColor: UIColors.FIESTA
+pasteboardPreferences.slugGuideColor:  UIColors.GRID_BLUE
+*/
