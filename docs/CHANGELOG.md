@@ -11,6 +11,14 @@
   Enforced straight corners to new rectangles and text frames
 - [`fix`](https://github.com/pchiorean/Indentz/commit/9cb2db6c9a113e8008122993fadb62e57424c2d9)
   **ReplaceSnippets**: Embedded the helper function into the main script and fixed a replacement quirk
+- [`new`](https://github.com/pchiorean/Indentz/commit/255f33547fcfc560208cf70f3af7d26728d8c5fb)
+  **lib/AddGuides**: Added a helper function for creating standard ruler guides
+- [`upd`](https://github.com/pchiorean/Indentz/commit/aa98b48ac3e848dcf3ebfe220abd037840c9bc1a)
+  **DefaultPrefs**: Changed baseline grid color to a lighter grey (230, 230, 230)
+- [`brk`](https://github.com/pchiorean/Indentz/commit/b8acc4c788519dc993a64d761cd12e9241af6ab7)
+  **lib/AddGuide**: Changed the `color` argument to `preset`: symmetry axes, sections/subsections, product alignment guides and so on
+- [`upd`](https://github.com/pchiorean/Indentz/commit/c44522729df1d402ab5129ac020e735202e435e4)
+  **GuidesAdd**: Updated to use `lib/addGuide()`
 
 ### [Release 22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
@@ -321,6 +329,7 @@
 
 - `new` **Debug**: Add a hires timer
 - `new` **DefaultSwatches**: Add tints support
+- `new` **QuickExport**: Change `Cancel` to `Reset` while Opt is pressed
 - `new` **QuickExport**: Add history to inputs (see page 43 of **ScriptUI** by PK)
 - `new` **QuickExport**: Add a resolution field
 - `new` **QuickExport**: Add JPG & `?`TIFF export profiles
