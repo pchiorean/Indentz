@@ -48,11 +48,14 @@ app.doScript(function () {
 			allowLockedObjectsToAdjust: false,
 			enableAutoAdjustMargins: false
 		},
-		// cmykProfile: 'ISO Coated v2 (ECI)',
 		documentPreferences: {
 			allowPageShuffle: false,
 			preserveLayoutWhenShuffling: true,
 			intent: DocumentIntentOptions.PRINT_INTENT
+		},
+		gridPreferences: {
+			baselineColor: [ 230, 230, 230 ]
+			// gridColor: UIColors.LIGHT_GRAY
 		},
 		guidePreferences: {
 			guidesLocked: false,
