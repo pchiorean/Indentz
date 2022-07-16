@@ -1,5 +1,5 @@
 /*
-	FitTo 22.6.28
+	FitTo 22.7.16
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
@@ -58,7 +58,7 @@ function fitTo(items, scope, target, enforced) {
 	if (items.constructor.name !== 'Array') items = Array(items);
 	scope = scope || 'page';
 	target = target || 'size';
-	var SNAP_PCT = 1; // Snap distance in percent of the target
+	var SNAP_PCT = 1; // Snap distance in percent of the visible area
 	var HW_PCT = 10;  // HW size in percent of the visible area
 	var DEBUG = false;
 	var clippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
@@ -208,7 +208,7 @@ function fitTo(items, scope, target, enforced) {
 
 		// Simple rectangles and containers
 		if (obj.constructor.name === 'Rectangle' && O.isStraight && O.isNotSkewed &&
-			(obj.pageItems.length === 0 || obj.pageItems.length === 1) &&
+				(obj.pageItems.length === 0 || obj.pageItems.length === 1) &&
 			obj.strokeWeight < 1) {
 			obj.geometricBounds = O.fitted;
 			return obj;
