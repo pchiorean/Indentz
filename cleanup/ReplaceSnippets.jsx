@@ -1,8 +1,8 @@
 ﻿/*
-	Replace text snippets 22.7.5
+	Replace text snippets 22.7.26
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
-	Replaces a list of snippets from a 4-column TSV file named 'snippets.txt':
+	Replaces a list of snippets from a 5-column TSV file named 'snippets.txt':
 
 	Find what              | Change to                 | Case sensitive | Whole word | Scope
 	English instructions   | Deutsche anleitung        | yes            | yes
@@ -14,7 +14,7 @@
 	2. <Change to>: the new text
 	3. <Case sensitive>: 'yes' or 'no' (default 'yes')
 	4. <Whole word>: 'yes' or 'no' (default 'yes')
-	5. <Scope>: replacement will only be done if the filename matches this regular expression
+	5. <Scope>: replacement will only be done if the filename matches this regular expression (case sensitive)
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
@@ -43,7 +43,6 @@
 */
 
 // @include '../lib/GetDataFile.jsxinc';
-// @include '../lib/ReplaceText.jsxinc';
 // @include '../lib/Report.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
