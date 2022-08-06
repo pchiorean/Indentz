@@ -502,6 +502,7 @@ while ((doc = docs.shift())) {
 		if (!exp.isOn.value) continue;
 		// Create subfolder
 		suffix = exp.suffix.text ? ('_' + exp.suffix.text) : '';
+		if (/print$/i.test(suffix) && doc.layers.itemByName('dielines').isValid) suffix += '+diecut'; // Filename hack for documents with diecuts
 		subfolder = '';
 		if (ui.output.options.subfolders.value && suffix) {
 			subfolder = suffix.replace(/^_/, '').replace(/\+.*$/, '').replace(/^\s+|\s+$/g, '');
