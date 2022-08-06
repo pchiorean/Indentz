@@ -1,5 +1,5 @@
 /*
-	Quick export 22.6.16
+	Quick export 22.8.6
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -50,18 +50,19 @@ var names = [];
 var docs = [];
 var pbWidth = 50;
 
-var VER = '2';
+var VER = '2.8';
 var defaults = {
 	presets: {
 		preset1: {
 			active: true,
 			name: '_preview',
-			suffix: '_preview',
+			dpi: '150',
+			suffix: 'preview',
 			options: {
 				spreads: true,
-				marks: { crop: true, info: false },
+				marks: { crop: true, info: true },
 				bleed: { custom: false, value: '3' },
-				slug: false
+				slug: true
 			},
 			script: {
 				active: false,
@@ -71,12 +72,13 @@ var defaults = {
 		preset2: {
 			active: false,
 			name: '_print',
-			suffix: '_print',
+			dpi: '350',
+			suffix: 'print',
 			options: {
-				spreads: false,
-				marks: { crop: true, info: false },
+				spreads: true,
+				marks: { crop: true, info: true },
 				bleed: { custom: false, value: '3' },
-				slug: false
+				slug: true
 			},
 			script: {
 				active: false,
@@ -108,91 +110,142 @@ app.pdfExportPreferences.viewPDF = false;
 
 // User interface
 
-var ui = new Window('dialog { alignChildren: "left", margins: 16, orientation: "column", spacing: 10, text: "Quick Export" }');
-ui.main = ui.add('group { margins: 0, orientation: "column", preferredSize: [ 500, -1 ], spacing: 10 }');
+var ui = new Window('dialog { text: "Quick Export", alignChildren: "left", margins: 16, orientation: "column", spacing: 10 }');
+ui.main = ui.add('group { margins: 0, orientation: "column", preferredSize: [ 590, -1 ], spacing: 10 }');
+
 // -- Input source
 if (folderMode) {
-	ui.input = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10, text: "Input folder" }');
+	ui.input = ui.main.add('panel { text: "Input folder", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
 		ui.input.source = ui.input.add('group { margins: 0, orientation: "row", spacing: 10 }');
-			ui.input.source.folder = ui.input.source.add('edittext { preferredSize: [ 368, 24 ], properties: { readonly: true } }');
-			ui.input.source.browse = ui.input.source.add('button { preferredSize: [ 100, 24 ], text: "Browse" }');
+			ui.input.source.folder = ui.input.source.add('edittext { preferredSize: [ 458, 24 ], properties: { readonly: true } }');
+			ui.input.source.browse = ui.input.source.add('button { text: "Browse", preferredSize: [ 100, 24 ] }');
 		ui.input.options = ui.input.add('group { margins: 0, orientation: "row", spacing: 10 }');
-			ui.input.options.subfolders = ui.input.options.add('checkbox { alignment: "bottom", text: "Include subfolders" }');
+			ui.input.options.subfolders = ui.input.options.add('checkbox { text: "Include subfolders", alignment: "bottom" }');
 }
+
 // -- Export options
-ui.presets = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10, text: "Export presets" }');
+ui.presets = ui.main.add('panel { text: "Export presets", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
 	ui.preset1 = ui.presets.add('group { margins: 0, orientation: "row", spacing: 10 }');
 		ui.preset1.isOn = ui.preset1.add('checkbox { alignment: "bottom" }');
 		ui.preset1.preset = ui.preset1.add('dropdownlist', undefined, presets);
 		ui.preset1.preset.preferredSize = [ 290, 24 ];
-		ui.preset1.add('statictext { justify: "right", preferredSize: [ 40, 24 ], text: "Suffix:" }');
-		ui.preset1.suffix = ui.preset1.add('edittext { helpTip: "Append this to the exported file name. Autodetected for presets that end with \'_suffix\'.", preferredSize: [ 100, 24 ] }');
+		ui.preset1.add('statictext { text: "DPI:", justify: "right", preferredSize: [ 25, 24 ] }');
+		ui.preset1.dpi = ui.preset1.add('edittext { justify: "center", preferredSize: [ 45, 24 ] }');
+		ui.preset1.dpi.helpTip = 'Export resolution';
+		ui.preset1.add('statictext { text: "Suffix:", justify: "right", preferredSize: [ 40, 24 ] }');
+		ui.preset1.suffix = ui.preset1.add('edittext { preferredSize: [ 100, 24 ] }');
+		ui.preset1.suffix.helpTip = "Append this to the exported file name.\nAutodetected for presets that end with '_suffix'.";
 	ui.preset1.options = WIN ? ui.presets.add('group { spacing: 12 }') : ui.presets.add('group { spacing: 14 }');
-		ui.preset1.exportSpreads = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Export as spreads", text: "Spreads" }');
-		ui.preset1.cropMarks = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Include crop marks", text: "Crop marks" }');
-		ui.preset1.pageInfo = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Include page information", text: "Page info" }');
-		ui.preset1.slug = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Include slug area", text: "Slug" }');
-		ui.preset1.bleedCustom = ui.preset1.options.add('checkbox { alignment: "bottom", helpTip: "Override document bleed settings", text: "Custom bleed:" }');
-		ui.preset1.bleedValue = ui.preset1.options.add('edittext { characters: 4, justify: "center", helpTip: "Enter a value between 0 and 25.4 mm", preferredSize: [ -1, 24 ] }');
+		ui.preset1.asSpreads = ui.preset1.options.add('checkbox { text: "As spreads", alignment: "bottom" }');
+		ui.preset1.asSpreads.helpTip = 'Export as spreads';
+		ui.preset1.options.add('panel', undefined, undefined).alignment = 'fill';
+		ui.preset1.cropMarks = ui.preset1.options.add('checkbox { text: "Crop marks", alignment: "bottom" }');
+		ui.preset1.cropMarks.helpTip = 'Include crop marks';
+		ui.preset1.pageInfo = ui.preset1.options.add('checkbox { text: "Page info", alignment: "bottom" }');
+		ui.preset1.pageInfo.helpTip = 'Include page information';
+		ui.preset1.options.add('panel', undefined, undefined).alignment = 'fill';
+		ui.preset1.slug = ui.preset1.options.add('checkbox { text: "Slug area", alignment: "bottom" }');
+		ui.preset1.slug.helpTip = 'Include slug area';
+		ui.preset1.bleedCustom = ui.preset1.options.add('checkbox { text: "Custom bleed:", alignment: "bottom" }');
+		ui.preset1.bleedCustom.helpTip = 'Override document bleed settings';
+		ui.preset1.bleedValue = ui.preset1.options.add('edittext { characters: 4, justify: "center", preferredSize: [ 51, 24 ] }');
+		ui.preset1.bleedValue.helpTip = 'Enter a value between 0 and 25.4 mm';
 	ui.preset1.script = ui.presets.add('group');
-		ui.preset1.script.add('statictext { preferredSize: [ 80, 24 ], helpTip: "Run a JavaScript or AppleScript before exporting", text: "Run a script:" }');
+		ui.preset1.script.st = ui.preset1.script.add('statictext { text: "Run a script:", preferredSize: [ 80, 24 ] }');
+		ui.preset1.script.st.helpTip = 'Run a JavaScript or AppleScript before exporting';
 		ui.preset1.script.isOn = ui.preset1.script.add('checkbox { alignment: "bottom" }');
-		ui.preset1.script.file = ui.preset1.script.add('edittext { preferredSize: [ 250, 24 ], properties: { readonly: true } }');
-		ui.preset1.script.browse = ui.preset1.script.add('button { preferredSize: [ 100, 24 ], text: "Browse" }');
+		ui.preset1.script.file = ui.preset1.script.add('edittext { preferredSize: [ 340, 24 ], properties: { readonly: true } }');
+		ui.preset1.script.browse = ui.preset1.script.add('button { text: "Browse", preferredSize: [ 100, 24 ] }');
 	ui.presets.add('panel { alignment: "fill" }');
+
 	ui.preset2 = ui.presets.add('group { margins: 0, orientation: "row", spacing: 10 }');
 		ui.preset2.isOn = ui.preset2.add('checkbox { alignment: "bottom" }');
 		ui.preset2.preset = ui.preset2.add('dropdownlist', undefined, presets);
 		ui.preset2.preset.preferredSize = [ 290, 24 ];
-		ui.preset2.add('statictext { justify: "right", preferredSize: [ 40, 24 ], text: "Suffix:" }');
-		ui.preset2.suffix = ui.preset2.add('edittext { helpTip: "Append this to the exported file name. Autodetected for presets that end with \'_suffix\'.", preferredSize: [ 100, 24 ] }');
-	ui.preset2.options = WIN ? ui.presets.add('group { spacing: 12 }') : ui.presets.add('group { spacing: 14 }');
-		ui.preset2.exportSpreads = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Export as spreads", text: "Spreads" }');
-		ui.preset2.cropMarks = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Include crop marks", text: "Crop marks" }');
-		ui.preset2.pageInfo = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Include page information", text: "Page info" }');
-		ui.preset2.slug = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Include slug area", text: "Slug" }');
-		ui.preset2.bleedCustom = ui.preset2.options.add('checkbox { alignment: "bottom", helpTip: "Override document bleed settings", text: "Custom bleed:" }');
-		ui.preset2.bleedValue = ui.preset2.options.add('edittext { characters: 4, justify: "center", helpTip: "Enter a value between 0 and 25.4 mm", preferredSize: [ -1, 24 ] }');
+		ui.preset2.add('statictext { text: "DPI:", justify: "right", preferredSize: [ 25, 24 ] }');
+		ui.preset2.dpi = ui.preset2.add('edittext { justify: "center", preferredSize: [ 45, 24 ] }');
+		ui.preset2.dpi.helpTip = 'Export resolution';
+		ui.preset2.add('statictext { text: "Suffix:", justify: "right", preferredSize: [ 40, 24 ] }');
+		ui.preset2.suffix = ui.preset2.add('edittext { preferredSize: [ 100, 24 ] }');
+		ui.preset2.suffix.helpTip = "Append this to the exported file name.\nAutodetected for presets that end with '_suffix'.";
+		ui.preset2.options = WIN ? ui.presets.add('group { spacing: 12 }') : ui.presets.add('group { spacing: 14 }');
+		ui.preset2.asSpreads = ui.preset2.options.add('checkbox { text: "As spreads", alignment: "bottom" }');
+		ui.preset2.asSpreads.helpTip = 'Export as spreads';
+		ui.preset2.options.add('panel', undefined, undefined).alignment = 'fill';
+		ui.preset2.cropMarks = ui.preset2.options.add('checkbox { text: "Crop marks", alignment: "bottom" }');
+		ui.preset2.cropMarks.helpTip = 'Include crop marks';
+		ui.preset2.pageInfo = ui.preset2.options.add('checkbox { text: "Page info", alignment: "bottom" }');
+		ui.preset2.pageInfo.helpTip = 'Include page information';
+		ui.preset2.options.add('panel', undefined, undefined).alignment = 'fill';
+		ui.preset2.slug = ui.preset2.options.add('checkbox { text: "Slug area", alignment: "bottom" }');
+		ui.preset2.slug.helpTip = 'Include slug area';
+		ui.preset2.bleedCustom = ui.preset2.options.add('checkbox { text: "Custom bleed:", alignment: "bottom" }');
+		ui.preset2.bleedCustom.helpTip = 'Override document bleed settings';
+		ui.preset2.bleedValue = ui.preset2.options.add('edittext { characters: 4, justify: "center", preferredSize: [ 51, 24 ] }');
+		ui.preset2.bleedValue.helpTip = 'Enter a value between 0 and 25.4 mm';
 	ui.preset2.script = ui.presets.add('group');
-		ui.preset2.script.add('statictext { preferredSize: [ 80, 24 ], helpTip: "Run a JavaScript or AppleScript before exporting", text: "Run a script:" }');
+		ui.preset2.script.st = ui.preset2.script.add('statictext { text: "Run a script:", preferredSize: [ 80, 24 ] }');
+		ui.preset2.script.st.helpTip = 'Run a JavaScript or AppleScript before exporting';
 		ui.preset2.script.isOn = ui.preset2.script.add('checkbox { alignment: "bottom" }');
-		ui.preset2.script.file = ui.preset2.script.add('edittext { preferredSize: [ 250, 24 ], properties: { readonly: true } }');
-		ui.preset2.script.browse = ui.preset2.script.add('button { preferredSize: [ 100, 24 ], text: "Browse" }');
+		ui.preset2.script.file = ui.preset2.script.add('edittext { preferredSize: [ 340, 24 ], properties: { readonly: true } }');
+		ui.preset2.script.browse = ui.preset2.script.add('button { text: "Browse", preferredSize: [ 100, 24 ] }');
+
 // -- Output options
-ui.output = ui.main.add('panel { alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10, text: "Output folder and options" }');
+ui.output = ui.main.add('panel { text: "Output folder and options", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
 	ui.output.dest = ui.output.add('group { margins: 0, orientation: "row", spacing: 10 }');
 		ui.output.dest.isOn = ui.output.dest.add('checkbox { alignment: "bottom" }');
-		ui.output.dest.folder = ui.output.dest.add('edittext { preferredSize: [ 340, 24 ], properties: { readonly: true } }');
-		ui.output.dest.browse = ui.output.dest.add('button { preferredSize: [ 100, 24 ], text: "Browse" }');
-	ui.output.options = ui.output.add('group { alignChildren: "top", margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 0 }');
-		ui.output.opt1 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", preferredSize: [ 230, -1 ], spacing: 5 }');
+		ui.output.dest.folder = ui.output.dest.add('edittext { preferredSize: [ 430, 24 ], properties: { readonly: true } }');
+		ui.output.dest.browse = ui.output.dest.add('button { text: "Browse", preferredSize: [ 100, 24 ] }');
+	ui.output.options = ui.output.add('group { alignChildren: "top", margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 15 }');
+		ui.output.opt1 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
 			ui.output.options.updateLinks = ui.output.opt1.add('checkbox { text: "Update out of date links" }');
 			ui.output.options.docSave = ui.output.opt1.add('group');
-				ui.output.options.docSave.isOn = ui.output.options.docSave.add('checkbox { text: "Save docs" }');
+				ui.output.options.docSave.isOn = ui.output.options.docSave.add('checkbox { text: "Save:" }');
 				ui.output.options.docSave.scope = ui.output.options.docSave.add('group');
-					ui.output.options.docSave.scope.mod = ui.output.options.docSave.scope.add('radiobutton { helpTip: "Save only modified documents", text: "modified" }');
+					ui.output.options.docSave.scope.mod = ui.output.options.docSave.scope.add('radiobutton { text: "only modified" }');
+					ui.output.options.docSave.scope.mod.helpTip = 'Save only modified documents';
 					ui.output.options.docSave.scope.mod.value = true;
-					ui.output.options.docSave.scope.all = ui.output.options.docSave.scope.add('radiobutton { helpTip: "Save all documents (using \'Save as\u2026\')", text: "all" }');
-			ui.output.options.docSaveAs = ui.output.opt1.add('checkbox { helpTip: "Documents will be saved as new to remove cruft and reduce their size", text: "Use \'Save as\u2026\' to reduce size" }');
-			ui.output.options.docClose = ui.output.opt1.add('checkbox { text: "Close docs after export" }');
+					ui.output.options.docSave.scope.all = ui.output.options.docSave.scope.add('radiobutton { text: "all documents" }');
+					ui.output.options.docSave.scope.all.helpTip = "Save all documents (using 'Save as\u2026')";
+			ui.output.options.docSaveAs = ui.output.opt1.add('checkbox { text: "Use \'Save as\u2026\' to reduce documents size" }');
+			ui.output.options.docSaveAs.helpTip = 'Documents will be saved as new to remove cruft and reduce their size';
+			ui.output.options.docClose = ui.output.opt1.add('checkbox { text: "Close documents after export" }');
 			ui.output.options.docClose.enabled = !folderMode;
+		ui.output.options.add('panel', undefined, undefined).alignment = 'fill';
 		ui.output.opt2 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
-			ui.output.options.subfolders = ui.output.opt2.add('checkbox { helpTip: "Use the \'suffix\' fields for subfolders (up to the first \'+\')", text: "Export in subfolders" }');
+			ui.output.options.subfolders = ui.output.opt2.add('checkbox { text: "Export in subfolders" }');
+			ui.output.options.subfolders.helpTip = "Use the 'suffix' fields for subfolders (up to the first '+')";
 			ui.output.options.split = ui.output.opt2.add('checkbox { text: "Export separate pages/spreads" }');
 			ui.output.options.overwrite = ui.output.opt2.add('checkbox { text: "Overwrite existing files" }');
+
 // -- Actions
 ui.actions = ui.add('group { orientation: "row" }');
 if (ADV) {
-	ui.actions.resetPrefs = ui.actions.add('button { preferredSize: [ 130, -1 ], text: "Reset preferences" }');
-	ui.actions.add('group { preferredSize: [ 180, -1 ] }');
+	ui.actions.resetPrefs = ui.actions.add('button { text: "Reset preferences", preferredSize: [ 130, -1 ] }');
+	ui.actions.add('group { preferredSize: [ 270, -1 ] }');
 } else {
-	ui.actions.savePrefs = ui.actions.add('checkbox { preferredSize: [ 320, -1 ], text: "Save preferences" }');
+	ui.actions.savePrefs = ui.actions.add('checkbox { text: "Save preferences", preferredSize: [ 410, -1 ] }');
 	ui.actions.savePrefs.value = true;
 }
-ui.actions.add('button { preferredSize: [ 80, -1 ], properties: { name: "cancel" }, text: "Cancel" }');
-ui.actions.ok = ui.actions.add('button { preferredSize: [ 80, -1 ], properties: { name: "ok" }, text: "Start" }');
+ui.actions.add('button { text: "Cancel", preferredSize: [ 80, -1 ], properties: { name: "cancel" } }');
+ui.actions.ok = ui.actions.add('button { text: "Start", preferredSize: [ 80, -1 ], properties: { name: "ok" } }');
 
 // UI callback functions
+
+if (folderMode) {
+	ui.input.source.browse.onClick = function () {
+		var ff;
+		var newFolder = Folder.selectDialog('Select a folder:');
+		if (newFolder) {
+			ff = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
+			ui.input.source.path = newFolder;
+			ui.input.source.folder.text = truncatePath(ff, 70);
+			ui.input.source.folder.helpTip = ff;
+			ui.actions.ok.enabled = (ui.preset1.isOn.value || ui.preset2.isOn.value) && !!ui.input.source.path;
+		}
+	};
+	ui.output.options.docClose.helpTip = 'In batch mode documents are always closed after export';
+}
 
 ui.preset1.isOn.onClick = function () {
 	ui.preset1.preset.enabled = ui.preset1.suffix.enabled = this.value;
@@ -205,7 +258,7 @@ ui.preset1.isOn.onClick = function () {
 };
 ui.preset1.bleedCustom.onClick = function () {
 	ui.preset1.bleedValue.enabled = this.value;
-	if (ui.preset1.bleedValue.enabled) ui.preset1.bleedValue.onChanging();
+	if (ui.preset1.bleedValue.enabled) ui.preset1.bleedValue.onDeactivate();
 };
 ui.preset1.script.isOn.onClick = function () {
 	ui.preset1.script.file.enabled = ui.preset1.script.browse.enabled = this.value;
@@ -228,14 +281,16 @@ ui.preset1.preset.onChange = function () {
 	// Auto-set suffix
 	var str = this.selection.text;
 	var pdfExpPreset = app.pdfExportPresets.item(str);
+	ui.preset1.dpi.text = pdfExpPreset.colorBitmapSamplingDPI;
 	ui.preset1.suffix.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
 	// Populate preset options
-	ui.preset1.exportSpreads.value = pdfExpPreset.exportReaderSpreads;
+	ui.preset1.asSpreads.value = pdfExpPreset.exportReaderSpreads;
 	ui.preset1.cropMarks.value = pdfExpPreset.cropMarks;
 	ui.preset1.pageInfo.value = pdfExpPreset.pageInformationMarks;
 	ui.preset1.slug.value = pdfExpPreset.includeSlugWithPDF;
 	ui.preset1.bleedValue.text = Math.round(pdfExpPreset.pageMarksOffset);
 };
+
 ui.preset2.isOn.onClick = function () {
 	ui.preset2.preset.enabled = ui.preset2.suffix.enabled = this.value;
 	ui.preset2.options.enabled = this.value;
@@ -247,20 +302,7 @@ ui.preset2.isOn.onClick = function () {
 };
 ui.preset2.bleedCustom.onClick = function () {
 	ui.preset2.bleedValue.enabled = this.value;
-	if (ui.preset2.bleedValue.enabled) ui.preset2.bleedValue.onChanging();
-};
-ui.preset1.bleedValue.onChanging =
-ui.preset2.bleedValue.onChanging = function () {
-	this.text = this.text.replace(/[^\d.,]/gi, '').replace(/^0/gi, '').replace(',', '.');
-	if (this.text === '') this.text = '0';
-	if (UnitValue(Number(this.text), 'mm').as('pt') > 72) this.text = '25.4';
-};
-ui.preset1.bleedValue.onDeactivate =
-ui.preset2.bleedValue.onDeactivate = function () {
-	if (isNaN(this.text)) {
-		alert('Invalid value.\nEnter a number between 0 and 25.4 mm.');
-		this.text = '0';
-	}
+	if (ui.preset2.bleedValue.enabled) ui.preset2.bleedValue.onDeactivate();
 };
 ui.preset2.script.isOn.onClick = function () {
 	ui.preset2.script.file.enabled = ui.preset2.script.browse.enabled = this.value;
@@ -283,35 +325,39 @@ ui.preset2.preset.onChange = function () {
 	// Auto-set suffix
 	var str = this.selection.text;
 	var pdfExpPreset = app.pdfExportPresets.item(str);
+	ui.preset2.dpi.text = pdfExpPreset.colorBitmapSamplingDPI;
 	ui.preset2.suffix.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
 	// Populate preset options
-	ui.preset2.exportSpreads.value = pdfExpPreset.exportReaderSpreads;
+	ui.preset2.asSpreads.value = pdfExpPreset.exportReaderSpreads;
 	ui.preset2.cropMarks.value = pdfExpPreset.cropMarks;
 	ui.preset2.pageInfo.value = pdfExpPreset.pageInformationMarks;
 	ui.preset2.slug.value = pdfExpPreset.includeSlugWithPDF;
 	ui.preset2.bleedValue.text = Math.round(pdfExpPreset.pageMarksOffset);
 };
+
 ui.preset1.suffix.onChange =
 ui.preset2.suffix.onChange = function () {
-	var str = this.text.replace(/^\s+|\s+$/g, ''); // Trim
-	str = str.replace(invalidFilenameChars, '');   // Sanitize suffix
-	str = str.replace(/^_/, '');                   // Delete separator
+	var str = this.text.replace(/^\s+|\s+$/g, '').replace(invalidFilenameChars, '').replace(/^_/, '');
 	if (this.text !== str) this.text = str;
 };
-if (folderMode) {
-	ui.input.source.browse.onClick = function () {
-		var ff;
-		var newFolder = Folder.selectDialog('Select a folder:');
-		if (newFolder) {
-			ff = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
-			ui.input.source.path = newFolder;
-			ui.input.source.folder.text = truncatePath(ff, 52);
-			ui.input.source.folder.helpTip = ff;
-			ui.actions.ok.enabled = (ui.preset1.isOn.value || ui.preset2.isOn.value) && !!ui.input.source.path;
-		}
-	};
-	ui.output.options.docClose.helpTip = 'In batch mode documents are always closed after export';
-}
+ui.preset1.dpi.onDeactivate =
+ui.preset2.dpi.onDeactivate = function () {
+	this.text = Number(this.text.replace(/[^\d.,]/gi, '').replace(',', '.'));
+	if (isNaN(this.text) || this.text < 9 || this.text > 2400) {
+		alert('Invalid value.\nEnter a number between 9 and 2400.');
+		this.text = '300';
+	}
+};
+ui.preset1.bleedValue.onDeactivate =
+ui.preset2.bleedValue.onDeactivate = function () {
+	if (this.text === '') this.text = '0';
+	this.text = Number(this.text.replace(/[^\d.,]/gi, '').replace(',', '.'));
+	if (isNaN(this.text) || UnitValue(this.text, 'mm').as('pt') > 72) {
+		alert('Invalid value.\nEnter a number between 0 and 25.4 mm.');
+		this.text = '3';
+	}
+};
+
 ui.output.dest.isOn.onClick = function () {
 	ui.output.dest.folder.enabled = ui.output.dest.browse.enabled = this.value;
 };
@@ -322,7 +368,7 @@ ui.output.dest.browse.onClick = function () {
 	if (newFolder) {
 		ff = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
 		ui.output.dest.path = newFolder;
-		ui.output.dest.folder.text = truncatePath(ff, 48);
+		ui.output.dest.folder.text = truncatePath(ff, 65);
 		ui.output.dest.folder.helpTip = ff;
 	}
 };
@@ -341,6 +387,7 @@ ui.output.options.docSave.scope.all.onClick = function () {
 ui.output.options.docSaveAs.onClick = function () {
 	if (!this.value) ui.output.options.docSave.scope.mod.value = true;
 };
+
 if (ADV) {
 	ui.actions.resetPrefs.onClick = function () {
 		try { settingsFile.remove(); } catch (e) {}
@@ -349,6 +396,7 @@ if (ADV) {
 } else {
 	ui.actions.savePrefs.onClick = function () { if (this.value) saveSettings(); };
 }
+
 ui.onShow = function () {
 	readSettings();
 	if (settings.position != null)
@@ -360,6 +408,7 @@ if (ui.show() === 2) cleanupAndExit();
 // Processing
 
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+
 // Get a sorted document list
 if (folderMode) {
 	docs = ui.input.options.subfolders.value ?
@@ -373,37 +422,43 @@ if (folderMode) {
 	docs = [];
 	while ((name = names.shift())) docs.push(app.documents.itemByName(name));
 }
+
 // Init progress bar
 maxCounter = docs.length * ((ui.preset1.isOn.value ? 1 : 0) + (ui.preset2.isOn.value ? 1 : 0));
 for (i = 0, n = docs.length; i < n; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
 progressBar = new ProgressBar('Exporting', maxCounter, pbWidth + 10);
+
 // Documents loop
 while ((doc = docs.shift())) {
 	if (folderMode) {
 		doc = app.open(doc);
 		if (doc.converted) {
-			errors.push(decodeURI(doc.name) + ' must be converted; skipped.');
+			errors.push(decodeURI(doc.name) + ': Must be converted; skipped.');
 			doc.close(SaveOptions.NO); continue;
 		}
 	} else {
 		app.activeDocument = doc;
-		if (doc.converted) { errors.push(decodeURI(doc.name) + ' must be converted; skipped.'); continue; }
-		if (!doc.saved) { errors.push(decodeURI(doc.name) + ' is not saved; skipped.'); continue; }
+		if (doc.converted) { errors.push(decodeURI(doc.name) + ': Must be converted; skipped.'); continue; }
+		if (!doc.saved) { errors.push(decodeURI(doc.name) + ': Is not saved; skipped.'); continue; }
 	}
+
 	// Set measurement units
 	old.horizontalMeasurementUnits = doc.viewPreferences.horizontalMeasurementUnits;
 	old.verticalMeasurementUnits = doc.viewPreferences.verticalMeasurementUnits;
 	doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;
 	doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
+
 	// Get base folder
 	baseFolder = decodeURI(doc.filePath);
 	if (ui.output.dest.isOn.value && ui.output.dest.path) {
 		if (!ui.output.dest.path.exists) ui.output.dest.path.create();
 		baseFolder = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
 	}
+
 	checkFonts();
 	checkTextOverflow();
 	if (ui.output.options.updateLinks.value) updateLinks();
+
 	// Export preset loop
 	old.docSpreads = doc.spreads.length; // Save initial spreads count for extendRange hack (see Export())
 	for (var step = 1; step < 3; step++) {
@@ -419,30 +474,32 @@ while ((doc = docs.shift())) {
 		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) runScript(exp.script.path);
 		app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 		app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
-		doExport(exp.exportSpreads.value, ui.output.options.split.value, exp.preset.selection.text);
+		doExport(exp.asSpreads.value, ui.output.options.split.value, exp.preset.selection.text);
 	}
+
 	// Restore measurement units
 	doc.viewPreferences.horizontalMeasurementUnits = old.horizontalMeasurementUnits;
 	doc.viewPreferences.verticalMeasurementUnits = old.verticalMeasurementUnits;
+
 	// Save and close
 	if (ui.output.options.docSave.isOn.value) {
 		if (ui.output.options.docSave.scope.mod.value) {
 			if (doc.modified) {
-				if (ui.output.options.docSaveAs.enabled && ui.output.options.docSaveAs.value)
-					doc.save(File(doc.fullName));
-				else doc.save();
+				doc.save(ui.output.options.docSaveAs.enabled && ui.output.options.docSaveAs.value ?
+					File(doc.fullName) : '');
 			}
 		} else { doc.save(File(doc.fullName)); }
 	}
 	if (folderMode) doc.close(SaveOptions.NO);
 	else if (ui.output.options.docClose.value) doc.close(SaveOptions.NO);
 }
+
 // Finish
 progressBar.close();
 if (errors.length > 0) report(errors, 'Errors', false, true);
 cleanupAndExit();
 
-// Functions
+// Helper functions
 
 function getFilesRecursively(/*Folder*/folder) {
 	var file;
@@ -479,7 +536,7 @@ function checkTextOverflow() {
 
 function updateLinks() {
 	for (var i = 0, n = doc.links.length; i < n; i++) {
-		if (doc.links[i].parent.parent.parentPage == null) continue;
+		if (!doc.links[i].parent.parent.parentPage) continue;
 		switch (doc.links[i].status) {
 			case LinkStatus.LINK_OUT_OF_DATE:
 				doc.links[i].update();
@@ -515,7 +572,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 	if (split && !isCombo) {
 		// Export separate pages
 		// Note: if a script doubles the number of pages/spreads, the extendRange hack exports them as pairs
-		extendRange = (doc.spreads.length === old.docSpreads * 2) && exp.exportSpreads.value;
+		extendRange = (doc.spreads.length === old.docSpreads * 2) && exp.asSpreads.value;
 		fileSufx = RegExp('([ ._-])([a-zA-Z]{' +
 			(extendRange ? target.length / 2 : target.length) + '})$', 'i').exec(baseName);
 			progressBar.update();
@@ -597,14 +654,24 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 	function exportToPDF(/*string*/filename, /*string|Enum*/pageRange, /*pdfExportPreset*/pdfPreset) {
 		if (ScriptUI.environment.keyboardState.keyName === 'Escape') cleanupAndExit();
 		var fPg, lPg, spreadWidth;
+
 		// Load preset settings
 		for (var key in pdfPreset) {
 			if (Object.prototype.hasOwnProperty.call(pdfPreset, key))
 				try { app.pdfExportPreferences[key] = pdfPreset[key]; } catch (e) {}
 		}
+
 		// Override some of the settings
 		app.pdfExportPreferences.pageRange = pageRange;
-		app.pdfExportPreferences.exportReaderSpreads = exp.exportSpreads.value;
+		app.pdfExportPreferences.colorBitmapSamplingDPI = Number(exp.dpi.text);
+		app.pdfExportPreferences.grayscaleBitmapSamplingDPI = Number(exp.dpi.text);
+		app.pdfExportPreferences.monochromeBitmapSamplingDPI = (function (dpi) {
+			if (dpi <= 96) return 300;
+			else if (dpi <= 150) return 600;
+			else if (dpi < 300) return 1200;
+			return 2400;
+		}(Number(exp.dpi.text)));
+		app.pdfExportPreferences.exportReaderSpreads = exp.asSpreads.value;
 		app.pdfExportPreferences.cropMarks = exp.cropMarks.value;
 		app.pdfExportPreferences.pageInformationMarks = exp.pageInfo.value;
 		app.pdfExportPreferences.includeSlugWithPDF = exp.slug.value;
@@ -617,7 +684,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 					doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
 					doc.documentPreferences.properties.documentBleedBottomOffset,
 					doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
-				) + 1, // Offset page marks at bleed value + 1 mm
+				) + 1, // Offset page marks 1 mm
 				UnitValue('72 pt').as('mm')); // But limit to 72 pt
 		} else {
 			app.pdfExportPreferences.bleedTop =
@@ -627,7 +694,8 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			app.pdfExportPreferences.pageMarksOffset =
 				Math.min(app.pdfExportPreferences.bleedTop + 1, UnitValue('72 pt').as('mm'));
 		}
-		// Don't include printer's marks if no bleed
+
+		// Hack: don't include printer's marks if no bleed
 		if (doc.documentPreferences.properties.documentBleedTopOffset +
 			doc.documentPreferences.properties.documentBleedInsideOrLeftOffset +
 			doc.documentPreferences.properties.documentBleedBottomOffset +
@@ -636,7 +704,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			app.pdfExportPreferences.cropMarks = false;
 			app.pdfExportPreferences.pageInformationMarks = false;
 		}
-		// Don't include page information on pages with very small widths
+		// Hack: don't include page information on pages with very small widths
 		if (pageRange === PageRange.ALL_PAGES) {
 			fPg = target.constructor.name === 'Spreads' ? target[0].pages[0]  : target[0];
 			lPg = target.constructor.name === 'Spreads' ? target[0].pages[-1] : target[0];
@@ -646,6 +714,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		} else { fPg = lPg = doc.pages.item(pageRange); }
 		spreadWidth = (target.constructor.name === 'Spreads' ? lPg.bounds[3] : fPg.bounds[3]) - fPg.bounds[1];
 		if (spreadWidth < UnitValue('335 pt').as('mm')) app.pdfExportPreferences.pageInformationMarks = false;
+
 		// Export
 		doc.exportFile(ExportFormat.PDF_TYPE, File(filename), false);
 	}
@@ -661,15 +730,25 @@ function readSettings() {
 		settings = $.evalFile(settingsFile);
 		if (settings.version === undefined || settings.version !== VER) setDefaults();
 	} catch (e) { setDefaults(); }
+
+	// Preset state
 	ui.preset1.isOn.value = settings.presets.preset1.active;
 	ui.preset1.preset.selection = findPresetIndex(settings.presets.preset1.name, ui.preset1.preset.items);
+	// Options
+	ui.preset1.dpi.text = Number(settings.presets.preset1.dpi.replace(/[^\d.,]/gi, '').replace(',', '.'));
+	if (isNaN(ui.preset1.dpi.text) || ui.preset1.dpi.text < 9 || ui.preset1.dpi.text > 2400)
+		ui.preset1.dpi.text = '300';
 	ui.preset1.suffix.text = settings.presets.preset1.suffix;
-	ui.preset1.exportSpreads.value = settings.presets.preset1.options.spreads;
+	ui.preset1.asSpreads.value = settings.presets.preset1.options.spreads;
 	ui.preset1.cropMarks.value = settings.presets.preset1.options.marks.crop;
 	ui.preset1.pageInfo.value = settings.presets.preset1.options.marks.info;
 	ui.preset1.bleedCustom.value = settings.presets.preset1.options.bleed.custom;
-	ui.preset1.bleedValue.text = settings.presets.preset1.options.bleed.value;
+	ui.preset1.bleedValue.text =
+		Number(settings.presets.preset1.options.bleed.value.replace(/[^\d.,]/gi, '').replace(',', '.'));
+	if (isNaN(ui.preset1.bleedValue.text) || UnitValue(ui.preset1.bleedValue.text, 'mm').as('pt') > 72)
+		ui.preset1.bleedValue.text = '3';
 	ui.preset1.slug.value = settings.presets.preset1.options.slug;
+	// Script
 	ui.preset1.script.path = File(settings.presets.preset1.script.file).exists ?
 		File(settings.presets.preset1.script.file) : '';
 	if (ui.preset1.script.path) {
@@ -678,15 +757,25 @@ function readSettings() {
 			WIN ? decodeURI(ui.preset1.script.path.fsName) : decodeURI(ui.preset1.script.path.fullName);
 	}
 	ui.preset1.script.isOn.value = !!ui.preset1.script.path && settings.presets.preset1.script.active;
+
+	// Preset state
 	ui.preset2.isOn.value = settings.presets.preset2.active;
 	ui.preset2.preset.selection = findPresetIndex(settings.presets.preset2.name, ui.preset2.preset.items);
+	// Options
+	ui.preset2.dpi.text = Number(settings.presets.preset2.dpi.replace(/[^\d.,]/gi, '').replace(',', '.'));
+	if (isNaN(ui.preset2.dpi.text) || ui.preset2.dpi.text < 9 || ui.preset2.dpi.text > 2400)
+		ui.preset2.dpi.text = '300';
 	ui.preset2.suffix.text = settings.presets.preset2.suffix;
-	ui.preset2.exportSpreads.value = settings.presets.preset2.options.spreads;
+	ui.preset2.asSpreads.value = settings.presets.preset2.options.spreads;
 	ui.preset2.cropMarks.value = settings.presets.preset2.options.marks.crop;
 	ui.preset2.pageInfo.value = settings.presets.preset2.options.marks.info;
 	ui.preset2.bleedCustom.value = settings.presets.preset2.options.bleed.custom;
-	ui.preset2.bleedValue.text = settings.presets.preset2.options.bleed.value;
+	ui.preset2.bleedValue.text =
+		Number(settings.presets.preset2.options.bleed.value.replace(/[^\d.,]/gi, '').replace(',', '.'));
+	if (isNaN(ui.preset2.bleedValue.text) || UnitValue(ui.preset2.bleedValue.text, 'mm').as('pt') > 72)
+		ui.preset2.bleedValue.text = '3';
 	ui.preset2.slug.value = settings.presets.preset2.options.slug;
+	// Script
 	ui.preset2.script.path = File(settings.presets.preset2.script.file).exists ?
 		File(settings.presets.preset2.script.file) : '';
 	if (ui.preset2.script.path) {
@@ -695,10 +784,12 @@ function readSettings() {
 			WIN ? decodeURI(ui.preset2.script.path.fsName) : decodeURI(ui.preset2.script.path.fullName);
 	}
 	ui.preset2.script.isOn.value = !!ui.preset2.script.path && settings.presets.preset2.script.active;
+
+	// Output options
 	ui.output.dest.path = Folder(settings.output.dest.folder).exists ? Folder(settings.output.dest.folder) : '';
 	if (ui.output.dest.path) {
 		var f = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
-		ui.output.dest.folder.text = truncatePath(f, 48);
+		ui.output.dest.folder.text = truncatePath(f, 65);
 		ui.output.dest.folder.helpTip = f;
 	}
 	ui.output.dest.isOn.value = !!ui.output.dest.path && settings.output.dest.active;
@@ -709,6 +800,8 @@ function readSettings() {
 	ui.output.options.docSave.isOn.value = settings.output.options.save;
 	ui.output.options.docSaveAs.value = false;
 	ui.output.options.docClose.value = settings.output.options.close;
+
+	// Init
 	ui.preset1.isOn.onClick();
 	ui.preset2.isOn.onClick();
 	ui.output.dest.isOn.onClick();
@@ -735,9 +828,10 @@ function saveSettings() {
 			preset1: {
 				active: ui.preset1.isOn.value,
 				name: ui.preset1.preset.selection.text,
+				dpi: ui.preset1.dpi.text,
 				suffix: ui.preset1.suffix.text,
 				options: {
-					spreads: ui.preset1.exportSpreads.value,
+					spreads: ui.preset1.asSpreads.value,
 					marks: {
 						crop: ui.preset1.cropMarks.value,
 						info: ui.preset1.pageInfo.value
@@ -756,9 +850,10 @@ function saveSettings() {
 			preset2: {
 				active: ui.preset2.isOn.value,
 				name: ui.preset2.preset.selection.text,
+				dpi: ui.preset2.dpi.text,
 				suffix: ui.preset2.suffix.text,
 				options: {
-					spreads: ui.preset2.exportSpreads.value,
+					spreads: ui.preset2.asSpreads.value,
 					marks: {
 						crop: ui.preset2.cropMarks.value,
 						info: ui.preset2.pageInfo.value
@@ -792,10 +887,12 @@ function saveSettings() {
 		position: [ ui.location[0], ui.location[1] ],
 		version: VER
 	};
+
 	try {
 		oldSettings = $.evalFile(settingsFile);
 		if (settings.toSource() === oldSettings.toSource()) return;
 	} catch (e) {}
+
 	settingsFile.open('w');
 	settingsFile.write(settings.toSource());
 	settingsFile.close();
