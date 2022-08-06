@@ -278,18 +278,36 @@ ui.preset1.script.browse.onClick = function () {
 	}
 };
 ui.preset1.preset.onChange = function () {
-	// Auto-set suffix
 	var str = this.selection.text;
 	var pdfExpPreset = app.pdfExportPresets.item(str);
-	ui.preset1.dpi.text = pdfExpPreset.colorBitmapSamplingDPI;
 	ui.preset1.suffix.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
-	// Populate preset options
+	ui.preset1.dpi.text = pdfExpPreset.colorBitmapSamplingDPI;
 	ui.preset1.asSpreads.value = pdfExpPreset.exportReaderSpreads;
 	ui.preset1.cropMarks.value = pdfExpPreset.cropMarks;
 	ui.preset1.pageInfo.value = pdfExpPreset.pageInformationMarks;
 	ui.preset1.slug.value = pdfExpPreset.includeSlugWithPDF;
 	ui.preset1.bleedValue.text = Math.round(pdfExpPreset.pageMarksOffset);
-};
+	ui.preset1.preset.helpTip = (function (preset) {
+			var msg = [];
+			msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
+			msg.push('Compression: ' + String(preset.colorBitmapCompression).toLowerCase().replace(/_/g, ' ').replace(' compression', ''));
+			msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase().replace(/_/g, ' '));
+			msg.push('Profile: ' + (preset.pdfDestinationProfile.constructor.name === 'String' ?
+				preset.effectivePDFDestinationProfile :
+				String(PDFProfileSelector.USE_DOCUMENT).toLowerCase().replace(/_/g, ' ').replace('use ', ''))
+			);
+			msg.push('\nExport as ' + (preset.exportReaderSpreads ? 'spreads' : 'pages'));
+			if (preset.useDocumentBleedWithPDF) msg.push('Use document bleed');
+			if (preset.cropMarks || preset.pageInformationMarks || preset.includeSlugWithPDF) {
+				msg.push('Include ' +
+					((preset.cropMarks ? 'crop marks, ' : '') +
+					(preset.pageInformationMarks ? 'page info, ' : '') +
+					(preset.includeSlugWithPDF ? 'slug area' : '')).replace(/, $/, '')
+				);
+			}
+			return msg.join('\n');
+		}(pdfExpPreset));
+	};
 
 ui.preset2.isOn.onClick = function () {
 	ui.preset2.preset.enabled = ui.preset2.suffix.enabled = this.value;
@@ -322,17 +340,35 @@ ui.preset2.script.browse.onClick = function () {
 	}
 };
 ui.preset2.preset.onChange = function () {
-	// Auto-set suffix
 	var str = this.selection.text;
 	var pdfExpPreset = app.pdfExportPresets.item(str);
-	ui.preset2.dpi.text = pdfExpPreset.colorBitmapSamplingDPI;
 	ui.preset2.suffix.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
-	// Populate preset options
+	ui.preset2.dpi.text = pdfExpPreset.colorBitmapSamplingDPI;
 	ui.preset2.asSpreads.value = pdfExpPreset.exportReaderSpreads;
 	ui.preset2.cropMarks.value = pdfExpPreset.cropMarks;
 	ui.preset2.pageInfo.value = pdfExpPreset.pageInformationMarks;
 	ui.preset2.slug.value = pdfExpPreset.includeSlugWithPDF;
 	ui.preset2.bleedValue.text = Math.round(pdfExpPreset.pageMarksOffset);
+	ui.preset2.preset.helpTip = (function (preset) {
+		var msg = [];
+		msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
+		msg.push('Compression: ' + String(preset.colorBitmapCompression).toLowerCase().replace(/_/g, ' ').replace(' compression', ''));
+		msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase().replace(/_/g, ' '));
+		msg.push('Profile: ' + (preset.pdfDestinationProfile.constructor.name === 'String' ?
+			preset.effectivePDFDestinationProfile :
+			String(PDFProfileSelector.USE_DOCUMENT).toLowerCase().replace(/_/g, ' ').replace('use ', ''))
+		);
+		msg.push('\nExport as ' + (preset.exportReaderSpreads ? 'spreads' : 'pages'));
+		if (preset.useDocumentBleedWithPDF) msg.push('Use document bleed');
+		if (preset.cropMarks || preset.pageInformationMarks || preset.includeSlugWithPDF) {
+			msg.push('Include ' +
+				((preset.cropMarks ? 'crop marks, ' : '') +
+				(preset.pageInformationMarks ? 'page info, ' : '') +
+				(preset.includeSlugWithPDF ? 'slug area' : '')).replace(/, $/, '')
+			);
+		}
+		return msg.join('\n');
+	}(pdfExpPreset));
 };
 
 ui.preset1.suffix.onChange =
