@@ -239,7 +239,7 @@ if (folderMode) {
 		if (newFolder) {
 			ff = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
 			ui.input.source.path = newFolder;
-			ui.input.source.folder.text = truncatePath(ff, 70);
+			ui.input.source.folder.text = truncateString(ff, 70);
 			ui.input.source.folder.helpTip = ff;
 			ui.actions.ok.enabled = (ui.preset1.isOn.value || ui.preset2.isOn.value) && !!ui.input.source.path;
 		}
@@ -368,7 +368,7 @@ ui.output.dest.browse.onClick = function () {
 	if (newFolder) {
 		ff = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
 		ui.output.dest.path = newFolder;
-		ui.output.dest.folder.text = truncatePath(ff, 65);
+		ui.output.dest.folder.text = truncateString(ff, 65);
 		ui.output.dest.folder.helpTip = ff;
 	}
 };
@@ -486,7 +486,7 @@ while ((doc = docs.shift())) {
 		if (ui.output.options.docSave.scope.mod.value) {
 			if (doc.modified) {
 				doc.save(ui.output.options.docSaveAs.enabled && ui.output.options.docSaveAs.value ?
-					File(doc.fullName) : '');
+					File(doc.fullName) : undefined);
 			}
 		} else { doc.save(File(doc.fullName)); }
 	}
@@ -500,18 +500,6 @@ if (errors.length > 0) report(errors, 'Errors', false, true);
 cleanupAndExit();
 
 // Helper functions
-
-function getFilesRecursively(/*Folder*/folder) {
-	var file;
-	var files = [];
-	var fileList = folder.getFiles();
-	for (var i = 0, n = fileList.length; i < n; i++) {
-		file = fileList[i];
-		if (file instanceof Folder) files = files.concat(getFilesRecursively(file));
-		else if (file instanceof File && file.name.match(/\.indd$/i)) files.push(file);
-	}
-	return files;
-}
 
 function checkFonts() {
 	var usedFonts = doc.fonts.everyItem().getElements();
@@ -569,8 +557,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 	var target = asSpreads ? doc.spreads : doc.pages;
 	var baseName = decodeURI(doc.name).replace(/\.indd$/i, '');
 	var isCombo = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*\+\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig.test(decodeURI(doc.name));
-	if (split && !isCombo) {
-		// Export separate pages
+	if (split && !isCombo) { // Export separate pages
 		// Note: if a script doubles the number of pages/spreads, the extendRange hack exports them as pairs
 		extendRange = (doc.spreads.length === old.docSpreads * 2) && exp.asSpreads.value;
 		fileSufx = RegExp('([ ._-])([a-zA-Z]{' +
@@ -601,8 +588,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			progressBar.msg(baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn);
 			exportToPDF(fn, range, app.pdfExportPresets.item(preset));
 		}
-	} else {
-		// Export all pages
+	} else { // Export all pages
 		baseName += suffix;
 		fn = uniqueName(baseName,
 			baseFolder + (subfolder ? '/' + subfolder : ''),
@@ -643,12 +629,6 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			unique = unique.replace(/\.pdf$/i, '') + (suffix ? '' : ' ') + String(fileLastIndex) + '.pdf';
 		}
 		return unique;
-	}
-
-	function zeroPad(/*number*/number, /*number*/digits) {
-		number = number.toString();
-		while (number.length < digits) number = '0' + number;
-		return Number(number);
 	}
 
 	function exportToPDF(/*string*/filename, /*string|Enum*/pageRange, /*pdfExportPreset*/pdfPreset) {
@@ -720,11 +700,6 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 	}
 }
 
-function truncatePath(/*string*/path, /*number*/maxLength) {
-	if (path.length > maxLength + 1) path = '\u2026' + path.slice(-maxLength + 1); // ellipsis
-	return path;
-}
-
 function readSettings() {
 	try {
 		settings = $.evalFile(settingsFile);
@@ -789,7 +764,7 @@ function readSettings() {
 	ui.output.dest.path = Folder(settings.output.dest.folder).exists ? Folder(settings.output.dest.folder) : '';
 	if (ui.output.dest.path) {
 		var f = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
-		ui.output.dest.folder.text = truncatePath(f, 65);
+		ui.output.dest.folder.text = truncateString(f, 65);
 		ui.output.dest.folder.helpTip = f;
 	}
 	ui.output.dest.isOn.value = !!ui.output.dest.path && settings.output.dest.active;
@@ -814,12 +789,6 @@ function readSettings() {
 		}
 		return 0;
 	}
-}
-
-function setDefaults() {
-	try { settingsFile.remove(); } catch (e) {}
-	settings = defaults;
-	alert('Preferences were reset.\nEither the file was an old version, or it was corrupt.');
 }
 
 function saveSettings() {
@@ -896,6 +865,35 @@ function saveSettings() {
 	settingsFile.open('w');
 	settingsFile.write(settings.toSource());
 	settingsFile.close();
+}
+
+function setDefaults() {
+	try { settingsFile.remove(); } catch (e) {}
+	settings = defaults;
+	alert('Preferences were reset.\nEither the file was an old version, or it was corrupt.');
+}
+
+function getFilesRecursively(/*Folder*/folder) {
+	var file;
+	var files = [];
+	var fileList = folder.getFiles();
+	for (var i = 0, n = fileList.length; i < n; i++) {
+		file = fileList[i];
+		if (file instanceof Folder) files = files.concat(getFilesRecursively(file));
+		else if (file instanceof File && file.name.match(/\.indd$/i)) files.push(file);
+	}
+	return files;
+}
+
+function truncateString(/*string*/str, /*number*/length) {
+	if (str.length > length + 1) str = '\u2026' + str.slice(-length + 1); // ellipsis
+	return str;
+}
+
+function zeroPad(/*number*/number, /*number*/digits) {
+	number = number.toString();
+	while (number.length < digits) number = '0' + number;
+	return Number(number);
 }
 
 // https://stackoverflow.com/questions/2802341/javascript-natural-sort-of-alphanumerical-strings/2802804#2802804
