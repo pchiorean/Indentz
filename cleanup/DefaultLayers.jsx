@@ -83,7 +83,7 @@ function main() {
 			if (i < data.records.length - 1) {
 				tmpLayer = doc.layers.item(data.records[i + 1].name);
 				if (tmpLayer.isValid && (newLayer.index > tmpLayer.index))
-					newLayer.move(LocationOptions.BEFORE,tmpLayer);
+					newLayer.move(LocationOptions.BEFORE, tmpLayer);
 			}
 		}
 		// Bottom layers
