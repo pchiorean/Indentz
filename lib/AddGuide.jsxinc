@@ -21,10 +21,11 @@ function addGuide(target, layer, HorV, location, label, preset) {
 		case '-': g.guideColor = app.activeDocument.guidePreferences.rulerGuidesColor; break; // Standard guide
 		case 'x': g.guideColor = UIColors.MAGENTA; break; // Center
 		case 's': g.guideColor = UIColors.GREEN; break; // Section
-		case 'g': g.guideColor = app.smartGuidePreferences.guideColor; g.viewThreshold = 200; break; // Subsection
-		case 'p': g.guideColor = app.activeDocument.pasteboardPreferences.slugGuideColor; g.viewThreshold = 200; break; // Product
-		default:  g.guideColor = UIColors.LIGHT_GRAY; g.viewThreshold = 200; break; // Miscellaneous
+		case 'g': g.guideColor = app.smartGuidePreferences.guideColor; g.viewThreshold = 101; break; // Subsection
+		case 'p': g.guideColor = app.activeDocument.pasteboardPreferences.slugGuideColor; g.viewThreshold = 101; break; // Product
+		default:  g.guideColor = UIColors.LIGHT_GRAY; g.viewThreshold = 101; break; // Miscellaneous
 	}
+	return g;
 }
 
 /*
