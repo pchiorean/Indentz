@@ -18,7 +18,20 @@
 - [`brk`](https://github.com/pchiorean/Indentz/commit/b8acc4c788519dc993a64d761cd12e9241af6ab7)
   **lib/AddGuide**: Changed the `color` argument to `preset`: symmetry axes, sections/subsections, product alignment guides and so on
 - [`upd`](https://github.com/pchiorean/Indentz/commit/c44522729df1d402ab5129ac020e735202e435e4)
-  **GuidesAdd**: Updated to use `lib/addGuide()`
+  **GuidesAdd**: Updated to use `lib/AddGuide`
+- [`brk`](https://github.com/pchiorean/Indentz/commit/87fb29b96d0f1440214d43ba1145f272a543ff53)
+  [`fix`](https://github.com/pchiorean/Indentz/commit/f0030e041f50c104f1cd0ee109884fbcb655ff63)
+  **QuickExport**: Added a resolution field; bumped settings version
+- [`upd`](https://github.com/pchiorean/Indentz/commit/a72b71d91c76cdb4d770737060b328af5a43eb1b)
+  **QuickExport**: Added a preset description helptip
+- [`upd`](https://github.com/pchiorean/Indentz/commit/135b8848c3ac232f75a1a636d4259692f23b90ab)
+  **QuickExport**: Hack: When exporting with a 'print' suffix, append '+diecut' if documents have a 'dielines' layer
+- [`upd`](https://github.com/pchiorean/Indentz/commit/1236ae8072b4c018eb366fd8fbc6999b4dafec03)
+  **QuickExport**: Input/output folder fields are now editable
+- [`upd`](https://github.com/pchiorean/Indentz/commit/14f8af0c6b2bb7d070cb3d66537f7874e7c435f7)
+  **lib/AddGuides**: Tweaked zoom threshold for several guide types
+- [`upd`](https://github.com/pchiorean/Indentz/commit/47041cd8d8181f6c655cc4ce22de670ce83ad6d6)
+  **lib/FitTo**: Hack: protect `<visible area>` frames and items on `dielines` layer
 
 ### [Release 22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
@@ -329,10 +342,9 @@
 
 - `new` **Debug**: Add a hires timer
 - `new` **DefaultSwatches**: Add tints support
-- `new` **QuickExport**: Change `Cancel` to `Reset` while Opt is pressed
+- `new` **QuickExport**: Add JPG, PNG & `?`TIFF export profiles
+- `new` **QuickExport**: Add INDD (with or without package) export profile
 - `new` **QuickExport**: Add history to inputs (see page 43 of **ScriptUI** by PK)
-- `new` **QuickExport**: Add a resolution field
-- `new` **QuickExport**: Add JPG & `?`TIFF export profiles
 - `new` **Report**: Add a button to save report to file
 
 ##### Updates
@@ -350,6 +362,7 @@
 - `upd` **PageSizeFromFilename**: Use real units (mm, cm, px) if detected
 - `upd` **PageSizeFromSelection**: Without selection fit all pages to their contents
 - `upd` **ParseDataFile**: Keep the record index in the returned object
+- `upd` **QuickExport**: Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
 - `upd` `?` **QuickExport**: JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 - `upd` **ReplaceText**: Take an array of strings as input
 - `upd` **ReplaceText**: Add a switch for grep matching
@@ -367,6 +380,10 @@
 - `fix` **PageSizeFromFilename**: Error on pages set to 1:X scale
 - `fix` **PageSizeFromFilename**: Limit detected bleed to max values
 - `fix` **PageSizeFromSelection**: Use outlined text bounds for text frames
+- `fix` **QuickExport**: Mirror error help tips to the title bar
+- `fix` **QuickExport**: Report layer overrides
+- `fix` **ReplaceSnippets**: Fix `\` matching
+- `fix` **SpreadsToFiles**: Don't append separators if already exist
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
 
 ##### New scripts
@@ -375,7 +392,7 @@
 
 ---
 
-##### Legend:
+**Legend**
 
 `new` - new features or first release\
 `brk` - changes in existing functionality that break compatibility\
