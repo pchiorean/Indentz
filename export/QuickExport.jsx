@@ -1,5 +1,5 @@
 /*
-	Quick export 22.8.6
+	Quick export 22.8.7
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -32,13 +32,14 @@
 // Initialisation
 
 var doc, settings, baseFolder, subfolder, suffix, exp, name, progressBar, maxCounter;
+var title = 'Quick Export';
 var ADV = ScriptUI.environment.keyboardState.altKey;
 var WIN = (File.fs === 'Windows');
 var invalidFilenameChars = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
 var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 var settingsFile = File(Folder.userData + '/' + script.name.replace(/.[^.]+$/, '') + '.prefs');
-var presets = app.pdfExportPresets.everyItem().name.sort(naturalSorter);
+var exportPresetsPDF = app.pdfExportPresets.everyItem().name.sort(naturalSorter);
 var folderMode = (app.documents.length === 0);
 var old = {
 	measurementUnit: app.scriptPreferences.measurementUnit,
@@ -110,14 +111,16 @@ app.pdfExportPreferences.viewPDF = false;
 
 // User interface
 
-var ui = new Window('dialog { text: "Quick Export", alignChildren: "left", margins: 16, orientation: "column", spacing: 10 }');
+var ui = new Window('dialog { alignChildren: "left", margins: 16, orientation: "column", spacing: 10 }');
+ui.text = title;
 ui.main = ui.add('group { margins: 0, orientation: "column", preferredSize: [ 590, -1 ], spacing: 10 }');
 
 // -- Input source
 if (folderMode) {
 	ui.input = ui.main.add('panel { text: "Input folder", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
 		ui.input.source = ui.input.add('group { margins: 0, orientation: "row", spacing: 10 }');
-			ui.input.source.folder = ui.input.source.add('edittext { preferredSize: [ 458, 24 ], properties: { readonly: true } }');
+			ui.input.source.folder = ui.input.source.add('edittext { preferredSize: [ 458, 24 ], properties: { readonly: false } }');
+			ui.input.source.folder.helpTip = 'Select a folder';
 			ui.input.source.browse = ui.input.source.add('button { text: "Browse", preferredSize: [ 100, 24 ] }');
 		ui.input.options = ui.input.add('group { margins: 0, orientation: "row", spacing: 10 }');
 			ui.input.options.subfolders = ui.input.options.add('checkbox { text: "Include subfolders", alignment: "bottom" }');
@@ -127,7 +130,7 @@ if (folderMode) {
 ui.presets = ui.main.add('panel { text: "Export presets", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
 	ui.preset1 = ui.presets.add('group { margins: 0, orientation: "row", spacing: 10 }');
 		ui.preset1.isOn = ui.preset1.add('checkbox { alignment: "bottom" }');
-		ui.preset1.preset = ui.preset1.add('dropdownlist', undefined, presets);
+		ui.preset1.preset = ui.preset1.add('dropdownlist', undefined, exportPresetsPDF);
 		ui.preset1.preset.preferredSize = [ 290, 24 ];
 		ui.preset1.add('statictext { text: "DPI:", justify: "right", preferredSize: [ 25, 24 ] }');
 		ui.preset1.dpi = ui.preset1.add('edittext { justify: "center", preferredSize: [ 45, 24 ] }');
@@ -160,7 +163,7 @@ ui.presets = ui.main.add('panel { text: "Export presets", alignChildren: "left",
 
 	ui.preset2 = ui.presets.add('group { margins: 0, orientation: "row", spacing: 10 }');
 		ui.preset2.isOn = ui.preset2.add('checkbox { alignment: "bottom" }');
-		ui.preset2.preset = ui.preset2.add('dropdownlist', undefined, presets);
+		ui.preset2.preset = ui.preset2.add('dropdownlist', undefined, exportPresetsPDF);
 		ui.preset2.preset.preferredSize = [ 290, 24 ];
 		ui.preset2.add('statictext { text: "DPI:", justify: "right", preferredSize: [ 25, 24 ] }');
 		ui.preset2.dpi = ui.preset2.add('edittext { justify: "center", preferredSize: [ 45, 24 ] }');
@@ -194,7 +197,7 @@ ui.presets = ui.main.add('panel { text: "Export presets", alignChildren: "left",
 ui.output = ui.main.add('panel { text: "Output folder and options", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
 	ui.output.dest = ui.output.add('group { margins: 0, orientation: "row", spacing: 10 }');
 		ui.output.dest.isOn = ui.output.dest.add('checkbox { alignment: "bottom" }');
-		ui.output.dest.folder = ui.output.dest.add('edittext { preferredSize: [ 430, 24 ], properties: { readonly: true } }');
+		ui.output.dest.folder = ui.output.dest.add('edittext { preferredSize: [ 430, 24 ], properties: { readonly: false } }');
 		ui.output.dest.browse = ui.output.dest.add('button { text: "Browse", preferredSize: [ 100, 24 ] }');
 	ui.output.options = ui.output.add('group { alignChildren: "top", margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 15 }');
 		ui.output.opt1 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
@@ -227,34 +230,44 @@ if (ADV) {
 	ui.actions.savePrefs = ui.actions.add('checkbox { text: "Save preferences", preferredSize: [ 410, -1 ] }');
 	ui.actions.savePrefs.value = true;
 }
+
 ui.actions.add('button { text: "Cancel", preferredSize: [ 80, -1 ], properties: { name: "cancel" } }');
 ui.actions.ok = ui.actions.add('button { text: "Start", preferredSize: [ 80, -1 ], properties: { name: "ok" } }');
 
 // UI callback functions
 
+// -- Input source
 if (folderMode) {
 	ui.input.source.browse.onClick = function () {
+		var ff = Folder.selectDialog('Select a folder:');
+		if (ff != null) ui.input.source.folder.text = ff;
+		ui.input.source.folder.onChange();
+	};
+	ui.input.source.folder.onChange = function () {
 		var ff;
-		var newFolder = Folder.selectDialog('Select a folder:');
-		if (newFolder) {
-			ff = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
-			ui.input.source.path = newFolder;
-			ui.input.source.folder.text = truncateString(ff, 70);
+		if (Folder(ui.input.source.folder.text).exists) {
+			ui.input.source.path = Folder(ui.input.source.folder.text);
+			ff = WIN ? decodeURI(ui.input.source.path.fsName) : decodeURI(ui.input.source.path.fullName);
+			ui.input.source.folder.text = ff;
 			ui.input.source.folder.helpTip = ff;
-			ui.actions.ok.enabled = (ui.preset1.isOn.value || ui.preset2.isOn.value) && !!ui.input.source.path;
+		} else {
+			ui.input.source.path = false;
+			ui.input.source.folder.helpTip = ui.input.source.folder.text == null ?
+				'Select a folder' : 'Folder not found';
 		}
+		updateOKStatus();
 	};
 	ui.output.options.docClose.helpTip = 'In batch mode documents are always closed after export';
 }
 
+// -- Export options
 ui.preset1.isOn.onClick = function () {
 	ui.preset1.preset.enabled = ui.preset1.suffix.enabled = this.value;
 	ui.preset1.options.enabled = this.value;
 	ui.preset1.script.enabled = this.value;
 	ui.preset1.bleedCustom.onClick();
 	ui.preset1.script.isOn.onClick();
-	if (folderMode) ui.actions.ok.enabled = (this.value || ui.preset2.isOn.value) && !!ui.input.source.path;
-	else ui.actions.ok.enabled = (this.value || ui.preset2.isOn.value);
+	updateOKStatus();
 };
 ui.preset1.bleedCustom.onClick = function () {
 	ui.preset1.bleedValue.enabled = this.value;
@@ -288,25 +301,25 @@ ui.preset1.preset.onChange = function () {
 	ui.preset1.slug.value = pdfExpPreset.includeSlugWithPDF;
 	ui.preset1.bleedValue.text = Math.round(pdfExpPreset.pageMarksOffset);
 	ui.preset1.preset.helpTip = (function (preset) {
-			var msg = [];
-			msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
-			msg.push('Compression: ' + String(preset.colorBitmapCompression).toLowerCase().replace(/_/g, ' ').replace(' compression', ''));
-			msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase().replace(/_/g, ' '));
-			msg.push('Profile: ' + (preset.pdfDestinationProfile.constructor.name === 'String' ?
-				preset.effectivePDFDestinationProfile :
-				String(PDFProfileSelector.USE_DOCUMENT).toLowerCase().replace(/_/g, ' ').replace('use ', ''))
+		var msg = [];
+		msg.push('Profile: ' + (preset.pdfDestinationProfile.constructor.name === 'String' ?
+			preset.effectivePDFDestinationProfile :
+			String(PDFProfileSelector.USE_DOCUMENT).toLowerCase().replace(/_/g, ' ').replace('use ', ''))
+		);
+		msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
+		msg.push('Compression: ' + String(preset.colorBitmapCompression).toLowerCase().replace(/_/g, ' ').replace(' compression', ''));
+		msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase().replace(/_/g, ' '));
+		msg.push('\nExport as ' + (preset.exportReaderSpreads ? 'spreads' : 'pages'));
+		if (preset.useDocumentBleedWithPDF) msg.push('Use document bleed');
+		if (preset.cropMarks || preset.pageInformationMarks || preset.includeSlugWithPDF) {
+			msg.push('Include ' +
+				((preset.cropMarks ? 'crop marks, ' : '') +
+				(preset.pageInformationMarks ? 'page info, ' : '') +
+				(preset.includeSlugWithPDF ? 'slug area' : '')).replace(/, $/, '')
 			);
-			msg.push('\nExport as ' + (preset.exportReaderSpreads ? 'spreads' : 'pages'));
-			if (preset.useDocumentBleedWithPDF) msg.push('Use document bleed');
-			if (preset.cropMarks || preset.pageInformationMarks || preset.includeSlugWithPDF) {
-				msg.push('Include ' +
-					((preset.cropMarks ? 'crop marks, ' : '') +
-					(preset.pageInformationMarks ? 'page info, ' : '') +
-					(preset.includeSlugWithPDF ? 'slug area' : '')).replace(/, $/, '')
-				);
-			}
-			return msg.join('\n');
-		}(pdfExpPreset));
+		}
+		return msg.join('\n');
+	}(pdfExpPreset));
 	};
 
 ui.preset2.isOn.onClick = function () {
@@ -315,8 +328,7 @@ ui.preset2.isOn.onClick = function () {
 	ui.preset2.script.enabled = this.value;
 	ui.preset2.bleedCustom.onClick();
 	ui.preset2.script.isOn.onClick();
-	if (folderMode) ui.actions.ok.enabled = (this.value || ui.preset1.isOn.value) && !!ui.input.source.path;
-	else ui.actions.ok.enabled = (this.value || ui.preset1.isOn.value);
+	updateOKStatus();
 };
 ui.preset2.bleedCustom.onClick = function () {
 	ui.preset2.bleedValue.enabled = this.value;
@@ -351,13 +363,13 @@ ui.preset2.preset.onChange = function () {
 	ui.preset2.bleedValue.text = Math.round(pdfExpPreset.pageMarksOffset);
 	ui.preset2.preset.helpTip = (function (preset) {
 		var msg = [];
-		msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
-		msg.push('Compression: ' + String(preset.colorBitmapCompression).toLowerCase().replace(/_/g, ' ').replace(' compression', ''));
-		msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase().replace(/_/g, ' '));
 		msg.push('Profile: ' + (preset.pdfDestinationProfile.constructor.name === 'String' ?
 			preset.effectivePDFDestinationProfile :
 			String(PDFProfileSelector.USE_DOCUMENT).toLowerCase().replace(/_/g, ' ').replace('use ', ''))
 		);
+		msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
+		msg.push('Compression: ' + String(preset.colorBitmapCompression).toLowerCase().replace(/_/g, ' ').replace(' compression', ''));
+		msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase().replace(/_/g, ' '));
 		msg.push('\nExport as ' + (preset.exportReaderSpreads ? 'spreads' : 'pages'));
 		if (preset.useDocumentBleedWithPDF) msg.push('Use document bleed');
 		if (preset.cropMarks || preset.pageInformationMarks || preset.includeSlugWithPDF) {
@@ -394,20 +406,39 @@ ui.preset2.bleedValue.onDeactivate = function () {
 	}
 };
 
+// -- Output options
 ui.output.dest.isOn.onClick = function () {
 	ui.output.dest.folder.enabled = ui.output.dest.browse.enabled = this.value;
+	if (ui.output.dest.isOn.value) {
+		ui.output.dest.folder.helpTip =
+			ui.output.dest.folder.text.length > 0 ?
+				(WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName)) :
+				'Select a folder';
+	} else {
+		ui.output.dest.folder.helpTip = 'Export to document folders';
+	}
+	updateOKStatus();
 };
 ui.output.dest.browse.onClick = function () {
-	var ff;
-	var newFolder = Folder.selectDialog('Select a folder:');
-	if (newFolder == null && !ui.output.dest.path) ui.output.dest.isOn.notify();
-	if (newFolder) {
-		ff = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
-		ui.output.dest.path = newFolder;
-		ui.output.dest.folder.text = truncateString(ff, 65);
-		ui.output.dest.folder.helpTip = ff;
-	}
+	var ff = Folder.selectDialog('Select a folder:');
+	if (ff != null) ui.output.dest.folder.text = ff;
+	ui.output.dest.folder.onChange();
 };
+ui.output.dest.folder.onChange = function () {
+	var ff;
+	if (Folder(ui.output.dest.folder.text).exists) {
+		ui.output.dest.path = Folder(ui.output.dest.folder.text);
+		ff = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
+		ui.output.dest.folder.text = ff;
+		ui.output.dest.folder.helpTip = ff;
+	} else {
+		ui.output.dest.path = false;
+		ui.output.dest.folder.helpTip = 'Folder not found';
+	}
+	if (ui.output.dest.folder.text.length === 0) ui.output.dest.isOn.notify();
+	updateOKStatus();
+};
+
 ui.output.options.docSave.isOn.onClick = function () {
 	ui.output.options.docSave.scope.enabled = this.value;
 	ui.output.options.docSaveAs.enabled = this.value;
@@ -424,6 +455,14 @@ ui.output.options.docSaveAs.onClick = function () {
 	if (!this.value) ui.output.options.docSave.scope.mod.value = true;
 };
 
+function updateOKStatus() { // 'Start' is enabled for valid input/destination and at least a preset selected
+	ui.actions.ok.enabled =
+		(folderMode ? !!ui.input.source.path : true) &&
+		(ui.output.dest.isOn.value ? !!ui.output.dest.path : true) &&
+		(ui.preset1.isOn.value || ui.preset2.isOn.value);
+}
+
+// -- Actions
 if (ADV) {
 	ui.actions.resetPrefs.onClick = function () {
 		try { settingsFile.remove(); } catch (e) {}
@@ -502,7 +541,7 @@ while ((doc = docs.shift())) {
 		if (!exp.isOn.value) continue;
 		// Create subfolder
 		suffix = exp.suffix.text ? ('_' + exp.suffix.text) : '';
-		if (/print$/i.test(suffix) && doc.layers.itemByName('dielines').isValid) suffix += '+diecut'; // Filename hack for documents with diecuts
+		if (/print$/i.test(suffix) && doc.layers.itemByName('dielines').isValid) suffix += '+diecut'; // Dielines hack
 		subfolder = '';
 		if (ui.output.options.subfolders.value && suffix) {
 			subfolder = suffix.replace(/^_/, '').replace(/\+.*$/, '').replace(/^\s+|\s+$/g, '');
@@ -532,8 +571,6 @@ while ((doc = docs.shift())) {
 }
 
 // Finish
-progressBar.close();
-if (errors.length > 0) report(errors, 'Errors', false, true);
 cleanupAndExit();
 
 // Helper functions
@@ -599,9 +636,9 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		extendRange = (doc.spreads.length === old.docSpreads * 2) && exp.asSpreads.value;
 		fileSufx = RegExp('([ ._-])([a-zA-Z]{' +
 			(extendRange ? target.length / 2 : target.length) + '})$', 'i').exec(baseName);
-			progressBar.update();
-			progressBar.init2(target.length);
-			for (var i = 0, n = target.length; i < n; i++) {
+		progressBar.update();
+		progressBar.init2(target.length);
+		for (var i = 0, n = target.length; i < n; i++) {
 			// Add a page/spread index
 			fn = baseName;
 			if (fileSufx) { // The target already has an index
@@ -801,7 +838,7 @@ function readSettings() {
 	ui.output.dest.path = Folder(settings.output.dest.folder).exists ? Folder(settings.output.dest.folder) : '';
 	if (ui.output.dest.path) {
 		var f = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
-		ui.output.dest.folder.text = truncateString(f, 65);
+		ui.output.dest.folder.text = f;
 		ui.output.dest.folder.helpTip = f;
 	}
 	ui.output.dest.isOn.value = !!ui.output.dest.path && settings.output.dest.active;
@@ -922,11 +959,6 @@ function getFilesRecursively(/*Folder*/folder) {
 	return files;
 }
 
-function truncateString(/*string*/str, /*number*/length) {
-	if (str.length > length + 1) str = '\u2026' + str.slice(-length + 1); // ellipsis
-	return str;
-}
-
 function zeroPad(/*number*/number, /*number*/digits) {
 	number = number.toString();
 	while (number.length < digits) number = '0' + number;
@@ -959,5 +991,7 @@ function cleanupAndExit() {
 	app.scriptPreferences.measurementUnit = old.measurementUnit;
 	app.scriptPreferences.userInteractionLevel = old.userInteractionLevel;
 	app.pdfExportPreferences.viewPDF = old.viewPDF;
+	try { progressBar.close(); } catch (e) {}
+	if (errors.length > 0) report(errors, 'Errors', false, true);
 	exit();
 }
