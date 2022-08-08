@@ -12,11 +12,11 @@
 - [`fix`](https://github.com/pchiorean/Indentz/commit/9cb2db6c9a113e8008122993fadb62e57424c2d9)
   **ReplaceSnippets**: Embedded the helper function into the main script and fixed a replacement quirk
 - [`new`](https://github.com/pchiorean/Indentz/commit/255f33547fcfc560208cf70f3af7d26728d8c5fb)
-  **lib/AddGuides**: Added a helper function for creating standard ruler guides
+  **lib/addGuides**: Added a helper function for creating standard ruler guides
 - [`upd`](https://github.com/pchiorean/Indentz/commit/aa98b48ac3e848dcf3ebfe220abd037840c9bc1a)
   **DefaultPrefs**: Changed baseline grid color to a lighter grey (230, 230, 230)
 - [`brk`](https://github.com/pchiorean/Indentz/commit/b8acc4c788519dc993a64d761cd12e9241af6ab7)
-  **lib/AddGuide**: Changed the `color` argument to `preset`: symmetry axes, sections/subsections, product alignment guides and so on
+  **lib/addGuide**: Changed the `color` argument to `preset`: symmetry axes, sections/subsections, product alignment guides and so on
 - [`upd`](https://github.com/pchiorean/Indentz/commit/c44522729df1d402ab5129ac020e735202e435e4)
   **GuidesAdd**: Updated to use `lib/AddGuide`
 - [`brk`](https://github.com/pchiorean/Indentz/commit/87fb29b96d0f1440214d43ba1145f272a543ff53)
@@ -29,9 +29,13 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/1236ae8072b4c018eb366fd8fbc6999b4dafec03)
   **QuickExport**: Input/output folder fields are now editable
 - [`upd`](https://github.com/pchiorean/Indentz/commit/14f8af0c6b2bb7d070cb3d66537f7874e7c435f7)
-  **lib/AddGuides**: Tweaked zoom threshold for several guide types
+  **lib/addGuides**: Tweaked zoom threshold for several guide types
 - [`upd`](https://github.com/pchiorean/Indentz/commit/47041cd8d8181f6c655cc4ce22de670ce83ad6d6)
-  **lib/FitTo**: Hack: protect `<visible area>` frames and items on `dielines` layer
+  **lib/fitTo**: Hack: protect `<visible area>` frames and items on `dielines` layer
+- [`ref`](https://github.com/pchiorean/Indentz/commit/52e0959dec7e4e321ddf13b2b0f7f528f6f96b25)
+   Renamed `/lib` dependencies and updated all `@include` directives
+- [`new`](https://github.com/pchiorean/Indentz/commit/e602c5232006a10b3b06fcaee718f22cb7aa449f)
+  **lib/truncateString**: Added a helper function for truncating strings
 
 ### [Release 22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
@@ -399,5 +403,5 @@
 `upd` - changes in existing functionality\
 `del` - removed features\
 `fix` - bug fixes\
-`ref` - code changes that neither fixes a bug or adds a feature\
+`ref` - changes that neither fixes a bug or adds a feature\
 `doc` - changes in documentation
