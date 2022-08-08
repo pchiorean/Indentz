@@ -10,7 +10,7 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-// @include '../lib/ProgressBar.jsxinc';
+// @include '../lib/progressBar.jsxinc';
 
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 var progressBar = new ProgressBar('Cleanup document', 14);

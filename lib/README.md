@@ -211,8 +211,8 @@ Use `@path/to/include.txt` to include records from another file or `@default` fo
 #### Example
 
 ```js
-// @include 'GetDataFile.jsxinc';
-// @include 'Report.jsxinc';
+// @include 'getDataFile.jsxinc';
+// @include 'report.jsxinc';
 
 var file, data;
 if (!(file = getDataFile('data.txt'))) { alert('No data file found.'); exit(); }

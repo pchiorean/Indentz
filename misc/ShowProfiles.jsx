@@ -8,7 +8,7 @@
 	https://choosealicense.com/licenses/mit/
 */
 
-// @include '../lib/Report.jsxinc';
+// @include '../lib/report.jsxinc';
 
 tmpDoc = app.documents.add(false);
 

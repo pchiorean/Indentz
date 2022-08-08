@@ -52,7 +52,7 @@
 
 /* eslint-disable no-mixed-spaces-and-tabs */
 
-// @include 'GetBounds.jsxinc';
+// @include 'getBounds.jsxinc';
 
 function fitTo(items, scope, target, enforced) {
 	if (items.constructor.name !== 'Array') items = Array(items);

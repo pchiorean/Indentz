@@ -10,7 +10,7 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-// @include '../lib/AddGuide.jsxinc';
+// @include '../lib/addGuide.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Add page guides');

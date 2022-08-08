@@ -38,9 +38,9 @@
 	SOFTWARE.
 */
 
-// @include '../lib/GetBounds.jsxinc';
-// @include '../lib/ProgressBar.jsxinc';
-// @include '../lib/Report.jsxinc';
+// @include '../lib/getBounds.jsxinc';
+// @include '../lib/progressBar.jsxinc';
+// @include '../lib/report.jsxinc';
 
 var errors = [];
 var currentPath;

@@ -35,8 +35,8 @@
 	SOFTWARE.
 */
 
-// @include '../lib/GetDataFile.jsxinc';
-// @include '../lib/Report.jsxinc';
+// @include '../lib/getDataFile.jsxinc';
+// @include '../lib/report.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
 

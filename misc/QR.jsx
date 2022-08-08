@@ -26,9 +26,9 @@
 	SOFTWARE.
 */
 
-// @include '../lib/GetBounds.jsxinc';
-// @include '../lib/ProgressBar.jsxinc';
-// @include '../lib/Report.jsxinc';
+// @include '../lib/getBounds.jsxinc';
+// @include '../lib/progressBar.jsxinc';
+// @include '../lib/report.jsxinc';
 
 doc = (app.documents.length === 0) ? app.documents.add() : app.activeDocument;
 var currentPath = doc.saved ? doc.filePath : '';

@@ -6,7 +6,7 @@
 	https://choosealicense.com/licenses/mit/
 */
 
-// @include '../lib/FitTo.jsxinc';
+// @include '../lib/fitTo.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
 
