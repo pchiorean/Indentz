@@ -1,0 +1,4 @@
+function truncateString(/*string*/str, /*number*/length) {
+	if (str.length > length + 1) str = '\u2026' + str.slice(-length + 1); // ellipsis
+	return str;
+}
