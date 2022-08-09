@@ -11,7 +11,7 @@ Name                               |     Fn | Description
 `SwatchesCleanup.jsx`              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 `SwatchesSave.jsx`                 |        | Saves document's swatches to a list
 **Layout**                         |        | **Document setup - page size, margins & columns, guides**
-`PageSizeFromFilename.jsx`         |     F3 | Sets every page size and margins according to the filename
+`PageSizeFromFilename.jsx`         |     F3 | Sets every page size and margins according to the file name
 `PageSizeFromMargins.jsx`          |        | Sets the page size to the page margins
 `PageSizeFromSelection.jsx`        |    ⇧F3 | Sets the page size to the selected objects bounds
 `PageMarginsFromSelection.jsx`     |    ⌥F3 | Sets the page margins to the selected objects bounds

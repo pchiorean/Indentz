@@ -124,7 +124,7 @@ Replaces a list of text snippets using a TSV substitution file[^2] named [**`sni
 > **Change to**: the new text\
 > **Case sensitive**: `yes` or `no` (defaults to `yes`)\
 > **Whole word**: `yes` or `no` (defaults to `yes`)\
-> **Scope**: replacement will only be done if the filename matches this [regular expression](https://regex101.com)[^3] (case sensitive)
+> **Scope**: replacement will only be done if the file name matches this [regular expression](https://regex101.com)[^3] (case sensitive)
 
 #### **`DocCleanup`** <small>F2</small>
 It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
@@ -142,7 +142,7 @@ Saves document's swatches to a TSV file compatible with [**`DefaultSwatches`**](
 Document setup – page size, margins & columns, guides.
 
 #### **`PageSizeFromFilename`** <small>F3</small>
-Sets the size of the page and the margins/visible area, getting dimensions from the filename. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
+Sets the size of the page and the margins/visible area, getting dimensions from the file name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
 
 | Filename                                        | Total size | Visible area | Bleed |
 |:------------------------------------------------|:-----------|:-------------|:------|
@@ -286,7 +286,7 @@ Usually the script will ask for an index list for naming files, like `-123`, whe
 
 But if the document name ends with a similar suffix equal in length to the number of pages, the script will use it for the index list: **`Document_ABC.indd`** with three spreads will be split into **`Document_A.indd`**, **`Document_B.indd`** and **`Document_C.indd`**.
 
-If the filename contains a `#`, the index will be placed in that position.
+If the file name contains a `#`, the index will be placed in that position.
 
 #### **`LayersToSpreads`**
 Moves all layers of the active document to separate spreads (the document must have a single spread).
@@ -417,7 +417,7 @@ All scripts are created by me unless otherwise noted.
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • July 26, 2022
+README.md • August 9, 2022
 
 [^1]: Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text.
 [^2]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in **`Indentz`** root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.

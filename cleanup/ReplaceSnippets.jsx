@@ -1,5 +1,5 @@
 ﻿/*
-	Replace text snippets 22.7.26
+	Replace text snippets 22.8.9
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces a list of snippets from a 5-column TSV file named 'snippets.txt':
@@ -14,7 +14,7 @@
 	2. <Change to>: the new text
 	3. <Case sensitive>: 'yes' or 'no' (default 'yes')
 	4. <Whole word>: 'yes' or 'no' (default 'yes')
-	5. <Scope>: replacement will only be done if the filename matches this regular expression (case sensitive)
+	5. <Scope>: replacement will only be done if the file name matches this regular expression (case sensitive)
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
@@ -71,7 +71,7 @@ function main() {
 	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length > 0) {
 		for (i = 0, n = data.records.length; i < n; i++) {
-			if (data.records[i].scope && !data.records[i].scope.test(decodeURI(doc.name))) {
+			if (data.records[i].scope && !data.records[i].scope.test(decodeURI(doc.name.replace(/.[^.]+$/, '')))) {
 				data.errors.info.push('\'' + data.records[i].findWhat + '\' not replaced (out of scope).');
 				continue;
 			}

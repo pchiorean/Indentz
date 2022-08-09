@@ -544,7 +544,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Change to</strong>: the new text<br>
 <strong>Case sensitive</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>)<br>
 <strong>Whole word</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>)<br>
-<strong>Scope</strong>: replacement will only be done if the filename matches this <a href="https://regex101.com">regular expression</a><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> (case sensitive)</p>
+<strong>Scope</strong>: replacement will only be done if the file name matches this <a href="https://regex101.com">regular expression</a><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> (case sensitive)</p>
 </blockquote>
 <h4 class="mume-header" id="doccleanup-smallf2small"><strong><code>DocCleanup</code></strong> <small>F2</small></h4>
 
@@ -561,7 +561,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Document setup &#x2013; page size, margins &amp; columns, guides.</p>
 <h4 class="mume-header" id="pagesizefromfilename-smallf3small"><strong><code>PageSizeFromFilename</code></strong> <small>F3</small></h4>
 
-<p>Sets the size of the page and the margins/visible area, getting dimensions from the filename. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
+<p>Sets the size of the page and the margins/visible area, getting dimensions from the file name. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
 <table>
 <thead>
 <tr>
@@ -865,7 +865,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Saves each spread of the active document to a separate file.</p>
 <p>Usually the script will ask for an index list for naming files, like <code>-123</code>, where <code>-</code> is the separator and <code>123</code> is the index list. Example: <strong><code>Document.indd</code></strong> with three spreads will be split into <strong><code>Document-1.indd</code></strong>, <strong><code>Document-2.indd</code></strong> and <strong><code>Document-3.indd</code></strong>.</p>
 <p>But if the document name ends with a similar suffix equal in length to the number of pages, the script will use it for the index list: <strong><code>Document_ABC.indd</code></strong> with three spreads will be split into <strong><code>Document_A.indd</code></strong>, <strong><code>Document_B.indd</code></strong> and <strong><code>Document_C.indd</code></strong>.</p>
-<p>If the filename contains a <code>#</code>, the index will be placed in that position.</p>
+<p>If the file name contains a <code>#</code>, the index will be placed in that position.</p>
 <h4 class="mume-header" id="layerstospreads"><strong><code>LayersToSpreads</code></strong></h4>
 
 <p>Moves all layers of the active document to separate spreads (the document must have a single spread).</p>
@@ -1011,7 +1011,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>All scripts are created by me unless otherwise noted.</p>
 <p>&#xA9; 2020-2022 Paul Chiorean &lt;jpeg AT basement.ro&gt;.<br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>README.md &#x2022; July 26, 2022</p>
+<p>README.md &#x2022; August 9, 2022</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
