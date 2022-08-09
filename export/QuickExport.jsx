@@ -26,8 +26,9 @@
 	SOFTWARE.
 */
 
-// @include '../lib/progressBar.jsxinc';
-// @include '../lib/report.jsxinc';
+// @includepath '.;./lib;../lib';
+// @include 'progressBar.jsxinc';
+// @include 'report.jsxinc';
 
 // Initialisation
 

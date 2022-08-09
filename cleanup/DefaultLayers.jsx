@@ -42,9 +42,10 @@
 	SOFTWARE.
 */
 
-// @include '../lib/getDataFile.jsxinc';
-// @include '../lib/isInArray.jsxinc';
-// @include '../lib/report.jsxinc';
+// @includepath '.;./lib;../lib';
+// @include 'getDataFile.jsxinc';
+// @include 'isInArray.jsxinc';
+// @include 'report.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
 

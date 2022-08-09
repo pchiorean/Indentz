@@ -26,7 +26,8 @@
 	SOFTWARE.
 */
 
-// @include '../lib/progressBar.jsxinc';
+// @includepath '.;./lib;../lib';
+// @include 'progressBar.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
 if (!doc.saved) { alert('Document is not saved.'); exit(); }

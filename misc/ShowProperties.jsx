@@ -12,7 +12,8 @@
 	https://choosealicense.com/licenses/mit/
 */
 
-// @include '../lib/report.jsxinc';
+// @includepath '.;./lib;../lib';
+// @include 'report.jsxinc';
 
 var target = app;
 if (app.documents.length > 0) target = app.documents[0];

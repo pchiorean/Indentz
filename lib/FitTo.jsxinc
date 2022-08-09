@@ -52,6 +52,7 @@
 
 /* eslint-disable no-mixed-spaces-and-tabs */
 
+// @includepath '.;./lib;../lib';
 // @include 'getBounds.jsxinc';
 
 function fitTo(items, scope, target, enforced) {

@@ -8,7 +8,8 @@
 	https://choosealicense.com/licenses/mit/
 */
 
-// @include '../lib/report.jsxinc';
+// @includepath '.;./lib;../lib';
+// @include 'report.jsxinc';
 
 if (app.documents.length === 0) exit();
 

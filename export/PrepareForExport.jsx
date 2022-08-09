@@ -26,7 +26,8 @@
 	SOFTWARE.
 */
 
-// @include '../lib/isInArray.jsxinc';
+// @includepath '.;./lib;../lib';
+// @include 'isInArray.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
 
