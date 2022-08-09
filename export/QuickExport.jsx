@@ -1,5 +1,5 @@
 /*
-	Quick export 22.8.7
+	Quick export 22.8.9
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -95,7 +95,6 @@ var defaults = {
 		options: {
 			subfolders: true,
 			split: false,
-			overwrite: false,
 			updatelinks: true,
 			save: true,
 			close: true
@@ -120,7 +119,6 @@ if (folderMode) {
 	ui.input = ui.main.add('panel { text: "Input folder", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
 		ui.input.source = ui.input.add('group { margins: 0, orientation: "row", spacing: 10 }');
 			ui.input.source.folder = ui.input.source.add('edittext { preferredSize: [ 458, 24 ], properties: { readonly: false } }');
-			ui.input.source.folder.helpTip = 'Select a folder';
 			ui.input.source.browse = ui.input.source.add('button { text: "Browse", preferredSize: [ 100, 24 ] }');
 		ui.input.options = ui.input.add('group { margins: 0, orientation: "row", spacing: 10 }');
 			ui.input.options.subfolders = ui.input.options.add('checkbox { text: "Include subfolders", alignment: "bottom" }');
@@ -137,7 +135,7 @@ ui.presets = ui.main.add('panel { text: "Export presets", alignChildren: "left",
 		ui.preset1.dpi.helpTip = 'Export resolution';
 		ui.preset1.add('statictext { text: "Suffix:", justify: "right", preferredSize: [ 40, 24 ] }');
 		ui.preset1.suffix = ui.preset1.add('edittext { preferredSize: [ 100, 24 ] }');
-		ui.preset1.suffix.helpTip = "Append this to the exported file name.\nAutodetected for presets that end with '_suffix'.";
+		ui.preset1.suffix.helpTip = "Append this text to the exported file name (everything in\nthe preset name after the last '_' will be autodetected)";
 	ui.preset1.options = WIN ? ui.presets.add('group { spacing: 12 }') : ui.presets.add('group { spacing: 14 }');
 		ui.preset1.asSpreads = ui.preset1.options.add('checkbox { text: "As spreads", alignment: "bottom" }');
 		ui.preset1.asSpreads.helpTip = 'Export as spreads';
@@ -170,7 +168,7 @@ ui.presets = ui.main.add('panel { text: "Export presets", alignChildren: "left",
 		ui.preset2.dpi.helpTip = 'Export resolution';
 		ui.preset2.add('statictext { text: "Suffix:", justify: "right", preferredSize: [ 40, 24 ] }');
 		ui.preset2.suffix = ui.preset2.add('edittext { preferredSize: [ 100, 24 ] }');
-		ui.preset2.suffix.helpTip = "Append this to the exported file name.\nAutodetected for presets that end with '_suffix'.";
+		ui.preset2.suffix.helpTip = "Append this text to the exported file name (everything in\nthe preset name after the last '_' will be autodetected)";
 		ui.preset2.options = WIN ? ui.presets.add('group { spacing: 12 }') : ui.presets.add('group { spacing: 14 }');
 		ui.preset2.asSpreads = ui.preset2.options.add('checkbox { text: "As spreads", alignment: "bottom" }');
 		ui.preset2.asSpreads.helpTip = 'Export as spreads';
@@ -217,7 +215,7 @@ ui.output = ui.main.add('panel { text: "Output folder and options", alignChildre
 		ui.output.options.add('panel', undefined, undefined).alignment = 'fill';
 		ui.output.opt2 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
 			ui.output.options.subfolders = ui.output.opt2.add('checkbox { text: "Export in subfolders" }');
-			ui.output.options.subfolders.helpTip = "Use the 'suffix' fields for subfolders (up to the first '+')";
+			ui.output.options.subfolders.helpTip = "Subfolders will be created from the suffix (the text after '+' is ignored)";
 			ui.output.options.split = ui.output.opt2.add('checkbox { text: "Export separate pages/spreads" }');
 			ui.output.options.overwrite = ui.output.opt2.add('checkbox { text: "Overwrite existing files" }');
 
@@ -238,6 +236,7 @@ ui.actions.ok = ui.actions.add('button { text: "Start", preferredSize: [ 80, -1 
 
 // -- Input source
 if (folderMode) {
+	ui.text = 'Select an input folder';
 	ui.input.source.browse.onClick = function () {
 		var ff = Folder.selectDialog('Select a folder:');
 		if (ff != null) ui.input.source.folder.text = ff;
@@ -249,15 +248,12 @@ if (folderMode) {
 			ui.input.source.path = Folder(ui.input.source.folder.text);
 			ff = WIN ? decodeURI(ui.input.source.path.fsName) : decodeURI(ui.input.source.path.fullName);
 			ui.input.source.folder.text = ff;
-			ui.input.source.folder.helpTip = ff;
 		} else {
 			ui.input.source.path = false;
-			ui.input.source.folder.helpTip = ui.input.source.folder.text == null ?
-				'Select a folder' : 'Folder not found';
 		}
 		updateOKStatus();
 	};
-	ui.output.options.docClose.helpTip = 'In batch mode documents are always closed after export';
+	ui.output.options.docClose.helpTip = 'In batch folder mode documents are always closed after export';
 }
 
 // -- Export options
@@ -320,7 +316,7 @@ ui.preset1.preset.onChange = function () {
 		}
 		return msg.join('\n');
 	}(pdfExpPreset));
-	};
+};
 
 ui.preset2.isOn.onClick = function () {
 	ui.preset2.preset.enabled = ui.preset2.suffix.enabled = this.value;
@@ -353,15 +349,15 @@ ui.preset2.script.browse.onClick = function () {
 };
 ui.preset2.preset.onChange = function () {
 	var str = this.selection.text;
-	var pdfExpPreset = app.pdfExportPresets.item(str);
+	var pdfPreset = app.pdfExportPresets.item(str);
 	ui.preset2.suffix.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
-	ui.preset2.dpi.text = pdfExpPreset.colorBitmapSamplingDPI;
-	ui.preset2.asSpreads.value = pdfExpPreset.exportReaderSpreads;
-	ui.preset2.cropMarks.value = pdfExpPreset.cropMarks;
-	ui.preset2.pageInfo.value = pdfExpPreset.pageInformationMarks;
-	ui.preset2.slug.value = pdfExpPreset.includeSlugWithPDF;
-	ui.preset2.bleedValue.text = Math.round(pdfExpPreset.pageMarksOffset);
-	ui.preset2.preset.helpTip = (function (preset) {
+	ui.preset2.dpi.text = pdfPreset.colorBitmapSamplingDPI;
+	ui.preset2.asSpreads.value = pdfPreset.exportReaderSpreads;
+	ui.preset2.cropMarks.value = pdfPreset.cropMarks;
+	ui.preset2.pageInfo.value = pdfPreset.pageInformationMarks;
+	ui.preset2.slug.value = pdfPreset.includeSlugWithPDF;
+	ui.preset2.bleedValue.text = Math.round(pdfPreset.pageMarksOffset);
+	ui.preset2.preset.helpTip = (function (/*pdfExportPreset*/preset) {
 		var msg = [];
 		msg.push('Profile: ' + (preset.pdfDestinationProfile.constructor.name === 'String' ?
 			preset.effectivePDFDestinationProfile :
@@ -380,7 +376,7 @@ ui.preset2.preset.onChange = function () {
 			);
 		}
 		return msg.join('\n');
-	}(pdfExpPreset));
+	}(pdfPreset));
 };
 
 ui.preset1.suffix.onChange =
@@ -409,15 +405,7 @@ ui.preset2.bleedValue.onDeactivate = function () {
 // -- Output options
 ui.output.dest.isOn.onClick = function () {
 	ui.output.dest.folder.enabled = ui.output.dest.browse.enabled = this.value;
-	if (ui.output.dest.isOn.value) {
-		ui.output.dest.folder.helpTip =
-			ui.output.dest.folder.text.length > 0 ?
-				(WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName)) :
-				'Select a folder';
-	} else {
-		ui.output.dest.folder.helpTip = 'Export to document folders';
-	}
-	updateOKStatus();
+	ui.output.dest.folder.onChange();
 };
 ui.output.dest.browse.onClick = function () {
 	var ff = Folder.selectDialog('Select a folder:');
@@ -430,12 +418,9 @@ ui.output.dest.folder.onChange = function () {
 		ui.output.dest.path = Folder(ui.output.dest.folder.text);
 		ff = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
 		ui.output.dest.folder.text = ff;
-		ui.output.dest.folder.helpTip = ff;
 	} else {
 		ui.output.dest.path = false;
-		ui.output.dest.folder.helpTip = 'Folder not found';
 	}
-	if (ui.output.dest.folder.text.length === 0) ui.output.dest.isOn.notify();
 	updateOKStatus();
 };
 
@@ -455,11 +440,63 @@ ui.output.options.docSaveAs.onClick = function () {
 	if (!this.value) ui.output.options.docSave.scope.mod.value = true;
 };
 
-function updateOKStatus() { // 'Start' is enabled for valid input/destination and at least a preset selected
-	ui.actions.ok.enabled =
-		(folderMode ? !!ui.input.source.path : true) &&
-		(ui.output.dest.isOn.value ? !!ui.output.dest.path : true) &&
-		(ui.preset1.isOn.value || ui.preset2.isOn.value);
+function updateOKStatus() {
+	// Enable/disable 'Start' button
+	ui.actions.ok.enabled = // If (a) && (b) && (c):
+		(folderMode ? !!ui.input.source.path : true) &&               // a) If in batch folder mode, it must be valid
+		(ui.output.dest.isOn.value ? !!ui.output.dest.path : true) && // b) If custom output folder, it must be valid
+		(ui.preset1.isOn.value || ui.preset2.isOn.value);             // c) At least a preset must be selected
+
+	// Update help tips
+	if (folderMode) { // Batch folder mode
+		if (ui.input.source.folder.text.length === 0) {
+			ui.input.source.folder.helpTip = 'Select a folder';
+		} else {
+			ui.input.source.folder.helpTip = ui.input.source.path ?
+				(WIN ? decodeURI(ui.input.source.path.fsName) : decodeURI(ui.input.source.path.fullName)) :
+				'Error: Folder not found';
+		}
+	}
+	if (ui.output.dest.isOn.value) { // Custom output folder
+		if (ui.output.dest.folder.text.length === 0) {
+			ui.output.dest.folder.helpTip = 'Select a folder';
+		} else {
+			ui.output.dest.folder.helpTip = ui.output.dest.path ?
+				(WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName)) :
+				'Error: Folder not found';
+		}
+	} else {
+		ui.output.dest.folder.helpTip = 'Using document folders';
+	}
+	ui.actions.ok.helpTip = ui.actions.ok.enabled ? '' : 'Error';
+
+	// Display errors in titlebar and 'Start' help tip
+	if (folderMode) { // Batch folder mode
+		if (ui.input.source.folder.text.length === 0) {
+			ui.text = ui.actions.ok.helpTip = 'Select an input folder';
+			return;
+		} else if (ui.input.source.path) {
+			ui.text = title;
+		} else {
+			ui.text = ui.actions.ok.helpTip = 'Error: Input folder not found';
+			return;
+		}
+	}
+	if (!ui.preset1.isOn.value && !ui.preset2.isOn.value) { // Presets
+		ui.text = ui.actions.ok.helpTip = 'Select an export preset';
+		return;
+	}
+	if (ui.output.dest.isOn.value) { // Custom output folder
+		if (ui.output.dest.folder.text.length === 0) {
+			ui.text = ui.actions.ok.helpTip = 'Select an output folder';
+			return;
+		} else if (ui.output.dest.path) {
+			ui.text = title;
+		} else {
+			ui.text = ui.actions.ok.helpTip = 'Error: Output folder not found';
+			return;
+		}
+	}
 }
 
 // -- Actions
@@ -580,7 +617,7 @@ function checkFonts() {
 	for (var i = 0, n = usedFonts.length; i < n; i++) {
 		if (usedFonts[i].status !== FontStatus.INSTALLED) {
 			errors.push(doc.name + ": Font '" + usedFonts[i].name.replace(/\t/g, ' ') + "' is " +
-				String(usedFonts[i].status).toLowerCase().replace('_', ' '));
+				String(usedFonts[i].status).toLowerCase().replace(/_/g, ' '));
 		}
 	}
 }
@@ -610,7 +647,7 @@ function updateLinks() {
 	}
 }
 
-function runScript(/*string*/path) {
+function runScript(/*File*/path) {
 	var ext = path.fsName.replace(/^.*\./, '');
 	app.doScript(path,
 		(function (str) {
@@ -631,6 +668,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 	var target = asSpreads ? doc.spreads : doc.pages;
 	var baseName = decodeURI(doc.name).replace(/\.indd$/i, '');
 	var isCombo = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*\+\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig.test(decodeURI(doc.name));
+
 	if (split && !isCombo) { // Export separate pages
 		// Note: if a script doubles the number of pages/spreads, the extendRange hack exports them as pairs
 		extendRange = (doc.spreads.length === old.docSpreads * 2) && exp.asSpreads.value;
@@ -638,6 +676,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			(extendRange ? target.length / 2 : target.length) + '})$', 'i').exec(baseName);
 		progressBar.update();
 		progressBar.init2(target.length);
+
 		for (var i = 0, n = target.length; i < n; i++) {
 			// Add a page/spread index
 			fn = baseName;
@@ -647,7 +686,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			} else if (target.length > 1) { // Add index only if needed
 				fn += '_' + zeroPad(extendRange && !(i % 2) ? i / 2 + 1 : i + 1, String(n).length);
 			}
-			// Get unique export filename
+			// Get unique export file name
 			fn = uniqueName(fn + suffix, baseFolder + (subfolder ? '/' + subfolder : ''),
 				ui.output.options.overwrite.value);
 			// Get page range
@@ -683,6 +722,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			if (!(f instanceof File) || !/\.pdf$/i.test(f)) return false;
 			return baseRE.test(decodeURI(f.name));
 		});
+
 		// Find the last index
 		var fileIndex;
 		var fileIndexRE = RegExp('^' +
@@ -694,6 +734,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			fileIndex = fileIndexRE.exec(decodeURI(pdfFiles[i].name).replace(/\.pdf$/i, ''));
 			if (fileIndex) fileLastIndex = Math.max(fileLastIndex, Number(fileIndex[1]));
 		}
+
 		// Get unique name: no index means index = 1, so set it to 2, else increment it; add a space if needed
 		if (fileLastIndex === 0) {
 			if (!overwrite)
@@ -719,7 +760,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		app.pdfExportPreferences.pageRange = pageRange;
 		app.pdfExportPreferences.colorBitmapSamplingDPI = Number(exp.dpi.text);
 		app.pdfExportPreferences.grayscaleBitmapSamplingDPI = Number(exp.dpi.text);
-		app.pdfExportPreferences.monochromeBitmapSamplingDPI = (function (dpi) {
+		app.pdfExportPreferences.monochromeBitmapSamplingDPI = (function (/*number*/dpi) {
 			if (dpi <= 96) return 300;
 			else if (dpi <= 150) return 600;
 			else if (dpi < 300) return 1200;
@@ -730,6 +771,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		app.pdfExportPreferences.pageInformationMarks = exp.pageInfo.value;
 		app.pdfExportPreferences.includeSlugWithPDF = exp.slug.value;
 		app.pdfExportPreferences.useDocumentBleedWithPDF = !exp.bleedCustom.value;
+
 		// Custom bleed value
 		if (app.pdfExportPreferences.useDocumentBleedWithPDF) {
 			app.pdfExportPreferences.pageMarksOffset = Math.min(
@@ -738,8 +780,8 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 					doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
 					doc.documentPreferences.properties.documentBleedBottomOffset,
 					doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
-				) + 1, // Offset page marks 1 mm
-				UnitValue('72 pt').as('mm')); // But limit to 72 pt
+				) + 1, // Offset page marks 1 mm --
+				UnitValue('72 pt').as('mm')); // -- but limit to 72 pt
 		} else {
 			app.pdfExportPreferences.bleedTop =
 			app.pdfExportPreferences.bleedBottom =
@@ -749,12 +791,12 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 				Math.min(app.pdfExportPreferences.bleedTop + 1, UnitValue('72 pt').as('mm'));
 		}
 
-		// Hack: don't include printer's marks if no bleed
+		// Hack: omit printer's marks if bleed is zero --
 		if (doc.documentPreferences.properties.documentBleedTopOffset +
 			doc.documentPreferences.properties.documentBleedInsideOrLeftOffset +
 			doc.documentPreferences.properties.documentBleedBottomOffset +
 			doc.documentPreferences.properties.documentBleedOutsideOrRightOffset === 0 &&
-			!app.pdfExportPreferences.includeSlugWithPDF) {
+			!app.pdfExportPreferences.includeSlugWithPDF) { // -- but include if user wants slug
 			app.pdfExportPreferences.cropMarks = false;
 			app.pdfExportPreferences.pageInformationMarks = false;
 		}
@@ -780,7 +822,7 @@ function readSettings() {
 		if (settings.version === undefined || settings.version !== VER) setDefaults();
 	} catch (e) { setDefaults(); }
 
-	// Preset state
+	// Preset
 	ui.preset1.isOn.value = settings.presets.preset1.active;
 	ui.preset1.preset.selection = findPresetIndex(settings.presets.preset1.name, ui.preset1.preset.items);
 	// Options
@@ -807,7 +849,7 @@ function readSettings() {
 	}
 	ui.preset1.script.isOn.value = !!ui.preset1.script.path && settings.presets.preset1.script.active;
 
-	// Preset state
+	// Preset
 	ui.preset2.isOn.value = settings.presets.preset2.active;
 	ui.preset2.preset.selection = findPresetIndex(settings.presets.preset2.name, ui.preset2.preset.items);
 	// Options
@@ -835,16 +877,10 @@ function readSettings() {
 	ui.preset2.script.isOn.value = !!ui.preset2.script.path && settings.presets.preset2.script.active;
 
 	// Output options
-	ui.output.dest.path = Folder(settings.output.dest.folder).exists ? Folder(settings.output.dest.folder) : '';
-	if (ui.output.dest.path) {
-		var f = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
-		ui.output.dest.folder.text = f;
-		ui.output.dest.folder.helpTip = f;
-	}
-	ui.output.dest.isOn.value = !!ui.output.dest.path && settings.output.dest.active;
+	ui.output.dest.folder.text = settings.output.dest.folder;
+	ui.output.dest.isOn.value = settings.output.dest.active;
 	ui.output.options.subfolders.value = settings.output.options.subfolders;
 	ui.output.options.split.value = settings.output.options.split;
-	ui.output.options.overwrite.value = false; // settings.output.options.overwrite;
 	ui.output.options.updateLinks.value = settings.output.options.updatelinks;
 	ui.output.options.docSave.isOn.value = settings.output.options.save;
 	ui.output.options.docSaveAs.value = false;
@@ -855,6 +891,7 @@ function readSettings() {
 	ui.preset2.isOn.onClick();
 	ui.output.dest.isOn.onClick();
 	ui.output.options.docSave.isOn.onClick();
+	updateOKStatus();
 
 	function findPresetIndex(/*string*/presetName, /*array*/presetsArray) {
 		if (app.pdfExportPresets.itemByName(presetName).isValid) {
@@ -921,7 +958,6 @@ function saveSettings() {
 			options: {
 				subfolders: ui.output.options.subfolders.value,
 				split: ui.output.options.split.value,
-				overwrite: false, // ui.output.options.overwrite.value,
 				updatelinks: ui.output.options.updateLinks.value,
 				save: ui.output.options.docSave.isOn.value,
 				close: ui.output.options.docClose.value
