@@ -1,5 +1,5 @@
 /*
-	Zoom to selection 22.1.27
+	Zoom to selection 22.8.9
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the selected objects. If no selection, it zooms to the current spread.
@@ -38,7 +38,7 @@ var BR = AnchorPoint.BOTTOM_RIGHT_ANCHOR;
 var CS_PBRD = CoordinateSpaces.PASTEBOARD_COORDINATES;
 var SP = 600;  // Side panels width
 var CP = 60;   // Control panel height
-var Z = 5.469; // Voodoo zoom coeficient // 5.856
+var Z = 5.469; // Generic 4K monitor: 5.469; iMac Retina 5K: 5.856
 var N = 1;     // Number of spreads to zoom to
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
