@@ -1,5 +1,5 @@
 /*
-	Default swatches 22.5.24
+	Default swatches 22.8.10
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 5-column TSV file named 'swatches.txt':
@@ -228,7 +228,7 @@ function main() {
 			function getColorValues(cVal) {
 				var v;
 				var array = [];
-				cVal = /[,|]/.test(cVal) ? cVal.split(/ *[,|] */) : cVal.split(/ +/);
+				cVal = /[,|\/]/.test(cVal) ? cVal.split(/ *[,|\/] */) : cVal.split(/ +/);
 				while ((v = cVal.shift())) array.push(Number(v));
 				return array;
 			}
