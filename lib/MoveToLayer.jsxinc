@@ -10,8 +10,14 @@ function moveToLayer(item, layer, position) {
 	if (item.parent.parent.layers.item(layer).isValid) {
 		if (item.itemLayer !== layer) item.itemLayer = layer;
 		switch (position) {
-			case 'front': item.bringToFront(); break;
-			case 'back': item.sendToBack(); break;
+			case 'front':
+			case 'top':
+				item.bringToFront();
+				break;
+			case 'back':
+			case 'bottom':
+				item.sendToBack();
+				break;
 		}
 	}
 	return item;
