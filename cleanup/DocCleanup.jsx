@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 22.4.15
+	Document cleanup 22.8.12
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -132,6 +132,7 @@ app.doScript(function () {
 		if (/Oval|Rectangle|Polygon/.test(item.constructor.name)
 			&& item.allPageItems.length === 0
 			&& item.strokeWeight === 0
+			&& item.itemLayer !== 'dielines'
 		) item.contentType = ContentType.GRAPHIC_TYPE;
 	}
 },
@@ -144,10 +145,12 @@ app.doScript(function () {
 	if ((layer = doc.layers.itemByName('visible area')).isValid)   { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('safety margins')).isValid) { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('dielines')).isValid)       { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('varnish')).isValid)        { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('guides')).isValid)         { layer.visible = true; layer.locked = false; }
 	if ((layer = doc.layers.itemByName('HW')).isValid)             { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('bg')).isValid)             { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('text & logos')).isValid)   { layer.visible = true; doc.activeLayer = layer; }
+	else if ((layer = doc.layers.itemByName('artwork')).isValid)   { layer.visible = true; doc.activeLayer = layer; }
 },
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Show/hide layers');
