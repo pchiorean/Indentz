@@ -1,5 +1,5 @@
 /*
-	Prepare for export 22.6.28
+	Prepare for export 22.8.12
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Hides some layers and moves objects with special colors to separate spreads.
@@ -97,7 +97,7 @@ function prepareForExport() {
 	}
 
 	// Move items from special layers on separate spreads
-	for (i = 0; i < matched.dielines.length; i++) moveSpecials(matched.dielines[i]);
+	// for (i = 0; i < matched.dielines.length; i++) moveSpecials(matched.dielines[i]);
 	for (i = 0; i < matched.varnish.length;  i++) moveSpecials(matched.varnish[i]);
 	for (i = 0; i < matched.foil.length;     i++) moveSpecials(matched.foil[i]);
 	for (i = 0; i < matched.white.length;    i++) moveSpecials(matched.white[i]);
