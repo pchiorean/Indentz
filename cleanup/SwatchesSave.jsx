@@ -1,6 +1,6 @@
 /*
-	Save swatches 21.9.18
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Save swatches 22.8.12
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Save document's swatches to a 4-column TSV file:
 
@@ -39,4 +39,3 @@ while ((c = cols.shift())) {
 	);
 }
 swatchesFile.close();
-swatchesFile.execute();
