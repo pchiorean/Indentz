@@ -1,5 +1,5 @@
 /*
-	Quick export 22.8.9
+	Quick export 22.8.11
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -260,6 +260,7 @@ if (folderMode) {
 // -- Export options
 ui.preset1.isOn.onClick = function () {
 	ui.preset1.preset.enabled = ui.preset1.suffix.enabled = this.value;
+	ui.preset1.dpi.enabled = this.value;
 	ui.preset1.options.enabled = this.value;
 	ui.preset1.script.enabled = this.value;
 	ui.preset1.bleedCustom.onClick();
@@ -301,18 +302,23 @@ ui.preset1.preset.onChange = function () {
 		var msg = [];
 		msg.push('Profile: ' + (preset.pdfDestinationProfile.constructor.name === 'String' ?
 			preset.effectivePDFDestinationProfile :
-			String(PDFProfileSelector.USE_DOCUMENT).toLowerCase().replace(/_/g, ' ').replace('use ', ''))
+			String(preset.pdfDestinationProfile).toLowerCase().replace(/_/g, ' ').replace('use ', ''))
 		);
+		msg.push('Standard: ' + String(preset.pdfColorSpace).toLowerCase().replace(/_/g, ' '));
+		msg.push('Color space: ' + String(preset.pdfColorSpace).toLowerCase().replace(/_/g, ' ')
+			.replace('rgb', 'RGB').replace('cmyk', 'CMYK'));
 		msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
 		msg.push('Compression: ' + String(preset.colorBitmapCompression).toLowerCase().replace(/_/g, ' ').replace(' compression', ''));
 		msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase().replace(/_/g, ' '));
 		msg.push('\nExport as ' + (preset.exportReaderSpreads ? 'spreads' : 'pages'));
 		if (preset.useDocumentBleedWithPDF) msg.push('Use document bleed');
-		if (preset.cropMarks || preset.pageInformationMarks || preset.includeSlugWithPDF) {
+		if (preset.cropMarks || preset.pageInformationMarks || preset.includeSlugWithPDF || preset.exportLayers) {
 			msg.push('Include ' +
 				((preset.cropMarks ? 'crop marks, ' : '') +
 				(preset.pageInformationMarks ? 'page info, ' : '') +
-				(preset.includeSlugWithPDF ? 'slug area' : '')).replace(/, $/, '')
+				(preset.includeSlugWithPDF ? 'slug area' : '') +
+				(preset.exportLayers ? 'layers' : ''))
+					.replace(/, $/, '')
 			);
 		}
 		return msg.join('\n');
@@ -321,6 +327,7 @@ ui.preset1.preset.onChange = function () {
 
 ui.preset2.isOn.onClick = function () {
 	ui.preset2.preset.enabled = ui.preset2.suffix.enabled = this.value;
+	ui.preset2.dpi.enabled = this.value;
 	ui.preset2.options.enabled = this.value;
 	ui.preset2.script.enabled = this.value;
 	ui.preset2.bleedCustom.onClick();
@@ -362,18 +369,22 @@ ui.preset2.preset.onChange = function () {
 		var msg = [];
 		msg.push('Profile: ' + (preset.pdfDestinationProfile.constructor.name === 'String' ?
 			preset.effectivePDFDestinationProfile :
-			String(PDFProfileSelector.USE_DOCUMENT).toLowerCase().replace(/_/g, ' ').replace('use ', ''))
+			String(preset.pdfDestinationProfile).toLowerCase().replace(/_/g, ' ').replace('use ', ''))
 		);
+		msg.push('Color space: ' + String(preset.pdfColorSpace).toLowerCase().replace(/_/g, ' ')
+			.replace('rgb', 'RGB').replace('cmyk', 'CMYK'));
 		msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
 		msg.push('Compression: ' + String(preset.colorBitmapCompression).toLowerCase().replace(/_/g, ' ').replace(' compression', ''));
 		msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase().replace(/_/g, ' '));
 		msg.push('\nExport as ' + (preset.exportReaderSpreads ? 'spreads' : 'pages'));
 		if (preset.useDocumentBleedWithPDF) msg.push('Use document bleed');
-		if (preset.cropMarks || preset.pageInformationMarks || preset.includeSlugWithPDF) {
+		if (preset.cropMarks || preset.pageInformationMarks || preset.includeSlugWithPDF || preset.exportLayers) {
 			msg.push('Include ' +
 				((preset.cropMarks ? 'crop marks, ' : '') +
 				(preset.pageInformationMarks ? 'page info, ' : '') +
-				(preset.includeSlugWithPDF ? 'slug area' : '')).replace(/, $/, '')
+				(preset.includeSlugWithPDF ? 'slug area' : '') +
+				(preset.exportLayers ? 'layers' : ''))
+					.replace(/, $/, '')
 			);
 		}
 		return msg.join('\n');
@@ -579,12 +590,20 @@ while ((doc = docs.shift())) {
 		if (!exp.isOn.value) continue;
 		// Create subfolder
 		suffix = exp.suffix.text ? ('_' + exp.suffix.text) : '';
-		if (/print$/i.test(suffix) && doc.layers.itemByName('dielines').isValid) suffix += '+diecut'; // Dielines hack
+		if (/print$/i.test(suffix) && doc.layers.itemByName('dielines').isValid) suffix += '+diecut'; // Hack: +diecut
 		subfolder = '';
 		if (ui.output.options.subfolders.value && suffix) {
 			subfolder = suffix.replace(/^_/, '').replace(/\+.*$/, '').replace(/^\s+|\s+$/g, '');
 			if (!Folder(baseFolder + '/' + subfolder).exists) Folder(baseFolder + '/' + subfolder).create();
 		}
+
+		// Hack: show/hide .layers
+		for (i = 0; i < doc.layers.length; i++) {
+			if (!/^\./.test(doc.layers[i].name)) continue;
+			if (/preview$/i.test(exp.preset.selection.text)) doc.layers[i].visible = true;
+			else if (/print(\+diecut)?$/i.test(exp.preset.selection.text)) doc.layers[i].visible = false;
+		}
+
 		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) runScript(exp.script.path);
 		app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 		app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
