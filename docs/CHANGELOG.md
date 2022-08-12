@@ -44,6 +44,21 @@
   **QuickExport:** Error messages are now displayed on the titlebar and the 'Start' button help tip
 - [`ref`](https://github.com/pchiorean/Indentz/commit/00415e83ac739a5c3c0328358f0d38a6af1185c0)
   Added an `#includepath` directive with a list of fallback folders
+- [`upd`](https://github.com/pchiorean/Indentz/commit/0dfb394a2db28a3a8654b7588f401ac6b909d45e)
+  **DefaultSwatches:** Added `/` to the list of values separators (thus, you can write values `34 42 23 5`, `34|42|23|5`, or `34/42/23/5`)
+- [`upd`](https://github.com/pchiorean/Indentz/commit/747f936d7c80c3954fd749b59dfae8091459e0fd)
+  **DocCleanup:** Items on `dielines` layer will not be converted to graphic frames; lock `varnish` layer
+- [`upd`](https://github.com/pchiorean/Indentz/commit/18320f0e4f543a75ca876090f49b4cb2c825e25f)
+  **SwatchesSave:** Don't open the TSV file after exporting it
+- [`upd`](https://github.com/pchiorean/Indentz/commit/83596d0de9b7e986e1691d8a9f283b4f91af36c3)
+  **PrepareForExport:** Dielines are no longer moved to separate page
+- [`upd`](https://github.com/pchiorean/Indentz/commit/eb4f65ce2704525ef692343ba573d1e36a09447e)
+  **lib/MoveToLayer:** Added `top`/`bottom` keywords
+- [`new` `upd` `fix`](https://github.com/pchiorean/Indentz/commit/0de1e18e859d5737938d345ab554fd1fe5eb2608)
+  **QuickExport:**
+  - `new` Added a(nother) hack: show/hide layers starting with a dot when using a 'preview'/'print' suffix (aka DNP layers)
+  - `upd` Added more info in the preset help tip
+  - `fix` Forgot to link the preset on/off checkbox to the DPI fields; fixed
 
 ### [Release 22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
@@ -354,6 +369,7 @@
 
 - `new` **Debug:** Add a hires timer
 - `new` **DefaultSwatches:** Add tints support
+- `new` **QuickExport:** `?`Add an option to show/hide layers starting with `.` or `-`
 - `new` **QuickExport:** Add JPG, PNG & `?`TIFF export profiles
 - `new` **QuickExport:** Add INDD (with or without package) export profile
 - `new` **QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
