@@ -1,6 +1,8 @@
 ## Changelog
 
-### [Current version](https://github.com/pchiorean/Indentz/compare/22.6.11...master)
+<!-- ### [Current version](https://github.com/pchiorean/Indentz/compare/22.8.13...master) -->
+
+### [Release 22.8.13](https://github.com/pchiorean/Indentz/releases/tag/22.8.13)
 
 ##### New features
 - [`new`](https://github.com/pchiorean/Indentz/commit/d5f2a4c5f3cc42a26a8b63bd90539645f60ba464)
