@@ -1,5 +1,5 @@
 ﻿/*
-	Replace text snippets 22.8.9
+	Replace text snippets 22.8.13
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces a list of snippets from a 5-column TSV file named 'snippets.txt':
@@ -73,7 +73,8 @@ function main() {
 	if (data.records.length > 0) {
 		for (i = 0, n = data.records.length; i < n; i++) {
 			if (data.records[i].scope && !data.records[i].scope.test(decodeURI(doc.name.replace(/.[^.]+$/, '')))) {
-				data.errors.info.push('\'' + data.records[i].findWhat + '\' not replaced (out of scope).');
+				data.errors.info.push(data.records[i].source +
+					'Not replaced ' + data.records[i].findWhat + '\' (out of scope).');
 				continue;
 			}
 			app.findTextPreferences   = NothingEnum.NOTHING;
@@ -89,10 +90,10 @@ function main() {
 			app.changeTextPreferences.changeTo = data.records[i].changeTo;
 			if (doc.changeText().length > 0) {
 				counter++;
-				data.errors.info.push('\'' + data.records[i].findWhat +
-					'\' replaced with \'' + data.records[i].changeTo + '\'.');
+				data.errors.info.push(data.records[i].source +
+					'Replaced ' + data.records[i].findWhat + '\' with \'' + data.records[i].changeTo + '\'.');
 			} else {
-				data.errors.info.push('\'' + data.records[i].findWhat + '\' not found.');
+				data.errors.info.push(data.records[i].source + data.records[i].findWhat + '\' not found.');
 			}
 		}
 	}
@@ -100,6 +101,7 @@ function main() {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
 		if (messages.length > 0) report(messages, 'Snippets: ' + counter + ' replaced');
+		else if (VERBOSITY > 1 && counter === 0) alert('No replacements made.');
 	}
 
 	/**
@@ -111,7 +113,7 @@ function main() {
 	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
 	 */
 	function parseDataFile(dataFile, flgR) {
-		var record, part, include, includeFile;
+		var record, source, part, include, includeFile;
 		var records = [];
 		var errors = { info: [], warn: [], fail: [] };
 		var tmpData = [];
@@ -121,6 +123,7 @@ function main() {
 		dataFile.encoding = 'UTF-8';
 		while (!dataFile.eof) {
 			line++;
+			source = (flgR ? decodeURI(dataFile.name) + ':' : '') + line + ' :: ';
 			record = (part ? part.slice(0,-1) : '') + dataFile.readln();
 			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
 			if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line, skip
@@ -139,14 +142,11 @@ function main() {
 						warn: errors.warn.concat(tmpData.errors.warn),
 						fail: errors.fail.concat(tmpData.errors.fail)
 					};
-				} else {
-					errors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-					': \'' + include + '\' not found.');
-				}
+				} else { errors.warn.push(source + '\'@' + include + '\' not found.'); }
 				continue;
 			}
 			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
-			record = record.replace(/^\s+|\s+$/g, '');
+			record = record.replace(/^ +| +$/g, '');
 			record = record.split(/ *\t */);
 			checkRecord();
 		}
@@ -155,19 +155,16 @@ function main() {
 
 		function checkRecord() {
 			var tmpErrors = { info: [], warn: [], fail: [] };
-			if (!record[0]) {
-				tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') +
-					line + ': Missing text to be replaced.');
-			}
-			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) {
-				records.push({
-					findWhat: record[0],
-					changeTo: record[1],
-					caseSensitive: record[2] ? (record[2].toLowerCase() === 'yes') : true,
-					wholeWord:     record[3] ? (record[3].toLowerCase() === 'yes') : true,
-					scope:         record[4] ? RegExp(record[4], 'g') : ''
-				});
-			}
+			var tmpRecord = {
+				source: source,
+				findWhat: record[0],
+				changeTo: record[1],
+				caseSensitive: record[2] ? (record[2].toLowerCase() === 'yes') : true,
+				wholeWord:     record[3] ? (record[3].toLowerCase() === 'yes') : true,
+				scope:         record[4] ? RegExp(record[4], 'g') : ''
+			};
+			if (!tmpRecord.findWhat) tmpErrors.fail.push(tmpRecord.source + 'Missing text to be replaced.');
+			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) records.push(tmpRecord);
 			errors = {
 				info: errors.info.concat(tmpErrors.info),
 				warn: errors.warn.concat(tmpErrors.warn),

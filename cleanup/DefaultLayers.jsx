@@ -1,5 +1,5 @@
 /*
-	Default layers 22.5.24
+	Default layers 22.8.13
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.txt':
@@ -104,6 +104,7 @@ function main() {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
 		if (messages.length > 0) report(messages, 'Layers: ' + counter.add + ' added | ' + counter.merge + ' merged');
+		else if (VERBOSITY > 1 && (counter.add + counter.merge) === 0) alert('No layers added or merged.');
 	}
 
 	function makeLayer(name, color, isVisible, isPrintable, variants) {
@@ -124,7 +125,7 @@ function main() {
 				printable:  isPrintable
 			});
 			counter.add++;
-			data.errors.info.push('Added \'' + targetLayer.name + '\'.');
+			data.errors.info.push(data.records[i].source + 'Added \'' + targetLayer.name + '\'.');
 		}
 		// Merge variants
 		layers = doc.layers.everyItem().getElements();
@@ -137,7 +138,8 @@ function main() {
 				targetLayer.visible = oldLayerVisibility;
 				if (oldName !== targetLayer.name) {
 					counter.merge++;
-					data.errors.info.push('Merged \'' + oldName + '\' with \'' + targetLayer.name + '\'.');
+					data.errors.info.push(data.records[i].source +
+						'Merged \'' + oldName + '\' with \'' + targetLayer.name + '\'.');
 				}
 			}
 		}
@@ -153,7 +155,7 @@ function main() {
 	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
 	 */
 	function parseDataFile(dataFile, flgR) {
-		var record, part, include, includeFile;
+		var record, source, part, include, includeFile;
 		var records = [];
 		var errors = { info: [], warn: [], fail: [] };
 		var tmpData = [];
@@ -163,6 +165,7 @@ function main() {
 		dataFile.encoding = 'UTF-8';
 		while (!dataFile.eof) {
 			line++;
+			source = (flgR ? decodeURI(dataFile.name) + ':' : '') + line + ' :: ';
 			record = (part ? part.slice(0,-1) : '') + dataFile.readln();
 			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
 			if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line, skip
@@ -181,14 +184,11 @@ function main() {
 						warn: errors.warn.concat(tmpData.errors.warn),
 						fail: errors.fail.concat(tmpData.errors.fail)
 					};
-				} else {
-					errors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-					': \'' + include + '\' not found.');
-				}
+				} else { errors.warn.push(source + '\'@' + include + '\' not found.'); }
 				continue;
 			}
 			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
-			record = record.replace(/^\s+|\s+$/g, '');
+			record = record.replace(/^ +| +$/g, '');
 			record = record.split(/ *\t */);
 			checkRecord();
 		}
@@ -198,6 +198,7 @@ function main() {
 		function checkRecord() {
 			var tmpErrors = { info: [], warn: [], fail: [] };
 			var tmpRecord = {
+				source:      source,
 				name:        record[0],
 				color:       record[1] ? getUIColor(record[1]) : UIColors.LIGHT_BLUE,
 				isVisible:   record[2] ? (record[2].toLowerCase() === 'yes')   : true,
@@ -205,12 +206,7 @@ function main() {
 				isBelow:     record[4] ? (record[4].toLowerCase() === 'below') : false,
 				variants:    record[5] ? unique((record[0] + ',' + record[5]).split(/ *, */)) : [ record[0] ]
 			};
-
-			if (!tmpRecord.name) {
-				tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-					': Skipped: missing layer name.');
-			}
-
+			if (!tmpRecord.name) tmpErrors.fail.push(tmpRecord.source + 'Missing layer name.');
 			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) records.push(tmpRecord);
 			errors = {
 				info: errors.info.concat(tmpErrors.info),

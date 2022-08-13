@@ -1,5 +1,5 @@
 /*
-	Default swatches 22.8.10
+	Default swatches 22.8.13
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 5-column TSV file named 'swatches.txt':
@@ -93,6 +93,7 @@ function main() {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
 		if (messages.length > 0) report(messages, 'Swatches: ' + counter.add + ' added | ' + counter.merge + ' merged');
+		else if (VERBOSITY > 1 && (counter.add + counter.merge) === 0) alert('No swatches added or merged.');
 	}
 
 	function addSwatch(name, model, space, values, variants) {
@@ -100,19 +101,19 @@ function main() {
 		var newColor = doc.colors.itemByName(name);
 		if (newColor.isValid) {
 			newColor.properties = {
-				model:      model,
-				space:      space,
+				model: model,
+				space: space,
 				colorValue: values
 			};
 		} else {
 			newColor = doc.colors.add({
-				name:       name,
-				model:      model || ColorModel.PROCESS,
-				space:      space || ColorSpace.CMYK,
+				name: name,
+				model: model || ColorModel.PROCESS,
+				space: space || ColorSpace.CMYK,
 				colorValue: values
 			});
 			counter.add++;
-			data.errors.info.push('Added \'' + newColor.name + '\'.');
+			data.errors.info.push(data.records[i].source + 'Added \'' + newColor.name + '\'.');
 		}
 		// Merge variants
 		colors = doc.colors.everyItem().getElements();
@@ -126,9 +127,11 @@ function main() {
 					oldName = c.name;
 					c.remove(newColor);
 					counter.merge++;
-					data.errors.info.push('Merged \'' + oldName + '\' with \'' + newColor.name + '\'.');
+					data.errors.info.push(data.records[i].source +
+						'Merged \'' + oldName + '\' with \'' + newColor.name + '\'.');
 				} catch (e) {
-					data.errors.warn.push('Could not merge \'' + c.name + '\' with \'' + newColor.name + '\'.');
+					data.errors.warn.push(data.records[i].source +
+						'Could not merge \'' + c.name + '\' with \'' + newColor.name + '\'.');
 				}
 			}
 		}
@@ -144,7 +147,7 @@ function main() {
 	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
 	 */
 	function parseDataFile(dataFile, flgR) {
-		var record, part, include, includeFile;
+		var record, source, part, include, includeFile;
 		var records = [];
 		var errors = { info: [], warn: [], fail: [] };
 		var tmpData = [];
@@ -154,6 +157,7 @@ function main() {
 		dataFile.encoding = 'UTF-8';
 		while (!dataFile.eof) {
 			line++;
+			source = (flgR ? decodeURI(dataFile.name) + ':' : '') + line + ' :: ';
 			record = (part ? part.slice(0,-1) : '') + dataFile.readln();
 			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
 			if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line, skip
@@ -172,14 +176,11 @@ function main() {
 						warn: errors.warn.concat(tmpData.errors.warn),
 						fail: errors.fail.concat(tmpData.errors.fail)
 					};
-				} else {
-					errors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-					': \'' + include + '\' not found.');
-				}
+				} else { errors.warn.push(source + '\'@' + include + '\' not found.'); }
 				continue;
 			}
 			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
-			record = record.replace(/^\s+|\s+$/g, '');
+			record = record.replace(/^ +| +$/g, '');
 			record = record.split(/ *\t */);
 			checkRecord();
 		}
@@ -189,6 +190,7 @@ function main() {
 		function checkRecord() {
 			var tmpErrors = { info: [], warn: [], fail: [] };
 			var tmpRecord = {
+				source: (flgR ? decodeURI(dataFile.name) + ':' : '') + line + ' :: ',
 				name:   record[0],
 				model:  getColorModel(record[1]),
 				space:  getColorSpace(record[2]),
@@ -196,13 +198,8 @@ function main() {
 			};
 			tmpRecord.variants = unique((getCVName(record[2], tmpRecord.values) +
 				(record[4] ? ',' + record[4] : '')).split(/ *, */));
-
 			// [TODO] Add model/space/values validation
-			if (!tmpRecord.name) {
-				tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-					': Skipped: missing swatch name.');
-			}
-
+			if (tmpRecord.name.length === 0) tmpErrors.fail.push(tmpRecord.source + 'Missing swatch name.');
 			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) records.push(tmpRecord);
 			errors = {
 				info: errors.info.concat(tmpErrors.info),

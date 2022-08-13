@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 22.5.24
+	Replace fonts 22.8.13
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named 'fonts.txt':
@@ -68,16 +68,17 @@ function main() {
 			app.findChangeTextOptions.includeLockedLayersForFind  = true;
 			app.findChangeTextOptions.includeLockedStoriesForFind = true;
 			app.findChangeTextOptions.includeMasterPages          = true;
-			app.findTextPreferences.appliedFont                   = data.records[i][0];
-			app.changeTextPreferences.appliedFont                 = data.records[i][1];
+			app.findTextPreferences.appliedFont                   = data.records[i].findWhat;
+			app.changeTextPreferences.appliedFont                 = data.records[i].changeTo;
 			if (doc.changeText().length > 0) {
 				counter++;
-				data.errors.info.push('Replaced \'' +
-					data.records[i][0].replace('\t', ' ') + '\' with \'' +
-					data.records[i][1].replace('\t', ' ') + '\'.');
+				data.errors.info.push(data.records[i].source +
+					'Replaced \'' +
+					data.records[i].findWhat.replace('\t', ' ') + '\' with \'' +
+					data.records[i].changeTo.replace('\t', ' ') + '\'.');
 			} else {
-				// data.errors.info.push('Skipped \'' +
-				// 	data.records[i][0].replace('\t', ' ') + '\', not in document.');
+				data.errors.info.push(data.records[i].source +
+					'Skipped \'' + data.records[i].findWhat.replace('\t', ' ') + '\', not in use.');
 			}
 		}
 		app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
@@ -86,6 +87,7 @@ function main() {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
 		if (messages.length > 0) report(messages, 'Fonts: ' + counter + ' replaced');
+		else if (VERBOSITY > 1 && counter > 0) alert('No fonts replaced.');
 	}
 
 	/**
@@ -97,7 +99,7 @@ function main() {
 	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
 	 */
 	function parseDataFile(dataFile, flgR) {
-		var record, part, include, includeFile;
+		var record, source, part, include, includeFile;
 		var records = [];
 		var errors = { info: [], warn: [], fail: [] };
 		var tmpData = [];
@@ -107,6 +109,7 @@ function main() {
 		dataFile.encoding = 'UTF-8';
 		while (!dataFile.eof) {
 			line++;
+			source = (flgR ? decodeURI(dataFile.name) + ':' : '') + line + ' :: ';
 			record = (part ? part.slice(0,-1) : '') + dataFile.readln();
 			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
 			if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line, skip
@@ -125,14 +128,11 @@ function main() {
 						warn: errors.warn.concat(tmpData.errors.warn),
 						fail: errors.fail.concat(tmpData.errors.fail)
 					};
-				} else {
-					errors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-					': \'' + include + '\' not found.');
-				}
+				} else { errors.warn.push(source + '\'@' + include + '\' not found.'); }
 				continue;
 			}
 			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
-			record = record.replace(/^\s+|\s+$/g, '');
+			record = record.replace(/^ +| +$/g, '');
 			record = record.split(/ *\t */);
 			checkRecord();
 		}
@@ -141,19 +141,18 @@ function main() {
 
 		function checkRecord() {
 			var tmpErrors = { info: [], warn: [], fail: [] };
-			if (!record[0] || !record[2])
-				tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line + ': Missing font name.');
-			if (!record[1] || !record[3])
-				tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line + ': Missing font style.');
+			if (!record[0] || !record[2]) tmpErrors.fail.push(source + 'Missing font name.');
+			if (!record[1] || !record[3]) tmpErrors.fail.push(source + 'Missing font style.');
 			if (app.fonts.item(record[2] + '\t' + record[3]).status !== FontStatus.INSTALLED) {
-				tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-				': Font \'' + (record[2] + ' ' + record[3]).replace(/\t/g, ' ') + '\' is not installed.');
+				tmpErrors.fail.push(source +
+					'Font \'' + (record[2] + ' ' + record[3]).replace(/\t/g, ' ') + '\' is not installed.');
 			}
 			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) {
-				records.push([
-					record[0] + '\t' + record[1],
-					record[2] + '\t' + record[3]
-				]);
+				records.push({
+					source: source,
+					findWhat: record[0] + '\t' + record[1],
+					changeTo: record[2] + '\t' + record[3]
+				});
 			}
 			errors = {
 				info: errors.info.concat(tmpErrors.info),

@@ -1,5 +1,5 @@
 /*
-	Replace links 22.5.24
+	Replace links 22.8.13
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.txt':
@@ -44,8 +44,8 @@ if (!(doc = app.activeDocument)) exit();
 // @includepath '.;./lib;../lib';
 // @include 'getDataFile.jsxinc';
 // @include 'isInArray.jsxinc';
-// @include 'report.jsxinc';
 // @include 'progressBar.jsxinc';
+// @include 'report.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace links');
@@ -85,8 +85,9 @@ function main() {
 					links[i].status !== LinkStatus.LINK_OUT_OF_DATE) continue; // Skip self
 				links[i].relink(File(data.records[r].newLink));
 				counter++;
-				data.errors.info.push('Relinked \'' + decodeURI(links[i].name) + '\' with \'' +
-					data.records[r].newLink.slice(data.records[r].newLink.lastIndexOf('/') + 1) + '\'.');
+				data.errors.info.push(data.records[r].source +
+					'Relinked \'' + decodeURI(links[i].name) + '\' with \'' +
+						data.records[r].newLink.slice(data.records[r].newLink.lastIndexOf('/') + 1) + '\'.');
 			}
 		}
 	}
@@ -95,7 +96,8 @@ function main() {
 	if (VERBOSITY > 0) {
 		messages = data.errors.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
-		if (messages.length > 0) report(messages, 'Links: ' + counter + ' changed');
+		if (messages.length > 0) report(messages, 'Links: ' + counter + ' replaced');
+		else if (VERBOSITY > 1 && counter === 0) alert('No links replaced.');
 	}
 
 	/**
@@ -107,7 +109,7 @@ function main() {
 	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
 	 */
 	function parseDataFile(dataFile, flgR) {
-		var record, part, include, includeFile;
+		var record, source, part, include, includeFile;
 		var records = [];
 		var errors = { info: [], warn: [], fail: [] };
 		var tmpData = [];
@@ -117,6 +119,7 @@ function main() {
 		dataFile.encoding = 'UTF-8';
 		while (!dataFile.eof) {
 			line++;
+			source = (flgR ? decodeURI(dataFile.name) + ':' : '') + line + ' :: ';
 			record = (part ? part.slice(0,-1) : '') + dataFile.readln();
 			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
 			if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line, skip
@@ -135,14 +138,11 @@ function main() {
 						warn: errors.warn.concat(tmpData.errors.warn),
 						fail: errors.fail.concat(tmpData.errors.fail)
 					};
-				} else {
-					errors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-					': \'' + include + '\' not found.');
-				}
+				} else { errors.warn.push(source + '\'@' + include + '\' not found.'); }
 				continue;
 			}
 			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
-			record = record.replace(/^\s+|\s+$/g, '');
+			record = record.replace(/^ +| +$/g, '');
 			record = record.split(/ *\t */);
 			checkRecord();
 		}
@@ -168,14 +168,18 @@ function main() {
 			// Check if newLink is valid
 			if (docHasLink) {
 				if (File(newLink).exists) {
-					records.push({ newLink: newLink, oldLinks: oldLinks });
+					records.push({
+						source: source,
+						newLink: newLink,
+						oldLinks: oldLinks
+					});
 				} else {
-					tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-					': Skipped \'' + newLink.slice(newLink.lastIndexOf('/') + 1) + '\', file not found.');
+					tmpErrors.warn.push(source +
+						'Skipped \'' + newLink.slice(newLink.lastIndexOf('/') + 1) + '\', file not found.');
 				}
 			} else {
-				// tmpErrors.info.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-				// ': Skipped \'' + newLink.slice(newLink.lastIndexOf('/') + 1) + '\', link not found.');
+				tmpErrors.info.push(source +
+					'Skipped \'' + newLink.slice(newLink.lastIndexOf('/') + 1) + '\', not in document.');
 			}
 			errors = {
 				info: errors.info.concat(tmpErrors.info),
