@@ -2,50 +2,43 @@
 
 ### [Current version](https://github.com/pchiorean/Indentz/compare/22.6.11...master)
 
-- [`upd`](https://github.com/pchiorean/Indentz/commit/d5f2a4c5f3cc42a26a8b63bd90539645f60ba464)
+##### New features
+- [`new`](https://github.com/pchiorean/Indentz/commit/d5f2a4c5f3cc42a26a8b63bd90539645f60ba464)
   **SpreadsToFiles:** Added a custom positioning placeholder character – if the file name contains a `#`, the index will be placed in that position
-- [`upd`](https://github.com/pchiorean/Indentz/commit/17a1faec009dbf69e301196defe8c454ddbbbd97)
-  **QuickExport, QRBatch:** Relaxed the list of invalid file name characters (`<` `>` `:` `"` `\` `/` `\` `|` `?` `*`)
-- [`fix`](https://github.com/pchiorean/Indentz/commit/bf0173fd6c2f4c264c202e7a3a6ac8411609e3b1)
-  [`fix`](https://github.com/pchiorean/Indentz/commit/6aecbbe07748946fb3b097dceac49ee609479a5e)
-  Enforced straight corners to new rectangles and text frames
-- [`fix`](https://github.com/pchiorean/Indentz/commit/9cb2db6c9a113e8008122993fadb62e57424c2d9)
-  **ReplaceSnippets:** Embedded the helper function into the main script and fixed a replacement quirk
+- [`new`](https://github.com/pchiorean/Indentz/commit/0de1e18e859d5737938d345ab554fd1fe5eb2608)
+  `hack` **QuickExport:** Show/hide layers starting with a dot when using a 'preview'/'print' suffix (aka DNP layers)
 - [`new`](https://github.com/pchiorean/Indentz/commit/255f33547fcfc560208cf70f3af7d26728d8c5fb)
   **lib/addGuides:** Added a helper function for creating standard ruler guides
+- [`new`](https://github.com/pchiorean/Indentz/commit/e602c5232006a10b3b06fcaee718f22cb7aa449f)
+  **lib/truncateString:** Added a helper function for truncating strings
+- [`new`](https://github.com/pchiorean/Indentz/commit/ecaeb2560026487080c36286215d83e0ee34d597)
+  **lib/report:** Added a button for saving report to file
+
+##### Updates
+- [`upd`](https://github.com/pchiorean/Indentz/commit/17a1faec009dbf69e301196defe8c454ddbbbd97)
+  **QuickExport, QRBatch:** Relaxed the list of invalid file name characters (`<` `>` `:` `"` `\` `/` `\` `|` `?` `*`)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/aa98b48ac3e848dcf3ebfe220abd037840c9bc1a)
   **DefaultPrefs:** Changed baseline grid color to a lighter grey (230, 230, 230)
 - [`brk`](https://github.com/pchiorean/Indentz/commit/b8acc4c788519dc993a64d761cd12e9241af6ab7)
   **lib/addGuide:** Changed the `color` argument to `preset`: symmetry axes, sections/subsections, product alignment guides and so on
 - [`upd`](https://github.com/pchiorean/Indentz/commit/c44522729df1d402ab5129ac020e735202e435e4)
-  **GuidesAdd:** Updated to use `lib/AddGuide`
+  **GuidesAdd:** Updated to use **lib/addGuide**
 - [`brk`](https://github.com/pchiorean/Indentz/commit/87fb29b96d0f1440214d43ba1145f272a543ff53)
-  [`fix`](https://github.com/pchiorean/Indentz/commit/f0030e041f50c104f1cd0ee109884fbcb655ff63)
   **QuickExport:** Added a resolution field; bumped settings version
 - [`upd`](https://github.com/pchiorean/Indentz/commit/a72b71d91c76cdb4d770737060b328af5a43eb1b)
   **QuickExport:** Added a preset description helptip
 - [`upd`](https://github.com/pchiorean/Indentz/commit/135b8848c3ac232f75a1a636d4259692f23b90ab)
-  **QuickExport:** Hack: When exporting with a 'print' suffix, append '+diecut' if documents have a 'dielines' layer
+  `hack` **QuickExport:** When exporting with a 'print' suffix, append '+diecut' if documents have a 'dielines' layer
 - [`upd`](https://github.com/pchiorean/Indentz/commit/1236ae8072b4c018eb366fd8fbc6999b4dafec03)
   **QuickExport:** Input/output folder fields are now editable
 - [`upd`](https://github.com/pchiorean/Indentz/commit/14f8af0c6b2bb7d070cb3d66537f7874e7c435f7)
   **lib/addGuides:** Tweaked zoom threshold for several guide types
 - [`upd`](https://github.com/pchiorean/Indentz/commit/47041cd8d8181f6c655cc4ce22de670ce83ad6d6)
-  **lib/fitTo:** Hack: protect `<visible area>` frames and items on `dielines` layer
-- [`ref`](https://github.com/pchiorean/Indentz/commit/52e0959dec7e4e321ddf13b2b0f7f528f6f96b25)
-   Renamed `/lib` dependencies and updated all `#include` directives
-- [`new`](https://github.com/pchiorean/Indentz/commit/e602c5232006a10b3b06fcaee718f22cb7aa449f)
-  **lib/truncateString:** Added a helper function for truncating strings
-- [`ref`](https://github.com/pchiorean/Indentz/commit/a566a05c57e50d13b86053db7a2f9674ecda3d9e)
-  Changed spelling of 'filename' to 'file name' :)
-- [`ref`](https://github.com/pchiorean/Indentz/commit/f60476d2d2adfd61590b744b4ddaea27f8cfb0f6)
-  **ZoomTo...:** Updated the zoom coeficient description with a monitor list
+  `hack` **lib/fitTo:** Protect `<visible area>` frames and items on `dielines` layer
 - [`upd`](https://github.com/pchiorean/Indentz/commit/3832bceeefb330818331e427d47d47b2ce7edac4)
   **QuickExport:** Error messages are now displayed on the titlebar and the 'Start' button help tip
-- [`ref`](https://github.com/pchiorean/Indentz/commit/00415e83ac739a5c3c0328358f0d38a6af1185c0)
-  Added an `#includepath` directive with a list of fallback folders
 - [`upd`](https://github.com/pchiorean/Indentz/commit/0dfb394a2db28a3a8654b7588f401ac6b909d45e)
-  **DefaultSwatches:** Added `/` to the list of values separators (thus, you can write values `34 42 23 5`, `34|42|23|5`, or `34/42/23/5`)
+  **DefaultSwatches:** Added `/` to the list of values separators (thus, you can write values as `34 42 23 5`, `34|42|23|5`, or `34/42/23/5`)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/747f936d7c80c3954fd749b59dfae8091459e0fd)
   **DocCleanup:** Items on `dielines` layer will not be converted to graphic frames; lock `varnish` layer
 - [`upd`](https://github.com/pchiorean/Indentz/commit/18320f0e4f543a75ca876090f49b4cb2c825e25f)
@@ -53,12 +46,26 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/83596d0de9b7e986e1691d8a9f283b4f91af36c3)
   **PrepareForExport:** Dielines are no longer moved to separate page
 - [`upd`](https://github.com/pchiorean/Indentz/commit/eb4f65ce2704525ef692343ba573d1e36a09447e)
-  **lib/MoveToLayer:** Added `top`/`bottom` keywords
-- [`new` `upd` `fix`](https://github.com/pchiorean/Indentz/commit/0de1e18e859d5737938d345ab554fd1fe5eb2608)
-  **QuickExport:**
-  - `new` Added a(nother) hack: show/hide layers starting with a dot when using a 'preview'/'print' suffix (aka DNP layers)
-  - `upd` Added more info in the preset help tip
-  - `fix` Forgot to link the preset on/off checkbox to the DPI fields; fixed
+  **lib/moveToLayer:** Added `top`/`bottom` keywords
+- [`upd`](https://github.com/pchiorean/Indentz/commit/02f545411e21f7b6e0cdbca19d5720f774745fbf)
+  **DefaultLayers/Swatches/ReplaceFonts/Links/Snippets:** Improved info/error reporting
+
+##### Bug fixes
+- [`fix`](https://github.com/pchiorean/Indentz/commit/bf0173fd6c2f4c264c202e7a3a6ac8411609e3b1)
+  [`fix`](https://github.com/pchiorean/Indentz/commit/6aecbbe07748946fb3b097dceac49ee609479a5e)
+  Enforced straight corners to new rectangles and text frames
+- [`fix`](https://github.com/pchiorean/Indentz/commit/9cb2db6c9a113e8008122993fadb62e57424c2d9)
+  **ReplaceSnippets:** Embedded the helper function into the main script and fixed a replacement quirk
+
+##### Miscellaneous
+- [`ref`](https://github.com/pchiorean/Indentz/commit/52e0959dec7e4e321ddf13b2b0f7f528f6f96b25)
+   **lib/\*:** Renamed libs to match their function name and updated `#include` directives
+- [`ref`](https://github.com/pchiorean/Indentz/commit/a566a05c57e50d13b86053db7a2f9674ecda3d9e)
+  Changed spelling of 'filename' to 'file name' ;)
+- [`ref`](https://github.com/pchiorean/Indentz/commit/f60476d2d2adfd61590b744b4ddaea27f8cfb0f6)
+  **ZoomTo...:** Updated the zoom coeficient description with a monitor list
+- [`ref`](https://github.com/pchiorean/Indentz/commit/00415e83ac739a5c3c0328358f0d38a6af1185c0)
+  Added an `#includepath` directive with a list of fallback folders
 
 ### [Release 22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
@@ -369,19 +376,17 @@
 
 - `new` **Debug:** Add a hires timer
 - `new` **DefaultSwatches:** Add tints support
-- `new` **QuickExport:** `?`Add an option to show/hide layers starting with `.` or `-`
 - `new` **QuickExport:** Add JPG, PNG & `?`TIFF export profiles
 - `new` **QuickExport:** Add INDD (with or without package) export profile
 - `new` **QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
-- `new` **Report:** Add a button to save report to file
 
 ##### Updates
 
 - `new` **DefaultLayers:** Add `top/bottom` order keyword
 - `new` **DefaultLayers/Swatches/ReplaceFonts/Links:** Add `@includepath` directive
 - `brk` **DefaultLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
-- `upd` **lib/GetDataFile:** Use relative paths for `@include` <!-- (VSC: Paths starting with `/` are resolved relative to the current workspace; paths starting with `./` or without any prefix are resolved relative to the current file.) -->
-- `upd` `?` **lib/IsInArray:** Add regex matching to `searchValue`
+- `upd` **lib/getDataFile:** Use relative paths for `@include` <!-- (VSC: Paths starting with `/` are resolved relative to the current workspace; paths starting with `./` or without any prefix are resolved relative to the current file.) -->
+- `upd` `?` **lib/isInArray:** Add regex matching to `searchValue`
 - `upd` **LabelPageRatios:** Mark outer/inner ratios
 - `brk` **MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
 - `upd` **MarkVisibleArea:** Use wildcards for layer names
