@@ -2,7 +2,7 @@
  * Displays a message in a scrollable list with optional filtering and/or compact mode.
  * Inspired by this snippet by Peter Kahrel:
  * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
- * @version 22.5.8
+ * @version 22.8.13
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string|string[]} message - Message to be displayed. Can be a string or a strings array.
@@ -51,8 +51,24 @@ function report(message, title, showFilter, showCompact) {
 	}());
 	list.minimumSize.width  = 100; list.maximumSize.width  = 1800;
 	list.minimumSize.height = 100; list.maximumSize.height = 1024;
-	w.add('button { text: "Close", properties: { name: "ok" } }');
-	w.ok.active = true;
+	// Actions
+	w.g = w.add('group');
+		w.save = w.g.add('button { text: "Save" }');
+		w.save.onClick = function () {
+			var file;
+			if (app.activeDocument && app.activeDocument.saved)
+				file = File(app.activeDocument.filePath + '/report.txt').saveDlg();
+			else file = File(Folder.desktop + '/report.txt').saveDlg();
+			if (file == null) return;
+			file.open('w');
+			file.encoding = 'UTF-8';
+			file.lineFeed = 'Unix';
+			file.write(title, '\n\n', list.text);
+			file.close();
+			w.close();
+		};
+		w.g.add('button { text: "Close", properties: { name: "ok" } }');
+		w.g.ok.active = true;
 	w.show();
 
 	// https://stackoverflow.com/questions/2802341/javascript-natural-sort-of-alphanumerical-strings/2802804#2802804
