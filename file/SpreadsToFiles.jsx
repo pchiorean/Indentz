@@ -1,5 +1,5 @@
 /*
-	Spreads to files 22.8.9
+	Spreads to files 22.8.21
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Saves the spreads of the active document in separate files.
@@ -49,7 +49,7 @@ if (ADV) template = templateFromUser(null); // In advanced mode always ask user
 else template = detectedTemplate ? String(detectedTemplate) : templateFromUser(null);
 if (template === String(detectedTemplate)) baseName = baseName.replace(detectedTemplate, '');
 // Detect custom position placeholder
-customPosition = baseName.match(/(.+)#(.+)/);
+customPosition = baseName.match(/(.+?)#(.+)/);
 
 progressBar = new ProgressBar('Saving', doc.spreads.length);
 for (spread = 0; spread < doc.spreads.length; spread++) {
