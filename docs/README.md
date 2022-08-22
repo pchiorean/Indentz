@@ -80,7 +80,7 @@ Adds swatches defined in a TSV file[^2] named [**`swatches.txt`**](samples/swatc
 > **Name**: swatch name\
 > **Color model**: `process` or `spot` (defaults to `process`)\
 > **Color space**: `cmyk`, `rgb` or `lab` (defaults to `cmyk`)\
-> **Values**: 3 values in 0-255 range for RGB; 4 values in 0-100 range for CMYK; 3 values in 0-100 (L), -128-127 (A and B) range for Lab\
+> **Values**: 3 values in 0-255 range for RGB; 4 values in 0-100 range for CMYK; 3 values in 0-100 (L), -128-127 (A and B) range for Lab; values can be separated by ` `, `,`, `|` or `/`\
 > **Variants**: a list of swatches that will be replaced by the base swatch (case insensitive; `*` and `?` wildcards accepted)
 
 You can use [**`SwatchesSave`**](#swatchessave) to get a tab delimited list of swatches from any document.
@@ -282,11 +282,9 @@ Combines the open documents, sorted alphabetically.
 #### **`SpreadsToFiles`**
 Saves each spread of the active document to a separate file.
 
-Usually the script will ask for an index list for naming files, like `-123`, where `-` is the separator and `123` is the index list. Example: **`Document.indd`** with three spreads will be split into **`Document-1.indd`**, **`Document-2.indd`** and **`Document-3.indd`**.
+If the file name has a suffix equal in length to the number of spreads, it will be used as the index list; for example a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`** / **`Document_B.indd`** / **`Document_C.indd`**; otherwise, the script will ask for an index list for naming files, like `-123`, where `-` is the separator and `123` is the index list.
 
-But if the document name ends with a similar suffix equal in length to the number of pages, the script will use it for the index list: **`Document_ABC.indd`** with three spreads will be split into **`Document_A.indd`**, **`Document_B.indd`** and **`Document_C.indd`**.
-
-If the file name contains a `#`, the index will be placed in that position.
+The index will be placed where the first `#` is detected, or at the end of the file name.
 
 #### **`LayersToSpreads`**
 Moves all layers of the active document to separate spreads (the document must have a single spread).
@@ -300,19 +298,23 @@ You can use **`SpreadsToFiles`** to save them in separate documents.
 #### **`QuickExport`** <small>⌃E</small>
 Exports to PDF all opened documents or, with nothing opened, all documents from a folder.
 
-For convenience, some export options are directly accessible: export as pages/spreads, include crop marks, page information, slug area, you can set a custom bleed. There are two export presets that can be used simultaneously or one at a time:
+For convenience, some export options can be easily changed from the preset settings: resolution, export as pages/spreads, include crop marks, page information, slug area, and you can set a custom bleed.
+
+There are two export presets that can be used simultaneously or one at a time:
 
 ![Quick export](img/script-quickexport.png)
 
-The text from the **Suffix** field will be appended to the exported file name (it's autodetected if the preset ends with `_suffix`). If **Export in subfolders** is checked, the suffix (up to the first `+`[^4]) will also be used for the subfolder name.
+The text from the **Suffix** field will be appended to the exported file name (everything in the preset name after the last `_` will be autodetected as suffix).
 
-It can run a JavaScript or AppleScript before exporting, e.g., one of the following:
+If **Export in subfolders** is checked, subfolders will be created from the suffix (the text after `+` is ignored[^4]).
+
+It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:
 
 #### **`MarkVisibleArea`**
 Creates a frame the size of the page margins on the **visible area** layer. It will use the **Visible area** swatch, which will be created with the values R=255 G=180 B=0 if it doesn't exist.
 
 #### **`PrepareForExport`**
-Hides **covered areas**, **visible area**, **safety margins**, **safe area**, **segmentation** and **guides** layers and moves all page objects from **dielines**, **die cut**, **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads.
+Hides **covered areas**, **visible area**, **safety margins**, **safe area**, **segmentation**, **guides**, and all layers starting with either a dot or a hyphen; moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads.
 
 #### **`ShowDNPLayers`** / **`HideDNPLayers`**
 Shows or hides the following “do-not-print” layers: **covered areas**, **visible area**, **\*vi?ib\***, **vis?\***, **safety margins**, **safe area**, **segmentation**, **rahmen** and **sicht\***, and all layers starting with either a dot or a hyphen.
@@ -417,7 +419,7 @@ All scripts are created by me unless otherwise noted.
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • August 9, 2022
+README.md • August 22, 2022
 
 [^1]: Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text.
 [^2]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in **`Indentz`** root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
