@@ -1,26 +1,25 @@
 ## Changelog
 
-<!-- ### [Current version](https://github.com/pchiorean/Indentz/compare/22.8.13...master) -->
-
-### [Release 22.8.13](https://github.com/pchiorean/Indentz/releases/tag/22.8.13)
+### [Current version](https://github.com/pchiorean/Indentz/compare/22.6.11...master)
 
 ##### New features
 - [`new`](https://github.com/pchiorean/Indentz/commit/d5f2a4c5f3cc42a26a8b63bd90539645f60ba464)
+  [`fix`](https://github.com/pchiorean/Indentz/commit/65d864208e26d670c182c3996dcf300eb9ffeac4)
   **SpreadsToFiles:** Added a custom positioning placeholder character – if the file name contains a `#`, the index will be placed in that position
 - [`new`](https://github.com/pchiorean/Indentz/commit/0de1e18e859d5737938d345ab554fd1fe5eb2608)
   `hack` **QuickExport:** Show/hide layers starting with a dot when using a 'preview'/'print' suffix (aka DNP layers)
 - [`new`](https://github.com/pchiorean/Indentz/commit/255f33547fcfc560208cf70f3af7d26728d8c5fb)
-  **lib/addGuides:** Added a helper function for creating standard ruler guides
+  **lib/addGuide:** Added a helper function for creating standard ruler guides
 - [`new`](https://github.com/pchiorean/Indentz/commit/e602c5232006a10b3b06fcaee718f22cb7aa449f)
   **lib/truncateString:** Added a helper function for truncating strings
 - [`new`](https://github.com/pchiorean/Indentz/commit/ecaeb2560026487080c36286215d83e0ee34d597)
-  **lib/report:** Added a button for saving report to file
+  **lib/report:** Added a button for saving the report to file
 
 ##### Updates
 - [`upd`](https://github.com/pchiorean/Indentz/commit/17a1faec009dbf69e301196defe8c454ddbbbd97)
   **QuickExport, QRBatch:** Relaxed the list of invalid file name characters (`<` `>` `:` `"` `\` `/` `\` `|` `?` `*`)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/aa98b48ac3e848dcf3ebfe220abd037840c9bc1a)
-  **DefaultPrefs:** Changed baseline grid color to a lighter grey (230, 230, 230)
+  **DefaultPrefs:** Changed baseline grid color to a lighter grey (`230,230,230`)
 - [`brk`](https://github.com/pchiorean/Indentz/commit/b8acc4c788519dc993a64d761cd12e9241af6ab7)
   **lib/addGuide:** Changed the `color` argument to `preset`: symmetry axes, sections/subsections, product alignment guides and so on
 - [`upd`](https://github.com/pchiorean/Indentz/commit/c44522729df1d402ab5129ac020e735202e435e4)
@@ -28,15 +27,16 @@
 - [`brk`](https://github.com/pchiorean/Indentz/commit/87fb29b96d0f1440214d43ba1145f272a543ff53)
   **QuickExport:** Added a resolution field; bumped settings version
 - [`upd`](https://github.com/pchiorean/Indentz/commit/a72b71d91c76cdb4d770737060b328af5a43eb1b)
-  **QuickExport:** Added a preset description helptip
+  **QuickExport:** Added a preset description help tip
 - [`upd`](https://github.com/pchiorean/Indentz/commit/135b8848c3ac232f75a1a636d4259692f23b90ab)
-  `hack` **QuickExport:** When exporting with a 'print' suffix, append '+diecut' if documents have a 'dielines' layer
+  `hack` **QuickExport:** When exporting with a `print` suffix, append `+diecut` if documents have a `dielines` layer
 - [`upd`](https://github.com/pchiorean/Indentz/commit/1236ae8072b4c018eb366fd8fbc6999b4dafec03)
   **QuickExport:** Input/output folder fields are now editable
 - [`upd`](https://github.com/pchiorean/Indentz/commit/14f8af0c6b2bb7d070cb3d66537f7874e7c435f7)
-  **lib/addGuides:** Tweaked zoom threshold for several guide types
+  **lib/addGuide:** Tweaked zoom threshold for several guide types
 - [`upd`](https://github.com/pchiorean/Indentz/commit/47041cd8d8181f6c655cc4ce22de670ce83ad6d6)
-  `hack` **lib/fitTo:** Protect `<visible area>` frames and items on `dielines` layer
+  [`upd`](https://github.com/pchiorean/Indentz/commit/958b5015d51e82b0720dc68e5eec6be48302ad23)
+  **lib/fitTo:** Protect `<visible area>` frames and items on `dielines` layer
 - [`upd`](https://github.com/pchiorean/Indentz/commit/3832bceeefb330818331e427d47d47b2ce7edac4)
   **QuickExport:** Error messages are now displayed on the titlebar and the 'Start' button help tip
 - [`upd`](https://github.com/pchiorean/Indentz/commit/0dfb394a2db28a3a8654b7588f401ac6b909d45e)
