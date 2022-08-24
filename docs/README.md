@@ -2,15 +2,13 @@
 
 A collection of InDesign scripts for various simple and repetitive tasks.
 
-## About
-
 As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown I found some time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow[^1], but I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). The code was developed and tested in Adobe CC 2020 (and later) on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though).
 
 I mainly use shortcuts to launch them (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**), so I've suggested a few below (for Mac).
 
 ---
 
-[**Cleanup**](#cleanup) | [**Layout**](#layout) | [**Align**](#align) | [**Fit**](#fit) | [**Scale**](#scale) | [**Proxy**](#proxy) | [**File**](#file) | [**Export**](#export) | [**View**](#view) | [**Miscellaneous**](#miscellaneous) | [**Install**](#install) | [**License**](#license)
+[**Cleanup**](#cleanup) | [**Layout**](#layout) | [**Align**](#align) | [**Fit**](#fit) | [**Scale**](#scale) | [**Proxy**](#proxy) | [**File**](#file) | [**Export**](#export) | [**View**](#view) | [**Miscellaneous**](#miscellaneous) | [**Install**](#install) | [**About**](#about)
 
 ---
 
@@ -160,7 +158,7 @@ Resizes the page to the selected objects.
 Sets the page margins from the selected objects.
 
 #### **`GuidesAdd`**
-If any page objects are selected, it adds spread guides around them.
+If any page objects are selected, it adds guides around them.
 
 If nothing is selected, it adds guides on page edges and inner centers (that is, the page without margins); a second run deletes them.
 
@@ -258,7 +256,7 @@ The **`ScaleTo...H`** and **`ScaleTo...W`** variants scale to the height or widt
 ### Proxy
 
 #### **`SetRefPoint...`**
-Use the numeric keypad to quickly set the reference point used for transformations (similar to clicking the little proxy squares in the **Control** palette):
+Use the numeric keypad to set the reference point used for transformations (similar to clicking the little proxy squares in the **Control** palette):
 
 ![Proxy](img/proxy.png)
 
@@ -410,16 +408,16 @@ The repository uses dynamically linked libraries from **`lib/`**, so the folder 
 
 ---
 
-## License
-
-The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
+## About
 
 All scripts are created by me unless otherwise noted.
 
 © 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-README.md • August 22, 2022
+The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
+
+README.md • August 24, 2022
 
 [^1]: Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text.
 [^2]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in **`Indentz`** root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
