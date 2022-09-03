@@ -1,5 +1,5 @@
 /*
-	FitTo 22.8.21
+	FitTo 22.9.3
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
@@ -49,8 +49,6 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-
-/* eslint-disable no-mixed-spaces-and-tabs */
 
 // @includepath '.;./lib;../lib';
 // @include 'getBounds.jsxinc';
