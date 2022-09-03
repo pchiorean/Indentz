@@ -237,7 +237,7 @@
 				"ignoreComments": true,
 				"ignoreUrls": true,
 				"ignoreRegExpLiterals": true,
-				"ignorePattern": "\\.add\\('|new Window\\("
+				"ignorePattern": "\\.add\\('|\\.helpTip|new Window\\("
 			}
 		],
 		"max-lines": "off",
@@ -299,7 +299,10 @@
 				]
 			}
 		],
-		"no-mixed-spaces-and-tabs": "warn",
+		"no-mixed-spaces-and-tabs": [
+			"error",
+			"smart-tabs"
+		],
 		"no-multiple-empty-lines": [
 			"warn",
 			{
