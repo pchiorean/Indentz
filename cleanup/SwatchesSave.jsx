@@ -1,5 +1,5 @@
 /*
-	Save swatches 22.8.12
+	Save swatches 22.8.31
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Save document's swatches to a 4-column TSV file:
@@ -24,7 +24,9 @@ var c, cols, i, k;
 var swatchesFile = File(String(doc.fullName).replace(/\.indd$/ig, '_swatches.txt'));
 
 swatchesFile.open('w');
+swatchesFile.encoding = 'UTF-8';
 swatchesFile.writeln('Name\tColor Model\tColor Space\tValues'); // Header
+
 cols = doc.colors.everyItem().getElements();
 while ((c = cols.shift())) {
 	if (c.name === '') continue; // Skip unnamed colors
@@ -38,4 +40,5 @@ while ((c = cols.shift())) {
 		k.join(' ')
 	);
 }
+
 swatchesFile.close();
