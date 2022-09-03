@@ -1,8 +1,25 @@
 ## Changelog
 
-<!-- ### [Current version](https://github.com/pchiorean/Indentz/compare/22.8.22...master) -->
+### [Development version](https://github.com/pchiorean/Indentz/compare/22.8.22...dev)
 
-### [Release 22.8.22](https://github.com/pchiorean/Indentz/releases/tag/22.8.22)
+- [`fix`](https://github.com/pchiorean/Indentz/commit/1214ec3da12b17c4ac8b8227dfa76a28183b63af)
+  **SwatchesSave:** Fixed file encoding (UTF-8)
+- [`ref`](https://github.com/pchiorean/Indentz/commit/e55692ccbf9d85bc0b2495dc4321451e1514d05d)
+  **QuickExport:** Minor (cosmetic) options tweaks
+- [`ref`](https://github.com/pchiorean/Indentz/commit/5fbb288a359358459c5f4d36004f41fd70e8802f)
+  **SpreadsToFiles:** Updated prompt text
+- [`ref`](https://github.com/pchiorean/Indentz/commit/73f201a2ac2ba1fce93d8a558b376ab603d01371)
+  **lib/fitTo:** Updated linting settings
+- [`ref`](https://github.com/pchiorean/Indentz/commit/17d5cb5ee2483fb73ec522f907b469f74bb65ca8)
+  **ZoomTo...:** Refactored to use similar code to its twin
+
+##### To do
+- **lib/parseDataFile:**
+  - [`brk`]() Change data files extension to `tsv`
+  - [`upd`]() Use relative paths for `@include` <!-- (paths starting with `/` are resolved relative to the current workspace; paths starting with `./` or without any prefix are resolved relative to the current file) -->
+  - [`new`]() Add a `@includepath` directive
+
+### [22.8.22](https://github.com/pchiorean/Indentz/releases/tag/22.8.22)
 
 ##### New features
 - [`new`](https://github.com/pchiorean/Indentz/commit/d5f2a4c5f3cc42a26a8b63bd90539645f60ba464)
@@ -71,7 +88,7 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/00415e83ac739a5c3c0328358f0d38a6af1185c0)
   Added an `#includepath` directive with a list of fallback folders
 
-### [Release 22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
+### [22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
 ##### New features
 
@@ -112,7 +129,7 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2d43649c6fcb012b8ab4ed28901059245415829a)
   **lib/Report:** Increased maximum width
 
-### [Release 22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
+### [22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
 
 ##### New features
 
@@ -160,7 +177,7 @@
 - [`doc`](https://github.com/pchiorean/Indentz/commit/14f7688731f5ba609c84530fee67600a55248e0b)
   **lib/ReplaceLink, ReplaceLinks:** Clarified/removed a mention about local links
 
-### [Release 22.3.11](https://github.com/pchiorean/Indentz/releases/tag/22.3.11)
+### [22.3.11](https://github.com/pchiorean/Indentz/releases/tag/22.3.11)
 
 ##### New features
 
@@ -200,7 +217,7 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/5fbd56abfeb7a46fd5e8bec0bb2e48d419573a90)
   Renamed **lib/isIn** to **isInArray**
 
-### [Release 22.2.9](https://github.com/pchiorean/Indentz/releases/tag/22.2.9)
+### [22.2.9](https://github.com/pchiorean/Indentz/releases/tag/22.2.9)
 
 ##### New features
 
@@ -378,7 +395,8 @@
 
 ##### New features
 
-- `new` **Debug:** Add a hires timer
+- `new` **Debug:** Add a stopwatch
+- `new` **DefaultLayers:** Add `top/bottom` order keyword
 - `new` **DefaultSwatches:** Add tints support
 - `new` **QuickExport:** Add JPG, PNG & `?`TIFF export profiles
 - `new` **QuickExport:** Add INDD (with or without package) export profile
@@ -386,40 +404,35 @@
 
 ##### Updates
 
-- `new` **DefaultLayers:** Add `top/bottom` order keyword
-- `new` **DefaultLayers/Swatches/ReplaceFonts/Links:** Add `@includepath` directive
 - `brk` **DefaultLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
-- `upd` **lib/getDataFile:** Use relative paths for `@include` <!-- (VSC: Paths starting with `/` are resolved relative to the current workspace; paths starting with `./` or without any prefix are resolved relative to the current file.) -->
-- `upd` `?` **lib/isInArray:** Add regex matching to `searchValue`
+- `upd` **DefaultSwatches:** Check color values on parsing
 - `upd` **LabelPageRatios:** Mark outer/inner ratios
 - `brk` **MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
 - `upd` **MarkVisibleArea:** Use wildcards for layer names
 - `brk` **MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.txt`, fallback to defaults
 - `upd` **PageMarginsFromSelection:** Set the margins of every page touched by the selection
-- `upd` **PageSizeFromFilename:** Use real units (mm, cm, px) if detected
+- `upd` **PageSizeFromFilename:** Use real units (mm, cm, px) when detected
+- `upd` **PageSizeFromSelection:** Use outlined text bounds for text frames
 - `upd` **PageSizeFromSelection:** Without selection fit all pages to their contents
-- `upd` **ParseDataFile:** Keep the record index in the returned object
 - `upd` **QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
 - `upd` `?` **QuickExport:** JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 - `upd` **ReplaceText:** Take an array of strings as input
-- `upd` **ReplaceText:** Add a switch for grep matching
+- `upd` **ReplaceText:** Add grep matching
 - `upd` **Report:** Add auto filtering mode (`true`|`false`|`auto`, default `false`)
 - `upd` **Report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
 - `upd` **SpreadsToFiles:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
-- `upd` **TextAutoSize:** Check `baselineShift`
 - `upd` **ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
-- `upd` Use a custom object style for visible area frame
-- `ref` Fix UI static/edittext width (see Marc's [measureString](https://twitter.com/indiscripts/status/1408788941550108674))
+- `upd` `?` **lib/isInArray:** Add regex matching to `searchValue`
+- `upd` Use a custom object style for `<visible area>` frame
 
 ##### Bug fixes
 
-- `fix` **DefaultSwatches:** Check color values on parsing
 - `fix` **PageSizeFromFilename:** Error on pages set to 1:X scale
 - `fix` **PageSizeFromFilename:** Limit detected bleed to max values
-- `fix` **PageSizeFromSelection:** Use outlined text bounds for text frames
 - `fix` **QuickExport:** Report layer overrides
 - `fix` **ReplaceSnippets:** Fix `\` matching
 - `fix` **SpreadsToFiles:** Don't append separators if already exist
+- `fix` **TextAutoSize:** Check `baselineShift`
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
 
 ##### New scripts
