@@ -1,5 +1,5 @@
 /*
-	Quick export 22.8.11
+	Quick export 22.9.1
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -215,9 +215,9 @@ ui.output = ui.main.add('panel { text: "Output folder and options", alignChildre
 			ui.output.options.docClose.enabled = !folderMode;
 		ui.output.options.add('panel', undefined, undefined).alignment = 'fill';
 		ui.output.opt2 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
-			ui.output.options.subfolders = ui.output.opt2.add('checkbox { text: "Export in subfolders" }');
-			ui.output.options.subfolders.helpTip = "Subfolders will be created from the suffix (the text after '+' is ignored)";
 			ui.output.options.split = ui.output.opt2.add('checkbox { text: "Export separate pages/spreads" }');
+			ui.output.options.subfolders = ui.output.opt2.add('checkbox { text: "Sort files by suffix into subfolders" }');
+			ui.output.options.subfolders.helpTip = "Everything after '+' is ignored (e.g., files with suffix\n'print+diecut' will be exported to 'print')";
 			ui.output.options.overwrite = ui.output.opt2.add('checkbox { text: "Overwrite existing files" }');
 
 // -- Actions
