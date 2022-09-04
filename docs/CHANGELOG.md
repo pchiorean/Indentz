@@ -12,10 +12,11 @@
   **lib/fitTo:** Updated linting settings
 - [`ref`](https://github.com/pchiorean/Indentz/commit/17d5cb5ee2483fb73ec522f907b469f74bb65ca8)
   **ZoomTo...:** Refactored to use similar code to its twin
+- [`brk`](https://github.com/pchiorean/Indentz/commit/30fb0d34a8e929cf432a7dc0583ad9f263bb5ef2)
+  **lib/parseDataFile:** Changed data files extension to `tsv`
 
 ##### To do
 - **lib/parseDataFile:**
-  - [`brk`]() Change data files extension to `tsv`
   - [`upd`]() Use relative paths for `@include` <!-- (paths starting with `/` are resolved relative to the current workspace; paths starting with `./` or without any prefix are resolved relative to the current file) -->
   - [`new`]() Add a `@includepath` directive
 
