@@ -14,6 +14,6 @@ Helvetica Neue LT Std 	75 Bold   	Helvetica Neue  	Bold
 #
 # The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default
 # (on the desktop, next to the script or in Indentz root); local files and files starting with '_' take precedence.
-# You can include another TSV file by inserting '@path/to/file.txt' in the desired position, or the global default
+# You can include another TSV file by inserting '@path/to/file.tsv' in the desired position, or the global default
 # with '@default'. Blank lines and those prefixed with '#' are ignored. You can split a very long line into multiple
 # lines with a backslash ('\') added at the end of each segment.
