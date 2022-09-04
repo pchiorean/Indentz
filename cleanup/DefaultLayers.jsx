@@ -1,15 +1,15 @@
 /*
-	Default layers 22.8.13
+	Default layers 22.9.4
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
-	Adds/merges layers from a 6-column TSV file named 'layers.txt':
+	Adds/merges layers from a 6-column TSV file named 'layers.tsv':
 
 	Name     | Color   | Visible | Printable | Order | Variants
 	dielines | Magenta | yes     | yes       | top   | cut*, decoupe, die, die*cut, stanz*
 	template | Gray    | no      | no        | below
 	...
 	1. <Name>: layer name
-	2. <Color>: layer color (see UIColors.txt; default 'Light Blue')
+	2. <Color>: layer color (see UIColors.tsv; default 'Light Blue')
 	3. <Visible>: 'yes' or 'no' (default 'yes')
 	4. <Printable>: 'yes' or 'no' (default 'yes')
 	5. <Order>: 'above' or 'below' existing layers (default 'above')
@@ -18,7 +18,7 @@
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
-	Include records from another file with `@path/to/include.txt` or the `@default` data file.
+	Include records from another file with `@path/to/include.tsv` or the `@default` data file.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -60,9 +60,9 @@ function main() {
 		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
 			'The default layer substitution list will be used.');
 	}
-	if (!(file = getDataFile('layers.txt'))) {
+	if (!(file = getDataFile('layers.tsv'))) {
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate a layer substitution list.\nThe file must be saved in the current folder, ' +
+			alert('Can\'t locate substitution list \'layers.tsv\'.\nThe file must be saved in the current folder, ' +
 				'on the desktop, or next to the script. Check docs for details.');
 		}
 		exit();
@@ -149,7 +149,7 @@ function main() {
 	/**
 	 * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
 	 * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
-	 * Include records from another file with `@path/to/include.txt` or the `@default` data file.
+	 * Include records from another file with `@path/to/include.tsv` or the `@default` data file.
 	 * @param {File} dataFile - A tab-separated-values file (object).
 	 * @param {boolean} flgR - Internal flag for recursive calls (`@include`).
 	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
@@ -174,7 +174,7 @@ function main() {
 				include = record.slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
 				includeFile = /^default(s?)$/i.test(include) ?
 					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Default data file
-					File(include); // 'path/to/file.txt'
+					File(include); // 'path/to/file.tsv'
 				if (includeFile && includeFile.exists) {
 					if (includeFile.fullName === dataFile.fullName) continue; // Skip self
 					tmpData = parseDataFile(includeFile, true);

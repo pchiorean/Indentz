@@ -1,8 +1,8 @@
 /*
-	Default swatches 22.8.13
+	Default swatches 22.9.4
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
-	Adds swatches from a 5-column TSV file named 'swatches.txt':
+	Adds swatches from a 5-column TSV file named 'swatches.tsv':
 
 	Name       | Color Model | Color Space | Values       | Variants
 	Rich Black | process     | cmyk        | 60 40 40 100 |
@@ -20,7 +20,7 @@
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
-	Include records from another file with `@path/to/include.txt` or the `@default` data file.
+	Include records from another file with `@path/to/include.tsv` or the `@default` data file.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -64,9 +64,9 @@ function main() {
 		'The default swatch substitution list will be used.');
 	}
 
-	if (!(file = getDataFile('swatches.txt'))) {
+	if (!(file = getDataFile('swatches.tsv'))) {
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate a swatch substitution list.\nThe file must be saved in the current folder, ' +
+			alert('Can\'t locate substitution list \'swatches.tsv\'.\nThe file must be saved in the current folder, ' +
 			'on the desktop, or next to the script. Check docs for details.');
 		}
 		exit();
@@ -141,7 +141,7 @@ function main() {
 	/**
 	 * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
 	 * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
-	 * Include records from another file with `@path/to/include.txt` or the `@default` data file.
+	 * Include records from another file with `@path/to/include.tsv` or the `@default` data file.
 	 * @param {File} dataFile - A tab-separated-values file (object).
 	 * @param {boolean} flgR - Internal flag for recursive calls (`@include`).
 	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
@@ -166,7 +166,7 @@ function main() {
 				include = record.slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
 				includeFile = /^default(s?)$/i.test(include) ?
 					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Default data file
-					File(include); // 'path/to/file.txt'
+					File(include); // 'path/to/file.tsv'
 				if (includeFile && includeFile.exists) {
 					if (includeFile.fullName === dataFile.fullName) continue; // Skip self
 					tmpData = parseDataFile(includeFile, true);

@@ -1,8 +1,8 @@
 /**
  * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
  * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
- * Include records from another file with `@path/to/include.txt` or the `@default` data file.
- * @version 22.5.24
+ * Include records from another file with `@path/to/include.tsv` or the `@default` data file.
+ * @version 22.9.4
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {File} dataFile - A tab-separated-values file (object).
@@ -28,7 +28,7 @@ function parseDataFile(dataFile, flgR) {
 			include = record.slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
 			includeFile = /^default(s?)$/i.test(include) ?
 				getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Default data file
-				File(include); // 'path/to/file.txt'
+				File(include); // 'path/to/file.tsv'
 			if (includeFile && includeFile.exists) {
 				if (includeFile.fullName === dataFile.fullName) continue; // Skip self
 				tmpData = parseDataFile(includeFile, true);

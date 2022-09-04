@@ -1,9 +1,9 @@
 /*
-	Batch QR codes 22.8.9
+	Batch QR codes 22.9.4
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
-	The list is a 3-column TSV file named 'qr.txt' with the following format:
+	The list is a 3-column TSV file named 'qr.tsv' with the following format:
 
 	Filename | Code   | On doc
 	File 1   | Code 1 | +
@@ -117,10 +117,10 @@ function main() {
 		ui.list.removeAll();
 		if (/QR Codes$/g.test(decodeURI(currentPath))) currentPath = currentPath.parent;
 		if (currentPath && (
-				((dataFile = File(currentPath + '/_qr.txt')) && dataFile.exists) ||
-				((dataFile = File(currentPath + '/_QR.txt')) && dataFile.exists) ||
-				((dataFile = File(currentPath + '/qr.txt'))  && dataFile.exists) ||
-				((dataFile = File(currentPath + '/QR.txt'))  && dataFile.exists))
+				((dataFile = File(currentPath + '/_qr.tsv')) && dataFile.exists) ||
+				((dataFile = File(currentPath + '/_QR.tsv')) && dataFile.exists) ||
+				((dataFile = File(currentPath + '/qr.tsv'))  && dataFile.exists) ||
+				((dataFile = File(currentPath + '/QR.tsv'))  && dataFile.exists))
 			) {
 			dataFile.open('r');
 			dataFile.encoding = 'UTF-8';

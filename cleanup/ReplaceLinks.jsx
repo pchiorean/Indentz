@@ -1,8 +1,8 @@
 /*
-	Replace links 22.8.13
+	Replace links 22.9.4
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
-	Replaces document links from a 2-column TSV file named 'links.txt':
+	Replaces document links from a 2-column TSV file named 'links.tsv':
 
 	New link path            | Document links
 	path/to/img1.psd         | img1.*
@@ -15,7 +15,7 @@
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
 	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
-	Include records from another file with `@path/to/include.txt` or the `@default` data file.
+	Include records from another file with `@path/to/include.tsv` or the `@default` data file.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -65,9 +65,9 @@ function main() {
 		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
 		'The default link substitution list will be used.');
 	}
-	if (!(file = getDataFile('links.txt'))) {
+	if (!(file = getDataFile('links.tsv'))) {
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate a link substitution list.\nThe file must be saved in the current folder, ' +
+			alert('Can\'t locate substitution list \'links.tsv\'.\nThe file must be saved in the current folder, ' +
 			'on the desktop, or next to the script. Check docs for details.');
 		}
 		exit();
@@ -103,7 +103,7 @@ function main() {
 	/**
 	 * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
 	 * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
-	 * Include records from another file with `@path/to/include.txt` or the `@default` data file.
+	 * Include records from another file with `@path/to/include.tsv` or the `@default` data file.
 	 * @param {File} dataFile - A tab-separated-values file (object).
 	 * @param {boolean} flgR - Internal flag for recursive calls (`@include`).
 	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
@@ -128,7 +128,7 @@ function main() {
 				include = record.slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
 				includeFile = /^default(s?)$/i.test(include) ?
 					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Default data file
-					File(include); // 'path/to/file.txt'
+					File(include); // 'path/to/file.tsv'
 				if (includeFile && includeFile.exists) {
 					if (includeFile.fullName === dataFile.fullName) continue; // Skip self
 					tmpData = parseDataFile(includeFile, true);

@@ -14,7 +14,7 @@
  * // <snip>
  * if (errors.length === 0) dbg('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
  * // Output:
- * // 2021-07-31 18:48:02.609 [INFO] ParseIF :: Open data file: 'test.txt' | Records: 14 | Layouts: 0
+ * // 2021-07-31 18:48:02.609 [INFO] ParseIF :: Open data file: 'test.tsv' | Records: 14 | Layouts: 0
  * // └─────────────────────┘ └────┘ └────────┘ └────────────────────────┘   └─────────┘   └────────┘
  * //        typestamp         type   context         message part1             part2         part3
  */

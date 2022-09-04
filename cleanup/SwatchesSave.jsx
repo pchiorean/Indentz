@@ -1,5 +1,5 @@
 /*
-	Save swatches 22.8.31
+	Save swatches 22.9.4
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Save document's swatches to a 4-column TSV file:
@@ -21,7 +21,7 @@
 if (!(doc = app.activeDocument)) exit();
 
 var c, cols, i, k;
-var swatchesFile = File(String(doc.fullName).replace(/\.indd$/ig, '_swatches.txt'));
+var swatchesFile = File(String(doc.fullName).replace(/\.indd$/ig, '_swatches.tsv'));
 
 swatchesFile.open('w');
 swatchesFile.encoding = 'UTF-8';
