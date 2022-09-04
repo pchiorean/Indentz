@@ -24,7 +24,7 @@ Adds a custom ruler guide. I use it for some scripts that make grids for several
 Appends a debugging line to a file saved on the desktop with the name of the running script (e.g. `active-script.log`).
 
 ```
-2021-07-31 18:48:02.609 [INFO] ParseIF :: Open data file: 'test.txt' | Records: 14 | Layouts: 0
+2021-07-31 18:48:02.609 [INFO] ParseIF :: Open data file: 'test.tsv' | Records: 14 | Layouts: 0
 └─────────────────────┘ └────┘ └────────┘ └────────────────────────┘   └─────────┘   └────────┘
        typestamp         type   context         message part1             part2         part3
 ```
@@ -206,7 +206,7 @@ Reads a TSV (tab-separated-values) file, validates the data (the provided functi
 
 Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 
-Use `@path/to/include.txt` to include records from another file or `@default` for default data file (see `getDataFile()`).
+Use `@path/to/include.tsv` to include records from another file or `@default` for default data file (see `getDataFile()`).
 
 #### Example
 
@@ -215,15 +215,15 @@ Use `@path/to/include.txt` to include records from another file or `@default` fo
 // @include 'report.jsxinc';
 
 var file, data;
-if (!(file = getDataFile('data.txt'))) { alert('No data file found.'); exit(); }
+if (!(file = getDataFile('data.tsv'))) { alert('No data file found.'); exit(); }
 data = parseDataFile(file);
 if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 if (data.records.length === 0) exit();
 ```
 
-Given a file `data.txt`:
+Given a file `data.tsv`:
 
-```
+```tsv
 Name        Color         Visible    Printable
 dielines    Magenta       no         yes
 # guides    Grid Green    yes        no

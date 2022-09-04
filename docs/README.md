@@ -48,7 +48,7 @@ Sets some preferences for the current document.
 </details>
 
 #### **`DefaultLayers`**
-Adds a set of layers defined in a TSV *(tab-separated values)* file[^2] named [**`layers.txt`**](samples/layers.txt):
+Adds a set of layers defined in a TSV *(tab-separated values)* file[^2] named [**`layers.tsv`**](samples/layers.tsv):
 
 | Name         | Color   | Visible | Printable | Order | Variants                                           |
 |:-------------|:--------|:--------|:----------|:------|:---------------------------------------------------|
@@ -66,7 +66,7 @@ Adds a set of layers defined in a TSV *(tab-separated values)* file[^2] named [*
 > **Variants**: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards accepted)
 
 #### **`DefaultSwatches`**
-Adds swatches defined in a TSV file[^2] named [**`swatches.txt`**](samples/swatches.txt):
+Adds swatches defined in a TSV file[^2] named [**`swatches.tsv`**](samples/swatches.tsv):
 
 | Name           | Color model | Color space | Values       | Variants         |
 |:---------------|:------------|:------------|:-------------|:-----------------|
@@ -84,7 +84,7 @@ Adds swatches defined in a TSV file[^2] named [**`swatches.txt`**](samples/swatc
 You can use [**`SwatchesSave`**](#swatchessave) to get a tab delimited list of swatches from any document.
 
 #### **`ReplaceFonts`**
-Replaces document fonts using a TSV substitution file[^2] named [**`fonts.txt`**](samples/fonts.txt):
+Replaces document fonts using a TSV substitution file[^2] named [**`fonts.tsv`**](samples/fonts.tsv):
 
 | Old font family | Style   | New font family    | Style   |
 |:----------------|:--------|:-------------------|:--------|
@@ -95,7 +95,7 @@ Replaces document fonts using a TSV substitution file[^2] named [**`fonts.txt`**
 You can use [**`ShowFonts`**](#showfonts) from [**Miscellaneous**](#miscellaneous) to get a tab delimited list of document fonts for copy-pasting.
 
 #### **`ReplaceLinks`**
-Replaces document links using a TSV substitution file[^2] named [**`links.txt`**](samples/links.txt):
+Replaces document links using a TSV substitution file[^2] named [**`links.tsv`**](samples/links.tsv):
 
 | New link path             | Document links              |
 |:--------------------------|:----------------------------|
@@ -108,7 +108,7 @@ Replaces document links using a TSV substitution file[^2] named [**`links.txt`**
 > **Document links**: a list of document links that will be relinked if found (case insensitive; `*` and `?` wildcards accepted); if the list is empty, the new link's name will be used.
 
 #### **`ReplaceSnippets`**
-Replaces a list of text snippets using a TSV substitution file[^2] named [**`snippets.txt`**](samples/snippets.txt):
+Replaces a list of text snippets using a TSV substitution file[^2] named [**`snippets.tsv`**](samples/snippets.tsv):
 
 | Find what              | Change to                 | Case sensitive | Whole word | Scope |
 |:-----------------------|:--------------------------|:---------------|:-----------|:------|
@@ -372,7 +372,7 @@ If the document name ends with a separator (space/dot/underline/hyphen) followed
 You can insert `|` for manually splitting the label into several lines.
 
 #### **`QRBatch`** <small>⇧F9</small>
-Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV file[^6] named [**`qr.txt`**](samples/qr.txt) and adds them to existing documents or creates separate files (the suffix thing applies here as well):
+Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV file[^6] named [**`qr.tsv`**](samples/qr.tsv) and adds them to existing documents or creates separate files (the suffix thing applies here as well):
 
 | Filename           | Code   | On doc |
 |:-------------------|:-------|:------:|
@@ -417,10 +417,10 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-Last updated: August 24, 2022
+Last updated: September 4, 2022
 
 [^1]: Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text.
-[^2]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in **`Indentz`** root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.txt`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+[^2]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in **`Indentz`** root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.tsv`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
 [^3]: For example, in **`Document_DE.indd`** “The sample is for free” will be replaced with “Das Sample ist kostenlos”, and for **`Document_FR.indd`** with “L'échantillon est gratuit”.
 [^4]: For example, if the suffix is `print+diecut`, the document will be saved as **`Document_print+diecut.pdf`** in a subfolder named **`print`**.
 [^5]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.

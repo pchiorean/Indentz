@@ -304,7 +304,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </details>
 <h4 class="mume-header" id="defaultlayers"><strong><code>DefaultLayers</code></strong></h4>
 
-<p>Adds a set of layers defined in a TSV <em>(tab-separated values)</em> file<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> named <a href="samples/layers.txt"><strong><code>layers.txt</code></strong></a>:</p>
+<p>Adds a set of layers defined in a TSV <em>(tab-separated values)</em> file<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> named <a href="samples/layers.tsv"><strong><code>layers.tsv</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -369,7 +369,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </blockquote>
 <h4 class="mume-header" id="defaultswatches"><strong><code>DefaultSwatches</code></strong></h4>
 
-<p>Adds swatches defined in a TSV file<sup class="footnote-ref"><a href="#fn2" id="fnref2:1">[2:1]</a></sup> named <a href="samples/swatches.txt"><strong><code>swatches.txt</code></strong></a>:</p>
+<p>Adds swatches defined in a TSV file<sup class="footnote-ref"><a href="#fn2" id="fnref2:1">[2:1]</a></sup> named <a href="samples/swatches.tsv"><strong><code>swatches.tsv</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -421,7 +421,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>You can use <a href="#swatchessave"><strong><code>SwatchesSave</code></strong></a> to get a tab delimited list of swatches from any document.</p>
 <h4 class="mume-header" id="replacefonts"><strong><code>ReplaceFonts</code></strong></h4>
 
-<p>Replaces document fonts using a TSV substitution file<sup class="footnote-ref"><a href="#fn2" id="fnref2:2">[2:2]</a></sup> named <a href="samples/fonts.txt"><strong><code>fonts.txt</code></strong></a>:</p>
+<p>Replaces document fonts using a TSV substitution file<sup class="footnote-ref"><a href="#fn2" id="fnref2:2">[2:2]</a></sup> named <a href="samples/fonts.tsv"><strong><code>fonts.tsv</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -455,7 +455,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>You can use <a href="#showfonts"><strong><code>ShowFonts</code></strong></a> from <a href="#miscellaneous"><strong>Miscellaneous</strong></a> to get a tab delimited list of document fonts for copy-pasting.</p>
 <h4 class="mume-header" id="replacelinks"><strong><code>ReplaceLinks</code></strong></h4>
 
-<p>Replaces document links using a TSV substitution file<sup class="footnote-ref"><a href="#fn2" id="fnref2:3">[2:3]</a></sup> named <a href="samples/links.txt"><strong><code>links.txt</code></strong></a>:</p>
+<p>Replaces document links using a TSV substitution file<sup class="footnote-ref"><a href="#fn2" id="fnref2:3">[2:3]</a></sup> named <a href="samples/links.tsv"><strong><code>links.tsv</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -488,7 +488,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </blockquote>
 <h4 class="mume-header" id="replacesnippets"><strong><code>ReplaceSnippets</code></strong></h4>
 
-<p>Replaces a list of text snippets using a TSV substitution file<sup class="footnote-ref"><a href="#fn2" id="fnref2:4">[2:4]</a></sup> named <a href="samples/snippets.txt"><strong><code>snippets.txt</code></strong></a>:</p>
+<p>Replaces a list of text snippets using a TSV substitution file<sup class="footnote-ref"><a href="#fn2" id="fnref2:4">[2:4]</a></sup> named <a href="samples/snippets.tsv"><strong><code>snippets.tsv</code></strong></a>:</p>
 <table>
 <thead>
 <tr>
@@ -947,7 +947,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>You can insert <code>|</code> for manually splitting the label into several lines.</p>
 <h4 class="mume-header" id="qrbatch-smallf9small"><strong><code>QRBatch</code></strong> <small>&#x21E7;F9</small></h4>
 
-<p>Does the same thing as <strong><code>QR</code></strong> but in a non-interactive way: retrieves a list of codes from a TSV file<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> named <a href="samples/qr.txt"><strong><code>qr.txt</code></strong></a> and adds them to existing documents or creates separate files (the suffix thing applies here as well):</p>
+<p>Does the same thing as <strong><code>QR</code></strong> but in a non-interactive way: retrieves a list of codes from a TSV file<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup> named <a href="samples/qr.tsv"><strong><code>qr.tsv</code></strong></a> and adds them to existing documents or creates separate files (the suffix thing applies here as well):</p>
 <table>
 <thead>
 <tr>
@@ -1010,13 +1010,13 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>&#xA9; 2020-2022 Paul Chiorean &lt;jpeg AT basement.ro&gt;.<br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
-<p>Last updated: August 24, 2022</p>
+<p>Last updated: September 4, 2022</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
 <li id="fn1" class="footnote-item"><p>Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
-<li id="fn2" class="footnote-item"><p>The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in <strong><code>Indentz</code></strong> root); local files and files starting with <code>_</code> take precedence. You can include another TSV file by inserting <strong><code>@path/to/file.txt</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a> <a href="#fnref2:1" class="footnote-backref">&#x21A9;&#xFE0E;</a> <a href="#fnref2:2" class="footnote-backref">&#x21A9;&#xFE0E;</a> <a href="#fnref2:3" class="footnote-backref">&#x21A9;&#xFE0E;</a> <a href="#fnref2:4" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn2" class="footnote-item"><p>The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in <strong><code>Indentz</code></strong> root); local files and files starting with <code>_</code> take precedence. You can include another TSV file by inserting <strong><code>@path/to/file.tsv</code></strong> in the desired position, or the global default with <strong><code>@default</code></strong>. Blank lines and those prefixed with <code>#</code> are ignored. You can split a very long line into multiple lines with a backslash (<code>\</code>) added at the end of each segment. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a> <a href="#fnref2:1" class="footnote-backref">&#x21A9;&#xFE0E;</a> <a href="#fnref2:2" class="footnote-backref">&#x21A9;&#xFE0E;</a> <a href="#fnref2:3" class="footnote-backref">&#x21A9;&#xFE0E;</a> <a href="#fnref2:4" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
 <li id="fn3" class="footnote-item"><p>For example, in <strong><code>Document_DE.indd</code></strong> &#x201C;The sample is for free&#x201D; will be replaced with &#x201C;Das Sample ist kostenlos&#x201D;, and for <strong><code>Document_FR.indd</code></strong> with &#x201C;L&#x2019;&#xE9;chantillon est gratuit&#x201D;. <a href="#fnref3" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
