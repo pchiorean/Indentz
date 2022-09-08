@@ -3,24 +3,28 @@
 ### [Development version](https://github.com/pchiorean/Indentz/compare/22.8.22...dev)
 
 - [`fix`](https://github.com/pchiorean/Indentz/commit/1214ec3da12b17c4ac8b8227dfa76a28183b63af)
-  **SwatchesSave:** Fixed file encoding (UTF-8)
+  **cleanup/SwatchesSave:** Fixed file encoding (UTF-8)
 - [`ref`](https://github.com/pchiorean/Indentz/commit/e55692ccbf9d85bc0b2495dc4321451e1514d05d)
-  **QuickExport:** Minor (cosmetic) options tweaks
+  **export/QuickExport:** Minor (cosmetic) options tweaks
 - [`ref`](https://github.com/pchiorean/Indentz/commit/5fbb288a359358459c5f4d36004f41fd70e8802f)
-  **SpreadsToFiles:** Updated prompt text
+  **file/SpreadsToFiles:** Updated prompt text
 - [`ref`](https://github.com/pchiorean/Indentz/commit/73f201a2ac2ba1fce93d8a558b376ab603d01371)
   **lib/fitTo:** Updated linting settings
 - [`ref`](https://github.com/pchiorean/Indentz/commit/17d5cb5ee2483fb73ec522f907b469f74bb65ca8)
-  **ZoomTo...:** Refactored to use similar code to its twin
+  **view/ZoomTo...:** Refactored to use similar code to its twin
 - [`brk`](https://github.com/pchiorean/Indentz/commit/30fb0d34a8e929cf432a7dc0583ad9f263bb5ef2)
   **lib/parseDataFile:** Changed data files extension to `tsv`
+- [`fix`](https://github.com/pchiorean/Indentz/commit/5e54d86d82a1ce06836361c8d50045e5c6e7774a)
+  **cleanup/ReplaceLinks.jsx:** Fixed an error for names containing `%`
 
 ##### To do
 - **lib/parseDataFile:**
-  - [`upd`]() Use relative paths for `@include` <!-- (paths starting with `/` are resolved relative to the current workspace; paths starting with `./` or without any prefix are resolved relative to the current file) -->
-  - [`new`]() Add a `@includepath` directive
+  - [`upd`]() Use relative paths for `@include`
+  - [`new`]() Add `@includepath` directive
 
-### [22.8.22](https://github.com/pchiorean/Indentz/releases/tag/22.8.22)
+### [Releases](https://github.com/pchiorean/Indentz/releases)
+
+#### [22.8.22](https://github.com/pchiorean/Indentz/releases/tag/22.8.22)
 
 ##### New features
 - [`new`](https://github.com/pchiorean/Indentz/commit/d5f2a4c5f3cc42a26a8b63bd90539645f60ba464)
@@ -89,7 +93,7 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/00415e83ac739a5c3c0328358f0d38a6af1185c0)
   Added an `#includepath` directive with a list of fallback folders
 
-### [22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
+#### [22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
 ##### New features
 
@@ -130,7 +134,7 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2d43649c6fcb012b8ab4ed28901059245415829a)
   **lib/Report:** Increased maximum width
 
-### [22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
+#### [22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
 
 ##### New features
 
@@ -178,7 +182,7 @@
 - [`doc`](https://github.com/pchiorean/Indentz/commit/14f7688731f5ba609c84530fee67600a55248e0b)
   **lib/ReplaceLink, ReplaceLinks:** Clarified/removed a mention about local links
 
-### [22.3.11](https://github.com/pchiorean/Indentz/releases/tag/22.3.11)
+#### [22.3.11](https://github.com/pchiorean/Indentz/releases/tag/22.3.11)
 
 ##### New features
 
@@ -218,7 +222,7 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/5fbd56abfeb7a46fd5e8bec0bb2e48d419573a90)
   Renamed **lib/isIn** to **isInArray**
 
-### [22.2.9](https://github.com/pchiorean/Indentz/releases/tag/22.2.9)
+#### [22.2.9](https://github.com/pchiorean/Indentz/releases/tag/22.2.9)
 
 ##### New features
 
@@ -385,7 +389,7 @@
 - [`doc`](https://github.com/pchiorean/Indentz/commit/c8dd950b8167d4a30148c866da25e91694f9416c)
   Added a changelog
 
-### [21.9.20](https://github.com/pchiorean/Indentz/tree/723c2fe6c71c9d5a4586f2b7685628fe0d788258)
+#### [21.9.20](https://github.com/pchiorean/Indentz/tree/723c2fe6c71c9d5a4586f2b7685628fe0d788258)
 
 - [`ref`](https://github.com/pchiorean/Indentz/commit/51bb19d2d7074181c5acacc8dd52931bfd3263c5)
   [`upd`](https://github.com/pchiorean/Indentz/commit/8982a3fde7956ac83372ba140a773a05dff929e2)
@@ -396,49 +400,49 @@
 
 ##### New features
 
-- `new` **Debug:** Add a stopwatch
-- `new` **DefaultLayers:** Add `top/bottom` order keyword
-- `new` **DefaultSwatches:** Add tints support
-- `new` **QuickExport:** Add JPG, PNG & `?`TIFF export profiles
-- `new` **QuickExport:** Add INDD (with or without package) export profile
-- `new` **QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
+- `new` **lib/debug:** Add a stopwatch
+- `new` **cleanup/DefaultLayers:** Add `top/bottom` order keyword
+- `new` **cleanup/DefaultSwatches:** Add tints support
+- `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
+- `new` **export/QuickExport:** Add INDD (with or without package) export profile
+- `new` **export/QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
 
 ##### Updates
 
-- `brk` **DefaultLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
-- `upd` **DefaultSwatches:** Check color values on parsing
-- `upd` **LabelPageRatios:** Mark outer/inner ratios
-- `brk` **MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
-- `upd` **MarkVisibleArea:** Use wildcards for layer names
-- `brk` **MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.txt`, fallback to defaults
-- `upd` **PageMarginsFromSelection:** Set the margins of every page touched by the selection
-- `upd` **PageSizeFromFilename:** Use real units (mm, cm, px) when detected
-- `upd` **PageSizeFromSelection:** Use outlined text bounds for text frames
-- `upd` **PageSizeFromSelection:** Without selection fit all pages to their contents
-- `upd` **QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
-- `upd` `?` **QuickExport:** JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
-- `upd` **ReplaceText:** Take an array of strings as input
-- `upd` **ReplaceText:** Add grep matching
-- `upd` **Report:** Add auto filtering mode (`true`|`false`|`auto`, default `false`)
-- `upd` **Report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
-- `upd` **SpreadsToFiles:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
-- `upd` **ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
+- `brk` **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
+- `upd` **cleanup/DefaultSwatches:** Check color values on parsing
+- `upd` **misc/LabelPageRatios:** Mark outer/inner ratios
+- `brk` **export/MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
+- `upd` **export/MarkVisibleArea:** Use wildcards for layer names
+- `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.txt`, fallback to defaults
+- `upd` **layout/PageMarginsFromSelection:** Set the margins of every page touched by the selection
+- `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
+- `upd` **layout/PageSizeFromSelection:** Use outlined text bounds for text frames
+- `upd` **layout/PageSizeFromSelection:** Without selection fit all pages to their contents
+- `upd` **export/QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
+- `upd` `?` **export/QuickExport:** JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
+- `upd` **lib/replaceText:** Take an array of strings as input
+- `upd` **lib/replaceText:** Add grep matching
+- `upd` **lib/report:** Add auto filtering mode (`true`|`false`|`auto`, default `false`)
+- `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
+- `upd` **file/SpreadsToFiles:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
+- `upd` **view/ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
 - `upd` `?` **lib/isInArray:** Add regex matching to `searchValue`
 - `upd` Use a custom object style for `<visible area>` frame
 
 ##### Bug fixes
 
-- `fix` **PageSizeFromFilename:** Error on pages set to 1:X scale
-- `fix` **PageSizeFromFilename:** Limit detected bleed to max values
-- `fix` **QuickExport:** Report layer overrides
-- `fix` **ReplaceSnippets:** Fix `\` matching
-- `fix` **SpreadsToFiles:** Don't append separators if already exist
-- `fix` **TextAutoSize:** Check `baselineShift`
+- `fix` **layout/PageSizeFromFilename:** Error on pages set to 1:X scale
+- `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
+- `fix` **export/QuickExport:** Report layer overrides
+- `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
+- `fix` **file/SpreadsToFiles:** Don't append separators if already exist
+- `fix` **fit/TextAutoSize:** Check `baselineShift`
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
 
 ##### New scripts
-- `new` `?` **LayersToFiles**
-- `new` **SpreadsToLayers**
+- `new` `?` **file/LayersToFiles**
+- `new` **file/SpreadsToLayers**
 
 ---
 
