@@ -1,5 +1,5 @@
 /*
-	Replace links 22.9.4
+	Replace links 22.9.8
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named 'links.tsv':
@@ -57,7 +57,7 @@ function main() {
 	var links = doc.links.everyItem().getElements();
 	var linkS = (function () {
 		var s = [];
-		for (i = 0; i < links.length; i++) s.push(decodeURI(links[i].name));
+		for (i = 0; i < links.length; i++) s.push(links[i].name);
 		return s;
 	}());
 
