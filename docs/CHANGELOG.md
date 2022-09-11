@@ -16,11 +16,8 @@
   **lib/parseDataFile:** Changed data files extension to `tsv`
 - [`fix`](https://github.com/pchiorean/Indentz/commit/5e54d86d82a1ce06836361c8d50045e5c6e7774a)
   **cleanup/ReplaceLinks.jsx:** Fixed an error for names containing `%`
-
-##### To do
-- **lib/parseDataFile:**
-  - [`upd`]() Use relative paths for `@include`
-  - [`new`]() Add `@includepath` directive
+- [`brk`](https://github.com/pchiorean/Indentz/commit/ea713c47c39dea36f7460d26b50541e700df9646)
+  **lib/parseDataFile and related:** Added `@includepath` directive and support for relative paths
 
 ### [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -403,6 +400,7 @@
 - `new` **lib/debug:** Add a stopwatch
 - `new` **cleanup/DefaultLayers:** Add `top/bottom` order keyword
 - `new` **cleanup/DefaultSwatches:** Add tints support
+- `new` **cleanup/DefaultSwatches:** Add groups support
 - `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
 - `new` **export/QuickExport:** Add INDD (with or without package) export profile
 - `new` **export/QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
@@ -439,6 +437,7 @@
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `fix` **fit/TextAutoSize:** Check `baselineShift`
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
+- `fix` Nullify large variables on exit
 
 ##### New scripts
 - `new` `?` **file/LayersToFiles**
