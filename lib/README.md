@@ -188,25 +188,24 @@ Moves an item to another layer, optionally sending it to the front or back, and 
 
 ---
 
-### parseDataFile(dataFile, [flgR]) ⇒ `object`
+### parseDataFile(dataFile) ⇒ `object`
 
 | Parameters | Type      | Default | Description                                     |
 |------------|-----------|---------|-------------------------------------------------|
 | dataFile   | `File`    |         | A tab-separated-values file (object).           |
-| [flgR]     | `boolean` | `false` | Internal flag for recursive calls (`@include`). |
 
 Reads a TSV (tab-separated-values) file, validates the data (the provided function is just a stub) and returns an object containing found records and errors:
 
 ```js
 {
     records: [ {}, {}, ... ],
-    errors:  { info: [], warn: [], fail: [] }
+    status:  { info: [], warn: [], fail: [] }
 };
 ```
 
-Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
 
-Use `@path/to/include.tsv` to include records from another file or `@default` for default data file (see `getDataFile()`).
+Use `@defaults` to include the global default (see `getDataFile()`), or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
 
 #### Example
 
@@ -217,8 +216,9 @@ Use `@path/to/include.tsv` to include records from another file or `@default` fo
 var file, data;
 if (!(file = getDataFile('data.tsv'))) { alert('No data file found.'); exit(); }
 data = parseDataFile(file);
-if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
+if (data.status.fail.length > 0) { report(data.status.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 if (data.records.length === 0) exit();
+// main stuff (e.g., see `DefaultLayers.jsx` for implementation)
 ```
 
 Given a file `data.tsv`:

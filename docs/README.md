@@ -48,7 +48,7 @@ Sets some preferences for the current document.
 </details>
 
 #### **`DefaultLayers`**
-Adds a set of layers defined in a TSV *(tab-separated values)* file[^2] named [**`layers.tsv`**](samples/layers.tsv):
+Adds a set of layers defined in a TSV *(tab-separated values)* file named [**`layers.tsv`**](samples/layers.tsv):
 
 | Name         | Color   | Visible | Printable | Order | Variants                                           |
 |:-------------|:--------|:--------|:----------|:------|:---------------------------------------------------|
@@ -65,8 +65,16 @@ Adds a set of layers defined in a TSV *(tab-separated values)* file[^2] named [*
 > **Order**: `above` or `below` existing layers (defaults to `above`)\
 > **Variants**: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards accepted)
 
+##### Details
+
+- The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script, or in **`Indentz`** root). Local files and files starting with `_` take precedence.
+
+- Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+
+- Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+
 #### **`DefaultSwatches`**
-Adds swatches defined in a TSV file[^2] named [**`swatches.tsv`**](samples/swatches.tsv):
+Adds swatches defined in a TSV file named [**`swatches.tsv`**](samples/swatches.tsv):
 
 | Name           | Color model | Color space | Values       | Variants         |
 |:---------------|:------------|:------------|:-------------|:-----------------|
@@ -81,10 +89,20 @@ Adds swatches defined in a TSV file[^2] named [**`swatches.tsv`**](samples/swatc
 > **Values**: 3 values in 0-255 range for RGB; 4 values in 0-100 range for CMYK; 3 values in 0-100 (L), -128-127 (A and B) range for Lab; values can be separated by ` `, `,`, `|` or `/`\
 > **Variants**: a list of swatches that will be replaced by the base swatch (case insensitive; `*` and `?` wildcards accepted)
 
+<details><summary><strong>Details</strong></summary>
+
+- The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script, or in **`Indentz`** root). Local files and files starting with `_` take precedence.
+
+- Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+
+- Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+
+</details>
+
 You can use [**`SwatchesSave`**](#swatchessave) to get a tab delimited list of swatches from any document.
 
 #### **`ReplaceFonts`**
-Replaces document fonts using a TSV substitution file[^2] named [**`fonts.tsv`**](samples/fonts.tsv):
+Replaces document fonts using a TSV substitution file named [**`fonts.tsv`**](samples/fonts.tsv):
 
 | Old font family | Style   | New font family    | Style   |
 |:----------------|:--------|:-------------------|:--------|
@@ -92,23 +110,46 @@ Replaces document fonts using a TSV substitution file[^2] named [**`fonts.tsv`**
 | **Arial**       | Bold    | **Helvetica Neue** | Bold    |
 | ...             |         |                    |         |
 
+<details><summary><strong>Details</strong></summary>
+
+- The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script, or in **`Indentz`** root). Local files and files starting with `_` take precedence.
+
+- Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+
+- Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+
+</details>
+
 You can use [**`ShowFonts`**](#showfonts) from [**Miscellaneous**](#miscellaneous) to get a tab delimited list of document fonts for copy-pasting.
 
 #### **`ReplaceLinks`**
-Replaces document links using a TSV substitution file[^2] named [**`links.tsv`**](samples/links.tsv):
+Replaces document links using a TSV substitution file named [**`links.tsv`**](samples/links.tsv):
 
 | New link path             | Document links              |
 |:--------------------------|:----------------------------|
 | **path/to/img1.psd**      | img1.*                      |
-| **path/to/img2-cmyk.tif** | img2_lowres.jpg, img2-rgb.* |
-| **path/to/img3.tif**      |                             |
+| **@includepath path/to**  |                             |
+| **img2-cmyk.tif**         | img2_lowres.jpg, img2-rgb.* |
+| **img3.tif**              |                             |
 | ...                       |                             |
 
-> **New link path**: new link's absolute path\
+> **New link path**: an absolute path, or relative to the data file, or relative to `@includepath`\
 > **Document links**: a list of document links that will be relinked if found (case insensitive; `*` and `?` wildcards accepted); if the list is empty, the new link's name will be used.
 
+<details><summary><strong>Details</strong></summary>
+
+- The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script, or in **`Indentz`** root). Local files and files starting with `_` take precedence.
+
+- Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+
+- Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+
+</details>
+
+The new link path can be absolute, or relative to the current data file, or to a default path defined by the `@includepath`. Quotes are optional.
+
 #### **`ReplaceSnippets`**
-Replaces a list of text snippets using a TSV substitution file[^2] named [**`snippets.tsv`**](samples/snippets.tsv):
+Replaces a list of text snippets using a TSV substitution file named [**`snippets.tsv`**](samples/snippets.tsv):
 
 | Find what              | Change to                 | Case sensitive | Whole word | Scope |
 |:-----------------------|:--------------------------|:---------------|:-----------|:------|
@@ -122,7 +163,17 @@ Replaces a list of text snippets using a TSV substitution file[^2] named [**`sni
 > **Change to**: the new text\
 > **Case sensitive**: `yes` or `no` (defaults to `yes`)\
 > **Whole word**: `yes` or `no` (defaults to `yes`)\
-> **Scope**: replacement will only be done if the file name matches this [regular expression](https://regex101.com)[^3] (case sensitive)
+> **Scope**: replacement will only be done if the file name matches this [regular expression](https://regex101.com)[^2] (case sensitive)
+
+<details><summary><strong>Details</strong></summary>
+
+- The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script, or in **`Indentz`** root). Local files and files starting with `_` take precedence.
+
+- Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+
+- Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+
+</details>
 
 #### **`DocCleanup`** <small>F2</small>
 It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
@@ -304,7 +355,7 @@ There are two export presets that can be used simultaneously or one at a time:
 
 The text from the **Suffix** field will be appended to the exported file name (everything in the preset name after the last `_` will be autodetected as suffix).
 
-If **Export in subfolders** is checked, subfolders will be created from the suffix (the text after `+` is ignored[^4]).
+If **Export in subfolders** is checked, subfolders will be created from the suffix (the text after `+` is ignored[^3]).
 
 It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:
 
@@ -357,7 +408,7 @@ Sometimes objects that have a script label attached are reused, which may create
 
 #### **`QR`** <small>F9</small>
 
-Adds a QR code on each spread of the active document or to separate PDF files[^5]:
+Adds a QR code on each spread of the active document or to separate PDF files[^4]:
 
 ![QR](img/script-qr.png)
 
@@ -372,7 +423,7 @@ If the document name ends with a separator (space/dot/underline/hyphen) followed
 You can insert `|` for manually splitting the label into several lines.
 
 #### **`QRBatch`** <small>⇧F9</small>
-Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV file[^6] named [**`qr.tsv`**](samples/qr.tsv) and adds them to existing documents or creates separate files (the suffix thing applies here as well):
+Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV file named [**`qr.tsv`**](samples/qr.tsv) and adds them to existing documents or creates separate files (the suffix thing applies here as well):
 
 | Filename           | Code   | On doc |
 |:-------------------|:-------|:------:|
@@ -384,6 +435,8 @@ Does the same thing as **`QR`** but in a non-interactive way: retrieves a list o
 > **Filename**: document name\
 > **Code**: any string\
 > **On doc**: any string: on existing document; empty or missing: on separate file
+
+The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence. Blank lines and those prefixed with `#` are ignored.
 
 You can insert `|` for manually splitting the label into several lines.
 
@@ -417,11 +470,9 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-Last updated: September 4, 2022
+Last updated: September 11, 2022
 
 [^1]: Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text.
-[^2]: The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script or in **`Indentz`** root); local files and files starting with `_` take precedence. You can include another TSV file by inserting **`@path/to/file.tsv`** in the desired position, or the global default with **`@default`**. Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
-[^3]: For example, in **`Document_DE.indd`** “The sample is for free” will be replaced with “Das Sample ist kostenlos”, and for **`Document_FR.indd`** with “L'échantillon est gratuit”.
-[^4]: For example, if the suffix is `print+diecut`, the document will be saved as **`Document_print+diecut.pdf`** in a subfolder named **`print`**.
-[^5]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
-[^6]: The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence. Blank lines and those prefixed with `#` are ignored.
+[^2]: For example, in **`Document_DE.indd`** “The sample is for free” will be replaced with “Das Sample ist kostenlos”, and for **`Document_FR.indd`** with “L'échantillon est gratuit”.
+[^3]: For example, if the suffix is `print+diecut`, the document will be saved as **`Document_print+diecut.pdf`** in a subfolder named **`print`**.
+[^4]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
