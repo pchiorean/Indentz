@@ -1,24 +1,26 @@
 /*
-	Default layers 22.9.4
+	Default layers 22.9.11
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.tsv':
 
 	Name     | Color   | Visible | Printable | Order | Variants
-	dielines | Magenta | yes     | yes       | top   | cut*, decoupe, die, die*cut, stanz*
+	dielines | Magenta | yes     | yes       | above | cut*, decoupe, die, die*cut, stanz*
 	template | Gray    | no      | no        | below
 	...
-	1. <Name>: layer name
-	2. <Color>: layer color (see UIColors.tsv; default 'Light Blue')
-	3. <Visible>: 'yes' or 'no' (default 'yes')
-	4. <Printable>: 'yes' or 'no' (default 'yes')
-	5. <Order>: 'above' or 'below' existing layers (default 'above')
-	6. <Variants>: a list of layers that will be merged with the base layer
-	   (case insensitive; '*' and '?' wildcards accepted)
 
-	The file can be saved in the current folder, on the desktop, or next to the script.
+	<Name>: layer name
+	<Color>: layer color (defaults to Light Blue; see UIColors.txt for color names)
+	<Visible>: 'yes' or 'no' (defaults to 'yes')
+	<Printable>: 'yes' or 'no' (defaults to 'yes')
+	<Order>: 'above' or 'below' existing layers (defaults to 'above')
+	<Variants>: a list of layers that will be merged with the base layer (case insensitive; '*' and '?' wildcards accepted)
+
+	The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
+	(on the desktop, next to the script, or in Indentz root); local files and files starting with `_` take precedence.
 	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
-	Include records from another file with `@path/to/include.tsv` or the `@default` data file.
+	Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
+	The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -42,12 +44,12 @@
 	SOFTWARE.
 */
 
+if (!(doc = app.activeDocument)) exit();
+
 // @includepath '.;./lib;../lib';
 // @include 'getDataFile.jsxinc';
 // @include 'isInArray.jsxinc';
 // @include 'report.jsxinc';
-
-if (!(doc = app.activeDocument)) exit();
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Default layers');
@@ -55,20 +57,24 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 function main() {
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, data, messages, oldActiveLayer, newLayer, tmpLayer, i;
+	var dataFileName = 'layers.tsv';
 	var counter = { add: 0, merge: 0 };
+
 	if (doc.converted && VERBOSITY > 0) {
 		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
 			'The default layer substitution list will be used.');
 	}
-	if (!(file = getDataFile('layers.tsv'))) {
+	if (!(file = getDataFile(dataFileName))) {
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate substitution list \'layers.tsv\'.\nThe file must be saved in the current folder, ' +
-				'on the desktop, or next to the script. Check docs for details.');
+			alert('Can\'t locate a substitution list \'' + dataFileName +
+			'\'.\nThe file must be saved in the current folder, on the ' +
+			'desktop, or next to the script. Check docs for details.');
 		}
 		exit();
 	}
+
 	data = parseDataFile(file);
-	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
+	if (data.status.fail.length > 0) { report(data.status.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length > 0) {
 		oldActiveLayer = doc.activeLayer; // Save active layer
 		doc.layers.everyItem().properties = { locked: false }; // Unlock existing layers
@@ -83,8 +89,11 @@ function main() {
 				data.records[i].variants);
 			if (i < data.records.length - 1) {
 				tmpLayer = doc.layers.item(data.records[i + 1].name);
-				if (tmpLayer.isValid && (newLayer.index > tmpLayer.index))
+				if (tmpLayer.isValid && (newLayer.index > tmpLayer.index)) {
+					data.status.info.push(data.records[i].source +
+						'Moved \'' + newLayer.name + '\' above \'' + tmpLayer.name + '\'.');
 					newLayer.move(LocationOptions.BEFORE, tmpLayer);
+				}
 			}
 		}
 		// Bottom layers
@@ -101,8 +110,8 @@ function main() {
 		doc.activeLayer = oldActiveLayer; // Restore active layer
 	}
 	if (VERBOSITY > 0) {
-		messages = data.errors.warn;
-		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
+		messages = data.status.warn;
+		if (VERBOSITY > 1) messages = messages.concat(data.status.info);
 		if (messages.length > 0) report(messages, 'Layers: ' + counter.add + ' added | ' + counter.merge + ' merged');
 		else if (VERBOSITY > 1 && (counter.add + counter.merge) === 0) alert('No layers added or merged.');
 	}
@@ -125,7 +134,7 @@ function main() {
 				printable:  isPrintable
 			});
 			counter.add++;
-			data.errors.info.push(data.records[i].source + 'Added \'' + targetLayer.name + '\'.');
+			data.status.info.push(data.records[i].source + 'Added \'' + targetLayer.name + '\'.');
 		}
 		// Merge variants
 		layers = doc.layers.everyItem().getElements();
@@ -138,7 +147,7 @@ function main() {
 				targetLayer.visible = oldLayerVisibility;
 				if (oldName !== targetLayer.name) {
 					counter.merge++;
-					data.errors.info.push(data.records[i].source +
+					data.status.info.push(data.records[i].source +
 						'Merged \'' + oldName + '\' with \'' + targetLayer.name + '\'.');
 				}
 			}
@@ -149,54 +158,124 @@ function main() {
 	/**
 	 * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
 	 * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
-	 * Include records from another file with `@path/to/include.tsv` or the `@default` data file.
+	 * Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
+	 * The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+	 * @version 22.9.11
+	 * @author Paul Chiorean <jpeg@basement.ro>
+	 * @license MIT
 	 * @param {File} dataFile - A tab-separated-values file (object).
-	 * @param {boolean} flgR - Internal flag for recursive calls (`@include`).
-	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
+	 * @returns {{records: array, status: { info: array, warn: array, fail: array }}}
 	 */
-	function parseDataFile(dataFile, flgR) {
-		var record, source, part, include, includeFile;
+	function parseDataFile(dataFile) {
+		var record, part, source, includeFolder;
 		var records = [];
-		var errors = { info: [], warn: [], fail: [] };
-		var tmpData = [];
+		var status = { info: [], warn: [], fail: [] };
 		var isHeaderFound = false;
 		var line = 0;
+		var includeFile = '';
+
+		dataFile = File(compactRelPath(dataFile.absoluteURI));
 		dataFile.open('r');
 		dataFile.encoding = 'UTF-8';
-		while (!dataFile.eof) {
+		includeFolder = Folder(dataFile.path);
+
+	while (!dataFile.eof) {
 			line++;
-			source = (flgR ? decodeURI(dataFile.name) + ':' : '') + line + ' :: ';
+			source = decodeURI(dataFile.absoluteURI) + ':' + line + ' :: ';
 			record = (part ? part.slice(0,-1) : '') + dataFile.readln();
 			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
 			if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line, skip
-			if (record.slice(0,1) === '\u0023') continue;          // '#': Comment line, skip
-			if (record.slice(0,1) === '\u0040') {                  // '@': Include directive, parse file
-				include = record.slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
-				includeFile = /^default(s?)$/i.test(include) ?
-					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Default data file
-					File(include); // 'path/to/file.tsv'
-				if (includeFile && includeFile.exists) {
-					if (includeFile.fullName === dataFile.fullName) continue; // Skip self
-					tmpData = parseDataFile(includeFile, true);
-					records = records.concat(tmpData.records);
-					errors = {
-						info: errors.info.concat(tmpData.errors.info),
-						warn: errors.warn.concat(tmpData.errors.warn),
-						fail: errors.fail.concat(tmpData.errors.fail)
-					};
-				} else { errors.warn.push(source + '\'@' + include + '\' not found.'); }
-				continue;
-			}
+			if (record.slice(0,1) === '\u0023') continue; // '#': Comment line, skip
+			if (record.slice(0,1) === '\u0040') { parseInclude(); continue; } // '@': Include directive, parse
 			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
 			record = record.replace(/^ +| +$/g, '');
 			record = record.split(/ *\t */);
 			checkRecord();
 		}
-		dataFile.close(); record = '';
-		return { records: records, errors: { info: errors.info, warn: errors.warn, fail: errors.fail } };
+		dataFile.close();
+		record = '';
+
+		return {
+			records: records,
+			status: { info: status.info, warn: status.warn, fail: status.fail }
+		};
+
+		function compactRelPath(/*string*/str) {
+			str = str.replace(/^\.\/|\/\.$/, '').replace(/\/\.\//g, '/'); // Trim '.'
+			str = str.replace(/\/[^\/]+\/\.{2}/g, '/'); // Resolve '..'
+			str = str.replace(/\/+/g, '/'); // Compact '//'
+			return str;
+		}
+
+		// Get unique array elements
+		// http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/
+		function unique(/*array*/array) {
+			var i, j;
+			var r = [];
+			o: for (i = 0; i < array.length; i++) {
+				for (j = 0; j < r.length; j++) if (r[j] === array[i]) continue o;
+				if (array[i] !== '') r[r.length] = array[i];
+			}
+			return r;
+		}
+
+		function parseInclude() {
+			var tmpData = [];
+			var include = record.replace(/['"]+/g, '').replace(/\s+$/g, '');
+			include = include.match(/^@(include(?:path)?|defaults|default)(?: +)?(.+)?$/i);
+			if (!include) {
+				status.warn.push(source + '\'' + record + '\' is not recognized (see docs).');
+				return;
+			}
+
+			switch (include[1]) {
+				case 'includepath':
+					if (include[2]) {
+						if (!/^~?\/{1,2}/.test(include[2])) include[2] = includeFolder.absoluteURI + '/' + include[2];
+						include[2] = compactRelPath(include[2]);
+						if (Folder(include[2]).exists) includeFolder = Folder(include[2]);
+						else status.warn.push(source + '\'' + include[2] + '\' not found.');
+					} else {
+						status.warn.push(source + '\'' + record + '\' is malformed (see docs).');
+					}
+					return;
+				case 'include':
+					if (include[2]) {
+						if (!/^~?\/{1,2}/.test(include[2])) include[2] = includeFolder.absoluteURI + '/' + include[2];
+						include[2] = compactRelPath(include[2]);
+						if (File(include[2]).exists) {
+							includeFile = File(include[2]);
+						} else {
+							status.warn.push(source + '\'' + include[2] + '\' not found.');
+							return;
+						}
+					} else {
+						status.warn.push(source + '\'' + record + '\' is malformed (see docs).');
+						return;
+					}
+					break;
+				case 'default':
+				case 'defaults':
+					includeFile = getDataFile(dataFileName, true);
+					if (!includeFile || !includeFile.exists) {
+						status.info.push(source + 'Default list \'' + dataFileName + '\' not found.');
+						return;
+					}
+					break;
+			}
+
+			if (includeFile.absoluteURI === dataFile.absoluteURI) return; // Skip self
+			tmpData = parseDataFile(includeFile);
+			records = records.concat(tmpData.records);
+			status = {
+				info: status.info.concat(tmpData.status.info),
+				warn: status.warn.concat(tmpData.status.warn),
+				fail: status.fail.concat(tmpData.status.fail)
+			};
+		}
 
 		function checkRecord() {
-			var tmpErrors = { info: [], warn: [], fail: [] };
+			var tmpStatus = { info: [], warn: [], fail: [] };
 			var tmpRecord = {
 				source:      source,
 				name:        record[0],
@@ -206,12 +285,12 @@ function main() {
 				isBelow:     record[4] ? (record[4].toLowerCase() === 'below') : false,
 				variants:    record[5] ? unique((record[0] + ',' + record[5]).split(/ *, */)) : [ record[0] ]
 			};
-			if (!tmpRecord.name) tmpErrors.fail.push(tmpRecord.source + 'Missing layer name.');
-			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) records.push(tmpRecord);
-			errors = {
-				info: errors.info.concat(tmpErrors.info),
-				warn: errors.warn.concat(tmpErrors.warn),
-				fail: errors.fail.concat(tmpErrors.fail)
+			if (!tmpRecord.name) tmpStatus.fail.push(tmpRecord.source + 'Missing layer name.');
+			if (tmpStatus.warn.length === 0 && tmpStatus.fail.length === 0) records.push(tmpRecord);
+			status = {
+				info: status.info.concat(tmpStatus.info),
+				warn: status.warn.concat(tmpStatus.warn),
+				fail: status.fail.concat(tmpStatus.fail)
 			};
 
 			function getUIColor(color) {
@@ -254,18 +333,6 @@ function main() {
 					'White':       UIColors.WHITE,
 					'Yellow':      UIColors.YELLOW
 				}[color] || UIColors.LIGHT_BLUE;
-			}
-
-			// Get unique array elements
-			// http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/
-			function unique(/*array*/array) {
-				var i, j;
-				var r = [];
-				o: for (i = 0; i < array.length; i++) {
-					for (j = 0; j < r.length; j++) if (r[j] === array[i]) continue o;
-					if (array[i] !== '') r[r.length] = array[i];
-				}
-				return r;
 			}
 		}
 	}

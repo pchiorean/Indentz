@@ -1,24 +1,27 @@
 ﻿/*
-	Replace text snippets 22.9.4
+	Replace text snippets 22.9.11
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
-	Replaces a list of snippets from a 5-column TSV file named 'snippets.tsv':
+	Replaces a list of snippets from a 5-column TSV file named `snippets.tsv`:
 
 	Find what              | Change to                 | Case sensitive | Whole word | Scope
 	English instructions   | Deutsche anleitung        | yes            | yes
 	The sample is for free | Das Sample ist kostenlos  | yes            | yes        | _DE$
-	The sample is for free | L'échantillon est gratuit | yes            | yes        | _FR$
+	The sample is for free | L`échantillon est gratuit | yes            | yes        | _FR$
 	12.06.22               | 13.11.2022
 	...
-	1. <Find what>: text to be replaced
-	2. <Change to>: the new text
-	3. <Case sensitive>: 'yes' or 'no' (default 'yes')
-	4. <Whole word>: 'yes' or 'no' (default 'yes')
-	5. <Scope>: replacement will only be done if the file name matches this regular expression (case sensitive)
 
-	The file can be saved in the current folder, on the desktop, or next to the script.
+	<Find what>: text to be replaced (you can use find and replace special characters)
+	<Change to>: the new text
+	<Case sensitive>: `yes` or `no` (defaults to `yes`)
+	<Whole word>: `yes` or `no` (defaults to `yes`)
+	<Scope>: replacement will only be done if the file name matches this regular expression
+
+	The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
+	(on the desktop, next to the script, or in Indentz root); local files and files starting with `_` take precedence.
 	Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
-	Include records from another file with `@path/to/include.tsv` or the `@default` data file.
+	Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
+	The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -42,11 +45,11 @@
 	SOFTWARE.
 */
 
+if (!(doc = app.activeDocument)) exit();
+
 // @includepath '.;./lib;../lib';
 // @include 'getDataFile.jsxinc';
 // @include 'report.jsxinc';
-
-if (!(doc = app.activeDocument)) exit();
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace text snippets');
@@ -54,27 +57,28 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 function main() {
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, data, messages, i, n;
+	var dataFileName = 'snippets.tsv';
 	var counter = 0;
 
 	if (doc.converted && VERBOSITY > 0) {
 		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
 		'The default snippet substitution list will be used.');
 	}
-	if (!(file = getDataFile('snippets.tsv'))) {
+	if (!(file = getDataFile(dataFileName))) {
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate substitution list \'snippets.tsv\'.\nThe file must be saved in the current folder, ' +
-			'on the desktop, or next to the script. Check docs for details.');
+			alert('Can\'t locate a substitution list \'' + dataFileName +
+			'\'.\nThe file must be saved in the current folder, on the ' +
+			'desktop, or next to the script. Check docs for details.');
 		}
 		exit();
 	}
 
 	data = parseDataFile(file);
-	if (data.errors.fail.length > 0) { report(data.errors.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
+	if (data.status.fail.length > 0) { report(data.status.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
 	if (data.records.length > 0) {
 		for (i = 0, n = data.records.length; i < n; i++) {
 			if (data.records[i].scope && !data.records[i].scope.test(decodeURI(doc.name.replace(/.[^.]+$/, '')))) {
-				data.errors.info.push(data.records[i].source +
-					'Not replaced ' + data.records[i].findWhat + '\' (out of scope).');
+				data.status.info.push(data.records[i].source + 'Out of scope.');
 				continue;
 			}
 			app.findTextPreferences   = NothingEnum.NOTHING;
@@ -90,16 +94,16 @@ function main() {
 			app.changeTextPreferences.changeTo = data.records[i].changeTo;
 			if (doc.changeText().length > 0) {
 				counter++;
-				data.errors.info.push(data.records[i].source +
+				data.status.info.push(data.records[i].source +
 					'Replaced ' + data.records[i].findWhat + '\' with \'' + data.records[i].changeTo + '\'.');
 			} else {
-				data.errors.info.push(data.records[i].source + data.records[i].findWhat + '\' not found.');
+				data.status.info.push(data.records[i].source + '\'' + data.records[i].findWhat + '\' not found.');
 			}
 		}
 	}
 	if (VERBOSITY > 0) {
-		messages = data.errors.warn;
-		if (VERBOSITY > 1) messages = messages.concat(data.errors.info);
+		messages = data.status.warn;
+		if (VERBOSITY > 1) messages = messages.concat(data.status.info);
 		if (messages.length > 0) report(messages, 'Snippets: ' + counter + ' replaced');
 		else if (VERBOSITY > 1 && counter === 0) alert('No replacements made.');
 	}
@@ -107,54 +111,112 @@ function main() {
 	/**
 	 * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
 	 * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
-	 * Include records from another file with `@path/to/include.tsv` or the `@default` data file.
+	 * Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
+	 * The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+	 * @version 22.9.11
+	 * @author Paul Chiorean <jpeg@basement.ro>
+	 * @license MIT
 	 * @param {File} dataFile - A tab-separated-values file (object).
-	 * @param {boolean} flgR - Internal flag for recursive calls (`@include`).
-	 * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
+	 * @returns {{records: array, status: { info: array, warn: array, fail: array }}}
 	 */
-	function parseDataFile(dataFile, flgR) {
-		var record, source, part, include, includeFile;
+	function parseDataFile(dataFile) {
+		var record, part, source, includeFolder;
 		var records = [];
-		var errors = { info: [], warn: [], fail: [] };
-		var tmpData = [];
+		var status = { info: [], warn: [], fail: [] };
 		var isHeaderFound = false;
 		var line = 0;
+		var includeFile = '';
+
+		dataFile = File(compactRelPath(dataFile.absoluteURI));
 		dataFile.open('r');
 		dataFile.encoding = 'UTF-8';
+		includeFolder = Folder(dataFile.path);
+
 		while (!dataFile.eof) {
 			line++;
-			source = (flgR ? decodeURI(dataFile.name) + ':' : '') + line + ' :: ';
+			source = decodeURI(dataFile.absoluteURI) + ':' + line + ' :: ';
 			record = (part ? part.slice(0,-1) : '') + dataFile.readln();
 			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
 			if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line, skip
-			if (record.slice(0,1) === '\u0023') continue;          // '#': Comment line, skip
-			if (record.slice(0,1) === '\u0040') {                  // '@': Include directive, parse file
-				include = record.slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
-				includeFile = /^default(s?)$/i.test(include) ?
-					getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Default data file
-					File(include); // 'path/to/file.tsv'
-				if (includeFile && includeFile.exists) {
-					if (includeFile.fullName === dataFile.fullName) continue; // Skip self
-					tmpData = parseDataFile(includeFile, true);
-					records = records.concat(tmpData.records);
-					errors = {
-						info: errors.info.concat(tmpData.errors.info),
-						warn: errors.warn.concat(tmpData.errors.warn),
-						fail: errors.fail.concat(tmpData.errors.fail)
-					};
-				} else { errors.warn.push(source + '\'@' + include + '\' not found.'); }
-				continue;
-			}
+			if (record.slice(0,1) === '\u0023') continue; // '#': Comment line, skip
+			if (record.slice(0,1) === '\u0040') { parseInclude(); continue; } // '@': Include directive, parse
 			if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
 			record = record.replace(/^ +| +$/g, '');
 			record = record.split(/ *\t */);
 			checkRecord();
 		}
-		dataFile.close(); record = '';
-		return { records: records, errors: { info: errors.info, warn: errors.warn, fail: errors.fail } };
+		dataFile.close();
+		record = '';
+
+		return {
+			records: records,
+			status: { info: status.info, warn: status.warn, fail: status.fail }
+		};
+
+		function compactRelPath(/*string*/str) {
+			str = str.replace(/^\.\/|\/\.$/, '').replace(/\/\.\//g, '/'); // Trim '.'
+			str = str.replace(/\/[^\/]+\/\.{2}/g, '/'); // Resolve '..'
+			str = str.replace(/\/+/g, '/'); // Compact '//'
+			return str;
+		}
+
+		function parseInclude() {
+			var tmpData = [];
+			var include = record.replace(/['"]+/g, '').replace(/\s+$/g, '');
+			include = include.match(/^@(include(?:path)?|defaults|default)(?: +)?(.+)?$/i);
+			if (!include) {
+				status.warn.push(source + '\'' + record + '\' is not recognized (see docs).');
+				return;
+			}
+
+			switch (include[1]) {
+				case 'includepath':
+					if (include[2]) {
+						if (!/^~?\/{1,2}/.test(include[2])) include[2] = includeFolder.absoluteURI + '/' + include[2];
+						include[2] = compactRelPath(include[2]);
+						if (Folder(include[2]).exists) includeFolder = Folder(include[2]);
+						else status.warn.push(source + '\'' + include[2] + '\' not found.');
+					} else {
+						status.warn.push(source + '\'' + record + '\' is malformed (see docs).');
+					}
+					return;
+				case 'include':
+					if (include[2]) {
+						if (!/^~?\/{1,2}/.test(include[2])) include[2] = includeFolder.absoluteURI + '/' + include[2];
+						include[2] = compactRelPath(include[2]);
+						if (File(include[2]).exists) {
+							includeFile = File(include[2]);
+						} else {
+							status.warn.push(source + '\'' + include[2] + '\' not found.');
+							return;
+						}
+					} else {
+						status.warn.push(source + '\'' + record + '\' is malformed (see docs).');
+						return;
+					}
+					break;
+				case 'default':
+				case 'defaults':
+					includeFile = getDataFile(dataFileName, true);
+					if (!includeFile || !includeFile.exists) {
+						status.info.push(source + 'Default list \'' + dataFileName + '\' not found.');
+						return;
+					}
+					break;
+			}
+
+			if (includeFile.absoluteURI === dataFile.absoluteURI) return; // Skip self
+			tmpData = parseDataFile(includeFile);
+			records = records.concat(tmpData.records);
+			status = {
+				info: status.info.concat(tmpData.status.info),
+				warn: status.warn.concat(tmpData.status.warn),
+				fail: status.fail.concat(tmpData.status.fail)
+			};
+		}
 
 		function checkRecord() {
-			var tmpErrors = { info: [], warn: [], fail: [] };
+			var tmpStatus = { info: [], warn: [], fail: [] };
 			var tmpRecord = {
 				source: source,
 				findWhat: record[0],
@@ -163,12 +225,12 @@ function main() {
 				wholeWord:     record[3] ? (record[3].toLowerCase() === 'yes') : true,
 				scope:         record[4] ? RegExp(record[4], 'g') : ''
 			};
-			if (!tmpRecord.findWhat) tmpErrors.fail.push(tmpRecord.source + 'Missing text to be replaced.');
-			if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) records.push(tmpRecord);
-			errors = {
-				info: errors.info.concat(tmpErrors.info),
-				warn: errors.warn.concat(tmpErrors.warn),
-				fail: errors.fail.concat(tmpErrors.fail)
+			if (!tmpRecord.findWhat) tmpStatus.fail.push(tmpRecord.source + 'Missing text to be replaced.');
+			if (tmpStatus.warn.length === 0 && tmpStatus.fail.length === 0) records.push(tmpRecord);
+			status = {
+				info: status.info.concat(tmpStatus.info),
+				warn: status.warn.concat(tmpStatus.warn),
+				fail: status.fail.concat(tmpStatus.fail)
 			};
 		}
 	}

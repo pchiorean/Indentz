@@ -1,71 +1,124 @@
 /**
  * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
  * Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
- * Include records from another file with `@path/to/include.tsv` or the `@default` data file.
- * @version 22.9.4
+ * Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
+ * The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+ * @version 22.9.11
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {File} dataFile - A tab-separated-values file (object).
- * @param {boolean} flgR - Internal flag for recursive calls (`@include`).
- * @returns {{records: array, errors: { info: array, warn: array, fail: array }}}
+ * @returns {{records: array, status: { info: array, warn: array, fail: array }}}
  */
-function parseDataFile(dataFile, flgR) {
-	var record, part, include, includeFile;
+function parseDataFile(dataFile) {
+	var record, part, source, includeFolder;
 	var records = [];
-	var errors = { info: [], warn: [], fail: [] };
-	var tmpData = [];
+	var status = { info: [], warn: [], fail: [] };
 	var isHeaderFound = false;
 	var line = 0;
+	var includeFile = '';
+
+	dataFile = File(compactRelPath(dataFile.absoluteURI));
 	dataFile.open('r');
 	dataFile.encoding = 'UTF-8';
+	includeFolder = Folder(dataFile.path);
+
 	while (!dataFile.eof) {
 		line++;
+		source = decodeURI(dataFile.absoluteURI) + ':' + line + ' :: ';
 		record = (part ? part.slice(0,-1) : '') + dataFile.readln();
 		if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
 		if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line, skip
-		if (record.slice(0,1) === '\u0023') continue;          // '#': Comment line, skip
-		if (record.slice(0,1) === '\u0040') {                  // '@': Include directive, parse file
-			include = record.slice(1).replace(/^\s+|\s+$/g, '').replace(/^['"]+|['"]+$/g, '');
-			includeFile = /^default(s?)$/i.test(include) ?
-				getDataFile(decodeURI(dataFile.name).replace(/^_/, ''), true) : // Default data file
-				File(include); // 'path/to/file.tsv'
-			if (includeFile && includeFile.exists) {
-				if (includeFile.fullName === dataFile.fullName) continue; // Skip self
-				tmpData = parseDataFile(includeFile, true);
-				records = records.concat(tmpData.records);
-				errors = {
-					info: errors.info.concat(tmpData.errors.info),
-					warn: errors.warn.concat(tmpData.errors.warn),
-					fail: errors.fail.concat(tmpData.errors.fail)
-				};
-			} else {
-				errors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line +
-				': \'' + include + '\' not found.');
-			}
-			continue;
-		}
+		if (record.slice(0,1) === '\u0023') continue; // '#': Comment line, skip
+		if (record.slice(0,1) === '\u0040') { parseInclude(); continue; } // '@': Include directive, parse
 		if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
-		record = record.replace(/^\s+|\s+$/g, '');
+		record = record.replace(/^ +| +$/g, '');
 		record = record.split(/ *\t */);
 		checkRecord();
 	}
-	dataFile.close(); record = '';
-	return { records: records, errors: { info: errors.info, warn: errors.warn, fail: errors.fail } };
+	dataFile.close();
+	record = '';
 
-	function checkRecord() {
-		var tmpErrors = { info: [], warn: [], fail: [] };
-		if (!record[0]) tmpErrors.warn.push((flgR ? decodeURI(dataFile.name) + ':' : 'Line ') + line + ': Some error');
+	return {
+		records: records,
+		status: { info: status.info, warn: status.warn, fail: status.fail }
+	};
+
+	function compactRelPath(/*string*/str) {
+		str = str.replace(/^\.\/|\/\.$/, '').replace(/\/\.\//g, '/'); // Trim '.'
+		str = str.replace(/\/[^\/]+\/\.{2}/g, '/'); // Resolve '..'
+		str = str.replace(/\/+/g, '/'); // Compact '//'
+		return str;
+	}
+
+	function parseInclude() {
+		var tmpData = [];
+		var include = record.replace(/['"]+/g, '').replace(/\s+$/g, '');
+		include = include.match(/^@(include(?:path)?|defaults|default)(?: +)?(.+)?$/i);
+		if (!include) {
+			status.warn.push(source + '\'' + record + '\' is not recognized (see docs).');
+			return;
+		}
+
+		switch (include[1]) {
+			case 'includepath':
+				if (include[2]) {
+					if (!/^~?\/{1,2}/.test(include[2])) include[2] = includeFolder.absoluteURI + '/' + include[2];
+					include[2] = compactRelPath(include[2]);
+					if (Folder(include[2]).exists) includeFolder = Folder(include[2]);
+					else status.warn.push(source + '\'' + include[2] + '\' not found.');
+				} else {
+					status.warn.push(source + '\'' + record + '\' is malformed (see docs).');
+				}
+				return;
+			case 'include':
+				if (include[2]) {
+					if (!/^~?\/{1,2}/.test(include[2])) include[2] = includeFolder.absoluteURI + '/' + include[2];
+					include[2] = compactRelPath(include[2]);
+					if (File(include[2]).exists) {
+						includeFile = File(include[2]);
+					} else {
+						status.warn.push(source + '\'' + include[2] + '\' not found.');
+						return;
+					}
+				} else {
+					status.warn.push(source + '\'' + record + '\' is malformed (see docs).');
+					return;
+				}
+				break;
+			case 'default':
+			case 'defaults':
+				includeFile = getDataFile(dataFileName, true);
+				if (!includeFile || !includeFile.exists) {
+					status.info.push(source + 'Default list \'' + dataFileName + '\' not found.');
+					return;
+				}
+				break;
+		}
+
+		if (includeFile.absoluteURI === dataFile.absoluteURI) return; // Skip self
+		tmpData = parseDataFile(includeFile);
+		records = records.concat(tmpData.records);
+		status = {
+			info: status.info.concat(tmpData.status.info),
+			warn: status.warn.concat(tmpData.status.warn),
+			fail: status.fail.concat(tmpData.status.fail)
+		};
+	}
+
+	function checkRecord() { // Just a template
+		var tmpStatus = { info: [], warn: [], fail: [] };
+		if (!record[0]) tmpStatus.warn.push(source + 'Some error message');
 		// ...
-		if (tmpErrors.warn.length === 0 && tmpErrors.fail.length === 0) {
+		if (tmpStatus.warn.length === 0 && tmpStatus.fail.length === 0) {
 			records.push({
 				key1: record[0] // || someDefaultValue
 				// ...
 			});
 		}
-		errors = {
-			info: errors.info.concat(tmpErrors.info),
-			warn: errors.warn.concat(tmpErrors.warn),
-			fail: errors.fail.concat(tmpErrors.fail)
+		status = {
+			info: status.info.concat(tmpStatus.info),
+			warn: status.warn.concat(tmpStatus.warn),
+			fail: status.fail.concat(tmpStatus.fail)
 		};
 	}
 }
