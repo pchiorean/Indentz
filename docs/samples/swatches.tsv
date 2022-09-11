@@ -1,4 +1,4 @@
-Name                 	Color model 	Color space 	Values       	Variants
+Name                 	Color Model 	Color Space 	Values       	Variants
 # Rich blacks
 C=60 M=40 Y=40 K=100 	process     	cmyk        	60 40 40 100
 C=40 M=5 Y=5 K=100   	process     	cmyk        	40 5 5 100
@@ -14,16 +14,16 @@ White                	spot        	rgb         	255 255 200
 Varnish              	spot        	rgb         	200 255 100
 
 # <Name>: swatch name
-# <Color model>: 'process' or 'spot' (defaults to 'process')
-# <Color space>: 'cmyk', 'rgb' or 'lab' (defaults to 'cmyk')
+# <Color model>: `process` or `spot` (defaults to `process`)
+# <Color space>: `cmyk`, `rgb` or `lab` (defaults to `cmyk`)
 # <Values>: 3 values in 0-255 range for RGB;
 #           4 values in 0-100 range for CMYK;
 #           3 values in 0-100 (L), -128-127 (A and B) range for Lab
-#           (values can be separated by ' ', ',', '|' or '/')
-# <Variants>: a list of swatches that will be replaced by the base swatch (case insensitive; '*' and '?' wildcards accepted)
+#           (values can be separated by ` `, `,`, `|` or `/`)
+# <Variants>: a list of swatches that will be replaced by the base swatch (case insensitive; `*` and `?` wildcards accepted)
 #
-# The TSV file can be saved locally (in the active document folder or its parent folder) or as a global default
-# (on the desktop, next to the script or in Indentz root); local files and files starting with '_' take precedence.
-# You can include another TSV file by inserting '@path/to/file.tsv' in the desired position, or the global default
-# with '@default'. Blank lines and those prefixed with '#' are ignored. You can split a very long line into multiple
-# lines with a backslash ('\') added at the end of each segment.
+# The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
+# (on the desktop, next to the script, or in Indentz root); local files and files starting with `_` take precedence.
+# Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+# Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
+# The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
