@@ -27,12 +27,13 @@ function parseDataFile(dataFile) {
 		source = decodeURI(dataFile.absoluteURI) + ':' + line + ' :: ';
 		record = (part ? part.slice(0,-1) : '') + dataFile.readln();
 		if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
-		if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line, skip
-		if (record.slice(0,1) === '\u0023') continue; // '#': Comment line, skip
+		if (record.replace(/^\s+|\s+$/g, '') === '') continue;            // Blank line, skip
+		if (record.slice(0,1) === '\u0023') continue;                     // '#': Comment line, skip
 		if (record.slice(0,1) === '\u0040') { parseInclude(); continue; } // '@': Include directive, parse
-		if (!isHeaderFound) { isHeaderFound = true; continue; } // Header line, skip
-		record = record.replace(/^ +| +$/g, '');
-		record = record.split(/ *\t */);
+		if (!isHeaderFound) { isHeaderFound = true; continue; }           // Header line, skip
+		record = record.replace(/#.+$/g, '');    // Trim end comment
+		record = record.replace(/^ +| +$/g, ''); // Trim spaces at both ends
+		record = record.split(/ *\t */); // Split on \t & trim spaces
 		checkRecord();
 	}
 	dataFile.close();
