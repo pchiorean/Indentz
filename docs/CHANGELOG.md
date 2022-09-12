@@ -13,11 +13,15 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/17d5cb5ee2483fb73ec522f907b469f74bb65ca8)
   **view/ZoomTo...:** Refactored to use similar code to its twin
 - [`brk`](https://github.com/pchiorean/Indentz/commit/30fb0d34a8e929cf432a7dc0583ad9f263bb5ef2)
-  **lib/parseDataFile:** Changed data files extension to `tsv`
+  **lib/parseDataFile and related:** Changed data files extension to `tsv`
 - [`fix`](https://github.com/pchiorean/Indentz/commit/5e54d86d82a1ce06836361c8d50045e5c6e7774a)
   **cleanup/ReplaceLinks.jsx:** Fixed an error for names containing `%`
 - [`brk`](https://github.com/pchiorean/Indentz/commit/ea713c47c39dea36f7460d26b50541e700df9646)
   **lib/parseDataFile and related:** Added `@includepath` directive and support for relative paths
+- [`fix`](https://github.com/pchiorean/Indentz/commit/d45bba8046dfbea4171fe208126b77642012dcff)
+  **lib/parseDataFile and related:** Fixed `@includepath` to be always relative to the data folder, ignoring previous `@includepath`
+- [`upd`](https://github.com/pchiorean/Indentz/commit/79c49c60f63de6797ee2935cf9a9251d926085e8)
+  **lib/parseDataFile and related:** Added support for comments at the end of lines
 
 ### [Releases](https://github.com/pchiorean/Indentz/releases)
 
