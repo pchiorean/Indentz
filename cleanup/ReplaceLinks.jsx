@@ -1,5 +1,5 @@
 /*
-	Replace links 22.9.11
+	Replace links 22.9.12
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named `links.tsv`:
@@ -172,7 +172,7 @@ function main() {
 			switch (include[1]) {
 				case 'includepath':
 					if (include[2]) {
-						if (!/^~?\/{1,2}/.test(include[2])) include[2] = includeFolder.absoluteURI + '/' + include[2];
+						if (!/^~?\/{1,2}/.test(include[2])) include[2] = Folder(dataFile.path).absoluteURI + '/' + include[2];
 						include[2] = compactRelPath(include[2]);
 						if (Folder(include[2]).exists) includeFolder = Folder(include[2]);
 						else status.warn.push(source + '\'' + include[2] + '\' not found.');
