@@ -1,9 +1,11 @@
-New link path          	Document links
-path/to/img1.psd       	img1.*
-path/to/img2-cmyk.tif	img2_lowres.jpg, img2-rgb.*
-path/to/img3.tif
+Relink to                   	Document links
+/absolute/path/to/img1.psd  	img1_lowres.jpg, img1-rgb.*
+img2.psd                    	img2.*
+@includepath reference/path
+img3.psd
+subfolder/img4.psd
 
-# <New link path>: an absolute path, or relative to the data file, or relative to `@includepath`
+# <New link path>: an absolute path, or relative to document `Links`, or relative to `@includepath`
 # <Document links>: a list of document links that will be relinked if found (case insensitive;
 #   `*` and `?` wildcards accepted); if the list is empty, the new link`s name will be used.
 #
