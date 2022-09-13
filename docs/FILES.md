@@ -5,8 +5,8 @@ Name                               |     Fn | Description
 `DefaultLayers.jsx`                |        | Adds/merges layers from a list
 `DefaultSwatches.jsx`              |        | Adds swatches from a list
 `ReplaceFonts.jsx`                 |        | Replaces fonts from a substitution list
-`ReplaceLinks.jsx`                 |        | Replaces document links from a substitution list
-`ReplaceSnippets.jsx`              |        | Replaces text snippets from a substitution list
+`ReplaceLinks.jsx`                 |    ⌥F8 | Replaces document links from a substitution list
+`ReplaceSnippets.jsx`              |    ⌥F6 | Replaces text snippets from a substitution list
 `DocCleanup.jsx`                   |     F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling
 `SwatchesCleanup.jsx`              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
 `SwatchesSave.jsx`                 |        | Saves document's swatches to a list
