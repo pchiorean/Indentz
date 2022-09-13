@@ -2,9 +2,11 @@
 
 A collection of InDesign scripts for various simple and repetitive tasks.
 
-As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown I found some time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow[^1], but I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). The code was developed and tested in Adobe CC 2020 (and later) on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though).
+As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown I had some time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow[^1], but I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). The code was developed and tested in Adobe InDesign CC 2020 and later on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6).
 
-I mainly use shortcuts to launch them (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**), so I've suggested a few below (for Mac).
+I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though).
+
+I'm also a fan of shortcuts, so I've suggested a few for Mac below (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**).
 
 ---
 
@@ -48,7 +50,7 @@ Sets some preferences for the current document.
 </details>
 
 #### **`DefaultLayers`**
-Adds a set of layers defined in a TSV *(tab-separated values)* file named [**`layers.tsv`**](samples/layers.tsv):
+Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample](samples/layers.tsv)) saved *locally* (meaning the active document folder or its parent), or as a *global default* (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Name         | Color   | Visible | Printable | Order | Variants                                           |
 |:-------------|:--------|:--------|:----------|:------|:---------------------------------------------------|
@@ -58,51 +60,69 @@ Adds a set of layers defined in a TSV *(tab-separated values)* file named [**`la
 | **template** | Gray    | no      | no        | below |                                                    |
 | ...          |         |         |           |       |                                                    |
 
-> **Name**: layer name\
-> **Color**: layer color (defaults to `Light Blue`; see [**`UIColors.txt`**](misc/UIColors.txt) for color names)\
+> **Name**: Layer name\
+> **Color**: Layer color (defaults to `Light Blue`; see [**`UIColors.txt`**](misc/UIColors.txt) for color names)\
 > **Visible**: `yes` or `no` (defaults to `yes`)\
 > **Printable**: `yes` or `no` (defaults to `yes`)\
 > **Order**: `above` or `below` existing layers (defaults to `above`)\
-> **Variants**: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards accepted)
+> **Variants**: A list of layers that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` and `*`)
 
-##### Details
+<details><summary><strong>Other features</strong></summary>
 
-- The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script, or in **`Indentz`** root). Local files and files starting with `_` take precedence.
+The first column may also contain a *statement*:
 
-- Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+- `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
+- `@defaults` – includes the global data file;
 
-- Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+There's also some non-standard stuff that will confuse Excel et al.:
+
+- Blank lines and those prefixed with `#` (comments) are ignored;
+- The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
+
+</details>
 
 #### **`DefaultSwatches`**
-Adds swatches defined in a TSV file named [**`swatches.tsv`**](samples/swatches.tsv):
+Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sample](samples/swatches.tsv)) saved *locally* (meaning the active document folder or its parent), or as a *global default* (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
-| Name           | Color model | Color space | Values       | Variants         |
+| Name           | Color Model | Color Space | Values       | Variants         |
 |:---------------|:------------|:------------|:-------------|:-----------------|
 | **Rich Black** | process     | cmyk        | 60 40 40 100 |                  |
 | **RGB Grey**   | process     | rgb         | 128 128 128  |                  |
 | **Cut**        | spot        | cmyk        | 0 100 0 0    | couper, die\*cut |
 | ...            |             |             |              |                  |
 
-> **Name**: swatch name\
-> **Color model**: `process` or `spot` (defaults to `process`)\
-> **Color space**: `cmyk`, `rgb` or `lab` (defaults to `cmyk`)\
-> **Values**: 3 values in 0-255 range for RGB; 4 values in 0-100 range for CMYK; 3 values in 0-100 (L), -128-127 (A and B) range for Lab; values can be separated by ` `, `,`, `|` or `/`\
-> **Variants**: a list of swatches that will be replaced by the base swatch (case insensitive; `*` and `?` wildcards accepted)
+> **Name**: Swatch name\
+> **Color Model**: `process` or `spot` (defaults to `process`)\
+> **Color Space**: `cmyk`, `rgb` or `lab` (defaults to `cmyk`)\
+> **Values**: a list of numbers separated by space (` `), comma (`,`), pipe (`|`) or slash (`/`):
+> - 3 values in 0–255 range for RGB
+> - 4 values in 0–100 range for CMYK
+> - 3 values in 0–100 (L), –128–127 (A and B) range for Lab
+>
+> **Variants**: a list of swatches that will be replaced by the base swatch; it's case insensitive and can take simple wildcards (`?` and `*`)
 
-<details><summary><strong>Details</strong></summary>
+You can use [**`SwatchesSave`**](#swatchessave) to save a tab delimited list of swatches from any document.
 
-- The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script, or in **`Indentz`** root). Local files and files starting with `_` take precedence.
+<details><summary><strong>Other features</strong></summary>
 
-- Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+The first column may also contain a *statement*:
 
-- Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+- `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
+- `@defaults` – includes the global data file;
+
+There's also some non-standard stuff that will confuse Excel et al.:
+
+- Blank lines and those prefixed with `#` (comments) are ignored;
+- The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
 
-You can use [**`SwatchesSave`**](#swatchessave) to get a tab delimited list of swatches from any document.
-
 #### **`ReplaceFonts`**
-Replaces document fonts using a TSV substitution file named [**`fonts.tsv`**](samples/fonts.tsv):
+Replaces document fonts using a TSV data file named **`fonts.tsv`** ([sample](samples/fonts.tsv)) saved *locally* (meaning the active document folder or its parent), or as a *global default* (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Old font family | Style   | New font family    | Style   |
 |:----------------|:--------|:-------------------|:--------|
@@ -110,46 +130,66 @@ Replaces document fonts using a TSV substitution file named [**`fonts.tsv`**](sa
 | **Arial**       | Bold    | **Helvetica Neue** | Bold    |
 | ...             |         |                    |         |
 
-<details><summary><strong>Details</strong></summary>
-
-- The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script, or in **`Indentz`** root). Local files and files starting with `_` take precedence.
-
-- Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
-
-- Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
-
-</details>
-
 You can use [**`ShowFonts`**](#showfonts) from [**Miscellaneous**](#miscellaneous) to get a tab delimited list of document fonts for copy-pasting.
 
-#### **`ReplaceLinks`**
-Replaces document links using a TSV substitution file named [**`links.tsv`**](samples/links.tsv):
+<details><summary><strong>Other features</strong></summary>
 
-| New link path             | Document links              |
-|:--------------------------|:----------------------------|
-| **path/to/img1.psd**      | img1.*                      |
-| **@includepath path/to**  |                             |
-| **img2-cmyk.tif**         | img2_lowres.jpg, img2-rgb.* |
-| **img3.tif**              |                             |
-| ...                       |                             |
+The first column may also contain a *statement*:
 
-> **New link path**: an absolute path, or relative to the data file, or relative to `@includepath`\
-> **Document links**: a list of document links that will be relinked if found (case insensitive; `*` and `?` wildcards accepted); if the list is empty, the new link's name will be used.
+- `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
+- `@defaults` – includes the global data file;
 
-<details><summary><strong>Details</strong></summary>
+There's also some non-standard stuff that will confuse Excel et al.:
 
-- The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script, or in **`Indentz`** root). Local files and files starting with `_` take precedence.
-
-- Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
-
-- Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+- Blank lines and those prefixed with `#` (comments) are ignored;
+- The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
 
-The new link path can be absolute, or relative to the current data file, or to a default path defined by the `@includepath`. Quotes are optional.
+#### **`ReplaceLinks`** <small>⌥F8</small>
+Replaces document links using a TSV data file named **`links.tsv`** ([sample](samples/links.tsv)) saved *locally* (meaning the active document folder or its parent), or as a *global default* (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
-#### **`ReplaceSnippets`**
-Replaces a list of text snippets using a TSV substitution file named [**`snippets.tsv`**](samples/snippets.tsv):
+| Relink to                         | Document links              |
+|:----------------------------------|:----------------------------|
+| **/absolute/path/to/img1.psd**    | img1_lowres.jpg, img1-rgb.* |
+| **img2.psd**                      | img2.*                      |
+| **`@includepath` reference/path** |                             |
+| **img3.psd**                      |                             |
+| **subfolder/img4.psd**            |                             |
+| ...                               |                             |
+
+> **Relink to** (also see **Other features** below):
+> - An absolute path of the form `/absolute/path/to/img1.psd`;
+> - A relative path which is:
+>   - relative by default to the document `Links` folder (`img2.psd`);
+>   - relative to `reference/path` defined by a previous `@includepath` statement (`img3.psd` and `subfolder/img4.psd`).
+> 
+> **Document links:**
+> - If empty, the *name* from the first column will be used (so that if it's in the document, it will be replaced);
+> - One or more document link names; it's case insensitive and can take simple wildcards (`?` and `*`).
+
+Quoting the paths is not required.
+
+<details><summary><strong>Other features</strong></summary>
+
+The first column may also contain a *statement*:
+
+- `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
+- `@defaults` – includes the global data file;
+
+There's also some non-standard stuff that will confuse Excel et al.:
+
+- Blank lines and those prefixed with `#` (comments) are ignored;
+- The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
+
+</details>
+
+#### **`ReplaceSnippets`** <small>⌥F6</small>
+Replaces a list of text snippets using a TSV data file named **`snippets.tsv`** ([sample](samples/snippets.tsv)) saved *locally* (meaning the active document folder or its parent), or as a *global default* (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Find what              | Change to                 | Case sensitive | Whole word | Scope |
 |:-----------------------|:--------------------------|:---------------|:-----------|:------|
@@ -159,19 +199,25 @@ Replaces a list of text snippets using a TSV substitution file named [**`snippet
 | 12.06.22               | 13.11.2022                |                |            |       |
 | ...                    |                           |                |            |       |
 
-> **Find what**: text to be replaced (you can use find and replace [special characters](https://helpx.adobe.com/indesign/using/find-change.html#metacharacters_for_searching))\
-> **Change to**: the new text\
+> **Find what**: Text to be replaced (you can use [special characters](https://helpx.adobe.com/indesign/using/find-change.html#metacharacters_for_searching))\
+> **Change to**: The replacement text\
 > **Case sensitive**: `yes` or `no` (defaults to `yes`)\
 > **Whole word**: `yes` or `no` (defaults to `yes`)\
-> **Scope**: replacement will only be done if the file name matches this [regular expression](https://regex101.com)[^2] (case sensitive)
+> **Scope**: Replacement will only be done if the file name matches the [regular expression](https://regex101.com)[^2] (case sensitive)
 
-<details><summary><strong>Details</strong></summary>
+<details><summary><strong>Other features</strong></summary>
 
-- The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default (on the desktop, next to the script, or in **`Indentz`** root). Local files and files starting with `_` take precedence.
+The first column may also contain a *statement*:
 
-- Blank lines and those prefixed with `#` are ignored. You can split a very long line into multiple lines with a backslash (`\`) added at the end of each segment.
+- `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
+- `@defaults` – includes the global data file;
 
-- Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+There's also some non-standard stuff that will confuse Excel et al.:
+
+- Blank lines and those prefixed with `#` (comments) are ignored;
+- The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
 
@@ -378,9 +424,9 @@ Invokes **Window ‣ Arrange ‣ Tile All Vertically** or **Tile All Horizontall
 #### **`ZoomToSelection`** <small>F4</small>
 It resembles **Fit Selection in Window** **<small>(⌥⌘=)</small>**, but with some improvements:
 
-* brings the selection a little closer;
-* if the cursor is in a text frame, zooms on the whole frame;
-* without anything selected zooms on the current spread.
+- Brings the selection a little closer;
+- If the cursor is in a text frame, zooms on the whole frame;
+- Without anything selected zooms on the current spread.
 
 #### **`ZoomToSpreads`** <small>⌥F4</small>
 Zooms on the first 3 spreads.
@@ -423,7 +469,7 @@ If the document name ends with a separator (space/dot/underline/hyphen) followed
 You can insert `|` for manually splitting the label into several lines.
 
 #### **`QRBatch`** <small>⇧F9</small>
-Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV file named [**`qr.tsv`**](samples/qr.tsv) and adds them to existing documents or creates separate files (the suffix thing applies here as well):
+Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV data file named **`qr.tsv`** ([sample](samples/qr.tsv)) and adds them to existing documents or creates separate files (the suffix thing applies here as well):
 
 | Filename           | Code   | On doc |
 |:-------------------|:-------|:------:|
@@ -436,7 +482,7 @@ Does the same thing as **`QR`** but in a non-interactive way: retrieves a list o
 > **Code**: any string\
 > **On doc**: any string: on existing document; empty or missing: on separate file
 
-The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence. Blank lines and those prefixed with `#` are ignored.
+The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence. Blank lines and those prefixed with `#` are ignored (this will confuse Excel).
 
 You can insert `|` for manually splitting the label into several lines.
 
@@ -470,7 +516,7 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-Last updated: September 11, 2022
+Last updated: September 13, 2022
 
 [^1]: Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text.
 [^2]: For example, in **`Document_DE.indd`** “The sample is for free” will be replaced with “Das Sample ist kostenlos”, and for **`Document_FR.indd`** with “L'échantillon est gratuit”.
