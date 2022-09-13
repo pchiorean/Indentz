@@ -9,10 +9,10 @@
 	RGB Grey   | process     | rgb         | 128 128 128
 	Cut        | spot        | cmyk        | 0 100 0 0
 	...
-	1. <Name>: swatch name,
-	2. <Color Model>: 'process' or 'spot' (default 'process'),
-	3. <Color Space>: 'cmyk', 'rgb' or 'lab' (default 'cmyk'),
-	4. <Values>: list of values, depends on the color model & space.
+	<Name>: swatch name,
+	<Color Model>: `process` or `spot` (default `process`),
+	<Color Space>: `cmyk`, `rgb` or `lab` (default `cmyk`),
+	<Values>: list of values, depends on the color model & space.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
