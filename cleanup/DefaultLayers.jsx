@@ -1,5 +1,5 @@
 /*
-	Default layers 22.9.12
+	Default layers 22.9.14
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.tsv':
@@ -247,7 +247,7 @@ function main() {
 						if (File(include[2]).exists) {
 							includeFile = File(include[2]);
 						} else {
-							status.warn.push(source + '\'' + include[2] + '\' not found.');
+							status.warn.push(source + '\'' + decodeURI(include[2]) + '\' not found.');
 							return;
 						}
 					} else {
@@ -259,7 +259,7 @@ function main() {
 				case 'defaults':
 					includeFile = getDataFile(dataFileName, true);
 					if (!includeFile || !includeFile.exists) {
-						status.info.push(source + 'Default list \'' + dataFileName + '\' not found.');
+						status.info.push(source + 'Default list \'' + decodeURI(dataFileName) + '\' not found.');
 						return;
 					}
 					break;
