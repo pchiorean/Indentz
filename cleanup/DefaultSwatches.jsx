@@ -1,5 +1,5 @@
 /*
-	Default swatches 22.9.12
+	Default swatches 22.9.14
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 5-column TSV file named `swatches.tsv`:
@@ -90,6 +90,7 @@ function main() {
 				data.records[i].values,
 				data.records[i].variants
 			);
+			if (ScriptUI.environment.keyboardState.keyName === 'Escape') exit();
 		}
 	}
 

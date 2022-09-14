@@ -96,6 +96,7 @@ function main() {
 					data.records[j].newLink.slice(data.records[j].newLink.lastIndexOf('/') + 1) + '\'.');
 				links[i].relink(File(data.records[j].newLink));
 				counter++;
+				if (ScriptUI.environment.keyboardState.keyName === 'Escape') exit();
 			}
 		}
 	}
