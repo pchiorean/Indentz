@@ -2,24 +2,24 @@
 
 ### addGuide(target, [layer], HorV, location, [label], [type])
 
-| Parameters | Type     | Default       | Description                                                                        |
-|------------|----------|---------------|------------------------------------------------------------------------------------|
-| target     | `object` |               | A `Document`, `Spread`, `Page` or a `MasterSpread`.                                |
-| [layer]    | `layer`  | `activeLayer` | A target layer; defaults to the active layer. *(Optional.)*                        |
-| HorV       | `string` |               | If the string begins with `v`, the guide is vertical, else horizontal.             |
-| location   | `number` |               | The location at which to place the guide relative to the current ruler zero point. |
-| [label]    | `string` |               | The label of the guide. *(Optional.)*                                              |
-| [preset]   | `number` |               | A customized set of properties, see source. *(Optional.)*                          |
+|Parameters|Type|Default|Description|
+|--|--|--|--|
+|target|`object`||A `Document`, `Spread`, `Page` or a `MasterSpread`.|
+|[layer|`layer`|`activeLayer`|A target layer; defaults to the active layer. *(Optional.)*|
+|HorV|`string`||If the string begins with `v`, the guide is vertical, else horizontal.|
+|location|`number`||The location at which to place the guide relative to the current ruler zero point.|
+|[label|`string`||The label of the guide. *(Optional.)*|
+|[preset|`number`||A customized set of properties, see source. *(Optional.)*|
 
 Adds a custom ruler guide. I use it for some scripts that make grids for several brands, for which I have a hard time remembering the properties of the different guide lines. With the `preset` parameter I standardize guide types: symmetry axes, sections and subsections, product alignment and so on.
 
 ### dbg([type], [context], message)
 
-| Parameters | Type     | Description                                                                                                                                                                                                                                                                                                                         |
-|------------|----------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| [type]     | `string` | A single character string: <ul> <li>`+` appends `MESSAGE` to the previous line;</li> <li>`I`, `W`, `E`, `F`, `M`, `N`, `T` or space outputs `[INFO]`, `[WARN]`, `[ERR]`, `[FAIL]`, `[MARK]`, `[NOTE]`, `[TODO]` or spacer. (Looks great with [Pragmata Pro Liga](https://fsd.it/shop/fonts/pragmatapro/).)</li> </ul> *(Optional.)* |
-| [context]  | `string` | A string enclosed in `<` `>`. *(Optional.)*                                                                                                                                                                                                                                                                                         |
-| message    | `string` | A comma-separated list of message parts (`part1`, `part2`, `part3`, ...).                                                                                                                                                                                                                                                           |
+|Parameters|Type|Description|
+|--|--|--|
+|[type]|`string`|A single character string: <ul> <li>`+` appends `MESSAGE` to the previous line;</li> <li>`I`, `W`, `E`, `F`, `M`, `N`, `T` or space outputs `[INFO]`, `[WARN]`, `[ERR]`, `[FAIL]`, `[MARK]`, `[NOTE]`, `[TODO]` or spacer. (Looks great with [Pragmata Pro Liga](https://fsd.it/shop/fonts/pragmatapro/).)</li> </ul> *(Optional.)*|
+|[context]|`string`|A string enclosed in `<` `>`. *(Optional.)*|
+|message|`string`|A comma-separated list of message parts (`part1`, `part2`, `part3`, ...).|
 
 Appends a debugging line to a file saved on the desktop with the name of the running script (e.g. `active-script.log`).
 
@@ -45,12 +45,12 @@ if (errors.length === 0) dbg('+', 'Records: ' + data.length, 'Layouts: ' + layou
 
 ### fitTo(items, [scope], [target], [forced])
 
-| Parameters | Type                       | Default | Description                                                               |
-|------------|----------------------------|---------|---------------------------------------------------------------------------|
-| items      | `pageItem` \| `pageItem[]` |         | A page item, or an array of page items to be reframed.                    |
-| [scope]    | `string`                   | `page`  | `page` or `spread`. *(Optional.)*                                         |
-| [target]   | `string`                   | `size`  | `size`, `margins`, `visible` or `bleed`. *(Optional.)*                    |
-| [forced]   | `boolean`                  | `false` | When `true` it just reframes the object without any checks. *(Optional.)* |
+|Parameters|Type|Default|Description|
+|--|--|--|--|
+|items|`pageItem` \| `pageItem[]`||A page item, or an array of page items to be reframed.|
+|[scope]|`string`|`page`|`page` or `spread`. *(Optional.)*|
+|[target]|`string`|`size`|`size`, `margins`, `visible` or `bleed`. *(Optional.)*|
+|[forced]|`boolean`|`false`|When `true` it just reframes the object without any checks. *(Optional.)*|
 
 Reframes the given items to the page/spread's (`scope`) size/margins/visible area/bleed (`target`). If an item is larger than the target, it will be reduced; if it is smaller but inside a 1% 'snap' area, it will be enlarged. Rectangular frames are simply reframed; rotated items, ovals, groups, etc. are inserted in a clipping frame that is reframed.
 
@@ -76,9 +76,9 @@ app.doScript(
 
 ### getBounds(page) ⇒ `object`
 
-| Parameters | Type     | Description      |
-|------------|----------|------------------|
-| page       | `object` | The target page. |
+|Parameters|Type|Description|
+|--|--|--|
+|page|`object`|The target page.|
 
 Returns an object containing the geometric bounds of `page`, its parent spread, and miscellaneous page boxes, using the current measurement units:
 
@@ -124,10 +124,10 @@ bounds[scope][target]; // [ 20,20,277,400 ]
 
 ### getDataFile(dataFile, [skipLocal]) ⇒ `File` | `undefined`
 
-| Parameters  | Type      | Default | Description                                    |
-|-------------|-----------|---------|------------------------------------------------|
-| dataFile    | `string`  |         | A tab-separated-values file (name).            |
-| [skipLocal] | `boolean` | false   | If `true`, don't search locally. *(Optional.)* |
+|Parameters|Type|Default|Description|
+|--|--|--|--|
+|dataFile|`string`||A tab-separated-values file (name).|
+|[skipLocal]|`boolean`|false|If `true`, don't search locally. *(Optional.)*|
 
 Returns the first occurrence of `dataFile`, first searching for a local one (in the current folder or the parent folder of the active document), then a default one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
 
@@ -158,11 +158,11 @@ $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
 
 ### isInArray(searchValue, array, [caseSensitive]) ⇒ `Boolean`
 
-| Parameters      | Type      | Default | Description                                                                         |
-|-----------------|-----------|---------|-------------------------------------------------------------------------------------|
-| searchValue     | `string`  |         | String to be matched.                                                               |
-| array           | `array`   |         | An array of strings; wildcards: `*` (zero or more characters), `?` (any character). |
-| [caseSensitive] | `boolean` | `false` | If `true` the search is case sensitive. *(Optional.)*                               |
+|Parameters|Type|Default|Description|
+|--|--|--|--|
+|searchValue|`string`||String to be matched.|
+|array|`array`||An array of strings; wildcards: `*` (zero or more characters), `?` (any character).|
+|[caseSensitive]|`boolean`|`false`|If `true` the search is case sensitive. *(Optional.)*|
 
 Matches the string `searchValue` against elements of `array`, using wildcards and case sensitivity. Returns `true` for match, `false` for no match.
 
@@ -178,11 +178,11 @@ isInArray(searchValue, array) // True: matches 2nd array element
 
 ### moveToLayer(item, layer, [position]) ⇒ `item`
 
-| Parameters | Type       | Description                                                           |
-|------------|------------|-----------------------------------------------------------------------|
-| item       | `pageItem` | The page item to be moved.                                            |
-| layer      | `object`   | The target layer.                                                     |
-| [position] | `string`   | `front` or `back`: sends the item to the front or back. *(Optional.)* |
+|Parameters|Type|Description|
+|--|--|--|
+|item|`pageItem`|The page item to be moved.|
+|layer|`object`|The target layer.|
+|[position]|`string`|Sends the item to the `front` or `back`. *(Optional.)*|
 
 Moves an item to another layer, optionally sending it to the front or back, and returns the item.
 
@@ -190,9 +190,9 @@ Moves an item to another layer, optionally sending it to the front or back, and 
 
 ### parseDataFile(dataFile) ⇒ `object`
 
-| Parameters | Type      | Default | Description                                     |
-|------------|-----------|---------|-------------------------------------------------|
-| dataFile   | `File`    |         | A tab-separated-values file (object).           |
+|Parameters|Type|Default|Description|
+|--|--|--|--|
+|dataFile|`File`||A tab-separated-values file (object).|
 
 Reads a TSV (tab-separated-values) file, validates the data (the provided function is just a stub) and returns an object containing found records and errors:
 
@@ -265,19 +265,19 @@ Creates a palette with two progress bars and a message; the second bar (optional
 
 #### var pb = new ProgressBar(title, maxValue, [maxWidth])
 
-| Parameters | Type     | Description                                        |
-|------------|----------|----------------------------------------------------|
-| title      | `string` | Palette title.                                     |
-| maxValue   | `number` | Number of steps for the main progress bar.         |
-| [maxWidth] | `number` | Maximum message length (characters). *(Optional.)* |
+|Parameters|Type|Description|
+|--|--|--|
+|title|`string`|Palette title.|
+|maxValue|`number`|Number of steps for the main progress bar.|
+|[maxWidth]|`number`|Maximum message length (characters). *(Optional.)*|
 
 Initializes and shows the palette. On creation you can set it's width to accomodate a given message length; if omitted, no message is shown (aka mini mode). The secondary progress bar is hidden by default.
 
 #### pb.msg([message]) *(Optional)*
 
-| Parameters | Type       | Description            |
-| ---------- | ---------- | ---------------------- |
-| [message]  | `string`   | Message. *(Optional.)* |
+|Parameters|Type|Description|
+|--|--|--|
+|[message]|`string`|Message. *(Optional.)*|
 
 Updates the message. If omitted, the previous message is cleared.
 
@@ -287,9 +287,9 @@ Increases the value of the main progress bar and updates the counter (not shown 
 
 #### pb.init2(maxValue2) *(Optional)*
 
-| Parameters | Type     | Description                                     |
-|------------|----------|-------------------------------------------------|
-| maxValue2  | `number` | Number of steps for the secondary progress bar. |
+|Parameters|Type|Description|
+|--|--|--|
+|maxValue2|`number`|Number of steps for the secondary progress bar.|
 
 Sets the number of steps for the secondary progress bar (the bar is shown only if the number is greater than 2).
 
@@ -327,10 +327,10 @@ progressBar.close();
 
 ### replaceLink(oldLinks, newLink) ⇒ `Boolean`
 
-| Parameters | Type                   | Description                                            |
-|------------|------------------------|--------------------------------------------------------|
-| oldLinks   | `string` \| `string[]` | A link name, or an array of link names to be replaced. |
-| newLink    | `string`               | New link name (if same folder), or full link path.     |
+|Parameters|Type|Description|
+|----------|----------------------|------------------------------------------------------|
+|oldLinks|`string` \| `string[]`|A link name, or an array of link names to be replaced.|
+|newLink|`string`|New link name (if same folder), or full link path.|
 
 Replaces a link or a list of links with a different one. A selection limits the scope. Returns `true` if a replacement was made, `false` if not.
 
@@ -346,11 +346,11 @@ replaceLink([ 'link1.jpg', 'link1.png' ], 'link1.psd');
 
 ### replaceSwatch(oldNames, newName, [newValues]) ⇒ `Boolean`
 
-| Parameters  | Type                   | Description                                                |
-|-------------|------------------------|------------------------------------------------------------|
-| oldNames    | `string` \| `string[]` | A swatch name, or an array of swatch names to be replaced. |
-| newName     | `string`               | New swatch name.                                           |
-| [newValues] | `number[]`             | Array of 4 values in 0-100 range (CMYK).                   |
+|Parameters|Type|Description|
+|--|--|--|
+|oldNames|`string` \| `string[]`|A swatch name, or an array of swatch names to be replaced.|
+|newName|`string`|New swatch name.|
+|[newValues]|`number[]`|Array of 4 values in 0-100 range (CMYK).|
 
 Replaces a swatch or a list of swatches with a different one. The new swatch is created only if values (CMYK) are provided and it doesn't already exist. Returns `true` if a replacement was made, `false` if not.
 
@@ -365,11 +365,11 @@ replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 
 ### replaceText(findWhat, changeTo, [wholeWord]) ⇒ `Boolean`
 
-| Parameters  | Type      | Default | Description                      |
-|-------------|-----------|---------|----------------------------------|
-| findWhat    | `string`  |         | Text to be replaced.             |
-| changeTo    | `string`  |         | New text.                        |
-| [wholeWord] | `boolean` | `true`  | Match whole words. *(Optional.)* |
+|Parameters|Type|Default|Description|
+|--|--|--|--|
+|findWhat|`string`||Text to be replaced.|
+|changeTo|`string`||New text.|
+|[wholeWord]|`boolean`|`true` |Match whole words. *(Optional.)*|
 
 Replaces a text with another. Returns `true` if a replacement was made, `false` if not.
 
@@ -384,12 +384,12 @@ replaceText('\\\\', '\u000A', false); // Replace '\\' with Forced Line Break
 
 ### report(message, title, [showFilter], [showCompact])
 
-| Parameters    | Type                   | Default | Description                                                                                                        |
-|---------------|------------------------|---------|--------------------------------------------------------------------------------------------------------------------|
-| message       | `string` \| `string[]` |         | Message to be displayed. Can be a string or a strings array.                                                       |
-| [title]       | `string`               | `''`    | Dialog title. *(Optional.)*                                                                                        |
-| [showFilter]  | `boolean`              | `false` | If `true` it shows a filtering field; wildcards: `?` (any character), space and `*` (AND), `|` (OR). *(Optional.)* |
-| [showCompact] | `boolean`              | `false` | If `true` duplicates are removed and the message is sorted. *(Optional.)*                                          |
+|Parameters|Type|Default|Description|
+|--|--|--|--|
+|message|`string` \| `string[]`||Message to be displayed. Can be a string or a strings array.|
+|[title]|`string`|`''`|Dialog title. *(Optional.)*|
+|[showFilter]|`boolean`|`false`|If `true` it shows a filter field; `auto` shows it automatically if there are more than 20 lines; wildcards: `?` (any character), space and `*` (AND), `|` (OR). *(Optional.)*|
+|[showCompact]|`boolean`|`false`|If `true` duplicates are removed and the message is sorted. *(Optional.)*|
 
 Displays a message in a scrollable list with optional filtering and/or compact mode.
 Inspired by [this](http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250) snippet by Peter Kahrel.
