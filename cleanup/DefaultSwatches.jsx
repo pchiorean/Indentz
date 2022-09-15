@@ -1,5 +1,5 @@
 /*
-	Default swatches 22.9.14
+	Default swatches 22.9.15
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds swatches from a 5-column TSV file named `swatches.tsv`:
@@ -233,6 +233,10 @@ function main() {
 					if (include[2]) {
 						if (!/^~?\/{1,2}/.test(include[2])) include[2] = includeFolder.absoluteURI + '/' + include[2];
 						include[2] = compactRelPath(include[2]);
+						if (!/\.(tsv|txt)$/i.test(include[2])) {
+							status.warn.push(source + '\'' + decodeURI(include[2]) + '\' is not a TSV file.');
+							return;
+						}
 						if (File(include[2]).exists) {
 							includeFile = File(include[2]);
 						} else {
