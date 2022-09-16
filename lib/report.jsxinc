@@ -2,7 +2,7 @@
  * Displays a message in a scrollable list with optional filtering and/or compact mode.
  * Inspired by this snippet by Peter Kahrel:
  * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
- * @version 22.9.15
+ * @version 22.9.16
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string|string[]} message - Message to be displayed. Can be a string or a strings array.
@@ -25,8 +25,8 @@ function report(message, title, showFilter, showCompact) {
 		}
 	}
 	// Add a filter field
-	if (showFilter === 'auto' && message.length > 19) showFilter = true;
-	if (showFilter && message.length > 1) {
+	if (showFilter === 'auto') showFilter = (message.length > 19);
+	if (showFilter === true && message.length > 1) {
 		search = w.add('edittext { characters: 40, helpTip: "Wildcards: \'?\' (any character), space and \'*\' (AND), \'|\' (OR)" }');
 		search.onChanging = function () {
 			var str, line, i, n;
