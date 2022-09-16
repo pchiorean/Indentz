@@ -19,9 +19,24 @@
 - [`brk`](https://github.com/pchiorean/Indentz/commit/ea713c47c39dea36f7460d26b50541e700df9646)
   **lib/parseDataFile and related:** Added `@includepath` directive and support for relative paths
 - [`fix`](https://github.com/pchiorean/Indentz/commit/d45bba8046dfbea4171fe208126b77642012dcff)
-  **lib/parseDataFile and related:** Fixed `@includepath` to be always relative to the data folder, ignoring previous `@includepath`
+  **lib/parseDataFile and related:** Fixed `@includepath` to be always relative to the data folder
 - [`upd`](https://github.com/pchiorean/Indentz/commit/79c49c60f63de6797ee2935cf9a9251d926085e8)
   **lib/parseDataFile and related:** Added support for comments at the end of lines
+- [`upd`](https://github.com/pchiorean/Indentz/commit/5878d14e2650871d4d1147eefbd245684d7df690)
+  [`fix`](https://github.com/pchiorean/Indentz/commit/142d7fc830f4c7ad3eea03fbfe8d0df94fb51590)
+  [`fix`](https://github.com/pchiorean/Indentz/commit/d0774f9aa75ac11f2adf554e9931f088493c8ffe)
+  **cleanup/ReplaceLinks:** Because we are dealing with document links, changed `@includepath` default to the document `Links` folder (and fixed `@include` to fall back to the data folder in this situation)
+- [`upd`](https://github.com/pchiorean/Indentz/commit/b9f79dedb8cc7d298a4941bb4c5eff3312c33c51)
+  **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links:** Cancel exporting if 'Esc' is pressed
+- [`upd`](https://github.com/pchiorean/Indentz/commit/c24e8506b98019d47314fe6d6f968e7c91303ce3)
+  **lib/report:** Added `auto` to filtering mode – automatically shows filtering if there are more than 20 lines
+- [`fix`](https://github.com/pchiorean/Indentz/commit/fbe49efe36d5907cc30c09d50c064f02c79b94d9)
+  **lib/parseDataFile and related:** Don't try to `@include` non-`.tsv` files
+- [`fix`](https://github.com/pchiorean/Indentz/commit/0dd4c38bf391b441d4f2ee251efc5298cbf47061)
+  **lib/report:** Fixed enabling auto filtering only when `auto` keyword is used (d'oh)
+
+#### To do
+- [`upd`]() **Show/HideDNPLayers:** Take layers from a TSV
 
 ### [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -232,7 +247,7 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/bcdc2ad7b12709b748396a9f0104b36c710953d1)
   **lib/ProgressBar:** Added a second (optional) progress bar
 - [`upd`](https://github.com/pchiorean/Indentz/commit/0fc73f2d1574cd5cc5747276a3fd544e6028e103)
-  **QuickExport 2.19:** Cancel exporting if 'Esc' is kept pressed
+  **QuickExport 2.19:** Cancel exporting if 'Esc' is pressed
 - [`new`](https://github.com/pchiorean/Indentz/commit/b0cec7208c5c08d82bd5efeb48850e01e2fc8677)
   **QuickExport 2.17:** Added a 'Save as…' option for removing cruft and reducing documents size
 - [`upd`](https://github.com/pchiorean/Indentz/commit/111a3d78ecd478439ae568d6d045e04ecaa6acfd)
@@ -408,6 +423,7 @@
 - `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
 - `new` **export/QuickExport:** Add INDD (with or without package) export profile
 - `new` **export/QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
+- `new` **export/QuickExport:** Add a preflight dropbox
 
 ##### Updates
 
@@ -425,7 +441,6 @@
 - `upd` `?` **export/QuickExport:** JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 - `upd` **lib/replaceText:** Take an array of strings as input
 - `upd` **lib/replaceText:** Add grep matching
-- `upd` **lib/report:** Add auto filtering mode (`true`|`false`|`auto`, default `false`)
 - `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
 - `upd` **file/SpreadsToFiles:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
 - `upd` **view/ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
