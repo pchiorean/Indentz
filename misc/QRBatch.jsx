@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 22.9.4
+	Batch QR codes 22.9.16
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -202,7 +202,7 @@ function main() {
 		else ui.list.active = true;
 	};
 	ui.list.onDoubleClick = function () { dataFile.execute(); };
-	ui.options.err.onClick = function () { report(errors, 'Errors'); };
+	ui.options.err.onClick = function () { report(errors, 'Errors', 'auto'); };
 	ui.options.browse.onClick = function () {
 		var folder = Folder.selectDialog('Select a folder containing the data file:');
 		if (folder && folder !== currentPath) {
@@ -243,7 +243,7 @@ function main() {
 		}
 		dataFile.close();
 	}
-	if (errors.length > 0) report(errors, 'Errors');
+	if (errors.length > 0) report(errors, 'Errors', 'auto');
 	app.scriptPreferences.userInteractionLevel = oldUIL;
 
 	function putCodeOnDocument() {

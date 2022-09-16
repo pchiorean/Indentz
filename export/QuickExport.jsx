@@ -1,5 +1,5 @@
 /*
-	Quick export 22.9.1
+	Quick export 22.9.16
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -1048,6 +1048,6 @@ function cleanupAndExit() {
 	app.scriptPreferences.userInteractionLevel = old.userInteractionLevel;
 	app.pdfExportPreferences.viewPDF = old.viewPDF;
 	try { progressBar.close(); } catch (e) {}
-	if (errors.length > 0) report(errors, 'Errors', false, true);
+	if (errors.length > 0) report(errors, 'Errors', 'auto', true);
 	exit();
 }

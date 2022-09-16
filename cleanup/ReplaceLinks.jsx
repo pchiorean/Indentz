@@ -1,5 +1,5 @@
 /*
-	Replace links 22.9.15
+	Replace links 22.9.16
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named `links.tsv`:
@@ -105,7 +105,7 @@ function main() {
 	if (VERBOSITY > 0) {
 		messages = data.status.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.status.info);
-		if (messages.length > 0) report(messages, 'Links: ' + counter + ' replaced');
+		if (messages.length > 0) report(messages, 'Links: ' + counter + ' replaced', 'auto');
 		else if (VERBOSITY > 1 && counter === 0) alert('No links replaced.');
 	}
 
