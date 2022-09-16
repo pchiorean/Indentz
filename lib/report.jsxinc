@@ -7,7 +7,7 @@
  * @license MIT
  * @param {string|string[]} message - Message to be displayed. Can be a string or a strings array.
  * @param {string} [title] - Dialog title. (Optional.)
- * @param {boolean} [showFilter=false] - If `true` it shows a filter field; `auto` shows it automatically if there
+ * @param {boolean|'auto'} [showFilter=false] - If `true` it shows a filter field; `auto` shows it automatically if there
  * are more than 20 lines; wildcards: `?` (any character), space and `*` (AND), `|` (OR). (Optional.)
  * @param {boolean} [showCompact=false] - If `true` duplicates are removed and the message is sorted. (Optional.)
  */
