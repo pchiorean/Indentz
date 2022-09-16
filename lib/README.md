@@ -388,7 +388,7 @@ replaceText('\\\\', '\u000A', false); // Replace '\\' with Forced Line Break
 |--|--|--|--|
 |message|`string` \| `string[]`||Message to be displayed. Can be a string or a strings array.|
 |[title]|`string`|`''`|Dialog title. *(Optional.)*|
-|[showFilter]|`boolean`|`false`|If `true` it shows a filter field; `auto` shows it automatically if there are more than 20 lines; wildcards: `?` (any character), space and `*` (AND), `|` (OR). *(Optional.)*|
+|[showFilter]|`boolean` \| `'auto'`|`false`|If `true` it shows a filter field; `auto` shows it automatically if there are more than 20 lines; wildcards: `?` (any character), space and `*` (AND), `|` (OR). *(Optional.)*|
 |[showCompact]|`boolean`|`false`|If `true` duplicates are removed and the message is sorted. *(Optional.)*|
 
 Displays a message in a scrollable list with optional filtering and/or compact mode.
