@@ -34,9 +34,14 @@
   **lib/parseDataFile and related:** Don't try to `@include` non-`.tsv` files
 - [`fix`](https://github.com/pchiorean/Indentz/commit/0dd4c38bf391b441d4f2ee251efc5298cbf47061)
   **lib/report:** Fixed enabling auto filtering only when `auto` keyword is used (d'oh)
+- [`upd`](https://github.com/pchiorean/Indentz/commit/646e7acad396b5013e03a0e5ca3963076989eb54)
+  Activated auto filtering to the status report on scripts that need it
+- [`fix`](https://github.com/pchiorean/Indentz/commit/3f88f2499e852ad5b022a85f446f105f493bde61)
+  **lib/report:** Fixed borked midnight patch to auto filtering (d'oh)
 
 #### To do
 - [`upd`]() **Show/HideDNPLayers:** Take layers from a TSV
+- [`doc`]() **lib/parseDataFile and related:** 'Blank lines and those prefixed with `#` are ignored.' -> 'starting'
 
 ### [Releases](https://github.com/pchiorean/Indentz/releases)
 
