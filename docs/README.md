@@ -77,7 +77,7 @@ The first column may also contain a *statement*:
 
 There's also some non-standard stuff that will confuse Excel et al.:
 
-- Blank lines and those prefixed with `#` (comments) are ignored;
+- Blank lines and those starting with `#` (comments) are ignored;
 - The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
@@ -115,7 +115,7 @@ The first column may also contain a *statement*:
 
 There's also some non-standard stuff that will confuse Excel et al.:
 
-- Blank lines and those prefixed with `#` (comments) are ignored;
+- Blank lines and those starting with `#` (comments) are ignored;
 - The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
@@ -142,7 +142,7 @@ The first column may also contain a *statement*:
 
 There's also some non-standard stuff that will confuse Excel et al.:
 
-- Blank lines and those prefixed with `#` (comments) are ignored;
+- Blank lines and those starting with `#` (comments) are ignored;
 - The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
@@ -182,7 +182,7 @@ The first column may also contain a *statement*:
 
 There's also some non-standard stuff that will confuse Excel et al.:
 
-- Blank lines and those prefixed with `#` (comments) are ignored;
+- Blank lines and those starting with `#` (comments) are ignored;
 - The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
@@ -215,7 +215,7 @@ The first column may also contain a *statement*:
 
 There's also some non-standard stuff that will confuse Excel et al.:
 
-- Blank lines and those prefixed with `#` (comments) are ignored;
+- Blank lines and those starting with `#` (comments) are ignored;
 - The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
@@ -482,7 +482,7 @@ Does the same thing as **`QR`** but in a non-interactive way: retrieves a list o
 > **Code**: any string\
 > **On doc**: any string: on existing document; empty or missing: on separate file
 
-The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence. Blank lines and those prefixed with `#` are ignored (this will confuse Excel).
+The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence. Blank lines and those starting with `#` are ignored (this will confuse Excel).
 
 You can insert `|` for manually splitting the label into several lines.
 
@@ -516,7 +516,7 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-Last updated: September 13, 2022
+Last updated: September 24, 2022
 
 [^1]: Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text.
 [^2]: For example, in **`Document_DE.indd`** “The sample is for free” will be replaced with “Das Sample ist kostenlos”, and for **`Document_FR.indd`** with “L'échantillon est gratuit”.

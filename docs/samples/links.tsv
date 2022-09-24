@@ -11,6 +11,6 @@ subfolder/img4.psd
 #
 # The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
 # (on the desktop, next to the script, or in Indentz root); local files and files starting with `_` take precedence.
-# Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+# Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
 # Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
 # The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.

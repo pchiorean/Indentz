@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 22.9.16
+	Batch QR codes 22.9.24
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -14,7 +14,7 @@
 	3. <On doc>: any string: on existing document; empty or missing: on separate file
 
 	The file can be saved in the current folder, on the desktop, or next to the script.
-	Blank lines and those prefixed with '#' are ignored.
+	Blank lines and those starting with '#' are ignored.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

@@ -15,4 +15,4 @@ File 3_AC  	Code 3
 # `Document_B_QR.pdf` and `Document_C_QR.pdf` will be generated).
 #
 # The TSV file must be saved locally (in the active document folder).
-# Files starting with `_` take precedence. Blank lines and those prefixed with # are ignored.
+# Files starting with `_` take precedence. Blank lines and those starting with # are ignored.

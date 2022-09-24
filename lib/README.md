@@ -203,7 +203,7 @@ Reads a TSV (tab-separated-values) file, validates the data (the provided functi
 };
 ```
 
-Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
 
 Use `@defaults` to include the global default (see `getDataFile()`), or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
 
