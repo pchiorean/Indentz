@@ -1,5 +1,5 @@
 /*
-	Replace links 22.9.16
+	Replace links 22.9.24
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named `links.tsv`:
@@ -165,7 +165,7 @@ function main() {
 
 		function parseInclude() {
 			var tmpData = [];
-			var include = record.replace(/['"]+/g, '').replace(/\s+$/g, '');
+			var include = record.replace(/ +$/g, '').replace(/ ['"]|['"]$/g, '');
 			include = include.match(/^@(include(?:path)?|defaults|default)(?: +)?(.+)?$/i);
 			if (!include) {
 				status.warn.push(source + '\'' + record + '\' is not recognized (see docs).');

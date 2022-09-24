@@ -1,5 +1,5 @@
 /*
-	Default layers 22.9.16
+	Default layers 22.9.24
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.tsv':
@@ -223,7 +223,7 @@ function main() {
 
 		function parseInclude() {
 			var tmpData = [];
-			var include = record.replace(/['"]+/g, '').replace(/\s+$/g, '');
+			var include = record.replace(/ +$/g, '').replace(/ ['"]|['"]$/g, '');
 			include = include.match(/^@(include(?:path)?|defaults|default)(?: +)?(.+)?$/i);
 			if (!include) {
 				status.warn.push(source + '\'' + record + '\' is not recognized (see docs).');
