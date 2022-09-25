@@ -1,5 +1,5 @@
 /*
-	Zoom to selection 22.8.31
+	Zoom to selection 22.9.25
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the selected objects. If no selection, it zooms to the current spread.
@@ -39,9 +39,9 @@ var BR = AnchorPoint.BOTTOM_RIGHT_ANCHOR;
 var CS_PBRD = CoordinateSpaces.PASTEBOARD_COORDINATES;
 
 // Customizable items
-var Z = 5.469; // App maximized on generic 4K monitor
-// var Z = 5.856; // App maximized on iMac Retina 5K
-var HC = 700; // Horizontal compensation (side panels)
+var Z = 5.478; // App maximized on generic 4K monitor
+// var Z = 4.769; // App maximized on iMac Retina 5K
+var HC = 650; // Horizontal compensation (side panels)
 var VC = 150; // Vertical compensation (Application Bar, document tabs, Control Panel)
 var N = 1; // Number of spreads to zoom to
 
