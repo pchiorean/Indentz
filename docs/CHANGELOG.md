@@ -38,10 +38,17 @@
   Activated auto filtering to the status report on scripts that need it
 - [`fix`](https://github.com/pchiorean/Indentz/commit/3f88f2499e852ad5b022a85f446f105f493bde61)
   **lib/report:** Fixed borked midnight patch to auto filtering (d'oh)
-
-#### To do
-- [`upd`]() **Show/HideDNPLayers:** Take layers from a TSV
-- [`doc`]() **lib/parseDataFile and related:** 'Blank lines and those prefixed with `#` are ignored.' -> 'starting'
+- [`fix`](https://github.com/pchiorean/Indentz/commit/80ba0dca551362a5587c46ea48e39e860172a1bc)
+  **lib/parseDataFile and related:** Fixed an excessive cleaning of quotes in `@include` paths
+- [`doc`](https://github.com/pchiorean/Indentz/commit/c6559f2827361c20aa3f172a0743a9e8549f73ea)
+  **lib/parseDataFile and related:** Changed 'Blank lines and those prefixed with `#` are ignored.' -> 'starting'
+- [`upd`](https://github.com/pchiorean/Indentz/commit/d0ff5ea8c67ab914fcc116f5e4a3a26660026c96)
+  **lib/getDataFile:** Updated to take as argument a list of files; returns the first one found
+- [`upd`](https://github.com/pchiorean/Indentz/commit/3b4cd59358981aa6643d2161880a567c9591b1a8)
+  [`upd`](https://github.com/pchiorean/Indentz/commit/d3f2ccdbffbeeb3bfde6085538ee82a74e13a172)
+  **lib/parseDataFile and related:** Added '.txt' fallback to the data files
+- [`upd`](https://github.com/pchiorean/Indentz/commit/ddf8abe1df84e6f4f469ba103b6e26ade644108a)
+  **cleanup/DocCleanup:** Preserve empty text frames (don't convert them to generic frames)
 
 ### [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -437,7 +444,8 @@
 - `upd` **misc/LabelPageRatios:** Mark outer/inner ratios
 - `brk` **export/MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
 - `upd` **export/MarkVisibleArea:** Use wildcards for layer names
-- `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.txt`, fallback to defaults
+- `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
+- `upd` **export/Show/HideDNPLayers:** Take layers from a TSV
 - `upd` **layout/PageMarginsFromSelection:** Set the margins of every page touched by the selection
 - `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
 - `upd` **layout/PageSizeFromSelection:** Use outlined text bounds for text frames
