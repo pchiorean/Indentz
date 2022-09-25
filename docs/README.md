@@ -422,9 +422,9 @@ Shows or hides the following “do-not-print” layers: **covered areas**, **vis
 Invokes **Window ‣ Arrange ‣ Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
 
 #### **`ZoomToSelection`** <small>F4</small>
-It resembles **Fit Selection in Window** **<small>(⌥⌘=)</small>**, but with some improvements:
+It resembles **Fit Selection in Window** **<small>(⌥⌘=)</small>**, but with some changes:
 
-- Brings the selection a little closer;
+- Brings the selection a little closer[^4];
 - If the cursor is in a text frame, zooms on the whole frame;
 - Without anything selected zooms on the current spread.
 
@@ -454,7 +454,7 @@ Sometimes objects that have a script label attached are reused, which may create
 
 #### **`QR`** <small>F9</small>
 
-Adds a QR code on each spread of the active document or to separate PDF files[^4]:
+Adds a QR code on each spread of the active document or to separate PDF files[^5]:
 
 ![QR](img/script-qr.png)
 
@@ -516,9 +516,10 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-Last updated: September 24, 2022
+Last updated: September 25, 2022
 
 [^1]: Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text.
 [^2]: For example, in **`Document_DE.indd`** “The sample is for free” will be replaced with “Das Sample ist kostenlos”, and for **`Document_FR.indd`** with “L'échantillon est gratuit”.
 [^3]: For example, if the suffix is `print+diecut`, the document will be saved as **`Document_print+diecut.pdf`** in a subfolder named **`print`**.
-[^4]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
+[^4]: The variable `Z` from line 42 must be set to fit a square page at 90% of 'Fit Page in Window'.
+[^5]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.

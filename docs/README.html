@@ -994,9 +994,9 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Invokes <strong>Window &#x2023; Arrange &#x2023; Tile All Vertically</strong> or <strong>Tile All Horizontally</strong>, depending on the current spread orientation.</p>
 <h4 class="mume-header" id="zoomtoselection-smallf4small"><strong><code>ZoomToSelection</code></strong> <small>F4</small></h4>
 
-<p>It resembles <strong>Fit Selection in Window</strong> <strong><small>(&#x2325;&#x2318;=)</small></strong>, but with some improvements:</p>
+<p>It resembles <strong>Fit Selection in Window</strong> <strong><small>(&#x2325;&#x2318;=)</small></strong>, but with some changes:</p>
 <ul>
-<li>Brings the selection a little closer;</li>
+<li>Brings the selection a little closer<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>;</li>
 <li>If the cursor is in a text frame, zooms on the whole frame;</li>
 <li>Without anything selected zooms on the current spread.</li>
 </ul>
@@ -1024,7 +1024,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.</p>
 <h4 class="mume-header" id="qr-smallf9small"><strong><code>QR</code></strong> <small>F9</small></h4>
 
-<p>Adds a QR code on each spread of the active document or to separate PDF files<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>:</p>
+<p>Adds a QR code on each spread of the active document or to separate PDF files<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>:</p>
 <p><img src="img/script-qr.png" alt="QR"></p>
 <p>The code looks like this:</p>
 <table>
@@ -1109,7 +1109,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>&#xA9; 2020-2022 Paul Chiorean &lt;jpeg AT basement.ro&gt;.<br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&apos;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
-<p>Last updated: September 24, 2022</p>
+<p>Last updated: September 25, 2022</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
@@ -1119,7 +1119,9 @@ The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.tx
 </li>
 <li id="fn3" class="footnote-item"><p>For example, if the suffix is <code>print+diecut</code>, the document will be saved as <strong><code>Document_print+diecut.pdf</code></strong> in a subfolder named <strong><code>print</code></strong>. <a href="#fnref3" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
-<li id="fn4" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref4" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn4" class="footnote-item"><p>The variable <code>Z</code> from line 42 must be set to fit a square page at 90% of &apos;Fit Page in Window&apos;. <a href="#fnref4" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref5" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
 </ol>
 </section>
