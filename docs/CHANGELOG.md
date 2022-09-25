@@ -1,6 +1,10 @@
 ## Changelog
 
-### [Development version](https://github.com/pchiorean/Indentz/compare/22.8.22...dev)
+<!-- ### [Development version](https://github.com/pchiorean/Indentz/compare/22.9.25...dev) -->
+
+<!-- ### [Releases](https://github.com/pchiorean/Indentz/releases) -->
+
+#### [22.9.25](https://github.com/pchiorean/Indentz/releases/tag/22.9.25)
 
 - [`fix`](https://github.com/pchiorean/Indentz/commit/1214ec3da12b17c4ac8b8227dfa76a28183b63af)
   **cleanup/SwatchesSave:** Fixed file encoding (UTF-8)
@@ -27,7 +31,7 @@
   [`fix`](https://github.com/pchiorean/Indentz/commit/d0774f9aa75ac11f2adf554e9931f088493c8ffe)
   **cleanup/ReplaceLinks:** Because we are dealing with document links, changed `@includepath` default to the document `Links` folder (and fixed `@include` to fall back to the data folder in this situation)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/b9f79dedb8cc7d298a4941bb4c5eff3312c33c51)
-  **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links:** Cancel exporting if 'Esc' is pressed
+  **cleanup/DefaultSwatches, ReplaceLinks:** Cancel if 'Esc' is pressed
 - [`upd`](https://github.com/pchiorean/Indentz/commit/c24e8506b98019d47314fe6d6f968e7c91303ce3)
   **lib/report:** Added `auto` to filtering mode – automatically shows filtering if there are more than 20 lines
 - [`fix`](https://github.com/pchiorean/Indentz/commit/fbe49efe36d5907cc30c09d50c064f02c79b94d9)
@@ -35,7 +39,7 @@
 - [`fix`](https://github.com/pchiorean/Indentz/commit/0dd4c38bf391b441d4f2ee251efc5298cbf47061)
   **lib/report:** Fixed enabling auto filtering only when `auto` keyword is used (d'oh)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/646e7acad396b5013e03a0e5ca3963076989eb54)
-  Activated auto filtering to the status report on scripts that need it
+  Activated auto filtering to the status report for scripts that need it
 - [`fix`](https://github.com/pchiorean/Indentz/commit/3f88f2499e852ad5b022a85f446f105f493bde61)
   **lib/report:** Fixed borked midnight patch to auto filtering (d'oh)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/80ba0dca551362a5587c46ea48e39e860172a1bc)
@@ -49,12 +53,13 @@
   **lib/parseDataFile and related:** Added '.txt' fallback to the data files
 - [`upd`](https://github.com/pchiorean/Indentz/commit/ddf8abe1df84e6f4f469ba103b6e26ade644108a)
   **cleanup/DocCleanup:** Preserve empty text frames (don't convert them to generic frames)
-
-### [Releases](https://github.com/pchiorean/Indentz/releases)
+- [`upd`](https://github.com/pchiorean/Indentz/commit/f03373821bd4f60b31f8cfb404394d30e6d2a587)
+  **view/ZoomTo...:** Updated the zoom factor (fits a square page to 90% of 'Fit Page in Window')
 
 #### [22.8.22](https://github.com/pchiorean/Indentz/releases/tag/22.8.22)
 
 ##### New features
+
 - [`new`](https://github.com/pchiorean/Indentz/commit/d5f2a4c5f3cc42a26a8b63bd90539645f60ba464)
   [`fix`](https://github.com/pchiorean/Indentz/commit/65d864208e26d670c182c3996dcf300eb9ffeac4)
   **SpreadsToFiles:** Added a custom positioning placeholder character – if the file name contains a `#`, the index will be placed in that position
@@ -68,6 +73,7 @@
   **lib/report:** Added a button for saving the report to file
 
 ##### Updates
+
 - [`upd`](https://github.com/pchiorean/Indentz/commit/17a1faec009dbf69e301196defe8c454ddbbbd97)
   **QuickExport, QRBatch:** Relaxed the list of invalid file name characters (`<` `>` `:` `"` `\` `/` `\` `|` `?` `*`)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/aa98b48ac3e848dcf3ebfe220abd037840c9bc1a)
@@ -105,6 +111,7 @@
   **DefaultLayers/Swatches/ReplaceFonts/Links/Snippets:** Improved info/error reporting
 
 ##### Bug fixes
+
 - [`fix`](https://github.com/pchiorean/Indentz/commit/bf0173fd6c2f4c264c202e7a3a6ac8411609e3b1)
   [`fix`](https://github.com/pchiorean/Indentz/commit/6aecbbe07748946fb3b097dceac49ee609479a5e)
   Enforced straight corners to new rectangles and text frames
@@ -112,6 +119,7 @@
   **ReplaceSnippets:** Embedded the helper function into the main script and fixed a replacement quirk
 
 ##### Miscellaneous
+
 - [`ref`](https://github.com/pchiorean/Indentz/commit/52e0959dec7e4e321ddf13b2b0f7f528f6f96b25)
    **lib/\*:** Renamed libs to match their function name and updated `#include` directives
 - [`ref`](https://github.com/pchiorean/Indentz/commit/a566a05c57e50d13b86053db7a2f9674ecda3d9e)
