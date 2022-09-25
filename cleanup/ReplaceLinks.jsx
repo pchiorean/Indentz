@@ -1,5 +1,5 @@
 /*
-	Replace links 22.9.24
+	Replace links 22.9.25
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named `links.tsv`:
@@ -57,7 +57,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 function main() {
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, data, messages, i, j, progressBar;
-	var dataFileName = 'links.tsv';
+	var dataFileName = [ 'links.tsv', 'links.txt' ];
 	var counter = 0;
 	var links = doc.links.everyItem().getElements();
 	var linkS = (function () {
@@ -72,7 +72,7 @@ function main() {
 	}
 	if (!(file = getDataFile(dataFileName))) {
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate substitution a list \'' + dataFileName +
+			alert('Can\'t locate substitution a list \'' + dataFileName.join('\' or \'') +
 			'\'.\nThe file must be saved in the current folder, on the ' +
 			'desktop, or next to the script. Check docs for details.');
 		}
@@ -211,7 +211,7 @@ function main() {
 				case 'defaults':
 					includeFile = getDataFile(dataFileName, true);
 					if (!includeFile || !includeFile.exists) {
-						status.info.push(source + 'Default list \'' + decodeURI(dataFileName) + '\' not found.');
+						status.info.push(source + 'Default list \'' + dataFileName.join('\' or \'') + '\' not found.');
 						return;
 					}
 					break;
