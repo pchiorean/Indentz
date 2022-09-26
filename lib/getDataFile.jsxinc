@@ -14,14 +14,14 @@ function getDataFile(dataFile, skipLocal) {
 	for (var i = 0; i < dataFile.length; i++) {
 		if (!skipLocal) {
 			if (!doc.saved) return undefined;
-			if ((file = File(app.activeDocument.filePath + '/_'    + dataFile)) && file.exists) return file;
-			if ((file = File(app.activeDocument.filePath + '/'     + dataFile)) && file.exists) return file;
-			if ((file = File(app.activeDocument.filePath + '/../_' + dataFile)) && file.exists) return file;
-			if ((file = File(app.activeDocument.filePath + '/../'  + dataFile)) && file.exists) return file;
+			if ((file = File(app.activeDocument.filePath + '/_'    + dataFile[i])) && file.exists) return file;
+			if ((file = File(app.activeDocument.filePath + '/'     + dataFile[i])) && file.exists) return file;
+			if ((file = File(app.activeDocument.filePath + '/../_' + dataFile[i])) && file.exists) return file;
+			if ((file = File(app.activeDocument.filePath + '/../'  + dataFile[i])) && file.exists) return file;
 		}
-		if ((file = File(Folder.desktop + '/'    + dataFile)) && file.exists) return file;
-		if ((file = File(script.path    + '/'    + dataFile)) && file.exists) return file;
-		if ((file = File(script.path    + '/../' + dataFile)) && file.exists) return file;
+		if ((file = File(Folder.desktop + '/'    + dataFile[i])) && file.exists) return file;
+		if ((file = File(script.path    + '/'    + dataFile[i])) && file.exists) return file;
+		if ((file = File(script.path    + '/../' + dataFile[i])) && file.exists) return file;
 	}
 	return undefined;
 }

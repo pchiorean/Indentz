@@ -72,7 +72,7 @@ function main() {
 	}
 	if (!(file = getDataFile(dataFileName))) {
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate substitution a list \'' + dataFileName.join('\' or \'') +
+			alert('Can\'t locate a substitution list \'' + dataFileName.join('\' or \'') +
 			'\'.\nThe file must be saved in the current folder, on the ' +
 			'desktop, or next to the script. Check docs for details.');
 		}
