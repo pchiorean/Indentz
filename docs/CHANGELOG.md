@@ -1,8 +1,11 @@
 ## Changelog
 
-<!-- ### [Development version](https://github.com/pchiorean/Indentz/compare/22.9.25...dev) -->
+### [Development version](https://github.com/pchiorean/Indentz/compare/22.9.25...dev)
 
-<!-- ### [Releases](https://github.com/pchiorean/Indentz/releases) -->
+- [`fix`](https://github.com/pchiorean/Indentz/commit/58c79e5872b1d575dc2fa235ff8c8721d682a07c)
+  **lib/getDataFile:** Fix regression from commit [d0ff5ea](https://github.com/pchiorean/Indentz/commit/d0ff5ea8c67ab914fcc116f5e4a3a26660026c96#diff-eee3f6feb9e5285db1b70d8d6f1786d3b6a87a4f89b81aa054a5f5cd341dedb5R16-R20)
+
+### [Releases](https://github.com/pchiorean/Indentz/releases)
 
 #### [22.9.25](https://github.com/pchiorean/Indentz/releases/tag/22.9.25)
 
