@@ -7,7 +7,7 @@ subfolder/img4.psd
 
 # <New link path>: an absolute path, or relative to document `Links`, or relative to `@includepath`
 # <Document links>: a list of document links that will be relinked if found (case insensitive;
-#   `*` and `?` wildcards accepted); if the list is empty, the new link`s name will be used.
+#   `*` and `?` wildcards accepted); if the list is empty, the new link's name will be used.
 #
 # The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
 # (on the desktop, next to the script, or in Indentz root); local files and files starting with `_` take precedence.
