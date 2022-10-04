@@ -1,5 +1,5 @@
 /*
-	Quick export 22.9.16
+	Quick export 22.10.4
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -487,9 +487,7 @@ function updateOKStatus() {
 		if (ui.input.source.folder.text.length === 0) {
 			ui.text = ui.actions.ok.helpTip = 'Select an input folder';
 			return;
-		} else if (ui.input.source.path) {
-			ui.text = title;
-		} else {
+		} else if (!ui.input.source.path) {
 			ui.text = ui.actions.ok.helpTip = 'Error: Input folder not found';
 			return;
 		}
@@ -502,13 +500,12 @@ function updateOKStatus() {
 		if (ui.output.dest.folder.text.length === 0) {
 			ui.text = ui.actions.ok.helpTip = 'Select an output folder';
 			return;
-		} else if (ui.output.dest.path) {
-			ui.text = title;
-		} else {
+		} else if (!ui.output.dest.path) {
 			ui.text = ui.actions.ok.helpTip = 'Error: Output folder not found';
 			return;
 		}
 	}
+	ui.text = title;
 }
 
 // -- Actions
