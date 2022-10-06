@@ -1,5 +1,5 @@
 /*
-	QR code 22.6.30
+	QR code 22.10.6
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -43,7 +43,7 @@ function main() {
 	baseName = /\./g.test(doc.name) ? doc.name.slice(0, doc.name.lastIndexOf('.')) : doc.name;
 	// baseName = baseName.replace(/_QR$/i, '');
 	suffix = RegExp('[ ._-][a-zA-Z0-9]{' + doc.spreads.length + '}$', 'i').exec(baseName);
-	suffix = suffix == null ? '' : String(suffix);
+	suffix = (!currentPath || suffix == null) ? '' : String(suffix);
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 	app.scriptPreferences.enableRedraw = false;
 
@@ -53,19 +53,22 @@ function main() {
 	ui.qpanel.add('statictext { properties: { name: "st" }, text: "Enter QR code text:" }');
 		ui.label = ui.qpanel.add('edittext { active: true, characters: 56, helpTip: "Use \'|\' for manual line breaks", properties: { enterKeySignalsOnChange: true } }');
 		ui.options = ui.qpanel.add('group { margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 15 }');
-			ui.white = ui.options.add('checkbox { helpTip: "Make label white (only when placing on documents)", text: "White label" }');
+			ui.white = ui.options.add('checkbox { text: "White label" }');
+			ui.white.helpTip = 'Make label white' + (currentPath ? ' (only when placing on documents)' : '');
 			ui.uppercase = ui.options.add('checkbox { helpTip: "Make label uppercase", text: "Uppercase label" }');
 			ui.uppercase.value = true;
 	ui.actions = ui.add('group { alignChildren: [ "fill", "top" ], orientation: "column" }');
-		ui.ondoc = ui.actions.add('button { helpTip: "Place the code on the bottom-left corner of each page", text: "On doc", properties: { name: "ok" } }');
-		ui.onfile = ui.actions.add('button { text: "Separate" }');
-		ui.onfile.helpTip = currentPath ? 'QR Codes/' +
-			((/\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf('.'))) || doc.name) + '_QR.pdf' :
-			'Where? Document is not saved';
-		ui.actions.add('button { text: "Cancel", properties: { name: "cancel" } }');
-		ui.onfile.enabled = !!currentPath;
-		ui.ondoc.onClick  = function () { onDoc = true; ui.close(); };
-		ui.onfile.onClick = function () { onDoc = false; ui.close(); };
+		if (currentPath) {
+			ui.onfile = ui.actions.add('button { text: "On file", properties: { name: "ok" } }');
+			ui.onfile.helpTip = 'Save as QR Codes/' + ((/\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf('.'))) || doc.name) + '_QR.pdf';
+			ui.onfile.onClick = function () { onDoc = false; ui.close(); };
+			ui.ondoc = ui.actions.add('button { text: "On doc" }');
+		} else {
+			ui.ondoc = ui.actions.add('button { text: "Ok" }');
+		}
+		ui.ondoc.helpTip = 'Place the code on the bottom-left corner of each page';
+		ui.ondoc.onClick = function () { onDoc = true; ui.close(); };
+		ui.actions.add('button { text: "Cancel" }');
 	if (ui.show() === 2) exit();
 
 	// Processing
