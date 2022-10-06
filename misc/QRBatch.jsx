@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 22.9.24
+	Batch QR codes 22.10.6
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -86,12 +86,12 @@ function main() {
 	ui.options = ui.add('group', undefined);
 	ui.options.orientation = 'row';
 	ui.options.alignChildren = [ 'right', 'center' ];
-	ui.options.white = ui.options.add('checkbox', undefined, 'White label');
-	ui.options.white.helpTip = 'Make label white (only when placing on documents)';
 	ui.options.uppercase = ui.options.add('checkbox', undefined, 'Uppercase label');
 	ui.options.uppercase.helpTip = 'Make label uppercase';
-	ui.options.uppercase.preferredSize.width = LIST.width - 579;
 	ui.options.uppercase.value = true;
+	ui.options.white = ui.options.add('checkbox', undefined, 'White label');
+	ui.options.white.helpTip = 'Make label white (only when placing on documents)';
+	ui.options.white.preferredSize.width = LIST.width - 612;
 	ui.options.err = ui.options.add('button', undefined, 'Show errors');
 	ui.options.err.visible = false;
 	ui.options.div1 = ui.options.add('panel', undefined, undefined);

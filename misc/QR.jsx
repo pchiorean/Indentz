@@ -53,10 +53,10 @@ function main() {
 	ui.qpanel.add('statictext { properties: { name: "st" }, text: "Enter QR code text:" }');
 		ui.label = ui.qpanel.add('edittext { active: true, characters: 56, helpTip: "Use \'|\' for manual line breaks", properties: { enterKeySignalsOnChange: true } }');
 		ui.options = ui.qpanel.add('group { margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 15 }');
-			ui.white = ui.options.add('checkbox { text: "White label" }');
-			ui.white.helpTip = 'Make label white' + (currentPath ? ' (only when placing on documents)' : '');
 			ui.uppercase = ui.options.add('checkbox { helpTip: "Make label uppercase", text: "Uppercase label" }');
 			ui.uppercase.value = true;
+			ui.white = ui.options.add('checkbox { text: "White label" }');
+			ui.white.helpTip = 'Make label white' + (currentPath ? ' (only when placing on documents)' : '');
 	ui.actions = ui.add('group { alignChildren: [ "fill", "top" ], orientation: "column" }');
 		if (currentPath) {
 			ui.onfile = ui.actions.add('button { text: "On file", properties: { name: "ok" } }');
