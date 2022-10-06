@@ -4,6 +4,12 @@
 
 - [`fix`](https://github.com/pchiorean/Indentz/commit/58c79e5872b1d575dc2fa235ff8c8721d682a07c)
   **lib/getDataFile:** Fix regression from commit [d0ff5ea](https://github.com/pchiorean/Indentz/commit/d0ff5ea8c67ab914fcc116f5e4a3a26660026c96#diff-eee3f6feb9e5285db1b70d8d6f1786d3b6a87a4f89b81aa054a5f5cd341dedb5R16-R20)
+- [`fix`](https://github.com/pchiorean/Indentz/commit/f333157f099182fe1c4e767128be7fc24e61e5bf)
+  **export/QuickExport:** Improved titlebar message logic and fixed a quirk
+- [`upd`](https://github.com/pchiorean/Indentz/commit/852844f62ea6ae58d8e83b7d78e6ef9c654b454c)
+  **misc/QR:** Changed default code placement to separate files & streamlined actions
+- [`upd`](https://github.com/pchiorean/Indentz/commit/0b51957f90170f291519d90eb7e8e575f475a620)
+  **misc/QR, QRBatch:** Switched white and uppercase options
 
 ### [Releases](https://github.com/pchiorean/Indentz/releases)
 
