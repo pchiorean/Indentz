@@ -1,6 +1,6 @@
 /**
  * Creates a palette with two progress bars and a message; the second bar (optional) may be used for microsteps.
- * @version 22.3.14
+ * @version 22.10.14
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} title - Palette title.
@@ -15,23 +15,18 @@ function ProgressBar(title, maxValue, maxWidth) {
 	pb.bar1.preferredSize.height = 12;
 	pb.bar2.preferredSize.height = 3;
 	pb.bar2.visible = false;
-	if (maxWidth) { // Full palette with message and counter
+	// If the maximum length of the message is defined (maxWidth) we have a full palette
+	// with text and progress bar(s), otherwise a mini-palette without text, of fixed width
+	if (maxWidth) {
 		pb.msg = pb.add('statictext { properties: { truncate: "middle" } }');
 		pb.msg.characters = Math.max(maxWidth, 50);
 		pb.layout.layout();
 		pb.bars.size = [ pb.msg.bounds[2], 16 ];
 		pb.bar1.size.width = pb.bar2.size.width = pb.bars.size.width;
-	} else { // Mini-palette with progress bars only
+	} else {
 		pb.layout.layout();
 		pb.bars.size = [ 415, 16 ];
 		pb.bar1.size.width = pb.bar2.size.width = pb.bars.size.width;
-	}
-	pb.show();
-	if (app.windows.length > 0) { // Center in current window
-		pb.frameLocation = [
-			(app.activeWindow.bounds[1] + app.activeWindow.bounds[3] - pb.frameSize.width) / 2,
-			(app.activeWindow.bounds[0] + app.activeWindow.bounds[2] - pb.frameSize.height) / 2
-		];
 	}
 	/**
 	 * Updates the message.
@@ -42,7 +37,7 @@ function ProgressBar(title, maxValue, maxWidth) {
 			if (message) pb.msg.text = message;
 			pb.msg.visible = !!message;
 		}
-		pb.update();
+		updatePB();
 	};
 	/**
 	 * Increases the value of the main progress bar and updates the counter.
@@ -53,7 +48,7 @@ function ProgressBar(title, maxValue, maxWidth) {
 		pb.bar2.visible = false;
 		pb.text = title;
 		if (maxWidth) pb.text += ' \u2013 ' + pb.bar1.value + '/' + pb.bar1.maxvalue;
-		pb.update();
+		updatePB();
 	};
 	/**
 	 * Sets the number of steps for the secondary progress bar.
@@ -63,7 +58,7 @@ function ProgressBar(title, maxValue, maxWidth) {
 		pb.bar2.value = 0;
 		pb.bar2.maxvalue = maxValue2 > 1 ? maxValue2 : 0;
 		pb.bar2.visible = (pb.bar2.maxvalue > 1);
-		pb.update();
+		updatePB();
 	};
 	/**
 	 * Increases the value of the secondary progress bar.
@@ -72,10 +67,22 @@ function ProgressBar(title, maxValue, maxWidth) {
 		if (pb.bar2.maxvalue < 2) return;
 		pb.bar2.visible = true;
 		pb.bar2.value++;
-		pb.update();
+		updatePB();
 	};
 	/**
 	 * Closes the progress bar.
 	 */
 	this.close = function () { $.sleep(100); pb.close(); };
+
+	// Show/update/center in window
+	function updatePB() {
+		if (!pb.visible) pb.show();
+		if (app.windows.length > 0) {
+			pb.frameLocation = [
+				(app.activeWindow.bounds[1] + app.activeWindow.bounds[3] - pb.frameSize.width) / 2,
+				(app.activeWindow.bounds[0] + app.activeWindow.bounds[2] - pb.frameSize.height) / 2
+			];
+		}
+		pb.update();
+	}
 }
