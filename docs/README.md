@@ -2,11 +2,7 @@
 
 A collection of InDesign scripts for various simple and repetitive tasks.
 
-As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown I had some time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow[^1], but I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). The code was developed and tested in Adobe InDesign CC 2020 and later on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6).
-
-I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though).
-
-I'm also a fan of shortcuts, so I've suggested a few for Mac below (**Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**).
+As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown I had some time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow[^1], but I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). The code was developed and tested in Adobe InDesign CC 2020 and later on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though). I'm also a big fan of shortcuts, so there are suggestions for Mac below (unfortunately must be added manually from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**).
 
 ---
 
@@ -69,7 +65,7 @@ Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample]
 
 <details><summary><strong>Other features</strong></summary>
 
-The first column may also contain a *statement*:
+A line may also contain a *statement*:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
 - `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
@@ -78,7 +74,7 @@ The first column may also contain a *statement*:
 There's also some non-standard stuff that will confuse Excel et al.:
 
 - Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -107,7 +103,7 @@ You can use [**`SwatchesSave`**](#swatchessave) to save a tab delimited list of 
 
 <details><summary><strong>Other features</strong></summary>
 
-The first column may also contain a *statement*:
+A line may also contain a *statement*:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
 - `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
@@ -116,7 +112,7 @@ The first column may also contain a *statement*:
 There's also some non-standard stuff that will confuse Excel et al.:
 
 - Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -134,7 +130,7 @@ You can use [**`ShowFonts`**](#showfonts) from [**Miscellaneous**](#miscellaneou
 
 <details><summary><strong>Other features</strong></summary>
 
-The first column may also contain a *statement*:
+A line may also contain a *statement*:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
 - `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
@@ -143,7 +139,7 @@ The first column may also contain a *statement*:
 There's also some non-standard stuff that will confuse Excel et al.:
 
 - Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -174,7 +170,7 @@ Quoting the paths is not required.
 
 <details><summary><strong>Other features</strong></summary>
 
-The first column may also contain a *statement*:
+A line may also contain a *statement*:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
 - `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
@@ -183,7 +179,7 @@ The first column may also contain a *statement*:
 There's also some non-standard stuff that will confuse Excel et al.:
 
 - Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -207,7 +203,7 @@ Replaces a list of text snippets using a TSV data file named **`snippets.tsv`** 
 
 <details><summary><strong>Other features</strong></summary>
 
-The first column may also contain a *statement*:
+A line may also contain a *statement*:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
 - `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
@@ -216,7 +212,7 @@ The first column may also contain a *statement*:
 There's also some non-standard stuff that will confuse Excel et al.:
 
 - Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I edit TSVs in [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -499,11 +495,10 @@ Shows properties and methods of a selected object.
 ---
 
 ## Install
-The repository uses dynamically linked libraries from **`lib/`**, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked.
-
-1. Open **Window ‣ Utilities ‣ Scripts**.
-2. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
-3. Copy **Indentz** to this folder.
+1. Clone or download from **Code ‣ Download ZIP**. The repository uses dynamically linked libraries from **`lib/`**, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked.
+2. Open **Window ‣ Utilities ‣ Scripts**.
+3. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
+4. Copy **Indentz** to this folder.
 
 ---
 
@@ -516,7 +511,7 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-Last updated: September 26, 2022
+Last updated: October 14, 2022
 
 [^1]: Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text.
 [^2]: For example, in **`Document_DE.indd`** “The sample is for free” will be replaced with “Das Sample ist kostenlos”, and for **`Document_FR.indd`** with “L'échantillon est gratuit”.
