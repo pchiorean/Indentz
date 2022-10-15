@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 22.9.13
+	Document cleanup 22.10.14
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Changes some settings, cleans up swatches/layers/pages and resets scaling.
@@ -14,7 +14,7 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'progressBar.jsxinc';
 
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
-var progressBar = new ProgressBar('Cleanup document', 13);
+var progressBar = new ProgressBar('Cleanup document', 14);
 
 progressBar.update();
 app.doScript(File(script.path + '/DefaultPrefs.jsx'),
@@ -109,20 +109,21 @@ app.doScript(function () {
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Delete unused swatches');
 
-// progressBar.update();
-// app.doScript(function () {
-// 	var item;
-// 	var items = doc.allPageItems;
-// 	while ((item = items.shift())) {
-// 		if (item.constructor.name !== 'TextFrame') continue;
-// 		if (!item.overflows && /\s+$/g.test(item.contents) && !item.nextTextFrame)
-// 			item.contents = item.contents.replace(/\s+$/g, '');
-// 		if (!item.overflows && item.lines.length === 1) item.lines[0].hyphenation = false;
-// 		if (!item.overflows && item.contents.length === 0) item.contentType = ContentType.UNASSIGNED;
-// 	}
-// },
-// ScriptLanguage.JAVASCRIPT, undefined,
-// UndoModes.ENTIRE_SCRIPT, 'Convert empty text frames to generic frames');
+progressBar.update();
+app.doScript(function () {
+	var item;
+	var items = doc.allPageItems;
+	while ((item = items.shift())) {
+		if (item.constructor.name !== 'TextFrame') continue;
+		if (item.textFramePreferences.autoSizingType !== AutoSizingTypeEnum.OFF) continue;
+		if (!item.overflows && /\s+$/g.test(item.contents) && !item.nextTextFrame)
+			item.contents = item.contents.replace(/\s+$/g, '');
+		if (!item.overflows && item.lines.length === 1) item.lines[0].hyphenation = false;
+		if (!item.overflows && item.contents.length === 0) item.contentType = ContentType.UNASSIGNED;
+	}
+},
+ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, 'Convert empty text frames to generic frames');
 
 progressBar.update();
 app.doScript(function () {
