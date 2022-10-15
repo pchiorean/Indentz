@@ -1,17 +1,19 @@
-## Helper functions
+# Helper functions
 
 ### addGuide(target, [layer], HorV, location, [label], [type])
 
 |Parameters|Type|Default|Description|
 |--|--|--|--|
 |target|`object`||A `Document`, `Spread`, `Page` or a `MasterSpread`.|
-|[layer|`layer`|`activeLayer`|A target layer; defaults to the active layer. *(Optional.)*|
+|[layer]|`layer`|`activeLayer`|A target layer; defaults to the active layer. *(Optional.)*|
 |HorV|`string`||If the string begins with `v`, the guide is vertical, else horizontal.|
 |location|`number`||The location at which to place the guide relative to the current ruler zero point.|
-|[label|`string`||The label of the guide. *(Optional.)*|
-|[preset|`number`||A customized set of properties, see source. *(Optional.)*|
+|[label]|`string`||The label of the guide. *(Optional.)*|
+|[preset]|`number`||A customized set of properties, see source. *(Optional.)*|
 
-Adds a custom ruler guide. I use it for some scripts that make grids for several brands, for which I have a hard time remembering the properties of the different guide lines. With the `preset` parameter I standardize guide types: symmetry axes, sections and subsections, product alignment and so on.
+Adds a custom ruler guide. I use it to make grids for several brands, for which I have a hard time remembering the properties of the different guide lines. With the `preset` parameter I standardize guide types: symmetry axes, sections and subsections, product alignment and so on.
+
+---
 
 ### dbg([type], [context], message)
 
@@ -104,8 +106,8 @@ Returns an object containing the geometric bounds of `page`, its parent spread, 
 #### Example
 
 ```js
-var pageSize      = getBounds(page).page.size;      // [ 0,0,297,210 ]
-var spreadMargins = getBounds(page).spread.margins; // [ 20,20,277,400 ] (20 mm margins)
+var pageSize      = getBounds(page).page.size;      // [ 0, 0, 297, 210 ]
+var spreadMargins = getBounds(page).spread.margins; // [ 20, 20, 277, 400 ] (20 mm margins)
 ```
 
 or
@@ -115,9 +117,9 @@ var bounds = getBounds(page);
 var scope  = 'spread';
 var target = 'margins';
 
-bounds.page.size;      // [ 0,0,297,210 ]
-bounds.spread.margins; // [ 20,20,277,400 ]
-bounds[scope][target]; // [ 20,20,277,400 ]
+bounds.page.size;      // [ 0, 0, 297, 210 ]
+bounds.spread.margins; // [ 20, 20, 277, 400 ]
+bounds[scope][target]; // [ 20, 20, 277, 400 ]
 ```
 
 ---
@@ -141,6 +143,46 @@ Returns the first occurrence of `dataFile`, first searching for a local one (in 
   3. `~/Desktop/dataFile`
   4. `script/folder/dataFile`
   5. `script/folder/../dataFile`
+
+---
+
+### getDropShadow(item) ⇒ `Object`
+
+|Parameters|Type|Description|
+|--|--|--|--|
+|item|`pageItem`|The page item from which we take properties.|
+
+Returns the page item's drop shadow properties (`item.transparencySettings.dropShadowSettings`).
+
+---
+
+### setDropShadow(item, set)
+
+|Parameters|Type|Description|
+|--|--|--|--|
+|item|`pageItem`|The page item to which we apply properties.|
+|set|`object`|A previously saved `transparencySettings.dropShadowSettings` properties.|
+
+Sets a page item's drop shadow properties from a previously saved set.
+
+#### Example
+
+```js
+var shadow = getDropShadow(item1);
+setDropShadow(item2, shadow);
+```
+
+---
+
+### getPageItem(name, target, [layer]) ⇒ `PageItem` | `undefined`
+
+|Parameters|Type|Description|
+|--|--|--|--|
+|name|`string`|The name of the page item to search.|
+|target|`object`|A `Document`, `Spread`, `Page` or a `MasterSpread`.|
+|[layer]|`layer`|Look only for objects from this layer. *(Optional.)*|
+
+Returns the first page item with the specified name, optionally from the specified layer.
 
 ---
 
@@ -259,7 +301,7 @@ it will return an object like this:
 
 ---
 
-### ProgressBar
+### progressBar
 
 Creates a palette with two progress bars and a message; the second bar (optional) may be used for microsteps.
 
@@ -271,7 +313,7 @@ Creates a palette with two progress bars and a message; the second bar (optional
 |maxValue|`number`|Number of steps for the main progress bar.|
 |[maxWidth]|`number`|Maximum message length (characters). *(Optional.)*|
 
-Initializes and shows the palette. On creation you can set it's width to accomodate a given message length; if omitted, no message is shown (aka mini mode). The secondary progress bar is hidden by default.
+Initializes the palette. On creation you can set it's width to accomodate a given message length; if omitted, no message is shown (aka mini mode). The secondary progress bar is hidden by default.
 
 #### pb.msg([message]) *(Optional)*
 
@@ -361,6 +403,7 @@ replaceSwatch('Red', 'Blue'); // 'Blue' it's supposed to exist
 replaceSwatch('Red', 'Blue', [ 100, 70, 0, 0 ]); // 'Blue' will be created if it doesn't exist
 replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 ```
+
 ---
 
 ### replaceText(findWhat, changeTo, [wholeWord]) ⇒ `Boolean`
