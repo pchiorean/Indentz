@@ -10,6 +10,14 @@
   **misc/QR:** Changed default code placement to separate files & streamlined actions
 - [`upd`](https://github.com/pchiorean/Indentz/commit/0b51957f90170f291519d90eb7e8e575f475a620)
   **misc/QR, QRBatch:** Switched white and uppercase options
+- [`upd`](https://github.com/pchiorean/Indentz/commit/2ff55013a414b28198796867cd01a4bfb0ec0838)
+  **lib/progressBar:** Improved centering in current window
+- [`upd`](https://github.com/pchiorean/Indentz/commit/d32729cb1f119c5c37ee42461b195baff5446a1c)
+  **cleanup/DocCleanup:** Reinstated the conversion of empty text frames to generic frames, but only when not auto-sized
+- [`new`](https://github.com/pchiorean/Indentz/commit/5cc09303da1e0a72e4f4ba673319e17e449e9c12)
+  **lib/getPageItem:** A new helper function to get a page item with a specified name, optionally from a specified layer
+- [`new`](https://github.com/pchiorean/Indentz/commit/d481571827839793fb208b8ac93a6cdfb3f0d8a2)
+  **lib/setDropShadow:** A new set of helper functions to get/set a page item's drop shadow properties
 
 ### [Releases](https://github.com/pchiorean/Indentz/releases)
 
