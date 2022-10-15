@@ -1,0 +1,34 @@
+/**
+ * Returns the page item's drop shadow properties.
+ * @param {pageItem} item - A page item.
+ * @returns {object} - The `dropShadowSettings` properties of page item
+ * @example var shadow = getDropShadow(obj1.pageItems[0]);
+*/
+function getDropShadow(item) {
+	return item.transparencySettings.dropShadowSettings;
+}
+
+/**
+ * Sets a page item's drop shadow properties from a previously saved set.
+ * @param {pageItem} item - A page item.
+ * @param {object} set - A set of previously saved `dropShadowSettings` properties.
+ * @example setDropShadow(obj2, shadow);
+ */
+ function setDropShadow(item, set) {
+	item.transparencySettings.dropShadowSettings.properties = {
+		angle: set.angle,
+		blendMode: set.blendMode,
+		distance: set.distance,
+		effectColor: set.effectColor,
+		honorOtherEffects: set.honorOtherEffects,
+		knockedOut: set.knockedOut,
+		noise: set.noise,
+		opacity: set.opacity,
+		size: set.size,
+		spread: set.spread,
+		useGlobalLight: set.useGlobalLight,
+		xOffset: set.xOffset,
+		yOffset: set.yOffset,
+		mode: set.mode
+	};
+}
