@@ -1,0 +1,20 @@
+/**
+ * Returns the first page item with a specified name, optionally from a specified layer.
+ * @param {string} name - The name of the page item to search.
+ * @param {Object} target - A `Document`, `Spread`, `Page` or a `MasterSpread`.
+ * @param {Layer} [layer] - Look only for objects from this layer. (Optional.)
+ * @returns {PageItem|void}
+ */
+function getPageItem(name, target, layer) {
+	var item;
+	var items = target.pageItems.everyItem().getElements();
+	if (layer) {
+		layer = app.activeDocument.layers.item(layer);
+		if (!layer.isValid) layer = undefined;
+	}
+	while ((item = items.shift())) {
+		if (item.name !== name) continue;
+		if (layer) if (item.itemLayer.name !== layer.name) continue;
+		return item;
+	}
+}
