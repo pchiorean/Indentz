@@ -1,5 +1,5 @@
 /*
-	Save swatches 22.9.4
+	Save swatches 22.10.21
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Save document's swatches to a 4-column TSV file:
@@ -10,8 +10,8 @@
 	Cut        | spot        | cmyk        | 0 100 0 0
 	...
 	<Name>: swatch name,
-	<Color Model>: `process` or `spot` (default `process`),
-	<Color Space>: `cmyk`, `rgb` or `lab` (default `cmyk`),
+	<Color Model>: `process` or `spot`,
+	<Color Space>: `cmyk`, `rgb` or `lab`,
 	<Values>: list of values, depends on the color model & space.
 
 	Released under MIT License:
@@ -21,11 +21,11 @@
 if (!(doc = app.activeDocument)) exit();
 
 var c, cols, i, k;
-var swatchesFile = File(String(doc.fullName).replace(/\.indd$/ig, '_swatches.tsv'));
+var dataFile = File(String(doc.fullName).replace(/\.indd$/ig, '_swatches.tsv'));
 
-swatchesFile.open('w');
-swatchesFile.encoding = 'UTF-8';
-swatchesFile.writeln('Name\tColor Model\tColor Space\tValues'); // Header
+dataFile.open('w');
+dataFile.encoding = 'UTF-8';
+dataFile.writeln('Name\tColor Model\tColor Space\tValues'); // Header
 
 cols = doc.colors.everyItem().getElements();
 while ((c = cols.shift())) {
@@ -33,7 +33,7 @@ while ((c = cols.shift())) {
 	if (/^(Registration|Paper|Black|Cyan|Magenta|Yellow)$/ // Skip standard colors
 		.test($.global.localize(c.name))) continue;
 	for (i = (k = c.colorValue).length; i--; k[i] = Math.round(k[i])); // Round values
-	swatchesFile.writeln(
+	dataFile.writeln(
 		c.name + '\t' +
 		String(c.model).replace(/ColorModel\./i, '').toLowerCase() + '\t' +
 		String(c.space).replace(/ColorSpace\./i, '').toLowerCase() + '\t' +
@@ -41,4 +41,4 @@ while ((c = cols.shift())) {
 	);
 }
 
-swatchesFile.close();
+dataFile.close();
