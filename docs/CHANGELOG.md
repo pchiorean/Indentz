@@ -18,6 +18,18 @@
   **lib/getPageItem:** A new helper function to get a page item with a specified name, optionally from a specified layer
 - [`new`](https://github.com/pchiorean/Indentz/commit/d481571827839793fb208b8ac93a6cdfb3f0d8a2)
   **lib/setDropShadow:** A new set of helper functions to get/set a page item's drop shadow properties
+- [`new`](https://github.com/pchiorean/Indentz/commit/8c5af98faefbd3f1e10c6849a7332904923b8d5c)
+  **cleanup/DumpLayers:** Added a new script to dump layer properties to TSV
+- [`fix`](https://github.com/pchiorean/Indentz/commit/8b7e6fb78ab1e3de2a5acfb864d6437a5b3bd354)
+  **cleanup/DefaultLayers:** Matching layer colors to `UIColors` is now case insensitive
+- [`upd`](https://github.com/pchiorean/Indentz/commit/ef626a01f068a09a2520f082b6ef22c8f32b3803)
+  `hack` **export/QuickExport:** Updated auto suffix hack for two additional layers: `varnish` and `white`
+- [`upd`](https://github.com/pchiorean/Indentz/commit/97f141fc24410515a394786f59977471974abd0b)
+  `hack` **export/QuickExport:** Updated dot-layers hack to only hide them when exporting with a 'print' suffix
+- [`upd`](https://github.com/pchiorean/Indentz/commit/78ee6a53fe7ceb8deeaf48f4a3742dcf6ede4788)
+  **misc/QR:** Reverted to on-document placement by default
+- [`upd`](https://github.com/pchiorean/Indentz/commit/9a3703e92e372c00e904a97195627400f64520a6)
+  **cleanup/DefaultPrefs:** Apply preferences in two steps: application/document
 
 ### [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -489,6 +501,7 @@
 
 - `fix` **layout/PageSizeFromFilename:** Error on pages set to 1:X scale
 - `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
+- `fix` **export/QuickExport:** Preserve custom bleed from profile
 - `fix` **export/QuickExport:** Report layer overrides
 - `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
