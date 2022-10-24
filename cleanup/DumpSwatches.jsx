@@ -1,5 +1,5 @@
 /*
-	Save swatches 22.10.21
+	Dump swatches 22.10.21
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Save document's swatches to a 4-column TSV file:
