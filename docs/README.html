@@ -263,42 +263,52 @@ pre[data-line] .line-highlight[data-end]:after {
       <div class="mume markdown-preview  ">
       <h1 class="mume-header" id="indentz">Indentz</h1>
 
-<p>A collection of InDesign scripts for various simple and repetitive tasks.</p>
-<p>As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown I had some time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>, but I tried to make them as generic as possible (<a href="https://github.com/pchiorean/Indentz/discussions">suggestions</a> are welcome). The code was developed and tested in Adobe InDesign CC 2020 and later on Mac (but I mostly used <a href="https://www.indesignjs.de/extendscriptAPI/indesign8/">InDesign ExtendScript API 8.0</a> for compatibility with CS6). I&apos;m a graphic designer, not a programmer, so do expect oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though). I&apos;m also a big fan of shortcuts, so there are suggestions for Mac below (unfortunately must be added manually from <strong>Edit &#x2023; Keyboard Shortcuts &#x2023; Product Area &#x2023; Scripts</strong>).</p>
+<p><small><a href="#cleanup">Cleanup</a> | <a href="#layout">Layout</a> | <a href="#align">Align</a> | <a href="#fit">Fit</a> | <a href="#scale">Scale</a> | <a href="#proxy">Proxy</a> | <a href="#file">File</a> | <a href="#export">Export</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#install">Install</a> | <a href="#about">About</a></small></p>
+<p>This is a collection of InDesign scripts for various simple and repetitive tasks.</p>
+<p>As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown, I used the extra time learning the (now ancient) Extendscript &apos;art&apos;. &#x1F609; At first, there were a couple of scripts I needed, but over time the collection grew. They are simple scripts adapted to my current workflow, and I tried to make them as generic as possible (<a href="https://github.com/pchiorean/Indentz/discussions">suggestions</a> are welcome). I&apos;m a big fan of shortcuts, so there are suggestions for Mac below (unfortunately they must be added manually from <strong>Edit &#x2023; Keyboard Shortcuts &#x2023; Product Area &#x2023; Scripts</strong>).</p>
+<p>The code was developed and tested in Adobe InDesign CC 2020&#x2013;2022 on Mac (but I mostly used <a href="https://www.indesignjs.de/extendscriptAPI/indesign8/">InDesign ExtendScript API 8.0</a> for compatibility with CS6). I&apos;m a graphic designer, not a programmer, so do expect oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though).</p>
 <hr>
-<p><a href="#cleanup"><strong>Cleanup</strong></a> | <a href="#layout"><strong>Layout</strong></a> | <a href="#align"><strong>Align</strong></a> | <a href="#fit"><strong>Fit</strong></a> | <a href="#scale"><strong>Scale</strong></a> | <a href="#proxy"><strong>Proxy</strong></a> | <a href="#file"><strong>File</strong></a> | <a href="#export"><strong>Export</strong></a> | <a href="#view"><strong>View</strong></a> | <a href="#miscellaneous"><strong>Miscellaneous</strong></a> | <a href="#install"><strong>Install</strong></a> | <a href="#about"><strong>About</strong></a></p>
-<hr>
-<h2 class="mume-header" id="description">Description</h2>
+<h2 class="mume-header" id="usage">Usage</h2>
 
 <h3 class="mume-header" id="cleanup">Cleanup</h3>
 
-<p>Preferences, defaults, cleanup.</p>
+<p>Defaults and cleanup.</p>
 <h4 class="mume-header" id="defaultprefs"><strong><code>DefaultPrefs</code></strong></h4>
 
 <p>Sets some preferences for the current document.</p>
 <details><summary><strong>Details</strong></summary>
+<p><strong>Application:</strong></p>
 <blockquote>
-<p><strong>Rulers:</strong> Reset Zero Point<br>
-<strong>Rulers Units:</strong> Millimeters<br>
-<strong>View:</strong> Show Rulers<br>
-<strong>View:</strong> Show Frame Edges<br>
+<p><strong>Preferences &#x2023; General:</strong> Prevent Selection of Locked Objects<br>
+<strong>Preferences &#x2023; Display Performance:</strong> Preserve Object-Level Display Settings<br>
+<strong>Preferences &#x2023; File Handling:</strong> Always Save Preview Images with Documents<br>
+<strong>View &#x2023; Screen Mode:</strong> Normal<br>
+<strong>View &#x2023; Grids &amp; Guides:</strong> Snap to Guides; Smart Guides<br>
+<strong>Windows &#x2023; Layers:</strong> Ungroup Remembers Layers; Paste Remembers Layers<br>
+<strong>Windows &#x2023; Objects &amp; Layout &#x2023; Transform:</strong> Reference Point: Center; Adjust Stroke Weight when Scaling; Adjust Effects when Scaling<br>
+<strong>Windows &#x2023; Output &#x2023; Preflight:</strong> Off</p>
+</blockquote>
+<p><strong>Document:</strong></p>
+<blockquote>
+<p><strong>Adjust Layout:</strong> Off<br>
 <strong>Document Intent:</strong> Print<br>
-<strong>Transparency Blend Space:</strong> CMYK<br>
-<strong>CMYK Profile:</strong> ISO Coated v2 (ECI) (fallback to Coated FOGRA39 (ISO 12647-2:2004))<br>
-<strong>RGB Profile:</strong> sRGB IEC61966-2.1<br>
-<strong>Grids &amp; Guides:</strong> Show Guides<br>
-<strong>Grids &amp; Guides:</strong> Unlock Guides<br>
-<strong>Guides &amp; Pasteboard: Preview Background:</strong> Light Gray<br>
-<strong>Keyboard Increments: Cursor Key:</strong> 0.2 mm<br>
-<strong>Keyboard Increments: Size/Leading:</strong> 0.5 pt<br>
-<strong>Keyboard Increments: Baseline Shift:</strong> 0.1 pt<br>
-<strong>Keyboard Increments: Kerning/Tracking:</strong> 5/1000 em<br>
-<strong>Pages:</strong> Allow Document Pages to Shuffle<br>
-<strong>Layers:</strong> Ungroup Remembers Layers<br>
-<strong>Layers:</strong> Paste Remembers Layers<br>
-<strong>Transform Reference Point:</strong> Center<br>
-<strong>Type Options:</strong> Use Typographer&apos;s Quotes<br>
-<strong>Type Options:</strong> Apply Leading to Entire Paragraphs</p>
+<strong>Rulers:</strong> Zero Point: Reset<br>
+<strong>Preferences &#x2023; Type:</strong> Use Typographer&apos;s Quotes; Apply Leading to Entire Paragraphs<br>
+<strong>Preferences &#x2023; Units &amp; Increments &#x2023; Keyboard Increments:</strong> Cursor Key: 0.2 mm; Size/Leading: 0.5 pt; Baseline Shift: 0.1 pt; Kerning/Tracking: 5/1000 em<br>
+<strong>Preferences &#x2023; Units &amp; Increments &#x2023; Ruler Units:</strong> Origin: Spread; Units: Millimeters<br>
+<strong>Preferences &#x2023; Units &amp; Increments &#x2023; Other Units:</strong> Stroke: Points<br>
+<strong>Preferences &#x2023; Grids:</strong> Baseline Grid Color: R=230 G=230 B=230<br>
+<strong>Preferences &#x2023; Guides &amp; Pasteboard:</strong> Preview Background Color: Light Gray<br>
+<strong>Edit &#x2023; Transparency Blend Space:</strong> Document CMYK<br>
+<strong>Edit &#x2023; Color Settings &#x2023; Working Spaces</strong>; RGB Profile: sRGB IEC61966-2.1; CMYK Profile: ISO Coated v2 (ECI), fallback to Coated FOGRA39 (ISO 12647-2:2004)<br>
+<strong>View:</strong> Show Rulers<br>
+<strong>View &#x2023; Extras:</strong> Show Frame Edges<br>
+<strong>View &#x2023; Grids &amp; Guides:</strong> Show Guides; Unlock Guides; Snap to Guides<br>
+<strong>Windows &#x2023; Color:</strong> Fill: None; Stroke: None<br>
+<strong>Windows &#x2023; Effects:</strong> Blending Mode: Normal; Opacity: 100%<br>
+<strong>Windows &#x2023; Output &#x2023; Attributes:</strong> Nonprinting: Off<br>
+<strong>Windows &#x2023; Pages:</strong> Allow Document Pages to Shuffle<br>
+<strong>Windows &#x2023; Type &amp; Tables &#x2023; Paragraph:</strong> Shading: Off</p>
 </blockquote>
 </details>
 <h4 class="mume-header" id="defaultlayers"><strong><code>DefaultLayers</code></strong></h4>
@@ -366,7 +376,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Order</strong>: <code>above</code> or <code>below</code> existing layers (defaults to <code>above</code>)<br>
 <strong>Variants</strong>: A list of layers that will be merged with the base layer; it&apos;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>)</p>
 </blockquote>
-<details><summary><strong>Other features</strong></summary>
+<details><summary><strong>Additional features</strong></summary>
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
@@ -437,7 +447,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><strong>Variants</strong>: a list of swatches that will be replaced by the base swatch; it&apos;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>)</p>
 </blockquote>
 <p>You can use <a href="#swatchessave"><strong><code>SwatchesSave</code></strong></a> to save a tab delimited list of swatches from any document.</p>
-<details><summary><strong>Other features</strong></summary>
+<details><summary><strong>Additional features</strong></summary>
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
@@ -485,7 +495,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 <p>You can use <a href="#showfonts"><strong><code>ShowFonts</code></strong></a> from <a href="#miscellaneous"><strong>Miscellaneous</strong></a> to get a tab delimited list of document fonts for copy-pasting.</p>
-<details><summary><strong>Other features</strong></summary>
+<details><summary><strong>Additional features</strong></summary>
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
@@ -537,7 +547,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 <blockquote>
-<p><strong>Relink to</strong> (also see <strong>Other features</strong> below):</p>
+<p><strong>Relink to</strong> (also see <strong>Additional features</strong> below):</p>
 <ul>
 <li>An absolute path of the form <code>/absolute/path/to/img1.psd</code>;</li>
 <li>A relative path which is:
@@ -554,7 +564,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </ul>
 </blockquote>
 <p>Quoting the paths is not required.</p>
-<details><summary><strong>Other features</strong></summary>
+<details><summary><strong>Additional features</strong></summary>
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
@@ -624,9 +634,9 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Change to</strong>: The replacement text<br>
 <strong>Case sensitive</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>)<br>
 <strong>Whole word</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>)<br>
-<strong>Scope</strong>: Replacement will only be done if the file name matches the <a href="https://regex101.com">regular expression</a><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> (case sensitive)</p>
+<strong>Scope</strong>: Replacement will only be done if the file name matches the <a href="https://regex101.com">regular expression</a><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> (case sensitive)</p>
 </blockquote>
-<details><summary><strong>Other features</strong></summary>
+<details><summary><strong>Additional features</strong></summary>
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
@@ -645,10 +655,13 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>It runs <a href="#defaultprefs"><strong><code>DefaultPrefs</code></strong></a>; deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.</p>
 <h4 class="mume-header" id="swatchescleanup-smallf2small"><strong><code>SwatchesCleanup</code></strong> <small>&#x21E7;F2</small></h4>
 
-<p>Converts process RGB swatches to CMYK and renames them to &#x201C;C=&#xA0;M=&#xA0;Y=&#xA0;K=&#x201D; format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.</p>
-<h4 class="mume-header" id="swatchessave"><strong><code>SwatchesSave</code></strong></h4>
+<p>Converts process RGB swatches to CMYK and renames them to &apos;C=&#xA0;M=&#xA0;Y=&#xA0;K=&apos; format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.</p>
+<h4 class="mume-header" id="dumplayers"><strong><code>DumpLayers</code></strong></h4>
 
-<p>Saves document&apos;s swatches to a TSV file compatible with <a href="#defaultswatches"><strong><code>DefaultSwatches</code></strong></a>.</p>
+<p>Saves a TSV file (compatible with <a href="#defaultlayers"><strong><code>DefaultLayers</code></strong></a>) containing the names and properties of the current document layers.</p>
+<h4 class="mume-header" id="dumpswatches"><strong><code>DumpSwatches</code></strong></h4>
+
+<p>Saves a TSV file (compatible with <a href="#defaultswatches"><strong><code>DefaultSwatches</code></strong></a>) containing the names and properties of the current document swatches.</p>
 <hr>
 <h3 class="mume-header" id="layout">Layout</h3>
 
@@ -973,7 +986,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>There are two export presets that can be used simultaneously or one at a time:</p>
 <p><img src="img/script-quickexport.png" alt="Quick export"></p>
 <p>The text from the <strong>Suffix</strong> field will be appended to the exported file name (everything in the preset name after the last <code>_</code> will be autodetected as suffix).</p>
-<p>If <strong>Sort files by suffix into subfolders</strong> is checked, subfolders will be created from the suffix (the text after <code>+</code> is ignored<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>).</p>
+<p>If <strong>Sort files by suffix into subfolders</strong> is checked, subfolders will be created from the suffix (the text after <code>+</code> is ignored<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>).</p>
 <p>It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:</p>
 <h4 class="mume-header" id="markvisiblearea"><strong><code>MarkVisibleArea</code></strong></h4>
 
@@ -983,7 +996,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Hides <strong>covered areas</strong>, <strong>visible area</strong>, <strong>safety margins</strong>, <strong>safe area</strong>, <strong>segmentation</strong>, <strong>guides</strong>, and all layers starting with either a dot or a hyphen; moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads.</p>
 <h4 class="mume-header" id="showdnplayers-hidednplayers"><strong><code>ShowDNPLayers</code></strong> / <strong><code>HideDNPLayers</code></strong></h4>
 
-<p>Shows or hides the following &#x201C;do-not-print&#x201D; layers: <strong>covered areas</strong>, <strong>visible area</strong>, <strong>*vi?ib*</strong>, <strong>vis?*</strong>, <strong>safety margins</strong>, <strong>safe area</strong>, <strong>segmentation</strong>, <strong>rahmen</strong> and <strong>sicht*</strong>, and all layers starting with either a dot or a hyphen.</p>
+<p>Shows or hides the following <em>do-not-print</em> layers: <strong>covered areas</strong>, <strong>visible area</strong>, <strong>*vi?ib*</strong>, <strong>vis?*</strong>, <strong>safety margins</strong>, <strong>safe area</strong>, <strong>segmentation</strong>, <strong>rahmen</strong> and <strong>sicht*</strong>, and all layers starting with either a dot or a hyphen.</p>
 <hr>
 <h3 class="mume-header" id="view">View</h3>
 
@@ -994,7 +1007,7 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <p>It resembles <strong>Fit Selection in Window</strong> <strong><small>(&#x2325;&#x2318;=)</small></strong>, but with some changes:</p>
 <ul>
-<li>Brings the selection a little closer<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>;</li>
+<li>Brings the selection a little closer<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>;</li>
 <li>If the cursor is in a text frame, zooms on the whole frame;</li>
 <li>Without anything selected zooms on the current spread.</li>
 </ul>
@@ -1022,7 +1035,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.</p>
 <h4 class="mume-header" id="qr-smallf9small"><strong><code>QR</code></strong> <small>F9</small></h4>
 
-<p>Adds a QR code on each spread of the active document or to separate PDF files<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>:</p>
+<p>Adds a QR code on each spread of the active document or to separate PDF files<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>:</p>
 <p><img src="img/script-qr.png" alt="QR"></p>
 <p>The code looks like this:</p>
 <table>
@@ -1091,7 +1104,6 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="showproperties-smallf1small"><strong><code>ShowProperties</code></strong> <small>F1</small></h4>
 
 <p>Shows properties and methods of a selected object.</p>
-<hr>
 <h2 class="mume-header" id="install">Install</h2>
 
 <ol>
@@ -1100,26 +1112,23 @@ pre[data-line] .line-highlight[data-end]:after {
 <li>Right-click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
 <li>Copy <strong>Indentz</strong> to this folder.</li>
 </ol>
-<hr>
 <h2 class="mume-header" id="about">About</h2>
 
 <p>All scripts are created by me unless otherwise noted.</p>
 <p>&#xA9; 2020-2022 Paul Chiorean &lt;jpeg AT basement.ro&gt;.<br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&apos;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
-<p>Last updated: October 14, 2022</p>
+<p><small>Last updated: October 24, 2022</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn1" class="footnote-item"><p>For example, in <strong><code>Document_DE.indd</code></strong> &apos;The sample is for free&apos; will be replaced with &apos;Das Sample ist kostenlos&apos;, and for <strong><code>Document_FR.indd</code></strong> with &apos;L&apos;&#xE9;chantillon est gratuit&apos;. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
-<li id="fn2" class="footnote-item"><p>For example, in <strong><code>Document_DE.indd</code></strong> &#x201C;The sample is for free&#x201D; will be replaced with &#x201C;Das Sample ist kostenlos&#x201D;, and for <strong><code>Document_FR.indd</code></strong> with &#x201C;L&apos;&#xE9;chantillon est gratuit&#x201D;. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn2" class="footnote-item"><p>For example, if the suffix is <code>print+diecut</code>, the document will be saved as <strong><code>Document_print+diecut.pdf</code></strong> in a subfolder named <strong><code>print</code></strong>. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
-<li id="fn3" class="footnote-item"><p>For example, if the suffix is <code>print+diecut</code>, the document will be saved as <strong><code>Document_print+diecut.pdf</code></strong> in a subfolder named <strong><code>print</code></strong>. <a href="#fnref3" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn3" class="footnote-item"><p>The variable <code>Z</code> from line 42 must be set to fit a square page at 90% of <strong>Fit Page in Window</strong>. <a href="#fnref3" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
-<li id="fn4" class="footnote-item"><p>The variable <code>Z</code> from line 42 must be set to fit a square page at 90% of &apos;Fit Page in Window&apos;. <a href="#fnref4" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
-</li>
-<li id="fn5" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref5" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn4" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref4" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
 </ol>
 </section>

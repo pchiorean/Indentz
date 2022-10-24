@@ -1,52 +1,61 @@
 # Indentz
 
-A collection of InDesign scripts for various simple and repetitive tasks.
+<small>[Cleanup](#cleanup) | [Layout](#layout) | [Align](#align) | [Fit](#fit) | [Scale](#scale) | [Proxy](#proxy) | [File](#file) | [Export](#export) | [View](#view) | [Miscellaneous](#miscellaneous) | [Install](#install) | [About](#about)</small>
 
-As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown I had some time to learn a bit of scripting; over time, the collection grew. These are simple scripts adapted to my workflow[^1], but I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). The code was developed and tested in Adobe InDesign CC 2020 and later on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though). I'm also a big fan of shortcuts, so there are suggestions for Mac below (unfortunately must be added manually from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**).
+This is a collection of InDesign scripts for various simple and repetitive tasks.
+
+As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown, I used the extra time learning the (now ancient) Extendscript 'art'. ;) At first, there were a couple of scripts I needed, but over time the collection grew. They are simple scripts adapted to my current workflow, and I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). I'm a big fan of shortcuts, so there are suggestions for Mac below (unfortunately they must be added manually from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**).
+
+The code was developed and tested in Adobe InDesign CC 2020–2022 on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though).
 
 ---
 
-[**Cleanup**](#cleanup) | [**Layout**](#layout) | [**Align**](#align) | [**Fit**](#fit) | [**Scale**](#scale) | [**Proxy**](#proxy) | [**File**](#file) | [**Export**](#export) | [**View**](#view) | [**Miscellaneous**](#miscellaneous) | [**Install**](#install) | [**About**](#about)
-
----
-
-## Description
+## Usage
 
 ### Cleanup
 
-Preferences, defaults, cleanup.
+Defaults and cleanup.
 
 #### **`DefaultPrefs`**
 Sets some preferences for the current document.
 
 <details><summary><strong>Details</strong></summary>
 
-> **Rulers:** Reset Zero Point\
-> **Rulers Units:** Millimeters\
-> **View:** Show Rulers\
-> **View:** Show Frame Edges\
+**Application:**
+> **Preferences ‣ General:** Prevent Selection of Locked Objects\
+> **Preferences ‣ Display Performance:** Preserve Object-Level Display Settings\
+> **Preferences ‣ File Handling:** Always Save Preview Images with Documents\
+> **View ‣ Screen Mode:** Normal\
+> **View ‣ Grids & Guides:** Snap to Guides; Smart Guides\
+> **Windows ‣ Layers:** Ungroup Remembers Layers; Paste Remembers Layers\
+> **Windows ‣ Objects & Layout ‣ Transform:** Reference Point: Center; Adjust Stroke Weight when Scaling; Adjust Effects when Scaling\
+> **Windows ‣ Output ‣ Preflight:** Off
+
+**Document:**
+> **Adjust Layout:** Off\
 > **Document Intent:** Print\
-> **Transparency Blend Space:** CMYK\
-> **CMYK Profile:** ISO Coated v2 (ECI) (fallback to Coated FOGRA39 (ISO 12647-2:2004))\
-> **RGB Profile:** sRGB IEC61966-2.1\
-> **Grids & Guides:** Show Guides\
-> **Grids & Guides:** Unlock Guides\
-> **Guides & Pasteboard: Preview Background:** Light Gray\
-> **Keyboard Increments: Cursor Key:** 0.2 mm\
-> **Keyboard Increments: Size/Leading:** 0.5 pt\
-> **Keyboard Increments: Baseline Shift:** 0.1 pt\
-> **Keyboard Increments: Kerning/Tracking:** 5/1000 em\
-> **Pages:** Allow Document Pages to Shuffle\
-> **Layers:** Ungroup Remembers Layers\
-> **Layers:** Paste Remembers Layers\
-> **Transform Reference Point:** Center\
-> **Type Options:** Use Typographer's Quotes\
-> **Type Options:** Apply Leading to Entire Paragraphs
+> **Rulers:** Zero Point: Reset\
+> **Preferences ‣ Type:** Use Typographer's Quotes; Apply Leading to Entire Paragraphs\
+> **Preferences ‣ Units & Increments ‣ Keyboard Increments:** Cursor Key: 0.2 mm; Size/Leading: 0.5 pt; Baseline Shift: 0.1 pt; Kerning/Tracking: 5/1000 em\
+> **Preferences ‣ Units & Increments ‣ Ruler Units:** Origin: Spread; Units: Millimeters\
+> **Preferences ‣ Units & Increments ‣ Other Units:** Stroke: Points\
+> **Preferences ‣ Grids:** Baseline Grid Color: R=230 G=230 B=230\
+> **Preferences ‣ Guides & Pasteboard:** Preview Background Color: Light Gray\
+> **Edit ‣ Transparency Blend Space:** Document CMYK\
+> **Edit ‣ Color Settings ‣ Working Spaces**; RGB Profile: sRGB IEC61966-2.1; CMYK Profile: ISO Coated v2 (ECI), fallback to Coated FOGRA39 (ISO 12647-2:2004)\
+> **View:** Show Rulers\
+> **View ‣ Extras:** Show Frame Edges\
+> **View ‣ Grids & Guides:** Show Guides; Unlock Guides; Snap to Guides\
+> **Windows ‣ Color:** Fill: None; Stroke: None\
+> **Windows ‣ Effects:** Blending Mode: Normal; Opacity: 100%\
+> **Windows ‣ Output ‣ Attributes:** Nonprinting: Off\
+> **Windows ‣ Pages:** Allow Document Pages to Shuffle\
+> **Windows ‣ Type & Tables ‣ Paragraph:** Shading: Off
 
 </details>
 
 #### **`DefaultLayers`**
-Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample](samples/layers.tsv)) saved *locally* (meaning the active document folder or its parent), or as a *global default* (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
+Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample](samples/layers.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Name         | Color   | Visible | Printable | Order | Variants                                           |
 |:-------------|:--------|:--------|:----------|:------|:---------------------------------------------------|
@@ -63,9 +72,9 @@ Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample]
 > **Order**: `above` or `below` existing layers (defaults to `above`)\
 > **Variants**: A list of layers that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` and `*`)
 
-<details><summary><strong>Other features</strong></summary>
+<details><summary><strong>Additional features</strong></summary>
 
-A line may also contain a *statement*:
+A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
 - `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
@@ -80,7 +89,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 </details>
 
 #### **`DefaultSwatches`**
-Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sample](samples/swatches.tsv)) saved *locally* (meaning the active document folder or its parent), or as a *global default* (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
+Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sample](samples/swatches.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Name           | Color Model | Color Space | Values       | Variants         |
 |:---------------|:------------|:------------|:-------------|:-----------------|
@@ -101,9 +110,9 @@ Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sam
 
 You can use [**`SwatchesSave`**](#swatchessave) to save a tab delimited list of swatches from any document.
 
-<details><summary><strong>Other features</strong></summary>
+<details><summary><strong>Additional features</strong></summary>
 
-A line may also contain a *statement*:
+A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
 - `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
@@ -118,7 +127,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 </details>
 
 #### **`ReplaceFonts`**
-Replaces document fonts using a TSV data file named **`fonts.tsv`** ([sample](samples/fonts.tsv)) saved *locally* (meaning the active document folder or its parent), or as a *global default* (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
+Replaces document fonts using a TSV data file named **`fonts.tsv`** ([sample](samples/fonts.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Old font family | Style   | New font family    | Style   |
 |:----------------|:--------|:-------------------|:--------|
@@ -128,9 +137,9 @@ Replaces document fonts using a TSV data file named **`fonts.tsv`** ([sample](sa
 
 You can use [**`ShowFonts`**](#showfonts) from [**Miscellaneous**](#miscellaneous) to get a tab delimited list of document fonts for copy-pasting.
 
-<details><summary><strong>Other features</strong></summary>
+<details><summary><strong>Additional features</strong></summary>
 
-A line may also contain a *statement*:
+A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
 - `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
@@ -145,7 +154,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 </details>
 
 #### **`ReplaceLinks`** <small>⌥F8</small>
-Replaces document links using a TSV data file named **`links.tsv`** ([sample](samples/links.tsv)) saved *locally* (meaning the active document folder or its parent), or as a *global default* (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
+Replaces document links using a TSV data file named **`links.tsv`** ([sample](samples/links.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Relink to                         | Document links              |
 |:----------------------------------|:----------------------------|
@@ -156,21 +165,21 @@ Replaces document links using a TSV data file named **`links.tsv`** ([sample](sa
 | **subfolder/img4.psd**            |                             |
 | ...                               |                             |
 
-> **Relink to** (also see **Other features** below):
+> **Relink to** (also see **Additional features** below):
 > - An absolute path of the form `/absolute/path/to/img1.psd`;
 > - A relative path which is:
 >   - relative by default to the document `Links` folder (`img2.psd`);
 >   - relative to `reference/path` defined by a previous `@includepath` statement (`img3.psd` and `subfolder/img4.psd`).
 > 
 > **Document links:**
-> - If empty, the *name* from the first column will be used (so that if it's in the document, it will be replaced);
+> - If empty, the _name_ from the first column will be used (so that if it's in the document, it will be replaced);
 > - One or more document link names; it's case insensitive and can take simple wildcards (`?` and `*`).
 
 Quoting the paths is not required.
 
-<details><summary><strong>Other features</strong></summary>
+<details><summary><strong>Additional features</strong></summary>
 
-A line may also contain a *statement*:
+A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
 - `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
@@ -185,7 +194,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 </details>
 
 #### **`ReplaceSnippets`** <small>⌥F6</small>
-Replaces a list of text snippets using a TSV data file named **`snippets.tsv`** ([sample](samples/snippets.tsv)) saved *locally* (meaning the active document folder or its parent), or as a *global default* (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
+Replaces a list of text snippets using a TSV data file named **`snippets.tsv`** ([sample](samples/snippets.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Find what              | Change to                 | Case sensitive | Whole word | Scope |
 |:-----------------------|:--------------------------|:---------------|:-----------|:------|
@@ -199,11 +208,11 @@ Replaces a list of text snippets using a TSV data file named **`snippets.tsv`** 
 > **Change to**: The replacement text\
 > **Case sensitive**: `yes` or `no` (defaults to `yes`)\
 > **Whole word**: `yes` or `no` (defaults to `yes`)\
-> **Scope**: Replacement will only be done if the file name matches the [regular expression](https://regex101.com)[^2] (case sensitive)
+> **Scope**: Replacement will only be done if the file name matches the [regular expression](https://regex101.com)[^1] (case sensitive)
 
-<details><summary><strong>Other features</strong></summary>
+<details><summary><strong>Additional features</strong></summary>
 
-A line may also contain a *statement*:
+A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
 - `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
@@ -221,10 +230,13 @@ There's also some non-standard stuff that will confuse Excel et al.:
 It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
 
 #### **`SwatchesCleanup`** <small>⇧F2</small>
-Converts process RGB swatches to CMYK and renames them to “C= M= Y= K=” format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.
+Converts process RGB swatches to CMYK and renames them to 'C= M= Y= K=' format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.
 
-#### **`SwatchesSave`**
-Saves document's swatches to a TSV file compatible with [**`DefaultSwatches`**](#defaultswatches).
+#### **`DumpLayers`**
+Saves a TSV file (compatible with [**`DefaultLayers`**](#defaultlayers)) containing the names and properties of the current document layers.
+
+#### **`DumpSwatches`**
+Saves a TSV file (compatible with [**`DefaultSwatches`**](#defaultswatches)) containing the names and properties of the current document swatches.
 
 ---
 
@@ -397,7 +409,7 @@ There are two export presets that can be used simultaneously or one at a time:
 
 The text from the **Suffix** field will be appended to the exported file name (everything in the preset name after the last `_` will be autodetected as suffix).
 
-If **Sort files by suffix into subfolders** is checked, subfolders will be created from the suffix (the text after `+` is ignored[^3]).
+If **Sort files by suffix into subfolders** is checked, subfolders will be created from the suffix (the text after `+` is ignored[^2]).
 
 It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:
 
@@ -408,7 +420,7 @@ Creates a frame the size of the page margins on the **visible area** layer. It w
 Hides **covered areas**, **visible area**, **safety margins**, **safe area**, **segmentation**, **guides**, and all layers starting with either a dot or a hyphen; moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads.
 
 #### **`ShowDNPLayers`** / **`HideDNPLayers`**
-Shows or hides the following “do-not-print” layers: **covered areas**, **visible area**, **\*vi?ib\***, **vis?\***, **safety margins**, **safe area**, **segmentation**, **rahmen** and **sicht\***, and all layers starting with either a dot or a hyphen.
+Shows or hides the following _do-not-print_ layers: **covered areas**, **visible area**, **\*vi?ib\***, **vis?\***, **safety margins**, **safe area**, **segmentation**, **rahmen** and **sicht\***, and all layers starting with either a dot or a hyphen.
 
 ---
 
@@ -420,7 +432,7 @@ Invokes **Window ‣ Arrange ‣ Tile All Vertically** or **Tile All Horizontall
 #### **`ZoomToSelection`** <small>F4</small>
 It resembles **Fit Selection in Window** **<small>(⌥⌘=)</small>**, but with some changes:
 
-- Brings the selection a little closer[^4];
+- Brings the selection a little closer[^3];
 - If the cursor is in a text frame, zooms on the whole frame;
 - Without anything selected zooms on the current spread.
 
@@ -450,7 +462,7 @@ Sometimes objects that have a script label attached are reused, which may create
 
 #### **`QR`** <small>F9</small>
 
-Adds a QR code on each spread of the active document or to separate PDF files[^5]:
+Adds a QR code on each spread of the active document or to separate PDF files[^4]:
 
 ![QR](img/script-qr.png)
 
@@ -492,15 +504,11 @@ Shows all color profiles available to InDesign.
 #### **`ShowProperties`** <small>F1</small>
 Shows properties and methods of a selected object.
 
----
-
 ## Install
 1. Clone or download from **Code ‣ Download ZIP**. The repository uses dynamically linked libraries from **`lib/`**, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked.
 2. Open **Window ‣ Utilities ‣ Scripts**.
 3. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
 4. Copy **Indentz** to this folder.
-
----
 
 ## About
 
@@ -511,10 +519,9 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-Last updated: October 14, 2022
+<small>Last updated: October 24, 2022</small>
 
-[^1]: Some of the scripts are meant to be used mainly on posters and such, not on documents with many pages or flowing text.
-[^2]: For example, in **`Document_DE.indd`** “The sample is for free” will be replaced with “Das Sample ist kostenlos”, and for **`Document_FR.indd`** with “L'échantillon est gratuit”.
-[^3]: For example, if the suffix is `print+diecut`, the document will be saved as **`Document_print+diecut.pdf`** in a subfolder named **`print`**.
-[^4]: The variable `Z` from line 42 must be set to fit a square page at 90% of 'Fit Page in Window'.
-[^5]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
+[^1]: For example, in **`Document_DE.indd`** 'The sample is for free' will be replaced with 'Das Sample ist kostenlos', and for **`Document_FR.indd`** with 'L'échantillon est gratuit'.
+[^2]: For example, if the suffix is `print+diecut`, the document will be saved as **`Document_print+diecut.pdf`** in a subfolder named **`print`**.
+[^3]: The variable `Z` from line 42 must be set to fit a square page at 90% of **Fit Page in Window**.
+[^4]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
