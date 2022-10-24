@@ -1,5 +1,5 @@
 /*
-	Default layers 22.9.25
+	Default layers 22.10.21
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.tsv':
@@ -299,46 +299,46 @@ function main() {
 				fail: status.fail.concat(tmpStatus.fail)
 			};
 
-			function getUIColor(color) {
+			function getUIColor(/*string*/color) {
 				return {
-					'Blue':        UIColors.BLUE,
-					'Black':       UIColors.BLACK,
-					'Brick Red':   UIColors.BRICK_RED,
-					'Brown':       UIColors.BROWN,
-					'Burgundy':    UIColors.BURGUNDY,
-					'Charcoal':    UIColors.CHARCOAL,
-					'Cute Teal':   UIColors.CUTE_TEAL,
-					'Cyan':        UIColors.CYAN,
-					'Dark Blue':   UIColors.DARK_BLUE,
-					'Dark Green':  UIColors.DARK_GREEN,
-					'Fiesta':      UIColors.FIESTA,
-					'Gold':        UIColors.GOLD,
-					'Grass Green': UIColors.GRASS_GREEN,
-					'Gray':        UIColors.GRAY,
-					'Green':       UIColors.GREEN,
-					'Grid Blue':   UIColors.GRID_BLUE,
-					'Grid Green':  UIColors.GRID_GREEN,
-					'Grid Orange': UIColors.GRID_ORANGE,
-					'Lavender':    UIColors.LAVENDER,
-					'Light Blue':  UIColors.LIGHT_BLUE,
-					'Light Gray':  UIColors.LIGHT_GRAY,
-					'Light Olive': UIColors.LIGHT_OLIVE,
-					'Lipstick':    UIColors.LIPSTICK,
-					'Magenta':     UIColors.MAGENTA,
-					'Ochre':       UIColors.OCHRE,
-					'Olive Green': UIColors.OLIVE_GREEN,
-					'Orange':      UIColors.ORANGE,
-					'Peach':       UIColors.PEACH,
-					'Pink':        UIColors.PINK,
-					'Purple':      UIColors.PURPLE,
-					'Red':         UIColors.RED,
-					'Sulphur':     UIColors.SULPHUR,
-					'Tan':         UIColors.TAN,
-					'Teal':        UIColors.TEAL,
-					'Violet':      UIColors.VIOLET,
-					'White':       UIColors.WHITE,
-					'Yellow':      UIColors.YELLOW
-				}[color] || UIColors.LIGHT_BLUE;
+					'blue':        UIColors.BLUE,
+					'black':       UIColors.BLACK,
+					'brick red':   UIColors.BRICK_RED,
+					'brown':       UIColors.BROWN,
+					'burgundy':    UIColors.BURGUNDY,
+					'charcoal':    UIColors.CHARCOAL,
+					'cute teal':   UIColors.CUTE_TEAL,
+					'cyan':        UIColors.CYAN,
+					'dark blue':   UIColors.DARK_BLUE,
+					'dark green':  UIColors.DARK_GREEN,
+					'fiesta':      UIColors.FIESTA,
+					'gold':        UIColors.GOLD,
+					'grass green': UIColors.GRASS_GREEN,
+					'gray':        UIColors.GRAY,
+					'green':       UIColors.GREEN,
+					'grid blue':   UIColors.GRID_BLUE,
+					'grid green':  UIColors.GRID_GREEN,
+					'grid orange': UIColors.GRID_ORANGE,
+					'lavender':    UIColors.LAVENDER,
+					'light blue':  UIColors.LIGHT_BLUE,
+					'light gray':  UIColors.LIGHT_GRAY,
+					'light olive': UIColors.LIGHT_OLIVE,
+					'lipstick':    UIColors.LIPSTICK,
+					'magenta':     UIColors.MAGENTA,
+					'ochre':       UIColors.OCHRE,
+					'olive green': UIColors.OLIVE_GREEN,
+					'orange':      UIColors.ORANGE,
+					'peach':       UIColors.PEACH,
+					'pink':        UIColors.PINK,
+					'purple':      UIColors.PURPLE,
+					'red':         UIColors.RED,
+					'sulphur':     UIColors.SULPHUR,
+					'tan':         UIColors.TAN,
+					'teal':        UIColors.TEAL,
+					'violet':      UIColors.VIOLET,
+					'white':       UIColors.WHITE,
+					'yellow':      UIColors.YELLOW
+				}[color.toLowerCase()] || UIColors.LIGHT_BLUE;
 			}
 		}
 	}
