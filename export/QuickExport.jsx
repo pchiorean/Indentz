@@ -1,5 +1,5 @@
 /*
-	Quick export 22.10.4
+	Quick export 22.10.24
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -587,7 +587,12 @@ while ((doc = docs.shift())) {
 		if (!exp.isOn.value) continue;
 		// Create subfolder
 		suffix = exp.suffix.text ? ('_' + exp.suffix.text) : '';
-		if (/print$/i.test(suffix) && doc.layers.itemByName('dielines').isValid) suffix += '+diecut'; // Hack: +diecut
+
+		// Hack: Append special folder names to the suffix
+		if (/print$/i.test(suffix) && doc.layers.itemByName('dielines').isValid) suffix += '+diecut';
+		if (/print$/i.test(suffix) && doc.layers.itemByName('varnish').isValid) suffix += '+varnish';
+		if (/print$/i.test(suffix) && doc.layers.itemByName('white').isValid) suffix += '+white';
+
 		subfolder = '';
 		if (ui.output.options.subfolders.value && suffix) {
 			subfolder = suffix.replace(/^_/, '').replace(/\+.*$/, '').replace(/^\s+|\s+$/g, '');
@@ -917,6 +922,12 @@ function readSettings() {
 		}
 		return 0;
 	}
+
+	function setDefaults() {
+		try { settingsFile.remove(); } catch (e) {}
+		settings = defaults;
+		alert('Preferences were reset.\nEither the file was an old version, or it was corrupt.');
+	}
 }
 
 function saveSettings() {
@@ -992,12 +1003,6 @@ function saveSettings() {
 	settingsFile.open('w');
 	settingsFile.write(settings.toSource());
 	settingsFile.close();
-}
-
-function setDefaults() {
-	try { settingsFile.remove(); } catch (e) {}
-	settings = defaults;
-	alert('Preferences were reset.\nEither the file was an old version, or it was corrupt.');
 }
 
 function getFilesRecursively(/*Folder*/folder) {
