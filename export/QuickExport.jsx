@@ -599,11 +599,10 @@ while ((doc = docs.shift())) {
 			if (!Folder(baseFolder + '/' + subfolder).exists) Folder(baseFolder + '/' + subfolder).create();
 		}
 
-		// Hack: show/hide .layers
+		// Hack: Hide dot-layers when exporting with a 'print' suffix
 		for (i = 0; i < doc.layers.length; i++) {
 			if (!/^\./.test(doc.layers[i].name)) continue;
-			if (/preview$/i.test(exp.preset.selection.text)) doc.layers[i].visible = true;
-			else if (/print(\+diecut)?$/i.test(exp.preset.selection.text)) doc.layers[i].visible = false;
+			if (/print(\+diecut)?$/i.test(exp.preset.selection.text)) doc.layers[i].visible = false;
 		}
 
 		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) runScript(exp.script.path);
