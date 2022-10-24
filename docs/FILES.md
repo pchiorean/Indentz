@@ -7,9 +7,10 @@ Name                               |     Fn | Description
 `ReplaceFonts.jsx`                 |        | Replaces fonts from a substitution list
 `ReplaceLinks.jsx`                 |    ⌥F8 | Replaces document links from a substitution list
 `ReplaceSnippets.jsx`              |    ⌥F6 | Replaces text snippets from a substitution list
-`DocCleanup.jsx`                   |     F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling
 `SwatchesCleanup.jsx`              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
-`SwatchesSave.jsx`                 |        | Saves document's swatches to a list
+`DocCleanup.jsx`                   |     F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling
+`DumpSwatches.jsx`                 |        | Saves document's swatches to a list
+`DumpLayers.jsx`                   |        | Saves document's layers to a list
 **Layout**                         |        | **Document setup - page size, margins & columns, guides**
 `PageSizeFromFilename.jsx`         |     F3 | Sets every page size and margins according to the file name
 `PageSizeFromMargins.jsx`          |        | Sets the page size to the page margins
