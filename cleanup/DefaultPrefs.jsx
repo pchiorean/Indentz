@@ -1,5 +1,5 @@
 /*
-	Default preferences 22.4.15
+	Default preferences 22.10.24
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Sets default preferences.
@@ -7,8 +7,6 @@
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
 */
-
-if (!(doc = app.activeDocument)) exit();
 
 app.doScript(function () {
 	app.properties = {
@@ -41,6 +39,8 @@ app.doScript(function () {
 			adjustStrokeWeightWhenScaling: true
 		}
 	};
+
+	if (!(doc = app.activeDocument)) exit();
 	doc.properties = {
 		adjustLayoutPreferences: {
 			enableAdjustLayout: false,
