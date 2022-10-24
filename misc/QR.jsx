@@ -1,5 +1,5 @@
 /*
-	QR code 22.10.6
+	QR code 22.10.21
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -59,10 +59,10 @@ function main() {
 			ui.white.helpTip = 'Make label white' + (currentPath ? ' (only when placing on documents)' : '');
 	ui.actions = ui.add('group { alignChildren: [ "fill", "top" ], orientation: "column" }');
 		if (currentPath) {
-			ui.onfile = ui.actions.add('button { text: "On file", properties: { name: "ok" } }');
+			ui.ondoc = ui.actions.add('button { text: "On doc", properties: { name: "ok" } }');
+			ui.onfile = ui.actions.add('button { text: "On file" }');
 			ui.onfile.helpTip = 'Save as QR Codes/' + ((/\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf('.'))) || doc.name) + '_QR.pdf';
 			ui.onfile.onClick = function () { onDoc = false; ui.close(); };
-			ui.ondoc = ui.actions.add('button { text: "On doc" }');
 		} else {
 			ui.ondoc = ui.actions.add('button { text: "Ok" }');
 		}
