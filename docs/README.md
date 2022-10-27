@@ -17,7 +17,7 @@ The code was developed and tested in Adobe InDesign CC 2020–2022 on Mac (but I
 Defaults and cleanup.
 
 #### **`DefaultPrefs`**
-Sets some preferences for the current document.
+Sets some preferences for the active document.
 
 <details><summary><strong>Details</strong></summary>
 
@@ -36,13 +36,13 @@ Sets some preferences for the current document.
 > **Document Intent:** Print\
 > **Rulers:** Zero Point: Reset\
 > **Preferences ‣ Type:** Use Typographer's Quotes; Apply Leading to Entire Paragraphs\
-> **Preferences ‣ Units & Increments ‣ Keyboard Increments:** Cursor Key: 0.2 mm; Size/Leading: 0.5 pt; Baseline Shift: 0.1 pt; Kerning/Tracking: 5/1000 em\
+> **Preferences ‣ Units & Increments ‣ Keyboard Increments:** Cursor Key: 0.2 mm; Size/Leading: 0.5 pt; Baseline Shift: 0.1 pt; Kerning/Tracking: 5/1000 em\
 > **Preferences ‣ Units & Increments ‣ Ruler Units:** Origin: Spread; Units: Millimeters\
 > **Preferences ‣ Units & Increments ‣ Other Units:** Stroke: Points\
 > **Preferences ‣ Grids:** Baseline Grid Color: R=230 G=230 B=230\
 > **Preferences ‣ Guides & Pasteboard:** Preview Background Color: Light Gray\
 > **Edit ‣ Transparency Blend Space:** Document CMYK\
-> **Edit ‣ Color Settings ‣ Working Spaces**: RGB Profile: sRGB IEC61966-2.1; CMYK Profile: ISO Coated v2 (ECI), fallback to Coated FOGRA39 (ISO 12647-2:2004)\
+> **Edit ‣ Color Settings ‣ Working Spaces**: RGB Profile: sRGB IEC61966-2.1; CMYK Profile: ISO Coated v2 (ECI), fallback to Coated FOGRA39 (ISO 12647-2:2004)\
 > **View:** Show Rulers\
 > **View ‣ Extras:** Show Frame Edges\
 > **View ‣ Grids & Guides:** Show Guides; Unlock Guides; Snap to Guides\
@@ -83,7 +83,7 @@ A line may also contain a _statement_:
 There's also some non-standard stuff that will confuse Excel et al.:
 
 - Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -121,7 +121,7 @@ A line may also contain a _statement_:
 There's also some non-standard stuff that will confuse Excel et al.:
 
 - Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -148,7 +148,7 @@ A line may also contain a _statement_:
 There's also some non-standard stuff that will confuse Excel et al.:
 
 - Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -188,7 +188,7 @@ A line may also contain a _statement_:
 There's also some non-standard stuff that will confuse Excel et al.:
 
 - Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -208,7 +208,7 @@ Replaces a list of text snippets using a TSV data file named **`snippets.tsv`** 
 > **Change to**: The replacement text\
 > **Case sensitive**: `yes` or `no` (defaults to `yes`)\
 > **Whole word**: `yes` or `no` (defaults to `yes`)\
-> **Scope**: Replacement will only be done if the file name matches the [regular expression](https://regex101.com)[^1] (case sensitive)
+> **Scope**: Replacement will only be done if the document name matches the [regular expression](https://regex101.com)[^1] (case sensitive)
 
 <details><summary><strong>Additional features</strong></summary>
 
@@ -221,7 +221,7 @@ A line may also contain a _statement_:
 There's also some non-standard stuff that will confuse Excel et al.:
 
 - Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -233,10 +233,10 @@ It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and
 Converts process RGB swatches to CMYK and renames them to 'C= M= Y= K=' format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.
 
 #### **`DumpLayers`**
-Saves a TSV file (compatible with [**`DefaultLayers`**](#defaultlayers)) containing the names and properties of the current document layers.
+Saves a TSV file (compatible with [**`DefaultLayers`**](#defaultlayers)) containing the names and properties of the active document layers.
 
 #### **`DumpSwatches`**
-Saves a TSV file (compatible with [**`DefaultSwatches`**](#defaultswatches)) containing the names and properties of the current document swatches.
+Saves a TSV file (compatible with [**`DefaultSwatches`**](#defaultswatches)) containing the names and properties of the active document swatches.
 
 ---
 
@@ -245,7 +245,7 @@ Saves a TSV file (compatible with [**`DefaultSwatches`**](#defaultswatches)) con
 Document setup – page size, margins & columns, guides.
 
 #### **`PageSizeFromFilename`** <small>F3</small>
-Sets the size of the page and the margins/visible area, getting dimensions from the file name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
+Sets the size of the page and the margins/visible area, getting dimensions from the document name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
 
 | Filename                                        | Total size | Visible area | Bleed |
 |:------------------------------------------------|:-----------|:-------------|:------|
@@ -265,7 +265,7 @@ Sets the page margins from the selected objects.
 #### **`GuidesAdd`**
 If any page objects are selected, it adds guides around them.
 
-If nothing is selected, it adds guides on page edges and inner centers (that is, the page without margins); a second run deletes them.
+If nothing is selected, it adds guids on page edges and in the middle of margins; a second run deletes them.
 
 #### **`GuidesDelete`**
 Deletes all guides from the document.
@@ -285,7 +285,7 @@ Toggles **Align To** between selection, margins, page or spread (just run it rep
 Resets **Align To** to default (**Align to Selection**).
 
 #### **`AlignTo...`**
-Use the numeric keypad to instantly align the selected object to the **Align To** selection.
+Use the numeric keypad to instantly align the selected object to the **Align To** selection, with a single keystroke.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -385,9 +385,9 @@ Combines the open documents, sorted alphabetically.
 #### **`SpreadsToFiles`**
 Saves each spread of the active document to a separate file.
 
-If the file name has a suffix equal in length to the number of spreads, it will be used as the index list; for example a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`** / **`Document_B.indd`** / **`Document_C.indd`**; otherwise, the script will ask for an index list for naming files, like `-123`, where `-` is the separator and `123` is the index list.
+If the document name ends with a _separator_ (space/dot/underline/hyphen) followed by _a sequence_ of digits or letters _equal_ to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`** / **`Document_B.indd`** / **`Document_C.indd`**. If not autodetected, the script will prompt the user for the list.
 
-The index will be placed where the first `#` is detected, or at the end of the file name.
+By default, the index will be appended at the end, but you can put a `#` in the document name to place the index at that particular position.
 
 #### **`LayersToSpreads`**
 Moves all layers of the active document to separate spreads (the document must have a single spread).
@@ -407,7 +407,7 @@ There are two export presets that can be used simultaneously or one at a time:
 
 ![Quick export](img/script-quickexport.png)
 
-The text from the **Suffix** field will be appended to the exported file name (everything in the preset name after the last `_` will be autodetected as suffix).
+The text from the **Suffix** field will be appended to the name of the exported file (everything in the preset name after the last `_` will be autodetected as suffix).
 
 If **Sort files by suffix into subfolders** is checked, subfolders will be created from the suffix (the text after `+` is ignored[^2]).
 
@@ -452,7 +452,9 @@ To handle some objects it is sometimes useful to temporarily insert them into a 
 Releases one or several objects from their clipping frames (you can select any objects, it will only release the clipped ones). If nothing is selected, it will release all clipped objects.
 
 #### **`LabelPage`**
-Adds a custom label on the current page slug, on the **info** layer.
+Adds a custom label on the current page slug, on the **info** layer (with Helvetica Regular 6 pt, **Registration** swatch):
+
+![Label Page](img/labelpage.png)
 
 #### **`LabelPageRatios`**
 Adds a label with the page aspect ratio, on the slug of each page, on the **info** layer.
@@ -462,17 +464,13 @@ Sometimes objects that have a script label attached are reused, which may create
 
 #### **`QR`** <small>F9</small>
 
-Adds a QR code on each spread of the active document or to separate PDF files[^4]:
-
-![QR](img/script-qr.png)
-
-The code looks like this:
+Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^4]:
 
 |             On document             |             On file              |
 |:-----------------------------------:|:--------------------------------:|
 | ![QR on document](img/qr-ondoc.png) | ![QR on file](img/qr-onfile.png) |
 
-If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, the code of each spread will have the appropriate suffix; when separate files are generated, they will be named appropriately (e.g., for **`Document_ABC.indd`** with three spreads, **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`** and **`Document_C_QR.pdf`** will be generated).
+If the document name ends with a _separator_ (space/dot/underline/hyphen) followed by a _sequence_ of digits or letters _equal_ to the number of spreads, the letter corresponding to the spread index will be appended to each code/file – e.g., for a document with three spreads named **`Document_ABC.indd`**, the script will generate **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`** and **`Document_C_QR.pdf`**.
 
 You can insert `|` for manually splitting the label into several lines.
 
@@ -496,7 +494,7 @@ You can insert `|` for manually splitting the label into several lines.
 
 
 #### **`ShowFonts`**
-Shows all fonts used in the current document.
+Shows all fonts used in the active document.
 
 #### **`ShowProfiles`**
 Shows all color profiles available to InDesign.
