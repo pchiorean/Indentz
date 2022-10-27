@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 22.9.25
+	Replace fonts 22.10.24
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named `fonts.tsv`:
@@ -101,7 +101,7 @@ function main() {
 	 * Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
 	 * Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
 	 * The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
-	 * @version 22.9.11
+	 * @version 22.10.24
 	 * @author Paul Chiorean <jpeg@basement.ro>
 	 * @license MIT
 	 * @param {File} dataFile - A tab-separated-values file (object).
@@ -123,14 +123,13 @@ function main() {
 		while (!dataFile.eof) {
 			line++;
 			source = decodeURI(dataFile.absoluteURI) + ':' + line + ' :: ';
-			record = (part ? part.slice(0,-1) : '') + dataFile.readln();
+			record = (part ? part.slice(0,-1) : '') + dataFile.readln(); // Join continued line
+			record = record.replace(/#(.+)?$/g, '');     // Trim everything after '#' (comments)
+			record = record.replace(/^ +|[ \t]+$/g, ''); // Trim spaces at both ends
 			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
-			if (record.replace(/^\s+|\s+$/g, '') === '') continue;            // Blank line, skip
-			if (record.slice(0,1) === '\u0023') continue;                     // '#': Comment line, skip
-			if (record.slice(0,1) === '\u0040') { parseInclude(); continue; } // '@': Include directive, parse
-			if (!isHeaderFound) { isHeaderFound = true; continue; }           // Header line, skip
-			record = record.replace(/#.+$/g, '');    // Trim end comment
-			record = record.replace(/^ +| +$/g, ''); // Trim spaces at both ends
+			if (record.replace(/^\s+|\s+$/g, '') === '') continue;       // Blank line, skip
+			if (record.slice(0,1) === '@') { parseInclude(); continue; } // Include directive, parse
+			if (!isHeaderFound) { isHeaderFound = true; continue; }      // Header line, skip
 			record = record.split(/ *\t */); // Split on \t & trim spaces
 			checkRecord();
 		}

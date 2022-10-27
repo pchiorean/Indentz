@@ -1,5 +1,5 @@
 ﻿/*
-	Replace text snippets 22.9.25
+	Replace text snippets 22.10.26
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces a list of snippets from a 5-column TSV file named `snippets.tsv`:
@@ -15,7 +15,7 @@
 	<Change to>: the new text
 	<Case sensitive>: `yes` or `no` (defaults to `yes`)
 	<Whole word>: `yes` or `no` (defaults to `yes`)
-	<Scope>: replacement will only be done if the file name matches this regular expression
+	<Scope>: replacement will only be done if the document name matches this regular expression
 
 	The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
 	(on the desktop, next to the script, or in Indentz root); local files and files starting with `_` take precedence.
@@ -113,7 +113,7 @@ function main() {
 	 * Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
 	 * Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
 	 * The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
-	 * @version 22.9.11
+	 * @version 22.10.24
 	 * @author Paul Chiorean <jpeg@basement.ro>
 	 * @license MIT
 	 * @param {File} dataFile - A tab-separated-values file (object).
@@ -135,14 +135,13 @@ function main() {
 		while (!dataFile.eof) {
 			line++;
 			source = decodeURI(dataFile.absoluteURI) + ':' + line + ' :: ';
-			record = (part ? part.slice(0,-1) : '') + dataFile.readln();
+			record = (part ? part.slice(0,-1) : '') + dataFile.readln(); // Join continued line
+			record = record.replace(/#(.+)?$/g, '');     // Trim everything after '#' (comments)
+			record = record.replace(/^ +|[ \t]+$/g, ''); // Trim spaces at both ends
 			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
-			if (record.replace(/^\s+|\s+$/g, '') === '') continue;            // Blank line, skip
-			if (record.slice(0,1) === '\u0023') continue;                     // '#': Comment line, skip
-			if (record.slice(0,1) === '\u0040') { parseInclude(); continue; } // '@': Include directive, parse
-			if (!isHeaderFound) { isHeaderFound = true; continue; }           // Header line, skip
-			record = record.replace(/#.+$/g, '');    // Trim end comment
-			record = record.replace(/^ +| +$/g, ''); // Trim spaces at both ends
+			if (record.replace(/^\s+|\s+$/g, '') === '') continue;       // Blank line, skip
+			if (record.slice(0,1) === '@') { parseInclude(); continue; } // Include directive, parse
+			if (!isHeaderFound) { isHeaderFound = true; continue; }      // Header line, skip
 			record = record.split(/ *\t */); // Split on \t & trim spaces
 			checkRecord();
 		}
