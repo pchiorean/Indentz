@@ -30,6 +30,15 @@
   **misc/QR:** Reverted to on-document placement by default
 - [`upd`](https://github.com/pchiorean/Indentz/commit/9a3703e92e372c00e904a97195627400f64520a6)
   **cleanup/DefaultPrefs:** Apply preferences in two steps: application/document
+- [`ref`](https://github.com/pchiorean/Indentz/commit/f0c224716706dd4809204484bb001cfb090a6bdc)
+  [`ref`](https://github.com/pchiorean/Indentz/commit/c83eb0de0362924eb77196df62fb04e31bdd7b89)
+  **lib/parseDataFile and related:** Tweaked whitespace trimming
+- [`upd`](https://github.com/pchiorean/Indentz/commit/759925ace01b33a5d314c2ed6576a853e76c9354)
+  **align/AlignToC, export/QuickExport, lib/report, misc/LabelPage, misc/QRBatch:** Centered UI in app window
+- [`fix`](https://github.com/pchiorean/Indentz/commit/1d46af91cde7a0d5b80148e0729a2adb0a2b4b66)
+  **cleanup/DefaultSwatches:** Removed some debugging leftovers
+- [`upd`](https://github.com/pchiorean/Indentz/commit/0f237cd67fb0582f22e2ce45c147b14e0bc747e8)
+  **cleanup/ReplaceSnippets:** Improved error messages
 
 ### [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -494,6 +503,7 @@
 - `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
 - `upd` **file/SpreadsToFiles:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
 - `upd` **view/ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
+- `upd` **view/ZoomTo...:** Run with 'Opt/Alt' to get the value of `Z`
 - `upd` `?` **lib/isInArray:** Add regex matching to `searchValue`
 - `upd` Use a custom object style for `<visible area>` frame
 
@@ -501,7 +511,6 @@
 
 - `fix` **layout/PageSizeFromFilename:** Error on pages set to 1:X scale
 - `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
-- `fix` **export/QuickExport:** Preserve custom bleed from profile
 - `fix` **export/QuickExport:** Report layer overrides
 - `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
