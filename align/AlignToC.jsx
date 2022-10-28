@@ -1,6 +1,6 @@
 /*
-	Align to center 21.9.12
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Align to center 22.10.28
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Aligns the selected objects to the center of the 'Align To' setting.
 
@@ -102,29 +102,38 @@ function main(selection) {
 					SPREAD_BOUNDS: 'spread'
 				}[str];
 			}(ADP));
-			var w = new Window('dialog', 'Center to ' + title);
-			w.orientation = 'row';
-			w.alignChildren = [ 'center', 'top' ];
-			w.main = w.add('panel');
-			w.main.spacing = 5;
-			w.main.orientation = 'column';
-			w.main.alignChildren = [ 'left', 'top' ];
-				w.main.add('radiobutton { text: "Horizontal" }');
-				w.main.add('radiobutton { text: "Vertical" }');
-				w.main.add('radiobutton { text: "Vertical (HW)" }')
+
+			var ui = new Window('dialog', 'Center to ' + title);
+			ui.orientation = 'row';
+			ui.alignChildren = [ 'center', 'top' ];
+			ui.main = ui.add('panel');
+			ui.main.spacing = 5;
+			ui.main.orientation = 'column';
+			ui.main.alignChildren = [ 'left', 'top' ];
+				ui.main.add('radiobutton { text: "Horizontal" }');
+				ui.main.add('radiobutton { text: "Vertical" }');
+				ui.main.add('radiobutton { text: "Vertical (HW)" }')
 					.enabled = (ADP !== AlignDistributeBounds.KEY_OBJECT);
-				w.main.add('radiobutton { text: "Both" }');
-				w.main.children[0].active = w.main.children[0].value = true;
-			w.actions = w.add('group', undefined, { name: 'actions' });
-			w.actions.orientation = 'column';
-			w.actions.alignChildren = [ 'fill', 'top' ];
-				w.actions.add('button { text: "Ok", name: "ok" }');
-				w.actions.add('button { text: "Cancel", name: "cancel" }');
-			w.onClose = function () {
-				for (var i = 0, n = w.main.children.length; i < n; i++)
-					if (w.main.children[i].value === true) option = i;
-				};
-			if (w.show() === 2) return -1;
+				ui.main.add('radiobutton { text: "Both" }');
+				ui.main.children[0].active = ui.main.children[0].value = true;
+			ui.actions = ui.add('group', undefined, { name: 'actions' });
+			ui.actions.orientation = 'column';
+			ui.actions.alignChildren = [ 'fill', 'top' ];
+				ui.actions.add('button { text: "Ok", name: "ok" }');
+				ui.actions.add('button { text: "Cancel", name: "cancel" }');
+
+			ui.onShow = function () {
+				ui.frameLocation = [
+					(app.activeWindow.bounds[1] + app.activeWindow.bounds[3] - ui.frameSize.width) / 2,
+					(app.activeWindow.bounds[0] + app.activeWindow.bounds[2] - ui.frameSize.height) / 2
+				];
+			};
+			ui.onClose = function () {
+			for (var i = 0, n = ui.main.children.length; i < n; i++)
+				if (ui.main.children[i].value === true) option = i;
+			};
+
+			if (ui.show() === 2) return -1;
 			return option;
 		}
 	}

@@ -1,5 +1,5 @@
 /*
-	Label page 22.6.28
+	Label page 22.10.27
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a custom label on the current page's slug.
@@ -35,6 +35,13 @@ function main() {
 	ui.actions.add('button', undefined, 'Cancel', { name: 'cancel' });
 	ui.ontop.onClick = function () { onTop = true; ui.close(); };
 	ui.onbottom.onClick = function () { onTop = false; ui.close(); };
+	ui.onShow = function () {
+		ui.frameLocation = [
+			(app.activeWindow.bounds[1] + app.activeWindow.bounds[3] - ui.frameSize.width) / 2,
+			(app.activeWindow.bounds[0] + app.activeWindow.bounds[2] - ui.frameSize.height) / 2
+		];
+	};
+
 	if (ui.show() === 2) exit();
 	slugInfo(app.activeWindow.activePage, ui.label.text, ui.caps.value, onTop);
 

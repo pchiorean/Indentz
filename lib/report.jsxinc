@@ -2,7 +2,7 @@
  * Displays a message in a scrollable list with optional filtering and/or compact mode.
  * Inspired by this snippet by Peter Kahrel:
  * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
- * @version 22.9.16
+ * @version 22.10.27
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string|string[]} message - Message to be displayed. Can be a string or a strings array.
@@ -12,11 +12,11 @@
  * @param {boolean} [showCompact=false] - If `true` duplicates are removed and the message is sorted. (Optional.)
  */
 function report(message, title, showFilter, showCompact) {
-	var w, search, list;
+	var ui, search, list;
 	if (message.constructor.name !== 'Array') message = message.split(/\r|\n/g);
-	// if (message.length === 0) return;
-	w = new Window('dialog', title || '');
-	// Sort and remove duplicates
+	ui = new Window('dialog', title || '');
+
+	// Compact: sort and remove duplicates
 	if (showCompact && message.length > 1) {
 		message = message.sort(naturalSorter);
 		for (var i = 1, l = message[0]; i < message.length; l = message[i], i++) {
@@ -24,14 +24,15 @@ function report(message, title, showFilter, showCompact) {
 			if (message[i] === '') { message.splice(i, 1); i--; }
 		}
 	}
-	// Add a filter field
+
+	// Filter
 	if (showFilter === 'auto') showFilter = (message.length > 19);
 	if (showFilter === true && message.length > 1) {
-		search = w.add('edittext { characters: 40, helpTip: "Wildcards: \'?\' (any character), space and \'*\' (AND), \'|\' (OR)" }');
+		search = ui.add('edittext { characters: 40, helpTip: "Wildcards: \'?\' (any character), space and \'*\' (AND), \'|\' (OR)" }');
 		search.onChanging = function () {
 			var str, line, i, n;
 			var result = [];
-			if (this.text === '') { list.text = message.join('\n'); w.text = title; return; }
+			if (this.text === '') { list.text = message.join('\n'); ui.text = title; return; }
 			str = this.text.replace(/[.[\]{+}]/g, '\\$&');                          // Pass through '^*()|?'
 			str = str.replace(/\?/g, '.');                                          // '?' -> Any character
 			if (/[ *]/g.test(str)) str = '(' + str.replace(/ +|\*/g, ').*(') + ')'; // Space or '*' -> AND
@@ -40,11 +41,11 @@ function report(message, title, showFilter, showCompact) {
 				line = message[i].toString().replace(/^\s+?/g, '');
 				if (str.test(line)) result.push(line.replace(/\r|\n/g, '\u00b6').replace(/\t/g, '\\t'));
 			}
-			w.text = str + ' | ' + result.length + ' record' + (result.length === 1 ? '' : 's');
+			ui.text = str + ' | ' + result.length + ' record' + (result.length === 1 ? '' : 's');
 			if (result.length > 0) list.text = result.join('\n'); else list.text = '';
 		};
 	}
-	list = w.add('edittext', undefined, message.join('\n'), { multiline: true, scrolling: true, readonly: true });
+	list = ui.add('edittext', undefined, message.join('\n'), { multiline: true, scrolling: true, readonly: true });
 	list.characters = (function () {
 		var width = 50;
 		for (var i = 0, n = message.length; i < n; width = Math.max(width, message[i].toString().length), i++);
@@ -52,25 +53,36 @@ function report(message, title, showFilter, showCompact) {
 	}());
 	list.minimumSize.width  = 100; list.maximumSize.width  = 1800;
 	list.minimumSize.height = 100; list.maximumSize.height = 1024;
+
 	// Actions
-	w.g = w.add('group');
-		w.save = w.g.add('button { text: "Save" }');
-		w.save.onClick = function () {
+	ui.g = ui.add('group');
+		ui.save = ui.g.add('button { text: "Save" }');
+		ui.save.onClick = function () {
 			var file;
 			if (app.activeDocument && app.activeDocument.saved)
 				file = File(app.activeDocument.filePath + '/report.txt').saveDlg();
 			else file = File(Folder.desktop + '/report.txt').saveDlg();
 			if (file == null) return;
-			file.open('w');
+			file.open('ui');
 			file.encoding = 'UTF-8';
 			file.lineFeed = 'Unix';
 			file.write(title, '\n\n', list.text);
 			file.close();
-			w.close();
+			ui.close();
 		};
-		w.g.add('button { text: "Close", properties: { name: "ok" } }');
-		w.g.ok.active = true;
-	w.show();
+		ui.g.add('button { text: "Close", properties: { name: "ok" } }');
+		ui.g.ok.active = true;
+
+	ui.onShow = function () {
+		if (app.windows.length > 0) {
+			ui.frameLocation = [
+				(app.activeWindow.bounds[1] + app.activeWindow.bounds[3] - ui.frameSize.width) / 2,
+				(app.activeWindow.bounds[0] + app.activeWindow.bounds[2] - ui.frameSize.height) / 2
+			];
+		}
+	};
+
+	ui.show();
 
 	// https://stackoverflow.com/questions/2802341/javascript-natural-sort-of-alphanumerical-strings/2802804#2802804
 	function naturalSorter(as, bs) {
