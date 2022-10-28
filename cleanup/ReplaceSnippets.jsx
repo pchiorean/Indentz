@@ -1,5 +1,5 @@
 ﻿/*
-	Replace text snippets 22.10.26
+	Replace text snippets 22.10.28
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces a list of snippets from a 5-column TSV file named `snippets.tsv`:
@@ -78,7 +78,8 @@ function main() {
 	if (data.records.length > 0) {
 		for (i = 0, n = data.records.length; i < n; i++) {
 			if (data.records[i].scope && !data.records[i].scope.test(decodeURI(doc.name.replace(/.[^.]+$/, '')))) {
-				data.status.info.push(data.records[i].source + 'Out of scope.');
+				data.status.info.push(data.records[i].source + '\'' + data.records[i].findWhat +
+					'\' is out of scope ' + data.records[i].scope + '.');
 				continue;
 			}
 			app.findTextPreferences   = NothingEnum.NOTHING;
