@@ -1,5 +1,5 @@
 /*
-	Quick export 22.10.28
+	Quick export 22.10.30
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -151,7 +151,7 @@ ui.presets = ui.main.add('panel { text: "Export presets", alignChildren: "left",
 		ui.preset1.bleedCustom = ui.preset1.options.add('checkbox { text: "Custom bleed:", alignment: "bottom" }');
 		ui.preset1.bleedCustom.helpTip = 'Override document bleed settings';
 		ui.preset1.bleedValue = ui.preset1.options.add('edittext { characters: 4, justify: "center", preferredSize: [ 51, 24 ] }');
-		ui.preset1.bleedValue.helpTip = 'Enter a value between 0 and 25.4 mm';
+		ui.preset1.bleedValue.helpTip = 'Enter a value between 0 and 152.4 mm';
 	ui.preset1.script = ui.presets.add('group');
 		ui.preset1.script.st = ui.preset1.script.add('statictext { text: "Run a script:", preferredSize: [ 80, 24 ] }');
 		ui.preset1.script.st.helpTip = 'Run a JavaScript or AppleScript before exporting';
@@ -184,7 +184,7 @@ ui.presets = ui.main.add('panel { text: "Export presets", alignChildren: "left",
 		ui.preset2.bleedCustom = ui.preset2.options.add('checkbox { text: "Custom bleed:", alignment: "bottom" }');
 		ui.preset2.bleedCustom.helpTip = 'Override document bleed settings';
 		ui.preset2.bleedValue = ui.preset2.options.add('edittext { characters: 4, justify: "center", preferredSize: [ 51, 24 ] }');
-		ui.preset2.bleedValue.helpTip = 'Enter a value between 0 and 25.4 mm';
+		ui.preset2.bleedValue.helpTip = 'Enter a value between 0 and 152.4 mm';
 	ui.preset2.script = ui.presets.add('group');
 		ui.preset2.script.st = ui.preset2.script.add('statictext { text: "Run a script:", preferredSize: [ 80, 24 ] }');
 		ui.preset2.script.st.helpTip = 'Run a JavaScript or AppleScript before exporting';
@@ -408,8 +408,8 @@ ui.preset1.bleedValue.onDeactivate =
 ui.preset2.bleedValue.onDeactivate = function () {
 	if (this.text === '') this.text = '0';
 	this.text = Number(this.text.replace(/[^\d.,]/gi, '').replace(',', '.'));
-	if (isNaN(this.text) || UnitValue(this.text, 'mm').as('pt') > 72) {
-		alert('Invalid value.\nEnter a number between 0 and 25.4 mm.');
+	if (isNaN(this.text) || UnitValue(this.text, 'mm').as('pt') > 432.0001) {
+		alert('Invalid value.\nEnter a number between 0 and 152.4 mm.');
 		this.text = '3';
 	}
 };
@@ -863,7 +863,7 @@ function readSettings() {
 	ui.preset1.bleedCustom.value = settings.presets.preset1.options.bleed.custom;
 	ui.preset1.bleedValue.text =
 		Number(settings.presets.preset1.options.bleed.value.replace(/[^\d.,]/gi, '').replace(',', '.'));
-	if (isNaN(ui.preset1.bleedValue.text) || UnitValue(ui.preset1.bleedValue.text, 'mm').as('pt') > 72)
+	if (isNaN(ui.preset1.bleedValue.text) || UnitValue(ui.preset1.bleedValue.text, 'mm').as('pt') > 432.001)
 		ui.preset1.bleedValue.text = '3';
 	ui.preset1.slug.value = settings.presets.preset1.options.slug;
 	// Script
@@ -890,7 +890,7 @@ function readSettings() {
 	ui.preset2.bleedCustom.value = settings.presets.preset2.options.bleed.custom;
 	ui.preset2.bleedValue.text =
 		Number(settings.presets.preset2.options.bleed.value.replace(/[^\d.,]/gi, '').replace(',', '.'));
-	if (isNaN(ui.preset2.bleedValue.text) || UnitValue(ui.preset2.bleedValue.text, 'mm').as('pt') > 72)
+	if (isNaN(ui.preset2.bleedValue.text) || UnitValue(ui.preset2.bleedValue.text, 'mm').as('pt') > 432.001)
 		ui.preset2.bleedValue.text = '3';
 	ui.preset2.slug.value = settings.presets.preset2.options.slug;
 	// Script
