@@ -1,5 +1,5 @@
 /*
-	QR code 22.10.21
+	QR code 22.11.4
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -69,6 +69,12 @@ function main() {
 		ui.ondoc.helpTip = 'Place the code on the bottom-left corner of each page';
 		ui.ondoc.onClick = function () { onDoc = true; ui.close(); };
 		ui.actions.add('button { text: "Cancel" }');
+	ui.onShow = function () {
+		ui.frameLocation = [
+			(app.activeWindow.bounds[1] + app.activeWindow.bounds[3] - ui.frameSize.width) / 2,
+			(app.activeWindow.bounds[0] + app.activeWindow.bounds[2] - ui.frameSize.height) / 2
+		];
+	};
 	if (ui.show() === 2) exit();
 
 	// Processing
