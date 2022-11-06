@@ -85,6 +85,7 @@ Name                               |     Fn | Description
 **Miscellaneous**                  |        | **Scripts that do not fall into the other categories**
 `Clip.jsx`                         |   Num* | Clips selected objects in a clipping frame (or releases them if already clipped)
 `ClipUndo.jsx`                     |  ⌃Num* | Releases selected objects from their clipping frames
+`EAN.jsx`                          |    ⌥F9 | Embeds an EAN code in the selected frame or adds it to a new page
 `LabelPage.jsx`                    |        | Adds a custom label on the current page's slug
 `LabelPageRatios.jsx`              |        | Adds a label (ratio) on each page's slug
 `LabelsCleanup.jsx`                |        | Removes all labels from the document
