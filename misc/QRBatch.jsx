@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 22.10.27
+	Batch QR codes 22.11.6
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -300,6 +300,7 @@ function main() {
 				appliedFont: app.fonts.item('Helvetica Neue\tRegular'),
 				pointSize: '5 pt',
 				autoLeading: 100,
+				leading: Leading.AUTO,
 				horizontalScale: 92,
 				tracking: -15,
 				hyphenation: false,
@@ -424,6 +425,7 @@ function main() {
 				appliedFont: app.fonts.item('Helvetica Neue\tRegular'),
 				pointSize: '5 pt',
 				autoLeading: 100,
+				leading: Leading.AUTO,
 				horizontalScale: 92,
 				tracking: -15,
 				capitalization: ui.options.uppercase.value ? Capitalization.ALL_CAPS : Capitalization.NORMAL,
