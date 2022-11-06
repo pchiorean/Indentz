@@ -263,9 +263,7 @@ Resizes the page to the selected objects.
 Sets the page margins from the selected objects.
 
 #### **`GuidesAdd`**
-If any page objects are selected, it adds guides around them.
-
-If nothing is selected, it adds guids on page edges and in the middle of margins; a second run deletes them.
+If any page objects are selected, it adds guides around them. If nothing is selected, it adds guids on page edges and in the middle of margins; a second run deletes them.
 
 #### **`GuidesDelete`**
 Deletes all guides from the document.
@@ -451,6 +449,12 @@ To handle some objects it is sometimes useful to temporarily insert them into a 
 #### **`ClipUndo`** <small>⌃Num\*</small>
 Releases one or several objects from their clipping frames (you can select any objects, it will only release the clipped ones). If nothing is selected, it will release all clipped objects.
 
+#### **`EAN`** <small>⌥F9</small>
+
+This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, modified to embed the code in a selected rectangle: if we have a page object (ideally a rectangle) selected, the script embeds an EAN code in it, scaled to width. If nothing is selected, it puts it in a new document.
+
+Enter 8 or 13 digits for the code itself; if you have an add-on, add a hyphen and another 2 or 5 digits.
+
 #### **`LabelPage`**
 Adds a custom label on the current page slug, on the **info** layer (with Helvetica Regular 6 pt, **Registration** swatch):
 
@@ -461,6 +465,12 @@ Adds a label with the page aspect ratio, on the slug of each page, on the **info
 
 #### **`LabelsCleanup`**
 Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
+
+#### **`Offset Paths`**
+
+This is a slightly modified version of [**OffsetPath**](https://creativepro.com/indesign-cad-tool/) by Olav Martin Kvern, that creates paths around selected objects at a custom offset distance:
+
+> When you apply a Contour-type text wrap to an object, you’re creating a path around that object—and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create the a new path from those geometric coordinates.
 
 #### **`QR`** <small>F9</small>
 
@@ -517,7 +527,7 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-<small>Last updated: October 26, 2022</small>
+<small>Last updated: November 6, 2022</small>
 
 [^1]: For example, in **`Document_DE.indd`** 'The sample is for free' will be replaced with 'Das Sample ist kostenlos', and for **`Document_FR.indd`** with 'L'échantillon est gratuit'.
 [^2]: For example, if the suffix is `print+diecut`, the document will be saved as **`Document_print+diecut.pdf`** in a subfolder named **`print`**.
