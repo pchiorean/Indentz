@@ -149,7 +149,7 @@ ui.presets = ui.main.add('panel { text: "Export presets", alignChildren: "left",
 		ui.preset1.slug = ui.preset1.options.add('checkbox { text: "Slug area", alignment: "bottom" }');
 		ui.preset1.slug.helpTip = 'Include slug area';
 		ui.preset1.bleedCustom = ui.preset1.options.add('checkbox { text: "Custom bleed:", alignment: "bottom" }');
-		ui.preset1.bleedCustom.helpTip = 'Override document bleed settings';
+		ui.preset1.bleedCustom.helpTip = 'Override bleed settings';
 		ui.preset1.bleedValue = ui.preset1.options.add('edittext { characters: 4, justify: "center", preferredSize: [ 51, 24 ] }');
 		ui.preset1.bleedValue.helpTip = 'Enter a value between 0 and 152.4 mm';
 	ui.preset1.script = ui.presets.add('group');
@@ -182,7 +182,7 @@ ui.presets = ui.main.add('panel { text: "Export presets", alignChildren: "left",
 		ui.preset2.slug = ui.preset2.options.add('checkbox { text: "Slug area", alignment: "bottom" }');
 		ui.preset2.slug.helpTip = 'Include slug area';
 		ui.preset2.bleedCustom = ui.preset2.options.add('checkbox { text: "Custom bleed:", alignment: "bottom" }');
-		ui.preset2.bleedCustom.helpTip = 'Override document bleed settings';
+		ui.preset2.bleedCustom.helpTip = 'Override bleed settings';
 		ui.preset2.bleedValue = ui.preset2.options.add('edittext { characters: 4, justify: "center", preferredSize: [ 51, 24 ] }');
 		ui.preset2.bleedValue.helpTip = 'Enter a value between 0 and 152.4 mm';
 	ui.preset2.script = ui.presets.add('group');
@@ -271,7 +271,13 @@ ui.preset1.isOn.onClick = function () {
 };
 ui.preset1.bleedCustom.onClick = function () {
 	ui.preset1.bleedValue.enabled = this.value;
-	if (ui.preset1.bleedValue.enabled) ui.preset1.bleedValue.onDeactivate();
+	if (ui.preset1.bleedValue.enabled) {
+		ui.preset1.bleedValue.helpTip = 'Enter a value between 0 and 152.4 mm';
+		ui.preset1.bleedValue.onDeactivate();
+	} else {
+		ui.preset1.bleedValue.text = '';
+		ui.preset1.bleedValue.helpTip = 'Using documend bleed';
+	}
 };
 ui.preset1.script.isOn.onClick = function () {
 	ui.preset1.script.file.enabled = ui.preset1.script.browse.enabled = this.value;
@@ -304,7 +310,15 @@ ui.preset1.preset.onChange = function () {
 	ui.preset1.cropMarks.value = pdfExpPreset.cropMarks;
 	ui.preset1.pageInfo.value = pdfExpPreset.pageInformationMarks;
 	ui.preset1.slug.value = pdfExpPreset.includeSlugWithPDF;
-	ui.preset1.bleedValue.text = Math.round(pdfExpPreset.pageMarksOffset);
+	if (pdfExpPreset.useDocumentBleedWithPDF) {
+		ui.preset1.bleedCustom.value = false;
+		ui.preset1.bleedCustom.onClick();
+	} else {
+		ui.preset1.bleedCustom.value = true;
+		ui.preset1.bleedCustom.onClick();
+		ui.preset1.bleedValue.text = Math.max(pdfExpPreset.bleedTop, pdfExpPreset.bleedInside,
+			pdfExpPreset.bleedBottom, pdfExpPreset.bleedOutside).toFixed(2).replace(/\.?0+$/, '');
+	}
 	ui.preset1.preset.helpTip = (function (/*pdfExportPreset*/preset) {
 		var msg = [];
 		msg.push('Profile: ' +
@@ -378,7 +392,13 @@ ui.preset2.isOn.onClick = function () {
 };
 ui.preset2.bleedCustom.onClick = function () {
 	ui.preset2.bleedValue.enabled = this.value;
-	if (ui.preset2.bleedValue.enabled) ui.preset2.bleedValue.onDeactivate();
+	if (ui.preset2.bleedValue.enabled) {
+		ui.preset2.bleedValue.helpTip = 'Enter a value between 0 and 152.4 mm';
+		ui.preset2.bleedValue.onDeactivate();
+	} else {
+		ui.preset2.bleedValue.text = '';
+		ui.preset2.bleedValue.helpTip = 'Using documend bleed';
+	}
 };
 ui.preset2.script.isOn.onClick = function () {
 	ui.preset2.script.file.enabled = ui.preset2.script.browse.enabled = this.value;
@@ -411,7 +431,15 @@ ui.preset2.preset.onChange = function () {
 	ui.preset2.cropMarks.value = pdfExpPreset.cropMarks;
 	ui.preset2.pageInfo.value = pdfExpPreset.pageInformationMarks;
 	ui.preset2.slug.value = pdfExpPreset.includeSlugWithPDF;
-	ui.preset2.bleedValue.text = Math.round(pdfExpPreset.pageMarksOffset);
+	if (pdfExpPreset.useDocumentBleedWithPDF) {
+		ui.preset2.bleedCustom.value = false;
+		ui.preset2.bleedCustom.onClick();
+	} else {
+		ui.preset2.bleedCustom.value = true;
+		ui.preset2.bleedCustom.onClick();
+		ui.preset2.bleedValue.text = Math.max(pdfExpPreset.bleedTop, pdfExpPreset.bleedInside,
+			pdfExpPreset.bleedBottom, pdfExpPreset.bleedOutside).toFixed(2).replace(/\.?0+$/, '');
+	}
 	ui.preset2.preset.helpTip = (function (/*pdfExportPreset*/preset) {
 		var msg = [];
 		msg.push('Profile: ' +
@@ -490,7 +518,7 @@ ui.preset2.bleedValue.onDeactivate = function () {
 	if (this.text === '') this.text = '0';
 	this.text = Number(this.text.replace(/[^\d.,]/gi, '').replace(',', '.'));
 	if (isNaN(this.text) || UnitValue(this.text, 'mm').as('pt') > 432.0001) {
-		alert('Invalid value.\nEnter a number between 0 and 152.4 mm.');
+		alert('Invalid value for bleed.\nEnter a number between 0 and 152.4 mm.');
 		this.text = '3';
 	}
 };
