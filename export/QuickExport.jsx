@@ -1,5 +1,5 @@
 /*
-	Quick export 22.10.30
+	Quick export 22.11.7
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -261,6 +261,8 @@ if (folderMode) {
 ui.preset1.isOn.onClick = function () {
 	ui.preset1.preset.enabled = ui.preset1.suffix.enabled = this.value;
 	ui.preset1.dpi.enabled = this.value;
+	if (app.pdfExportPresets.item(ui.preset1.preset.selection.text).colorBitmapSampling === Sampling.NONE)
+		ui.preset1.dpi.enabled = false;
 	ui.preset1.options.enabled = this.value;
 	ui.preset1.script.enabled = this.value;
 	ui.preset1.bleedCustom.onClick();
@@ -292,26 +294,64 @@ ui.preset1.preset.onChange = function () {
 	var str = this.selection.text;
 	var pdfExpPreset = app.pdfExportPresets.item(str);
 	ui.preset1.suffix.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
-	ui.preset1.dpi.text = pdfExpPreset.colorBitmapSamplingDPI;
+	if (pdfExpPreset.colorBitmapSampling === Sampling.NONE) {
+		ui.preset1.dpi.enabled = false;
+	} else {
+		ui.preset1.dpi.enabled = true;
+		ui.preset1.dpi.text = pdfExpPreset.colorBitmapSamplingDPI;
+	}
 	ui.preset1.asSpreads.value = pdfExpPreset.exportReaderSpreads;
 	ui.preset1.cropMarks.value = pdfExpPreset.cropMarks;
 	ui.preset1.pageInfo.value = pdfExpPreset.pageInformationMarks;
 	ui.preset1.slug.value = pdfExpPreset.includeSlugWithPDF;
 	ui.preset1.bleedValue.text = Math.round(pdfExpPreset.pageMarksOffset);
-	ui.preset1.preset.helpTip = (function (preset) {
+	ui.preset1.preset.helpTip = (function (/*pdfExportPreset*/preset) {
 		var msg = [];
-		msg.push('Profile: ' + (preset.pdfDestinationProfile.constructor.name === 'String' ?
-			preset.effectivePDFDestinationProfile :
-			String(preset.pdfDestinationProfile).toLowerCase().replace(/_/g, ' ').replace('use ', ''))
+		msg.push('Profile: ' +
+			(preset.pdfDestinationProfile.constructor.name === 'String' ?
+				preset.effectivePDFDestinationProfile :
+				String(preset.pdfDestinationProfile).toLowerCase()
+					.replace(/_/g, ' ')
+					.replace('use ', '')
+			)
 		);
-		msg.push('Standard: ' + String(preset.pdfColorSpace).toLowerCase().replace(/_/g, ' '));
-		msg.push('Color space: ' + String(preset.pdfColorSpace).toLowerCase().replace(/_/g, ' ')
-			.replace('rgb', 'RGB').replace('cmyk', 'CMYK'));
-		msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
-		msg.push('Compression: ' + String(preset.colorBitmapCompression).toLowerCase().replace(/_/g, ' ').replace(' compression', ''));
-		msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase().replace(/_/g, ' '));
+		if (preset.standardsCompliance !== PDFXStandards.NONE) {
+			msg.push('Standard: ' +
+				String(preset.standardsCompliance).toLowerCase()
+					.replace(/^(pdfx)(.+?)(\d{4})(_standard)$/, 'PDF/X-$2:$3')
+			);
+		}
+		msg.push('Color space: ' +
+			String(preset.pdfColorSpace).toLowerCase()
+				.replace(/_/g, ' ')
+				.replace(' color space', '')
+				.replace('rgb', 'RGB')
+				.replace('cmyk', 'CMYK')
+		);
+
+		if (preset.colorBitmapSampling !== Sampling.NONE) {
+			msg.push('Sampling: ' + String(preset.colorBitmapSampling).toLowerCase().replace(/_/g, ' '));
+			msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
+		}
+		msg.push('Compression: ' +
+			String(preset.colorBitmapCompression).toLowerCase()
+				.replace(/_/g, ' ')
+				.replace(' compression', '')
+		);
+		if (preset.colorBitmapCompression !== BitmapCompression.NONE &&
+			preset.colorBitmapCompression !== BitmapCompression.ZIP)
+			msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase().replace(/_/g, ' '));
 		msg.push('\nExport as ' + (preset.exportReaderSpreads ? 'spreads' : 'pages'));
-		if (preset.useDocumentBleedWithPDF) msg.push('Use document bleed');
+
+		if (preset.useDocumentBleedWithPDF) {
+			msg.push('Use document bleed');
+		} else {
+			msg.push('Use custom bleed: ' +
+				Math.max(preset.bleedTop, preset.bleedInside, preset.bleedBottom, preset.bleedOutside)
+					.toFixed(2).replace(/\.?0+$/, '') + ' mm'
+			);
+		}
+
 		if (preset.cropMarks || preset.pageInformationMarks || preset.includeSlugWithPDF || preset.exportLayers) {
 			msg.push('Include ' +
 				((preset.cropMarks ? 'crop marks, ' : '') +
@@ -328,6 +368,8 @@ ui.preset1.preset.onChange = function () {
 ui.preset2.isOn.onClick = function () {
 	ui.preset2.preset.enabled = ui.preset2.suffix.enabled = this.value;
 	ui.preset2.dpi.enabled = this.value;
+	if (app.pdfExportPresets.item(ui.preset2.preset.selection.text).colorBitmapSampling === Sampling.NONE)
+		ui.preset2.dpi.enabled = false;
 	ui.preset2.options.enabled = this.value;
 	ui.preset2.script.enabled = this.value;
 	ui.preset2.bleedCustom.onClick();
@@ -357,27 +399,66 @@ ui.preset2.script.browse.onClick = function () {
 };
 ui.preset2.preset.onChange = function () {
 	var str = this.selection.text;
-	var pdfPreset = app.pdfExportPresets.item(str);
+	var pdfExpPreset = app.pdfExportPresets.item(str);
 	ui.preset2.suffix.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
-	ui.preset2.dpi.text = pdfPreset.colorBitmapSamplingDPI;
-	ui.preset2.asSpreads.value = pdfPreset.exportReaderSpreads;
-	ui.preset2.cropMarks.value = pdfPreset.cropMarks;
-	ui.preset2.pageInfo.value = pdfPreset.pageInformationMarks;
-	ui.preset2.slug.value = pdfPreset.includeSlugWithPDF;
-	ui.preset2.bleedValue.text = Math.round(pdfPreset.pageMarksOffset);
+	if (pdfExpPreset.colorBitmapSampling === Sampling.NONE) {
+		ui.preset2.dpi.enabled = false;
+	} else {
+		ui.preset2.dpi.enabled = true;
+		ui.preset2.dpi.text = pdfExpPreset.colorBitmapSamplingDPI;
+	}
+	ui.preset2.asSpreads.value = pdfExpPreset.exportReaderSpreads;
+	ui.preset2.cropMarks.value = pdfExpPreset.cropMarks;
+	ui.preset2.pageInfo.value = pdfExpPreset.pageInformationMarks;
+	ui.preset2.slug.value = pdfExpPreset.includeSlugWithPDF;
+	ui.preset2.bleedValue.text = Math.round(pdfExpPreset.pageMarksOffset);
 	ui.preset2.preset.helpTip = (function (/*pdfExportPreset*/preset) {
 		var msg = [];
-		msg.push('Profile: ' + (preset.pdfDestinationProfile.constructor.name === 'String' ?
-			preset.effectivePDFDestinationProfile :
-			String(preset.pdfDestinationProfile).toLowerCase().replace(/_/g, ' ').replace('use ', ''))
+		msg.push('Profile: ' +
+			(preset.pdfDestinationProfile.constructor.name === 'String' ?
+				preset.effectivePDFDestinationProfile :
+				String(preset.pdfDestinationProfile).toLowerCase()
+					.replace(/_/g, ' ')
+					.replace('use ', '')
+			)
 		);
-		msg.push('Color space: ' + String(preset.pdfColorSpace).toLowerCase().replace(/_/g, ' ')
-			.replace('rgb', 'RGB').replace('cmyk', 'CMYK'));
-		msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
-		msg.push('Compression: ' + String(preset.colorBitmapCompression).toLowerCase().replace(/_/g, ' ').replace(' compression', ''));
-		msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase().replace(/_/g, ' '));
+		if (preset.standardsCompliance !== PDFXStandards.NONE) {
+			msg.push('Standard: ' +
+				String(preset.standardsCompliance).toLowerCase()
+					.replace(/^(pdfx)(.+?)(\d{4})(_standard)$/, 'PDF/X-$2:$3')
+			);
+		}
+		msg.push('Color space: ' +
+			String(preset.pdfColorSpace).toLowerCase()
+				.replace(/_/g, ' ')
+				.replace(' color space', '')
+				.replace('rgb', 'RGB')
+				.replace('cmyk', 'CMYK')
+		);
+
+		if (preset.colorBitmapSampling !== Sampling.NONE) {
+			msg.push('Sampling: ' + String(preset.colorBitmapSampling).toLowerCase().replace(/_/g, ' '));
+			msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
+		}
+		msg.push('Compression: ' +
+			String(preset.colorBitmapCompression).toLowerCase()
+				.replace(/_/g, ' ')
+				.replace(' compression', '')
+		);
+		if (preset.colorBitmapCompression !== BitmapCompression.NONE &&
+			preset.colorBitmapCompression !== BitmapCompression.ZIP)
+			msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase().replace(/_/g, ' '));
 		msg.push('\nExport as ' + (preset.exportReaderSpreads ? 'spreads' : 'pages'));
-		if (preset.useDocumentBleedWithPDF) msg.push('Use document bleed');
+
+		if (preset.useDocumentBleedWithPDF) {
+			msg.push('Use document bleed');
+		} else {
+			msg.push('Use custom bleed: ' +
+				Math.max(preset.bleedTop, preset.bleedInside, preset.bleedBottom, preset.bleedOutside)
+					.toFixed(2).replace(/\.?0+$/, '') + ' mm'
+			);
+		}
+
 		if (preset.cropMarks || preset.pageInformationMarks || preset.includeSlugWithPDF || preset.exportLayers) {
 			msg.push('Include ' +
 				((preset.cropMarks ? 'crop marks, ' : '') +
@@ -388,7 +469,7 @@ ui.preset2.preset.onChange = function () {
 			);
 		}
 		return msg.join('\n');
-	}(pdfPreset));
+	}(pdfExpPreset));
 };
 
 ui.preset1.suffix.onChange =
@@ -823,7 +904,7 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 			doc.documentPreferences.properties.documentBleedInsideOrLeftOffset +
 			doc.documentPreferences.properties.documentBleedBottomOffset +
 			doc.documentPreferences.properties.documentBleedOutsideOrRightOffset === 0 &&
-			!app.pdfExportPreferences.includeSlugWithPDF) { // -- but include if user wants slug
+			!app.pdfExportPreferences.includeSlugWithPDF) { // -- but not if user wants slug
 			app.pdfExportPreferences.cropMarks = false;
 			app.pdfExportPreferences.pageInformationMarks = false;
 		}
