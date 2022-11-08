@@ -1,5 +1,5 @@
 /*
-	Quick export 22.11.7
+	Quick export 22.11.8
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -894,14 +894,16 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 
 		// Override some of the settings
 		app.pdfExportPreferences.pageRange = pageRange;
-		app.pdfExportPreferences.colorBitmapSamplingDPI = Number(exp.dpi.text);
-		app.pdfExportPreferences.grayscaleBitmapSamplingDPI = Number(exp.dpi.text);
-		app.pdfExportPreferences.monochromeBitmapSamplingDPI = (function (/*number*/dpi) {
-			if (dpi <= 96) return 300;
-			else if (dpi <= 150) return 600;
-			else if (dpi < 300) return 1200;
-			return 2400;
-		}(Number(exp.dpi.text)));
+		if (app.pdfExportPreferences.colorBitmapSampling !== Sampling.NONE) {
+			app.pdfExportPreferences.colorBitmapSamplingDPI = Number(exp.dpi.text);
+			app.pdfExportPreferences.grayscaleBitmapSamplingDPI = Number(exp.dpi.text);
+			app.pdfExportPreferences.monochromeBitmapSamplingDPI = (function (/*number*/dpi) {
+				if (dpi <= 96) return 300;
+				else if (dpi <= 150) return 600;
+				else if (dpi < 300) return 1200;
+				return 2400;
+			}(Number(exp.dpi.text)));
+		}
 		app.pdfExportPreferences.exportReaderSpreads = exp.asSpreads.value;
 		app.pdfExportPreferences.cropMarks = exp.cropMarks.value;
 		app.pdfExportPreferences.pageInformationMarks = exp.pageInfo.value;
