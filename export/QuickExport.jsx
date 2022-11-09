@@ -1,5 +1,5 @@
 /*
-	Quick export 22.11.8
+	Quick export 22.11.9
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -50,6 +50,7 @@ var old = {
 var errors = [];
 var names = [];
 var docs = [];
+var layersState = [];
 var pbWidth = 50;
 
 var VER = '2.8';
@@ -696,34 +697,43 @@ while ((doc = docs.shift())) {
 	if (ui.output.options.updateLinks.value) updateLinks();
 
 	// Export preset loop
-	old.docSpreads = doc.spreads.length; // Save initial spreads count for extendRange hack (see Export())
+	old.docSpreads = doc.spreads.length; // Save initial spreads count for extendRange hack (see doExport())
 	for (var step = 1; step < 3; step++) {
 		exp = ui['preset' + step]; // Current export preset
 		if (!exp.isOn.value) continue;
+
+		saveLayersState();
+
 		// Create subfolder
-		suffix = exp.suffix.text ? ('_' + exp.suffix.text) : '';
-
-		// Hack: Append special folder names to the suffix
-		if (/print$/i.test(suffix) && doc.layers.itemByName('dielines').isValid) suffix += '+diecut';
-		if (/print$/i.test(suffix) && doc.layers.itemByName('varnish').isValid) suffix += '+varnish';
-		if (/print$/i.test(suffix) && doc.layers.itemByName('white').isValid) suffix += '+white';
-
+		suffix = exp.suffix.text ? ('_' + exp.suffix.text) : ''; // Detect suffix from preset name
 		subfolder = '';
 		if (ui.output.options.subfolders.value && suffix) {
 			subfolder = suffix.replace(/^_/, '').replace(/\+.*$/, '').replace(/^\s+|\s+$/g, '');
 			if (!Folder(baseFolder + '/' + subfolder).exists) Folder(baseFolder + '/' + subfolder).create();
 		}
 
+		// Hack: Append special folder names to the suffix
+		if (/print$/i.test(suffix) && doc.layers.itemByName('dielines').isValid) suffix += '+diecut';
+		if (/print$/i.test(suffix) && doc.layers.itemByName('white').isValid)    suffix += '+white';
+		if (/print$/i.test(suffix) && doc.layers.itemByName('foil').isValid)     suffix += '+foil';
+		if (/print$/i.test(suffix) && doc.layers.itemByName('varnish').isValid)  suffix += '+varnish';
+
 		// Hack: Hide dot-layers when exporting with a 'print' suffix
 		for (i = 0; i < doc.layers.length; i++) {
 			if (!/^\./.test(doc.layers[i].name)) continue;
-			if (/print(\+diecut)?$/i.test(exp.preset.selection.text)) doc.layers[i].visible = false;
+			if (/print(\+.+)?$/i.test(exp.preset.selection.text)) doc.layers[i].visible = false;
 		}
 
-		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) runScript(exp.script.path);
-		app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
-		app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+		// Run script
+		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) {
+			runScript(exp.script.path);
+			app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
+			app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+		}
+
 		doExport(exp.asSpreads.value, ui.output.options.split.value, exp.preset.selection.text);
+
+		restoreLayersState();
 	}
 
 	// Restore measurement units
@@ -752,7 +762,7 @@ function checkFonts() {
 	var usedFonts = doc.fonts.everyItem().getElements();
 	for (var i = 0, n = usedFonts.length; i < n; i++) {
 		if (usedFonts[i].status !== FontStatus.INSTALLED) {
-			errors.push(doc.name + ": Font '" + usedFonts[i].name.replace(/\t/g, ' ') + "' is " +
+			errors.push(decodeURI(doc.name) + ": Font '" + usedFonts[i].name.replace(/\t/g, ' ') + "' is " +
 				String(usedFonts[i].status).toLowerCase().replace(/_/g, ' '));
 		}
 	}
@@ -762,7 +772,7 @@ function checkTextOverflow() {
 	for (var i = 0; i < doc.allPageItems.length; i++) {
 		if (doc.allPageItems[i].constructor.name === 'TextFrame') {
 			if (doc.allPageItems[i].overflows && doc.allPageItems[i].parentPage) {
-				errors.push(doc.name + ': Text overflows.');
+				errors.push(decodeURI(doc.name) + ': Text overflows.');
 				return;
 			}
 		}
@@ -777,26 +787,59 @@ function updateLinks() {
 				doc.links[i].update();
 				break;
 			case LinkStatus.LINK_MISSING:
-				errors.push(doc.name + ": Link '" + doc.links[i].name + "' not found.");
+				errors.push(decodeURI(doc.name) + ": Link '" + doc.links[i].name + "' not found.");
 				break;
 		}
 	}
 }
 
-function runScript(/*File*/path) {
-	var ext = path.fsName.replace(/^.*\./, '');
-	app.doScript(path,
-		(function (str) {
-			return {
-				scpt:   WIN ? undefined : ScriptLanguage.APPLESCRIPT_LANGUAGE,
-				js:     ScriptLanguage.JAVASCRIPT,
-				jsx:    ScriptLanguage.JAVASCRIPT,
-				jsxbin: ScriptLanguage.JAVASCRIPT
-			}[str];
-		}(ext)),
-		undefined,
-		UndoModes.ENTIRE_SCRIPT, 'Run script'
-	);
+function runScript(/*File*/scriptPath) {
+	try {
+		app.doScript(scriptPath,
+			getScriptLanguage(scriptPath.fsName.replace(/^.*\./, '')),
+			undefined,
+			UndoModes.ENTIRE_SCRIPT, 'Run script'
+		);
+	} catch (e) {
+		errors.push(decodeURI(doc.name) + ': Script returned "' +
+			e.toString().replace(/\r|\n/g, '\u00B6') + '" (line: ' + e.line + ')');
+	}
+
+	function getScriptLanguage(/*string*/ext) {
+		return {
+			scpt:   WIN ? undefined : ScriptLanguage.APPLESCRIPT_LANGUAGE,
+			js:     ScriptLanguage.JAVASCRIPT,
+			jsx:    ScriptLanguage.JAVASCRIPT,
+			jsxbin: ScriptLanguage.JAVASCRIPT
+		}[ext];
+	}
+}
+
+function saveLayersState() {
+	var i, n, layer;
+	for (i = 0, n = doc.layers.length; i < n; i++) {
+		layer = doc.layers[i];
+		layersState.push({
+			layer:     layer.name,
+			locked:    layer.locked,
+			printable: layer.printable,
+			visible:   layer.visible
+		});
+		if (layer.locked) layer.locked = false;
+	}
+}
+
+function restoreLayersState() {
+	var i, n, layer;
+	for (i = 0, n = layersState.length; i < n; i++) {
+		layer = doc.layers.itemByName(layersState[i].layer);
+		if (layer.isValid) {
+			layer.locked    = layersState[i].locked;
+			layer.printable = layersState[i].printable;
+			layer.visible   = layersState[i].visible;
+		}
+	}
+	layersState = [];
 }
 
 function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
