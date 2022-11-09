@@ -54,6 +54,8 @@
   **export/QuickExport:** Linked DPI availability to the profile sampling setting (on export)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/1b9a61edfed56f9dcb4bc413c9e008d70eb3ceaf)
   **export/QuickExport:** Restore document layer status after export; report script errors
+- [`ref`](https://github.com/pchiorean/Indentz/commit/2e2d69a432ab215f0a840f8ccd56ac17a3abb0e9)
+  **lib/fitTo:** Simplified `isStraight` flag
 
 ### [Releases](https://github.com/pchiorean/Indentz/releases)
 
