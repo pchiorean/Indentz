@@ -117,9 +117,7 @@ function fitTo(items, scope, target, enforced) {
 			child: (obj.pageItems.length === 1 && obj.fillColor.name === 'None') ?
 				obj.pageItems[0].visibleBounds : undefined,
 			// Flags
-			isStraight: Boolean(obj.absoluteRotationAngle === 0 ||
-				Math.abs(obj.absoluteRotationAngle) === 90 ||
-				Math.abs(obj.absoluteRotationAngle) === 180),
+			isStraight: Boolean(Math.abs(obj.absoluteRotationAngle % 90) === 0),
 			isNotSkewed: Boolean(obj.absoluteShearAngle === 0),
 			itHits: [ // Track sides that touch the visible area snap zone
 				Boolean(obj.geometricBounds[0] <= Z.visible[0]),
