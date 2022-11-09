@@ -34,11 +34,26 @@
   [`ref`](https://github.com/pchiorean/Indentz/commit/c83eb0de0362924eb77196df62fb04e31bdd7b89)
   **lib/parseDataFile and related:** Tweaked whitespace trimming
 - [`upd`](https://github.com/pchiorean/Indentz/commit/759925ace01b33a5d314c2ed6576a853e76c9354)
-  **align/AlignToC, export/QuickExport, lib/report, misc/LabelPage, misc/QRBatch:** Centered UI in app window
+  [`upd`](https://github.com/pchiorean/Indentz/commit/28b673210950d68ce3af764621ea79578b8749b9)
+  **align/AlignToC, export/QuickExport, lib/report, misc/LabelPage, misc/QR, QRBatch:** Centered UI in app window
 - [`fix`](https://github.com/pchiorean/Indentz/commit/1d46af91cde7a0d5b80148e0729a2adb0a2b4b66)
   **cleanup/DefaultSwatches:** Removed some debugging leftovers
 - [`upd`](https://github.com/pchiorean/Indentz/commit/0f237cd67fb0582f22e2ce45c147b14e0bc747e8)
   **cleanup/ReplaceSnippets:** Improved error messages
+- [`upd`](https://github.com/pchiorean/Indentz/commit/5ab283e31220561083c19954ece6f15dc1f34ddc)
+  **export/QuickExport:** Increased max bleed value to 152.4 mm
+- [`new`](https://github.com/pchiorean/Indentz/commit/0f956b6c3fb7f6e9488c374c0deaa46dc8086380)
+  **misc/EAN:** Added a new script that embeds an EAN code in the selected frame or adds it to a new page
+- [`fix`](https://github.com/pchiorean/Indentz/commit/0710d21d149e102191e29177ec78acfb89ba8903)
+  **misc/QR, QRBatch:** Enforced label's leading to auto, 100%
+- [`fix`](https://github.com/pchiorean/Indentz/commit/87870d075dd1c58644cbcb25828a20d08b49ca5b)
+  **export/QuickExport:** Fixed and improved the preset tooltip info; linked DPI availability to the profile sampling setting (on loading profile)
+- [`fix`](https://github.com/pchiorean/Indentz/commit/8dcdbb5b5f8451765800ea0c5c69568fcd367183)
+  **export/QuickExport:** Preserved custom bleed from the PDF preset
+- [`fix`](https://github.com/pchiorean/Indentz/commit/972742b3976d0261e59b6a94a440632444e1dd9e)
+  **export/QuickExport:** Linked DPI availability to the profile sampling setting (on export)
+- [`upd`](https://github.com/pchiorean/Indentz/commit/1b9a61edfed56f9dcb4bc413c9e008d70eb3ceaf)
+  **export/QuickExport:** Restore document layer status after export; report script errors
 
 ### [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -519,6 +534,7 @@
 - `fix` Nullify large variables on exit
 
 ##### New scripts
+
 - `new` `?` **file/LayersToFiles**
 - `new` **file/SpreadsToLayers**
 
