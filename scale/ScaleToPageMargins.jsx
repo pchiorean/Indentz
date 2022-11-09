@@ -1,5 +1,5 @@
 /*
-	Scale to page margins 22.6.9
+	Scale to page margins 22.11.9
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Scales the selected objects to the page margins.
@@ -38,7 +38,7 @@ function main(selection) {
 	}
 
 	// Scale, ungroup and restore initial selection
-	scale(item);
+	doScale();
 	if (item.name === '<scale group>') item.ungroup();
 	app.select(old.selection);
 
@@ -46,7 +46,7 @@ function main(selection) {
 	app.generalPreferences.ungroupRemembersLayers = old.ungroupRemembersLayers;
 	app.clipboardPreferences.pasteRemembersLayers = old.pasteRemembersLayers;
 
-	function scale(objects) {
+	function doScale() {
 		var ADB = AlignDistributeBounds.MARGIN_BOUNDS;
 		var TRP = app.layoutWindows[0].transformReferencePoint;
 		var size = {
@@ -59,17 +59,14 @@ function main(selection) {
 				h: item.visibleBounds[2] - item.visibleBounds[0]
 			}
 		};
-		var scaleFactor = Math.min(
-			size.target.w / size.item.w,
-			size.target.h / size.item.h
-		);
+		var scaleFactor = Math.min(size.target.w / size.item.w, size.target.h / size.item.h);
 
 		// Center object
 		doc.align(item, AlignOptions.HORIZONTAL_CENTERS, ADB);
 		doc.align(item, AlignOptions.VERTICAL_CENTERS, ADB);
 
 		// Scale
-		objects.transform(
+		item.transform(
 			CoordinateSpaces.PASTEBOARD_COORDINATES, AnchorPoint.CENTER_ANCHOR,
 			app.transformationMatrices.add({ horizontalScaleFactor: scaleFactor, verticalScaleFactor: scaleFactor })
 		);
