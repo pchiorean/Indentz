@@ -1,33 +1,34 @@
 Name                               |     Fn | Description
 :-                                 |     -: | :-
 **Cleanup**                        |        | **Preferences, defaults, cleanup**
-`DefaultPrefs.jsx`                 |        | Sets default preferences
+`BreakLinkToStyles.jsx`            |        | Unnaplies paragraph/character/object styles from all or selected objects
 `DefaultLayers.jsx`                |        | Adds/merges layers from a list
+`DefaultPrefs.jsx`                 |        | Sets default preferences
 `DefaultSwatches.jsx`              |        | Adds swatches from a list
+`DocCleanup.jsx`                   |     F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling
+`DumpLayers.jsx`                   |        | Saves document's layers to a list
+`DumpSwatches.jsx`                 |        | Saves document's swatches to a list
 `ReplaceFonts.jsx`                 |        | Replaces fonts from a substitution list
 `ReplaceLinks.jsx`                 |    ⌥F8 | Replaces document links from a substitution list
 `ReplaceSnippets.jsx`              |    ⌥F6 | Replaces text snippets from a substitution list
 `SwatchesCleanup.jsx`              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
-`DocCleanup.jsx`                   |     F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling
-`DumpSwatches.jsx`                 |        | Saves document's swatches to a list
-`DumpLayers.jsx`                   |        | Saves document's layers to a list
 **Layout**                         |        | **Document setup - page size, margins & columns, guides**
+`GuidesAdd.jsx`                    |        | Adds guides on pages' edges and inner centers or selected objects' edges
+`GuidesDelete.jsx`                 |        | Deletes all guides from the document
+`PageMarginsFromSelection.jsx`     |    ⌥F3 | Sets the page margins to the selected objects bounds
 `PageSizeFromFilename.jsx`         |     F3 | Sets every page size and margins according to the file name
 `PageSizeFromMargins.jsx`          |        | Sets the page size to the page margins
 `PageSizeFromSelection.jsx`        |    ⇧F3 | Sets the page size to the selected objects bounds
-`PageMarginsFromSelection.jsx`     |    ⌥F3 | Sets the page margins to the selected objects bounds
-`GuidesAdd.jsx`                    |        | Adds guides on pages' edges and inner centers or selected objects' edges
-`GuidesDelete.jsx`                 |        | Deletes all guides from the document
 **Align**                          |        | **Easily align objects using the numeric keypad**
-`AlignToTL.jsx`                    |   Num7 | Aligns the selected objects to the top-left of the 'Align To' setting
-`AlignToT.jsx`                     |   Num8 | Aligns the selected objects to the top of the 'Align To' setting
-`AlignToTR.jsx`                    |   Num9 | Aligns the selected objects to the top-right of the 'Align To' setting
-`AlignToL.jsx`                     |   Num4 | Aligns the selected objects to the left of the 'Align To' setting
-`AlignToC.jsx`                     |   Num5 | Aligns the selected objects to the center of the 'Align To' setting
-`AlignToR.jsx`                     |   Num6 | Aligns the selected objects to the right of the 'Align To' setting
-`AlignToBL.jsx`                    |   Num1 | Aligns the selected objects to the bottom-left of the 'Align To' setting
 `AlignToB.jsx`                     |   Num2 | Aligns the selected objects to the bottom of the 'Align To' setting
+`AlignToBL.jsx`                    |   Num1 | Aligns the selected objects to the bottom-left of the 'Align To' setting
 `AlignToBR.jsx`                    |   Num3 | Aligns the selected objects to the bottom-right of the 'Align To' setting
+`AlignToC.jsx`                     |   Num5 | Aligns the selected objects to the center of the 'Align To' setting
+`AlignToL.jsx`                     |   Num4 | Aligns the selected objects to the left of the 'Align To' setting
+`AlignToR.jsx`                     |   Num6 | Aligns the selected objects to the right of the 'Align To' setting
+`AlignToT.jsx`                     |   Num8 | Aligns the selected objects to the top of the 'Align To' setting
+`AlignToTL.jsx`                    |   Num7 | Aligns the selected objects to the top-left of the 'Align To' setting
+`AlignToTR.jsx`                    |   Num9 | Aligns the selected objects to the top-right of the 'Align To' setting
 `ResetAlignTo.jsx`                 |  ⌃Num0 | Resets the 'Align To' setting to default
 `ToggleAlignTo.jsx`                |   Num0 | Toggles the 'Align To' setting
 **Fit**                            |        | **Reframe objects to the page/spread or their margins/bleed**
@@ -49,34 +50,34 @@ Name                               |     Fn | Description
 `FitToSpreadVisibleAreaForced.jsx` | ⌥⇧⌘F12 | Reframes the selected objects to the spread visible area, forced
 `TextAutosize.jsx`                 |     F6 | Auto-sizes the text frame to the content
 **Scale**                          |        | **Scale objects to the page size, page margins, or spread bleed**
-`ScaleToPageSize.jsx`              |     F5 | Scales the selected objects to the page size
-`ScaleToPageSizeH.jsx`             |    ^F5 | Scales the selected objects to the page top/bottom size
-`ScaleToPageSizeW.jsx`             |        | Scales the selected objects to the page left/right size
 `ScaleToPageMargins.jsx`           |    ⌥F5 | Scales the selected objects to the page margins
 `ScaleToPageMarginsH.jsx`          |   ⌃⌥F5 | Scales the selected objects to the page top/bottom margins
 `ScaleToPageMarginsW.jsx`          |        | Scales the selected objects to the page left/right margins
+`ScaleToPageSize.jsx`              |     F5 | Scales the selected objects to the page size
+`ScaleToPageSizeH.jsx`             |    ^F5 | Scales the selected objects to the page top/bottom size
+`ScaleToPageSizeW.jsx`             |        | Scales the selected objects to the page left/right size
 `ScaleToSpreadBleed.jsx`           |    ⇧F5 | Scales the selected objects to the spread bleed
 `ScaleToSpreadBleedH.jsx`          |   ⌃⇧F5 | Scales the selected objects to the spread bleed top/bottom size
 `ScaleToSpreadBleedW.jsx`          |        | Scales the selected objects to the spread bleed left/right size
 **Proxy**                          |        | **Easily control the reference point used for transformations**
-`SetRefPointToTL.jsx`              |  ⌃Num7 | Sets 'Transform Reference Point' to top-left
-`SetRefPointToT.jsx`               |  ⌃Num8 | Sets 'Transform Reference Point' to top
-`SetRefPointToTR.jsx`              |  ⌃Num9 | Sets 'Transform Reference Point' to top-right
-`SetRefPointToL.jsx`               |  ⌃Num4 | Sets 'Transform Reference Point' to left
-`SetRefPointToC.jsx`               |  ⌃Num5 | Sets 'Transform Reference Point' to center
-`SetRefPointToR.jsx`               |  ⌃Num6 | Sets 'Transform Reference Point' to right
-`SetRefPointToBL.jsx`              |  ⌃Num1 | Sets 'Transform Reference Point' to bottom-left
 `SetRefPointToB.jsx`               |  ⌃Num2 | Sets 'Transform Reference Point' to bottom
+`SetRefPointToBL.jsx`              |  ⌃Num1 | Sets 'Transform Reference Point' to bottom-left
 `SetRefPointToBR.jsx`              |  ⌃Num3 | Sets 'Transform Reference Point' to bottom-right
+`SetRefPointToC.jsx`               |  ⌃Num5 | Sets 'Transform Reference Point' to center
+`SetRefPointToL.jsx`               |  ⌃Num4 | Sets 'Transform Reference Point' to left
+`SetRefPointToR.jsx`               |  ⌃Num6 | Sets 'Transform Reference Point' to right
+`SetRefPointToT.jsx`               |  ⌃Num8 | Sets 'Transform Reference Point' to top
+`SetRefPointToTL.jsx`              |  ⌃Num7 | Sets 'Transform Reference Point' to top-left
+`SetRefPointToTR.jsx`              |  ⌃Num9 | Sets 'Transform Reference Point' to top-right
 **File**                           |        | **File management**
 `FilesToSpreads.jsx`               |        | Combines the open documents, sorted alphabetically
-`SpreadsToFiles.jsx`               |        | Saves the spreads of the active document in separate files
 `LayersToSpreads.jsx`              |        | Moves layers of the active document to separate spreads
+`SpreadsToFiles.jsx`               |        | Saves the spreads of the active document in separate files
 **Export**                         |        | **Document export and related**
-`QuickExport.jsx`                  |        | Exports open .indd documents or a folder with several configurable PDF presets
-`PrepareForExport.jsx`             |        | Hides some layers and moves objects with special colors to separate spreads
-`MarkVisibleArea.jsx`              |        | Creates on each page a 'visible area' frame the size of the page margins
 `HideDNPLayers.jsx`                |        | Hides DO-NOT-PRINT layers
+`MarkVisibleArea.jsx`              |        | Creates on each page a 'visible area' frame the size of the page margins
+`PrepareForExport.jsx`             |        | Hides some layers and moves objects with special colors to separate spreads
+`QuickExport.jsx`                  |        | Exports open .indd documents or a folder with several configurable PDF presets
 `ShowDNPLayers.jsx`                |        | Shows DO-NOT-PRINT layers
 **View**                           |        | **Document display**
 `TileAll.jsx`                      |    ⇧F4 | Invokes 'Tile All Vertically/Horizontally', depending on current spread orientation
