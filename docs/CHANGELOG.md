@@ -1,6 +1,8 @@
 ## Changelog
 
-### [Development version](https://github.com/pchiorean/Indentz/compare/22.9.25...dev)
+<!-- ### [Development version](https://github.com/pchiorean/Indentz/compare/22.11.10...dev) -->
+
+### [22.11.10](https://github.com/pchiorean/Indentz/releases/tag/22.11.10)
 
 - [`fix`](https://github.com/pchiorean/Indentz/commit/58c79e5872b1d575dc2fa235ff8c8721d682a07c)
   **lib/getDataFile:** Fix regression from commit [d0ff5ea](https://github.com/pchiorean/Indentz/commit/d0ff5ea8c67ab914fcc116f5e4a3a26660026c96#diff-eee3f6feb9e5285db1b70d8d6f1786d3b6a87a4f89b81aa054a5f5cd341dedb5R16-R20)
@@ -15,11 +17,11 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/d32729cb1f119c5c37ee42461b195baff5446a1c)
   **cleanup/DocCleanup:** Reinstated the conversion of empty text frames to generic frames, but only when not auto-sized
 - [`new`](https://github.com/pchiorean/Indentz/commit/5cc09303da1e0a72e4f4ba673319e17e449e9c12)
-  **lib/getPageItem:** A new helper function to get a page item with a specified name, optionally from a specified layer
+  Added **lib/getPageItem:** Helper function to get a page item with a specified name, optionally from a specified layer
 - [`new`](https://github.com/pchiorean/Indentz/commit/d481571827839793fb208b8ac93a6cdfb3f0d8a2)
-  **lib/setDropShadow:** A new set of helper functions to get/set a page item's drop shadow properties
+  Added **lib/setDropShadow:** Set of helper functions to get/set a page item's drop shadow properties
 - [`new`](https://github.com/pchiorean/Indentz/commit/8c5af98faefbd3f1e10c6849a7332904923b8d5c)
-  **cleanup/DumpLayers:** Added a new script to dump layer properties to TSV
+  Added **cleanup/DumpLayers:** Dump layer properties to TSV
 - [`fix`](https://github.com/pchiorean/Indentz/commit/8b7e6fb78ab1e3de2a5acfb864d6437a5b3bd354)
   **cleanup/DefaultLayers:** Matching layer colors to `UIColors` is now case insensitive
 - [`upd`](https://github.com/pchiorean/Indentz/commit/ef626a01f068a09a2520f082b6ef22c8f32b3803)
@@ -43,7 +45,7 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/5ab283e31220561083c19954ece6f15dc1f34ddc)
   **export/QuickExport:** Increased max bleed value to 152.4 mm
 - [`new`](https://github.com/pchiorean/Indentz/commit/0f956b6c3fb7f6e9488c374c0deaa46dc8086380)
-  **misc/EAN:** Added a new script that embeds an EAN code in the selected frame or adds it to a new page
+  Added **misc/EAN:** Embeds an EAN code in the selected frame or adds it to a new page
 - [`fix`](https://github.com/pchiorean/Indentz/commit/0710d21d149e102191e29177ec78acfb89ba8903)
   **misc/QR, QRBatch:** Enforced label's leading to auto, 100%
 - [`fix`](https://github.com/pchiorean/Indentz/commit/87870d075dd1c58644cbcb25828a20d08b49ca5b)
@@ -56,10 +58,10 @@
   **export/QuickExport:** Restore document layer status after export; report script errors
 - [`ref`](https://github.com/pchiorean/Indentz/commit/2e2d69a432ab215f0a840f8ccd56ac17a3abb0e9)
   **lib/fitTo:** Simplified `isStraight` flag
+- [`ref`](https://github.com/pchiorean/Indentz/commit/f1940a37cdf5cf5588e53fa57afe70f3bf52f2fc)
+  **scale/ScaleTo...:** Minor changes to scaling function
 
-### [Releases](https://github.com/pchiorean/Indentz/releases)
-
-#### [22.9.25](https://github.com/pchiorean/Indentz/releases/tag/22.9.25)
+### [22.9.25](https://github.com/pchiorean/Indentz/releases/tag/22.9.25)
 
 - [`fix`](https://github.com/pchiorean/Indentz/commit/1214ec3da12b17c4ac8b8227dfa76a28183b63af)
   **cleanup/SwatchesSave:** Fixed file encoding (UTF-8)
@@ -111,7 +113,7 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/f03373821bd4f60b31f8cfb404394d30e6d2a587)
   **view/ZoomTo...:** Updated the zoom factor (fits a square page to 90% of 'Fit Page in Window')
 
-#### [22.8.22](https://github.com/pchiorean/Indentz/releases/tag/22.8.22)
+### [22.8.22](https://github.com/pchiorean/Indentz/releases/tag/22.8.22)
 
 ##### New features
 
@@ -121,9 +123,9 @@
 - [`new`](https://github.com/pchiorean/Indentz/commit/0de1e18e859d5737938d345ab554fd1fe5eb2608)
   `hack` **QuickExport:** Show/hide layers starting with a dot when using a 'preview'/'print' suffix (aka DNP layers)
 - [`new`](https://github.com/pchiorean/Indentz/commit/255f33547fcfc560208cf70f3af7d26728d8c5fb)
-  **lib/addGuide:** Added a helper function for creating standard ruler guides
+  Added **lib/addGuide:** Helper function for creating standard ruler guides
 - [`new`](https://github.com/pchiorean/Indentz/commit/e602c5232006a10b3b06fcaee718f22cb7aa449f)
-  **lib/truncateString:** Added a helper function for truncating strings
+  Added **lib/truncateString:** Helper function for truncating strings
 - [`new`](https://github.com/pchiorean/Indentz/commit/ecaeb2560026487080c36286215d83e0ee34d597)
   **lib/report:** Added a button for saving the report to file
 
@@ -184,14 +186,14 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/00415e83ac739a5c3c0328358f0d38a6af1185c0)
   Added an `#includepath` directive with a list of fallback folders
 
-#### [22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
+### [22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
 ##### New features
 
 - [`new`](https://github.com/pchiorean/Indentz/commit/e9012199d92ba0bef97acdbc9720a85de0ae07ab)
   **ReplaceSnippets:** Converted **lib/ReplaceText** to a standalone script
 - [`new`](https://github.com/pchiorean/Indentz/commit/a5104648fd99949bef989d579bbaceabcffc802a)
-  **LayersToSpreads:** Moves layers of the active document to separate spreads
+  Added **LayersToSpreads:** Moves layers of the active document to separate spreads
 
 ##### Updates
 
@@ -225,7 +227,7 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2d43649c6fcb012b8ab4ed28901059245415829a)
   **lib/Report:** Increased maximum width
 
-#### [22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
+### [22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
 
 ##### New features
 
@@ -273,12 +275,12 @@
 - [`doc`](https://github.com/pchiorean/Indentz/commit/14f7688731f5ba609c84530fee67600a55248e0b)
   **lib/ReplaceLink, ReplaceLinks:** Clarified/removed a mention about local links
 
-#### [22.3.11](https://github.com/pchiorean/Indentz/releases/tag/22.3.11)
+### [22.3.11](https://github.com/pchiorean/Indentz/releases/tag/22.3.11)
 
 ##### New features
 
 - [`new`](https://github.com/pchiorean/Indentz/commit/ae70c878cc579c3a1714e67a5756e519597bb3ea)
-  **lib/MoveToLayers:** Moves items to layers, optionally setting front/back order
+  Added **lib/MoveToLayers:** Moves items to layers, optionally setting front/back order
 - [`new`](https://github.com/pchiorean/Indentz/commit/fd40557b6a81caa4342884132746c75120f64f52)
   **DocCleanup:** Empty non-text frames will be converted to graphic frames to make them visible on complex layouts
 - [`new`](https://github.com/pchiorean/Indentz/commit/4b100ce6490f374b8047d2cf9f9e5b239e6351bb)
@@ -313,7 +315,7 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/5fbd56abfeb7a46fd5e8bec0bb2e48d419573a90)
   Renamed **lib/isIn** to **isInArray**
 
-#### [22.2.9](https://github.com/pchiorean/Indentz/releases/tag/22.2.9)
+### [22.2.9](https://github.com/pchiorean/Indentz/releases/tag/22.2.9)
 
 ##### New features
 
@@ -480,7 +482,7 @@
 - [`doc`](https://github.com/pchiorean/Indentz/commit/c8dd950b8167d4a30148c866da25e91694f9416c)
   Added a changelog
 
-#### [21.9.20](https://github.com/pchiorean/Indentz/tree/723c2fe6c71c9d5a4586f2b7685628fe0d788258)
+### [21.9.20](https://github.com/pchiorean/Indentz/tree/723c2fe6c71c9d5a4586f2b7685628fe0d788258)
 
 - [`ref`](https://github.com/pchiorean/Indentz/commit/51bb19d2d7074181c5acacc8dd52931bfd3263c5)
   [`upd`](https://github.com/pchiorean/Indentz/commit/8982a3fde7956ac83372ba140a773a05dff929e2)
