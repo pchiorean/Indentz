@@ -1,34 +1,28 @@
-### What's new in release [22.9.25](https://github.com/pchiorean/Indentz/releases/tag/22.9.25)
+### What's new in [22.11.10](https://github.com/pchiorean/Indentz/releases/tag/22.11.10)
 
 #### Cleanup
-- **`DefaultSwatches`** You can now cancel adding swatches by pressing 'Esc'.
-- **`DocCleanup`** No longer converts empty text frames to generic frames.
-- **`ReplaceLinks`**
-  - Fixed an error for names containing `%`.
-  - You can now cancel relinking by pressing 'Esc'.
-- **`SwatchesSave`** Changed the TSV encoding to UTF-8 to preseve swatch names using non-ASCII characters.
+- Added **BreakLinkToStyles:** Unnaplies paragraph/character/object styles from all or selected objects.
+- Added **DumpLayers:** Saves a TSV file with the properties of the active document layers (compatible with **DefaultLayers**).
+- **DefaultPrefs:** Preferences are now applied in two steps: application/document.
+- **DocCleanup:** Reinstated conversion of empty text frames to generic frames, but only when they are not auto-sized.
+- Renamed **SwatchesSave** to **DumpSwatches**.
 
 #### Export
-- **`QuickExport`** Cosmetic tweaks to 'Export in subfolders' description.
+- **QuickExport:**
+  - Custom bleed is now imported when defined in the PDF preset.
+  - Document layers will be restored to initial status after export.
+  - Increased maximum bleed value to 152.4 mm.
+  - Improved the PDF preset tooltip info.
+  - Errors are now reported after running additional scripts.
+  - When the PDF preset is set to preserve original resolution the DPI option is now disabled.
 
-#### File
-- **`SpreadsToFiles`** Cosmetic tweaks to the prompt text.
-
-#### View
-- **`ZoomTo...`**
-  - Refactored to use similar code to its twin.
-  - Tweaked the zoom factor (fits a square page to 90% of 'Fit Page in Window').
-
-#### Lib
-**Note:** In the release version, the `jsxinc` stubs are statically-linked, so the scripts are stand-alone, and the **`lib`** folder is not included. Also, some stubs are used elsewhere but kept here for convenience.
-
-- **`getDataFile`** Updated to take as argument a list of files; returns the first one found.
-- **`parseDataFile`** (and all scripts that use TSVs as input)
-  - `new` Added `@includepath` statement which sets a reference path to which subsequent relative paths will refer.
-  - `new` You can now use relative paths for both `@include` and `@includepath`: thus, a path may be an absolute path, one relative to the current data file, or a path relative to a reference path, if defined by a previous `@includepath` statement.
-  - Changed data files extension to `.tsv` (it still looks for `.txt` as fallback).
-  - Added support for comments at the end of lines (everything after a `#` is ignored).
-- **`report`** `new` Added `auto` to filtering mode – automatically shows filtering if there are more than 20 lines.
+#### Misc
+- Added **EAN:** Embeds an EAN code in the selected frame or adds it to a new page.
+- **QR:**
+  - Switched uppercase and white label options.
+  - Set label leading to 100%.
 
 #### Other
-- Activated auto filtering to the status report for scripts that need it.
+- Dialogs are centered in the InDesign window.
+
+For other fixes and improvements not mentioned here see the full [changelog](CHANGELOG.md).
