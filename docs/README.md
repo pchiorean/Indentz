@@ -226,6 +226,10 @@ There's also some non-standard stuff that will confuse Excel et al.:
 
 </details>
 
+#### **`BreakLinkToStyles`**
+
+Unnaplies paragraph/character/object styles from the selected objects or all objects in the document if nothing is selected.
+
 #### **`DocCleanup`** <small>F2</small>
 It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
 
@@ -302,7 +306,7 @@ Use the numeric keypad to instantly align the selected object to the **Align To*
 #### **`FitToPage...`** / **`FitToSpread...`**
 These scripts reframe the selected objects to the page/spread or their margins/bleed by reducing the edges of objects or clipping frames that cross the target and extending ones that touch it or are very close (in a 1% snap zone).
 
-Rectangular frames and orthogonal lines are directly resized; rotated objects, ovals, groups, etc. are inserted into a clipping frame that is resized.
+Rectangular frames and orthogonal lines are simply resized; rotated objects, ovals, groups, etc. are inserted into a clipping frame that is resized.
 
 **`FitTo...Forced`** bluntly reframes an object to the target.
 
@@ -527,7 +531,7 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-<small>Last updated: November 9, 2022</small>
+<small>Last updated: November 10, 2022</small>
 
 [^1]: For example, in **`Document_DE.indd`** 'The sample is for free' will be replaced with 'Das Sample ist kostenlos', and for **`Document_FR.indd`** with 'L'échantillon est gratuit'.
 [^2]: For example, if the suffix is `print+diecut`, the document will be saved as **`Document_print+diecut.pdf`** in a subfolder named **`print`**.
