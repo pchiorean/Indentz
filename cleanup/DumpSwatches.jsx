@@ -1,14 +1,15 @@
 /*
-	Dump swatches 22.10.21
+	Dump swatches 22.11.11
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
-	Save document's swatches to a 4-column TSV file:
+	Saves document's swatches to a TSV file compatible with `DefaultSwatches.jsx`:
 
 	Name       | Color Model | Color Space | Values
 	Rich Black | process     | cmyk        | 60 40 40 100
 	RGB Grey   | process     | rgb         | 128 128 128
 	Cut        | spot        | cmyk        | 0 100 0 0
 	...
+
 	<Name>: swatch name,
 	<Color Model>: `process` or `spot`,
 	<Color Space>: `cmyk`, `rgb` or `lab`,

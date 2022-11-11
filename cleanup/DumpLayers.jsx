@@ -1,14 +1,14 @@
 /*
-	Dump layers 22.10.21
+	Dump layers 22.11.11
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
-	Save document's layers to a 4-column TSV file:
+	Saves document's layers to a TSV file compatible with `Defaultlayers.jsx`:
 
 	Name     | Color   | Visible | Printable
-	text     | Green   | yes     | yes
-	bg       | Red     | yes     | yes
+	dielines | Magenta | yes     | yes
 	template | Gray    | no      | no
 	...
+
 	<Name>: layer name,
 	<Color>: layer color (see UIColors.txt for color names),
 	<Visible>: `yes` or `no`,
