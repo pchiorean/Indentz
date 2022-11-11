@@ -1,8 +1,8 @@
 /*
-	Cleanup labels 21.9.12
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Remove script labels 22.11.11
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
-	Removes all labels from the document.
+	Removes all script labels from all or selected objects.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -17,4 +17,4 @@ app.doScript(
 		while ((item = items.shift())) item.label = '';
 	},
 	ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Cleanup labels');
+	UndoModes.ENTIRE_SCRIPT, 'Remove script labels');
