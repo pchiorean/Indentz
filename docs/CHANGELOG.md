@@ -1,109 +1,153 @@
 ## Changelog
 
-<!-- ### [Development version](https://github.com/pchiorean/Indentz/compare/22.11.10...dev) -->
+### [Development version](https://github.com/pchiorean/Indentz/compare/22.11.10...dev)
+
+##### New features
+
+##### Updates
+
+##### Bug fixes
+
+##### Miscellaneous
+- `00/00` []()
+  `ref` **misc/LabelsCleanup:** Renamed and moved to **cleanup/RemoveScriptLabels**
+
+##### Queued
+
+- `new` **cleanup/DefaultLayers:** Add `top/bottom` order keyword
+- `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
+- `upd` **cleanup/DocCleanup:** Convert empty frames to generic frames when they have no fill/stroke
+- `new` **export/QuickExport:** Add a preflight dropbox
+- `upd` **export/QuickExport:** Read document PDF standard from a saved label
+- `upd` **export/QuickExport:** Use custom bleed from PDF preset, but display only max. value
+- `upd` **export/QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
+- `fix` **export/QuickExport:** Report layer overrides
+- `fix` **file/SpreadsToFiles:** Don't append separators if already exist
+- `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
+- `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
+- `upd` **layout/PageSizeFromSelection:** Use outlined text bounds for text frames
+- `upd` **layout/PageSizeFromSelection:** Without selection fit all pages to their contents
+- `upd` **misc/EAN:** Try to get clipboard on open
+- `upd` **misc/QRBatch:** Move 'Refresh' before 'Browse'
+- `upd` **view/ZoomTo...:** Run with 'Opt/Alt' to get the value of `Z`
+- `doc` **\*:** Paul Chiorean <jpeg@basement.ro>
+- `doc` `?` Add `@method` to JSDoc comments
+
+	<details>
+
+	```js
+	/**
+	 * Класс индикатора выполнения
+	 * @param {Number} maxValue             Максимальное значение индикатора
+	 * @param {String} barLabel             Текст над индикатором
+	 * @param {String} panelTitle           Заголовок панели
+	 * @param {String} Info                 Текст под индикатором
+	 *
+	 * @method close()                      Закрывает окно индикатора выполнения
+	 * @method reset(maxValue, barLabel)    Новые значения для максимума и текста над индикатором
+	 * @method setVal(barValue)             Устанавливает конкретное значение индикатора
+	 * @method increase()                   Увеличивает значение индикатора на единицу
+	 * @method setLabel(str)                Устанавливает новое значение текста над индикатором
+	 * @method setPanelLabel(str)           Устанавливает новое значение заголовка панели
+	 * @method setInfo(str)                 Устанавливает новое значение текста под индикатором
+	 */
+	```
+
+	</details>
 
 ### [22.11.10](https://github.com/pchiorean/Indentz/releases/tag/22.11.10)
 
-- [`fix`](https://github.com/pchiorean/Indentz/commit/58c79e5872b1d575dc2fa235ff8c8721d682a07c)
-  **lib/getDataFile:** Fix regression from commit [d0ff5ea](https://github.com/pchiorean/Indentz/commit/d0ff5ea8c67ab914fcc116f5e4a3a26660026c96#diff-eee3f6feb9e5285db1b70d8d6f1786d3b6a87a4f89b81aa054a5f5cd341dedb5R16-R20)
-- [`fix`](https://github.com/pchiorean/Indentz/commit/f333157f099182fe1c4e767128be7fc24e61e5bf)
-  **export/QuickExport:** Improved titlebar message logic and fixed a quirk
-- [`upd`](https://github.com/pchiorean/Indentz/commit/852844f62ea6ae58d8e83b7d78e6ef9c654b454c)
-  **misc/QR:** Changed default code placement to separate files & streamlined actions
-- [`upd`](https://github.com/pchiorean/Indentz/commit/0b51957f90170f291519d90eb7e8e575f475a620)
-  **misc/QR, QRBatch:** Switched white and uppercase options
-- [`upd`](https://github.com/pchiorean/Indentz/commit/2ff55013a414b28198796867cd01a4bfb0ec0838)
-  **lib/progressBar:** Improved centering in current window
-- [`upd`](https://github.com/pchiorean/Indentz/commit/d32729cb1f119c5c37ee42461b195baff5446a1c)
-  **cleanup/DocCleanup:** Reinstated the conversion of empty text frames to generic frames, but only when not auto-sized
-- [`new`](https://github.com/pchiorean/Indentz/commit/5cc09303da1e0a72e4f4ba673319e17e449e9c12)
+##### New features
+
+- `10/15` [`new`](https://github.com/pchiorean/Indentz/commit/5cc09303da1e0a72e4f4ba673319e17e449e9c12)
   Added **lib/getPageItem:** Helper function to get a page item with a specified name, optionally from a specified layer
-- [`new`](https://github.com/pchiorean/Indentz/commit/d481571827839793fb208b8ac93a6cdfb3f0d8a2)
+- `10/15` [`new`](https://github.com/pchiorean/Indentz/commit/d481571827839793fb208b8ac93a6cdfb3f0d8a2)
   Added **lib/setDropShadow:** Set of helper functions to get/set a page item's drop shadow properties
-- [`new`](https://github.com/pchiorean/Indentz/commit/8c5af98faefbd3f1e10c6849a7332904923b8d5c)
+- `10/24` [`new`](https://github.com/pchiorean/Indentz/commit/8c5af98faefbd3f1e10c6849a7332904923b8d5c)
   Added **cleanup/DumpLayers:** Dump layer properties to TSV
-- [`fix`](https://github.com/pchiorean/Indentz/commit/8b7e6fb78ab1e3de2a5acfb864d6437a5b3bd354)
-  **cleanup/DefaultLayers:** Matching layer colors to `UIColors` is now case insensitive
-- [`upd`](https://github.com/pchiorean/Indentz/commit/ef626a01f068a09a2520f082b6ef22c8f32b3803)
+- `11/06` [`new`](https://github.com/pchiorean/Indentz/commit/0f956b6c3fb7f6e9488c374c0deaa46dc8086380)
+  Added **misc/EAN:** Embeds an EAN code in the selected frame or adds it to a new page
+- `11/09` [`upd`](https://github.com/pchiorean/Indentz/commit/1b9a61edfed56f9dcb4bc413c9e008d70eb3ceaf)
+  **export/QuickExport:** Restore document layer status after export; report script errors
+
+##### Updates
+
+- `10/06` [`upd`](https://github.com/pchiorean/Indentz/commit/852844f62ea6ae58d8e83b7d78e6ef9c654b454c)
+  **misc/QR:** Changed default code placement to separate files & streamlined actions
+- `10/06` [`upd`](https://github.com/pchiorean/Indentz/commit/0b51957f90170f291519d90eb7e8e575f475a620)
+  **misc/QR, QRBatch:** Switched white and uppercase options
+- `10/15` [`upd`](https://github.com/pchiorean/Indentz/commit/2ff55013a414b28198796867cd01a4bfb0ec0838)
+  **lib/progressBar:** Improved centering in current window
+- `10/15` [`upd`](https://github.com/pchiorean/Indentz/commit/d32729cb1f119c5c37ee42461b195baff5446a1c)
+  **cleanup/DocCleanup:** Reinstated the conversion of empty text frames to generic frames, but only when not auto-sized
+- `10/24` [`upd`](https://github.com/pchiorean/Indentz/commit/ef626a01f068a09a2520f082b6ef22c8f32b3803)
   `hack` **export/QuickExport:** Updated auto suffix hack for two additional layers: `varnish` and `white`
-- [`upd`](https://github.com/pchiorean/Indentz/commit/97f141fc24410515a394786f59977471974abd0b)
+- `10/24` [`upd`](https://github.com/pchiorean/Indentz/commit/97f141fc24410515a394786f59977471974abd0b)
   `hack` **export/QuickExport:** Updated dot-layers hack to only hide them when exporting with a 'print' suffix
-- [`upd`](https://github.com/pchiorean/Indentz/commit/78ee6a53fe7ceb8deeaf48f4a3742dcf6ede4788)
+- `10/24` [`upd`](https://github.com/pchiorean/Indentz/commit/78ee6a53fe7ceb8deeaf48f4a3742dcf6ede4788)
   **misc/QR:** Reverted to on-document placement by default
-- [`upd`](https://github.com/pchiorean/Indentz/commit/9a3703e92e372c00e904a97195627400f64520a6)
+- `10/24` [`upd`](https://github.com/pchiorean/Indentz/commit/9a3703e92e372c00e904a97195627400f64520a6)
   **cleanup/DefaultPrefs:** Apply preferences in two steps: application/document
-- [`ref`](https://github.com/pchiorean/Indentz/commit/f0c224716706dd4809204484bb001cfb090a6bdc)
+- `10/28` [`upd`](https://github.com/pchiorean/Indentz/commit/759925ace01b33a5d314c2ed6576a853e76c9354)
+  **align/AlignToC, export/QuickExport, lib/report, misc/LabelPage, misc/QR:** Centered UI in app window
+- `10/28` [`upd`](https://github.com/pchiorean/Indentz/commit/0f237cd67fb0582f22e2ce45c147b14e0bc747e8)
+  **cleanup/ReplaceSnippets:** Improved error messages
+- `10/30` [`upd`](https://github.com/pchiorean/Indentz/commit/5ab283e31220561083c19954ece6f15dc1f34ddc)
+  **export/QuickExport:** Increased max bleed value to 152.4 mm
+- `11/06` [`upd`](https://github.com/pchiorean/Indentz/commit/28b673210950d68ce3af764621ea79578b8749b9)
+  **misc/QR:** Centered UI in app window
+
+##### Bug fixes
+
+- `09/28` [`fix`](https://github.com/pchiorean/Indentz/commit/58c79e5872b1d575dc2fa235ff8c8721d682a07c)
+  **lib/getDataFile:** Fix regression from commit [d0ff5ea](https://github.com/pchiorean/Indentz/commit/d0ff5ea8c67ab914fcc116f5e4a3a26660026c96#diff-eee3f6feb9e5285db1b70d8d6f1786d3b6a87a4f89b81aa054a5f5cd341dedb5R16-R20)
+- `10/04` [`fix`](https://github.com/pchiorean/Indentz/commit/f333157f099182fe1c4e767128be7fc24e61e5bf)
+  **export/QuickExport:** Improved titlebar message logic and fixed a quirk
+- `10/24` [`fix`](https://github.com/pchiorean/Indentz/commit/8b7e6fb78ab1e3de2a5acfb864d6437a5b3bd354)
+  **cleanup/DefaultLayers:** Matching layer colors to `UIColors` is now case insensitive
+- `10/28` [`fix`](https://github.com/pchiorean/Indentz/commit/1d46af91cde7a0d5b80148e0729a2adb0a2b4b66)
+  **cleanup/DefaultSwatches:** Removed some debugging leftovers
+- `11/06` [`fix`](https://github.com/pchiorean/Indentz/commit/0710d21d149e102191e29177ec78acfb89ba8903)
+  **misc/QR, QRBatch:** Enforced label's leading to auto, 100%
+- `11/07` [`fix`](https://github.com/pchiorean/Indentz/commit/87870d075dd1c58644cbcb25828a20d08b49ca5b)
+  **export/QuickExport:** Fixed and improved the preset tooltip info; linked DPI availability to the profile sampling setting (on loading profile)
+- `11/07` [`fix`](https://github.com/pchiorean/Indentz/commit/8dcdbb5b5f8451765800ea0c5c69568fcd367183)
+  **export/QuickExport:** Preserved custom bleed from the PDF preset
+- `11/08` [`fix`](https://github.com/pchiorean/Indentz/commit/972742b3976d0261e59b6a94a440632444e1dd9e)
+  **export/QuickExport:** Linked DPI availability to the profile sampling setting (on export)
+
+##### Miscellaneous
+
+- `10/24` [`ref`](https://github.com/pchiorean/Indentz/commit/6ecde9e6a0bd2394dd20b442cf1943c561607246)
+  **cleanup/SwatchesSave:** Renamed to **DumpSwatches**
+- `10/27` [`ref`](https://github.com/pchiorean/Indentz/commit/f0c224716706dd4809204484bb001cfb090a6bdc)
   [`ref`](https://github.com/pchiorean/Indentz/commit/c83eb0de0362924eb77196df62fb04e31bdd7b89)
   **lib/parseDataFile and related:** Tweaked whitespace trimming
-- [`upd`](https://github.com/pchiorean/Indentz/commit/759925ace01b33a5d314c2ed6576a853e76c9354)
-  [`upd`](https://github.com/pchiorean/Indentz/commit/28b673210950d68ce3af764621ea79578b8749b9)
-  **align/AlignToC, export/QuickExport, lib/report, misc/LabelPage, misc/QR, QRBatch:** Centered UI in app window
-- [`fix`](https://github.com/pchiorean/Indentz/commit/1d46af91cde7a0d5b80148e0729a2adb0a2b4b66)
-  **cleanup/DefaultSwatches:** Removed some debugging leftovers
-- [`upd`](https://github.com/pchiorean/Indentz/commit/0f237cd67fb0582f22e2ce45c147b14e0bc747e8)
-  **cleanup/ReplaceSnippets:** Improved error messages
-- [`upd`](https://github.com/pchiorean/Indentz/commit/5ab283e31220561083c19954ece6f15dc1f34ddc)
-  **export/QuickExport:** Increased max bleed value to 152.4 mm
-- [`new`](https://github.com/pchiorean/Indentz/commit/0f956b6c3fb7f6e9488c374c0deaa46dc8086380)
-  Added **misc/EAN:** Embeds an EAN code in the selected frame or adds it to a new page
-- [`fix`](https://github.com/pchiorean/Indentz/commit/0710d21d149e102191e29177ec78acfb89ba8903)
-  **misc/QR, QRBatch:** Enforced label's leading to auto, 100%
-- [`fix`](https://github.com/pchiorean/Indentz/commit/87870d075dd1c58644cbcb25828a20d08b49ca5b)
-  **export/QuickExport:** Fixed and improved the preset tooltip info; linked DPI availability to the profile sampling setting (on loading profile)
-- [`fix`](https://github.com/pchiorean/Indentz/commit/8dcdbb5b5f8451765800ea0c5c69568fcd367183)
-  **export/QuickExport:** Preserved custom bleed from the PDF preset
-- [`fix`](https://github.com/pchiorean/Indentz/commit/972742b3976d0261e59b6a94a440632444e1dd9e)
-  **export/QuickExport:** Linked DPI availability to the profile sampling setting (on export)
-- [`upd`](https://github.com/pchiorean/Indentz/commit/1b9a61edfed56f9dcb4bc413c9e008d70eb3ceaf)
-  **export/QuickExport:** Restore document layer status after export; report script errors
-- [`ref`](https://github.com/pchiorean/Indentz/commit/2e2d69a432ab215f0a840f8ccd56ac17a3abb0e9)
+- `11/09` [`ref`](https://github.com/pchiorean/Indentz/commit/2e2d69a432ab215f0a840f8ccd56ac17a3abb0e9)
   **lib/fitTo:** Simplified `isStraight` flag
-- [`ref`](https://github.com/pchiorean/Indentz/commit/f1940a37cdf5cf5588e53fa57afe70f3bf52f2fc)
+- `11/09` [`ref`](https://github.com/pchiorean/Indentz/commit/f1940a37cdf5cf5588e53fa57afe70f3bf52f2fc)
   **scale/ScaleTo...:** Minor changes to scaling function
 
 ### [22.9.25](https://github.com/pchiorean/Indentz/releases/tag/22.9.25)
 
-- [`fix`](https://github.com/pchiorean/Indentz/commit/1214ec3da12b17c4ac8b8227dfa76a28183b63af)
-  **cleanup/SwatchesSave:** Fixed file encoding (UTF-8)
-- [`ref`](https://github.com/pchiorean/Indentz/commit/e55692ccbf9d85bc0b2495dc4321451e1514d05d)
-  **export/QuickExport:** Minor (cosmetic) options tweaks
-- [`ref`](https://github.com/pchiorean/Indentz/commit/5fbb288a359358459c5f4d36004f41fd70e8802f)
-  **file/SpreadsToFiles:** Updated prompt text
-- [`ref`](https://github.com/pchiorean/Indentz/commit/73f201a2ac2ba1fce93d8a558b376ab603d01371)
-  **lib/fitTo:** Updated linting settings
-- [`ref`](https://github.com/pchiorean/Indentz/commit/17d5cb5ee2483fb73ec522f907b469f74bb65ca8)
-  **view/ZoomTo...:** Refactored to use similar code to its twin
-- [`brk`](https://github.com/pchiorean/Indentz/commit/30fb0d34a8e929cf432a7dc0583ad9f263bb5ef2)
-  **lib/parseDataFile and related:** Changed data files extension to `tsv`
-- [`fix`](https://github.com/pchiorean/Indentz/commit/5e54d86d82a1ce06836361c8d50045e5c6e7774a)
-  **cleanup/ReplaceLinks.jsx:** Fixed an error for names containing `%`
+##### New features
+
 - [`brk`](https://github.com/pchiorean/Indentz/commit/ea713c47c39dea36f7460d26b50541e700df9646)
   **lib/parseDataFile and related:** Added `@includepath` directive and support for relative paths
-- [`fix`](https://github.com/pchiorean/Indentz/commit/d45bba8046dfbea4171fe208126b77642012dcff)
-  **lib/parseDataFile and related:** Fixed `@includepath` to be always relative to the data folder
 - [`upd`](https://github.com/pchiorean/Indentz/commit/79c49c60f63de6797ee2935cf9a9251d926085e8)
   **lib/parseDataFile and related:** Added support for comments at the end of lines
-- [`upd`](https://github.com/pchiorean/Indentz/commit/5878d14e2650871d4d1147eefbd245684d7df690)
-  [`fix`](https://github.com/pchiorean/Indentz/commit/142d7fc830f4c7ad3eea03fbfe8d0df94fb51590)
-  [`fix`](https://github.com/pchiorean/Indentz/commit/d0774f9aa75ac11f2adf554e9931f088493c8ffe)
-  **cleanup/ReplaceLinks:** Because we are dealing with document links, changed `@includepath` default to the document `Links` folder (and fixed `@include` to fall back to the data folder in this situation)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/b9f79dedb8cc7d298a4941bb4c5eff3312c33c51)
   **cleanup/DefaultSwatches, ReplaceLinks:** Cancel if 'Esc' is pressed
 - [`upd`](https://github.com/pchiorean/Indentz/commit/c24e8506b98019d47314fe6d6f968e7c91303ce3)
   **lib/report:** Added `auto` to filtering mode – automatically shows filtering if there are more than 20 lines
-- [`fix`](https://github.com/pchiorean/Indentz/commit/fbe49efe36d5907cc30c09d50c064f02c79b94d9)
-  **lib/parseDataFile and related:** Don't try to `@include` non-`.tsv` files
-- [`fix`](https://github.com/pchiorean/Indentz/commit/0dd4c38bf391b441d4f2ee251efc5298cbf47061)
-  **lib/report:** Fixed enabling auto filtering only when `auto` keyword is used (d'oh)
+
+##### Updates
+
+- [`brk`](https://github.com/pchiorean/Indentz/commit/30fb0d34a8e929cf432a7dc0583ad9f263bb5ef2)
+  **lib/parseDataFile and related:** Changed data files extension to `tsv`
 - [`upd`](https://github.com/pchiorean/Indentz/commit/646e7acad396b5013e03a0e5ca3963076989eb54)
   Activated auto filtering to the status report for scripts that need it
-- [`fix`](https://github.com/pchiorean/Indentz/commit/3f88f2499e852ad5b022a85f446f105f493bde61)
-  **lib/report:** Fixed borked midnight patch to auto filtering (d'oh)
-- [`fix`](https://github.com/pchiorean/Indentz/commit/80ba0dca551362a5587c46ea48e39e860172a1bc)
-  **lib/parseDataFile and related:** Fixed an excessive cleaning of quotes in `@include` paths
-- [`doc`](https://github.com/pchiorean/Indentz/commit/c6559f2827361c20aa3f172a0743a9e8549f73ea)
-  **lib/parseDataFile and related:** Changed 'Blank lines and those prefixed with `#` are ignored.' -> 'starting'
-- [`upd`](https://github.com/pchiorean/Indentz/commit/d0ff5ea8c67ab914fcc116f5e4a3a26660026c96)
+- [`brk`](https://github.com/pchiorean/Indentz/commit/d0ff5ea8c67ab914fcc116f5e4a3a26660026c96)
   **lib/getDataFile:** Updated to take as argument a list of files; returns the first one found
 - [`upd`](https://github.com/pchiorean/Indentz/commit/3b4cd59358981aa6643d2161880a567c9591b1a8)
   [`upd`](https://github.com/pchiorean/Indentz/commit/d3f2ccdbffbeeb3bfde6085538ee82a74e13a172)
@@ -112,6 +156,40 @@
   **cleanup/DocCleanup:** Preserve empty text frames (don't convert them to generic frames)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/f03373821bd4f60b31f8cfb404394d30e6d2a587)
   **view/ZoomTo...:** Updated the zoom factor (fits a square page to 90% of 'Fit Page in Window')
+
+##### Bug fixes
+
+- [`fix`](https://github.com/pchiorean/Indentz/commit/1214ec3da12b17c4ac8b8227dfa76a28183b63af)
+  **cleanup/SwatchesSave:** Fixed file encoding (UTF-8)
+- [`fix`](https://github.com/pchiorean/Indentz/commit/5e54d86d82a1ce06836361c8d50045e5c6e7774a)
+  **cleanup/ReplaceLinks.jsx:** Fixed an error for names containing `%`
+- [`fix`](https://github.com/pchiorean/Indentz/commit/d45bba8046dfbea4171fe208126b77642012dcff)
+  **lib/parseDataFile and related:** Fixed `@includepath` to be always relative to the data folder
+- [`fix`](https://github.com/pchiorean/Indentz/commit/5878d14e2650871d4d1147eefbd245684d7df690)
+  [`fix`](https://github.com/pchiorean/Indentz/commit/142d7fc830f4c7ad3eea03fbfe8d0df94fb51590)
+  [`fix`](https://github.com/pchiorean/Indentz/commit/d0774f9aa75ac11f2adf554e9931f088493c8ffe)
+  **cleanup/ReplaceLinks:** Because we are dealing with document links, changed `@includepath` default to the document `Links` folder (and fixed `@include` to fall back to the data folder in this situation)
+- [`fix`](https://github.com/pchiorean/Indentz/commit/fbe49efe36d5907cc30c09d50c064f02c79b94d9)
+  **lib/parseDataFile and related:** Don't try to `@include` non-`.tsv` files
+- [`fix`](https://github.com/pchiorean/Indentz/commit/0dd4c38bf391b441d4f2ee251efc5298cbf47061)
+  **lib/report:** Fixed enabling auto filtering only when `auto` keyword is used (d'oh)
+- [`fix`](https://github.com/pchiorean/Indentz/commit/3f88f2499e852ad5b022a85f446f105f493bde61)
+  **lib/report:** Fixed borked midnight patch to auto filtering (d'oh)
+- [`fix`](https://github.com/pchiorean/Indentz/commit/80ba0dca551362a5587c46ea48e39e860172a1bc)
+  **lib/parseDataFile and related:** Fixed an excessive cleaning of quotes in `@include` paths
+
+##### Miscellaneous
+
+- [`ref`](https://github.com/pchiorean/Indentz/commit/e55692ccbf9d85bc0b2495dc4321451e1514d05d)
+  **export/QuickExport:** Minor (cosmetic) options tweaks
+- [`ref`](https://github.com/pchiorean/Indentz/commit/5fbb288a359358459c5f4d36004f41fd70e8802f)
+  **file/SpreadsToFiles:** Updated prompt text
+- [`ref`](https://github.com/pchiorean/Indentz/commit/73f201a2ac2ba1fce93d8a558b376ab603d01371)
+  **lib/fitTo:** Updated linting settings
+- [`ref`](https://github.com/pchiorean/Indentz/commit/17d5cb5ee2483fb73ec522f907b469f74bb65ca8)
+  **view/ZoomTo...:** Refactored to use similar code to its twin
+- [`doc`](https://github.com/pchiorean/Indentz/commit/c6559f2827361c20aa3f172a0743a9e8549f73ea)
+  **lib/parseDataFile and related:** Changed 'prefixed' to 'starting'
 
 ### [22.8.22](https://github.com/pchiorean/Indentz/releases/tag/22.8.22)
 
@@ -494,13 +572,11 @@
 ##### New features
 
 - `new` **lib/debug:** Add a stopwatch
-- `new` **cleanup/DefaultLayers:** Add `top/bottom` order keyword
 - `new` **cleanup/DefaultSwatches:** Add tints support
 - `new` **cleanup/DefaultSwatches:** Add groups support
 - `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
 - `new` **export/QuickExport:** Add INDD (with or without package) export profile
 - `new` **export/QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
-- `new` **export/QuickExport:** Add a preflight dropbox
 
 ##### Updates
 
@@ -512,27 +588,19 @@
 - `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
 - `upd` **export/Show/HideDNPLayers:** Take layers from a TSV
 - `upd` **layout/PageMarginsFromSelection:** Set the margins of every page touched by the selection
-- `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
-- `upd` **layout/PageSizeFromSelection:** Use outlined text bounds for text frames
-- `upd` **layout/PageSizeFromSelection:** Without selection fit all pages to their contents
-- `upd` **export/QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
 - `upd` `?` **export/QuickExport:** JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 - `upd` **lib/replaceText:** Take an array of strings as input
 - `upd` **lib/replaceText:** Add grep matching
 - `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
 - `upd` **file/SpreadsToFiles:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
 - `upd` **view/ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
-- `upd` **view/ZoomTo...:** Run with 'Opt/Alt' to get the value of `Z`
 - `upd` `?` **lib/isInArray:** Add regex matching to `searchValue`
 - `upd` Use a custom object style for `<visible area>` frame
 
 ##### Bug fixes
 
 - `fix` **layout/PageSizeFromFilename:** Error on pages set to 1:X scale
-- `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
-- `fix` **export/QuickExport:** Report layer overrides
 - `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
-- `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `fix` **fit/TextAutoSize:** Check `baselineShift`
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
 - `fix` Nullify large variables on exit
