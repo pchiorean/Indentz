@@ -9,8 +9,8 @@
 ##### Bug fixes
 
 ##### Miscellaneous
-- `00/00` []()
-  `ref` **misc/LabelsCleanup:** Renamed and moved to **cleanup/RemoveScriptLabels**
+- `11/11` [`ref`](https://github.com/pchiorean/Indentz/commit/aeede5af80fb77de0193a45b9d2d277e717503ab)
+  **misc/LabelsCleanup:** Renamed and moved to **cleanup/RemoveScriptLabels**
 
 ##### Queued
 
