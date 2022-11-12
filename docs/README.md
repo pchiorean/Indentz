@@ -17,7 +17,7 @@ The code was developed and tested in Adobe InDesign CC 2020–2022 on Mac (but I
 Defaults and cleanup.
 
 #### **`DefaultPrefs`**
-Sets some preferences for the active document.
+Sets some preferences for the active document. You should customize them to your taste by editing the script.
 
 <details><summary><strong>Details</strong></summary>
 
@@ -108,7 +108,7 @@ Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sam
 >
 > **Variants**: a list of swatches that will be replaced by the base swatch; it's case insensitive and can take simple wildcards (`?` and `*`)
 
-You can use [**`SwatchesSave`**](#swatchessave) to save a tab delimited list of swatches from any document.
+You can use [**`DumpSwatches`**](#dumpswatches) to save a tab delimited list of swatches from any document.
 
 <details><summary><strong>Additional features</strong></summary>
 
@@ -208,7 +208,9 @@ Replaces a list of text snippets using a TSV data file named **`snippets.tsv`** 
 > **Change to**: The replacement text\
 > **Case sensitive**: `yes` or `no` (defaults to `yes`)\
 > **Whole word**: `yes` or `no` (defaults to `yes`)\
-> **Scope**: Replacement will only be done if the document name matches the [regular expression](https://regex101.com)[^1] (case sensitive)
+> **Scope**: Replacement will only be done if the document name matches the [regular expression](https://regex101.com) (case sensitive)
+
+For example, 'The sample is for free' will be replaced with 'Das Sample ist kostenlos' in **`Document_DE.indd`**, and with 'L'échantillon est gratuit' in **`Document_FR.indd`**.
 
 <details><summary><strong>Additional features</strong></summary>
 
@@ -232,6 +234,9 @@ Unnaplies paragraph/character/object styles from the selected objects or all obj
 
 #### **`DocCleanup`** <small>F2</small>
 It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
+
+#### **`RemoveScriptLabels`**
+Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
 
 #### **`SwatchesCleanup`** <small>⇧F2</small>
 Converts process RGB swatches to CMYK and renames them to 'C= M= Y= K=' format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.
@@ -411,7 +416,7 @@ There are two export presets that can be used simultaneously or one at a time:
 
 The text from the **Suffix** field will be appended to the name of the exported file (everything in the preset name after the last `_` will be autodetected as suffix).
 
-If **Sort files by suffix into subfolders** is checked, subfolders will be created from the suffix (the text after `+` is ignored[^2]).
+If **Sort files by suffix into subfolders** is checked, files will be exported in subfolders named using the suffix text up to the first `+` character. For example, for a `print+diecut` suffix, the PDF will be saved as **`Document_print+diecut.pdf`** in a subfolder named **`print`**.
 
 It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:
 
@@ -434,7 +439,7 @@ Invokes **Window ‣ Arrange ‣ Tile All Vertically** or **Tile All Horizontall
 #### **`ZoomToSelection`** <small>F4</small>
 It resembles **Fit Selection in Window** **<small>(⌥⌘=)</small>**, but with some changes:
 
-- Brings the selection a little closer[^3];
+- Brings the selection a little closer[^1];
 - If the cursor is in a text frame, zooms on the whole frame;
 - Without anything selected zooms on the current spread.
 
@@ -467,9 +472,6 @@ Adds a custom label on the current page slug, on the **info** layer (with Helvet
 #### **`LabelPageRatios`**
 Adds a label with the page aspect ratio, on the slug of each page, on the **info** layer.
 
-#### **`LabelsCleanup`**
-Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
-
 #### **`Offset Paths`**
 
 This is a slightly modified version of [**OffsetPath**](https://creativepro.com/indesign-cad-tool/) by Olav Martin Kvern, that creates paths around selected objects at a custom offset distance:
@@ -478,7 +480,7 @@ This is a slightly modified version of [**OffsetPath**](https://creativepro.com/
 
 #### **`QR`** <small>F9</small>
 
-Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^4]:
+Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^2]:
 
 |             On document             |             On file              |
 |:-----------------------------------:|:--------------------------------:|
@@ -531,9 +533,9 @@ The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-<small>Last updated: November 10, 2022</small>
+Thanks to Adrian Frigioiu for bug reports and feedback.
 
-[^1]: For example, in **`Document_DE.indd`** 'The sample is for free' will be replaced with 'Das Sample ist kostenlos', and for **`Document_FR.indd`** with 'L'échantillon est gratuit'.
-[^2]: For example, if the suffix is `print+diecut`, the document will be saved as **`Document_print+diecut.pdf`** in a subfolder named **`print`**.
-[^3]: The variable `Z` from line 42 must be set to fit a square page at 90% of **Fit Page in Window**.
-[^4]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
+<small>Last updated: November 12, 2022</small>
+
+[^1]: The variable `Z` from line 42 must be set to fit a square page at 90% of **Fit Page in Window**.
+[^2]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.

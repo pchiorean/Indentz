@@ -275,7 +275,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Defaults and cleanup.</p>
 <h4 class="mume-header" id="defaultprefs"><strong><code>DefaultPrefs</code></strong></h4>
 
-<p>Sets some preferences for the active document.</p>
+<p>Sets some preferences for the active document. You should customize them to your taste by editing the script.</p>
 <details><summary><strong>Details</strong></summary>
 <p><strong>Application:</strong></p>
 <blockquote>
@@ -446,7 +446,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </ul>
 <p><strong>Variants</strong>: a list of swatches that will be replaced by the base swatch; it&apos;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>)</p>
 </blockquote>
-<p>You can use <a href="#swatchessave"><strong><code>SwatchesSave</code></strong></a> to save a tab delimited list of swatches from any document.</p>
+<p>You can use <a href="#dumpswatches"><strong><code>DumpSwatches</code></strong></a> to save a tab delimited list of swatches from any document.</p>
 <details><summary><strong>Additional features</strong></summary>
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
@@ -634,8 +634,9 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Change to</strong>: The replacement text<br>
 <strong>Case sensitive</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>)<br>
 <strong>Whole word</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>)<br>
-<strong>Scope</strong>: Replacement will only be done if the document name matches the <a href="https://regex101.com">regular expression</a><sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> (case sensitive)</p>
+<strong>Scope</strong>: Replacement will only be done if the document name matches the <a href="https://regex101.com">regular expression</a> (case sensitive)</p>
 </blockquote>
+<p>For example, &apos;The sample is for free&apos; will be replaced with &apos;Das Sample ist kostenlos&apos; in <strong><code>Document_DE.indd</code></strong>, and with &apos;L&apos;&#xE9;chantillon est gratuit&apos; in <strong><code>Document_FR.indd</code></strong>.</p>
 <details><summary><strong>Additional features</strong></summary>
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
@@ -656,6 +657,9 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="doccleanup-smallf2small"><strong><code>DocCleanup</code></strong> <small>F2</small></h4>
 
 <p>It runs <a href="#defaultprefs"><strong><code>DefaultPrefs</code></strong></a>; deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.</p>
+<h4 class="mume-header" id="removescriptlabels"><strong><code>RemoveScriptLabels</code></strong></h4>
+
+<p>Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.</p>
 <h4 class="mume-header" id="swatchescleanup-smallf2small"><strong><code>SwatchesCleanup</code></strong> <small>&#x21E7;F2</small></h4>
 
 <p>Converts process RGB swatches to CMYK and renames them to &apos;C=&#xA0;M=&#xA0;Y=&#xA0;K=&apos; format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.</p>
@@ -988,7 +992,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>There are two export presets that can be used simultaneously or one at a time:</p>
 <p><img src="img/script-quickexport.png" alt="Quick export"></p>
 <p>The text from the <strong>Suffix</strong> field will be appended to the name of the exported file (everything in the preset name after the last <code>_</code> will be autodetected as suffix).</p>
-<p>If <strong>Sort files by suffix into subfolders</strong> is checked, subfolders will be created from the suffix (the text after <code>+</code> is ignored<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>).</p>
+<p>If <strong>Sort files by suffix into subfolders</strong> is checked, files will be exported in subfolders named using the suffix text up to the first <code>+</code> character. For example, for a <code>print+diecut</code> suffix, the PDF will be saved as <strong><code>Document_print+diecut.pdf</code></strong> in a subfolder named <strong><code>print</code></strong>.</p>
 <p>It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:</p>
 <h4 class="mume-header" id="markvisiblearea"><strong><code>MarkVisibleArea</code></strong></h4>
 
@@ -1009,7 +1013,7 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <p>It resembles <strong>Fit Selection in Window</strong> <strong><small>(&#x2325;&#x2318;=)</small></strong>, but with some changes:</p>
 <ul>
-<li>Brings the selection a little closer<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>;</li>
+<li>Brings the selection a little closer<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>;</li>
 <li>If the cursor is in a text frame, zooms on the whole frame;</li>
 <li>Without anything selected zooms on the current spread.</li>
 </ul>
@@ -1037,9 +1041,6 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="labelpageratios"><strong><code>LabelPageRatios</code></strong></h4>
 
 <p>Adds a label with the page aspect ratio, on the slug of each page, on the <strong>info</strong> layer.</p>
-<h4 class="mume-header" id="labelscleanup"><strong><code>LabelsCleanup</code></strong></h4>
-
-<p>Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.</p>
 <h4 class="mume-header" id="offset-paths"><strong><code>Offset Paths</code></strong></h4>
 
 <p>This is a slightly modified version of <a href="https://creativepro.com/indesign-cad-tool/"><strong>OffsetPath</strong></a> by Olav Martin Kvern, that creates paths around selected objects at a custom offset distance:</p>
@@ -1048,7 +1049,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </blockquote>
 <h4 class="mume-header" id="qr-smallf9small"><strong><code>QR</code></strong> <small>F9</small></h4>
 
-<p>Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup>:</p>
+<p>Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>:</p>
 <table>
 <thead>
 <tr>
@@ -1129,17 +1130,14 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>&#xA9; 2020-2022 Paul Chiorean &lt;jpeg AT basement.ro&gt;.<br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&apos;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
-<p><small>Last updated: November 10, 2022</small></p>
+<p>Thanks to Adrian Frigioiu for bug reports and feedback.</p>
+<p><small>Last updated: November 12, 2022</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>For example, in <strong><code>Document_DE.indd</code></strong> &apos;The sample is for free&apos; will be replaced with &apos;Das Sample ist kostenlos&apos;, and for <strong><code>Document_FR.indd</code></strong> with &apos;L&apos;&#xE9;chantillon est gratuit&apos;. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn1" class="footnote-item"><p>The variable <code>Z</code> from line 42 must be set to fit a square page at 90% of <strong>Fit Page in Window</strong>. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
-<li id="fn2" class="footnote-item"><p>For example, if the suffix is <code>print+diecut</code>, the document will be saved as <strong><code>Document_print+diecut.pdf</code></strong> in a subfolder named <strong><code>print</code></strong>. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
-</li>
-<li id="fn3" class="footnote-item"><p>The variable <code>Z</code> from line 42 must be set to fit a square page at 90% of <strong>Fit Page in Window</strong>. <a href="#fnref3" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
-</li>
-<li id="fn4" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref4" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn2" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
 </ol>
 </section>
