@@ -82,6 +82,7 @@ Name                               |     Fn | Description
 `ShowDNPLayers.jsx`                |        | Shows DO-NOT-PRINT layers
 **View**                           |        | **Document display**
 `TileAll.jsx`                      |    ⇧F4 | Invokes 'Tile All Vertically/Horizontally', depending on current spread orientation
+`ZoomTo300Percent.jsx`             |     ⌘3 | Zooms to 300%
 `ZoomToSelection.jsx`              |     F4 | Zooms to the selected objects. If no selection, it zooms to the current spread
 `ZoomToSpreads.jsx`                |    ⌥F4 | Zooms to the current spread or the first N spreads
 **Miscellaneous**                  |        | **Scripts that do not fall into the other categories**
