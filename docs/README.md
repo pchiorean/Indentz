@@ -436,6 +436,9 @@ Shows or hides the following _do-not-print_ layers: **covered areas**, **visible
 #### **`TileAll`** <small>⇧F4</small>
 Invokes **Window ‣ Arrange ‣ Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
 
+#### **`ZoomTo300Percent`** <small>⌘3</small>
+Zooms current layout window to 300%.
+
 #### **`ZoomToSelection`** <small>F4</small>
 It resembles **Fit Selection in Window** **<small>(⌥⌘=)</small>**, but with some changes:
 
