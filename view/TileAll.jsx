@@ -1,6 +1,6 @@
 /*
-	Tile all 21.9.18
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Tile all 22.11.12
+	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Invokes 'Tile All Vertically' or 'Tile All Horizontally',
 	depending on current spread orientation.
@@ -10,8 +10,10 @@
 */
 
 if (app.documents.length < 2) exit();
+if (app.activeWindow.constructor.name !== 'LayoutWindow') exit();
 
 var page = app.activeWindow.activePage;
+
 var size = {
 	width:  page.parent.pages.lastItem().bounds[3] - page.parent.pages.firstItem().bounds[1],
 	height: page.parent.pages.lastItem().bounds[2] - page.parent.pages.firstItem().bounds[0]
@@ -27,4 +29,5 @@ switch (size.width / size.height <= 1) {
 }
 
 app.selection = NothingEnum.NOTHING;
-for (var i = 0, n = app.windows.length; i < n; i++) app.windows[i].zoom(ZoomOptions.FIT_SPREAD);
+for (var i = 0, n = app.windows.length; i < n; i++)
+	if (app.windows[i].constructor.name === 'LayoutWindow') app.windows[i].zoom(ZoomOptions.FIT_SPREAD);

@@ -1,5 +1,5 @@
 /*
-	Zoom to spreads 22.9.25
+	Zoom to spreads 22.11.12
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the current spread (if N = 1) or the first N spreads (if N > 1).
@@ -27,6 +27,7 @@
 */
 
 if (!(doc = app.activeDocument)) exit();
+if (app.activeWindow.constructor.name !== 'LayoutWindow') exit();
 
 var items, item, zoom, i, n;
 var window = app.activeWindow;

@@ -1,5 +1,5 @@
 /*
-	Zoom to selection 22.9.25
+	Zoom to selection 22.11.12
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the selected objects. If no selection, it zooms to the current spread.
@@ -27,6 +27,7 @@
 */
 
 if (!(doc = app.activeDocument)) exit();
+if (app.activeWindow.constructor.name !== 'LayoutWindow') exit();
 
 var items, item, zoom, i, n;
 var window = app.activeWindow;
