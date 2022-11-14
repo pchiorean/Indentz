@@ -4,16 +4,29 @@
 
 ##### New features
 
+- `11/12` [`new`](https://github.com/pchiorean/Indentz/commit/bd152afa2fa862875036a6e02eb8717a16586428)
+  **view/ZoomTo300Percent:** Zooms current layout window to 300%
+
 ##### Updates
+
+##### Removed features
 
 ##### Bug fixes
 
 ##### Miscellaneous
+
 - `11/11` [`ref`](https://github.com/pchiorean/Indentz/commit/aeede5af80fb77de0193a45b9d2d277e717503ab)
   **misc/LabelsCleanup:** Renamed and moved to **cleanup/RemoveScriptLabels**
+- `11/12` [`ref`](https://github.com/pchiorean/Indentz/commit/416073f9e74ef2d3e7a0718a37044e07cb0a366a)
+  **export/QuickExport:** Updated help tip for 'Sort files by suffix into subfolders'
+- `11/14` [`upd`](https://github.com/pchiorean/Indentz/commit/3fe118dc578d8559feb46282d9efb9ac39f9ebef)
+  **clean/DefaultPrefs:** Added scaling options
+- `11/14` [`new`](https://github.com/pchiorean/Indentz/commit/04d7b2c3442753a6f87f8ab9b28943f7012e0777)
+  **layout/PageMarginsTo5Percent.jsx:** Sets margins to 5% of the visible area for all document pages
 
 ##### Queued
 
+- `new` Add an '.ini' file for custom user settings
 - `new` **cleanup/DefaultLayers:** Add `top/bottom` order keyword
 - `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
 - `upd` **cleanup/DocCleanup:** Convert empty frames to generic frames when they have no fill/stroke
@@ -22,6 +35,7 @@
 - `upd` **export/QuickExport:** Use custom bleed from PDF preset, but display only max. value
 - `upd` **export/QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
 - `fix` **export/QuickExport:** Report layer overrides
+- `fix` **cleanup/DocCleanup:** Don't trim ending spaces when VJ != top
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
 - `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
@@ -30,8 +44,9 @@
 - `upd` **misc/EAN:** Try to get clipboard on open
 - `upd` **misc/QRBatch:** Move 'Refresh' before 'Browse'
 - `upd` **view/ZoomTo...:** Run with 'Opt/Alt' to get the value of `Z`
-- `doc` **\*:** Paul Chiorean <jpeg@basement.ro>
+- `doc` Add a mention about the option to interrupt the ongoing operation with 'Esc'
 - `doc` `?` Add `@method` to JSDoc comments
+- `doc` **\*:** Paul Chiorean <jpeg@basement.ro>
 
 	<details>
 
@@ -329,6 +344,11 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/880aa8ec0a66dbff191be1af103a493c4b7ce1d5)
   **DocCleanup:** Changed visibility and locked state of some technical layers (e.g., 'dielines')
 
+##### Removed features
+
+- [`del`](https://github.com/pchiorean/Indentz/commit/7b768b5f8cce9c6c975beed0c00977e1d8428122)
+  Removed `DocDefaults` stub
+
 ##### Bug fixes
 
 - [`fix`](https://github.com/pchiorean/Indentz/commit/a0278cdce29715ee9934266fde3e7a024e9c331c)
@@ -344,8 +364,6 @@
 
 ##### Miscellaneous
 
-- [`del`](https://github.com/pchiorean/Indentz/commit/7b768b5f8cce9c6c975beed0c00977e1d8428122)
-  Removed `DocDefaults` stub
 - [`ref`](https://github.com/pchiorean/Indentz/commit/015098b840418e3700a3499df0d0fbd49243ef05)
   **QRBatch:** Processed lines are commented with just a '#', no space; works better when aligning columns with 'Rainbow CSV'
 - [`ref`](https://github.com/pchiorean/Indentz/commit/98623ed89d2e82d4b138c071d3d33db659236345)
@@ -369,14 +387,17 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/ca8bf04cc4561838f7cfa6ff0563a46d5a3cbacd)
   [`upd`](https://github.com/pchiorean/Indentz/commit/e8470e8aceaa8664e8c0d35c355c9dfb4c0a7a52)
   **DocCleanup, DocDefaults:** Added progress bars
-- [`ref`](https://github.com/pchiorean/Indentz/commit/b804940a29d841ead53543b87acbf0f94424c6f9)
-  **QRBatch:** Removed bounds fallback (it's done in the `GetBounds` lib now)
 - [`brk`](https://github.com/pchiorean/Indentz/commit/c7420f394c72661ca1f0f459fc8b882dae80576d)
   **lib/FitTo, lib/GetBounds:** The visible area will now fallback to page/spread size
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2cbdc230c18ec232078d4e61928640fae793e772)
   **DefaultLayers/Swatches/ReplaceFonts/Links:** Set verbosity to INFO when **Ctrl** is pressed
 - [`upd`](https://github.com/pchiorean/Indentz/commit/41bc44c5e4c47cc25054f15d6be0f66af8470eda)
   **SwatchesCleanup:** Merged 'R=0 G=0 B=0' to the default Black swatch
+
+##### Removed features
+
+- [`ref`](https://github.com/pchiorean/Indentz/commit/b804940a29d841ead53543b87acbf0f94424c6f9)
+  **QRBatch:** Removed bounds fallback (it's done in the `GetBounds` lib now)
 
 ##### Bug fixes
 
