@@ -1,5 +1,5 @@
 /*
-	Default preferences 22.10.24
+	Default preferences 22.11.13
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Sets default preferences.
@@ -36,7 +36,8 @@ app.doScript(function () {
 		},
 		transformPreferences: {
 			adjustEffectsWhenScaling: true,
-			adjustStrokeWeightWhenScaling: true
+			adjustStrokeWeightWhenScaling: true,
+			whenScaling: WhenScalingOptions.APPLY_TO_CONTENT
 		}
 	};
 
