@@ -1,5 +1,5 @@
 /*
-	Page size from file name 22.8.9
+	Page size from file name 22.11.17
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Sets every page size and margins according to the file name.
@@ -59,7 +59,18 @@ function main() {
 		strokeType: '$ID/Canned Dashed 3x2'
 	};
 	var visAreaRE = /^<?(visible|safe) area>?$/i;
+	// Dimensons: match '_000[.0] [mm] x 000[.0] [mm]' pairs
+	// 1. [_-]                  // '_' or '-' separator between pairs
+	// 2. \d+([.,]\d+)?([cm]m)? // group 1: digits, optional decimals, optional cm/mm
+	// 3. x                     // 'x' separator between groups
+	// 4. \d+([.,]\d+)?(cm|mm)? // group 2
+	// 5. (?!x)(?!\d)           // discard if more groups (to avoid 000x00x00 et al)
 	var pairsRE = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig;
+	// Bleed: match '_00 [mm]' after '0 [mm]'
+	// 1. \d(?:[cm]m)?          // 1 digit followed by optional mm/cm (non-capturing group)
+	// 2. [_+]                  // '_' or '+' separator
+	// 3. (\d{1,2})             // 1 or 2 digits (capturing group #1)
+	// 4. (?:[cm]m)             // mandatory mm/cm (non-capturing group)
 	var bleedRE = /\d\s*(?:[cm]m)?[_+](\d{1,2})\s*(?:[cm]m)/i;
 	var ISO216SubsetRE = /A[1-7]\b/;
 	var baseName = (/\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf('.'))) || doc.name;
@@ -79,19 +90,8 @@ function main() {
 	doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 	app.generalPreferences.objectsMoveWithPage = false;
 
-	// Dimensions: match '_000[.0] [mm] x 000[.0] [mm]' pairs
 	dimensions = baseName.match(pairsRE);
-		// 1. [_-]                  // '_' or '-' separator between pairs
-		// 2. \d+([.,]\d+)?([cm]m)? // group 1: digits, optional decimals, optional cm/mm
-		// 3. x                     // 'x' separator between groups
-		// 4. \d+([.,]\d+)?(cm|mm)? // group 2
-		// 5. (?!x)(?!\d)           // discard if more groups (to avoid 000x00x00 et al)
-	// Bleed: match '_00 [mm]' after '0 [mm]'
 	newBleed = bleedRE.exec(baseName);
-		// 1. \d(?:[cm]m)?          // 1 digit followed by optional mm/cm (non-capturing group)
-		// 2. [_+]                  // '_' or '+' separator
-		// 3. (\d{1,2})             // 1 or 2 digits (capturing group #1)
-		// 4. (?:[cm]m)             // mandatory mm/cm (non-capturing group)
 	// If no dimension pairs are found, try to match common 'A' sizes
 	if (dimensions == null) {
 		dimensions = baseName.match(ISO216SubsetRE);
