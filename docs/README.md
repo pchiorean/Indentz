@@ -268,6 +268,13 @@ Resizes the current page to its margins.
 #### **`PageSizeFromSelection`** <small>⇧F3</small>
 Resizes the page to the selected objects.
 
+#### **`PageMarginsFromScriptName.jsx`**
+Sets the page margins and the HW area from the script name. The script is designed to be renamed, to personalize the values.
+
+By default it sets the page margins to 5% of the visible/page area for all document pages. Renaming it to, e.g., `Margins<XX>HW<YY>.jsx`, you set a value `XX` for the margins and (optionally) a `YY` value for an HW area at the bottom.
+
+The default values are 5 for margins and 10 for HW.
+
 #### **`PageMarginsFromSelection`** <small>⌥F3</small>
 Sets the page margins from the selected objects.
 
@@ -538,7 +545,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: November 12, 2022</small>
+<small>Last updated: November 17, 2022</small>
 
 [^1]: The variable `Z` from line 42 must be set to fit a square page at 90% of **Fit Page in Window**.
 [^2]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.

@@ -16,6 +16,7 @@ Name                               |     Fn | Description
 **Layout**                         |        | **Document setup - page size, margins & columns, guides**
 `GuidesAdd.jsx`                    |        | Adds guides on pages' edges and inner centers or selected objects' edges
 `GuidesDelete.jsx`                 |        | Deletes all guides from the document
+`PageMarginsFromScriptName.jsx`    |        | Sets page margins and HW from the script name
 `PageMarginsFromSelection.jsx`     |    ⌥F3 | Sets the page margins to the selected objects bounds
 `PageSizeFromFilename.jsx`         |     F3 | Sets every page size and margins according to the file name
 `PageSizeFromMargins.jsx`          |        | Sets the page size to the page margins
