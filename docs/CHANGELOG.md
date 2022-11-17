@@ -2,29 +2,7 @@
 
 ### [Development version](https://github.com/pchiorean/Indentz/compare/22.11.10...dev)
 
-##### New features
-
-- `11/12` [`new`](https://github.com/pchiorean/Indentz/commit/bd152afa2fa862875036a6e02eb8717a16586428)
-  **view/ZoomTo300Percent:** Zooms current layout window to 300%
-
-##### Updates
-
-##### Removed features
-
-##### Bug fixes
-
-##### Miscellaneous
-
-- `11/11` [`ref`](https://github.com/pchiorean/Indentz/commit/aeede5af80fb77de0193a45b9d2d277e717503ab)
-  **misc/LabelsCleanup:** Renamed and moved to **cleanup/RemoveScriptLabels**
-- `11/12` [`ref`](https://github.com/pchiorean/Indentz/commit/416073f9e74ef2d3e7a0718a37044e07cb0a366a)
-  **export/QuickExport:** Updated help tip for 'Sort files by suffix into subfolders'
-- `11/14` [`upd`](https://github.com/pchiorean/Indentz/commit/3fe118dc578d8559feb46282d9efb9ac39f9ebef)
-  **clean/DefaultPrefs:** Added scaling options
-- `11/14` [`new`](https://github.com/pchiorean/Indentz/commit/04d7b2c3442753a6f87f8ab9b28943f7012e0777)
-  **layout/PageMarginsTo5Percent.jsx:** Sets margins to 5% of the visible area for all document pages
-
-##### Queued
+<details><summary><strong>Queued</strong></summary>
 
 - `new` Add an '.ini' file for custom user settings
 - `new` **cleanup/DefaultLayers:** Add `top/bottom` order keyword
@@ -44,6 +22,7 @@
 - `upd` **misc/EAN:** Try to get clipboard on open
 - `upd` **misc/QRBatch:** Move 'Refresh' before 'Browse'
 - `upd` **view/ZoomTo...:** Run with 'Opt/Alt' to get the value of `Z`
+- `upd` `?` Add a 'Canceling, please wait...' note when cancelling batch processes
 - `doc` Add a mention about the option to interrupt the ongoing operation with 'Esc'
 - `doc` `?` Add `@method` to JSDoc comments
 - `doc` **\*:** Paul Chiorean <jpeg@basement.ro>
@@ -69,6 +48,37 @@
 	```
 
 	</details>
+
+</details>
+
+##### New features
+
+- `11/12` [`new`](https://github.com/pchiorean/Indentz/commit/bd152afa2fa862875036a6e02eb8717a16586428)
+  **view/ZoomTo300Percent:** Zooms current layout window to 300%
+- `11/14` [`upd`](https://github.com/pchiorean/Indentz/commit/3fe118dc578d8559feb46282d9efb9ac39f9ebef)
+  **clean/DefaultPrefs:** Added scaling options
+- `11/14` [`new`](https://github.com/pchiorean/Indentz/commit/04d7b2c3442753a6f87f8ab9b28943f7012e0777)
+  **layout/PageMarginsTo5Percent:** Sets margins to 5% of the visible area for all document pages
+- `11/17` [`new`](https://github.com/pchiorean/Indentz/commit/0322f41787496ad351226c2c066b9cb13478d7e9)
+  **layout/PageMarginsTo5Percent:** Now it also detects the HW value; renamed to **PageMarginsFromScriptName**
+
+##### Updates
+
+- `11/15` [`upd`](https://github.com/pchiorean/Indentz/commit/401233e7256283a1c3ed1df67ec4bcd9a6af9599)
+  **misc/QRBatch:** Filterd list to display only queueable lines
+
+##### Removed features
+
+##### Bug fixes
+- `11/17` [`fix`](https://github.com/pchiorean/Indentz/commit/6b70b11e3638bdac0e8b1d849a68c7475e9edc0a)
+  **export/QuickExport:** Fixed auto-suffix hack to chain layer names (d'oh!)
+
+##### Miscellaneous
+
+- `11/11` [`ref`](https://github.com/pchiorean/Indentz/commit/aeede5af80fb77de0193a45b9d2d277e717503ab)
+  **misc/LabelsCleanup:** Renamed and moved to **cleanup/RemoveScriptLabels**
+- `11/12` [`ref`](https://github.com/pchiorean/Indentz/commit/416073f9e74ef2d3e7a0718a37044e07cb0a366a)
+  **export/QuickExport:** Updated help tip for 'Sort files by suffix into subfolders'
 
 ### [22.11.10](https://github.com/pchiorean/Indentz/releases/tag/22.11.10)
 
@@ -177,7 +187,7 @@
 - [`fix`](https://github.com/pchiorean/Indentz/commit/1214ec3da12b17c4ac8b8227dfa76a28183b63af)
   **cleanup/SwatchesSave:** Fixed file encoding (UTF-8)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/5e54d86d82a1ce06836361c8d50045e5c6e7774a)
-  **cleanup/ReplaceLinks.jsx:** Fixed an error for names containing `%`
+  **cleanup/ReplaceLinks:** Fixed an error for names containing `%`
 - [`fix`](https://github.com/pchiorean/Indentz/commit/d45bba8046dfbea4171fe208126b77642012dcff)
   **lib/parseDataFile and related:** Fixed `@includepath` to be always relative to the data folder
 - [`fix`](https://github.com/pchiorean/Indentz/commit/5878d14e2650871d4d1147eefbd245684d7df690)
@@ -493,7 +503,7 @@
   **Debug 1.0:** Updated description, simplified arguments parsing, updated `trunc/pad` function
 - [`upd`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
   **HW 2.7:** Also match old `<safe area>` frames as visible area marks
-- [`upd`](ShowProfiles)
+- [`upd`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c#diff-88f86d8b713ae55352e6f1412b825214bd1c2a159f50d5f73a8c1a705d20bbca)
   **ShowProfiles 1.5:** Profiles are only available with a document opened, so create a temporary one
 
 ##### Removed features
