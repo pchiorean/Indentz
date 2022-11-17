@@ -1,5 +1,5 @@
 /*
-	Quick export 22.11.12
+	Quick export 22.11.17
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -713,10 +713,10 @@ while ((doc = docs.shift())) {
 		}
 
 		// Hack: Append special folder names to the suffix
-		if (/print$/i.test(suffix) && doc.layers.itemByName('dielines').isValid) suffix += '+diecut';
-		if (/print$/i.test(suffix) && doc.layers.itemByName('white').isValid)    suffix += '+white';
-		if (/print$/i.test(suffix) && doc.layers.itemByName('foil').isValid)     suffix += '+foil';
-		if (/print$/i.test(suffix) && doc.layers.itemByName('varnish').isValid)  suffix += '+varnish';
+		if (/^_print/i.test(suffix) && doc.layers.itemByName('dielines').isValid) suffix += '+diecut';
+		if (/^_print/i.test(suffix) && doc.layers.itemByName('white').isValid)    suffix += '+white';
+		if (/^_print/i.test(suffix) && doc.layers.itemByName('foil').isValid)     suffix += '+foil';
+		if (/^_print/i.test(suffix) && doc.layers.itemByName('varnish').isValid)  suffix += '+varnish';
 
 		// Hack: Hide dot-layers when exporting with a 'print' suffix
 		for (i = 0; i < doc.layers.length; i++) {
