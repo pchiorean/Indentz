@@ -3,7 +3,7 @@
  * Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
  * Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
  * The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
- * @version 22.10.24
+ * @version 22.11.19
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {File} dataFile - A tab-separated-values file (object).
@@ -115,6 +115,7 @@ function parseDataFile(dataFile) {
 		// ...
 		if (tmpStatus.warn.length === 0 && tmpStatus.fail.length === 0) {
 			records.push({
+				source: source,
 				key1: record[0] // || someDefaultValue
 				// ...
 			});
