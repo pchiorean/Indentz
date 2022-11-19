@@ -224,7 +224,7 @@ Moves an item to another layer, optionally sending it to the front or back, and 
 |--|--|--|
 |item|`pageItem`|The page item to be moved.|
 |layer|`object`|The target layer.|
-|[position]|`string`|Sends the item to the `front` or `back`. *(Optional.)*|
+|[position]|`string`|`front`/`top` or `back`/`bottom`: Sends the item to the front or back of its layer. *(Optional.)*|
 
 ---
 
