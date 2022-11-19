@@ -115,6 +115,7 @@ app.doScript(function () {
 	var items = doc.allPageItems;
 	while ((item = items.shift())) {
 		if (item.constructor.name !== 'TextFrame') continue;
+		if (item.textFramePreferences.verticalJustification !== VerticalJustification.TOP_ALIGN) continue;
 		if (item.textFramePreferences.autoSizingType !== AutoSizingTypeEnum.OFF) continue;
 		if (!item.overflows && /\s+$/g.test(item.contents) && !item.nextTextFrame)
 			item.contents = item.contents.replace(/\s+$/g, '');
