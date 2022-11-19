@@ -1,8 +1,8 @@
 ﻿/*
-	Document cleanup 22.10.14
+	Document cleanup 22.10.19
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
-	Changes some settings, cleans up swatches/layers/pages and resets scaling.
+	Changes some settings, cleans up swatches/layers/pages and other things.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -132,6 +132,8 @@ app.doScript(function () {
 	while ((item = items.shift())) {
 		if (/Oval|Rectangle|Polygon/.test(item.constructor.name)
 			&& item.allPageItems.length === 0
+			&& item.fillColor.name === 'None'
+			&& item.strokeColor.name === 'None'
 			&& item.strokeWeight === 0
 			&& item.itemLayer !== 'dielines'
 		) item.contentType = ContentType.GRAPHIC_TYPE;
