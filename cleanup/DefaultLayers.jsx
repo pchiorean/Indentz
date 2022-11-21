@@ -1,5 +1,5 @@
 /*
-	Default layers 22.10.24
+	Default layers 22.10.21
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.tsv':
@@ -13,7 +13,7 @@
 	<Color>: layer color (defaults to Light Blue; see UIColors.txt for color names)
 	<Visible>: 'yes' or 'no' (defaults to 'yes')
 	<Printable>: 'yes' or 'no' (defaults to 'yes')
-	<Order>: 'above' or 'below' existing layers (defaults to 'above')
+	<Order>: 'above' or 'below' existing layers, or 'top'/'bottom' (defaults to 'above')
 	<Variants>: a list of layers that will be merged with the base layer (case insensitive; '*' and '?' wildcards accepted)
 
 	The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
@@ -78,9 +78,10 @@ function main() {
 	if (data.records.length > 0) {
 		oldActiveLayer = doc.activeLayer; // Save active layer
 		doc.layers.everyItem().properties = { locked: false }; // Unlock existing layers
-		// Top layers
+
+		// Layers above existing ones
 		for (i = data.records.length - 1; i >= 0; i--) {
-			if (data.records[i].isBelow) continue;
+			if (data.records[i].order !== 'above' && data.records[i].order !== 'top') continue;
 			newLayer = makeLayer(
 				data.records[i].name,
 				data.records[i].color,
@@ -96,9 +97,10 @@ function main() {
 				}
 			}
 		}
-		// Bottom layers
+
+		// Layers below existing ones
 		for (i = 0; i < data.records.length; i++) {
-			if (!data.records[i].isBelow) continue;
+			if (data.records[i].order !== 'below' && data.records[i].order !== 'bottom') continue;
 			makeLayer(
 				data.records[i].name,
 				data.records[i].color,
@@ -107,6 +109,21 @@ function main() {
 				data.records[i].variants)
 			.move(LocationOptions.AT_END);
 		}
+
+		// Layers on top/bottom
+		for (i = data.records.length - 1; i >= 0; i--) {
+			if (data.records[i].order !== 'top') continue;
+			if (!(tmpLayer = doc.layers.item(data.records[i].name)).isValid) continue;
+			tmpLayer.move(LocationOptions.AT_BEGINNING);
+			data.status.info.push(data.records[i].source + 'Moved \'' + tmpLayer.name + '\' at top.');
+		}
+		for (i = 0; i < data.records.length; i++) {
+			if (data.records[i].order !== 'bottom') continue;
+			if (!(tmpLayer = doc.layers.item(data.records[i].name)).isValid) continue;
+			tmpLayer.move(LocationOptions.AT_END);
+			data.status.info.push(data.records[i].source + 'Moved \'' + tmpLayer.name + '\' at bottom.');
+		}
+
 		doc.activeLayer = oldActiveLayer; // Restore active layer
 	}
 	if (VERBOSITY > 0) {
@@ -287,7 +304,7 @@ function main() {
 				color:       record[1] ? getUIColor(record[1]) : UIColors.LIGHT_BLUE,
 				isVisible:   record[2] ? (record[2].toLowerCase() === 'yes')   : true,
 				isPrintable: record[3] ? (record[3].toLowerCase() === 'yes')   : true,
-				isBelow:     record[4] ? (record[4].toLowerCase() === 'below') : false,
+				order:       record[4] ? record[4].toLowerCase() : 'below',
 				variants:    record[5] ? unique((record[0] + ',' + record[5]).split(/ *, */)) : [ record[0] ]
 			};
 			if (!tmpRecord.name) tmpStatus.fail.push(tmpRecord.source + 'Missing layer name.');
