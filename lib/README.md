@@ -1,31 +1,35 @@
 # Helper functions
 
-### addGuide(target, [layer], HorV, location, [label], [type])
+### addGuide(_target, [layer], HorV, location, [label], [type]_)
 
 Adds a custom ruler guide. I use it to make grids for several brands, for which I have a hard time remembering the properties of the different guide lines. With the `preset` parameter I standardize guide types: symmetry axes, sections and subsections, product alignment and so on.
 
-|Parameters|Type|Default|Description|
-|--|--|--|--|
-|target|`object`||A `Document`, `Spread`, `Page` or a `MasterSpread`.|
-|[layer]|`layer`|`activeLayer`|A target layer; defaults to the active layer. *(Optional.)*|
-|HorV|`string`||If the string begins with `v`, the guide is vertical, else horizontal.|
-|location|`number`||The location at which to place the guide relative to the current ruler zero point.|
-|[label]|`string`||The label of the guide. *(Optional.)*|
-|[preset]|`number`||A customized set of properties, see source. *(Optional.)*|
+##### Parameters:
+
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|--|
+|`target`|`object`||A `Document`, `Spread`, `Page` or a `MasterSpread`.|
+|`[layer]`|`layer`|`activeLayer`|A target layer; defaults to the active layer. *(Optional.)*|
+|`HorV`|`string`||If the string begins with `v`, the guide is vertical, else horizontal.|
+|`location`|`number`||The location at which to place the guide relative to the current ruler zero point.|
+|`[label]`|`string`||The label of the guide. *(Optional.)*|
+|`[preset]`|`number`||A customized set of properties, see source. *(Optional.)*|
 
 ---
 
-### dbg([type], [context], message)
+### dbg(_[type], [context], message_)
 
-Appends a debugging line to a file saved on the desktop with the name of the running script (e.g. `active-script.log`). If no arguments are given, it just appends an empty line.
+Appends a debugging line to a file saved on the desktop with the name of the running script (e.g. `active-script.log`). If no arguments are given, it just appends an empty line. It's a crude tool, but very effective.
 
-|Parameters|Type|Description|
-|--|--|--|
-|[type]|`string`|A single character string: <ul> <li>`+` appends `MESSAGE` to the previous line;</li> <li>`I`, `W`, `E`, `F`, `M`, `N`, `T` or space outputs `[INFO]`, `[WARN]`, `[ERR]`, `[FAIL]`, `[MARK]`, `[NOTE]`, `[TODO]` or spacer. (Looks great with [Pragmata Pro Liga](https://fsd.it/shop/fonts/pragmatapro/).)</li> </ul> *(Optional.)*|
-|[context]|`string`|A string enclosed in `<` `>`. *(Optional.)*|
-|message|`string`|A comma-separated list of message parts (`part1`, `part2`, `part3`, ...).|
+##### Parameters:
 
-#### Example
+|Name|Type|Description|
+|:--:|:--:|--|
+|`[type]`|`string`|A single character string: <ul> <li>`+` appends `MESSAGE` to the previous line;</li> <li>`I`, `W`, `E`, `F`, `M`, `N`, `T` or space outputs `[INFO]`, `[WARN]`, `[ERR]`, `[FAIL]`, `[MARK]`, `[NOTE]`, `[TODO]` or spacer. (Looks great with [Pragmata Pro Liga](https://fsd.it/shop/fonts/pragmatapro/).)</li> </ul> *(Optional.)*|
+|`[context]`|`string`|A string enclosed in `<` `>`. *(Optional.)*|
+|`message`|`string`|A comma-separated list of message parts (`part1`, `part2`, `part3`, ...).|
+
+##### Example:
 
 ```js
 dbg('i', '<ParseIF>', 'Open data file: \'' + decodeURI(dataFile.name) + '\'');
@@ -43,20 +47,22 @@ if (errors.length === 0) dbg('+', 'Records: ' + data.length, 'Layouts: ' + layou
 
 ---
 
-### fitTo(items, [scope], [target], [forced])
+### fitTo(_items, [scope], [target], [forced]_)
 
 Reframes the given items to the page/spread's (`scope`) size/margins/visible area/bleed (`target`). If an item is larger than the target, it will be reduced; if it is smaller but inside a 1% 'snap' area, it will be enlarged. Rectangular frames are simply reframed; rotated items, ovals, groups, etc. are inserted in a clipping frame that is reframed.
 
 **Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`. If margins or visible area are undefined, they fallback to page/spread size.
 
-|Parameters|Type|Default|Description|
-|--|--|--|--|
-|items|`pageItem` \| `pageItem[]`||A page item, or an array of page items to be reframed.|
-|[scope]|`string`|`page`|`page` or `spread`. *(Optional.)*|
-|[target]|`string`|`size`|`size`, `margins`, `visible` or `bleed`. *(Optional.)*|
-|[forced]|`boolean`|`false`|When `true` it just reframes the object without any checks. *(Optional.)*|
+##### Parameters:
 
-#### Example
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|--|
+|`items`|`pageItem` \| `pageItem[]`||A page item, or an array of page items to be reframed.|
+|`[scope]`|`string`|`page`|`page` or `spread`. *(Optional.)*|
+|`[target]`|`string`|`size`|`size`, `margins`, `visible` or `bleed`. *(Optional.)*|
+|`[forced]`|`boolean`|`false`|When `true` it just reframes the object without any checks. *(Optional.)*|
+
+##### Example:
 
 ```js
 fitTo(doc.selection, 'page', 'bleed'); // Fits the selected objects to the page bleed
@@ -74,19 +80,29 @@ app.doScript(
 
 ---
 
-### getBounds(page) ⇒ `object`
+### getBounds(_page_) ⇒ \{Object\}
 
-Returns an object containing the geometric bounds of `page`, its parent spread, and miscellaneous page boxes, using the current measurement units:
+Computes miscellaneous page boxes of a document page.
+
+##### Parameters:
+
+|Name|Type|Description|
+|:--:|:--:|--|
+|`page`|`object`|The target page.|
+
+##### Returns:
+
+An object containing the geometric bounds of `page` and its parent spread, and of their margins, visible area and bleed, using the current measurement units:
 
 ```js
 {
     page: {
-        size:    [ top, left, bottom, right ],
-        margins: [ t, l, b, r ],
-        visible: [ t, l, b, r ],
-        bleed:   [ t, l, b, r ]
+        size:    [ t, l, b, r ], // page bounds
+        margins: [ t, l, b, r ], // margins bounds
+        visible: [ t, l, b, r ], // visible area bounds
+        bleed:   [ t, l, b, r ]  // bleed bounds
     },
-    spread: {
+    spread: { // the same, but for the parent spread
         size:    [ t, l, b, r ],
         margins: [ t, l, b, r ],
         visible: [ t, l, b, r ],
@@ -97,11 +113,7 @@ Returns an object containing the geometric bounds of `page`, its parent spread, 
 
 **Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`. If margins or visible area are undefined, they fallback to page/spread size.
 
-|Parameters|Type|Description|
-|--|--|--|
-|page|`object`|The target page.|
-
-#### Example
+##### Example:
 
 ```js
 var pageSize      = getBounds(page).page.size;      // [ 0, 0, 297, 210 ]
@@ -122,9 +134,20 @@ bounds[scope][target]; // [ 20, 20, 277, 400 ]
 
 ---
 
-### getDataFile(dataFile, [skipLocal]) ⇒ `File` | `undefined`
+### getDataFile(_dataFile, [skipLocal]_) ⇒ \{File\} | undefined
 
-Returns the first occurrence of `dataFile`, first searching for a local one (in the current folder or the parent folder of the active document), then a default one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
+Gets the first occurrence of a file from a list of predefined folders.
+
+##### Parameters:
+
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|--|
+|`dataFile`|`string`||A tab-separated-values file (name).|
+|`[skipLocal]`|`boolean`|false|If `true`, don't search locally. *(Optional.)*|
+
+##### Returns:
+
+The first occurrence of `dataFile`, first searching for a local one (in the current folder or the parent folder of the active document), then a default one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
 
 - Local file:
 
@@ -137,33 +160,36 @@ Returns the first occurrence of `dataFile`, first searching for a local one (in 
   4. `script/folder/dataFile`
   5. `script/folder/../dataFile`
 
-|Parameters|Type|Default|Description|
-|--|--|--|--|
-|dataFile|`string`||A tab-separated-values file (name).|
-|[skipLocal]|`boolean`|false|If `true`, don't search locally. *(Optional.)*|
+---
+
+### getDropShadow(_item_) ⇒ \{Object\}
+
+Gets a page item's drop shadow properties.
+
+##### Parameters:
+
+|Name|Type|Description|
+|:--:|:--:|--|
+|`item`|`pageItem`|The page item from which we take properties.|
+
+##### Returns:
+
+The page item's drop shadow properties (`item.transparencySettings.dropShadowSettings`).
 
 ---
 
-### getDropShadow(item) ⇒ `Object`
-
-Returns the page item's drop shadow properties (`item.transparencySettings.dropShadowSettings`).
-
-|Parameters|Type|Description|
-|--|--|--|--|
-|item|`pageItem`|The page item from which we take properties.|
-
----
-
-### setDropShadow(item, set)
+### setDropShadow(_item, set_)
 
 Sets a page item's drop shadow properties from a set saved with `getDropShadow()`.
 
-|Parameters|Type|Description|
-|--|--|--|--|
-|item|`pageItem`|The page item to which we apply properties.|
-|set|`object`|A previously saved `transparencySettings.dropShadowSettings` properties set.|
+##### Parameters:
 
-#### Example
+|Name|Type|Description|
+|:--:|:--:|--|
+|`item`|`pageItem`|The page item to which we apply properties.|
+|`set`|`object`|A previously saved `transparencySettings.dropShadowSettings` properties set.|
+
+##### Example:
 
 ```js
 var shadow = getDropShadow(item1);
@@ -172,23 +198,29 @@ setDropShadow(item2, shadow);
 
 ---
 
-### getPageItem(name, target, [layer]) ⇒ `PageItem` | `undefined`
+### getPageItem(_name, target, [layer]_) ⇒ \{PageItem\} | undefined
 
-Returns the first page item with a specified name, optionally from a specified layer.
+Gets a page item by name, optionally from a layer.
 
-|Parameters|Type|Description|
-|--|--|--|--|
-|name|`string`|The name of the page item to search.|
-|target|`object`|A `Document`, `Spread`, `Page` or a `MasterSpread`.|
-|[layer]|`layer`|Only look for objects from this layer. *(Optional.)*|
+##### Parameters:
+
+|Name|Type|Description|
+|:--:|:--:|--|
+|`name`|`string`|The name of the page item to search.|
+|`target`|`object`|A `Document`, `Spread`, `Page` or a `MasterSpread`.|
+|`[layer]`|`layer`|Only look for objects from this layer. *(Optional.)*|
+
+##### Returns:
+
+The first page item with the specified `name`, optionally from the specified `layer`.
 
 ---
 
-### getScriptsFolder() ⇒ `'path/to/folder/'` | `undefined`
+### getScriptsFolder() ⇒ 'path/to/folder/' | undefined
 
 Detects the user scripts folder searching for the string 'Scripts Panel' in `$.includePath`, returning a string with the path followed by '/', or `undefined`.
 
-#### Example
+##### Example:
 
 ```js
 $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
@@ -196,17 +228,23 @@ $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
 
 ---
 
-### isInArray(searchValue, array, [caseSensitive]) ⇒ `Boolean`
+### isInArray(_searchValue, array, [caseSensitive]_) ⇒ Boolean
 
-Matches a string against elements of an array, using wildcards and case sensitivity. Returns `true` for match, `false` for no match.
+Matches a string against elements of an array, using wildcards and case sensitivity.
 
-|Parameters|Type|Default|Description|
-|--|--|--|--|
-|searchValue|`string`||String to be matched.|
-|array|`array`||An array of strings; wildcards: `*` (zero or more characters), `?` (any character).|
-|[caseSensitive]|`boolean`|`false`|If `true` the search is case sensitive. *(Optional.)*|
+##### Parameters:
 
-#### Example
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|--|
+|`searchValue`|`string`||String to be matched.|
+|`array`|`array`||An array of strings with optional wildcards: `*` (zero or more characters), `?` (any character).|
+|`[caseSensitive]`|`boolean`|`false`|If `true` the search is case sensitive. *(Optional.)*|
+
+##### Returns:
+
+Returns `true` for match, `false` for no match.
+
+##### Example:
 
 ```js
 var searchValue = 'codes';
@@ -216,21 +254,38 @@ isInArray(searchValue, array) // True: matches 2nd array element
 
 ---
 
-### moveToLayer(item, layer, [position]) ⇒ `item`
+### moveToLayer(_item, layer, [position]_)
 
-Moves an item to another layer, optionally sending it to the front or back, and returns the item.
+Moves an item to another layer, optionally sending it to the front or back.
 
-|Parameters|Type|Description|
-|--|--|--|
-|item|`pageItem`|The page item to be moved.|
-|layer|`object`|The target layer.|
-|[position]|`string`|`front`/`top` or `back`/`bottom`: Sends the item to the front or back of its layer. *(Optional.)*|
+##### Parameters:
+
+|Name|Type|Description|
+|:--:|:--:|--|
+|`item`|`pageItem`|The page item to be moved.|
+|`layer`|`object`|The target layer.|
+|`[position]`|`string`|`front`/`top` or `back`/`bottom`: Sends the item to the front or back of its layer. *(Optional.)*|
+
 
 ---
 
-### parseDataFile(dataFile) ⇒ `object`
+### parseDataFile(_dataFile_) ⇒ \{Object\}
 
-Reads a TSV (tab-separated-values) file, validates the data (the provided function is just a stub) and returns an object containing found records and errors:
+Reads a TSV (tab-separated-values) file. (The provided function is just a stub.)
+
+##### Parameters:
+
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|--|
+|`dataFile`|`File`||A tab-separated-values file (object).|
+
+Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
+
+Use `@defaults` to include the global default (see `getDataFile()`), or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+
+##### Returns:
+
+An object containing the records found and errors:
 
 ```js
 {
@@ -239,15 +294,7 @@ Reads a TSV (tab-separated-values) file, validates the data (the provided functi
 };
 ```
 
-|Parameters|Type|Default|Description|
-|--|--|--|--|
-|dataFile|`File`||A tab-separated-values file (object).|
-
-Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
-
-Use `@defaults` to include the global default (see `getDataFile()`), or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
-
-#### Example
+##### Example:
 
 ```js
 // @include 'getDataFile.jsxinc';
@@ -277,22 +324,24 @@ it will return an object like this:
 {
     records: [
         {
-            name:        'dielines'
-            color:       UIColors.MAGENTA
-            isVisible:   false
+            source:      '~/Desktop/data.tsv:2 :: ',
+            name:        'dielines',
+            color:       UIColors.MAGENTA,
+            isVisible:   false,
             isPrintable: true
         },
         {
-            name:        'artwork'
-            color:       UIColors.LIGHT_BLUE
-            isVisible:   true
+            source:      '~/Desktop/data.tsv:4 :: ',
+            name:        'artwork',
+            color:       UIColors.LIGHT_BLUE,
+            isVisible:   true,
             isPrintable: true
         }
     ],
     errors: {
         info: [],
-        warn: [ 'Line 5: Missing layer name.' ],
-        fail: []
+        warn: [],
+        fail: [ '~/Desktop/data.tsv:5 :: Missing layer name.' ]
     }
 }
 ```
@@ -301,37 +350,43 @@ it will return an object like this:
 
 ### progressBar
 
-Creates a palette with two progress bars and a message; the second bar (optional) may be used for microsteps.
+Creates a palette with two progress bars and a message; the second bar may be used for microsteps (optional).
 
-#### var pb = new ProgressBar(title, maxValue, [maxWidth])
+#### var pb = new ProgressBar(_title, maxValue, [maxWidth]_)
 
 Initializes the palette. On creation you can set it's width to accomodate a given message length; if omitted, no message is shown (aka mini mode). The secondary progress bar is hidden by default.
 
-|Parameters|Type|Description|
-|--|--|--|
-|title|`string`|Palette title.|
-|maxValue|`number`|Number of steps for the main progress bar.|
-|[maxWidth]|`number`|Maximum message length (characters). *(Optional.)*|
+##### Parameters:
 
-#### pb.msg([message]) *(Optional)*
+|Name|Type|Description|
+|:--:|:--:|--|
+|`title`|`string`|Palette title.|
+|`maxValue`|`number`|Number of steps for the main progress bar.|
+|`[maxWidth]`|`number`|Maximum message length (characters). *(Optional.)*|
+
+#### pb.msg(_[message]_) *(Optional)*
 
 Updates the message. If omitted, the previous message is cleared.
 
-|Parameters|Type|Description|
-|--|--|--|
-|[message]|`string`|Message. *(Optional.)*|
+##### Parameters:
+
+|Name|Type|Description|
+|:--:|:--:|--|
+|`[message]`|`string`|Message. *(Optional.)*|
 
 #### pb.update()
 
 Increases the value of the main progress bar and updates the counter (not shown in mini mode). Also resets & hides the secondary progress bar.
 
-#### pb.init2(maxValue2) *(Optional)*
+#### pb.init2(_maxValue2_) *(Optional)*
 
-Sets the number of steps for the secondary progress bar (the bar is shown only if the number is greater than 2).
+Sets the number of steps for the secondary progress bar (shown only if the number is greater than 2).
 
-|Parameters|Type|Description|
-|--|--|--|
-|maxValue2|`number`|Number of steps for the secondary progress bar.|
+##### Parameters:
+
+|Name|Type|Description|
+|:--:|:--:|--|
+|`maxValue2`|`number`|Number of steps for the secondary progress bar.|
 
 #### pb.update2() *(Optional)*
 
@@ -341,7 +396,7 @@ Increases the value of the secondary progress bar.
 
 Closes the progress bar.
 
-#### Example
+##### Example:
 
 ```js
 var steps = 100;
@@ -365,16 +420,22 @@ progressBar.close();
 
 ---
 
-### replaceLink(oldLinks, newLink) ⇒ `Boolean`
+### replaceLink(_oldLinks, newLink_) ⇒ Boolean
 
-Replaces a link or a list of links with a different one. A selection limits the scope. Returns `true` if a replacement was made, `false` if not.
+Replaces a link or a list of links with a different one. A selection limits the scope.
 
-|Parameters|Type|Description|
-|----------|----------------------|------------------------------------------------------|
-|oldLinks|`string` \| `string[]`|A link name, or an array of link names to be replaced.|
-|newLink|`string`|New link name (if same folder), or full link path.|
+##### Parameters:
 
-#### Example
+|Name|Type|Description|
+|:--:|:--:|--|
+|`oldLinks`|`string` \| `string[]`|A link name, or an array of link names to be replaced.|
+|`newLink`|`string`|New link name (if same folder), or full link path.|
+
+##### Returns:
+
+Returns `true` if a replacement was made, `false` if not.
+
+##### Example:
 
 ```js
 replaceLink('link1.jpg', 'link1.psd'); // Both links are in the same folder
@@ -384,17 +445,23 @@ replaceLink([ 'link1.jpg', 'link1.png' ], 'link1.psd');
 
 ---
 
-### replaceSwatch(oldNames, newName, [newValues]) ⇒ `Boolean`
+### replaceSwatch(_oldNames, newName, [newValues]_) ⇒ Boolean
 
-Replaces a swatch or a list of swatches with a different one. The new swatch is created only if values (CMYK) are provided and it doesn't already exist. Returns `true` if a replacement was made, `false` if not.
+Replaces a swatch or a list of swatches with a different one. The new swatch is created only if values (CMYK) are provided and it doesn't already exist.
 
-|Parameters|Type|Description|
-|--|--|--|
-|oldNames|`string` \| `string[]`|A swatch name, or an array of swatch names to be replaced.|
-|newName|`string`|New swatch name.|
-|[newValues]|`number[]`|Array of 4 values in 0-100 range (CMYK).|
+##### Parameters:
 
-#### Example
+|Name|Type|Description|
+|:--:|:--:|--|
+|`oldNames`|`string` \| `string[]`|A swatch name, or an array of swatch names to be replaced.|
+|`newName`|`string`|New swatch name.|
+|`[newValues]`|`number[]`|Array of 4 values in 0-100 range (CMYK).|
+
+##### Returns:
+
+Returns `true` if a replacement was made, `false` if not.
+
+##### Example:
 
 ```js
 replaceSwatch('Red', 'Blue'); // 'Blue' it's supposed to exist
@@ -404,17 +471,23 @@ replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 
 ---
 
-### replaceText(findWhat, changeTo, [wholeWord]) ⇒ `Boolean`
+### replaceText(_findWhat, changeTo, [wholeWord]_) ⇒ Boolean
 
-Replaces a text with another. Returns `true` if a replacement was made, `false` if not.
+Replaces a text with another.
 
-|Parameters|Type|Default|Description|
-|--|--|--|--|
-|findWhat|`string`||Text to be replaced.|
-|changeTo|`string`||New text.|
-|[wholeWord]|`boolean`|`true` |Match whole words. *(Optional.)*|
+##### Parameters:
 
-#### Example
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|--|
+|`findWhat`|`string`||Text to be replaced.|
+|`changeTo`|`string`||New text.|
+|`[wholeWord]`|`boolean`|`true` |Match whole words. *(Optional.)*|
+
+##### Returns:
+
+Returns `true` if a replacement was made, `false` if not.
+
+##### Example:
 
 ```js
 replaceText('11.10.', '13.12.2021');
@@ -423,19 +496,21 @@ replaceText('\\\\', '\u000A', false); // Replace '\\' with Forced Line Break
 
 ---
 
-### report(message, title, [showFilter], [showCompact])
+### report(_message, title, [showFilter], [showCompact]_)
 
 Displays a message in a scrollable list with optional filtering and/or compact mode.
 Inspired by [this](http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250) snippet by Peter Kahrel.
 
-|Parameters|Type|Default|Description|
-|--|--|--|--|
-|message|`string` \| `string[]`||Message to be displayed. Can be a string or a strings array.|
-|[title]|`string`|`''`|Dialog title. *(Optional.)*|
-|[showFilter]|`boolean` \| `'auto'`|`false`|If `true` it shows a filter field; `auto` shows it automatically if there are more than 20 lines; wildcards: `?` (any character), space and `*` (AND), `|` (OR). *(Optional.)*|
-|[showCompact]|`boolean`|`false`|If `true` duplicates are removed and the message is sorted. *(Optional.)*|
+##### Parameters:
 
-#### Example
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|--|
+|`message`|`string` \| `string[]`||Message to be displayed. Can be a string or a strings array.|
+|`[title]`|`string`|`''`|Dialog title. *(Optional.)*|
+|`[showFilter]`|`boolean` \| `'auto'`|`false`|If `true` it shows a filter field; `auto` shows it automatically if there are more than 20 lines; optional wildcards: `?` (any character), space and `*` (AND), `|` (OR). *(Optional.)*|
+|`[showCompact]`|`boolean`|`false`|If `true` duplicates are removed and the message is sorted. *(Optional.)*|
+
+##### Example:
 
 ```js
 report(message, 'Sample alert');
