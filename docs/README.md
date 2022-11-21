@@ -57,19 +57,19 @@ Sets some preferences for the active document. You should customize them to your
 #### **`DefaultLayers`**
 Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample](samples/layers.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
-| Name         | Color   | Visible | Printable | Order | Variants                                           |
-|:-------------|:--------|:--------|:----------|:------|:---------------------------------------------------|
-| **dielines** | Magenta | yes     | yes       | above | cut\*, decoupe, die, die\*cut, stanz\*             |
-| **text**     | Green   |         |           |       | copy, headline\*, hl, text\*, txt, typ?            |
-| **bg**       | Red     |         |           | below | back, \*background\*, bgg, fond, hg, hintergrund\* |
-| **template** | Gray    | no      | no        | below |                                                    |
-| ...          |         |         |           |       |                                                    |
+| Name         | Color   | Visible | Printable | Order  | Variants                                           |
+|:-------------|:--------|:--------|:----------|:-------|:---------------------------------------------------|
+| **dielines** | Magenta | yes     | yes       | above  | cut\*, decoupe, die, die\*cut, stanz\*             |
+| **text**     | Green   |         |           |        | copy, headline\*, hl, text\*, txt, typ?            |
+| **bg**       | Red     |         |           | below  | back, \*background\*, bgg, fond, hg, hintergrund\* |
+| **template** | Gray    | no      | no        | bottom |                                                    |
+| ...          |         |         |           |        |                                                    |
 
 > **Name**: Layer name\
 > **Color**: Layer color (defaults to `Light Blue`; see [**`UIColors.txt`**](misc/UIColors.txt) for color names)\
 > **Visible**: `yes` or `no` (defaults to `yes`)\
 > **Printable**: `yes` or `no` (defaults to `yes`)\
-> **Order**: `above` or `below` existing layers (defaults to `above`)\
+> **Order**: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`)\
 > **Variants**: A list of layers that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` and `*`)
 
 <details><summary><strong>Additional features</strong></summary>
@@ -545,7 +545,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: November 17, 2022</small>
+<small>Last updated: November 21, 2022</small>
 
 [^1]: The variable `Z` from line 42 must be set to fit a square page at 90% of **Fit Page in Window**.
 [^2]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
