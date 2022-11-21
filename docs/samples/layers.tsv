@@ -12,7 +12,7 @@ bg           	Red        	yes     	yes       	below 	back, *background*, bgg, fo
 # <Color>: layer color (defaults to Light Blue; see UIColors.txt for color names)
 # <Visible>: `yes` or `no` (defaults to `yes`)
 # <Printable>: `yes` or `no` (defaults to `yes`)
-# <Order>: `above` or `below` existing layers (defaults to `above`)
+# <Order>: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`)
 # <Variants>: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards accepted)
 #
 # The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
