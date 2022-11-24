@@ -1,5 +1,5 @@
 /*
-	QR code 22.11.6
+	QR code 22.11.24
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -136,10 +136,10 @@ function main() {
 				autoSizingType: AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
 				useNoLineBreaksForAutoSizing: true,
 				insetSpacing: [
-					UnitValue('3.0 mm').as('pt'),
-					UnitValue('2.5 mm').as('pt'),
-					UnitValue('1.0 mm').as('pt'),
-					UnitValue('2.5 mm').as('pt')
+					UnitValue('4.0 mm').as('pt'), // T
+					UnitValue('3.0 mm').as('pt'), // L
+					UnitValue('1.0 mm').as('pt'), // B
+					UnitValue('3.0 mm').as('pt')  // R
 				]
 			};
 			doc.align(labelFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
@@ -158,9 +158,9 @@ function main() {
 			codeFrame.absoluteRotationAngle = -90;
 			codeFrame.geometricBounds = [
 				labelFrame.geometricBounds[2],
-				page.bounds[1] + UnitValue('2.3 mm').as('pt'),
-				labelFrame.geometricBounds[2] + UnitValue('11.8 mm').as('pt'),
-				page.bounds[1] + UnitValue('14.1 mm').as('pt')
+				page.bounds[1] + UnitValue('3 mm').as('pt'),
+				labelFrame.geometricBounds[2] + UnitValue('12 mm').as('pt'),
+				page.bounds[1] + UnitValue('15 mm').as('pt')
 			];
 			codeFrame.createPlainTextQRCode(labelText.replace(/[|\u000A]/g, '')); // Remove LB markers
 			codeFrame.frameFittingOptions.properties = {
