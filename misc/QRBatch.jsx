@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 22.11.15
+	Batch QR codes 22.11.24
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
@@ -97,8 +97,8 @@ function main() {
 	ui.options.div1 = ui.options.add('panel', undefined, undefined);
 	ui.options.div1.alignment = 'fill';
 	ui.options.div1.visible = false;
-	ui.options.browse = ui.options.add('button', undefined, 'Browse');
 	ui.options.reload = ui.options.add('button', undefined, 'Reload');
+	ui.options.browse = ui.options.add('button', undefined, 'Browse');
 	ui.options.div2 = ui.options.add('panel', undefined, undefined);
 	ui.options.div2.alignment = 'fill';
 	ui.options.add('button', undefined, 'Cancel', { name: 'cancel' });
@@ -196,6 +196,7 @@ function main() {
 		}
 		ui.options.start.enabled = queue.length > 0 && (errors.length === 0 || ui.list.selection);
 		ui.options.reload.enabled = !!currentPath;
+		ui.options.reload.visible = dataFile.exists;
 		ui.options.err.visible = ui.options.div1.visible = (errors.length > 0);
 		if (errors.length > 0) ui.options.err.active = true;
 		else if (!dataFile.exists) ui.options.browse.active = true;
