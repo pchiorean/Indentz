@@ -17,7 +17,7 @@ Adds a custom ruler guide. I use it to make grids for several brands, for which 
 
 ---
 
-### dbg(_[type], [context], message_)
+### dbg(_[type], message_)
 
 Appends a debugging line to a file saved on the desktop with the name of the running script (e.g. `active-script.log`). If no arguments are given, it just appends an empty line. It's a crude tool, but very effective.
 
@@ -26,23 +26,20 @@ Appends a debugging line to a file saved on the desktop with the name of the run
 |Name|Type|Description|
 |:--:|:--:|--|
 |`[type]`|`string`|A single character string: <ul> <li>`+` appends `MESSAGE` to the previous line;</li> <li>`I`, `W`, `E`, `F`, `M`, `N`, `T` or space outputs `[INFO]`, `[WARN]`, `[ERR]`, `[FAIL]`, `[MARK]`, `[NOTE]`, `[TODO]` or spacer. (Looks great with [Pragmata Pro Liga](https://fsd.it/shop/fonts/pragmatapro/).)</li> </ul> *(Optional.)*|
-|`[context]`|`string`|A string enclosed in `<` `>`. *(Optional.)*|
 |`message`|`string`|A comma-separated list of message parts (`part1`, `part2`, `part3`, ...).|
 
 ##### Example:
 
 ```js
-dbg('i', '<ParseIF>', 'Open data file: \'' + decodeURI(dataFile.name) + '\'');
+dbg('i', 'Open data file: \'' + decodeURI(dataFile.name) + '\'');
 // <snip>
 if (errors.length === 0) dbg('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
 ```
 
-![Sample output](../docs/img/lib/debug.png)
-
 ```
-2021-07-31 18:48:02.609 [INFO] ParseIF :: Open data file: 'test.tsv' | Records: 14 | Layouts: 0
-└─────────────────────┘ └────┘ └────────┘ └────────────────────────┘   └─────────┘   └────────┘
-       typestamp         type   context         message part1             part2         part3
+2021-07-31 18:48:02.609 [INFO] [parseDataFile] Open data file: 'test.tsv' | Records: 14 | Layouts: 0
+└─────────────────────┘ └────┘ └─────────────┘ └────────────────────────┘   └─────────┘   └────────┘
+       typestamp         type       scope            message part1             part2         part3
 ```
 
 ---
