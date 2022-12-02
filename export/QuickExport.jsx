@@ -713,7 +713,9 @@ while ((doc = docs.shift())) {
 		}
 
 		// Hack: Append special folder names to the suffix
-		if (/^_print/i.test(suffix) && doc.layers.itemByName('dielines').isValid) suffix += '+diecut';
+		if (/^_print/i.test(suffix) &&
+				((doc.layers.itemByName('dielines').isValid) || doc.layers.itemByName('diecut').isValid))
+			suffix += '+diecut';
 		if (/^_print/i.test(suffix) && doc.layers.itemByName('white').isValid)    suffix += '+white';
 		if (/^_print/i.test(suffix) && doc.layers.itemByName('foil').isValid)     suffix += '+foil';
 		if (/^_print/i.test(suffix) && doc.layers.itemByName('varnish').isValid)  suffix += '+varnish';
