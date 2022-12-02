@@ -1,5 +1,5 @@
 /*
-	Quick export 22.11.17
+	Quick export 22.12.2
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -973,14 +973,14 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		}
 
 		// Hack: omit printer's marks if bleed is zero --
-		if (doc.documentPreferences.properties.documentBleedTopOffset +
-			doc.documentPreferences.properties.documentBleedInsideOrLeftOffset +
-			doc.documentPreferences.properties.documentBleedBottomOffset +
-			doc.documentPreferences.properties.documentBleedOutsideOrRightOffset === 0 &&
-			!app.pdfExportPreferences.includeSlugWithPDF) { // -- but not if user wants slug
-			app.pdfExportPreferences.cropMarks = false;
-			app.pdfExportPreferences.pageInformationMarks = false;
-		}
+		// if (doc.documentPreferences.properties.documentBleedTopOffset +
+		// 	doc.documentPreferences.properties.documentBleedInsideOrLeftOffset +
+		// 	doc.documentPreferences.properties.documentBleedBottomOffset +
+		// 	doc.documentPreferences.properties.documentBleedOutsideOrRightOffset === 0 &&
+		// 	!app.pdfExportPreferences.includeSlugWithPDF) { // -- but not if user wants slug
+		// 	app.pdfExportPreferences.cropMarks = false;
+		// 	app.pdfExportPreferences.pageInformationMarks = false;
+		// }
 		// Hack: don't include page information on pages with very small widths
 		if (pageRange === PageRange.ALL_PAGES) {
 			fPg = target.constructor.name === 'Spreads' ? target[0].pages[0]  : target[0];
