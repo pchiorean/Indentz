@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 22.10.24
+	Replace fonts 22.12.4
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces fonts from a 4-column TSV file named `fonts.tsv`:
@@ -40,55 +40,67 @@
 if (!(doc = app.activeDocument)) exit();
 
 // @includepath '.;./lib;../lib';
-// @include 'getDataFile.jsxinc';
+// @include 'parseDataFile.jsxinc';
 // @include 'report.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace fonts');
 
 function main() {
-	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
-	var file, data, messages, i, n;
+	var title = 'Replace fonts';
 	var dataFileName = [ 'fonts.tsv', 'fonts.txt' ];
+	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
+	var file, messages, i, n;
+	var parsed = { header: [], data: [], errors: [] };
+	var data = { records: [], status: { info: [], warn: [], fail: [] } };
 	var counter = 0;
 
 	if (doc.converted && VERBOSITY > 0) {
 		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
-		'The default font substitution list will be used.');
+			'The default swatch substitution list will be used.');
 	}
-	if (!(file = getDataFile(dataFileName))) {
+
+	// Get raw data from TSV
+	if (!(file = getDataFile(dataFileName))) { // No data file found
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate a substitution list \'' + dataFileName.join('\' or \'') +
-			'\'.\nThe file must be saved in the current folder, on the ' +
-			'desktop, or next to the script. Check docs for details.');
+			alert('Can\'t locate a substitution list \'' +
+				(dataFileName.constructor.name === 'Array' ? dataFileName.join('\' or \'') : dataFileName) +
+				'\'.\nThe file must be saved in the current folder, on the desktop, or next to the script. ' +
+				'Check docs for details.');
 		}
 		exit();
 	}
+	parsed = parseDataFile(file, dataFileName);
+	if (parsed.errors.length > 0) { report(parsed.errors, title); exit(); }
 
-	data = parseDataFile(file);
-	if (data.status.fail.length > 0) { report(data.status.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
-	if (data.records.length > 0) {
-		for (i = 0, n = data.records.length; i < n; i++) {
-			app.findTextPreferences = app.changeTextPreferences   = NothingEnum.NOTHING;
-			app.findChangeTextOptions.includeHiddenLayers         = true;
-			app.findChangeTextOptions.includeLockedLayersForFind  = true;
-			app.findChangeTextOptions.includeLockedStoriesForFind = true;
-			app.findChangeTextOptions.includeMasterPages          = true;
-			app.findTextPreferences.appliedFont                   = data.records[i].findWhat;
-			app.changeTextPreferences.appliedFont                 = data.records[i].changeTo;
-			if (doc.changeText().length > 0) {
-				counter++;
-				data.status.info.push(data.records[i].source +
-					'Replaced \'' +
-					data.records[i].findWhat.replace('\t', ' ') + '\' with \'' +
-					data.records[i].changeTo.replace('\t', ' ') + '\'.');
-			} else {
-				data.status.info.push(data.records[i].source +
-					'Skipped \'' + data.records[i].findWhat.replace('\t', ' ') + '\', not in use.');
-			}
+	// Build structured data
+	for (i = 0; i < parsed.data.length; i++)
+		data.records[i] = checkRecord(parsed.data[i].record);
+	if (data.status.fail.length > 0) { report(data.status.fail, title); exit(); }
+
+	// Processing
+	for (i = 0, n = data.records.length; i < n; i++) {
+		app.findTextPreferences = app.changeTextPreferences   = NothingEnum.NOTHING;
+		app.findChangeTextOptions.includeHiddenLayers         = true;
+		app.findChangeTextOptions.includeLockedLayersForFind  = true;
+		app.findChangeTextOptions.includeLockedStoriesForFind = true;
+		app.findChangeTextOptions.includeMasterPages          = true;
+		app.findTextPreferences.appliedFont                   = data.records[i].findWhat;
+		app.changeTextPreferences.appliedFont                 = data.records[i].changeTo;
+		if (doc.changeText().length > 0) {
+			counter++;
+			stat(data.status, data.records[i].source,
+				'Replaced \'' +
+				data.records[i].findWhat.replace('\t', ' ') + '\' with \'' +
+				data.records[i].changeTo.replace('\t', ' ') + '\'.', 0);
+		} else {
+			stat(data.status, data.records[i].source,
+				'Skipped \'' + data.records[i].findWhat.replace('\t', ' ') + '\' because is not in use.', 0);
 		}
-		app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
 	}
+
+	// Closing up
+	app.findTextPreferences = app.changeTextPreferences = NothingEnum.NOTHING;
 	if (VERBOSITY > 0) {
 		messages = data.status.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.status.info);
@@ -96,137 +108,23 @@ function main() {
 		else if (VERBOSITY > 1 && counter > 0) alert('No fonts replaced.');
 	}
 
-	/**
-	 * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
-	 * Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
-	 * Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
-	 * The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
-	 * @version 22.10.24
-	 * @author Paul Chiorean <jpeg@basement.ro>
-	 * @license MIT
-	 * @param {File} dataFile - A tab-separated-values file (object).
-	 * @returns {{records: array, status: { info: array, warn: array, fail: array }}}
-	 */
-	function parseDataFile(dataFile) {
-		var record, part, source, includeFolder;
-		var records = [];
-		var status = { info: [], warn: [], fail: [] };
-		var isHeaderFound = false;
-		var line = 0;
-		var includeFile = '';
+	function checkRecord(/*array*/record) {
+		var tmpData = {};
 
-		dataFile = File(compactRelPath(dataFile.absoluteURI));
-		dataFile.open('r');
-		dataFile.encoding = 'UTF-8';
-		includeFolder = Folder(dataFile.path);
+		tmpData.source = parsed.data[i].source.join(':');
 
-		while (!dataFile.eof) {
-			line++;
-			source = decodeURI(dataFile.absoluteURI) + ':' + line + ' :: ';
-			record = (part ? part.slice(0,-1) : '') + dataFile.readln(); // Join continued line
-			record = record.replace(/#(.+)?$/g, '');     // Trim everything after '#' (comments)
-			record = record.replace(/^ +|[ \t]+$/g, ''); // Trim spaces at both ends
-			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
-			if (record.replace(/^\s+|\s+$/g, '') === '') continue;       // Blank line, skip
-			if (record.slice(0,1) === '@') { parseInclude(); continue; } // Include directive, parse
-			if (!isHeaderFound) { isHeaderFound = true; continue; }      // Header line, skip
-			record = record.split(/ *\t */); // Split on \t & trim spaces
-			checkRecord();
-		}
-		dataFile.close();
-		record = '';
+		if (!record[0] || !record[2]) stat(data.status, tmpData.source, 'Missing font name.', -1);
+		if (!record[1] || !record[3]) stat(data.status, tmpData.source, 'Missing font style.', -1);
 
-		return {
-			records: records,
-			status: { info: status.info, warn: status.warn, fail: status.fail }
-		};
-
-		function compactRelPath(/*string*/str) {
-			str = str.replace(/^\.\/|\/\.$/, '').replace(/\/\.\//g, '/'); // Trim '.'
-			str = str.replace(/\/[^\/]+\/\.{2}/g, '/'); // Resolve '..'
-			str = str.replace(/\/+/g, '/'); // Compact '//'
-			return str;
+		if ((record[2] && record[3]) && app.fonts.item(record[2] + '\t' + record[3]).status !== FontStatus.INSTALLED) {
+			stat(data.status, tmpData.source,
+				'Font \'' + (record[2] + ' ' + record[3]).replace(/\t/g, ' ') + '\' is not installed.', -1);
 		}
 
-		function parseInclude() {
-			var tmpData = [];
-			var include = record.replace(/ +$/g, '').replace(/ ['"]|['"]$/g, '');
-			include = include.match(/^@(include(?:path)?|defaults|default)(?: +)?(.+)?$/i);
-			if (!include) {
-				status.warn.push(source + '\'' + record + '\' is not recognized (see docs).');
-				return;
-			}
+		tmpData.findWhat = record[0] + '\t' + record[1];
+		tmpData.changeTo = record[2] + '\t' + record[3];
 
-			switch (include[1]) {
-				case 'includepath':
-					if (include[2]) {
-						if (!/^~?\/{1,2}/.test(include[2])) include[2] = Folder(dataFile.path).absoluteURI + '/' + include[2];
-						include[2] = compactRelPath(include[2]);
-						if (Folder(include[2]).exists) includeFolder = Folder(include[2]);
-						else status.warn.push(source + '\'' + include[2] + '\' not found.');
-					} else {
-						status.warn.push(source + '\'' + record + '\' is malformed (see docs).');
-					}
-					return;
-				case 'include':
-					if (include[2]) {
-						if (!/^~?\/{1,2}/.test(include[2])) include[2] = includeFolder.absoluteURI + '/' + include[2];
-						include[2] = compactRelPath(include[2]);
-						if (!/\.(tsv|txt)$/i.test(include[2])) {
-							status.warn.push(source + '\'' + decodeURI(include[2]) + '\' is not a TSV file.');
-							return;
-						}
-						if (File(include[2]).exists) {
-							includeFile = File(include[2]);
-						} else {
-							status.warn.push(source + '\'' + decodeURI(include[2]) + '\' not found.');
-							return;
-						}
-					} else {
-						status.warn.push(source + '\'' + record + '\' is malformed (see docs).');
-						return;
-					}
-					break;
-				case 'default':
-				case 'defaults':
-					includeFile = getDataFile(dataFileName, true);
-					if (!includeFile || !includeFile.exists) {
-						status.info.push(source + 'Default list \'' + dataFileName.join('\' or \'') + '\' not found.');
-						return;
-					}
-					break;
-			}
-
-			if (includeFile.absoluteURI === dataFile.absoluteURI) return; // Skip self
-			tmpData = parseDataFile(includeFile);
-			records = records.concat(tmpData.records);
-			status = {
-				info: status.info.concat(tmpData.status.info),
-				warn: status.warn.concat(tmpData.status.warn),
-				fail: status.fail.concat(tmpData.status.fail)
-			};
-		}
-
-		function checkRecord() {
-			var tmpStatus = { info: [], warn: [], fail: [] };
-			if (!record[0] || !record[2]) tmpStatus.fail.push(source + 'Missing font name.');
-			if (!record[1] || !record[3]) tmpStatus.fail.push(source + 'Missing font style.');
-			if (app.fonts.item(record[2] + '\t' + record[3]).status !== FontStatus.INSTALLED) {
-				tmpStatus.fail.push(source +
-					'Font \'' + (record[2] + ' ' + record[3]).replace(/\t/g, ' ') + '\' is not installed.');
-			}
-			if (tmpStatus.warn.length === 0 && tmpStatus.fail.length === 0) {
-				records.push({
-					source: source,
-					findWhat: record[0] + '\t' + record[1],
-					changeTo: record[2] + '\t' + record[3]
-				});
-			}
-			status = {
-				info: status.info.concat(tmpStatus.info),
-				warn: status.warn.concat(tmpStatus.warn),
-				fail: status.fail.concat(tmpStatus.fail)
-			};
-		}
+		if (data.status.fail.length > 0) return false;
+		return tmpData;
 	}
 }

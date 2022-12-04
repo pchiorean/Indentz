@@ -3,19 +3,19 @@
  * Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
  * Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
  * The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
- * @version 22.11.19
+ * @version 22.12.4
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {File} dataFile - A tab-separated-values file (object).
- * @returns {{records: array, status: { info: array, warn: array, fail: array }}}
+ * @param {(string|string[])} [defaultName] - Default data file name, or an array of file names (used for `@defaults`).
+ * @returns {{ header: [], data: [ { record: [], source: [] }, {}, ... ], errors: [] }}
  */
-function parseDataFile(dataFile) {
-	var record, part, source, includeFolder;
-	var records = [];
-	var status = { info: [], warn: [], fail: [] };
+ function parseDataFile(dataFile, defaultName) {
+	var record, part, src, includeFolder;
+	var parsed = { header: [], data: [], errors: [] };
 	var isHeaderFound = false;
-	var line = 0;
 	var includeFile = '';
+	var line = 0;
 
 	dataFile = File(compactRelPath(dataFile.absoluteURI));
 	dataFile.open('r');
@@ -24,50 +24,39 @@ function parseDataFile(dataFile) {
 
 	while (!dataFile.eof) {
 		line++;
-		source = decodeURI(dataFile.absoluteURI) + ':' + line + ' :: ';
+		src = [ decodeURI(dataFile.absoluteURI), line ];
 		record = (part ? part.slice(0,-1) : '') + dataFile.readln(); // Join continued line
-		record = record.replace(/#(.+)?$/g, '');     // Trim everything after '#' (comments)
+		record = record.replace(/#(.+)?$/g, ''); // Trim everything after '#' (comments)
 		record = record.replace(/^ +|[ \t]+$/g, ''); // Trim spaces at both ends
 		if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
-		if (record.replace(/^\s+|\s+$/g, '') === '') continue;       // Blank line, skip
-		if (record.slice(0,1) === '@') { parseInclude(); continue; } // Include directive, parse
-		if (!isHeaderFound) { isHeaderFound = true; continue; }      // Header line, skip
+		if (record.replace(/^\s+|\s+$/g, '') === '') continue; // Blank line => skip
+		if (record.slice(0,1) === '@') { parseInclude(); continue; } // Include directive => parse
 		record = record.split(/ *\t */); // Split on \t & trim spaces
-		checkRecord();
+		if (!isHeaderFound) { isHeaderFound = true; parsed.header = record; continue; } // 1st valid line => header
+		parsed.data.push({ record: record, source: src });
 	}
 	dataFile.close();
-	record = '';
-
-	return {
-		records: records,
-		status: { info: status.info, warn: status.warn, fail: status.fail }
-	};
-
-	function compactRelPath(/*string*/str) {
-		str = str.replace(/^\.\/|\/\.$/, '').replace(/\/\.\//g, '/'); // Trim '.'
-		str = str.replace(/\/[^\/]+\/\.{2}/g, '/'); // Resolve '..'
-		str = str.replace(/\/+/g, '/'); // Compact '//'
-		return str;
-	}
+	return parsed;
 
 	function parseInclude() {
-		var tmpData = [];
+		var tmpParsed = {};
 		var include = record.replace(/ +$/g, '').replace(/ ['"]|['"]$/g, '');
 		include = include.match(/^@(include(?:path)?|defaults|default)(?: +)?(.+)?$/i);
 		if (!include) {
-			status.warn.push(source + '\'' + record + '\' is not recognized (see docs).');
+			stat(parsed.errors, src.join(':'), '\'' + record + '\' is not recognized (see docs).');
 			return;
 		}
 
 		switch (include[1]) {
 			case 'includepath':
 				if (include[2]) {
-					if (!/^~?\/{1,2}/.test(include[2])) include[2] = Folder(dataFile.path).absoluteURI + '/' + include[2];
+					if (!/^~?\/{1,2}/.test(include[2]))
+						include[2] = Folder(dataFile.path).absoluteURI + '/' + include[2];
 					include[2] = compactRelPath(include[2]);
 					if (Folder(include[2]).exists) includeFolder = Folder(include[2]);
-					else status.warn.push(source + '\'' + include[2] + '\' not found.');
+					else stat(parsed.errors, src.join(':'), 'Folder \'' + include[2] + '\' is not found.');
 				} else {
-					status.warn.push(source + '\'' + record + '\' is malformed (see docs).');
+					stat(parsed.errors, src.join(':'), '\'' + record + '\' is malformed (see docs).');
 				}
 				return;
 			case 'include':
@@ -75,55 +64,87 @@ function parseDataFile(dataFile) {
 					if (!/^~?\/{1,2}/.test(include[2])) include[2] = includeFolder.absoluteURI + '/' + include[2];
 					include[2] = compactRelPath(include[2]);
 					if (!/\.(tsv|txt)$/i.test(include[2])) {
-						status.warn.push(source + '\'' + decodeURI(include[2]) + '\' is not a TSV file.');
+						stat(parsed.errors, src.join(':'), 'File \'' + decodeURI(include[2]) + '\' is not a TSV file.');
 						return;
 					}
 					if (File(include[2]).exists) {
 						includeFile = File(include[2]);
 					} else {
-						status.warn.push(source + '\'' + decodeURI(include[2]) + '\' not found.');
+						stat(parsed.errors, src.join(':'), 'File \'' + decodeURI(include[2]) + '\' is not found.');
 						return;
 					}
 				} else {
-					status.warn.push(source + '\'' + record + '\' is malformed (see docs).');
+					stat(parsed.errors, src.join(':'), '\'' + record + '\' is malformed (see docs).');
 					return;
 				}
 				break;
 			case 'default':
 			case 'defaults':
-				includeFile = getDataFile(dataFileName, true); // dataFileName is the global default string array
+				if (!defaultName) return;
+				includeFile = getDataFile(defaultName, true);
 				if (!includeFile || !includeFile.exists) {
-					status.info.push(source + 'Default list \'' + dataFileName.join('\' or \'') + '\' not found.');
+					stat(parsed.errors, src.join(':'),
+						'Default list \'' + defaultName.join('\' or \'') + '\' is not found.');
 					return;
 				}
 				break;
 		}
 
 		if (includeFile.absoluteURI === dataFile.absoluteURI) return; // Skip self
-		tmpData = parseDataFile(includeFile);
-		records = records.concat(tmpData.records);
-		status = {
-			info: status.info.concat(tmpData.status.info),
-			warn: status.warn.concat(tmpData.status.warn),
-			fail: status.fail.concat(tmpData.status.fail)
-		};
+		tmpParsed = parseDataFile(includeFile);
+		parsed.data = parsed.data.concat(tmpParsed.data);
+		parsed.errors = parsed.errors.concat(tmpParsed.errors);
 	}
+}
 
-	function checkRecord() { // Just a template
-		var tmpStatus = { info: [], warn: [], fail: [] };
-		if (!record[0]) tmpStatus.warn.push(source + 'Some error message');
-		// ...
-		if (tmpStatus.warn.length === 0 && tmpStatus.fail.length === 0) {
-			records.push({
-				source: source,
-				key1: record[0] // || someDefaultValue
-				// ...
-			});
+/**
+ * Returns the first occurrence of file `name`, first searching for a local one (in the current
+ * folder or the parent folder of the active document), then a default one (on the desktop or next
+ * to the running script). It also matches local files starting with `_`, which take precedence.
+ * @param {(string|string[])} name - The file name, or an array of file names.
+ * @param {boolean} [skipLocal=false] - If `true`, don't search locally.
+ * @returns {File|void} - File object if found, else `undefined`.
+ */
+function getDataFile(name, skipLocal) {
+	var file = '';
+	var doc = app.activeDocument;
+	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
+	if (name.constructor.name !== 'Array') name = Array(name);
+
+	for (var i = 0; i < name.length; i++) {
+		if (!skipLocal) {
+			if (doc && doc.saved && (file = File(doc.filePath + '/_'    + name[i])) && file.exists) return file;
+			if (doc && doc.saved && (file = File(doc.filePath + '/'     + name[i])) && file.exists) return file;
+			if (doc && doc.saved && (file = File(doc.filePath + '/../_' + name[i])) && file.exists) return file;
+			if (doc && doc.saved && (file = File(doc.filePath + '/../'  + name[i])) && file.exists) return file;
 		}
-		status = {
-			info: status.info.concat(tmpStatus.info),
-			warn: status.warn.concat(tmpStatus.warn),
-			fail: status.fail.concat(tmpStatus.fail)
-		};
+		if ((file = File(Folder.desktop + '/'    + name[i])) && file.exists) return file;
+		if ((file = File(script.path    + '/'    + name[i])) && file.exists) return file;
+		if ((file = File(script.path    + '/../' + name[i])) && file.exists) return file;
 	}
+	return undefined;
+}
+
+function compactRelPath(/*string*/str) {
+	str = str.replace(/^\.\/|\/\.$/, '')  // Trim './' and '/.
+		.replace(/\/\.\//g, '/')          // Trim '/./'
+		.replace(/\/[^\/]+\/\.{2}/g, '/') // Resolve '..'
+		.replace(/\/+/g, '/');            // Compact '//'
+	return str;
+}
+
+function stat(/*array|object*/target, /*string*/src, /*string*/msg, /*0=info|1=warn|-1=fail*/type) {
+	var sep = ' :: ';
+	type = (function (t) { // Numeric code => string (key)
+		return {
+			 '0': 'info',
+			 '1': 'warn',
+			'-1': 'fail'
+		}[t] || 'warn';
+	}(type));
+
+	if (target instanceof Array) target.push(src + sep + msg);
+	else target[type].push(src + sep + msg);
+
+	return src + sep + msg;
 }

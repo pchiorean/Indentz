@@ -1,5 +1,5 @@
 /*
-	Default layers 22.10.21
+	Default layers 22.12.4
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.tsv':
@@ -47,91 +47,171 @@
 if (!(doc = app.activeDocument)) exit();
 
 // @includepath '.;./lib;../lib';
-// @include 'getDataFile.jsxinc';
 // @include 'isInArray.jsxinc';
+// @include 'parseDataFile.jsxinc';
 // @include 'report.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Default layers');
 
 function main() {
-	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
-	var file, data, messages, oldActiveLayer, newLayer, tmpLayer, i;
+	var title = 'Default layers';
 	var dataFileName = [ 'layers.tsv', 'layers.txt' ];
+	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
+	var file, messages, oldActiveLayer, newLayer, tmpLayer, i;
+	var parsed = { header: [], data: [], errors: [] };
+	var data = { records: [], status: { info: [], warn: [], fail: [] } };
 	var counter = { add: 0, merge: 0 };
 
 	if (doc.converted && VERBOSITY > 0) {
 		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
-			'The default layer substitution list will be used.');
+			'The default swatch substitution list will be used.');
 	}
-	if (!(file = getDataFile(dataFileName))) {
+
+	// Get raw data from TSV
+	if (!(file = getDataFile(dataFileName))) { // No data file found
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate a substitution list \'' + dataFileName.join('\' or \'') +
-			'\'.\nThe file must be saved in the current folder, on the ' +
-			'desktop, or next to the script. Check docs for details.');
+			alert('Can\'t locate a substitution list \'' +
+				(dataFileName.constructor.name === 'Array' ? dataFileName.join('\' or \'') : dataFileName) +
+				'\'.\nThe file must be saved in the current folder, on the desktop, or next to the script. ' +
+				'Check docs for details.');
 		}
 		exit();
 	}
+	parsed = parseDataFile(file, dataFileName);
+	if (parsed.errors.length > 0) { report(parsed.errors, title); exit(); }
 
-	data = parseDataFile(file);
-	if (data.status.fail.length > 0) { report(data.status.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
-	if (data.records.length > 0) {
-		oldActiveLayer = doc.activeLayer; // Save active layer
-		doc.layers.everyItem().properties = { locked: false }; // Unlock existing layers
+	// Build structured data
+	for (i = 0; i < parsed.data.length; i++)
+		data.records[i] = checkRecord(parsed.data[i].record);
+	if (data.status.fail.length > 0) { report(data.status.fail, title); exit(); }
 
-		// Layers above existing ones
-		for (i = data.records.length - 1; i >= 0; i--) {
-			if (data.records[i].order !== 'above' && data.records[i].order !== 'top') continue;
-			newLayer = makeLayer(
-				data.records[i].name,
-				data.records[i].color,
-				data.records[i].isVisible,
-				data.records[i].isPrintable,
-				data.records[i].variants);
-			if (i < data.records.length - 1) {
-				tmpLayer = doc.layers.item(data.records[i + 1].name);
-				if (tmpLayer.isValid && (newLayer.index > tmpLayer.index)) {
-					data.status.info.push(data.records[i].source +
-						'Moved \'' + newLayer.name + '\' above \'' + tmpLayer.name + '\'.');
-					newLayer.move(LocationOptions.BEFORE, tmpLayer);
-				}
+	// Processing
+	oldActiveLayer = doc.activeLayer; // Save active layer
+	doc.layers.everyItem().properties = { locked: false }; // Unlock existing layers
+
+	for (i = data.records.length - 1; i >= 0; i--) { // Layers above
+		if (data.records[i].order !== 'above' && data.records[i].order !== 'top') continue;
+		newLayer = makeLayer(
+			data.records[i].name,
+			data.records[i].color,
+			data.records[i].isVisible,
+			data.records[i].isPrintable,
+			data.records[i].variants);
+		if (i < data.records.length - 1) {
+			tmpLayer = doc.layers.item(data.records[i + 1].name);
+			if (tmpLayer.isValid && (newLayer.index > tmpLayer.index)) {
+				stat(data.status, data.records[i].source,
+					'Moved \'' + newLayer.name + '\' above \'' + tmpLayer.name + '\'.', 0);
+				newLayer.move(LocationOptions.BEFORE, tmpLayer);
 			}
 		}
-
-		// Layers below existing ones
-		for (i = 0; i < data.records.length; i++) {
-			if (data.records[i].order !== 'below' && data.records[i].order !== 'bottom') continue;
-			makeLayer(
-				data.records[i].name,
-				data.records[i].color,
-				data.records[i].isVisible,
-				data.records[i].isPrintable,
-				data.records[i].variants)
-			.move(LocationOptions.AT_END);
-		}
-
-		// Layers on top/bottom
-		for (i = data.records.length - 1; i >= 0; i--) {
-			if (data.records[i].order !== 'top') continue;
-			if (!(tmpLayer = doc.layers.item(data.records[i].name)).isValid) continue;
-			tmpLayer.move(LocationOptions.AT_BEGINNING);
-			data.status.info.push(data.records[i].source + 'Moved \'' + tmpLayer.name + '\' at top.');
-		}
-		for (i = 0; i < data.records.length; i++) {
-			if (data.records[i].order !== 'bottom') continue;
-			if (!(tmpLayer = doc.layers.item(data.records[i].name)).isValid) continue;
-			tmpLayer.move(LocationOptions.AT_END);
-			data.status.info.push(data.records[i].source + 'Moved \'' + tmpLayer.name + '\' at bottom.');
-		}
-
-		doc.activeLayer = oldActiveLayer; // Restore active layer
 	}
+
+	for (i = 0; i < data.records.length; i++) { // Layers below
+		if (data.records[i].order !== 'below' && data.records[i].order !== 'bottom') continue;
+		makeLayer(
+			data.records[i].name,
+			data.records[i].color,
+			data.records[i].isVisible,
+			data.records[i].isPrintable,
+			data.records[i].variants
+		).move(LocationOptions.AT_END);
+	}
+
+	for (i = data.records.length - 1; i >= 0; i--) { // Top/bottom layers
+		if (data.records[i].order !== 'top') continue;
+		if (!(tmpLayer = doc.layers.item(data.records[i].name)).isValid) continue;
+		tmpLayer.move(LocationOptions.AT_BEGINNING);
+		stat(data.status, data.records[i].source, 'Moved \'' + tmpLayer.name + '\' at top.', 0);
+	}
+	for (i = 0; i < data.records.length; i++) {
+		if (data.records[i].order !== 'bottom') continue;
+		if (!(tmpLayer = doc.layers.item(data.records[i].name)).isValid) continue;
+		tmpLayer.move(LocationOptions.AT_END);
+		stat(data.status, data.records[i].source, 'Moved \'' + tmpLayer.name + '\' at bottom.', 0);
+	}
+
+	doc.activeLayer = oldActiveLayer; // Restore active layer
+
+	// Closing up
 	if (VERBOSITY > 0) {
 		messages = data.status.warn;
 		if (VERBOSITY > 1) messages = messages.concat(data.status.info);
 		if (messages.length > 0)
 			report(messages, 'Layers: ' + counter.add + ' added | ' + counter.merge + ' merged', 'auto');
 		else if (VERBOSITY > 1 && (counter.add + counter.merge) === 0) alert('No layers added or merged.');
+	}
+
+	function checkRecord(/*array*/record) {
+		var tmpData = {};
+
+		tmpData.source = parsed.data[i].source.join(':');
+		tmpData.name = record[0];
+		tmpData.color = record[1] ? getUIColor(record[1]) : UIColors.LIGHT_BLUE;
+		tmpData.isVisible = record[2] ? (record[2].toLowerCase() === 'yes') : true;
+		tmpData.isPrintable = record[3] ? (record[3].toLowerCase() === 'yes') : true;
+		tmpData.order = record[4] ? record[4].toLowerCase() : 'below';
+		tmpData.variants = record[5] ? unique((record[0] + ',' + record[5]).split(/ *, */)) : [ record[0] ];
+
+		if (tmpData.name.length === 0) stat(data.status, tmpData.source + ':1', 'Missing layer name.', -1);
+
+		if (data.status.fail.length > 0) return false;
+		return tmpData;
+
+		function getUIColor(/*string*/color) {
+			return {
+				'blue'       : UIColors.BLUE,
+				'black'      : UIColors.BLACK,
+				'brick red'  : UIColors.BRICK_RED,
+				'brown'      : UIColors.BROWN,
+				'burgundy'   : UIColors.BURGUNDY,
+				'charcoal'   : UIColors.CHARCOAL,
+				'cute teal'  : UIColors.CUTE_TEAL,
+				'cyan'       : UIColors.CYAN,
+				'dark blue'  : UIColors.DARK_BLUE,
+				'dark green' : UIColors.DARK_GREEN,
+				'fiesta'     : UIColors.FIESTA,
+				'gold'       : UIColors.GOLD,
+				'grass green': UIColors.GRASS_GREEN,
+				'gray'       : UIColors.GRAY,
+				'green'      : UIColors.GREEN,
+				'grid blue'  : UIColors.GRID_BLUE,
+				'grid green' : UIColors.GRID_GREEN,
+				'grid orange': UIColors.GRID_ORANGE,
+				'lavender'   : UIColors.LAVENDER,
+				'light blue' : UIColors.LIGHT_BLUE,
+				'light gray' : UIColors.LIGHT_GRAY,
+				'light olive': UIColors.LIGHT_OLIVE,
+				'lipstick'   : UIColors.LIPSTICK,
+				'magenta'    : UIColors.MAGENTA,
+				'ochre'      : UIColors.OCHRE,
+				'olive green': UIColors.OLIVE_GREEN,
+				'orange'     : UIColors.ORANGE,
+				'peach'      : UIColors.PEACH,
+				'pink'       : UIColors.PINK,
+				'purple'     : UIColors.PURPLE,
+				'red'        : UIColors.RED,
+				'sulphur'    : UIColors.SULPHUR,
+				'tan'        : UIColors.TAN,
+				'teal'       : UIColors.TEAL,
+				'violet'     : UIColors.VIOLET,
+				'white'      : UIColors.WHITE,
+				'yellow'     : UIColors.YELLOW
+			}[color.toLowerCase()] || UIColors.LIGHT_BLUE;
+		}
+
+		// Get unique array elements
+		// http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/
+		function unique(/*array*/array) {
+			var i, j;
+			var r = [];
+			o: for (i = 0; i < array.length; i++) {
+				for (j = 0; j < r.length; j++) if (r[j] === array[i]) continue o;
+				if (array[i] !== '') r[r.length] = array[i];
+			}
+			return r;
+		}
 	}
 
 	function makeLayer(name, color, isVisible, isPrintable, variants) {
@@ -152,7 +232,7 @@ function main() {
 				printable:  isPrintable
 			});
 			counter.add++;
-			data.status.info.push(data.records[i].source + 'Added \'' + targetLayer.name + '\'.');
+			stat(data.status, data.records[i].source, 'Added \'' + targetLayer.name + '\'.', 0);
 		}
 		// Merge variants
 		layers = doc.layers.everyItem().getElements();
@@ -165,197 +245,11 @@ function main() {
 				targetLayer.visible = oldLayerVisibility;
 				if (oldName !== targetLayer.name) {
 					counter.merge++;
-					data.status.info.push(data.records[i].source +
-						'Merged \'' + oldName + '\' with \'' + targetLayer.name + '\'.');
+					stat(data.status, data.records[i].source,
+						'Merged \'' + oldName + '\' with \'' + targetLayer.name + '\'.', 0);
 				}
 			}
 		}
 		return targetLayer;
-	}
-
-	/**
-	 * Reads a TSV (tab-separated-values) file, returning an object containing found records and errors.
-	 * Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
-	 * Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
-	 * The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
-	 * @version 22.10.24
-	 * @author Paul Chiorean <jpeg@basement.ro>
-	 * @license MIT
-	 * @param {File} dataFile - A tab-separated-values file (object).
-	 * @returns {{records: array, status: { info: array, warn: array, fail: array }}}
-	 */
-	function parseDataFile(dataFile) {
-		var record, part, source, includeFolder;
-		var records = [];
-		var status = { info: [], warn: [], fail: [] };
-		var isHeaderFound = false;
-		var line = 0;
-		var includeFile = '';
-
-		dataFile = File(compactRelPath(dataFile.absoluteURI));
-		dataFile.open('r');
-		dataFile.encoding = 'UTF-8';
-		includeFolder = Folder(dataFile.path);
-
-	while (!dataFile.eof) {
-			line++;
-			source = decodeURI(dataFile.absoluteURI) + ':' + line + ' :: ';
-			record = (part ? part.slice(0,-1) : '') + dataFile.readln(); // Join continued line
-			record = record.replace(/#(.+)?$/g, '');     // Trim everything after '#' (comments)
-			record = record.replace(/^ +|[ \t]+$/g, ''); // Trim spaces at both ends
-			if (record.slice(-1) === '\\') { part = record; continue; } else { part = ''; } // '\': Line continues
-			if (record.replace(/^\s+|\s+$/g, '') === '') continue;       // Blank line, skip
-			if (record.slice(0,1) === '@') { parseInclude(); continue; } // Include directive, parse
-			if (!isHeaderFound) { isHeaderFound = true; continue; }      // Header line, skip
-			record = record.split(/ *\t */); // Split on \t & trim spaces
-			checkRecord();
-		}
-		dataFile.close();
-		record = '';
-
-		return {
-			records: records,
-			status: { info: status.info, warn: status.warn, fail: status.fail }
-		};
-
-		function compactRelPath(/*string*/str) {
-			str = str.replace(/^\.\/|\/\.$/, '').replace(/\/\.\//g, '/'); // Trim '.'
-			str = str.replace(/\/[^\/]+\/\.{2}/g, '/'); // Resolve '..'
-			str = str.replace(/\/+/g, '/'); // Compact '//'
-			return str;
-		}
-
-		// Get unique array elements
-		// http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/
-		function unique(/*array*/array) {
-			var i, j;
-			var r = [];
-			o: for (i = 0; i < array.length; i++) {
-				for (j = 0; j < r.length; j++) if (r[j] === array[i]) continue o;
-				if (array[i] !== '') r[r.length] = array[i];
-			}
-			return r;
-		}
-
-		function parseInclude() {
-			var tmpData = [];
-			var include = record.replace(/ +$/g, '').replace(/ ['"]|['"]$/g, '');
-			include = include.match(/^@(include(?:path)?|defaults|default)(?: +)?(.+)?$/i);
-			if (!include) {
-				status.warn.push(source + '\'' + record + '\' is not recognized (see docs).');
-				return;
-			}
-
-			switch (include[1]) {
-				case 'includepath':
-					if (include[2]) {
-						if (!/^~?\/{1,2}/.test(include[2])) include[2] = Folder(dataFile.path).absoluteURI + '/' + include[2];
-						include[2] = compactRelPath(include[2]);
-						if (Folder(include[2]).exists) includeFolder = Folder(include[2]);
-						else status.warn.push(source + '\'' + include[2] + '\' not found.');
-					} else {
-						status.warn.push(source + '\'' + record + '\' is malformed (see docs).');
-					}
-					return;
-				case 'include':
-					if (include[2]) {
-						if (!/^~?\/{1,2}/.test(include[2])) include[2] = includeFolder.absoluteURI + '/' + include[2];
-						include[2] = compactRelPath(include[2]);
-						if (!/\.(tsv|txt)$/i.test(include[2])) {
-							status.warn.push(source + '\'' + decodeURI(include[2]) + '\' is not a TSV file.');
-							return;
-						}
-						if (File(include[2]).exists) {
-							includeFile = File(include[2]);
-						} else {
-							status.warn.push(source + '\'' + decodeURI(include[2]) + '\' not found.');
-							return;
-						}
-					} else {
-						status.warn.push(source + '\'' + record + '\' is malformed (see docs).');
-						return;
-					}
-					break;
-				case 'default':
-				case 'defaults':
-					includeFile = getDataFile(dataFileName, true);
-					if (!includeFile || !includeFile.exists) {
-						status.info.push(source + 'Default list \'' + dataFileName.join('\' or \'') + '\' not found.');
-						return;
-					}
-					break;
-			}
-
-			if (includeFile.absoluteURI === dataFile.absoluteURI) return; // Skip self
-			tmpData = parseDataFile(includeFile);
-			records = records.concat(tmpData.records);
-			status = {
-				info: status.info.concat(tmpData.status.info),
-				warn: status.warn.concat(tmpData.status.warn),
-				fail: status.fail.concat(tmpData.status.fail)
-			};
-		}
-
-		function checkRecord() {
-			var tmpStatus = { info: [], warn: [], fail: [] };
-			var tmpRecord = {
-				source:      source,
-				name:        record[0],
-				color:       record[1] ? getUIColor(record[1]) : UIColors.LIGHT_BLUE,
-				isVisible:   record[2] ? (record[2].toLowerCase() === 'yes')   : true,
-				isPrintable: record[3] ? (record[3].toLowerCase() === 'yes')   : true,
-				order:       record[4] ? record[4].toLowerCase() : 'below',
-				variants:    record[5] ? unique((record[0] + ',' + record[5]).split(/ *, */)) : [ record[0] ]
-			};
-			if (!tmpRecord.name) tmpStatus.fail.push(tmpRecord.source + 'Missing layer name.');
-			if (tmpStatus.warn.length === 0 && tmpStatus.fail.length === 0) records.push(tmpRecord);
-			status = {
-				info: status.info.concat(tmpStatus.info),
-				warn: status.warn.concat(tmpStatus.warn),
-				fail: status.fail.concat(tmpStatus.fail)
-			};
-
-			function getUIColor(/*string*/color) {
-				return {
-					'blue':        UIColors.BLUE,
-					'black':       UIColors.BLACK,
-					'brick red':   UIColors.BRICK_RED,
-					'brown':       UIColors.BROWN,
-					'burgundy':    UIColors.BURGUNDY,
-					'charcoal':    UIColors.CHARCOAL,
-					'cute teal':   UIColors.CUTE_TEAL,
-					'cyan':        UIColors.CYAN,
-					'dark blue':   UIColors.DARK_BLUE,
-					'dark green':  UIColors.DARK_GREEN,
-					'fiesta':      UIColors.FIESTA,
-					'gold':        UIColors.GOLD,
-					'grass green': UIColors.GRASS_GREEN,
-					'gray':        UIColors.GRAY,
-					'green':       UIColors.GREEN,
-					'grid blue':   UIColors.GRID_BLUE,
-					'grid green':  UIColors.GRID_GREEN,
-					'grid orange': UIColors.GRID_ORANGE,
-					'lavender':    UIColors.LAVENDER,
-					'light blue':  UIColors.LIGHT_BLUE,
-					'light gray':  UIColors.LIGHT_GRAY,
-					'light olive': UIColors.LIGHT_OLIVE,
-					'lipstick':    UIColors.LIPSTICK,
-					'magenta':     UIColors.MAGENTA,
-					'ochre':       UIColors.OCHRE,
-					'olive green': UIColors.OLIVE_GREEN,
-					'orange':      UIColors.ORANGE,
-					'peach':       UIColors.PEACH,
-					'pink':        UIColors.PINK,
-					'purple':      UIColors.PURPLE,
-					'red':         UIColors.RED,
-					'sulphur':     UIColors.SULPHUR,
-					'tan':         UIColors.TAN,
-					'teal':        UIColors.TEAL,
-					'violet':      UIColors.VIOLET,
-					'white':       UIColors.WHITE,
-					'yellow':      UIColors.YELLOW
-				}[color.toLowerCase()] || UIColors.LIGHT_BLUE;
-			}
-		}
 	}
 }
