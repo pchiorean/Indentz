@@ -14,7 +14,7 @@ The code was developed and tested in Adobe InDesign CC 2020–2022 on Mac (but I
 
 ### Cleanup
 
-Defaults and cleanup.
+<small>**Defaults and cleanup.**</small>
 
 #### **`DefaultPrefs`**
 Sets some preferences for the active document. You should customize them to your taste by editing the script.
@@ -72,7 +72,7 @@ Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample]
 > **Order**: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`)\
 > **Variants**: A list of layers that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` and `*`)
 
-<details><summary><strong>Additional features</strong></summary>
+**Additional features:**
 
 A line may also contain a _statement_:
 
@@ -85,8 +85,6 @@ There's also some non-standard stuff that will confuse Excel et al.:
 - Blank lines and those starting with `#` (comments) are ignored;
 - The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
-
-</details>
 
 #### **`DefaultSwatches`**
 Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sample](samples/swatches.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
@@ -251,7 +249,7 @@ Saves a TSV file (compatible with [**`DefaultSwatches`**](#defaultswatches)) con
 
 ### Layout
 
-Document setup – page size, margins & columns, guides.
+<small>**Document setup – page size, margins & columns, guides.**</small>
 
 #### **`PageSizeFromFilename`** <small>F3</small>
 Sets the size of the page and the margins/visible area, getting dimensions from the document name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
@@ -288,7 +286,7 @@ Deletes all guides from the document.
 
 ### Align
 
-Align page objects with ease using the numeric keypad.
+<small>**Align page objects with ease using the numeric keypad.**</small>
 
 #### **`ToggleAlignTo`** <small>Num0</small>
 Toggles **Align To** between selection, margins, page or spread (just run it repeatedly):
@@ -545,7 +543,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: November 21, 2022</small>
+<small>Last updated: December 4, 2022</small>
 
 [^1]: The variable `Z` from line 42 must be set to fit a square page at 90% of **Fit Page in Window**.
 [^2]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
