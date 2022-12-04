@@ -131,34 +131,6 @@ bounds[scope][target]; // [ 20, 20, 277, 400 ]
 
 ---
 
-### getDataFile(_dataFile, [skipLocal]_) ⇒ \{File\} | undefined
-
-Gets the first occurrence of a file from a list of predefined folders.
-
-##### Parameters:
-
-|Name|Type|Default|Description|
-|:--:|:--:|:--:|--|
-|`dataFile`|`string`||A tab-separated-values file (name).|
-|`[skipLocal]`|`boolean`|false|If `true`, don't search locally. *(Optional.)*|
-
-##### Returns:
-
-The first occurrence of `dataFile`, first searching for a local one (in the current folder or the parent folder of the active document), then a default one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
-
-- Local file:
-
-  1. `current/folder/_dataFile` or `dataFile`
-  2. `current/folder/../_dataFile` or `dataFile`
-
-- Default file:
-
-  3. `~/Desktop/dataFile`
-  4. `script/folder/dataFile`
-  5. `script/folder/../dataFile`
-
----
-
 ### getDropShadow(_item_) ⇒ \{Object\}
 
 Gets a page item's drop shadow properties.
@@ -268,41 +240,79 @@ Moves an item to another layer, optionally sending it to the front or back.
 
 ### parseDataFile(_dataFile_) ⇒ \{Object\}
 
-Reads a TSV (tab-separated-values) file. (The provided function is just a stub.)
+Reads a TSV (tab-separated-values) file.
 
 ##### Parameters:
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`dataFile`|`File`||A tab-separated-values file (object).|
+|`[defaultName]`|`string|string[]`||Default data file name, or an array of file names (used for `@defaults`).|
 
-Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
+The parser has some non-standard features:
 
-Use `@defaults` to include the global default (see `getDataFile()`), or `@include path/to/another.tsv` for other file. The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+- A line may contain a _statement_:
+
+  - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
+  - `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
+  - `@defaults` – includes the global data file (see `getDataFile()` below);
+
+- Blank lines and those starting with `#` (comments) are ignored;
+- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 ##### Returns:
 
-An object containing the records found and errors:
+An object containing the records found (strings) and parsing errors, built from the main file plus all included files, structured as follows:
 
 ```js
 {
-    records: [ {}, {}, ... ],
-    status:  { info: [], warn: [], fail: [] }
-};
+    header: [],
+    data: [
+        { record: [], source: [] },
+        ...
+    ],
+    errors: []
+}
 ```
 
 ##### Example:
 
 ```js
-// @include 'getDataFile.jsxinc';
-// @include 'report.jsxinc';
+var file;
+var parsed = { header: [], data: [], errors: [] };
+var data = { records: [], errors: [] };
 
-var file, data;
 if (!(file = getDataFile('data.tsv'))) { alert('No data file found.'); exit(); }
-data = parseDataFile(file);
-if (data.status.fail.length > 0) { report(data.status.fail, decodeURI(file.getRelativeURI(doc.filePath))); exit(); }
-if (data.records.length === 0) exit();
-// main stuff (e.g., see `DefaultLayers.jsx` for implementation)
+
+// Parse data file
+parsed = parseDataFile(file, 'data.tsv');
+if (parsed.errors.length > 0) { report(parsed.errors); exit(); }
+
+// Build native objects
+for (var i = 0; i < parsed.data.length; i++) {
+    checkRecord(parsed.data[i].record);
+}
+if (data.errors.length > 0) { report(data.errors); exit(); }
+
+// Main processing
+for (var i = 0; i < data.records.length; i++) {
+    // doStuff(data.records[i]);
+}
+
+function checkRecord(/*array*/record) {
+    var tmpData = {};
+    tmpData.source = parsed.data[i].source.join(':');
+    tmpData.name = record[0];
+    tmpData.color = record[1] ? getUIColor(record[1]) : UIColors.LIGHT_BLUE;
+    tmpData.isVisible = record[2] ? (record[2].toLowerCase() === 'yes') : true;
+    tmpData.isPrintable = record[3] ? (record[3].toLowerCase() === 'yes') : true;
+
+    if (tmpData.name.length === 0) stat(data.status, tmpData.source + ':1', 'Missing layer name.', -1);
+    if (data.status.fail.length > 0) return false;
+    return tmpData;
+}
+
 ```
 
 Given a file `data.tsv`:
@@ -313,35 +323,70 @@ dielines    Magenta       no         yes
 # guides    Grid Green    yes        no
 artwork     Light Blue    yes        yes
             Red           yes        yes
+@include path/to/another.tsv
+```
+
+and `another.tsv`:
+
+```csv
+Name        Color         Visible    Printable
+.reference  Black         no         no
+@include missing.tsv
 ```
 
 it will return an object like this:
 
 ```js
 {
-    records: [
+    header: [ "Name", "Color", "Visible", "Printable" ],
+    data: [
         {
-            source:      '~/Desktop/data.tsv:2 :: ',
-            name:        'dielines',
-            color:       UIColors.MAGENTA,
-            isVisible:   false,
-            isPrintable: true
+            record: [ "dielines", "Magenta", "no", "yes" ],
+            source: [ "data.tsv", 2 ]
         },
-        {
-            source:      '~/Desktop/data.tsv:4 :: ',
-            name:        'artwork',
-            color:       UIColors.LIGHT_BLUE,
-            isVisible:   true,
-            isPrintable: true
+            record: [ "artwork", "Light Blue", "yes", "yes" ],
+            source: [ "data.tsv", 4 ]
+        },
+            record: [ "", "Red", "yes", "yes" ],
+            source: [ "data.tsv", 5 ]
+        },
+            record: [ ".reference", "Black", "no", "no" ],
+            source: [ "path/to/another.tsv", 2 ]
         }
     ],
-    errors: {
-        info: [],
-        warn: [],
-        fail: [ '~/Desktop/data.tsv:5 :: Missing layer name.' ]
-    }
+    errors: [ "path/to/another.tsv:3 :: 'missing.tsv' not found." ]
 }
 ```
+
+See, for example, `DefaultLayers.jsx` for an actual implementation.
+
+There are some additional functions in this file, one being:
+
+### getDataFile(_dataFile, [skipLocal]_) ⇒ \{File\} | undefined
+
+Gets the first occurrence of a file from a list of predefined folders.
+
+##### Parameters:
+
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|--|
+|`dataFile`|`string`||A tab-separated-values file (name).|
+|`[skipLocal]`|`boolean`|false|If `true`, don't search locally. *(Optional.)*|
+
+##### Returns:
+
+The first occurrence of `dataFile`, first searching for a local one (in the current folder or the parent folder of the active document), then a default one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
+
+- Local file:
+
+  1. `current/folder/_dataFile` or `dataFile`
+  2. `current/folder/../_dataFile` or `dataFile`
+
+- Default file:
+
+  3. `~/Desktop/dataFile`
+  4. `script/folder/dataFile`
+  5. `script/folder/../dataFile`
 
 ---
 
