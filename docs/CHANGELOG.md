@@ -5,49 +5,21 @@
 <details><summary><strong>Queued</strong></summary>
 
 - `new` Add an '.ini' file for custom user settings
-- `new` **cleanup/DefaultLayers:** Add `top/bottom` order keyword
 - `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
-- `upd` **cleanup/DocCleanup:** Convert empty frames to generic frames when they have no fill/stroke
+- `fix` **cleanup/DefaultLayers:** Check their position before moving layers to top/bottom
 - `new` **export/QuickExport:** Add a preflight dropbox
-- `upd` **export/QuickExport:** Read document PDF standard from a saved label
-- `upd` **export/QuickExport:** Use custom bleed from PDF preset, but display only max. value
+- `upd` **export/QuickExport:** Default document PDF standard from a saved label
+- `upd` **export/QuickExport:** Use custom bleed T/L/B/R from PDF preset, but display only max. value
 - `upd` **export/QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
 - `fix` **export/QuickExport:** Report layer overrides
-- `fix` **cleanup/DocCleanup:** Don't trim ending spaces when VJ != top
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
 - `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
 - `upd` **layout/PageSizeFromSelection:** Use outlined text bounds for text frames
 - `upd` **layout/PageSizeFromSelection:** Without selection fit all pages to their contents
-- `upd` **misc/EAN:** Try to get clipboard on open
-- `upd` **misc/QRBatch:** Move 'Refresh' before 'Browse'
 - `upd` **view/ZoomTo...:** Run with 'Opt/Alt' to get the value of `Z`
 - `upd` `?` Add a 'Canceling, please wait...' note when cancelling batch processes
 - `doc` Add a mention about the option to interrupt the ongoing operation with 'Esc'
-- `doc` `?` Add `@method` to JSDoc comments
-- `doc` **\*:** Paul Chiorean <jpeg@basement.ro>
-
-	<details>
-
-	```js
-	/**
-	 * Класс индикатора выполнения
-	 * @param {Number} maxValue             Максимальное значение индикатора
-	 * @param {String} barLabel             Текст над индикатором
-	 * @param {String} panelTitle           Заголовок панели
-	 * @param {String} Info                 Текст под индикатором
-	 *
-	 * @method close()                      Закрывает окно индикатора выполнения
-	 * @method reset(maxValue, barLabel)    Новые значения для максимума и текста над индикатором
-	 * @method setVal(barValue)             Устанавливает конкретное значение индикатора
-	 * @method increase()                   Увеличивает значение индикатора на единицу
-	 * @method setLabel(str)                Устанавливает новое значение текста над индикатором
-	 * @method setPanelLabel(str)           Устанавливает новое значение заголовка панели
-	 * @method setInfo(str)                 Устанавливает новое значение текста под индикатором
-	 */
-	```
-
-	</details>
 
 </details>
 
@@ -61,17 +33,34 @@
   **layout/PageMarginsTo5Percent:** Sets margins to 5% of the visible area for all document pages
 - `11/17` [`new`](https://github.com/pchiorean/Indentz/commit/0322f41787496ad351226c2c066b9cb13478d7e9)
   **layout/PageMarginsTo5Percent:** Now it also detects the HW value; renamed to **PageMarginsFromScriptName**
+- `11/21` [`new`](https://github.com/pchiorean/Indentz/commit/5a3c6fb308e12a114910b70df79ed220d7491981)
+  **cleanup/DefaultLayers:** Added `top`/`bottom` keywords for layers order
+- `12/04` [`new`](https://github.com/pchiorean/Indentz/commit/0199b29a56e98d68b3b876f44f826f8076e68937)
+  **lib/unique:** Added a helper function to get unique array elements
 
 ##### Updates
 
 - `11/15` [`upd`](https://github.com/pchiorean/Indentz/commit/401233e7256283a1c3ed1df67ec4bcd9a6af9599)
   **misc/QRBatch:** Filterd list to display only queueable lines
+- `11/19` [`upd`](https://github.com/pchiorean/Indentz/commit/2961ecb72ab657443d8813d13e0edd7d7217b764)
+  **cleanup/DocCleanup:** Convert empty frames to generic frames only when they have no fill/stroke
+- `11/24` [`ref`](https://github.com/pchiorean/Indentz/commit/39e2f11a3497ec752640a6cbb541473c60581675)
+  **misc/QRBatch:** Moved 'Refresh' before 'Browse'
+- `11/24` [`upd`](https://github.com/pchiorean/Indentz/commit/87905c2091bb62b6b103c5607fd063d20af498ea)
+  **misc/QR, QRBatch:** Slightly increased the distance between the code and the edge of the page (4 mm left, 3 mm below)
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/184055a8b55309406a2de7793b6f2f5fdc82d9ae)
+  **lib/debug:** Replaced the context argument with an auto call stack; renamed to **dbg**
+- `12/04` [`brk`](https://github.com/pchiorean/Indentz/commit/53e753a54223d6e78d7854a47dabd7a98bbf0704)
+  **lib/ParseDataFile and related:** Refactored to return parsed records as raw strings; moved data validation/converting to native objects to a separate step; see `lib/README.md` for details
+
 
 ##### Removed features
 
 ##### Bug fixes
 - `11/17` [`fix`](https://github.com/pchiorean/Indentz/commit/6b70b11e3638bdac0e8b1d849a68c7475e9edc0a)
   **export/QuickExport:** Fixed auto-suffix hack to chain layer names (d'oh!)
+- `11/19` [`fix`](https://github.com/pchiorean/Indentz/commit/f0e94cd7a5d557630ab103302511fba655c7f3ff)
+  **cleanup/DocCleanup:** Trimming ending spaces for center- or bottom-aligned text frames inadvertently moved the text; fixed
 
 ##### Miscellaneous
 
@@ -79,6 +68,8 @@
   **misc/LabelsCleanup:** Renamed and moved to **cleanup/RemoveScriptLabels**
 - `11/12` [`ref`](https://github.com/pchiorean/Indentz/commit/416073f9e74ef2d3e7a0718a37044e07cb0a366a)
   **export/QuickExport:** Updated help tip for 'Sort files by suffix into subfolders'
+- `11/19` [`doc`](https://github.com/pchiorean/Indentz/commit/c3c8e2313aba93b3eee35a71b9b47c31945b1fa9)
+  **lib/moveToLayer:** Updated description
 
 ### [22.11.10](https://github.com/pchiorean/Indentz/releases/tag/22.11.10)
 
@@ -602,7 +593,7 @@
 
 ##### New features
 
-- `new` **lib/debug:** Add a stopwatch
+- `new` **lib/dbg:** Add a stopwatch
 - `new` **cleanup/DefaultSwatches:** Add tints support
 - `new` **cleanup/DefaultSwatches:** Add groups support
 - `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
