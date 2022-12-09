@@ -17,29 +17,28 @@ Adds a custom ruler guide. I use it to make grids for several brands, for which 
 
 ---
 
-### dbg(_[type], message_)
+### log(_message_)
 
-Appends a debugging line to a file saved on the desktop with the name of the running script (e.g. `active-script.log`). If no arguments are given, it just appends an empty line. It's a crude tool, but very effective.
+Appends a debugging line to a file saved on the desktop with the name of the running script (e.g., `active-script.log`), containing a timestamp, a stack trace, and a message. Without arguments, it just appends an empty line. It's a crude, but effective tool.
 
 ##### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
-|`[type]`|`string`|A single character string: <ul> <li>`+` appends `MESSAGE` to the previous line;</li> <li>`I`, `W`, `E`, `F`, `M`, `N`, `T` or space outputs `[INFO]`, `[WARN]`, `[ERR]`, `[FAIL]`, `[MARK]`, `[NOTE]`, `[TODO]` or spacer. (Looks great with [Pragmata Pro Liga](https://fsd.it/shop/fonts/pragmatapro/).)</li> </ul> *(Optional.)*|
-|`message`|`string`|A comma-separated list of message parts (`part1`, `part2`, `part3`, ...).|
+|`message`|`string`|A list of messages (`part1`, `part2`, `part3`, etc.) that will be appended to the timestamp and the stack trace; you can append them to the previous line using `+` as the first part (or an empty string to skip the separator).|
 
 ##### Example:
 
 ```js
-dbg('i', 'Open data file: \'' + decodeURI(dataFile.name) + '\'');
+log('Data file: \'' + decodeURI(dataFile.name) + '\'');
 // <snip>
-if (errors.length === 0) dbg('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
+log('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
 ```
 
 ```
-2021-07-31 18:48:02.609 [INFO] [parseDataFile] Open data file: 'test.tsv' | Records: 14 | Layouts: 0
-└─────────────────────┘ └────┘ └─────────────┘ └────────────────────────┘   └─────────┘   └────────┘
-       typestamp         type       scope            message part1             part2         part3
+2021-07-31 18:48:02.609 main::parseDataFile:: Data file: 'test.tsv' | Records: 14 | Layouts: 2
+└─────────────────────┘ └───────────────────┘ └───────────────────┘   └─────────┘   └────────┘
+       typestamp                stack             message part1          part2         part3
 ```
 
 ---
