@@ -227,7 +227,6 @@ There's also some non-standard stuff that will confuse Excel et al.:
 </details>
 
 #### **`BreakLinkToStyles`**
-
 Unnaplies paragraph/character/object styles from the selected objects or all objects in the document if nothing is selected.
 
 #### **`DocCleanup`** <small>F2</small>
@@ -467,7 +466,6 @@ To handle some objects it is sometimes useful to temporarily insert them into a 
 Releases one or several objects from their clipping frames (you can select any objects, it will only release the clipped ones). If nothing is selected, it will release all clipped objects.
 
 #### **`EAN`** <small>⌥F9</small>
-
 This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, modified to embed the code in a selected rectangle: if we have a page object (ideally a rectangle) selected, the script embeds an EAN code in it, scaled to width. If nothing is selected, it puts it in a new document.
 
 Enter 8 or 13 digits for the code itself; if you have an add-on, add a hyphen and another 2 or 5 digits.
@@ -481,13 +479,13 @@ Adds a custom label on the current page slug, on the **info** layer (with Helvet
 Adds a label with the page aspect ratio, on the slug of each page, on the **info** layer.
 
 #### **`Offset Paths`**
+This is a slightly modified version of [**OffsetPath**](https://creativepro.com/indesign-cad-tool/) by Olav Martin Kvern. It uses a clever method to create paths around selected objects at a custom offset distance:
 
-This is a slightly modified version of [**OffsetPath**](https://creativepro.com/indesign-cad-tool/) by Olav Martin Kvern, that creates paths around selected objects at a custom offset distance:
+> When you apply a Contour-type text wrap to an object, you’re creating a path around that object—and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create a new path from those geometric coordinates.
 
-> When you apply a Contour-type text wrap to an object, you’re creating a path around that object—and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create the a new path from those geometric coordinates.
+I fixed some bugs and added a default value, an option to join contours, and support for undoing.
 
 #### **`QR`** <small>F9</small>
-
 Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^2]:
 
 |             On document             |             On file              |
@@ -527,6 +525,7 @@ Shows all color profiles available to InDesign.
 Shows properties and methods of a selected object.
 
 ## Install
+
 1. Clone or download from **Code ‣ Download ZIP**. The repository uses dynamically linked libraries from **`lib/`**, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked.
 2. Open **Window ‣ Utilities ‣ Scripts**.
 3. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
@@ -543,7 +542,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: December 4, 2022</small>
+<small>Last updated: December 9, 2022</small>
 
 [^1]: The variable `Z` from line 42 must be set to fit a square page at 90% of **Fit Page in Window**.
 [^2]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.

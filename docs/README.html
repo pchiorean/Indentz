@@ -272,7 +272,7 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <h3 class="mume-header" id="cleanup">Cleanup</h3>
 
-<p>Defaults and cleanup.</p>
+<p><small><strong>Defaults and cleanup.</strong></small></p>
 <h4 class="mume-header" id="defaultprefs"><strong><code>DefaultPrefs</code></strong></h4>
 
 <p>Sets some preferences for the active document. You should customize them to your taste by editing the script.</p>
@@ -376,7 +376,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Order</strong>: <code>above</code> or <code>below</code> existing layers, or <code>top</code>/<code>bottom</code> (defaults to <code>above</code>)<br>
 <strong>Variants</strong>: A list of layers that will be merged with the base layer; it&apos;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>)</p>
 </blockquote>
-<details><summary><strong>Additional features</strong></summary>
+<p><strong>Additional features:</strong></p>
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
@@ -389,7 +389,6 @@ pre[data-line] .line-highlight[data-end]:after {
 <li>The fields can be visually aligned with spaces that will be removed at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
 <li>A very long line can be broken into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</li>
 </ul>
-</details>
 <h4 class="mume-header" id="defaultswatches"><strong><code>DefaultSwatches</code></strong></h4>
 
 <p>Adds a set of swatches defined in a TSV data file named <strong><code>swatches.tsv</code></strong> (<a href="samples/swatches.tsv">sample</a>) saved <em>locally</em> (meaning the active document folder or its parent), or as a <em>global default</em> (on the desktop, next to the script, or in <strong><code>Indentz</code></strong> root); local files and those starting with <code>_</code> take precedence:</p>
@@ -672,7 +671,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <hr>
 <h3 class="mume-header" id="layout">Layout</h3>
 
-<p>Document setup &#x2013; page size, margins &amp; columns, guides.</p>
+<p><small><strong>Document setup &#x2013; page size, margins &amp; columns, guides.</strong></small></p>
 <h4 class="mume-header" id="pagesizefromfilename-smallf3small"><strong><code>PageSizeFromFilename</code></strong> <small>F3</small></h4>
 
 <p>Sets the size of the page and the margins/visible area, getting dimensions from the document name. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
@@ -729,7 +728,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <hr>
 <h3 class="mume-header" id="align">Align</h3>
 
-<p>Align page objects with ease using the numeric keypad.</p>
+<p><small><strong>Align page objects with ease using the numeric keypad.</strong></small></p>
 <h4 class="mume-header" id="togglealignto-smallnum0small"><strong><code>ToggleAlignTo</code></strong> <small>Num0</small></h4>
 
 <p>Toggles <strong>Align To</strong> between selection, margins, page or spread (just run it repeatedly):</p>
@@ -1051,10 +1050,11 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Adds a label with the page aspect ratio, on the slug of each page, on the <strong>info</strong> layer.</p>
 <h4 class="mume-header" id="offset-paths"><strong><code>Offset Paths</code></strong></h4>
 
-<p>This is a slightly modified version of <a href="https://creativepro.com/indesign-cad-tool/"><strong>OffsetPath</strong></a> by Olav Martin Kvern, that creates paths around selected objects at a custom offset distance:</p>
+<p>This is a slightly modified version of <a href="https://creativepro.com/indesign-cad-tool/"><strong>OffsetPath</strong></a> by Olav Martin Kvern. It uses a clever method to create paths around selected objects at a custom offset distance:</p>
 <blockquote>
-<p>When you apply a Contour-type text wrap to an object, you&#x2019;re creating a path around that object&#x2014;and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create the a new path from those geometric coordinates.</p>
+<p>When you apply a Contour-type text wrap to an object, you&#x2019;re creating a path around that object&#x2014;and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create a new path from those geometric coordinates.</p>
 </blockquote>
+<p>I fixed some bugs and added a default value, an option to join contours, and support for undoing.</p>
 <h4 class="mume-header" id="qr-smallf9small"><strong><code>QR</code></strong> <small>F9</small></h4>
 
 <p>Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>:</p>
@@ -1139,7 +1139,7 @@ pre[data-line] .line-highlight[data-end]:after {
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&apos;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>Thanks to Adrian Frigioiu for bug reports and feedback.</p>
-<p><small>Last updated: November 21, 2022</small></p>
+<p><small>Last updated: December 9, 2022</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
