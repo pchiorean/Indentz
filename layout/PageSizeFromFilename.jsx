@@ -1,5 +1,5 @@
 /*
-	Page size from file name 22.11.17
+	Page size from file name 22.12.10
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Sets every page size and margins according to the file name.
@@ -29,27 +29,17 @@
 
 if (!(doc = app.activeDocument)) exit();
 
+// @includepath '.;./lib;../lib';
+// @include 'isInArray.jsxinc';
+
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Set page dimensions');
 
 function main() {
 	var dimensions, firstPair, secondPair,
 		newPgSize, newMgSize, newBleed, newMargins, page, i, n;
-	var visLayerName = findLayer([
-		'visible area',
-		'visible', 'Visible',
-		'vizibil', 'Vizibil',
-		'vis. area', 'Vis. area',
-		'rahmen'
-	]);
-	var dieLayerName = findLayer([
-		'dielines',
-		'cut lines', 'Cut lines', 'cut', 'Cut', 'CUT',
-		'decoupe', 'Decoupe',
-		'die', 'Die', 'die cut', 'Die Cut', 'diecut', 'Diecut',
-		'stanz', 'Stanz', 'stanze', 'Stanze',
-		'stanzform', 'Stanzform'
-	]);
+	var visLayerName = findLayer([ 'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ]);
+	var dieLayerName = findLayer([ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ]);
 	var visFrame = {
 		swatchName: 'Visible area',
 		swatchModel: ColorModel.SPOT,
@@ -181,14 +171,10 @@ function main() {
 	}
 	cleanupAndExit();
 
-	// Find first valid layer from a list of names
+	// Find first valid layer from a list of names, else return first name
 	function findLayer(names) {
-		var layer;
-		for (var i = 0, n = names.length; i < n; i++) {
-			layer = doc.layers.item(names[i]);
-			if (layer.isValid) return names[i];
-		}
-		// If nothing found, return first name
+		for (var i = 0; i < doc.layers.length; i++)
+			if (isInArray(doc.layers[i].name, names)) return doc.layers[i].name;
 		return names[0];
 	}
 
