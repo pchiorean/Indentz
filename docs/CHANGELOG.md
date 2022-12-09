@@ -6,17 +6,21 @@
 
 - `new` Add an '.ini' file for custom user settings
 - `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
-- `fix` **cleanup/DefaultLayers:** Check their position before moving layers to top/bottom
+- `fix` **cleanup/ReplaceLinks:** When relinking layered graphics, try to restore layers' visibility; report culprits
 - `new` **export/QuickExport:** Add a preflight dropbox
 - `upd` **export/QuickExport:** Default document PDF standard from a saved label
 - `upd` **export/QuickExport:** Use custom bleed T/L/B/R from PDF preset, but display only max. value
 - `upd` **export/QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
 - `fix` **export/QuickExport:** Report layer overrides
+- `fix` **export/QuickExport:** Fix low-res export for embedded .indd files
+- `fix` **export/QuickExport:** Restore cropping mode when relinking files
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
 - `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
 - `upd` **layout/PageSizeFromSelection:** Use outlined text bounds for text frames
 - `upd` **layout/PageSizeFromSelection:** Without selection fit all pages to their contents
+- `upd` **misc/EAN:** If multiple objects are selected, insert the code to all
+- `fix` **misc/EAN:** Preserve clipboard
 - `upd` **view/ZoomTo...:** Run with 'Opt/Alt' to get the value of `Z`
 - `upd` `?` Add a 'Canceling, please wait...' note when cancelling batch processes
 - `doc` Add a mention about the option to interrupt the ongoing operation with 'Esc'
@@ -48,19 +52,25 @@
   **misc/QRBatch:** Moved 'Refresh' before 'Browse'
 - `11/24` [`upd`](https://github.com/pchiorean/Indentz/commit/87905c2091bb62b6b103c5607fd063d20af498ea)
   **misc/QR, QRBatch:** Slightly increased the distance between the code and the edge of the page (4 mm left, 3 mm below)
-- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/184055a8b55309406a2de7793b6f2f5fdc82d9ae)
-  **lib/debug:** Replaced the context argument with an auto call stack; renamed to **dbg**
 - `12/04` [`brk`](https://github.com/pchiorean/Indentz/commit/53e753a54223d6e78d7854a47dabd7a98bbf0704)
   **lib/ParseDataFile and related:** Refactored to return parsed records as raw strings; moved data validation/converting to native objects to a separate step; see `lib/README.md` for details
-
+- `12/09` [`upd`](https://github.com/pchiorean/Indentz/commit/253b6b0b4e7d94485ed40aecd4219db8ce7dfa0a)
+  **layout/PageSizeFromFilename, export/MarkVisibleArea:** Added support for wildcards in layer names
+- `12/09` [`upd`](https://github.com/pchiorean/Indentz/commit/23f5801e89f727d89af87f009abab8791ab3e6fc)
+  **lib/log:** Reduced types to just one: appending the message; also, renamed to **log**
 
 ##### Removed features
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/184055a8b55309406a2de7793b6f2f5fdc82d9ae)
+  **lib/debug:** Replaced the context argument with an auto call stack; renamed to **dbg**
 
 ##### Bug fixes
 - `11/17` [`fix`](https://github.com/pchiorean/Indentz/commit/6b70b11e3638bdac0e8b1d849a68c7475e9edc0a)
   **export/QuickExport:** Fixed auto-suffix hack to chain layer names (d'oh!)
 - `11/19` [`fix`](https://github.com/pchiorean/Indentz/commit/f0e94cd7a5d557630ab103302511fba655c7f3ff)
   **cleanup/DocCleanup:** Trimming ending spaces for center- or bottom-aligned text frames inadvertently moved the text; fixed
+- `12/09` [`fix`](https://github.com/pchiorean/Indentz/commit/beed82b8579730cad9145ea671d992bce471ed0d)
+  **cleanup/DefaultLayers:** Don't move a layer to top/bottom if it's already there
+
 
 ##### Miscellaneous
 
@@ -606,7 +616,6 @@
 - `upd` **cleanup/DefaultSwatches:** Check color values on parsing
 - `upd` **misc/LabelPageRatios:** Mark outer/inner ratios
 - `brk` **export/MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
-- `upd` **export/MarkVisibleArea:** Use wildcards for layer names
 - `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
 - `upd` **export/Show/HideDNPLayers:** Take layers from a TSV
 - `upd` **layout/PageMarginsFromSelection:** Set the margins of every page touched by the selection
