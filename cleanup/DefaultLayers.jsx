@@ -1,5 +1,5 @@
 /*
-	Default layers 22.12.4
+	Default layers 22.12.9
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds/merges layers from a 6-column TSV file named 'layers.tsv':
@@ -122,14 +122,18 @@ function main() {
 	for (i = data.records.length - 1; i >= 0; i--) { // Top/bottom layers
 		if (data.records[i].order !== 'top') continue;
 		if (!(tmpLayer = doc.layers.item(data.records[i].name)).isValid) continue;
-		tmpLayer.move(LocationOptions.AT_BEGINNING);
-		stat(data.status, data.records[i].source, 'Moved \'' + tmpLayer.name + '\' at top.', 0);
+		if (tmpLayer.index !== 0) {
+			tmpLayer.move(LocationOptions.AT_BEGINNING);
+			stat(data.status, data.records[i].source, 'Moved \'' + tmpLayer.name + '\' at top.', 0);
+		}
 	}
 	for (i = 0; i < data.records.length; i++) {
 		if (data.records[i].order !== 'bottom') continue;
 		if (!(tmpLayer = doc.layers.item(data.records[i].name)).isValid) continue;
-		tmpLayer.move(LocationOptions.AT_END);
-		stat(data.status, data.records[i].source, 'Moved \'' + tmpLayer.name + '\' at bottom.', 0);
+		if (tmpLayer.index !== (doc.layers.length - 1)) {
+			tmpLayer.move(LocationOptions.AT_END);
+			stat(data.status, data.records[i].source, 'Moved \'' + tmpLayer.name + '\' at bottom.', 0);
+		}
 	}
 
 	doc.activeLayer = oldActiveLayer; // Restore active layer
