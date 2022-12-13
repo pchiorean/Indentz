@@ -1,5 +1,5 @@
 /*
-	Quick export 22.12.2
+	Quick export 22.12.13
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -668,7 +668,9 @@ progressBar = new ProgressBar('Exporting', maxCounter, pbWidth + 10);
 // Documents loop
 while ((doc = docs.shift())) {
 	if (folderMode) {
-		doc = app.open(doc);
+		if (doc.exists) {
+			doc = app.open(doc);
+		} else { errors.push(decodeURI(doc) + ': Not found; skipped.'); continue; }
 		if (doc.converted) {
 			errors.push(decodeURI(doc.name) + ': Must be converted; skipped.');
 			doc.close(SaveOptions.NO); continue;
