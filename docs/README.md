@@ -446,7 +446,7 @@ Zooms current layout window to 300%.
 #### **`ZoomToSelection`** <small>F4</small>
 It resembles **Fit Selection in Window** **<small>(⌥⌘=)</small>**, but with some changes:
 
-- Brings the selection a little closer[^1];
+- Brings the selection a little closer;
 - If the cursor is in a text frame, zooms on the whole frame;
 - Without anything selected zooms on the current spread.
 
@@ -486,7 +486,7 @@ This is a slightly modified version of [**OffsetPath**](https://creativepro.com/
 I fixed some bugs and added a default value, an option to join contours, and support for undoing.
 
 #### **`QR`** <small>F9</small>
-Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^2]:
+Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^1]:
 
 |             On document             |             On file              |
 |:-----------------------------------:|:--------------------------------:|
@@ -542,7 +542,6 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: December 9, 2022</small>
+<small>Last updated: December 12, 2022</small>
 
-[^1]: The variable `Z` from line 42 must be set to fit a square page at 90% of **Fit Page in Window**.
-[^2]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
+[^1]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
