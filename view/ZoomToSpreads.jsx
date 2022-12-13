@@ -1,5 +1,5 @@
 /*
-	Zoom to spreads 22.11.12
+	Zoom to spreads 22.12.13
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the current spread (if N = 1) or the first N spreads (if N > 1).
@@ -29,27 +29,35 @@
 if (!(doc = app.activeDocument)) exit();
 if (app.activeWindow.constructor.name !== 'LayoutWindow') exit();
 
-var items, item, zoom, i, n;
-var window = app.activeWindow;
-var page = window.activePage;
+var items, item, scr, tgt, zoom, i, n;
+var targetBounds = [];
+var w = app.activeWindow;
+var page = w.activePage;
 var selection = [];
 var oldSelection = doc.selection;
-var targetBounds = [];
 var TL = AnchorPoint.TOP_LEFT_ANCHOR;
 var BR = AnchorPoint.BOTTOM_RIGHT_ANCHOR;
 var CS_PBRD = CoordinateSpaces.PASTEBOARD_COORDINATES;
 
 // Customizable items
-var Z = 5.478; // App maximized on generic 4K monitor
-// var Z = 4.769; // App maximized on iMac Retina 5K
+var N = 3; // Number of spreads to zoom to
 var HC = 650; // Horizontal compensation (side panels)
 var VC = 150; // Vertical compensation (Application Bar, document tabs, Control Panel)
-var N = 3; // Number of spreads to zoom to
+var zF = 0.700548218846136;
+zF /= app.generalPreferences.mainMonitorPpi / 96;
 
 app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
+// Get viewport bounds
+scr = {
+	width: (w.bounds[3] - w.bounds[1]) - HC,
+	height: (w.bounds[2] - w.bounds[0]) - VC
+};
+
+// Get target bounds
 if (selection.length > 0 && selection[0].constructor.name !== 'Guide') {
-	// We have a selection, get bounds
+	zF *= 0.9;
+	// Get selection bounds
 	items = selection;
 	item = items[0];
 	if (Object.prototype.hasOwnProperty.call(item, 'parentTextFrames')) { // Inside a text frame
@@ -61,14 +69,14 @@ if (selection.length > 0 && selection[0].constructor.name !== 'Guide') {
 		app.select(item);
 	}
 	targetBounds = item.visibleBounds;
-	for (i = 1, n = items.length; i < n; i++) { // Get selection's extremities
+	for (i = 1, n = items.length; i < n; i++) { // Get extremities
 		targetBounds[0] = Math.min(items[i].visibleBounds[0], targetBounds[0]);
 		targetBounds[1] = Math.min(items[i].visibleBounds[1], targetBounds[1]);
 		targetBounds[2] = Math.max(items[i].visibleBounds[2], targetBounds[2]);
 		targetBounds[3] = Math.max(items[i].visibleBounds[3], targetBounds[3]);
 	}
 } else {
-	// Nothing is selected, get spreads' bounds
+	// If nothing is selected, get spread bounds
 	targetBounds[0] = ((N === 1) ? page.parent : doc.spreads[0]).pages[0].resolve(TL, CS_PBRD)[0][1];
 	targetBounds[1] = ((N === 1) ? page.parent : doc.spreads[0]).pages[0].resolve(TL, CS_PBRD)[0][0];
 	targetBounds[2] = ((N === 1) ? page.parent : doc.spreads[0]).pages[-1].resolve(BR, CS_PBRD)[0][1];
@@ -87,20 +95,22 @@ if (selection.length > 0 && selection[0].constructor.name !== 'Guide') {
 	}
 	app.select(null);
 }
+tgt = {
+	width: UnitValue(targetBounds[3] - targetBounds[1], 'pt').as('px'),
+	height: UnitValue(targetBounds[2] - targetBounds[0], 'pt').as('px')
+};
 
-// Compute zoom percentage
-zoom = Math.min(
-	(window.bounds[3] - window.bounds[1] - HC) / UnitValue((targetBounds[3] - targetBounds[1]), 'pt').as('px'),
-	(window.bounds[2] - window.bounds[0] + VC) / UnitValue((targetBounds[2] - targetBounds[0]), 'pt').as('px')
-);
-zoom = Number(zoom * 10 * Z).toFixed(2);
+// Get zoom percentage
+w.zoom(ZoomOptions.FIT_PAGE);
+
+zoom = Math.min(scr.width / tgt.width, scr.height / tgt.height) * zF * 100;
 zoom = (Math.max(5, zoom), Math.min(zoom, 4000)); // Keep it in 5-4000% range
 
 // Zoom to target
 if (N > 1 && selection.length === 0)
-	window.activePage = (doc.spreads.length > 2) ? doc.spreads[1].pages[0] : page;
-window.zoom(ZoomOptions.FIT_SPREAD);
-try { window.zoomPercentage = zoom; } catch (e) {
+	w.activePage = (doc.spreads.length > 2) ? doc.spreads[1].pages[0] : page;
+w.zoom(ZoomOptions.FIT_SPREAD);
+try { w.zoomPercentage = zoom; } catch (e) {
 	// Avoid error 30481 'Data is out of range'
 	try { app.menuActions.item('$ID/Fit Selection in Window').invoke(); } catch (_) {}
 }
