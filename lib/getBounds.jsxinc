@@ -1,27 +1,30 @@
 /*
-	GetBounds 22.2.13
+	GetBounds 22.12.17
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
-	Returns an object containing the geometric bounds of the given page, its parent spread, and miscellaneous
-	page boxes, using the current measurement units:
+	Returns an object containing the geometric bounds of the given page, its parent spread,
+	and miscellaneous page boxes, using the current measurement units:
 
 	{
 		page: {
 			size:    [ top, left, bottom, right ],
 			margins: [ t, l, b, r ],
 			visible: [ t, l, b, r ],
+			safety:  [ t, l, b, r ],
 			bleed:   [ t, l, b, r ]
 		},
 		spread: {
 			size:    [ t, l, b, r ],
 			margins: [ t, l, b, r ],
 			visible: [ t, l, b, r ],
+			safety:  [ t, l, b, r ],
 			bleed:   [ t, l, b, r ]
 		}
 	};
 
-	Note: 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`.
-	If margins or visible area are undefined, they fallback to page/spread size.
+	Note: 'visible'/'safety' are areas marked by one or more frames named `<visible area>`
+	or`<safety area>` (or labeled `visible area`/`safety area`). If margins or visible/safety
+	areas are undefined, they fallback to page/spread size.
 
 	Examples:
 
@@ -63,14 +66,15 @@
 
 function getBounds(page) {
 	var PSO = PageSideOptions;
-	var visAreaRE = /^<?(visible|safe) area>?$/i;
+	var visAreaRE = /^<?visible area>?$/i;
+	var safeAreaRE = /^<?safe(ty)? area>?$/i;
 	var fPg = page.parent.pages.firstItem();
 	var lPg = page.parent.pages.lastItem();
 	var bleed = {
-		top:    page.parent.parent.documentPreferences.properties.documentBleedTopOffset,
-		left:   page.parent.parent.documentPreferences.properties.documentBleedInsideOrLeftOffset,
-		bottom: page.parent.parent.documentPreferences.properties.documentBleedBottomOffset,
-		right:  page.parent.parent.documentPreferences.properties.documentBleedOutsideOrRightOffset
+		top:    page.parent.parent.documentPreferences.documentBleedTopOffset,
+		left:   page.parent.parent.documentPreferences.documentBleedInsideOrLeftOffset,
+		bottom: page.parent.parent.documentPreferences.documentBleedBottomOffset,
+		right:  page.parent.parent.documentPreferences.documentBleedOutsideOrRightOffset
 	};
 	var margins = {
 		top:    page.marginPreferences.top,
@@ -92,16 +96,40 @@ function getBounds(page) {
 				var frame, i, n;
 				var frames = page.pageItems.everyItem().getElements();
 				var bounds = [];
-				var v = [];
+				var f = [];
 				while ((frame = frames.shift()))
-					if (visAreaRE.test(frame.label) || visAreaRE.test(frame.name)) v.push(frame);
-				if (v.length > 0) { // Found visible area frame(s)
-					bounds = v[0].geometricBounds;
-					for (i = 1, n = v.length; i < n; i++) {
-						bounds[0] = Math.min(v[i].geometricBounds[0], bounds[0]);
-						bounds[1] = Math.min(v[i].geometricBounds[1], bounds[1]);
-						bounds[2] = Math.max(v[i].geometricBounds[2], bounds[2]);
-						bounds[3] = Math.max(v[i].geometricBounds[3], bounds[3]);
+					if (visAreaRE.test(frame.label) || visAreaRE.test(frame.name)) f.push(frame);
+				if (f.length > 0) { // Found visible area frame(s)
+					bounds = f[0].geometricBounds;
+					for (i = 1, n = f.length; i < n; i++) {
+						bounds[0] = Math.min(f[i].geometricBounds[0], bounds[0]);
+						bounds[1] = Math.min(f[i].geometricBounds[1], bounds[1]);
+						bounds[2] = Math.max(f[i].geometricBounds[2], bounds[2]);
+						bounds[3] = Math.max(f[i].geometricBounds[3], bounds[3]);
+					}
+					bounds = [ // Intersect with page bounds
+						Math.max(bounds[0], page.bounds[0]),
+						Math.max(bounds[1], page.bounds[1]),
+						Math.min(bounds[2], page.bounds[2]),
+						Math.min(bounds[3], page.bounds[3])
+					];
+				} else { bounds = page.bounds; } // Fallback to page bounds
+				return bounds;
+			}()),
+			safety: (function () {
+				var frame, i, n;
+				var frames = page.pageItems.everyItem().getElements();
+				var bounds = [];
+				var f = [];
+				while ((frame = frames.shift()))
+					if (safeAreaRE.test(frame.label) || safeAreaRE.test(frame.name)) f.push(frame);
+				if (f.length > 0) { // Found safety area frame(s)
+					bounds = f[0].geometricBounds;
+					for (i = 1, n = f.length; i < n; i++) {
+						bounds[0] = Math.min(f[i].geometricBounds[0], bounds[0]);
+						bounds[1] = Math.min(f[i].geometricBounds[1], bounds[1]);
+						bounds[2] = Math.max(f[i].geometricBounds[2], bounds[2]);
+						bounds[3] = Math.max(f[i].geometricBounds[3], bounds[3]);
 					}
 					bounds = [ // Intersect with page bounds
 						Math.max(bounds[0], page.bounds[0]),
@@ -119,7 +147,9 @@ function getBounds(page) {
 				page.bounds[2] + bleed.bottom,
 				page.bounds[3] + ((fPg === lPg) ?
 					((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right) : (page === lPg ? bleed.right : 0))
-			]
+			],
+			width: page.bounds[3] - page.bounds[1],
+			height: page.bounds[2] - page.bounds[0]
 		},
 		spread: {
 			size: [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ],
@@ -156,16 +186,36 @@ function getBounds(page) {
 				var frame, i, n;
 				var frames = page.parent.pageItems.everyItem().getElements();
 				var bounds = [];
-				var v = [];
+				var f = [];
 				while ((frame = frames.shift()))
-					if (visAreaRE.test(frame.label) || visAreaRE.test(frame.name)) v.push(frame);
-				if (v.length > 0) { // Found visible area frame(s)
-					bounds = v[0].geometricBounds;
-					for (i = 1, n = v.length; i < n; i++) {
-						bounds[0] = Math.min(v[i].geometricBounds[0], bounds[0]);
-						bounds[1] = Math.min(v[i].geometricBounds[1], bounds[1]);
-						bounds[2] = Math.max(v[i].geometricBounds[2], bounds[2]);
-						bounds[3] = Math.max(v[i].geometricBounds[3], bounds[3]);
+					if (visAreaRE.test(frame.label) || visAreaRE.test(frame.name)) f.push(frame);
+				if (f.length > 0) { // Found visible area frame(s)
+					bounds = f[0].geometricBounds;
+					for (i = 1, n = f.length; i < n; i++) {
+						bounds[0] = Math.min(f[i].geometricBounds[0], bounds[0]);
+						bounds[1] = Math.min(f[i].geometricBounds[1], bounds[1]);
+						bounds[2] = Math.max(f[i].geometricBounds[2], bounds[2]);
+						bounds[3] = Math.max(f[i].geometricBounds[3], bounds[3]);
+					}
+				} else { // Fallback to spread bounds
+					bounds = [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ];
+				}
+				return bounds;
+			}()),
+			safety: (function () {
+				var frame, i, n;
+				var frames = page.parent.pageItems.everyItem().getElements();
+				var bounds = [];
+				var f = [];
+				while ((frame = frames.shift()))
+					if (safeAreaRE.test(frame.label) || safeAreaRE.test(frame.name)) f.push(frame);
+				if (f.length > 0) { // Found safety area frame(s)
+					bounds = f[0].geometricBounds;
+					for (i = 1, n = f.length; i < n; i++) {
+						bounds[0] = Math.min(f[i].geometricBounds[0], bounds[0]);
+						bounds[1] = Math.min(f[i].geometricBounds[1], bounds[1]);
+						bounds[2] = Math.max(f[i].geometricBounds[2], bounds[2]);
+						bounds[3] = Math.max(f[i].geometricBounds[3], bounds[3]);
 					}
 				} else { // Fallback to spread bounds
 					bounds = [ fPg.bounds[0], fPg.bounds[1], lPg.bounds[2], lPg.bounds[3] ];
@@ -179,7 +229,9 @@ function getBounds(page) {
 				lPg.bounds[3] + ((fPg === lPg) ?
 					((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right) :
 					bleed.right)
-			]
+			],
+			width: lPg.bounds[3] - fPg.bounds[1],
+			height: lPg.bounds[2] - fPg.bounds[0]
 		}
 	};
 }
