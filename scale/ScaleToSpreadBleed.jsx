@@ -1,5 +1,5 @@
 /*
-	Scale to spread bleed 22.11.9
+	Scale to spread bleed 22.11.17
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Scales the selected objects to the spread bleed.
@@ -119,10 +119,10 @@ function main(selection) {
 		var fPg = page.parent.pages.firstItem();
 		var lPg = page.parent.pages.lastItem();
 		var bleed = {
-			top:    doc.documentPreferences.properties.documentBleedTopOffset,
-			left:   doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
-			bottom: doc.documentPreferences.properties.documentBleedBottomOffset,
-			right:  doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
+			top:    doc.documentPreferences.documentBleedTopOffset,
+			left:   doc.documentPreferences.documentBleedInsideOrLeftOffset,
+			bottom: doc.documentPreferences.documentBleedBottomOffset,
+			right:  doc.documentPreferences.documentBleedOutsideOrRightOffset
 		};
 		return [
 			fPg.bounds[0] - bleed.top,

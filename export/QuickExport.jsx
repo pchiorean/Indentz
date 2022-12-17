@@ -1,5 +1,5 @@
 /*
-	Quick export 22.12.13
+	Quick export 22.12.17
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -961,10 +961,10 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		if (app.pdfExportPreferences.useDocumentBleedWithPDF) {
 			app.pdfExportPreferences.pageMarksOffset = Math.min(
 				Math.max(
-					doc.documentPreferences.properties.documentBleedTopOffset,
-					doc.documentPreferences.properties.documentBleedInsideOrLeftOffset,
-					doc.documentPreferences.properties.documentBleedBottomOffset,
-					doc.documentPreferences.properties.documentBleedOutsideOrRightOffset
+					doc.documentPreferences.documentBleedTopOffset,
+					doc.documentPreferences.documentBleedInsideOrLeftOffset,
+					doc.documentPreferences.documentBleedBottomOffset,
+					doc.documentPreferences.documentBleedOutsideOrRightOffset
 				) + 1, // Offset page marks 1 mm --
 				UnitValue('72 pt').as('mm')); // -- but limit to 72 pt
 		} else {
@@ -977,10 +977,10 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 		}
 
 		// Hack: omit printer's marks if bleed is zero --
-		// if (doc.documentPreferences.properties.documentBleedTopOffset +
-		// 	doc.documentPreferences.properties.documentBleedInsideOrLeftOffset +
-		// 	doc.documentPreferences.properties.documentBleedBottomOffset +
-		// 	doc.documentPreferences.properties.documentBleedOutsideOrRightOffset === 0 &&
+		// if (doc.documentPreferences.documentBleedTopOffset +
+		// 	doc.documentPreferences.documentBleedInsideOrLeftOffset +
+		// 	doc.documentPreferences.documentBleedBottomOffset +
+		// 	doc.documentPreferences.documentBleedOutsideOrRightOffset === 0 &&
 		// 	!app.pdfExportPreferences.includeSlugWithPDF) { // -- but not if user wants slug
 		// 	app.pdfExportPreferences.cropMarks = false;
 		// 	app.pdfExportPreferences.pageInformationMarks = false;

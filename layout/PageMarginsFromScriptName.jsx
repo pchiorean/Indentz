@@ -1,5 +1,5 @@
 /*
-	Page margins and HW from the script name 22.11.17
+	Page margins from script name 22.11.17
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
 	By default it sets the page margins to 5% of the visible/page area for
@@ -151,10 +151,10 @@ function grid() {
 		var fPg = page.parent.pages.firstItem();
 		var lPg = page.parent.pages.lastItem();
 		var bleed = {
-			top:    page.parent.parent.documentPreferences.properties.documentBleedTopOffset,
-			left:   page.parent.parent.documentPreferences.properties.documentBleedInsideOrLeftOffset,
-			bottom: page.parent.parent.documentPreferences.properties.documentBleedBottomOffset,
-			right:  page.parent.parent.documentPreferences.properties.documentBleedOutsideOrRightOffset
+			top:    page.parent.parent.documentPreferences.documentBleedTopOffset,
+			left:   page.parent.parent.documentPreferences.documentBleedInsideOrLeftOffset,
+			bottom: page.parent.parent.documentPreferences.documentBleedBottomOffset,
+			right:  page.parent.parent.documentPreferences.documentBleedOutsideOrRightOffset
 		};
 		var margins = {
 			top:    page.marginPreferences.top,

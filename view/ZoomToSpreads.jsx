@@ -1,5 +1,5 @@
 /*
-	Zoom to spreads 22.12.13
+	Zoom to spreads 22.11.17
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the current spread (if N = 1) or the first N spreads (if N > 1).
@@ -87,11 +87,11 @@ if (selection.length > 0 && selection[0].constructor.name !== 'Guide') {
 		targetBounds[2] = Math.max(targetBounds[2], doc.spreads[i].pages[-1].resolve(BR, CS_PBRD)[0][1]);
 		targetBounds[3] = Math.max(targetBounds[3], doc.spreads[i].pages[-1].resolve(BR, CS_PBRD)[0][0]);
 	}
-	if (app.properties.activeWindow.screenMode === ScreenModeOptions.PREVIEW_OFF) {
-		targetBounds[0] -= doc.documentPreferences.properties.documentBleedTopOffset;
-		targetBounds[1] -= doc.documentPreferences.properties.documentBleedInsideOrLeftOffset;
-		targetBounds[2] += doc.documentPreferences.properties.documentBleedBottomOffset;
-		targetBounds[3] += doc.documentPreferences.properties.documentBleedOutsideOrRightOffset;
+	if (app.activeWindow.screenMode === ScreenModeOptions.PREVIEW_OFF) {
+		targetBounds[0] -= doc.documentPreferences.documentBleedTopOffset;
+		targetBounds[1] -= doc.documentPreferences.documentBleedInsideOrLeftOffset;
+		targetBounds[2] += doc.documentPreferences.documentBleedBottomOffset;
+		targetBounds[3] += doc.documentPreferences.documentBleedOutsideOrRightOffset;
 	}
 	app.select(null);
 }

@@ -1,5 +1,5 @@
 /*
-	Label page 22.10.27
+	Label page 22.11.17
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a custom label on the current page's slug.
@@ -107,14 +107,14 @@ function main() {
 		switch (isOnTop) {
 			case true:
 				if (doc.documentPreferences.slugTopOffset < pageMarksHeight +
-					doc.documentPreferences.properties.documentBleedTopOffset) {
+					doc.documentPreferences.documentBleedTopOffset) {
 					doc.documentPreferences.slugTopOffset = pageMarksHeight +
-					doc.documentPreferences.properties.documentBleedTopOffset;
+					doc.documentPreferences.documentBleedTopOffset;
 				}
 				infoFrame.move([
 					page.bounds[1] + 10,
 					page.bounds[0] -
-						doc.documentPreferences.properties.documentBleedTopOffset -
+						doc.documentPreferences.documentBleedTopOffset -
 						UnitValue('1 mm').as('pt') -
 						(15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2 -
 						(infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])
@@ -122,15 +122,15 @@ function main() {
 				break;
 			case false:
 				if (doc.documentPreferences.slugBottomOffset < pageMarksHeight +
-					doc.documentPreferences.properties.documentBleedBottomOffset) {
+					doc.documentPreferences.documentBleedBottomOffset) {
 					doc.documentPreferences.slugBottomOffset = pageMarksHeight +
-					doc.documentPreferences.properties.documentBleedBottomOffset;
+					doc.documentPreferences.documentBleedBottomOffset;
 				}
 				infoFrame.move([
 					page.bounds[1] + 10,
 					page.bounds[2] +
 						UnitValue('1 mm').as('pt') +
-						doc.documentPreferences.properties.documentBleedBottomOffset +
+						doc.documentPreferences.documentBleedBottomOffset +
 						(15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2
 				]);
 				break;

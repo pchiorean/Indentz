@@ -1,5 +1,5 @@
 /*
-	Layers to spreads 22.6.28
+	Layers to spreads 22.12.17
 	(c) 2022 Paul Chiorean (jpeg@basement.ro)
 
 	Moves layers of the active document to separate spreads.
@@ -75,9 +75,9 @@ function main() {
 		app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 		if (doc.documentPreferences.slugTopOffset < pageMarksHeight +
-			doc.documentPreferences.properties.documentBleedTopOffset) {
+			doc.documentPreferences.documentBleedTopOffset) {
 			doc.documentPreferences.slugTopOffset = pageMarksHeight +
-			doc.documentPreferences.properties.documentBleedTopOffset;
+			doc.documentPreferences.documentBleedTopOffset;
 		}
 
 		infoFrame = spread.pageItems.itemByName('<page label>');
@@ -117,7 +117,7 @@ function main() {
 			infoFrame.move([
 				spread.pages[0].bounds[1] + 10,
 				spread.pages[0].bounds[0] -
-					doc.documentPreferences.properties.documentBleedTopOffset -
+					doc.documentPreferences.documentBleedTopOffset -
 					UnitValue('1 mm').as('pt') -
 					(15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2 -
 					(infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])
