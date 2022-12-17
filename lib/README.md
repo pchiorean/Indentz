@@ -88,7 +88,7 @@ Computes miscellaneous page boxes of a document page.
 
 ##### Returns:
 
-An object containing the geometric bounds of `page` and its parent spread, and of their margins, visible area and bleed, using the current measurement units:
+An object containing the geometric bounds of `page` and its parent spread, and of their margins, visible/safety area and bleed, using the current measurement units:
 
 ```js
 {
@@ -96,18 +96,20 @@ An object containing the geometric bounds of `page` and its parent spread, and o
         size:    [ t, l, b, r ], // page bounds
         margins: [ t, l, b, r ], // margins bounds
         visible: [ t, l, b, r ], // visible area bounds
+        safety:  [ t, l, b, r ], // safety area bounds
         bleed:   [ t, l, b, r ]  // bleed bounds
     },
     spread: { // the same, but for the parent spread
         size:    [ t, l, b, r ],
         margins: [ t, l, b, r ],
         visible: [ t, l, b, r ],
+        safety:  [ t, l, b, r ],
         bleed:   [ t, l, b, r ]
     }
 };
 ```
 
-**Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`. If margins or visible area are undefined, they fallback to page/spread size.
+**Note:** 'visible'/'safety' are areas marked by one or more frames named `<visible area>` or`<safety area>` (or labeled `visible area`/`safety area`). If margins or visible/safety areas are undefined, they fallback to page/spread size.
 
 ##### Example:
 
@@ -439,6 +441,8 @@ Closes the progress bar.
 
 ##### Example:
 
+**Dual progress bar:**
+
 ```js
 var steps = 100;
 var steps2 = 10;
@@ -455,8 +459,35 @@ for (var i = 0; i < steps; i++) {
 progressBar.close();
 ```
 
-![](../docs/img/lib/progress-bar.png)\
-![](../docs/img/lib/progress-bar-dual.png)\
+![](../docs/img/lib/progress-bar-dual.png)
+
+**Simple progress bar:**
+
+```js
+var steps = 100;
+var progressBar = new ProgressBar('Progress bar demo', steps, 50);
+for (var i = 0; i < steps; i++) {
+	progressBar.update();
+	progressBar.msg('Progress bar value is ' + (i+1) + '.');
+	if (i === 24) $.sleep(2500);
+}
+progressBar.close();
+```
+
+![](../docs/img/lib/progress-bar.png)
+
+**Mini progress bar:**
+
+```js
+var steps = 100;
+var progressBar = new ProgressBar('Mini progress bar demo', steps);
+for (var i = 0; i < steps; i++) {
+	progressBar.update();
+	if (i === 24) $.sleep(2500);
+}
+progressBar.close();
+```
+
 ![](../docs/img/lib/progress-bar-mini.png)
 
 ---
@@ -564,3 +595,5 @@ report(message, 'Sample alert', true);
 ```
 
 ![Alert with filter](../docs/img/lib/report-filter.png)
+
+<small>Last updated: December 17, 2022</small>
