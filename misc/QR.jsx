@@ -1,5 +1,5 @@
 /*
-	QR code 22.11.24
+	QR code 22.11.17
 	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Adds a QR code to the current document or to a separate file.
@@ -120,6 +120,7 @@ function main() {
 				pointSize: '5 pt',
 				autoLeading: 100,
 				leading: Leading.AUTO,
+				justification: Justification.LEFT_ALIGN,
 				horizontalScale: 92,
 				tracking: -15,
 				hyphenation: false,
@@ -232,6 +233,7 @@ function main() {
 				pointSize: '5 pt',
 				autoLeading: 100,
 				leading: Leading.AUTO,
+				justification: Justification.LEFT_ALIGN,
 				horizontalScale: 92,
 				tracking: -15,
 				capitalization: ui.uppercase.value ? Capitalization.ALL_CAPS : Capitalization.NORMAL,
