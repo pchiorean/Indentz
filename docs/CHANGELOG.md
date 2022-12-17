@@ -41,6 +41,10 @@
   **cleanup/DefaultLayers:** Added `top`/`bottom` keywords for layers order
 - `12/04` [`new`](https://github.com/pchiorean/Indentz/commit/0199b29a56e98d68b3b876f44f826f8076e68937)
   **lib/unique:** Added a helper function to get unique array elements
+- `12/17` [`upd`](https://github.com/pchiorean/Indentz/commit/a78169b6f0f8b0789e6b956560078b75198d071b)
+  **lib/getBounds:** Added safety area
+- `12/17` [`new`](https://github.com/pchiorean/Indentz/commit/421c8ca6e46f9efdbe3a3cd52aefc67ab29ea250)
+  **lib/naturalSorter:** Natural sorting of string arrays
 
 ##### Updates
 
@@ -52,16 +56,16 @@
   **misc/QRBatch:** Moved 'Refresh' before 'Browse'
 - `11/24` [`upd`](https://github.com/pchiorean/Indentz/commit/87905c2091bb62b6b103c5607fd063d20af498ea)
   **misc/QR, QRBatch:** Slightly increased the distance between the code and the edge of the page (4 mm left, 3 mm below)
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/184055a8b55309406a2de7793b6f2f5fdc82d9ae)
+  **lib/debug:** Replaced the context argument with an auto call stack; renamed to **dbg**
 - `12/04` [`brk`](https://github.com/pchiorean/Indentz/commit/53e753a54223d6e78d7854a47dabd7a98bbf0704)
   **lib/ParseDataFile and related:** Refactored to return parsed records as raw strings; moved data validation/converting to native objects to a separate step; see `lib/README.md` for details
 - `12/09` [`upd`](https://github.com/pchiorean/Indentz/commit/253b6b0b4e7d94485ed40aecd4219db8ce7dfa0a)
   **layout/PageSizeFromFilename, export/MarkVisibleArea:** Added support for wildcards in layer names
 - `12/09` [`upd`](https://github.com/pchiorean/Indentz/commit/23f5801e89f727d89af87f009abab8791ab3e6fc)
-  **lib/log:** Reduced types to just one: appending the message; also, renamed to **log**
+  **lib/dbg:** Reduced types to just one: appending the message; also, renamed to **log**
 
 ##### Removed features
-- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/184055a8b55309406a2de7793b6f2f5fdc82d9ae)
-  **lib/debug:** Replaced the context argument with an auto call stack; renamed to **dbg**
 
 ##### Bug fixes
 - `11/17` [`fix`](https://github.com/pchiorean/Indentz/commit/6b70b11e3638bdac0e8b1d849a68c7475e9edc0a)
@@ -70,7 +74,12 @@
   **cleanup/DocCleanup:** Trimming ending spaces for center- or bottom-aligned text frames inadvertently moved the text; fixed
 - `12/09` [`fix`](https://github.com/pchiorean/Indentz/commit/beed82b8579730cad9145ea671d992bce471ed0d)
   **cleanup/DefaultLayers:** Don't move a layer to top/bottom if it's already there
-
+- `12/13` [`fix`](https://github.com/pchiorean/Indentz/commit/0c007500882fb4709bcc173590bfabb3983a5a35)
+  **export/QuickExport:** Added a check for missing queued documents
+- `12/13` [`fix`](https://github.com/pchiorean/Indentz/commit/4d40417e6452ede53010140b3d314a704137369f)
+  **lib/moveToLayer:** Fixed an infinite loop when resolving item's parent spread
+- `12/17` [`fix`](https://github.com/pchiorean/Indentz/commit/4291b7f49739ede895d9145ad0c0f1a7a2409d8d)
+  **misc/QR, QRBatch:** Also set left justification on label
 
 ##### Miscellaneous
 
@@ -80,6 +89,8 @@
   **export/QuickExport:** Updated help tip for 'Sort files by suffix into subfolders'
 - `11/19` [`doc`](https://github.com/pchiorean/Indentz/commit/c3c8e2313aba93b3eee35a71b9b47c31945b1fa9)
   **lib/moveToLayer:** Updated description
+- `12/17` [`org`](https://github.com/pchiorean/Indentz/commit/695621afbccffbd37293e6186501d6f4b459d31d)
+  **layout/AdjustLayout:** Moved from **misc**
 
 ### [22.11.10](https://github.com/pchiorean/Indentz/releases/tag/22.11.10)
 
@@ -652,3 +663,4 @@
 `fix` - bug fixes\
 `ref` - changes that neither fixes a bug or adds a feature\
 `doc` - changes in documentation
+`org` - file management
