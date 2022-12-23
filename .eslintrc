@@ -237,7 +237,7 @@
 				"ignoreComments": true,
 				"ignoreUrls": true,
 				"ignoreRegExpLiterals": true,
-				"ignorePattern": "\\.add\\('|\\.helpTip|new Window\\("
+				"ignorePattern": "\\.add\\('|\\.helpTip|new Window\\(|log\\("
 			}
 		],
 		"max-lines": "off",
