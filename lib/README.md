@@ -198,7 +198,7 @@ $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
 
 ---
 
-### isInArray(_searchValue, array, [caseSensitive]_) ⇒ Boolean
+### isInArray(_searchValue, array, [caseSensitive]_) ⇒ \{Boolean\}
 
 Matches a string against elements of an array, using wildcards and case sensitivity.
 
@@ -235,7 +235,6 @@ Moves an item to another layer, optionally sending it to the front or back.
 |`item`|`pageItem`|The page item to be moved.|
 |`layer`|`object`|The target layer.|
 |`[position]`|`string`|`front`/`top` or `back`/`bottom`: Sends the item to the front or back of its layer. *(Optional.)*|
-
 
 ---
 
@@ -492,7 +491,7 @@ progressBar.close();
 
 ---
 
-### replaceLink(_oldLinks, newLink_) ⇒ Boolean
+### replaceLink(_oldLinks, newLink_) ⇒ \{Boolean\}
 
 Replaces a link or a list of links with a different one. A selection limits the scope.
 
@@ -517,7 +516,7 @@ replaceLink([ 'link1.jpg', 'link1.png' ], 'link1.psd');
 
 ---
 
-### replaceSwatch(_oldNames, newName, [newValues]_) ⇒ Boolean
+### replaceSwatch(_oldNames, newName, [newValues]_) ⇒ \{Boolean\}
 
 Replaces a swatch or a list of swatches with a different one. The new swatch is created only if values (CMYK) are provided and it doesn't already exist.
 
@@ -543,7 +542,7 @@ replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 
 ---
 
-### replaceText(_findWhat, changeTo, [wholeWord]_) ⇒ Boolean
+### replaceText(_findWhat, changeTo, [wholeWord]_) ⇒ \{Boolean\}
 
 Replaces a text with another.
 
@@ -596,4 +595,4 @@ report(message, 'Sample alert', true);
 
 ![Alert with filter](../docs/img/lib/report-filter.png)
 
-<small>Last updated: December 17, 2022</small>
+<small>Last updated: December 23, 2022</small>
