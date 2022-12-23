@@ -4,7 +4,6 @@
 
 <details><summary><strong>Queued</strong></summary>
 
-- `new` Add an '.ini' file for custom user settings
 - `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
 - `fix` **cleanup/ReplaceLinks:** When relinking layered graphics, try to restore layers' visibility; report culprits
 - `new` **export/QuickExport:** Add a preflight dropbox
@@ -21,9 +20,9 @@
 - `upd` **layout/PageSizeFromSelection:** Without selection fit all pages to their contents
 - `upd` **misc/EAN:** If multiple objects are selected, insert the code to all
 - `fix` **misc/EAN:** Preserve clipboard
-- `upd` **view/ZoomTo...:** Run with 'Opt/Alt' to get the value of `Z`
-- `upd` `?` Add a 'Canceling, please wait...' note when cancelling batch processes
+- `new` Add an '.ini' file for custom user settings
 - `doc` Add a mention about the option to interrupt the ongoing operation with 'Esc'
+- `upd` `?` Add a 'Canceling, please wait...' note when cancelling batch processes
 
 </details>
 
@@ -64,6 +63,14 @@
   **layout/PageSizeFromFilename, export/MarkVisibleArea:** Added support for wildcards in layer names
 - `12/09` [`upd`](https://github.com/pchiorean/Indentz/commit/23f5801e89f727d89af87f009abab8791ab3e6fc)
   **lib/dbg:** Reduced types to just one: appending the message; also, renamed to **log**
+- `12/23` [`upd`](https://github.com/pchiorean/Indentz/commit/11abfc2b81ba995123cd6d010b9889ae305c6f16)
+  **view/ZoomTo...:** Include slug when preview mode is off
+- `12/23` [`upd`](https://github.com/pchiorean/Indentz/commit/d6c2fd31ed140d8fecd2e80d88f1a81b92402585)
+  **lib/getPageItem:** Include all page items
+- `12/23` [`upd`](https://github.com/pchiorean/Indentz/commit/f1648666a4547d82b25f50f973e8c86fcf7c037d)
+  **lib/log:** Shorten display of anonymous functions to 'anon'
+- `12/23` [`upd`](https://github.com/pchiorean/Indentz/commit/9bbfa9e9fd5aec3278933369b13467e147f2adcd)
+   **export/QuickExport:** Don't display preferences reset warning on first run
 
 ##### Removed features
 
