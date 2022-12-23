@@ -1,5 +1,5 @@
 /*
-	Zoom to spreads 22.11.17
+	Zoom to spreads 22.12.23
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Zooms to the current spread (if N = 1) or the first N spreads (if N > 1).
@@ -88,10 +88,16 @@ if (selection.length > 0 && selection[0].constructor.name !== 'Guide') {
 		targetBounds[3] = Math.max(targetBounds[3], doc.spreads[i].pages[-1].resolve(BR, CS_PBRD)[0][0]);
 	}
 	if (app.activeWindow.screenMode === ScreenModeOptions.PREVIEW_OFF) {
+		// Include bleed
 		targetBounds[0] -= doc.documentPreferences.documentBleedTopOffset;
 		targetBounds[1] -= doc.documentPreferences.documentBleedInsideOrLeftOffset;
 		targetBounds[2] += doc.documentPreferences.documentBleedBottomOffset;
 		targetBounds[3] += doc.documentPreferences.documentBleedOutsideOrRightOffset;
+		// Include slug
+		targetBounds[0] -= doc.documentPreferences.slugTopOffset;
+		targetBounds[1] -= doc.documentPreferences.slugInsideOrLeftOffset;
+		targetBounds[2] += doc.documentPreferences.slugBottomOffset;
+		targetBounds[3] += doc.documentPreferences.slugRightOrOutsideOffset;
 	}
 	app.select(null);
 }
