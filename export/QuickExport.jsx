@@ -1,5 +1,5 @@
 /*
-	Quick export 22.12.17
+	Quick export 22.12.23
 	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -630,8 +630,8 @@ if (ADV) {
 
 ui.onShow = function () {
 	readSettings();
-	if (settings.position != null) {
-		ui.location = settings.position; // Use saved position
+	if (settings.position !== '') {
+		try { ui.location = settings.position; } catch (e) {} // Use saved position
 	} else if (app.windows.length > 0) { // Center in current window
 		ui.frameLocation = [
 			(app.activeWindow.bounds[1] + app.activeWindow.bounds[3] - ui.frameSize.width) / 2,
@@ -1089,7 +1089,7 @@ function readSettings() {
 	function setDefaults() {
 		try { settingsFile.remove(); } catch (e) {}
 		settings = defaults;
-		alert('Preferences were reset.\nEither the file was an old version, or it was corrupt.');
+		if(settingsFile.exists) alert('Preferences were reset.\nEither the file was an old version, or it was corrupt.');
 	}
 }
 
