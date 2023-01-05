@@ -126,10 +126,11 @@ function getDataFile(name, skipLocal) {
 }
 
 function compactRelPath(/*string*/str) {
-	str = str.replace(/^\.\/|\/\.$/, '')  // Trim './' and '/.
-		.replace(/\/\.\//g, '/')          // Trim '/./'
-		.replace(/\/[^\/]+\/\.{2}/g, '/') // Resolve '..'
-		.replace(/\/+/g, '/');            // Compact '//'
+	str = str.replace(/^\.\/|\/\.$/, '')   // Trim './' and '/.
+		.replace(/\/\.\//g, '/')           // Trim '/./'
+		.replace(/\/[^\/]+\/\.{2}\//, '/') // Resolve '/../'
+		.replace(/\/+/g, '/');             // Compact '//'
+	if (/\/\.{2}\//.test(str)) str = compactRelPath(str);
 	return str;
 }
 
