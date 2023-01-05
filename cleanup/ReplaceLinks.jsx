@@ -1,6 +1,6 @@
 /*
-	Replace links 22.12.5
-	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
+	Replace links 23.01.5
+	(c) 2021-2023 Paul Chiorean (jpeg@basement.ro)
 
 	Replaces document links from a 2-column TSV file named `links.tsv`:
 
@@ -253,10 +253,11 @@ function main() {
 	}
 
 	function compactRelPath(/*string*/str) {
-		str = str.replace(/^\.\/|\/\.$/, '')  // Trim './' and '/.
-			.replace(/\/\.\//g, '/')          // Trim '/./'
-			.replace(/\/[^\/]+\/\.{2}/g, '/') // Resolve '..'
-			.replace(/\/+/g, '/');            // Compact '//'
+		str = str.replace(/^\.\/|\/\.$/, '')   // Trim './' and '/.
+			.replace(/\/\.\//g, '/')           // Trim '/./'
+			.replace(/\/[^\/]+\/\.{2}\//, '/') // Resolve '/../'
+			.replace(/\/+/g, '/');             // Compact '//'
+		if (/\/\.{2}\//.test(str)) str = compactRelPath(str);
 		return str;
 	}
 
