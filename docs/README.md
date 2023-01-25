@@ -6,7 +6,7 @@ This is a collection of InDesign scripts for various simple and repetitive tasks
 
 As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown, I used the extra time to learn a bit of the (now ancient) Extendscript 'art'. 😉 These are simple scripts adapted to my current workflow, and I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). I'm a big fan of shortcuts, so there are suggestions for Mac below (unfortunately they must be added manually from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**).
 
-The code was developed and tested in Adobe InDesign CC 2020–2022 on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though).
+The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though).
 
 ---
 
@@ -458,7 +458,7 @@ Zooms on the first 3 spreads.
 ### Miscellaneous
 
 #### **`Clip`** <small>Num\*</small>
-To handle some objects it is sometimes useful to temporarily insert them into a container (clipping frame). The script inserts the selected objects into a clipping frame or restores them if they are already clipped.
+To handle some objects, it may be useful to temporarily insert them into a container (clipping frame). The script inserts the selected objects into a clipping frame or restores them if they are already clipped.
 
 **Note:** It uses the clipboard, so make sure you don't lose anything important.
 
@@ -466,7 +466,7 @@ To handle some objects it is sometimes useful to temporarily insert them into a 
 Releases one or several objects from their clipping frames (you can select any objects, it will only release the clipped ones). If nothing is selected, it will release all clipped objects.
 
 #### **`EAN`** <small>⌥F9</small>
-This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, modified to embed the code in a selected rectangle: if we have a page object (ideally a rectangle) selected, the script embeds an EAN code in it, scaled to width. If nothing is selected, it puts it in a new document.
+This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, modified to embed a code in the selected rectangle: if we have a page object (ideally a rectangle) selected, the script embeds an EAN code in it, scaled to width. If nothing is selected, creates a new document.
 
 Enter 8 or 13 digits for the code itself; if you have an add-on, add a hyphen and another 2 or 5 digits.
 
@@ -479,7 +479,7 @@ Adds a custom label on the current page slug, on the **info** layer (with Helvet
 Adds a label with the page aspect ratio, on the slug of each page, on the **info** layer.
 
 #### **`Offset Paths`**
-This is a slightly modified version of [**OffsetPath**](https://creativepro.com/indesign-cad-tool/) by Olav Martin Kvern. It uses a clever method to create paths around selected objects at a custom offset distance:
+This is a slightly modified version of [**OffsetPath**](https://creativepro.com/indesign-cad-tool/) by Olav Martin Kvern, which uses a clever method to create paths around selected objects at a custom offset distance:
 
 > When you apply a Contour-type text wrap to an object, you’re creating a path around that object—and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create a new path from those geometric coordinates.
 
@@ -535,13 +535,13 @@ Shows properties and methods of a selected object.
 
 All scripts are created by me unless otherwise noted.
 
-© 2020-2022 Paul Chiorean \<jpeg AT basement.ro\>.\
+© 2020-2023 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: December 12, 2022</small>
+<small>Last updated: January 25, 2023</small>
 
 [^1]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
