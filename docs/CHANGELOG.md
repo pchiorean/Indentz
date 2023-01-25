@@ -4,6 +4,8 @@
 
 <details><summary><strong>Queued</strong></summary>
 
+- `brk` **cleanup/DefaultLayers:** Add column for locked status
+- `upd` **cleanup/ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
 - `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
 - `fix` **cleanup/ReplaceLinks:** When relinking layered graphics, try to restore layers' visibility; report culprits
 - `new` **export/QuickExport:** Add a preflight dropbox
@@ -87,6 +89,9 @@
   **lib/moveToLayer:** Fixed an infinite loop when resolving item's parent spread
 - `12/17` [`fix`](https://github.com/pchiorean/Indentz/commit/4291b7f49739ede895d9145ad0c0f1a7a2409d8d)
   **misc/QR, QRBatch:** Also set left justification on label
+- `01/05` [`fix`](https://github.com/pchiorean/Indentz/commit/ce88cb02b9b680a6ae4b4c7b2b32fb2403de0be1)
+          [`fix`](https://github.com/pchiorean/Indentz/commit/78a9adfcacdbaf7ca5a826f704479222f20320de)
+  **lib/parseDataFile:compactRelPath:** Resolve multiple `/../` segments by recursion
 
 ##### Miscellaneous
 
