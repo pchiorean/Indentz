@@ -92,6 +92,8 @@
 - `01/05` [`fix`](https://github.com/pchiorean/Indentz/commit/ce88cb02b9b680a6ae4b4c7b2b32fb2403de0be1)
           [`fix`](https://github.com/pchiorean/Indentz/commit/78a9adfcacdbaf7ca5a826f704479222f20320de)
   **lib/parseDataFile:compactRelPath:** Resolve multiple `/../` segments by recursion
+- `01/29` [`fix`](https://github.com/pchiorean/Indentz/commit/11ec889ffe04714404d425947c1bd739e753c5ca)
+  **cleanup/DocCleanup:** Show/hide layers: updated `safety area` name
 
 ##### Miscellaneous
 
@@ -103,6 +105,12 @@
   **lib/moveToLayer:** Updated description
 - `12/17` [`org`](https://github.com/pchiorean/Indentz/commit/695621afbccffbd37293e6186501d6f4b459d31d)
   **layout/AdjustLayout:** Moved from **misc**
+- `01/25` [`ref`](https://github.com/pchiorean/Indentz/commit/13d8487dff6a20cce54aad233d967ccd30c2f16b)
+  **export/QuickExport:** Removed redundant brackets
+- `01/29` [`doc`](https://github.com/pchiorean/Indentz/commit/4f09cbba4913f036f2d56a093b6a6fbf6a8feb84)
+  **lib/getBounds:** Fixed a whitespace typo
+- `01/29` [`ref`](https://github.com/pchiorean/Indentz/commit/a6049074c5ece2b8115eeaaae9a0a734b456b4cf)
+  **lib/fitTo:** Small improvements to the code legibility
 
 ### [22.11.10](https://github.com/pchiorean/Indentz/releases/tag/22.11.10)
 
