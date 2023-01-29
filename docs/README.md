@@ -14,10 +14,10 @@ The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (but I
 
 ### Cleanup
 
-<small>**Defaults and cleanup.**</small>
+<small>_**Defaults and cleanup.**_</small>
 
-#### **`DefaultPrefs`**
-Sets some preferences for the active document. You should customize them to your taste by editing the script.
+#### **`DefaultPrefs.jsx`**
+Sets some preferences for the active document. You should customize them to your workflow by editing the script.
 
 <details><summary><strong>Details</strong></summary>
 
@@ -54,7 +54,7 @@ Sets some preferences for the active document. You should customize them to your
 
 </details>
 
-#### **`DefaultLayers`**
+#### **`DefaultLayers.jsx`**
 Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample](samples/layers.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Name         | Color   | Visible | Printable | Order  | Variants                                           |
@@ -77,7 +77,7 @@ Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample]
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or one relative to `reference/path` if defined;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -86,7 +86,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 - The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
-#### **`DefaultSwatches`**
+#### **`DefaultSwatches.jsx`**
 Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sample](samples/swatches.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Name           | Color Model | Color Space | Values       | Variants         |
@@ -106,14 +106,14 @@ Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sam
 >
 > **Variants**: a list of swatches that will be replaced by the base swatch; it's case insensitive and can take simple wildcards (`?` and `*`)
 
-You can use [**`DumpSwatches`**](#dumpswatches) to save a tab delimited list of swatches from any document.
+You can use [**`DumpSwatches.jsx`**](#dumpswatchesjsx) to save a tab delimited list of swatches from any document.
 
 <details><summary><strong>Additional features</strong></summary>
 
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or one relative to `reference/path` if defined;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -124,7 +124,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 
 </details>
 
-#### **`ReplaceFonts`**
+#### **`ReplaceFonts.jsx`**
 Replaces document fonts using a TSV data file named **`fonts.tsv`** ([sample](samples/fonts.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Old font family | Style   | New font family    | Style   |
@@ -133,14 +133,14 @@ Replaces document fonts using a TSV data file named **`fonts.tsv`** ([sample](sa
 | **Arial**       | Bold    | **Helvetica Neue** | Bold    |
 | ...             |         |                    |         |
 
-You can use [**`ShowFonts`**](#showfonts) from [**Miscellaneous**](#miscellaneous) to get a tab delimited list of document fonts for copy-pasting.
+You can use [**`ShowFonts.jsx`**](#showfontsjsx) from [**Miscellaneous**](#miscellaneous) to get a tab delimited list of document fonts for copy-pasting.
 
 <details><summary><strong>Additional features</strong></summary>
 
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or one relative to `reference/path` if defined;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -151,7 +151,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 
 </details>
 
-#### **`ReplaceLinks`** <small>⌥F8</small>
+#### **`ReplaceLinks.jsx`** <small>⌥F8</small>
 Replaces document links using a TSV data file named **`links.tsv`** ([sample](samples/links.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Relink to                         | Document links              |
@@ -180,7 +180,7 @@ Quoting the paths is not required.
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or one relative to `reference/path` if defined;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -191,7 +191,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 
 </details>
 
-#### **`ReplaceSnippets`** <small>⌥F6</small>
+#### **`ReplaceSnippets.jsx`** <small>⌥F6</small>
 Replaces a list of text snippets using a TSV data file named **`snippets.tsv`** ([sample](samples/snippets.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Find what              | Change to                 | Case sensitive | Whole word | Scope |
@@ -215,7 +215,7 @@ For example, 'The sample is for free' will be replaced with 'Das Sample ist kost
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or one relative to `reference/path` if defined;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -226,32 +226,32 @@ There's also some non-standard stuff that will confuse Excel et al.:
 
 </details>
 
-#### **`BreakLinkToStyles`**
+#### **`BreakLinkToStyles.jsx`**
 Unnaplies paragraph/character/object styles from the selected objects or all objects in the document if nothing is selected.
 
-#### **`DocCleanup`** <small>F2</small>
-It runs [**`DefaultPrefs`**](#defaultprefs); deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
+#### **`DocCleanup.jsx`** <small>F2</small>
+It runs [**`DefaultPrefs.jsx`**](#defaultprefsjsx); deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
 
-#### **`RemoveScriptLabels`**
+#### **`RemoveScriptLabels.jsx`**
 Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
 
-#### **`SwatchesCleanup`** <small>⇧F2</small>
+#### **`SwatchesCleanup.jsx`** <small>⇧F2</small>
 Converts process RGB swatches to CMYK and renames them to 'C= M= Y= K=' format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.
 
-#### **`DumpLayers`**
-Saves a TSV file (compatible with [**`DefaultLayers`**](#defaultlayers)) containing the names and properties of the active document layers.
+#### **`DumpLayers.jsx`**
+Saves a TSV file (compatible with [**`DefaultLayers.jsx`**](#defaultlayersjsx)) containing the names and properties of the active document layers.
 
-#### **`DumpSwatches`**
-Saves a TSV file (compatible with [**`DefaultSwatches`**](#defaultswatches)) containing the names and properties of the active document swatches.
+#### **`DumpSwatches.jsx`**
+Saves a TSV file (compatible with [**`DefaultSwatches.jsx`**](#defaultswatchesjsx)) containing the names and properties of the active document swatches.
 
 ---
 
 ### Layout
 
-<small>**Document setup – page size, margins & columns, guides.**</small>
+<small>_**Document setup – page size, margins & columns, guides.**_</small>
 
-#### **`PageSizeFromFilename`** <small>F3</small>
-Sets the size of the page and the margins/visible area, getting dimensions from the document name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
+#### **`PageSizeFromFilename.jsx`** <small>F3</small>
+Sets the size of the page, the margins and the visible area[^1], getting dimensions from the document name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
 
 | Filename                                        | Total size | Visible area | Bleed |
 |:------------------------------------------------|:-----------|:-------------|:------|
@@ -259,44 +259,36 @@ Sets the size of the page and the margins/visible area, getting dimensions from 
 | **Document2\_1400x400\_700x137mm\.indd**        | 1400×400   | 700×137      | –     |
 | **Document3\_597x517\_577x500.5\_3mm V4\.indd** | 597×517    | 577×500.5    | 3     |
 
-#### **`PageSizeFromMargins`**
+#### **`PageSizeFromMargins.jsx`**
 Resizes the current page to its margins.
 
-#### **`PageSizeFromSelection`** <small>⇧F3</small>
+#### **`PageSizeFromSelection.jsx`** <small>⇧F3</small>
 Resizes the page to the selected objects.
 
 #### **`PageMarginsFromScriptName.jsx`**
 Sets the page margins and the HW area from the script name. The script is designed to be renamed, to personalize the values.
 
-By default it sets the page margins to 5% of the visible/page area for all document pages. Renaming it to, e.g., `Margins<XX>HW<YY>.jsx`, you set a value `XX` for the margins and (optionally) a `YY` value for an HW area at the bottom.
+By default it sets the page margins to 5% of the visible/page area for all document pages. Renaming it to, e.g., `Margins<XX>.jsx` or `Margins<XX>HW<YY>.jsx`, you set a value `XX` for the margins and (optionally) a `YY` value for an HW area at the bottom.
 
 The default values are 5 for margins and 10 for HW.
 
-#### **`PageMarginsFromSelection`** <small>⌥F3</small>
+#### **`PageMarginsFromSelection.jsx`** <small>⌥F3</small>
 Sets the page margins from the selected objects.
 
-#### **`GuidesAdd`**
+#### **`GuidesAdd.jsx`**
 If any page objects are selected, it adds guides around them. If nothing is selected, it adds guids on page edges and in the middle of margins; a second run deletes them.
 
-#### **`GuidesDelete`**
+#### **`GuidesDelete.jsx`**
 Deletes all guides from the document.
 
 ---
 
 ### Align
 
-<small>**Align page objects with ease using the numeric keypad.**</small>
+<small>_**Align page objects with ease using the numeric keypad.**_</small>
 
-#### **`ToggleAlignTo`** <small>Num0</small>
-Toggles **Align To** between selection, margins, page or spread (just run it repeatedly):
-
-![Align Panel screenshot](img/alignto.png)
-
-#### **`ResetAlignTo`** <small>⌃Num0</small>
-Resets **Align To** to default (**Align to Selection**).
-
-#### **`AlignTo...`**
-Use the numeric keypad to instantly align the selected object to the **Align To** selection, with a single keystroke.
+#### **`AlignTo*.jsx`**
+Use the numeric keypad to instantly align the selected object to the **Align To** selection (see below), with a single keystroke.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -308,16 +300,37 @@ Use the numeric keypad to instantly align the selected object to the **Align To*
 
 </details>
 
+#### **`ToggleAlignTo.jsx`** <small>Num0</small>
+Toggles **Align To** between selection, margins, page or spread (just run it repeatedly):
+
+![Align Panel screenshot](img/alignto.png)
+
+#### **`ResetAlignTo.jsx`** <small>⌃Num0</small>
+Resets **Align To** to default (**Align to Selection**).
+
 ---
 
 ### Fit
 
-#### **`FitToPage...`** / **`FitToSpread...`**
-These scripts reframe the selected objects to the page/spread or their margins/bleed by reducing the edges of objects or clipping frames that cross the target and extending ones that touch it or are very close (in a 1% snap zone).
+<small>_**Reframe selected objects.**_</small>
 
-Rectangular frames and orthogonal lines are simply resized; rotated objects, ovals, groups, etc. are inserted into a clipping frame that is resized.
+#### **`FitTo*.jsx`**
 
-**`FitTo...Forced`** bluntly reframes an object to the target.
+These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area). Example for running `FitToPageBleed.jsx` (⇧F11) on selected frames:
+
+![Example](img/fit.png)
+
+The refitting is done by:
+
+- **Shrinking** the edges that hang outside the specified area.
+
+  Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame.
+
+- **Extending** the edges that touch or are very close to a trigger zone[^2] (either target or visible area).
+
+  Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.
+
+Variants with the suffix **`Forced`** simply reframe the objects to the target area.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -336,7 +349,7 @@ Rectangular frames and orthogonal lines are simply resized; rotated objects, ova
 
 </details>
 
-#### **`TextAutosize`** <small>F6</small>
+#### **`TextAutosize.jsx`** <small>F6</small>
 Auto-sizes the selected text frames to their content. It's designed to be run repeatedly.
 
 The level is increased from **None** to **Height Only** and from **Height Only** to **Height and Width** (single lines are always set **Height and Width**). The reference point is set by the first paragraph alignment and the text frame vertical justification:
@@ -353,10 +366,12 @@ The level is increased from **None** to **Height Only** and from **Height Only**
 
 ### Scale
 
-#### **`ScaleToPageSize`** / **`ScaleToPageMargins`** / **`ScaleToSpreadBleed`**
-Scales the selected objects to the page size, page margins, or spread bleed. All objects are scaled together, as a group.
+<small>_**Resize selected objects.**_</small>
 
-The **`ScaleTo...H`** and **`ScaleTo...W`** variants scale to the height or width of their target.
+#### **`ScaleTo*.jsx`**
+Scale the selected objects to the page size, page margins, or spread bleed. All objects are scaled together, as a group.
+
+**`*H.jsx`** and **`*W.jsx`** variants scale to the height or width of their target.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -371,7 +386,7 @@ The **`ScaleTo...H`** and **`ScaleTo...W`** variants scale to the height or widt
 
 ### Proxy
 
-#### **`SetRefPoint...`**
+#### **`SetRefPoint*.jsx`**
 Use the numeric keypad to set the reference point used for transformations (similar to clicking the little proxy squares in the **Control** palette):
 
 ![Proxy](img/proxy.png)
@@ -390,26 +405,26 @@ Use the numeric keypad to set the reference point used for transformations (simi
 
 ### File
 
-#### **`FilesToSpreads`**
+#### **`FilesToSpreads.jsx`**
 Combines the open documents, sorted alphabetically.
 
-#### **`SpreadsToFiles`**
+#### **`SpreadsToFiles.jsx`**
 Saves each spread of the active document to a separate file.
 
 If the document name ends with a _separator_ (space/dot/underline/hyphen) followed by _a sequence_ of digits or letters _equal_ to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`** / **`Document_B.indd`** / **`Document_C.indd`**. If not autodetected, the script will prompt the user for the list.
 
 By default, the index will be appended at the end, but you can put a `#` in the document name to place the index at that particular position.
 
-#### **`LayersToSpreads`**
+#### **`LayersToSpreads.jsx`**
 Moves all layers of the active document to separate spreads (the document must have a single spread).
 
-You can use **`SpreadsToFiles`** to save them in separate documents.
+You can use **`SpreadsToFiles.jsx`** to save them in separate documents.
 
 ---
 
 ### Export
 
-#### **`QuickExport`** <small>⌃E</small>
+#### **`QuickExport.jsx`** <small>⌃E</small>
 Exports to PDF all opened documents or, with nothing opened, all documents from a folder.
 
 For convenience, some export options can be easily changed from the preset settings: resolution, export as pages/spreads, include crop marks, page information, slug area, and you can set a custom bleed.
@@ -424,69 +439,69 @@ If **Sort files by suffix into subfolders** is checked, files will be exported i
 
 It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:
 
-#### **`MarkVisibleArea`**
+#### **`MarkVisibleArea.jsx`**
 Creates a frame the size of the page margins on the **visible area** layer. It will use the **Visible area** swatch, which will be created with the values R=255 G=180 B=0 if it doesn't exist.
 
-#### **`PrepareForExport`**
+#### **`PrepareForExport.jsx`**
 Hides **covered areas**, **visible area**, **safety margins**, **safe area**, **segmentation**, **guides**, and all layers starting with either a dot or a hyphen; moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads.
 
-#### **`ShowDNPLayers`** / **`HideDNPLayers`**
-Shows or hides the following _do-not-print_ layers: **covered areas**, **visible area**, **\*vi?ib\***, **vis?\***, **safety margins**, **safe area**, **segmentation**, **rahmen** and **sicht\***, and all layers starting with either a dot or a hyphen.
+#### **`ShowDNPLayers.jsx`** / **`HideDNPLayers.jsx`**
+Show or hide the following _do-not-print_ layers: **covered areas**, **visible area**, **\*vi?ib\***, **vis?\***, **safety margins**, **safe area**, **segmentation**, **rahmen** and **sicht\***, and all layers starting with either a dot or a hyphen.
 
 ---
 
 ### View
 
-#### **`TileAll`** <small>⇧F4</small>
+#### **`TileAll.jsx`** <small>⇧F4</small>
 Invokes **Window ‣ Arrange ‣ Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
 
-#### **`ZoomTo300Percent`** <small>⌘3</small>
+#### **`ZoomTo300Percent.jsx`** <small>⌘3</small>
 Zooms current layout window to 300%.
 
-#### **`ZoomToSelection`** <small>F4</small>
+#### **`ZoomToSelection.jsx`** <small>F4</small>
 It resembles **Fit Selection in Window** **<small>(⌥⌘=)</small>**, but with some changes:
 
 - Brings the selection a little closer;
 - If the cursor is in a text frame, zooms on the whole frame;
 - Without anything selected zooms on the current spread.
 
-#### **`ZoomToSpreads`** <small>⌥F4</small>
+#### **`ZoomToSpreads.jsx`** <small>⌥F4</small>
 Zooms on the first 3 spreads.
 
 ---
 
 ### Miscellaneous
 
-#### **`Clip`** <small>Num\*</small>
+#### **`Clip.jsx`** <small>Num\*</small>
 To handle some objects, it may be useful to temporarily insert them into a container (clipping frame). The script inserts the selected objects into a clipping frame or restores them if they are already clipped.
 
 **Note:** It uses the clipboard, so make sure you don't lose anything important.
 
-#### **`ClipUndo`** <small>⌃Num\*</small>
+#### **`ClipUndo.jsx`** <small>⌃Num\*</small>
 Releases one or several objects from their clipping frames (you can select any objects, it will only release the clipped ones). If nothing is selected, it will release all clipped objects.
 
-#### **`EAN`** <small>⌥F9</small>
+#### **`EAN.jsx`** <small>⌥F9</small>
 This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, modified to embed a code in the selected rectangle: if we have a page object (ideally a rectangle) selected, the script embeds an EAN code in it, scaled to width. If nothing is selected, creates a new document.
 
 Enter 8 or 13 digits for the code itself; if you have an add-on, add a hyphen and another 2 or 5 digits.
 
-#### **`LabelPage`**
-Adds a custom label on the current page slug, on the **info** layer (with Helvetica Regular 6 pt, **Registration** swatch):
+#### **`LabelPage.jsx`**
+Adds a custom label on the current page slug, on the **info** layer (Helvetica Regular 6 pt, fill **Registration**, stroke **Paper** 0.4 pt):
 
 ![Label Page](img/labelpage.png)
 
-#### **`LabelPageRatios`**
+#### **`LabelPageRatios.jsx`**
 Adds a label with the page aspect ratio, on the slug of each page, on the **info** layer.
 
-#### **`Offset Paths`**
+#### **`OffsetPaths.jsx`**
 This is a slightly modified version of [**OffsetPath**](https://creativepro.com/indesign-cad-tool/) by Olav Martin Kvern, which uses a clever method to create paths around selected objects at a custom offset distance:
 
 > When you apply a Contour-type text wrap to an object, you’re creating a path around that object—and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create a new path from those geometric coordinates.
 
 I fixed some bugs and added a default value, an option to join contours, and support for undoing.
 
-#### **`QR`** <small>F9</small>
-Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^1]:
+#### **`QR.jsx`** <small>F9</small>
+Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^3]:
 
 |             On document             |             On file              |
 |:-----------------------------------:|:--------------------------------:|
@@ -496,7 +511,7 @@ If the document name ends with a _separator_ (space/dot/underline/hyphen) follow
 
 You can insert `|` for manually splitting the label into several lines.
 
-#### **`QRBatch`** <small>⇧F9</small>
+#### **`QRBatch.jsx`** <small>⇧F9</small>
 Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV data file named **`qr.tsv`** ([sample](samples/qr.tsv)) and adds them to existing documents or creates separate files (the suffix thing applies here as well):
 
 | Filename           | Code   | On doc |
@@ -515,14 +530,14 @@ The TSV file must be saved locally (in the active document folder); files starti
 You can insert `|` for manually splitting the label into several lines.
 
 
-#### **`ShowFonts`**
+#### **`ShowFonts.jsx`**
 Shows all fonts used in the active document.
 
-#### **`ShowProfiles`**
+#### **`ShowProfiles.jsx`**
 Shows all color profiles available to InDesign.
 
-#### **`ShowProperties`** <small>F1</small>
-Shows properties and methods of a selected object.
+#### **`ShowProperties.jsx`** <small>F1</small>
+Shows properties and methods of a selected object (for debugging purposes).
 
 ## Install
 
@@ -542,6 +557,10 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: January 25, 2023</small>
+<small>Last updated: January 29, 2023</small>
 
-[^1]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
+[^1]: _Visible area_ is a zone delimited by one or more frames named `<visible area>`. If undefined, it fallbacks to the page/spread size.
+
+[^2]: By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
+
+[^3]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.

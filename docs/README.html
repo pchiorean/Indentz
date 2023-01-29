@@ -261,21 +261,21 @@ pre[data-line] .line-highlight[data-end]:after {
     </head>
     <body for="html-export">
       <div class="mume markdown-preview  ">
-      <h1 class="mume-header" id="-indentz">Indentz</h1>
+      <h1 class="mume-header" id="indentz">Indentz</h1>
 
 <p><small><a href="#cleanup">Cleanup</a> | <a href="#layout">Layout</a> | <a href="#align">Align</a> | <a href="#fit">Fit</a> | <a href="#scale">Scale</a> | <a href="#proxy">Proxy</a> | <a href="#file">File</a> | <a href="#export">Export</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#install">Install</a> | <a href="#about">About</a></small></p>
 <p>This is a collection of InDesign scripts for various simple and repetitive tasks.</p>
-<p>As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown, I used the extra time to learn a bit of the (now ancient) Extendscript &apos;art&apos;. &#x1F609; These are simple scripts adapted to my current workflow, and I tried to make them as generic as possible (<a href="https://github.com/pchiorean/Indentz/discussions">suggestions</a> are welcome). I&apos;m a big fan of shortcuts, so there are suggestions for Mac below (unfortunately they must be added manually from <strong>Edit &#x2023; Keyboard Shortcuts &#x2023; Product Area &#x2023; Scripts</strong>).</p>
-<p>The code was developed and tested in Adobe InDesign CC 2020&#x2013;2023 on Mac (but I mostly used <a href="https://www.indesignjs.de/extendscriptAPI/indesign8/">InDesign ExtendScript API 8.0</a> for compatibility with CS6). I&apos;m a graphic designer, not a programmer, so do expect oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though).</p>
+<p>As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown, I used the extra time to learn a bit of the (now ancient) Extendscript &#x2018;art&#x2019;. &#x1F609; These are simple scripts adapted to my current workflow, and I tried to make them as generic as possible (<a href="https://github.com/pchiorean/Indentz/discussions">suggestions</a> are welcome). I&#x2019;m a big fan of shortcuts, so there are suggestions for Mac below (unfortunately they must be added manually from <strong>Edit &#x2023; Keyboard Shortcuts &#x2023; Product Area &#x2023; Scripts</strong>).</p>
+<p>The code was developed and tested in Adobe InDesign CC 2020&#x2013;2023 on Mac (but I mostly used <a href="https://www.indesignjs.de/extendscriptAPI/indesign8/">InDesign ExtendScript API 8.0</a> for compatibility with CS6). I&#x2019;m a graphic designer, not a programmer, so do expect oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though).</p>
 <hr>
-<h2 class="mume-header" id="-usage">Usage</h2>
+<h2 class="mume-header" id="usage">Usage</h2>
 
-<h3 class="mume-header" id="-cleanup">Cleanup</h3>
+<h3 class="mume-header" id="cleanup">Cleanup</h3>
 
-<p><small><strong>Defaults and cleanup.</strong></small></p>
-<h4 class="mume-header" id="-defaultprefs"><strong><code>DefaultPrefs</code></strong></h4>
+<p><small><em><strong>Defaults and cleanup.</strong></em></small></p>
+<h4 class="mume-header" id="defaultprefsjsx"><strong><code>DefaultPrefs.jsx</code></strong></h4>
 
-<p>Sets some preferences for the active document. You should customize them to your taste by editing the script.</p>
+<p>Sets some preferences for the active document. You should customize them to your workflow by editing the script.</p>
 <details><summary><strong>Details</strong></summary>
 <p><strong>Application:</strong></p>
 <blockquote>
@@ -293,7 +293,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><strong>Adjust Layout:</strong> Off<br>
 <strong>Document Intent:</strong> Print<br>
 <strong>Rulers:</strong> Zero Point: Reset<br>
-<strong>Preferences &#x2023; Type:</strong> Use Typographer&apos;s Quotes; Apply Leading to Entire Paragraphs<br>
+<strong>Preferences &#x2023; Type:</strong> Use Typographer&#x2019;s Quotes; Apply Leading to Entire Paragraphs<br>
 <strong>Preferences &#x2023; Units &amp; Increments &#x2023; Keyboard Increments:</strong> Cursor Key: 0.2&#xA0;mm; Size/Leading: 0.5&#xA0;pt; Baseline Shift: 0.1&#xA0;pt; Kerning/Tracking: 5/1000 em<br>
 <strong>Preferences &#x2023; Units &amp; Increments &#x2023; Ruler Units:</strong> Origin: Spread; Units: Millimeters<br>
 <strong>Preferences &#x2023; Units &amp; Increments &#x2023; Other Units:</strong> Stroke: Points<br>
@@ -311,7 +311,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Windows &#x2023; Type &amp; Tables &#x2023; Paragraph:</strong> Shading: Off</p>
 </blockquote>
 </details>
-<h4 class="mume-header" id="-defaultlayers"><strong><code>DefaultLayers</code></strong></h4>
+<h4 class="mume-header" id="defaultlayersjsx"><strong><code>DefaultLayers.jsx</code></strong></h4>
 
 <p>Adds a set of layers defined in a TSV data file named <strong><code>layers.tsv</code></strong> (<a href="samples/layers.tsv">sample</a>) saved <em>locally</em> (meaning the active document folder or its parent), or as a <em>global default</em> (on the desktop, next to the script, or in <strong><code>Indentz</code></strong> root); local files and those starting with <code>_</code> take precedence:</p>
 <table>
@@ -359,7 +359,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:left"></td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
@@ -374,22 +374,22 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Visible</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>)<br>
 <strong>Printable</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>)<br>
 <strong>Order</strong>: <code>above</code> or <code>below</code> existing layers, or <code>top</code>/<code>bottom</code> (defaults to <code>above</code>)<br>
-<strong>Variants</strong>: A list of layers that will be merged with the base layer; it&apos;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>)</p>
+<strong>Variants</strong>: A list of layers that will be merged with the base layer; it&#x2019;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>)</p>
 </blockquote>
 <p><strong>Additional features:</strong></p>
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or a path relative to <code>reference/path</code> if defined;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or one relative to <code>reference/path</code> if defined;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
-<p>There&apos;s also some non-standard stuff that will confuse Excel et al.:</p>
+<p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
 <ul>
 <li>Blank lines and those starting with <code>#</code> (comments) are ignored;</li>
 <li>The fields can be visually aligned with spaces that will be removed at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
 <li>A very long line can be broken into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</li>
 </ul>
-<h4 class="mume-header" id="-defaultswatches"><strong><code>DefaultSwatches</code></strong></h4>
+<h4 class="mume-header" id="defaultswatchesjsx"><strong><code>DefaultSwatches.jsx</code></strong></h4>
 
 <p>Adds a set of swatches defined in a TSV data file named <strong><code>swatches.tsv</code></strong> (<a href="samples/swatches.tsv">sample</a>) saved <em>locally</em> (meaning the active document folder or its parent), or as a <em>global default</em> (on the desktop, next to the script, or in <strong><code>Indentz</code></strong> root); local files and those starting with <code>_</code> take precedence:</p>
 <table>
@@ -425,7 +425,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:left">couper, die*cut</td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
@@ -443,24 +443,24 @@ pre[data-line] .line-highlight[data-end]:after {
 <li>4 values in 0&#x2013;100 range for CMYK</li>
 <li>3 values in 0&#x2013;100 (L), &#x2013;128&#x2013;127 (A and B) range for Lab</li>
 </ul>
-<p><strong>Variants</strong>: a list of swatches that will be replaced by the base swatch; it&apos;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>)</p>
+<p><strong>Variants</strong>: a list of swatches that will be replaced by the base swatch; it&#x2019;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>)</p>
 </blockquote>
-<p>You can use <a href="#dumpswatches"><strong><code>DumpSwatches</code></strong></a> to save a tab delimited list of swatches from any document.</p>
+<p>You can use <a href="#dumpswatchesjsx"><strong><code>DumpSwatches.jsx</code></strong></a> to save a tab delimited list of swatches from any document.</p>
 <details><summary><strong>Additional features</strong></summary>
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or a path relative to <code>reference/path</code> if defined;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or one relative to <code>reference/path</code> if defined;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
-<p>There&apos;s also some non-standard stuff that will confuse Excel et al.:</p>
+<p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
 <ul>
 <li>Blank lines and those starting with <code>#</code> (comments) are ignored;</li>
 <li>The fields can be visually aligned with spaces that will be removed at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
 <li>A very long line can be broken into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</li>
 </ul>
 </details>
-<h4 class="mume-header" id="-replacefonts"><strong><code>ReplaceFonts</code></strong></h4>
+<h4 class="mume-header" id="replacefontsjsx"><strong><code>ReplaceFonts.jsx</code></strong></h4>
 
 <p>Replaces document fonts using a TSV data file named <strong><code>fonts.tsv</code></strong> (<a href="samples/fonts.tsv">sample</a>) saved <em>locally</em> (meaning the active document folder or its parent), or as a <em>global default</em> (on the desktop, next to the script, or in <strong><code>Indentz</code></strong> root); local files and those starting with <code>_</code> take precedence:</p>
 <table>
@@ -486,29 +486,29 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:left">Bold</td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
 </table>
-<p>You can use <a href="#showfonts"><strong><code>ShowFonts</code></strong></a> from <a href="#miscellaneous"><strong>Miscellaneous</strong></a> to get a tab delimited list of document fonts for copy-pasting.</p>
+<p>You can use <a href="#showfontsjsx"><strong><code>ShowFonts.jsx</code></strong></a> from <a href="#miscellaneous"><strong>Miscellaneous</strong></a> to get a tab delimited list of document fonts for copy-pasting.</p>
 <details><summary><strong>Additional features</strong></summary>
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or a path relative to <code>reference/path</code> if defined;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or one relative to <code>reference/path</code> if defined;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
-<p>There&apos;s also some non-standard stuff that will confuse Excel et al.:</p>
+<p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
 <ul>
 <li>Blank lines and those starting with <code>#</code> (comments) are ignored;</li>
 <li>The fields can be visually aligned with spaces that will be removed at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
 <li>A very long line can be broken into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</li>
 </ul>
 </details>
-<h4 class="mume-header" id="-replacelinks-smallf8small"><strong><code>ReplaceLinks</code></strong> <small>&#x2325;F8</small></h4>
+<h4 class="mume-header" id="replacelinksjsx-smallf8small"><strong><code>ReplaceLinks.jsx</code></strong> <small>&#x2325;F8</small></h4>
 
 <p>Replaces document links using a TSV data file named <strong><code>links.tsv</code></strong> (<a href="samples/links.tsv">sample</a>) saved <em>locally</em> (meaning the active document folder or its parent), or as a <em>global default</em> (on the desktop, next to the script, or in <strong><code>Indentz</code></strong> root); local files and those starting with <code>_</code> take precedence:</p>
 <table>
@@ -540,7 +540,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:left"></td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:left"></td>
 </tr>
 </tbody>
@@ -558,8 +558,8 @@ pre[data-line] .line-highlight[data-end]:after {
 </ul>
 <p><strong>Document links:</strong></p>
 <ul>
-<li>If empty, the <em>name</em> from the first column will be used (so that if it&apos;s in the document, it will be replaced);</li>
-<li>One or more document link names; it&apos;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>).</li>
+<li>If empty, the <em>name</em> from the first column will be used (so that if it&#x2019;s in the document, it will be replaced);</li>
+<li>One or more document link names; it&#x2019;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>).</li>
 </ul>
 </blockquote>
 <p>Quoting the paths is not required.</p>
@@ -567,17 +567,17 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or a path relative to <code>reference/path</code> if defined;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or one relative to <code>reference/path</code> if defined;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
-<p>There&apos;s also some non-standard stuff that will confuse Excel et al.:</p>
+<p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
 <ul>
 <li>Blank lines and those starting with <code>#</code> (comments) are ignored;</li>
 <li>The fields can be visually aligned with spaces that will be removed at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
 <li>A very long line can be broken into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</li>
 </ul>
 </details>
-<h4 class="mume-header" id="-replacesnippets-smallf6small"><strong><code>ReplaceSnippets</code></strong> <small>&#x2325;F6</small></h4>
+<h4 class="mume-header" id="replacesnippetsjsx-smallf6small"><strong><code>ReplaceSnippets.jsx</code></strong> <small>&#x2325;F6</small></h4>
 
 <p>Replaces a list of text snippets using a TSV data file named <strong><code>snippets.tsv</code></strong> (<a href="samples/snippets.tsv">sample</a>) saved <em>locally</em> (meaning the active document folder or its parent), or as a <em>global default</em> (on the desktop, next to the script, or in <strong><code>Indentz</code></strong> root); local files and those starting with <code>_</code> take precedence:</p>
 <table>
@@ -607,7 +607,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </tr>
 <tr>
 <td style="text-align:left">The sample is for free</td>
-<td style="text-align:left">L&apos;&#xE9;chantillon est gratuit</td>
+<td style="text-align:left">L&#x2019;&#xE9;chantillon est gratuit</td>
 <td style="text-align:left">yes</td>
 <td style="text-align:left">yes</td>
 <td style="text-align:left">_FR$</td>
@@ -620,7 +620,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:left"></td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
 <td style="text-align:left"></td>
@@ -635,46 +635,46 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Whole word</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>)<br>
 <strong>Scope</strong>: Replacement will only be done if the document name matches the <a href="https://regex101.com">regular expression</a> (case sensitive)</p>
 </blockquote>
-<p>For example, &apos;The sample is for free&apos; will be replaced with &apos;Das Sample ist kostenlos&apos; in <strong><code>Document_DE.indd</code></strong>, and with &apos;L&apos;&#xE9;chantillon est gratuit&apos; in <strong><code>Document_FR.indd</code></strong>.</p>
+<p>For example, &#x2018;The sample is for free&#x2019; will be replaced with &#x2018;Das Sample ist kostenlos&#x2019; in <strong><code>Document_DE.indd</code></strong>, and with &#x2018;L&#x2019;&#xE9;chantillon est gratuit&#x2019; in <strong><code>Document_FR.indd</code></strong>.</p>
 <details><summary><strong>Additional features</strong></summary>
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or a path relative to <code>reference/path</code> if defined;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or one relative to <code>reference/path</code> if defined;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
-<p>There&apos;s also some non-standard stuff that will confuse Excel et al.:</p>
+<p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
 <ul>
 <li>Blank lines and those starting with <code>#</code> (comments) are ignored;</li>
 <li>The fields can be visually aligned with spaces that will be removed at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
 <li>A very long line can be broken into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</li>
 </ul>
 </details>
-<h4 class="mume-header" id="-breaklinktostyles"><strong><code>BreakLinkToStyles</code></strong></h4>
+<h4 class="mume-header" id="breaklinktostylesjsx"><strong><code>BreakLinkToStyles.jsx</code></strong></h4>
 
 <p>Unnaplies paragraph/character/object styles from the selected objects or all objects in the document if nothing is selected.</p>
-<h4 class="mume-header" id="-doccleanup-smallf2small"><strong><code>DocCleanup</code></strong> <small>F2</small></h4>
+<h4 class="mume-header" id="doccleanupjsx-smallf2small"><strong><code>DocCleanup.jsx</code></strong> <small>F2</small></h4>
 
-<p>It runs <a href="#defaultprefs"><strong><code>DefaultPrefs</code></strong></a>; deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.</p>
-<h4 class="mume-header" id="-removescriptlabels"><strong><code>RemoveScriptLabels</code></strong></h4>
+<p>It runs <a href="#defaultprefsjsx"><strong><code>DefaultPrefs.jsx</code></strong></a>; deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.</p>
+<h4 class="mume-header" id="removescriptlabelsjsx"><strong><code>RemoveScriptLabels.jsx</code></strong></h4>
 
 <p>Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.</p>
-<h4 class="mume-header" id="-swatchescleanup-smallf2small"><strong><code>SwatchesCleanup</code></strong> <small>&#x21E7;F2</small></h4>
+<h4 class="mume-header" id="swatchescleanupjsx-smallf2small"><strong><code>SwatchesCleanup.jsx</code></strong> <small>&#x21E7;F2</small></h4>
 
-<p>Converts process RGB swatches to CMYK and renames them to &apos;C=&#xA0;M=&#xA0;Y=&#xA0;K=&apos; format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.</p>
-<h4 class="mume-header" id="-dumplayers"><strong><code>DumpLayers</code></strong></h4>
+<p>Converts process RGB swatches to CMYK and renames them to &#x2018;C=&#xA0;M=&#xA0;Y=&#xA0;K=&#x2019; format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.</p>
+<h4 class="mume-header" id="dumplayersjsx"><strong><code>DumpLayers.jsx</code></strong></h4>
 
-<p>Saves a TSV file (compatible with <a href="#defaultlayers"><strong><code>DefaultLayers</code></strong></a>) containing the names and properties of the active document layers.</p>
-<h4 class="mume-header" id="-dumpswatches"><strong><code>DumpSwatches</code></strong></h4>
+<p>Saves a TSV file (compatible with <a href="#defaultlayersjsx"><strong><code>DefaultLayers.jsx</code></strong></a>) containing the names and properties of the active document layers.</p>
+<h4 class="mume-header" id="dumpswatchesjsx"><strong><code>DumpSwatches.jsx</code></strong></h4>
 
-<p>Saves a TSV file (compatible with <a href="#defaultswatches"><strong><code>DefaultSwatches</code></strong></a>) containing the names and properties of the active document swatches.</p>
+<p>Saves a TSV file (compatible with <a href="#defaultswatchesjsx"><strong><code>DefaultSwatches.jsx</code></strong></a>) containing the names and properties of the active document swatches.</p>
 <hr>
-<h3 class="mume-header" id="-layout">Layout</h3>
+<h3 class="mume-header" id="layout">Layout</h3>
 
-<p><small><strong>Document setup &#x2013; page size, margins &amp; columns, guides.</strong></small></p>
-<h4 class="mume-header" id="-pagesizefromfilename-smallf3small"><strong><code>PageSizeFromFilename</code></strong> <small>F3</small></h4>
+<p><small><em><strong>Document setup &#x2013; page size, margins &amp; columns, guides.</strong></em></small></p>
+<h4 class="mume-header" id="pagesizefromfilenamejsx-smallf3small"><strong><code>PageSizeFromFilename.jsx</code></strong> <small>F3</small></h4>
 
-<p>Sets the size of the page and the margins/visible area, getting dimensions from the document name. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
+<p>Sets the size of the page, the margins and the visible area<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>, getting dimensions from the document name. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
 <table>
 <thead>
 <tr>
@@ -705,40 +705,33 @@ pre[data-line] .line-highlight[data-end]:after {
 </tr>
 </tbody>
 </table>
-<h4 class="mume-header" id="-pagesizefrommargins"><strong><code>PageSizeFromMargins</code></strong></h4>
+<h4 class="mume-header" id="pagesizefrommarginsjsx"><strong><code>PageSizeFromMargins.jsx</code></strong></h4>
 
 <p>Resizes the current page to its margins.</p>
-<h4 class="mume-header" id="-pagesizefromselection-smallf3small"><strong><code>PageSizeFromSelection</code></strong> <small>&#x21E7;F3</small></h4>
+<h4 class="mume-header" id="pagesizefromselectionjsx-smallf3small"><strong><code>PageSizeFromSelection.jsx</code></strong> <small>&#x21E7;F3</small></h4>
 
 <p>Resizes the page to the selected objects.</p>
-<h4 class="mume-header" id="-pagemarginsfromscriptnamejsx"><strong><code>PageMarginsFromScriptName.jsx</code></strong></h4>
+<h4 class="mume-header" id="pagemarginsfromscriptnamejsx"><strong><code>PageMarginsFromScriptName.jsx</code></strong></h4>
 
 <p>Sets the page margins and the HW area from the script name. The script is designed to be renamed, to personalize the values.</p>
-<p>By default it sets the page margins to 5% of the visible/page area for all document pages. Renaming it to, e.g., <code>Margins&lt;XX&gt;HW&lt;YY&gt;.jsx</code>, you set a value <code>XX</code> for the margins and (optionally) a <code>YY</code> value for an HW area at the bottom.</p>
+<p>By default it sets the page margins to 5% of the visible/page area for all document pages. Renaming it to, e.g., <code>Margins&lt;XX&gt;.jsx</code> or <code>Margins&lt;XX&gt;HW&lt;YY&gt;.jsx</code>, you set a value <code>XX</code> for the margins and (optionally) a <code>YY</code> value for an HW area at the bottom.</p>
 <p>The default values are 5 for margins and 10 for HW.</p>
-<h4 class="mume-header" id="-pagemarginsfromselection-smallf3small"><strong><code>PageMarginsFromSelection</code></strong> <small>&#x2325;F3</small></h4>
+<h4 class="mume-header" id="pagemarginsfromselectionjsx-smallf3small"><strong><code>PageMarginsFromSelection.jsx</code></strong> <small>&#x2325;F3</small></h4>
 
 <p>Sets the page margins from the selected objects.</p>
-<h4 class="mume-header" id="-guidesadd"><strong><code>GuidesAdd</code></strong></h4>
+<h4 class="mume-header" id="guidesaddjsx"><strong><code>GuidesAdd.jsx</code></strong></h4>
 
 <p>If any page objects are selected, it adds guides around them. If nothing is selected, it adds guids on page edges and in the middle of margins; a second run deletes them.</p>
-<h4 class="mume-header" id="-guidesdelete"><strong><code>GuidesDelete</code></strong></h4>
+<h4 class="mume-header" id="guidesdeletejsx"><strong><code>GuidesDelete.jsx</code></strong></h4>
 
 <p>Deletes all guides from the document.</p>
 <hr>
-<h3 class="mume-header" id="-align">Align</h3>
+<h3 class="mume-header" id="align">Align</h3>
 
-<p><small><strong>Align page objects with ease using the numeric keypad.</strong></small></p>
-<h4 class="mume-header" id="-togglealignto-smallnum0small"><strong><code>ToggleAlignTo</code></strong> <small>Num0</small></h4>
+<p><small><em><strong>Align page objects with ease using the numeric keypad.</strong></em></small></p>
+<h4 class="mume-header" id="aligntojsx"><strong><code>AlignTo*.jsx</code></strong></h4>
 
-<p>Toggles <strong>Align To</strong> between selection, margins, page or spread (just run it repeatedly):</p>
-<p><img src="img/alignto.png" alt="Align Panel screenshot"></p>
-<h4 class="mume-header" id="-resetalignto-smallnum0small"><strong><code>ResetAlignTo</code></strong> <small>&#x2303;Num0</small></h4>
-
-<p>Resets <strong>Align To</strong> to default (<strong>Align to Selection</strong>).</p>
-<h4 class="mume-header" id="-alignto"><strong><code>AlignTo...</code></strong></h4>
-
-<p>Use the numeric keypad to instantly align the selected object to the <strong>Align To</strong> selection, with a single keystroke.</p>
+<p>Use the numeric keypad to instantly align the selected object to the <strong>Align To</strong> selection (see below), with a single keystroke.</p>
 <details><summary><strong>Shortcuts</strong></summary>
 <table>
 <thead>
@@ -779,14 +772,33 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 </details>
+<h4 class="mume-header" id="togglealigntojsx-smallnum0small"><strong><code>ToggleAlignTo.jsx</code></strong> <small>Num0</small></h4>
+
+<p>Toggles <strong>Align To</strong> between selection, margins, page or spread (just run it repeatedly):</p>
+<p><img src="img/alignto.png" alt="Align Panel screenshot"></p>
+<h4 class="mume-header" id="resetaligntojsx-smallnum0small"><strong><code>ResetAlignTo.jsx</code></strong> <small>&#x2303;Num0</small></h4>
+
+<p>Resets <strong>Align To</strong> to default (<strong>Align to Selection</strong>).</p>
 <hr>
-<h3 class="mume-header" id="-fit">Fit</h3>
+<h3 class="mume-header" id="fit">Fit</h3>
 
-<h4 class="mume-header" id="-fittopage--fittospread"><strong><code>FitToPage...</code></strong> / <strong><code>FitToSpread...</code></strong></h4>
+<p><small><em><strong>Reframe selected objects.</strong></em></small></p>
+<h4 class="mume-header" id="fittojsx"><strong><code>FitTo*.jsx</code></strong></h4>
 
-<p>These scripts reframe the selected objects to the page/spread or their margins/bleed by reducing the edges of objects or clipping frames that cross the target and extending ones that touch it or are very close (in a 1% snap zone).</p>
-<p>Rectangular frames and orthogonal lines are simply resized; rotated objects, ovals, groups, etc. are inserted into a clipping frame that is resized.</p>
-<p><strong><code>FitTo...Forced</code></strong> bluntly reframes an object to the target.</p>
+<p>These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area). Example for running <code>FitToPageBleed.jsx</code> (&#x21E7;F11) on selected frames:</p>
+<p><img src="img/fit.png" alt="Example"></p>
+<p>The refitting is done by:</p>
+<ul>
+<li>
+<p><strong>Shrinking</strong> the edges that hang outside the specified area.</p>
+<p>Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame.</p>
+</li>
+<li>
+<p><strong>Extending</strong> the edges that touch or are very close to a trigger zone<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> (either target or visible area).</p>
+<p>Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.</p>
+</li>
+</ul>
+<p>Variants with the suffix <strong><code>Forced</code></strong> simply reframe the objects to the target area.</p>
 <details><summary><strong>Shortcuts</strong></summary>
 <table>
 <thead>
@@ -850,9 +862,9 @@ pre[data-line] .line-highlight[data-end]:after {
 </table>
 <p><strong>Note:</strong> <code>F11</code> page, <code>F12</code> spread; <code>&#x2325;</code> margins, <code>&#x2325;&#x21E7;</code> visible area, <code>&#x21E7;</code> bleed; <code>&#x2318;</code> forced.</p>
 </details>
-<h4 class="mume-header" id="-textautosize-smallf6small"><strong><code>TextAutosize</code></strong> <small>F6</small></h4>
+<h4 class="mume-header" id="textautosizejsx-smallf6small"><strong><code>TextAutosize.jsx</code></strong> <small>F6</small></h4>
 
-<p>Auto-sizes the selected text frames to their content. It&apos;s designed to be run repeatedly.</p>
+<p>Auto-sizes the selected text frames to their content. It&#x2019;s designed to be run repeatedly.</p>
 <p>The level is increased from <strong>None</strong> to <strong>Height Only</strong> and from <strong>Height Only</strong> to <strong>Height and Width</strong> (single lines are always set <strong>Height and Width</strong>). The reference point is set by the first paragraph alignment and the text frame vertical justification:</p>
 <table>
 <thead>
@@ -886,12 +898,13 @@ pre[data-line] .line-highlight[data-end]:after {
 </table>
 <p><strong>Note:</strong> A second run will preserve the current auto-sizing if only the alignment is different.</p>
 <hr>
-<h3 class="mume-header" id="-scale">Scale</h3>
+<h3 class="mume-header" id="scale">Scale</h3>
 
-<h4 class="mume-header" id="-scaletopagesize--scaletopagemargins--scaletospreadbleed"><strong><code>ScaleToPageSize</code></strong> / <strong><code>ScaleToPageMargins</code></strong> / <strong><code>ScaleToSpreadBleed</code></strong></h4>
+<p><small><em><strong>Resize selected objects.</strong></em></small></p>
+<h4 class="mume-header" id="scaletojsx"><strong><code>ScaleTo*.jsx</code></strong></h4>
 
-<p>Scales the selected objects to the page size, page margins, or spread bleed. All objects are scaled together, as a group.</p>
-<p>The <strong><code>ScaleTo...H</code></strong> and <strong><code>ScaleTo...W</code></strong> variants scale to the height or width of their target.</p>
+<p>Scale the selected objects to the page size, page margins, or spread bleed. All objects are scaled together, as a group.</p>
+<p><strong><code>*H.jsx</code></strong> and <strong><code>*W.jsx</code></strong> variants scale to the height or width of their target.</p>
 <details><summary><strong>Shortcuts</strong></summary>
 <table>
 <thead>
@@ -925,9 +938,9 @@ pre[data-line] .line-highlight[data-end]:after {
 </table>
 </details>
 <hr>
-<h3 class="mume-header" id="-proxy">Proxy</h3>
+<h3 class="mume-header" id="proxy">Proxy</h3>
 
-<h4 class="mume-header" id="-setrefpoint"><strong><code>SetRefPoint...</code></strong></h4>
+<h4 class="mume-header" id="setrefpointjsx"><strong><code>SetRefPoint*.jsx</code></strong></h4>
 
 <p>Use the numeric keypad to set the reference point used for transformations (similar to clicking the little proxy squares in the <strong>Control</strong> palette):</p>
 <p><img src="img/proxy.png" alt="Proxy"></p>
@@ -972,24 +985,24 @@ pre[data-line] .line-highlight[data-end]:after {
 </table>
 </details>
 <hr>
-<h3 class="mume-header" id="-file">File</h3>
+<h3 class="mume-header" id="file">File</h3>
 
-<h4 class="mume-header" id="-filestospreads"><strong><code>FilesToSpreads</code></strong></h4>
+<h4 class="mume-header" id="filestospreadsjsx"><strong><code>FilesToSpreads.jsx</code></strong></h4>
 
 <p>Combines the open documents, sorted alphabetically.</p>
-<h4 class="mume-header" id="-spreadstofiles"><strong><code>SpreadsToFiles</code></strong></h4>
+<h4 class="mume-header" id="spreadstofilesjsx"><strong><code>SpreadsToFiles.jsx</code></strong></h4>
 
 <p>Saves each spread of the active document to a separate file.</p>
 <p>If the document name ends with a <em>separator</em> (space/dot/underline/hyphen) followed by <em>a sequence</em> of digits or letters <em>equal</em> to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name &#x2013; e.g., a document with three spreads named <strong><code>Document_ABC.indd</code></strong> will be split into <strong><code>Document_A.indd</code></strong> / <strong><code>Document_B.indd</code></strong> / <strong><code>Document_C.indd</code></strong>. If not autodetected, the script will prompt the user for the list.</p>
 <p>By default, the index will be appended at the end, but you can put a <code>#</code> in the document name to place the index at that particular position.</p>
-<h4 class="mume-header" id="-layerstospreads"><strong><code>LayersToSpreads</code></strong></h4>
+<h4 class="mume-header" id="layerstospreadsjsx"><strong><code>LayersToSpreads.jsx</code></strong></h4>
 
 <p>Moves all layers of the active document to separate spreads (the document must have a single spread).</p>
-<p>You can use <strong><code>SpreadsToFiles</code></strong> to save them in separate documents.</p>
+<p>You can use <strong><code>SpreadsToFiles.jsx</code></strong> to save them in separate documents.</p>
 <hr>
-<h3 class="mume-header" id="-export">Export</h3>
+<h3 class="mume-header" id="export">Export</h3>
 
-<h4 class="mume-header" id="-quickexport-smallesmall"><strong><code>QuickExport</code></strong> <small>&#x2303;E</small></h4>
+<h4 class="mume-header" id="quickexportjsx-smallesmall"><strong><code>QuickExport.jsx</code></strong> <small>&#x2303;E</small></h4>
 
 <p>Exports to PDF all opened documents or, with nothing opened, all documents from a folder.</p>
 <p>For convenience, some export options can be easily changed from the preset settings: resolution, export as pages/spreads, include crop marks, page information, slug area, and you can set a custom bleed.</p>
@@ -998,25 +1011,25 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>The text from the <strong>Suffix</strong> field will be appended to the name of the exported file (everything in the preset name after the last <code>_</code> will be autodetected as suffix).</p>
 <p>If <strong>Sort files by suffix into subfolders</strong> is checked, files will be exported in subfolders named using the suffix text up to the first <code>+</code> character. For example, for a <code>print+diecut</code> suffix, the PDF will be saved as <strong><code>Document_print+diecut.pdf</code></strong> in a subfolder named <strong><code>print</code></strong>.</p>
 <p>It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:</p>
-<h4 class="mume-header" id="-markvisiblearea"><strong><code>MarkVisibleArea</code></strong></h4>
+<h4 class="mume-header" id="markvisibleareajsx"><strong><code>MarkVisibleArea.jsx</code></strong></h4>
 
-<p>Creates a frame the size of the page margins on the <strong>visible area</strong> layer. It will use the <strong>Visible area</strong> swatch, which will be created with the values R=255 G=180 B=0 if it doesn&apos;t exist.</p>
-<h4 class="mume-header" id="-prepareforexport"><strong><code>PrepareForExport</code></strong></h4>
+<p>Creates a frame the size of the page margins on the <strong>visible area</strong> layer. It will use the <strong>Visible area</strong> swatch, which will be created with the values R=255 G=180 B=0 if it doesn&#x2019;t exist.</p>
+<h4 class="mume-header" id="prepareforexportjsx"><strong><code>PrepareForExport.jsx</code></strong></h4>
 
 <p>Hides <strong>covered areas</strong>, <strong>visible area</strong>, <strong>safety margins</strong>, <strong>safe area</strong>, <strong>segmentation</strong>, <strong>guides</strong>, and all layers starting with either a dot or a hyphen; moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads.</p>
-<h4 class="mume-header" id="-showdnplayers--hidednplayers"><strong><code>ShowDNPLayers</code></strong> / <strong><code>HideDNPLayers</code></strong></h4>
+<h4 class="mume-header" id="showdnplayersjsx--hidednplayersjsx"><strong><code>ShowDNPLayers.jsx</code></strong> / <strong><code>HideDNPLayers.jsx</code></strong></h4>
 
-<p>Shows or hides the following <em>do-not-print</em> layers: <strong>covered areas</strong>, <strong>visible area</strong>, <strong>*vi?ib*</strong>, <strong>vis?*</strong>, <strong>safety margins</strong>, <strong>safe area</strong>, <strong>segmentation</strong>, <strong>rahmen</strong> and <strong>sicht*</strong>, and all layers starting with either a dot or a hyphen.</p>
+<p>Show or hide the following <em>do-not-print</em> layers: <strong>covered areas</strong>, <strong>visible area</strong>, <strong>*vi?ib*</strong>, <strong>vis?*</strong>, <strong>safety margins</strong>, <strong>safe area</strong>, <strong>segmentation</strong>, <strong>rahmen</strong> and <strong>sicht*</strong>, and all layers starting with either a dot or a hyphen.</p>
 <hr>
-<h3 class="mume-header" id="-view">View</h3>
+<h3 class="mume-header" id="view">View</h3>
 
-<h4 class="mume-header" id="-tileall-smallf4small"><strong><code>TileAll</code></strong> <small>&#x21E7;F4</small></h4>
+<h4 class="mume-header" id="tilealljsx-smallf4small"><strong><code>TileAll.jsx</code></strong> <small>&#x21E7;F4</small></h4>
 
 <p>Invokes <strong>Window &#x2023; Arrange &#x2023; Tile All Vertically</strong> or <strong>Tile All Horizontally</strong>, depending on the current spread orientation.</p>
-<h4 class="mume-header" id="-zoomto300percent-small3small"><strong><code>ZoomTo300Percent</code></strong> <small>&#x2318;3</small></h4>
+<h4 class="mume-header" id="zoomto300percentjsx-small3small"><strong><code>ZoomTo300Percent.jsx</code></strong> <small>&#x2318;3</small></h4>
 
 <p>Zooms current layout window to 300%.</p>
-<h4 class="mume-header" id="-zoomtoselection-smallf4small"><strong><code>ZoomToSelection</code></strong> <small>F4</small></h4>
+<h4 class="mume-header" id="zoomtoselectionjsx-smallf4small"><strong><code>ZoomToSelection.jsx</code></strong> <small>F4</small></h4>
 
 <p>It resembles <strong>Fit Selection in Window</strong> <strong><small>(&#x2325;&#x2318;=)</small></strong>, but with some changes:</p>
 <ul>
@@ -1024,40 +1037,40 @@ pre[data-line] .line-highlight[data-end]:after {
 <li>If the cursor is in a text frame, zooms on the whole frame;</li>
 <li>Without anything selected zooms on the current spread.</li>
 </ul>
-<h4 class="mume-header" id="-zoomtospreads-smallf4small"><strong><code>ZoomToSpreads</code></strong> <small>&#x2325;F4</small></h4>
+<h4 class="mume-header" id="zoomtospreadsjsx-smallf4small"><strong><code>ZoomToSpreads.jsx</code></strong> <small>&#x2325;F4</small></h4>
 
 <p>Zooms on the first 3 spreads.</p>
 <hr>
-<h3 class="mume-header" id="-miscellaneous">Miscellaneous</h3>
+<h3 class="mume-header" id="miscellaneous">Miscellaneous</h3>
 
-<h4 class="mume-header" id="-clip-smallnumsmall"><strong><code>Clip</code></strong> <small>Num*</small></h4>
+<h4 class="mume-header" id="clipjsx-smallnumsmall"><strong><code>Clip.jsx</code></strong> <small>Num*</small></h4>
 
 <p>To handle some objects, it may be useful to temporarily insert them into a container (clipping frame). The script inserts the selected objects into a clipping frame or restores them if they are already clipped.</p>
-<p><strong>Note:</strong> It uses the clipboard, so make sure you don&apos;t lose anything important.</p>
-<h4 class="mume-header" id="-clipundo-smallnumsmall"><strong><code>ClipUndo</code></strong> <small>&#x2303;Num*</small></h4>
+<p><strong>Note:</strong> It uses the clipboard, so make sure you don&#x2019;t lose anything important.</p>
+<h4 class="mume-header" id="clipundojsx-smallnumsmall"><strong><code>ClipUndo.jsx</code></strong> <small>&#x2303;Num*</small></h4>
 
 <p>Releases one or several objects from their clipping frames (you can select any objects, it will only release the clipped ones). If nothing is selected, it will release all clipped objects.</p>
-<h4 class="mume-header" id="-ean-smallf9small"><strong><code>EAN</code></strong> <small>&#x2325;F9</small></h4>
+<h4 class="mume-header" id="eanjsx-smallf9small"><strong><code>EAN.jsx</code></strong> <small>&#x2325;F9</small></h4>
 
 <p>This script is inspired by <a href="https://github.com/smorodsky/ean-barcode-generator"><strong>EAN Barcode Generator</strong></a> by Konstantin Smorodsky, modified to embed a code in the selected rectangle: if we have a page object (ideally a rectangle) selected, the script embeds an EAN code in it, scaled to width. If nothing is selected, creates a new document.</p>
 <p>Enter 8 or 13 digits for the code itself; if you have an add-on, add a hyphen and another 2 or 5 digits.</p>
-<h4 class="mume-header" id="-labelpage"><strong><code>LabelPage</code></strong></h4>
+<h4 class="mume-header" id="labelpagejsx"><strong><code>LabelPage.jsx</code></strong></h4>
 
-<p>Adds a custom label on the current page slug, on the <strong>info</strong> layer (with Helvetica Regular 6&#xA0;pt, <strong>Registration</strong> swatch):</p>
+<p>Adds a custom label on the current page slug, on the <strong>info</strong> layer (Helvetica Regular 6&#xA0;pt, fill <strong>Registration</strong>, stroke <strong>Paper</strong> 0.4 pt):</p>
 <p><img src="img/labelpage.png" alt="Label Page"></p>
-<h4 class="mume-header" id="-labelpageratios"><strong><code>LabelPageRatios</code></strong></h4>
+<h4 class="mume-header" id="labelpageratiosjsx"><strong><code>LabelPageRatios.jsx</code></strong></h4>
 
 <p>Adds a label with the page aspect ratio, on the slug of each page, on the <strong>info</strong> layer.</p>
-<h4 class="mume-header" id="-offset-paths"><strong><code>Offset Paths</code></strong></h4>
+<h4 class="mume-header" id="offsetpathsjsx"><strong><code>OffsetPaths.jsx</code></strong></h4>
 
 <p>This is a slightly modified version of <a href="https://creativepro.com/indesign-cad-tool/"><strong>OffsetPath</strong></a> by Olav Martin Kvern, which uses a clever method to create paths around selected objects at a custom offset distance:</p>
 <blockquote>
 <p>When you apply a Contour-type text wrap to an object, you&#x2019;re creating a path around that object&#x2014;and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create a new path from those geometric coordinates.</p>
 </blockquote>
 <p>I fixed some bugs and added a default value, an option to join contours, and support for undoing.</p>
-<h4 class="mume-header" id="-qr-smallf9small"><strong><code>QR</code></strong> <small>F9</small></h4>
+<h4 class="mume-header" id="qrjsx-smallf9small"><strong><code>QR.jsx</code></strong> <small>F9</small></h4>
 
-<p>Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>:</p>
+<p>Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>:</p>
 <table>
 <thead>
 <tr>
@@ -1074,7 +1087,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </table>
 <p>If the document name ends with a <em>separator</em> (space/dot/underline/hyphen) followed by a <em>sequence</em> of digits or letters <em>equal</em> to the number of spreads, the letter corresponding to the spread index will be appended to each code/file &#x2013; e.g., for a document with three spreads named <strong><code>Document_ABC.indd</code></strong>, the script will generate <strong><code>Document_A_QR.pdf</code></strong>, <strong><code>Document_B_QR.pdf</code></strong> and <strong><code>Document_C_QR.pdf</code></strong>.</p>
 <p>You can insert <code>|</code> for manually splitting the label into several lines.</p>
-<h4 class="mume-header" id="-qrbatch-smallf9small"><strong><code>QRBatch</code></strong> <small>&#x21E7;F9</small></h4>
+<h4 class="mume-header" id="qrbatchjsx-smallf9small"><strong><code>QRBatch.jsx</code></strong> <small>&#x21E7;F9</small></h4>
 
 <p>Does the same thing as <strong><code>QR</code></strong> but in a non-interactive way: retrieves a list of codes from a TSV data file named <strong><code>qr.tsv</code></strong> (<a href="samples/qr.tsv">sample</a>) and adds them to existing documents or creates separate files (the suffix thing applies here as well):</p>
 <table>
@@ -1102,7 +1115,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:center"></td>
 </tr>
 <tr>
-<td style="text-align:left">...</td>
+<td style="text-align:left">&#x2026;</td>
 <td style="text-align:left"></td>
 <td style="text-align:center"></td>
 </tr>
@@ -1115,16 +1128,16 @@ pre[data-line] .line-highlight[data-end]:after {
 </blockquote>
 <p>The TSV file must be saved locally (in the active document folder); files starting with <code>_</code> take precedence. Blank lines and those starting with <code>#</code> are ignored (this will confuse Excel).</p>
 <p>You can insert <code>|</code> for manually splitting the label into several lines.</p>
-<h4 class="mume-header" id="-showfonts"><strong><code>ShowFonts</code></strong></h4>
+<h4 class="mume-header" id="showfontsjsx"><strong><code>ShowFonts.jsx</code></strong></h4>
 
 <p>Shows all fonts used in the active document.</p>
-<h4 class="mume-header" id="-showprofiles"><strong><code>ShowProfiles</code></strong></h4>
+<h4 class="mume-header" id="showprofilesjsx"><strong><code>ShowProfiles.jsx</code></strong></h4>
 
 <p>Shows all color profiles available to InDesign.</p>
-<h4 class="mume-header" id="-showproperties-smallf1small"><strong><code>ShowProperties</code></strong> <small>F1</small></h4>
+<h4 class="mume-header" id="showpropertiesjsx-smallf1small"><strong><code>ShowProperties.jsx</code></strong> <small>F1</small></h4>
 
-<p>Shows properties and methods of a selected object.</p>
-<h2 class="mume-header" id="-install">Install</h2>
+<p>Shows properties and methods of a selected object (for debugging purposes).</p>
+<h2 class="mume-header" id="install">Install</h2>
 
 <ol>
 <li>Clone or download from <strong>Code &#x2023; Download ZIP</strong>. The repository uses dynamically linked libraries from <strong><code>lib/</code></strong>, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest <a href="https://github.com/pchiorean/Indentz/releases">release</a>, where they are statically linked.</li>
@@ -1132,18 +1145,22 @@ pre[data-line] .line-highlight[data-end]:after {
 <li>Right-click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
 <li>Copy <strong>Indentz</strong> to this folder.</li>
 </ol>
-<h2 class="mume-header" id="-about">About</h2>
+<h2 class="mume-header" id="about">About</h2>
 
 <p>All scripts are created by me unless otherwise noted.</p>
 <p>&#xA9; 2020-2023 Paul Chiorean &lt;jpeg AT basement.ro&gt;.<br>
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
-<p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&apos;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
+<p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>Thanks to Adrian Frigioiu for bug reports and feedback.</p>
-<p><small>Last updated: January 25, 2023</small></p>
+<p><small>Last updated: January 29, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn1" class="footnote-item"><p><em>Visible area</em> is a zone delimited by one or more frames named <code>&lt;visible area&gt;</code>. If undefined, it fallbacks to the page/spread size. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+</li>
+<li id="fn2" class="footnote-item"><p>By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant <code>SNAP_PCT</code> from <code>fitTo()</code>. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+</li>
+<li id="fn3" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref3" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
 </ol>
 </section>
