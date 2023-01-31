@@ -251,9 +251,9 @@ Saves a TSV file (compatible with [**`DefaultSwatches.jsx`**](#defaultswatchesjs
 <small>_**Document setup – page size, margins & columns, guides.**_</small>
 
 #### **`PageSizeFromFilename.jsx`** <small>F3</small>
-Sets the size of the page, the margins and the visible area[^1], getting dimensions from the document name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
+Sets the size of the page, the margins, and marks the visible area[^1], getting dimensions from the file name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
 
-| Filename                                        | Total size | Visible area | Bleed |
+| File name                                       | Total size | Visible area | Bleed |
 |:------------------------------------------------|:-----------|:-------------|:------|
 | **Document1\_315x55\.indd**                     | 315×55     | –            | –     |
 | **Document2\_1400x400\_700x137mm\.indd**        | 1400×400   | 700×137      | –     |
@@ -514,14 +514,14 @@ You can insert `|` for manually splitting the label into several lines.
 #### **`QRBatch.jsx`** <small>⇧F9</small>
 Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV data file named **`qr.tsv`** ([sample](samples/qr.tsv)) and adds them to existing documents or creates separate files (the suffix thing applies here as well):
 
-| Filename           | Code   | On doc |
+| File name          | Code   | On doc |
 |:-------------------|:-------|:------:|
 | **Document 1**     | Code 1 |   +    |
 | **Document 2_ABC** | Code 2 |   +    |
 | **Document 3_AC**  | Code 3 |        |
 | ...                |        |        |
 
-> **Filename**: document name\
+> **File name**: document name\
 > **Code**: any string\
 > **On doc**: any string: on existing document; empty or missing: on separate file
 
@@ -557,9 +557,9 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: January 29, 2023</small>
+<small>Last updated: January 31, 2023</small>
 
-[^1]: _Visible area_ is a zone delimited by one or more frames named `<visible area>`. If undefined, it fallbacks to the page/spread size.
+[^1]: A visible area is a zone delimited by a frame named `<visible area>`, and it's used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size.
 
 [^2]: By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
 

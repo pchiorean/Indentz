@@ -674,11 +674,11 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><small><em><strong>Document setup &#x2013; page size, margins &amp; columns, guides.</strong></em></small></p>
 <h4 class="mume-header" id="pagesizefromfilenamejsx-smallf3small"><strong><code>PageSizeFromFilename.jsx</code></strong> <small>F3</small></h4>
 
-<p>Sets the size of the page, the margins and the visible area<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>, getting dimensions from the document name. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
+<p>Sets the size of the page, the margins, and marks the visible area<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>, getting dimensions from the file name. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Filename</th>
+<th style="text-align:left">File name</th>
 <th style="text-align:left">Total size</th>
 <th style="text-align:left">Visible area</th>
 <th style="text-align:left">Bleed</th>
@@ -1093,7 +1093,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <table>
 <thead>
 <tr>
-<th style="text-align:left">Filename</th>
+<th style="text-align:left">File name</th>
 <th style="text-align:left">Code</th>
 <th style="text-align:center">On doc</th>
 </tr>
@@ -1122,7 +1122,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 <blockquote>
-<p><strong>Filename</strong>: document name<br>
+<p><strong>File name</strong>: document name<br>
 <strong>Code</strong>: any string<br>
 <strong>On doc</strong>: any string: on existing document; empty or missing: on separate file</p>
 </blockquote>
@@ -1152,11 +1152,11 @@ pre[data-line] .line-highlight[data-end]:after {
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>Thanks to Adrian Frigioiu for bug reports and feedback.</p>
-<p><small>Last updated: January 29, 2023</small></p>
+<p><small>Last updated: January 31, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p><em>Visible area</em> is a zone delimited by one or more frames named <code>&lt;visible area&gt;</code>. If undefined, it fallbacks to the page/spread size. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn1" class="footnote-item"><p>A visible area is a zone delimited by a frame named <code>&lt;visible area&gt;</code>, and it&#x2019;s used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
 <li id="fn2" class="footnote-item"><p>By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant <code>SNAP_PCT</code> from <code>fitTo()</code>. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
