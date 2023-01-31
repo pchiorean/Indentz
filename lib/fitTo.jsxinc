@@ -1,5 +1,5 @@
 /*
-	FitTo 23.1.29
+	FitTo 23.1.31
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
@@ -14,7 +14,7 @@
 	items      │ `pageItem` or [] │         │ A page item, or an array of page items to be reframed.
 	[scope]    │ `string`         │ `page`  │ `page` or `spread`.
 	[target]   │ `string`         │ `size`  │ `size`, `margins`, `visible` or `bleed`.
-	[forced]   │ `boolean`        │ `false` │ When `true` it just reframes the object without any checks. (Optional.)
+	[enforced] │ `boolean`        │ `false` │ When `true` it just reframes the object without any checks. (Optional.)
 
 	Note: 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`.
 
@@ -96,7 +96,9 @@ function fitTo(items, scope, target, enforced) {
 		B = {
 			size: bounds[scope].size,
 			target: bounds[scope][target],
-			visible: bounds[scope].visible
+			visible: bounds[scope].visible,
+			targetSZ: [],
+			visibleSZ: []
 		};
 		if (!B.target) return obj;
 		// Target and visible area snap zones
@@ -133,12 +135,25 @@ function fitTo(items, scope, target, enforced) {
 
 		// Knowing source/target properties, we compute the new bounds and reframe
 
-		// 1. Exceptions
+		// 1. Checks
 
-		// Forced fit simply reframes the objects, except for orthogonal lines, which will be fitted later
+		// -- Cancel if the object is outside the target
+		if (O.visible[1] > B.target[3] || O.visible[3] < B.target[1] || // outside target, h
+			O.visible[0] > B.target[2] || O.visible[2] < B.target[0]    // outside target, v
+		) return undefined;
+
+		// -- Cancel if the object is inside the target and visible area
+		if (O.visible[1] > B.targetSZ[1] && O.visible[3] < B.targetSZ[3] &&  // inside target, h
+			O.visible[0] > B.targetSZ[0] && O.visible[2] < B.targetSZ[2] &&  // inside target, v
+			!O.hitsVSZ[0] && !O.hitsVSZ[1] && !O.hitsVSZ[2] && !O.hitsVSZ[3] // inside visible area
+		) return undefined;
+
+		// 2. Exceptions
+
+		// -- Enforced fit simply reframes the objects, except for orthogonal lines, which will be fitted later
 		if (enforced && obj.constructor.name !== 'GraphicLine') { obj.geometricBounds = B.target; return obj; }
 
-		// HW has predefined dimensions
+		// -- HW has predefined dimensions
 		if (/hw/gi.test(obj.label) &&
 			(obj.constructor.name === 'TextFrame' || obj.constructor.name === 'Rectangle')) {
 			var hwRef = (target === 'margins') ? B.target : B.size;
@@ -160,20 +175,11 @@ function fitTo(items, scope, target, enforced) {
 			return obj;
 		}
 
-		// 2. Checks
+		// -- Skip special items
+		// if (obj.name === '<visible area>') return obj;
+		if (obj.itemLayer.name === 'dielines') return obj;
 
-		// Cancel if the object is outside the target
-		if (O.visible[1] > B.target[3] || O.visible[3] < B.target[1] || // outside target, h
-			O.visible[0] > B.target[2] || O.visible[2] < B.target[0]    // outside target, v
-		) return undefined;
-
-		// Cancel if the object is inside the target and visible area
-		if (O.visible[1] > B.targetSZ[1] && O.visible[3] < B.targetSZ[3] &&  // inside target, h
-			O.visible[0] > B.targetSZ[0] && O.visible[2] < B.targetSZ[2] &&  // inside target, v
-			!O.hitsVSZ[0] && !O.hitsVSZ[1] && !O.hitsVSZ[2] && !O.hitsVSZ[3] // inside visible area
-		) return undefined;
-
-		// 3. Object bounds are adjusted in two steps:
+		// 3. New object bounds are computed in two steps:
 
 		// -- If larger than the target, shrink to it
 		O.shrinked = [
@@ -203,10 +209,6 @@ function fitTo(items, scope, target, enforced) {
 		if (DEBUG) showDebugFrames();
 
 		// 4. Reframe the object to the new bounds
-
-		// -- Special items
-		// if (obj.name === '<visible area>') return obj;
-		if (obj.itemLayer.name === 'dielines') return obj;
 
 		// -- Already clipped
 		if (clippingFrameRE.test(obj.name) && obj.pageItems[0].isValid) {
