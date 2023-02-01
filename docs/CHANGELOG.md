@@ -1,32 +1,6 @@
 ## Changelog
 
-### [Development version](https://github.com/pchiorean/Indentz/compare/22.11.10...dev)
-
-<details><summary><strong>Queued</strong></summary>
-
-- `brk` **cleanup/DefaultLayers:** Add column for locked status
-- `upd` **cleanup/ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
-- `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
-- `fix` **cleanup/ReplaceLinks:** When relinking layered graphics, try to restore layers' visibility; report culprits
-- `new` **export/QuickExport:** Add a preflight dropbox
-- `upd` **export/QuickExport:** Default document PDF standard from a saved label
-- `upd` **export/QuickExport:** Use custom bleed T/L/B/R from PDF preset, but display only max. value
-- `upd` **export/QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
-- `fix` **export/QuickExport:** Report layer overrides
-- `fix` **export/QuickExport:** Fix low-res export for embedded .indd files
-- `fix` **export/QuickExport:** Restore cropping mode when relinking files
-- `fix` **file/SpreadsToFiles:** Don't append separators if already exist
-- `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
-- `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
-- `upd` **layout/PageSizeFromSelection:** Use outlined text bounds for text frames
-- `upd` **layout/PageSizeFromSelection:** Without selection fit all pages to their contents
-- `upd` **misc/EAN:** If multiple objects are selected, insert the code to all
-- `fix` **misc/EAN:** Preserve clipboard
-- `new` Add an '.ini' file for custom user settings
-- `doc` Add a mention about the option to interrupt the ongoing operation with 'Esc'
-- `upd` `?` Add a 'Canceling, please wait...' note when cancelling batch processes
-
-</details>
+### [23.2.1](https://github.com/pchiorean/Indentz/releases/tag/23.2.1)
 
 ##### New features
 
