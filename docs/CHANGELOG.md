@@ -1,6 +1,6 @@
 ## Changelog
 
-### [Development version](https://github.com/pchiorean/Indentz/compare/22.11.10...dev)
+### [Development version](https://github.com/pchiorean/Indentz/compare/23.2.1...dev)
 
 <details><summary><strong>Queued</strong></summary>
 
