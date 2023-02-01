@@ -1,28 +1,29 @@
-### What's new in [22.11.10](https://github.com/pchiorean/Indentz/releases/tag/22.11.10)
+### What's new in [23.2.1](https://github.com/pchiorean/Indentz/releases/tag/23.2.1)
 
 #### Cleanup
-- Added **BreakLinkToStyles:** Unnaplies paragraph/character/object styles from all or selected objects.
-- Added **DumpLayers:** Saves a TSV file with the properties of the active document layers (compatible with **DefaultLayers**).
-- **DefaultPrefs:** Preferences are now applied in two steps: application/document.
-- **DocCleanup:** Reinstated conversion of empty text frames to generic frames, but only when they are not auto-sized.
-- Renamed **SwatchesSave** to **DumpSwatches**.
+
+- **DefaultPrefs:** Changed **General ‣ Object Editing ‣ When Scaling** to **Apply to Content**.
+- **DefaultLayers:** You can now order layers to `top` or `bottom` using these keywords.
+- **DocCleanup:** Minor tweaks and fixes.
+- **RemoveScriptLabels:** Renamed from **misc/LabelsCleanup**.
 
 #### Export
+
 - **QuickExport:**
-  - Custom bleed is now imported when defined in the PDF preset.
-  - Document layers will be restored to initial status after export.
-  - Increased maximum bleed value to 152.4 mm.
-  - Improved the PDF preset tooltip info.
-  - Errors are now reported after running additional scripts.
-  - When the PDF preset is set to preserve original resolution the DPI option is now disabled.
+  - Preferences will be silently created on first run.
+  - Added a fix for queued documents that disappear before the actual export.
+
+#### Layout
+
+- Added **PageMarginsFromScriptName:** Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It's designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword `HW`. Example: `MG5HW10.jsx` sets a value of 5% for the margins and 10% for the HW (`HW` can also be used alone, which sets it to 10%, or omitted, which sets it to 0).
+
+#### View
+
+- **ZoomToSelection/Spreads:** When zooming to page include the slug if preview mode is off.
+- Added **ZoomTo300Percent:** Zooms the current view to 300%.
 
 #### Misc
-- Added **EAN:** Embeds an EAN code in the selected frame or adds it to a new page.
-- **QR:**
-  - Switched uppercase and white label options.
-  - Set label leading to 100%.
 
-#### Other
-- Dialogs are centered in the InDesign window.
+- **QR, QRBatch:** Minor tweaks and fixes.
 
-For other fixes and improvements not mentioned here see the full [changelog](CHANGELOG.md).
+For other changes not mentioned here see the full [changelog](CHANGELOG.md).
