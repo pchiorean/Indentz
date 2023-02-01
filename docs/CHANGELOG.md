@@ -73,6 +73,8 @@
   **lib/log:** Shorten display of anonymous functions to 'anon'
 - `12/23` [`upd`](https://github.com/pchiorean/Indentz/commit/9bbfa9e9fd5aec3278933369b13467e147f2adcd)
    **export/QuickExport:** Don't display preferences reset warning on first run
+- `01/31` [`upd`](https://github.com/pchiorean/Indentz/commit/258f503abef1d504a27219ca7519c2a3abb9b8df)
+  **lib/fitTo:** Swapped checks with exceptions; other minor fixes
 
 ##### Removed features
 
