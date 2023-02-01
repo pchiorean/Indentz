@@ -266,11 +266,7 @@ Resizes the current page to its margins.
 Resizes the page to the selected objects.
 
 #### **`PageMarginsFromScriptName.jsx`**
-Sets the page margins and the HW area from the script name. The script is designed to be renamed, to personalize the values.
-
-By default it sets the page margins to 5% of the visible/page area for all document pages. Renaming it to, e.g., `Margins<XX>.jsx` or `Margins<XX>HW<YY>.jsx`, you set a value `XX` for the margins and (optionally) a `YY` value for an HW area at the bottom.
-
-The default values are 5 for margins and 10 for HW.
+Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It's designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword `HW`. Example: `MG5HW10.jsx` sets a value of 5% for the margins and 10% for the HW (`HW` can also be used alone, which sets it to 10%, or omitted, which sets it to 0).
 
 #### **`PageMarginsFromSelection.jsx`** <small>⌥F3</small>
 Sets the page margins from the selected objects.
@@ -557,7 +553,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: January 31, 2023</small>
+<small>Last updated: February 1, 2023</small>
 
 [^1]: A visible area is a zone delimited by a frame named `<visible area>`, and it's used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size.
 
