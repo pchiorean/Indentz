@@ -684,5 +684,5 @@
 `del` - removed features\
 `fix` - bug fixes\
 `ref` - changes that neither fixes a bug or adds a feature\
-`doc` - changes in documentation
+`doc` - changes in documentation\
 `org` - file management
