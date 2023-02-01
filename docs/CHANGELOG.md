@@ -30,6 +30,18 @@
 
 ##### New features
 
+##### Updates
+
+##### Removed features
+
+##### Bug fixes
+
+##### Miscellaneous
+
+### [23.2.1](https://github.com/pchiorean/Indentz/releases/tag/23.2.1)
+
+##### New features
+
 - `11/12` [`new`](https://github.com/pchiorean/Indentz/commit/bd152afa2fa862875036a6e02eb8717a16586428)
   **view/ZoomTo300Percent:** Zooms current layout window to 300%
 - `11/14` [`upd`](https://github.com/pchiorean/Indentz/commit/3fe118dc578d8559feb46282d9efb9ac39f9ebef)
@@ -75,8 +87,6 @@
    **export/QuickExport:** Don't display preferences reset warning on first run
 - `01/31` [`upd`](https://github.com/pchiorean/Indentz/commit/258f503abef1d504a27219ca7519c2a3abb9b8df)
   **lib/fitTo:** Swapped checks with exceptions; other minor fixes
-
-##### Removed features
 
 ##### Bug fixes
 - `11/17` [`fix`](https://github.com/pchiorean/Indentz/commit/6b70b11e3638bdac0e8b1d849a68c7475e9edc0a)
