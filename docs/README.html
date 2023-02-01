@@ -713,7 +713,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Resizes the page to the selected objects.</p>
 <h4 class="mume-header" id="pagemarginsfromscriptnamejsx"><strong><code>PageMarginsFromScriptName.jsx</code></strong></h4>
 
-<p>Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It&#x2019;s designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword <code>HW</code>. Example: <code>MG5HW10.jsx</code> sets a value of 5% for the margins and 10% for the HW (<code>HW</code> can also be used alone, which sets it to 10%, or omitted, which sets it to 0).</p>
+<p>Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It&#x2019;s designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword <code>HW</code> &#x2013; e.g., <code>MG5HW10.jsx</code> sets a value of 5% for the margins and 10% for the HW (<code>HW</code> can also be used alone, which sets it to 10%, or omitted, which sets it to 0).</p>
 <h4 class="mume-header" id="pagemarginsfromselectionjsx-smallf3small"><strong><code>PageMarginsFromSelection.jsx</code></strong> <small>&#x2325;F3</small></h4>
 
 <p>Sets the page margins from the selected objects.</p>
@@ -863,7 +863,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="textautosizejsx-smallf6small"><strong><code>TextAutosize.jsx</code></strong> <small>F6</small></h4>
 
 <p>Auto-sizes the selected text frames to their content. It&#x2019;s designed to be run repeatedly.</p>
-<p>The level is increased from <strong>None</strong> to <strong>Height Only</strong> and from <strong>Height Only</strong> to <strong>Height and Width</strong> (single lines are always set <strong>Height and Width</strong>). The reference point is set by the first paragraph alignment and the text frame vertical justification:</p>
+<p>Each run increases the level with one step (from <strong>None</strong> to <strong>Height Only</strong>, and from <strong>Height Only</strong> to <strong>Height and Width</strong>), except single lines, which are always set <strong>Height and Width</strong>. The reference point is set by the first paragraph&#x2019;s alignment and the text frame&#x2019;s vertical justification:</p>
 <table>
 <thead>
 <tr>
@@ -894,7 +894,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> A second run will preserve the current auto-sizing if only the alignment is different.</p>
+<p><strong>Note:</strong> A second run will preserve the current auto-sizing if only the alignment is changed.</p>
 <hr>
 <h3 class="mume-header" id="scale">Scale</h3>
 
@@ -991,8 +991,8 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="spreadstofilesjsx"><strong><code>SpreadsToFiles.jsx</code></strong></h4>
 
 <p>Saves each spread of the active document to a separate file.</p>
-<p>If the document name ends with a <em>separator</em> (space/dot/underline/hyphen) followed by <em>a sequence</em> of digits or letters <em>equal</em> to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name &#x2013; e.g., a document with three spreads named <strong><code>Document_ABC.indd</code></strong> will be split into <strong><code>Document_A.indd</code></strong> / <strong><code>Document_B.indd</code></strong> / <strong><code>Document_C.indd</code></strong>. If not autodetected, the script will prompt the user for the list.</p>
-<p>By default, the index will be appended at the end, but you can put a <code>#</code> in the document name to place the index at that particular position.</p>
+<p>If the file name ends with a <em>separator</em> (space/dot/underline/hyphen) followed by <em>a sequence</em> of digits or letters <em>equal</em> to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name &#x2013; e.g., a document with three spreads named <strong><code>Document_ABC.indd</code></strong> will be split into <strong><code>Document_A.indd</code></strong> / <strong><code>Document_B.indd</code></strong> / <strong><code>Document_C.indd</code></strong>. If not autodetected, the script will prompt the user for a sequence.</p>
+<p>By default, the index will be appended at the end, but you can put a <code>#</code> in the file name to place the index at that particular position.</p>
 <h4 class="mume-header" id="layerstospreadsjsx"><strong><code>LayersToSpreads.jsx</code></strong></h4>
 
 <p>Moves all layers of the active document to separate spreads (the document must have a single spread).</p>

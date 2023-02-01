@@ -266,7 +266,7 @@ Resizes the current page to its margins.
 Resizes the page to the selected objects.
 
 #### **`PageMarginsFromScriptName.jsx`**
-Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It's designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword `HW`. Example: `MG5HW10.jsx` sets a value of 5% for the margins and 10% for the HW (`HW` can also be used alone, which sets it to 10%, or omitted, which sets it to 0).
+Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It's designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword `HW` – e.g., `MG5HW10.jsx` sets a value of 5% for the margins and 10% for the HW (`HW` can also be used alone, which sets it to 10%, or omitted, which sets it to 0).
 
 #### **`PageMarginsFromSelection.jsx`** <small>⌥F3</small>
 Sets the page margins from the selected objects.
@@ -348,7 +348,7 @@ Variants with the suffix **`Forced`** simply reframe the objects to the target a
 #### **`TextAutosize.jsx`** <small>F6</small>
 Auto-sizes the selected text frames to their content. It's designed to be run repeatedly.
 
-The level is increased from **None** to **Height Only** and from **Height Only** to **Height and Width** (single lines are always set **Height and Width**). The reference point is set by the first paragraph alignment and the text frame vertical justification:
+Each run increases the level with one step (from **None** to **Height Only**, and from **Height Only** to **Height and Width**), except single lines, which are always set **Height and Width**. The reference point is set by the first paragraph's alignment and the text frame's vertical justification:
 
 | <small>Paragraph Alignment →<br>↓ Vertical Justification</small> | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png) |
 | :-: | :-: | :-: | :-: |
@@ -356,7 +356,7 @@ The level is increased from **None** to **Height Only** and from **Height Only**
 | ![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png) |
 | ![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png) |
 
-**Note:** A second run will preserve the current auto-sizing if only the alignment is different.
+**Note:** A second run will preserve the current auto-sizing if only the alignment is changed.
 
 ---
 
@@ -407,9 +407,9 @@ Combines the open documents, sorted alphabetically.
 #### **`SpreadsToFiles.jsx`**
 Saves each spread of the active document to a separate file.
 
-If the document name ends with a _separator_ (space/dot/underline/hyphen) followed by _a sequence_ of digits or letters _equal_ to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`** / **`Document_B.indd`** / **`Document_C.indd`**. If not autodetected, the script will prompt the user for the list.
+If the file name ends with a _separator_ (space/dot/underline/hyphen) followed by _a sequence_ of digits or letters _equal_ to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`** / **`Document_B.indd`** / **`Document_C.indd`**. If not autodetected, the script will prompt the user for a sequence.
 
-By default, the index will be appended at the end, but you can put a `#` in the document name to place the index at that particular position.
+By default, the index will be appended at the end, but you can put a `#` in the file name to place the index at that particular position.
 
 #### **`LayersToSpreads.jsx`**
 Moves all layers of the active document to separate spreads (the document must have a single spread).
