@@ -4,7 +4,7 @@ C=60 M=40 Y=40 K=100 	process     	cmyk        	60 40 40 100
 C=40 M=5 Y=5 K=100   	process     	cmyk        	40 5 5 100
 
 # Special colors
-Safety margins       	spot        	rgb         	0 180 255
+Safety area          	spot        	rgb         	0 180 255    	Safety margins
 Covered area         	spot        	rgb         	255 0 128    	verdeckter bereich
 Visible area         	spot        	rgb         	255 180 0    	safe area, visible mark
 Cut                  	spot        	rgb         	255 0 0      	cut, artios?couper, final cut
