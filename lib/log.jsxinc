@@ -1,7 +1,7 @@
 /**
  * Appends a debugging line to a file saved on the desktop with the name of the running script
  * (e.g. `active-script.log`). If no arguments are given, it just appends an empty line.
- * @version 22.12.23
+ * @version 23.2.3
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} message - A list of messages (`part1`, `part2`, `part3`, etc.) that will
@@ -32,6 +32,7 @@ function log(/*?message list*/) {
 
 	debugFile.open('a');
 	debugFile.encoding = 'UTF-8';
+	debugFile.lineFeed = 'Unix';
 	debugFile.write(line);
 	debugFile.close();
 

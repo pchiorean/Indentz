@@ -1,6 +1,6 @@
 /*
-	Dump swatches 22.11.11
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Dump swatches 23.2.3
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Saves document's swatches to a TSV file compatible with `DefaultSwatches.jsx`:
 
@@ -26,6 +26,7 @@ var dataFile = File(String(doc.fullName).replace(/\.indd$/ig, '_swatches.tsv'));
 
 dataFile.open('w');
 dataFile.encoding = 'UTF-8';
+dataFile.lineFeed = 'Unix';
 dataFile.writeln('Name\tColor Model\tColor Space\tValues'); // Header
 
 cols = doc.colors.everyItem().getElements();

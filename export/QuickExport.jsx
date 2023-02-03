@@ -1,6 +1,6 @@
 /*
-	Quick export 22.12.23
-	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
+	Quick export 23.2.3
+	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
 
@@ -1164,6 +1164,8 @@ function saveSettings() {
 	} catch (e) {}
 
 	settingsFile.open('w');
+	settingsFile.encoding = 'UTF-8';
+	settingsFile.lineFeed = 'Unix';
 	settingsFile.write(settings.toSource());
 	settingsFile.close();
 }
