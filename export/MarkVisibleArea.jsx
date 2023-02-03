@@ -1,6 +1,6 @@
 /*
-	Mark visible area 22.12.10
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Mark visible area 23.2.3
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Creates on each page a 'visible area' frame the size of the page margins.
 
@@ -20,8 +20,8 @@ function main() {
 	var page, mgs,
 		visLayer, dieLayer,
 		oldFrame, frames;
-	var visLayerName = findLayer([ 'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ]);
-	var dieLayerName = findLayer([ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ]);
+	var visLayerName = getLayer([ 'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ]);
+	var dieLayerName = getLayer([ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ]);
 	var visFrame = {
 		swatchName: 'Visible area',
 		swatchModel: ColorModel.SPOT,
@@ -103,7 +103,7 @@ function main() {
 	}
 
 	// Find first valid layer from a list of names, else return first name
-	function findLayer(names) {
+	function getLayer(names) {
 		for (var i = 0; i < doc.layers.length; i++)
 			if (isInArray(doc.layers[i].name, names)) return doc.layers[i].name;
 		return names[0];

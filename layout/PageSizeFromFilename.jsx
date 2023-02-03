@@ -1,6 +1,6 @@
 /*
-	Page size from file name 22.12.10
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Page size from file name 23.2.3
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Sets every page size and margins according to the file name.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -38,8 +38,8 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 function main() {
 	var dimensions, firstPair, secondPair,
 		newPgSize, newMgSize, newBleed, newMargins, page, i, n;
-	var visLayerName = findLayer([ 'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ]);
-	var dieLayerName = findLayer([ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ]);
+	var visLayerName = getLayer([ 'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ]);
+	var dieLayerName = getLayer([ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ]);
 	var visFrame = {
 		swatchName: 'Visible area',
 		swatchModel: ColorModel.SPOT,
@@ -172,7 +172,7 @@ function main() {
 	cleanupAndExit();
 
 	// Find first valid layer from a list of names, else return first name
-	function findLayer(names) {
+	function getLayer(names) {
 		for (var i = 0; i < doc.layers.length; i++)
 			if (isInArray(doc.layers[i].name, names)) return doc.layers[i].name;
 		return names[0];
