@@ -1,5 +1,5 @@
 /*
-	FitTo 23.1.31
+	FitTo 23.2.7
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
@@ -135,20 +135,11 @@ function fitTo(items, scope, target, enforced) {
 
 		// Knowing source/target properties, we compute the new bounds and reframe
 
-		// 1. Checks
+		// 1. Some exceptions
 
-		// -- Cancel if the object is outside the target
-		if (O.visible[1] > B.target[3] || O.visible[3] < B.target[1] || // outside target, h
-			O.visible[0] > B.target[2] || O.visible[2] < B.target[0]    // outside target, v
-		) return undefined;
-
-		// -- Cancel if the object is inside the target and visible area
-		if (O.visible[1] > B.targetSZ[1] && O.visible[3] < B.targetSZ[3] &&  // inside target, h
-			O.visible[0] > B.targetSZ[0] && O.visible[2] < B.targetSZ[2] &&  // inside target, v
-			!O.hitsVSZ[0] && !O.hitsVSZ[1] && !O.hitsVSZ[2] && !O.hitsVSZ[3] // inside visible area
-		) return undefined;
-
-		// 2. Exceptions
+		// -- Skip special items
+		if (!enforced && obj.name === '<visible area>') return obj;
+		if (!enforced && obj.itemLayer.name === 'dielines') return obj;
 
 		// -- Enforced fit simply reframes the objects, except for orthogonal lines, which will be fitted later
 		if (enforced && obj.constructor.name !== 'GraphicLine') { obj.geometricBounds = B.target; return obj; }
@@ -175,9 +166,18 @@ function fitTo(items, scope, target, enforced) {
 			return obj;
 		}
 
-		// -- Skip special items
-		// if (obj.name === '<visible area>') return obj;
-		if (obj.itemLayer.name === 'dielines') return obj;
+		// 1. Check if the object is eligble to be fitted
+
+		// -- Skip if it's outside the target
+		if (O.visible[1] > B.target[3] || O.visible[3] < B.target[1] || // outside target, h
+			O.visible[0] > B.target[2] || O.visible[2] < B.target[0]    // outside target, v
+		) return undefined;
+
+		// -- Skip if it's inside the target and the visible area
+		if (O.visible[1] > B.targetSZ[1] && O.visible[3] < B.targetSZ[3] &&  // inside target, h
+			O.visible[0] > B.targetSZ[0] && O.visible[2] < B.targetSZ[2] &&  // inside target, v
+			!O.hitsVSZ[0] && !O.hitsVSZ[1] && !O.hitsVSZ[2] && !O.hitsVSZ[3] // inside visible area
+		) return undefined;
 
 		// 3. New object bounds are computed in two steps:
 
