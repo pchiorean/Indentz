@@ -1,12 +1,12 @@
 # Indentz
 
-<small>[Cleanup](#cleanup) | [Layout](#layout) | [Align](#align) | [Fit](#fit) | [Scale](#scale) | [Proxy](#proxy) | [File](#file) | [Export](#export) | [View](#view) | [Miscellaneous](#miscellaneous) | [Install](#install) | [About](#about)</small>
-
 This is a collection of InDesign scripts for various simple and repetitive tasks.
 
-As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown, I used the extra time to learn a bit of the (now ancient) Extendscript 'art'. 😉 These are simple scripts adapted to my current workflow, and I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). I'm a big fan of shortcuts, so there are suggestions for Mac below (unfortunately they must be added manually from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**).
+---
 
-The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though).
+I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I made several simple scripts to improve my workflow. Many are meant to be used with shortcuts[^1] (suggestions for Mac below). Some require one or more objects on the page to be selected. Apart from errors, they do their job silently; however, a few[^2] give a detailed report when run with `Ctrl`.
+
+The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/), compatibile with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
 ---
 
@@ -251,7 +251,7 @@ Saves a TSV file (compatible with [**`DefaultSwatches.jsx`**](#defaultswatchesjs
 <small>_**Document setup – page size, margins & columns, guides.**_</small>
 
 #### **`PageSizeFromFilename.jsx`** <small>F3</small>
-Sets the size of the page, the margins, and marks the visible area[^1], getting dimensions from the file name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
+Sets the size of the page, the margins, and marks the visible area[^3], getting dimensions from the file name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
 
 | File name                                       | Total size | Visible area | Bleed |
 |:------------------------------------------------|:-----------|:-------------|:------|
@@ -322,7 +322,7 @@ The refitting is done by:
 
   Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame.
 
-- **Extending** the edges that touch or are very close to a trigger zone[^2] (either target or visible area).
+- **Extending** the edges that touch or are very close to a trigger zone[^4] (either target or visible area).
 
   Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.
 
@@ -449,7 +449,7 @@ Show or hide the following _do-not-print_ layers: **covered areas**, **visible a
 ### View
 
 #### **`TileAll.jsx`** <small>⇧F4</small>
-Invokes **Window ‣ Arrange ‣ Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
+Invokes **Window ‣ Arrange ‣ Tile All Vertically**, **Tile All Horizontally**, or **Tile**, depending on the current spread orientation.
 
 #### **`ZoomTo300Percent.jsx`** <small>⌘3</small>
 Zooms current layout window to 300%.
@@ -497,7 +497,7 @@ This is a slightly modified version of [**OffsetPath**](https://creativepro.com/
 I fixed some bugs and added a default value, an option to join contours, and support for undoing.
 
 #### **`QR.jsx`** <small>F9</small>
-Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^3]:
+Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^5]:
 
 |             On document             |             On file              |
 |:-----------------------------------:|:--------------------------------:|
@@ -553,10 +553,14 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: February 3, 2023</small>
+<small>Last updated: February 22, 2023</small>
 
-[^1]: A visible area is a zone delimited by a frame named `<visible area>`, and it's used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size.
+[^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
-[^2]: By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
+[^2]: `DefaultLayers.jsx`, `DefaultSwatches.jsx`, `ReplaceFonts.jsx`, `ReplaceLinks.jsx`, `ReplaceSnippet.jsx`.
 
-[^3]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
+[^3]: A _visible area_ is a zone delimited by a frame named `<visible area>`, and it's used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size.
+
+[^4]: By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
+
+[^5]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.

@@ -263,10 +263,10 @@ pre[data-line] .line-highlight[data-end]:after {
       <div class="mume markdown-preview  ">
       <h1 class="mume-header" id="indentz">Indentz</h1>
 
-<p><small><a href="#cleanup">Cleanup</a> | <a href="#layout">Layout</a> | <a href="#align">Align</a> | <a href="#fit">Fit</a> | <a href="#scale">Scale</a> | <a href="#proxy">Proxy</a> | <a href="#file">File</a> | <a href="#export">Export</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#install">Install</a> | <a href="#about">About</a></small></p>
 <p>This is a collection of InDesign scripts for various simple and repetitive tasks.</p>
-<p>As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown, I used the extra time to learn a bit of the (now ancient) Extendscript &#x2018;art&#x2019;. &#x1F609; These are simple scripts adapted to my current workflow, and I tried to make them as generic as possible (<a href="https://github.com/pchiorean/Indentz/discussions">suggestions</a> are welcome). I&#x2019;m a big fan of shortcuts, so there are suggestions for Mac below (unfortunately they must be added manually from <strong>Edit &#x2023; Keyboard Shortcuts &#x2023; Product Area &#x2023; Scripts</strong>).</p>
-<p>The code was developed and tested in Adobe InDesign CC 2020&#x2013;2023 on Mac (but I mostly used <a href="https://www.indesignjs.de/extendscriptAPI/indesign8/">InDesign ExtendScript API 8.0</a> for compatibility with CS6). I&#x2019;m a graphic designer, not a programmer, so do expect oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though).</p>
+<hr>
+<p>I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I made several simple scripts to improve my workflow. Many are meant to be used with shortcuts<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> (suggestions for Mac below). Some require one or more objects on the page to be selected. Apart from errors, they do their job silently; however, a few<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> give a detailed report when run with <code>Ctrl</code>.</p>
+<p>The code was developed and tested in Adobe InDesign CC 2020&#x2013;2023 on Mac (I mostly used <a href="https://www.indesignjs.de/extendscriptAPI/indesign8/">InDesign ExtendScript API 8.0</a>, compatibile with CS6). I&#x2019;m a graphic designer, not a programmer, so do expect oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though!).</p>
 <hr>
 <h2 class="mume-header" id="usage">Usage</h2>
 
@@ -674,7 +674,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><small><em><strong>Document setup &#x2013; page size, margins &amp; columns, guides.</strong></em></small></p>
 <h4 class="mume-header" id="pagesizefromfilenamejsx-smallf3small"><strong><code>PageSizeFromFilename.jsx</code></strong> <small>F3</small></h4>
 
-<p>Sets the size of the page, the margins, and marks the visible area<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>, getting dimensions from the file name. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
+<p>Sets the size of the page, the margins, and marks the visible area<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>, getting dimensions from the file name. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
 <table>
 <thead>
 <tr>
@@ -792,7 +792,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame.</p>
 </li>
 <li>
-<p><strong>Extending</strong> the edges that touch or are very close to a trigger zone<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> (either target or visible area).</p>
+<p><strong>Extending</strong> the edges that touch or are very close to a trigger zone<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> (either target or visible area).</p>
 <p>Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.</p>
 </li>
 </ul>
@@ -1023,7 +1023,7 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <h4 class="mume-header" id="tilealljsx-smallf4small"><strong><code>TileAll.jsx</code></strong> <small>&#x21E7;F4</small></h4>
 
-<p>Invokes <strong>Window &#x2023; Arrange &#x2023; Tile All Vertically</strong> or <strong>Tile All Horizontally</strong>, depending on the current spread orientation.</p>
+<p>Invokes <strong>Window &#x2023; Arrange &#x2023; Tile All Vertically</strong>, <strong>Tile All Horizontally</strong>, or <strong>Tile</strong>, depending on the current spread orientation.</p>
 <h4 class="mume-header" id="zoomto300percentjsx-small3small"><strong><code>ZoomTo300Percent.jsx</code></strong> <small>&#x2318;3</small></h4>
 
 <p>Zooms current layout window to 300%.</p>
@@ -1068,7 +1068,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>I fixed some bugs and added a default value, an option to join contours, and support for undoing.</p>
 <h4 class="mume-header" id="qrjsx-smallf9small"><strong><code>QR.jsx</code></strong> <small>F9</small></h4>
 
-<p>Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>:</p>
+<p>Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>:</p>
 <table>
 <thead>
 <tr>
@@ -1150,15 +1150,19 @@ pre[data-line] .line-highlight[data-end]:after {
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>Thanks to Adrian Frigioiu for bug reports and feedback.</p>
-<p><small>Last updated: February 3, 2023</small></p>
+<p><small>Last updated: February 22, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>A visible area is a zone delimited by a frame named <code>&lt;visible area&gt;</code>, and it&#x2019;s used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn1" class="footnote-item"><p>You can add shortcuts to scripts from <strong>Edit &#x2023; Keyboard Shortcuts &#x2023; Product Area &#x2023; Scripts</strong>. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
-<li id="fn2" class="footnote-item"><p>By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant <code>SNAP_PCT</code> from <code>fitTo()</code>. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn2" class="footnote-item"><p><code>DefaultLayers.jsx</code>, <code>DefaultSwatches.jsx</code>, <code>ReplaceFonts.jsx</code>, <code>ReplaceLinks.jsx</code>, <code>ReplaceSnippet.jsx</code>. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
-<li id="fn3" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref3" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn3" class="footnote-item"><p>A <em>visible area</em> is a zone delimited by a frame named <code>&lt;visible area&gt;</code>, and it&#x2019;s used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size. <a href="#fnref3" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant <code>SNAP_PCT</code> from <code>fitTo()</code>. <a href="#fnref4" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref5" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
 </ol>
 </section>
