@@ -1,6 +1,6 @@
 /*
-	Replace links 23.01.5
-	(c) 2021-2023 Paul Chiorean (jpeg@basement.ro)
+	Replace links 23.2.22
+	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces document links from a 2-column TSV file named `links.tsv`:
 
@@ -287,13 +287,13 @@ function main() {
 
 		// Check if newLink is actually used and valid
 		if (!isLinkUsed) {
-			stat(data.status, tmpData.source + ':1',
-				'Skipped \'' + decodeURI(newLink) + '\' because it\'s not used.', 0);
-				return false;
+			// stat(data.status, tmpData.source + ':1',
+			// 	'Skipped \'' + decodeURI(newLink) + '\' because it\'s not used.', 0);
+			return false;
 		} else if (!File(newLink).exists) {
 			stat(data.status, tmpData.source + ':1',
 				'New link \'' + decodeURI(newLink) + '\' is not found.', -1);
-				return false;
+			return false;
 		}
 
 		tmpData.newLink = newLink;
