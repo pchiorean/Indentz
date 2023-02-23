@@ -7,7 +7,7 @@
 - `brk` **cleanup/DefaultLayers:** Add column for locked status
 - `upd` **cleanup/ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
 - `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
-- `fix` **cleanup/ReplaceLinks:** When relinking layered graphics, try to restore layers' visibility; report culprits
+- `fix` **cleanup/ReplaceLinks:** When relinking layered graphics, try to restore layers' visibility; inhibit alert and report culprits at finish
 - `new` **export/QuickExport:** Add a preflight dropbox
 - `upd` **export/QuickExport:** Default document PDF standard from a saved label
 - `upd` **export/QuickExport:** Use custom bleed T/L/B/R from PDF preset, but display only max. value
@@ -32,11 +32,25 @@
 
 ##### Updates
 
+- `02/03` [`upd`](https://github.com/pchiorean/Indentz/commit/bdd9d16c1a28598a7461c4f429d1c591728caff9)
+  **cleanup/DumpLayers, DumpSwatches, export/QuickExport, lib/log, report** Set linefeed to Unix
+- `02/03` [`upd`](https://github.com/pchiorean/Indentz/commit/6d294984e6df49ca1d80c363e249d65304acdb9f)
+  **export/Hide/ShowDNPLayers, PrepareForExport** Renamed 'Safety margins' to 'Safety area'
+- `02/07` [`upd`](https://github.com/pchiorean/Indentz/commit/73ca242a907c01f14b2f61dc1ea6953a8f6cfab5)
+  **lib/fitTo** Increased enforced mode priority
+- `02/22` [`upd`](https://github.com/pchiorean/Indentz/commit/ce11e9620ea2ca1ed62b9fa4c9ce73a4430e9801)
+  **view/TileAll** Added generic tiling for 1:1 formats
+- `02/22` [`upd`](https://github.com/pchiorean/Indentz/commit/eb0a3cdb3a61480d2aa8381b7141dac49840aae3)
+  **cleanup/ReplaceLinks** Skipped reporting status for unused links
+
 ##### Removed features
 
 ##### Bug fixes
 
 ##### Miscellaneous
+
+- `02/03` [`ref`](https://github.com/pchiorean/Indentz/commit/43a0c4fc7329de94f8b13a07bcec21b8c377e16a)
+  **export/MarkVisibleArea, layout/PageSizeFromFilename** Renamed 'findLayer' to 'getLayer'
 
 ### [23.2.1](https://github.com/pchiorean/Indentz/releases/tag/23.2.1)
 
