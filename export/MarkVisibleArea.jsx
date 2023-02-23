@@ -1,5 +1,5 @@
 /*
-	Mark visible area 23.2.3
+	Mark visible area 23.2.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Creates on each page a 'visible area' frame the size of the page margins.
@@ -27,15 +27,22 @@ function main() {
 		swatchModel: ColorModel.SPOT,
 		swatchSpace: ColorSpace.RGB,
 		swatchValue: [ 255, 180, 0 ],
-		strokeWeight: '0.75 pt',
+		strokeWeightS: '0.75 pt',
+		strokeWeightL: '1.00 pt',
 		strokeType: '$ID/Canned Dashed 3x2'
 	};
 	var visAreaRE = /^<?(visible|safe) area>?$/i;
+	var isLargePage = false;
 
 	for (var i = 0, n = doc.pages.length; i < n; i++) {
 		page = doc.pages[i];
 		mgs = page.marginPreferences;
 		if (mgs.top + mgs.left + mgs.bottom + mgs.right === 0) continue;
+		isLargePage = (
+			(page.bounds[3] - page.bounds[1]) > 666 ||
+			(page.bounds[2] - page.bounds[0]) > 666
+		);
+
 		// Make swatch
 		if (!doc.colors.itemByName(visFrame.swatchName).isValid) {
 			doc.colors.add({
@@ -81,7 +88,7 @@ function main() {
 			contentType: ContentType.UNASSIGNED,
 			fillColor: 'None',
 			strokeColor:  visFrame.swatchName,
-			strokeWeight: visFrame.strokeWeight,
+			strokeWeight: isLargePage ? visFrame.strokeWeightL : visFrame.strokeWeightS,
 			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 			strokeType: visFrame.strokeType,
 			overprintStroke: false,

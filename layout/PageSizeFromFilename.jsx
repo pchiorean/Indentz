@@ -1,5 +1,5 @@
 /*
-	Page size from file name 23.2.3
+	Page size from file name 23.2.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Sets every page size and margins according to the file name.
@@ -45,7 +45,8 @@ function main() {
 		swatchModel: ColorModel.SPOT,
 		swatchSpace: ColorSpace.RGB,
 		swatchValue: [ 255, 180, 0 ],
-		strokeWeight: '0.75 pt',
+		strokeWeightS: '0.75 pt',
+		strokeWeightL: '1.00 pt',
 		strokeType: '$ID/Canned Dashed 3x2'
 	};
 	var visAreaRE = /^<?(visible|safe) area>?$/i;
@@ -180,6 +181,10 @@ function main() {
 
 	function markVisibleArea() {
 		var visLayer, dieLayer, oldFrame, frames;
+		var isLargePage = (
+			(page.bounds[3] - page.bounds[1]) > 666 ||
+			(page.bounds[2] - page.bounds[0]) > 666
+		);
 		var PM = page.marginPreferences;
 		if (PM.top + PM.left + PM.bottom + PM.right === 0) return;
 		// Make swatch
@@ -227,7 +232,7 @@ function main() {
 			contentType: ContentType.UNASSIGNED,
 			fillColor: 'None',
 			strokeColor:  visFrame.swatchName,
-			strokeWeight: visFrame.strokeWeight,
+			strokeWeight: isLargePage ? visFrame.strokeWeightL : visFrame.strokeWeightS,
 			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 			strokeType: visFrame.strokeType,
 			overprintStroke: false,
