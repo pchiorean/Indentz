@@ -2,9 +2,7 @@
 
 This is a collection of InDesign scripts for various simple and repetitive tasks.
 
----
-
-I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I made several simple scripts to improve my workflow. Many are meant to be used with shortcuts[^1] (suggestions for Mac below). Some require one or more objects on the page to be selected. Apart from errors, they do their job silently; however, a few[^2] give a detailed report when run with `Ctrl`.
+I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I made several simple scripts to improve my workflow. Many are meant to be used with shortcuts[^1] (suggestions for Mac below). Some require one or more objects on the page to be selected. Apart from errors, they do their job silently; however, a few[^2] give a report if run with `Ctrl`.
 
 The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/), compatibile with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
@@ -537,7 +535,8 @@ Shows properties and methods of a selected object (for debugging purposes).
 
 ## Install
 
-1. Clone or download from **Code ‣ Download ZIP**. The repository uses dynamically linked libraries from **`lib/`**, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked.
+1. Clone or download from **Code ‣ Download ZIP**.\
+  The repository uses dynamically linked libraries from **`lib/`**, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked.
 2. Open **Window ‣ Utilities ‣ Scripts**.
 3. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
 4. Copy **Indentz** to this folder.
@@ -553,7 +552,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: February 22, 2023</small>
+<small>Last updated: February 23, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
