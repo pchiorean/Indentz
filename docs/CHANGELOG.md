@@ -13,18 +13,18 @@
 - `upd` **export/QuickExport:** Use custom bleed T/L/B/R from PDF preset, but display only max. value
 - `upd` **export/QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
 - `fix` **export/QuickExport:** Report layer overrides
-- `fix` **export/QuickExport:** Fix low-res export for embedded .indd files
 - `fix` **export/QuickExport:** Restore cropping mode when relinking files
+- `fix` **export/QuickExport:** Fix low-res export for embedded .indd files
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
 - `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
 - `upd` **layout/PageSizeFromSelection:** Use outlined text bounds for text frames
 - `upd` **layout/PageSizeFromSelection:** Without selection fit all pages to their contents
 - `upd` **misc/EAN:** If multiple objects are selected, insert the code to all
-- `fix` **misc/EAN:** Preserve clipboard
+- `fix` `?!` **misc/EAN:** Preserve clipboard
 - `new` Add an '.ini' file for custom user settings
 - `doc` Add a mention about the option to interrupt the ongoing operation with 'Esc'
-- `upd` `?` Add a 'Canceling, please wait...' note when cancelling batch processes
+- `upd` `?` Add a 'Canceling, please wait...' note when canceling batch processes
 
 </details>
 
@@ -37,15 +37,19 @@
 - `02/03` [`upd`](https://github.com/pchiorean/Indentz/commit/6d294984e6df49ca1d80c363e249d65304acdb9f)
   **export/Hide/ShowDNPLayers, PrepareForExport** Renamed 'Safety margins' to 'Safety area'
 - `02/07` [`upd`](https://github.com/pchiorean/Indentz/commit/73ca242a907c01f14b2f61dc1ea6953a8f6cfab5)
-  **lib/fitTo** Increased enforced mode priority
+  **lib/fitTo** Bump priority of enforced fitting
 - `02/22` [`upd`](https://github.com/pchiorean/Indentz/commit/ce11e9620ea2ca1ed62b9fa4c9ce73a4430e9801)
-  **view/TileAll** Added generic tiling for 1:1 formats
+  **view/TileAll** Added generic tiling for square formats
 - `02/22` [`upd`](https://github.com/pchiorean/Indentz/commit/eb0a3cdb3a61480d2aa8381b7141dac49840aae3)
   **cleanup/ReplaceLinks** Skipped reporting status for unused links
+- `02/23` [`upd`](https://github.com/pchiorean/Indentz/commit/def4661ad77f65261b2c0e4ac40cbb21b1d5bf5f)
+  **export/MarkVisibleArea, layout/PageSizeFromFilename:** Increased stroke width for large visuals
 
 ##### Removed features
 
 ##### Bug fixes
+- `02/24` [`fix`](https://github.com/pchiorean/Indentz/commit/fd5a40a300cb56bcc4df54a19a1d780c550cecce)
+  **export/PrepareForExport:** Don't add 'info' layer if not actually needed
 
 ##### Miscellaneous
 
