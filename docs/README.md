@@ -6,8 +6,6 @@ I often perform repeated, tedious, or time-consuming operations as a DTP operato
 
 The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/), compatibile with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
----
-
 ## Usage
 
 ### Cleanup
@@ -242,8 +240,6 @@ Saves a TSV file (compatible with [**`DefaultLayers.jsx`**](#defaultlayersjsx)) 
 #### **`DumpSwatches.jsx`**
 Saves a TSV file (compatible with [**`DefaultSwatches.jsx`**](#defaultswatchesjsx)) containing the names and properties of the active document swatches.
 
----
-
 ### Layout
 
 <small>_**Document setup – page size, margins & columns, guides.**_</small>
@@ -275,8 +271,6 @@ If any page objects are selected, it adds guides around them. If nothing is sele
 #### **`GuidesDelete.jsx`**
 Deletes all guides from the document.
 
----
-
 ### Align
 
 <small>_**Align page objects with ease using the numeric keypad.**_</small>
@@ -301,8 +295,6 @@ Toggles **Align To** between selection, margins, page or spread (just run it rep
 
 #### **`ResetAlignTo.jsx`** <small>⌃Num0</small>
 Resets **Align To** to default (**Align to Selection**).
-
----
 
 ### Fit
 
@@ -356,8 +348,6 @@ Each run increases the level with one step (from **None** to **Height Only**, an
 
 **Note:** A second run will preserve the current auto-sizing if only the alignment is changed.
 
----
-
 ### Scale
 
 <small>_**Resize selected objects.**_</small>
@@ -376,8 +366,6 @@ Scale the selected objects to the page size, page margins, or spread bleed. All 
 
 </details>
 
----
-
 ### Proxy
 
 #### **`SetRefPoint*.jsx`**
@@ -395,8 +383,6 @@ Use the numeric keypad to set the reference point used for transformations (simi
 
 </details>
 
----
-
 ### File
 
 #### **`FilesToSpreads.jsx`**
@@ -413,8 +399,6 @@ By default, the index will be appended at the end, but you can put a `#` in the 
 Moves all layers of the active document to separate spreads (the document must have a single spread).
 
 You can use **`SpreadsToFiles.jsx`** to save them in separate documents.
-
----
 
 ### Export
 
@@ -442,8 +426,6 @@ Hides **covered areas**, **visible area**, **safety area**, **safe area**, **seg
 #### **`ShowDNPLayers.jsx`** / **`HideDNPLayers.jsx`**
 Show or hide the following _do-not-print_ layers: **covered areas**, **visible area**, **\*vi?ib\***, **vis?\***, **safety area**, **safe area**, **segmentation**, **rahmen** and **sicht\***, and all layers starting with either a dot or a hyphen.
 
----
-
 ### View
 
 #### **`TileAll.jsx`** <small>⇧F4</small>
@@ -461,8 +443,6 @@ It resembles **Fit Selection in Window** **<small>(⌥⌘=)</small>**, but with 
 
 #### **`ZoomToSpreads.jsx`** <small>⌥F4</small>
 Zooms on the first 3 spreads.
-
----
 
 ### Miscellaneous
 
@@ -552,7 +532,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: February 23, 2023</small>
+<small>Last updated: February 24, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
