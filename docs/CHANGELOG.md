@@ -2,32 +2,6 @@
 
 ### [Development version](https://github.com/pchiorean/Indentz/compare/23.2.1...dev)
 
-<details><summary><strong>Queued</strong></summary>
-
-- `brk` **cleanup/DefaultLayers:** Add column for locked status
-- `upd` **cleanup/ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
-- `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
-- `fix` **cleanup/ReplaceLinks:** When relinking layered graphics, try to restore layers' visibility; inhibit alert and report culprits at finish
-- `new` **export/QuickExport:** Add a preflight dropbox
-- `upd` **export/QuickExport:** Default document PDF standard from a saved label
-- `upd` **export/QuickExport:** Use custom bleed T/L/B/R from PDF preset, but display only max. value
-- `upd` **export/QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
-- `fix` **export/QuickExport:** Report layer overrides
-- `fix` **export/QuickExport:** Restore cropping mode when relinking files
-- `fix` **export/QuickExport:** Fix low-res export for embedded .indd files
-- `fix` **file/SpreadsToFiles:** Don't append separators if already exist
-- `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
-- `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
-- `upd` **layout/PageSizeFromSelection:** Use outlined text bounds for text frames
-- `upd` **layout/PageSizeFromSelection:** Without selection fit all pages to their contents
-- `upd` **misc/EAN:** If multiple objects are selected, insert the code to all
-- `fix` `?!` **misc/EAN:** Preserve clipboard
-- `new` Add an '.ini' file for custom user settings
-- `doc` Add a mention about the option to interrupt the ongoing operation with 'Esc'
-- `upd` `?` Add a 'Canceling, please wait...' note when canceling batch processes
-
-</details>
-
 ##### New features
 
 ##### Updates
@@ -44,6 +18,8 @@
   **cleanup/ReplaceLinks** Skipped reporting status for unused links
 - `02/23` [`upd`](https://github.com/pchiorean/Indentz/commit/def4661ad77f65261b2c0e4ac40cbb21b1d5bf5f)
   **export/MarkVisibleArea, layout/PageSizeFromFilename:** Increased stroke width for large visuals
+- `03/07` [`upd`](https://github.com/pchiorean/Indentz/commit/981fede9a4cb658051a5e2e1fb8eb496288ca77d)
+  **export/QuickExport:** Improved speed when checking for text overflow (changed the loop from `for` to `while`)
 
 ##### Removed features
 
@@ -670,37 +646,62 @@
 - `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
 - `new` **export/QuickExport:** Add INDD (with or without package) export profile
 - `new` **export/QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
+- `new` **file/SpreadsToLayers**
+- `new` Add an '.ini' file for custom user settings
+- `new` 'Send \[selection\] to layer...'
+- `new` `?` **file/LayersToFiles**
 
 ##### Updates
 
+- `brk` **cleanup/DefaultLayers:** Add column for locked status
 - `brk` **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
 - `upd` **cleanup/DefaultSwatches:** Check color values on parsing
-- `upd` **misc/LabelPageRatios:** Mark outer/inner ratios
-- `brk` **export/MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
+- `upd` **cleanup/ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
+- `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
 - `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
+- `brk` **export/MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
+- `new` **export/QuickExport:** Add a preflight dropbox
+- `upd` **export/QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
+- `upd` **export/QuickExport:** Default document PDF standard from a saved label
+- `upd` **export/QuickExport:** Skip file export when links queued to be updated are missing
+- `upd` **export/QuickExport:** Use custom bleed T/L/B/R from PDF preset, but display only max. value
 - `upd` **export/Show/HideDNPLayers:** Take layers from a TSV
-- `upd` **layout/PageMarginsFromSelection:** Set the margins of every page touched by the selection
-- `upd` `?` **export/QuickExport:** JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
-- `upd` **lib/replaceText:** Take an array of strings as input
-- `upd` **lib/replaceText:** Add grep matching
-- `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
 - `upd` **file/SpreadsToFiles:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
+- `upd` **layout/PageMarginsFromSelection:** Set the margins of every page touched by the selection
+- `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
+- `upd` **layout/PageSizeFromSelection:** Use outlined text bounds for text frames
+- `upd` **layout/PageSizeFromSelection:** Without selection fit all pages to their contents
+- `upd` **lib/replaceText:** Add grep matching
+- `upd` **lib/replaceText:** Take an array of strings as input
+- `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
+- `upd` **misc/EAN:** If multiple objects are selected, insert the code to all
+- `upd` **misc/LabelPageRatios:** Mark outer/inner ratios
 - `upd` **view/ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
-- `upd` `?` **lib/isInArray:** Add regex matching to `searchValue`
 - `upd` Use a custom object style for `<visible area>` frame
+- `upd` `?` **export/QuickExport:** JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
+- `upd` `?` **lib/isInArray:** Add regex matching to `searchValue`
+- `upd` `?` Add a 'Canceling, please wait...' note when canceling batch processes
+
+##### Removed features
 
 ##### Bug fixes
 
-- `fix` **layout/PageSizeFromFilename:** Error on pages set to 1:X scale
+- `fix` **cleanup/ReplaceLinks:** When relinking layered graphics, try to restore layers' visibility; inhibit alert and report culprits at finish
 - `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
+- `fix` **export/QuickExport:** Fix low-res export for embedded .indd files
+- `fix` **export/QuickExport:** Report layer overrides
+- `fix` **export/QuickExport:** Restore cropping mode when relinking files
+- `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `fix` **fit/TextAutoSize:** Check `baselineShift`
-- `fix` `transform()` and `app.transformPreferences.whenScaling`
+- `fix` **layout/PageSizeFromFilename:** Error on pages set to 1:X scale
+- `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
 - `fix` Nullify large variables on exit
+- `fix` `transform()` and `app.transformPreferences.whenScaling`
+- `fix` `?!` **misc/EAN:** Preserve clipboard
 
-##### New scripts
+##### Miscellaneous
 
-- `new` `?` **file/LayersToFiles**
-- `new` **file/SpreadsToLayers**
+- `doc` Add a mention about canceling the ongoing operation with 'Esc'
 
 ---
 
