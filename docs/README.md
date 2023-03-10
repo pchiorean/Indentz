@@ -312,7 +312,7 @@ The refitting is done by:
 
   Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame.
 
-- **Extending** the edges that touch or are very close to a trigger zone[^4] (either target or visible area).
+- **Extending** the edges that touch or are very close to the trigger zone[^4] (either target or visible area).
 
   Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.
 
@@ -532,7 +532,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: February 24, 2023</small>
+<small>Last updated: March 10, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
