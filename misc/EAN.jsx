@@ -1,5 +1,5 @@
 /*
-	EAN code 23.x.xx
+	EAN code 23.3.10
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Embeds an EAN code in the selected frame or adds it to a new page.
@@ -37,7 +37,7 @@
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'EAN code');
 
 function main() {
-	var doc, page, ui, barcode, codeFrame, codeLayer, txtLayer, target, SF, clpbrd;
+	var doc, page, ui, barcode, codeFrame, codeLayer, txtLayer, target, SF;
 	var codeLayerName = 'codes';
 	var txtLayerName = 'text & logos';
 	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
@@ -152,8 +152,6 @@ function main() {
 		doc.documentPreferences.pageHeight = page.bounds[2] - page.bounds[1];
 		app.activeWindow.zoom(ZoomOptions.FIT_SPREAD);
 	}
-
-	// [TODO] Make a temporary frame to paste/copy code to clipboard
 
 	app.select(codeFrame);
 
