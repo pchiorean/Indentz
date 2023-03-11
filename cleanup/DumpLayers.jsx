@@ -1,6 +1,6 @@
 /*
-	Dump layers 22.11.11
-	(c) 2022 Paul Chiorean (jpeg@basement.ro)
+	Dump layers 23.2.3
+	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Saves document's layers to a TSV file compatible with `Defaultlayers.jsx`:
 
@@ -25,6 +25,7 @@ var dataFile = File(String(doc.fullName).replace(/\.indd$/ig, '_layers.tsv'));
 
 dataFile.open('w');
 dataFile.encoding = 'UTF-8';
+dataFile.lineFeed = 'Unix';
 dataFile.writeln('Name\tColor\tVisible\tPrintable'); // Header
 
 layers = doc.layers.everyItem().getElements();

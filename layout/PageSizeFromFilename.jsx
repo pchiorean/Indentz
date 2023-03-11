@@ -1,6 +1,6 @@
 /*
-	Page size from file name 22.12.10
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Page size from file name 23.2.23
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Sets every page size and margins according to the file name.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -38,14 +38,15 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 function main() {
 	var dimensions, firstPair, secondPair,
 		newPgSize, newMgSize, newBleed, newMargins, page, i, n;
-	var visLayerName = findLayer([ 'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ]);
-	var dieLayerName = findLayer([ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ]);
+	var visLayerName = getLayer([ 'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ]);
+	var dieLayerName = getLayer([ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ]);
 	var visFrame = {
 		swatchName: 'Visible area',
 		swatchModel: ColorModel.SPOT,
 		swatchSpace: ColorSpace.RGB,
 		swatchValue: [ 255, 180, 0 ],
-		strokeWeight: '0.75 pt',
+		strokeWeightS: '0.75 pt',
+		strokeWeightL: '1.00 pt',
 		strokeType: '$ID/Canned Dashed 3x2'
 	};
 	var visAreaRE = /^<?(visible|safe) area>?$/i;
@@ -172,7 +173,7 @@ function main() {
 	cleanupAndExit();
 
 	// Find first valid layer from a list of names, else return first name
-	function findLayer(names) {
+	function getLayer(names) {
 		for (var i = 0; i < doc.layers.length; i++)
 			if (isInArray(doc.layers[i].name, names)) return doc.layers[i].name;
 		return names[0];
@@ -180,6 +181,10 @@ function main() {
 
 	function markVisibleArea() {
 		var visLayer, dieLayer, oldFrame, frames;
+		var isLargePage = (
+			(page.bounds[3] - page.bounds[1]) > 666 ||
+			(page.bounds[2] - page.bounds[0]) > 666
+		);
 		var PM = page.marginPreferences;
 		if (PM.top + PM.left + PM.bottom + PM.right === 0) return;
 		// Make swatch
@@ -227,7 +232,7 @@ function main() {
 			contentType: ContentType.UNASSIGNED,
 			fillColor: 'None',
 			strokeColor:  visFrame.swatchName,
-			strokeWeight: visFrame.strokeWeight,
+			strokeWeight: isLargePage ? visFrame.strokeWeightL : visFrame.strokeWeightS,
 			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 			strokeType: visFrame.strokeType,
 			overprintStroke: false,

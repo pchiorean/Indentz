@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:////Users/paul.chiorean/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.6.7/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
+      <link rel="stylesheet" href="file:////Users/paul.chiorean/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.6.8/node_modules/@shd101wyy/mume/dependencies/katex/katex.min.css">
       
       
       
@@ -263,11 +263,9 @@ pre[data-line] .line-highlight[data-end]:after {
       <div class="mume markdown-preview  ">
       <h1 class="mume-header" id="indentz">Indentz</h1>
 
-<p><small><a href="#cleanup">Cleanup</a> | <a href="#layout">Layout</a> | <a href="#align">Align</a> | <a href="#fit">Fit</a> | <a href="#scale">Scale</a> | <a href="#proxy">Proxy</a> | <a href="#file">File</a> | <a href="#export">Export</a> | <a href="#view">View</a> | <a href="#miscellaneous">Miscellaneous</a> | <a href="#install">Install</a> | <a href="#about">About</a></small></p>
 <p>This is a collection of InDesign scripts for various simple and repetitive tasks.</p>
-<p>As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown, I used the extra time to learn a bit of the (now ancient) Extendscript &#x2018;art&#x2019;. &#x1F609; These are simple scripts adapted to my current workflow, and I tried to make them as generic as possible (<a href="https://github.com/pchiorean/Indentz/discussions">suggestions</a> are welcome). I&#x2019;m a big fan of shortcuts, so there are suggestions for Mac below (unfortunately they must be added manually from <strong>Edit &#x2023; Keyboard Shortcuts &#x2023; Product Area &#x2023; Scripts</strong>).</p>
-<p>The code was developed and tested in Adobe InDesign CC 2020&#x2013;2023 on Mac (but I mostly used <a href="https://www.indesignjs.de/extendscriptAPI/indesign8/">InDesign ExtendScript API 8.0</a> for compatibility with CS6). I&#x2019;m a graphic designer, not a programmer, so do expect oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though).</p>
-<hr>
+<p>I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I made several simple scripts to improve my workflow. Many are meant to be used with shortcuts<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> (suggestions for Mac below). Some require one or more objects on the page to be selected. Apart from errors, they do their job silently; however, a few<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> give a report if run with <code>Ctrl</code>.</p>
+<p>The code was developed and tested in Adobe InDesign CC 2020&#x2013;2023 on Mac (I mostly used <a href="https://www.indesignjs.de/extendscriptAPI/indesign8/">InDesign ExtendScript API 8.0</a>, compatibile with CS6). I&#x2019;m a graphic designer, not a programmer, so do expect oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though!).</p>
 <h2 class="mume-header" id="usage">Usage</h2>
 
 <h3 class="mume-header" id="cleanup">Cleanup</h3>
@@ -668,13 +666,12 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="dumpswatchesjsx"><strong><code>DumpSwatches.jsx</code></strong></h4>
 
 <p>Saves a TSV file (compatible with <a href="#defaultswatchesjsx"><strong><code>DefaultSwatches.jsx</code></strong></a>) containing the names and properties of the active document swatches.</p>
-<hr>
 <h3 class="mume-header" id="layout">Layout</h3>
 
 <p><small><em><strong>Document setup &#x2013; page size, margins &amp; columns, guides.</strong></em></small></p>
 <h4 class="mume-header" id="pagesizefromfilenamejsx-smallf3small"><strong><code>PageSizeFromFilename.jsx</code></strong> <small>F3</small></h4>
 
-<p>Sets the size of the page, the margins, and marks the visible area<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>, getting dimensions from the file name. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
+<p>Sets the size of the page, the margins, and marks the visible area<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>, getting dimensions from the file name. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
 <table>
 <thead>
 <tr>
@@ -713,7 +710,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Resizes the page to the selected objects.</p>
 <h4 class="mume-header" id="pagemarginsfromscriptnamejsx"><strong><code>PageMarginsFromScriptName.jsx</code></strong></h4>
 
-<p>Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It&#x2019;s designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword <code>HW</code>. Example: <code>MG5HW10.jsx</code> sets a value of 5% for the margins and 10% for the HW (<code>HW</code> can also be used alone, which sets it to 10%, or omitted, which sets it to 0).</p>
+<p>Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It&#x2019;s designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword <code>HW</code> &#x2013; e.g., <code>MG5HW10.jsx</code> sets a value of 5% for the margins and 10% for the HW (<code>HW</code> can also be used alone, which sets it to 10%, or omitted, which sets it to 0).</p>
 <h4 class="mume-header" id="pagemarginsfromselectionjsx-smallf3small"><strong><code>PageMarginsFromSelection.jsx</code></strong> <small>&#x2325;F3</small></h4>
 
 <p>Sets the page margins from the selected objects.</p>
@@ -723,7 +720,6 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="guidesdeletejsx"><strong><code>GuidesDelete.jsx</code></strong></h4>
 
 <p>Deletes all guides from the document.</p>
-<hr>
 <h3 class="mume-header" id="align">Align</h3>
 
 <p><small><em><strong>Align page objects with ease using the numeric keypad.</strong></em></small></p>
@@ -777,7 +773,6 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="resetaligntojsx-smallnum0small"><strong><code>ResetAlignTo.jsx</code></strong> <small>&#x2303;Num0</small></h4>
 
 <p>Resets <strong>Align To</strong> to default (<strong>Align to Selection</strong>).</p>
-<hr>
 <h3 class="mume-header" id="fit">Fit</h3>
 
 <p><small><em><strong>Reframe selected objects.</strong></em></small></p>
@@ -792,7 +787,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame.</p>
 </li>
 <li>
-<p><strong>Extending</strong> the edges that touch or are very close to a trigger zone<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> (either target or visible area).</p>
+<p><strong>Extending</strong> the edges that touch or are very close to the trigger zone<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> (either target or visible area).</p>
 <p>Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.</p>
 </li>
 </ul>
@@ -863,7 +858,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="textautosizejsx-smallf6small"><strong><code>TextAutosize.jsx</code></strong> <small>F6</small></h4>
 
 <p>Auto-sizes the selected text frames to their content. It&#x2019;s designed to be run repeatedly.</p>
-<p>The level is increased from <strong>None</strong> to <strong>Height Only</strong> and from <strong>Height Only</strong> to <strong>Height and Width</strong> (single lines are always set <strong>Height and Width</strong>). The reference point is set by the first paragraph alignment and the text frame vertical justification:</p>
+<p>Each run increases the level with one step (from <strong>None</strong> to <strong>Height Only</strong>, and from <strong>Height Only</strong> to <strong>Height and Width</strong>), except single lines, which are always set <strong>Height and Width</strong>. The reference point is set by the first paragraph&#x2019;s alignment and the text frame&#x2019;s vertical justification:</p>
 <table>
 <thead>
 <tr>
@@ -894,8 +889,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> A second run will preserve the current auto-sizing if only the alignment is different.</p>
-<hr>
+<p><strong>Note:</strong> A second run will preserve the current auto-sizing if only the alignment is changed.</p>
 <h3 class="mume-header" id="scale">Scale</h3>
 
 <p><small><em><strong>Resize selected objects.</strong></em></small></p>
@@ -935,7 +929,6 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 </details>
-<hr>
 <h3 class="mume-header" id="proxy">Proxy</h3>
 
 <h4 class="mume-header" id="setrefpointjsx"><strong><code>SetRefPoint*.jsx</code></strong></h4>
@@ -982,7 +975,6 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 </details>
-<hr>
 <h3 class="mume-header" id="file">File</h3>
 
 <h4 class="mume-header" id="filestospreadsjsx"><strong><code>FilesToSpreads.jsx</code></strong></h4>
@@ -991,13 +983,12 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="spreadstofilesjsx"><strong><code>SpreadsToFiles.jsx</code></strong></h4>
 
 <p>Saves each spread of the active document to a separate file.</p>
-<p>If the document name ends with a <em>separator</em> (space/dot/underline/hyphen) followed by <em>a sequence</em> of digits or letters <em>equal</em> to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name &#x2013; e.g., a document with three spreads named <strong><code>Document_ABC.indd</code></strong> will be split into <strong><code>Document_A.indd</code></strong> / <strong><code>Document_B.indd</code></strong> / <strong><code>Document_C.indd</code></strong>. If not autodetected, the script will prompt the user for the list.</p>
-<p>By default, the index will be appended at the end, but you can put a <code>#</code> in the document name to place the index at that particular position.</p>
+<p>If the file name ends with a <em>separator</em> (space/dot/underline/hyphen) followed by <em>a sequence</em> of digits or letters <em>equal</em> to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name &#x2013; e.g., a document with three spreads named <strong><code>Document_ABC.indd</code></strong> will be split into <strong><code>Document_A.indd</code></strong> / <strong><code>Document_B.indd</code></strong> / <strong><code>Document_C.indd</code></strong>. If not autodetected, the script will prompt the user for a sequence.</p>
+<p>By default, the index will be appended at the end, but you can put a <code>#</code> in the file name to place the index at that particular position.</p>
 <h4 class="mume-header" id="layerstospreadsjsx"><strong><code>LayersToSpreads.jsx</code></strong></h4>
 
 <p>Moves all layers of the active document to separate spreads (the document must have a single spread).</p>
 <p>You can use <strong><code>SpreadsToFiles.jsx</code></strong> to save them in separate documents.</p>
-<hr>
 <h3 class="mume-header" id="export">Export</h3>
 
 <h4 class="mume-header" id="quickexportjsx-smallesmall"><strong><code>QuickExport.jsx</code></strong> <small>&#x2303;E</small></h4>
@@ -1014,16 +1005,15 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Creates a frame the size of the page margins on the <strong>visible area</strong> layer. It will use the <strong>Visible area</strong> swatch, which will be created with the values R=255 G=180 B=0 if it doesn&#x2019;t exist.</p>
 <h4 class="mume-header" id="prepareforexportjsx"><strong><code>PrepareForExport.jsx</code></strong></h4>
 
-<p>Hides <strong>covered areas</strong>, <strong>visible area</strong>, <strong>safety margins</strong>, <strong>safe area</strong>, <strong>segmentation</strong>, <strong>guides</strong>, and all layers starting with either a dot or a hyphen; moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads.</p>
+<p>Hides <strong>covered areas</strong>, <strong>visible area</strong>, <strong>safety area</strong>, <strong>safe area</strong>, <strong>segmentation</strong>, <strong>guides</strong>, and all layers starting with either a dot or a hyphen; moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads.</p>
 <h4 class="mume-header" id="showdnplayersjsx--hidednplayersjsx"><strong><code>ShowDNPLayers.jsx</code></strong> / <strong><code>HideDNPLayers.jsx</code></strong></h4>
 
-<p>Show or hide the following <em>do-not-print</em> layers: <strong>covered areas</strong>, <strong>visible area</strong>, <strong>*vi?ib*</strong>, <strong>vis?*</strong>, <strong>safety margins</strong>, <strong>safe area</strong>, <strong>segmentation</strong>, <strong>rahmen</strong> and <strong>sicht*</strong>, and all layers starting with either a dot or a hyphen.</p>
-<hr>
+<p>Show or hide the following <em>do-not-print</em> layers: <strong>covered areas</strong>, <strong>visible area</strong>, <strong>*vi?ib*</strong>, <strong>vis?*</strong>, <strong>safety area</strong>, <strong>safe area</strong>, <strong>segmentation</strong>, <strong>rahmen</strong> and <strong>sicht*</strong>, and all layers starting with either a dot or a hyphen.</p>
 <h3 class="mume-header" id="view">View</h3>
 
 <h4 class="mume-header" id="tilealljsx-smallf4small"><strong><code>TileAll.jsx</code></strong> <small>&#x21E7;F4</small></h4>
 
-<p>Invokes <strong>Window &#x2023; Arrange &#x2023; Tile All Vertically</strong> or <strong>Tile All Horizontally</strong>, depending on the current spread orientation.</p>
+<p>Invokes <strong>Window &#x2023; Arrange &#x2023; Tile All Vertically</strong>, <strong>Tile All Horizontally</strong>, or <strong>Tile</strong>, depending on the current spread orientation.</p>
 <h4 class="mume-header" id="zoomto300percentjsx-small3small"><strong><code>ZoomTo300Percent.jsx</code></strong> <small>&#x2318;3</small></h4>
 
 <p>Zooms current layout window to 300%.</p>
@@ -1038,7 +1028,6 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="zoomtospreadsjsx-smallf4small"><strong><code>ZoomToSpreads.jsx</code></strong> <small>&#x2325;F4</small></h4>
 
 <p>Zooms on the first 3 spreads.</p>
-<hr>
 <h3 class="mume-header" id="miscellaneous">Miscellaneous</h3>
 
 <h4 class="mume-header" id="clipjsx-smallnumsmall"><strong><code>Clip.jsx</code></strong> <small>Num*</small></h4>
@@ -1068,7 +1057,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>I fixed some bugs and added a default value, an option to join contours, and support for undoing.</p>
 <h4 class="mume-header" id="qrjsx-smallf9small"><strong><code>QR.jsx</code></strong> <small>F9</small></h4>
 
-<p>Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>:</p>
+<p>Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files<sup class="footnote-ref"><a href="#fn5" id="fnref5">[5]</a></sup>:</p>
 <table>
 <thead>
 <tr>
@@ -1138,7 +1127,8 @@ pre[data-line] .line-highlight[data-end]:after {
 <h2 class="mume-header" id="install">Install</h2>
 
 <ol>
-<li>Clone or download from <strong>Code &#x2023; Download ZIP</strong>. The repository uses dynamically linked libraries from <strong><code>lib/</code></strong>, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest <a href="https://github.com/pchiorean/Indentz/releases">release</a>, where they are statically linked.</li>
+<li>Clone or download from <strong>Code &#x2023; Download ZIP</strong>.<br>
+The repository uses dynamically linked libraries from <strong><code>lib/</code></strong>, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest <a href="https://github.com/pchiorean/Indentz/releases">release</a>, where they are statically linked.</li>
 <li>Open <strong>Window &#x2023; Utilities &#x2023; Scripts</strong>.</li>
 <li>Right-click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
 <li>Copy <strong>Indentz</strong> to this folder.</li>
@@ -1150,15 +1140,19 @@ pre[data-line] .line-highlight[data-end]:after {
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>Thanks to Adrian Frigioiu for bug reports and feedback.</p>
-<p><small>Last updated: February 1, 2023</small></p>
+<p><small>Last updated: March 10, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>A visible area is a zone delimited by a frame named <code>&lt;visible area&gt;</code>, and it&#x2019;s used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn1" class="footnote-item"><p>You can add shortcuts to scripts from <strong>Edit &#x2023; Keyboard Shortcuts &#x2023; Product Area &#x2023; Scripts</strong>. <a href="#fnref1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
-<li id="fn2" class="footnote-item"><p>By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant <code>SNAP_PCT</code> from <code>fitTo()</code>. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn2" class="footnote-item"><p><code>DefaultLayers.jsx</code>, <code>DefaultSwatches.jsx</code>, <code>ReplaceFonts.jsx</code>, <code>ReplaceLinks.jsx</code>, <code>ReplaceSnippet.jsx</code>. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
-<li id="fn3" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref3" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn3" class="footnote-item"><p>A <em>visible area</em> is a zone delimited by a frame named <code>&lt;visible area&gt;</code>, and it&#x2019;s used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size. <a href="#fnref3" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+</li>
+<li id="fn4" class="footnote-item"><p>By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant <code>SNAP_PCT</code> from <code>fitTo()</code>. <a href="#fnref4" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+</li>
+<li id="fn5" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref5" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
 </ol>
 </section>

@@ -1,6 +1,6 @@
 /*
-	Fit frame to text 22.4.5
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Fit frame to text 23.3.11
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Auto-sizes the text frame to the content from 'None' to 'Height Only' to 'Height and Width'
 	(single lines are always auto-sized 'Height and Width'). A second run tightens auto-sizing.
@@ -48,9 +48,10 @@ function main(selection) {
 		var align;
 		var ASR = AutoSizingReferenceEnum;
 		var VJ = VerticalJustification;
-		var framePrefs = frame.textFramePreferences;
-		var oldAST = framePrefs.autoSizingType;
-		var oldASRP = framePrefs.autoSizingReferencePoint;
+		var old = {
+			AST: frame.textFramePreferences.autoSizingType,
+			ASRP: frame.textFramePreferences.autoSizingReferencePoint
+		};
 
 		// Trim ending whitespace
 		if (!frame.overflows && /\s+$/g.test(frame.contents) && !frame.nextTextFrame)
@@ -85,104 +86,104 @@ function main(selection) {
 		}
 
 		// Tighten frame
-		switch (framePrefs.verticalJustification) {
+		switch (frame.textFramePreferences.verticalJustification) {
 			case VJ.TOP_ALIGN:
-				framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT;
+				frame.textFramePreferences.autoSizingReferencePoint = ASR.TOP_CENTER_POINT;
 				break;
 			case VJ.CENTER_ALIGN:
-				framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT;
+				frame.textFramePreferences.autoSizingReferencePoint = ASR.CENTER_POINT;
 				break;
 			case VJ.BOTTOM_ALIGN:
-				framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT;
+				frame.textFramePreferences.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT;
 				break;
 		}
-		if (framePrefs.verticalJustification !== VJ.JUSTIFY_ALIGN)
-			framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
+		if (frame.textFramePreferences.verticalJustification !== VJ.JUSTIFY_ALIGN)
+			frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
 
 		// Fix first baseline offset
 		switch (align) {
 			case 'center':
-				framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT;
+				frame.textFramePreferences.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT;
 				break;
 			case 'left':
-				framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT;
+				frame.textFramePreferences.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT;
 				break;
 			case 'right':
-				framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT;
+				frame.textFramePreferences.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT;
 				break;
 		}
-		framePrefs.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
-		framePrefs.useNoLineBreaksForAutoSizing = true;
+		frame.textFramePreferences.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
+		frame.textFramePreferences.useNoLineBreaksForAutoSizing = true;
+		frame.textFramePreferences.autoSizingType = old.AST;
 
 		// Set alignment
 		switch (align) {
 			case 'left':
-				switch (framePrefs.verticalJustification) {
+				switch (frame.textFramePreferences.verticalJustification) {
 					case VJ.TOP_ALIGN:
-						framePrefs.autoSizingReferencePoint = ASR.TOP_LEFT_POINT;
+						frame.textFramePreferences.autoSizingReferencePoint = ASR.TOP_LEFT_POINT;
 						break;
 					case VJ.JUSTIFY_ALIGN:
 					case VJ.CENTER_ALIGN:
-						framePrefs.autoSizingReferencePoint = ASR.LEFT_CENTER_POINT;
+						frame.textFramePreferences.autoSizingReferencePoint = ASR.LEFT_CENTER_POINT;
 						break;
 					case VJ.BOTTOM_ALIGN:
-						framePrefs.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT;
+						frame.textFramePreferences.autoSizingReferencePoint = ASR.BOTTOM_LEFT_POINT;
 						break;
 				}
 				break;
 			case 'center':
-				switch (framePrefs.verticalJustification) {
+				switch (frame.textFramePreferences.verticalJustification) {
 					case VJ.TOP_ALIGN:
-						framePrefs.autoSizingReferencePoint = ASR.TOP_CENTER_POINT;
+						frame.textFramePreferences.autoSizingReferencePoint = ASR.TOP_CENTER_POINT;
 						break;
 					case VJ.JUSTIFY_ALIGN:
 					case VJ.CENTER_ALIGN:
-						framePrefs.autoSizingReferencePoint = ASR.CENTER_POINT;
+						frame.textFramePreferences.autoSizingReferencePoint = ASR.CENTER_POINT;
 						break;
 					case VJ.BOTTOM_ALIGN:
-						framePrefs.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT;
+						frame.textFramePreferences.autoSizingReferencePoint = ASR.BOTTOM_CENTER_POINT;
 						break;
 				}
 				break;
 			case 'right':
-				switch (framePrefs.verticalJustification) {
+				switch (frame.textFramePreferences.verticalJustification) {
 					case VJ.TOP_ALIGN:
-						framePrefs.autoSizingReferencePoint = ASR.TOP_RIGHT_POINT;
+						frame.textFramePreferences.autoSizingReferencePoint = ASR.TOP_RIGHT_POINT;
 						break;
 					case VJ.JUSTIFY_ALIGN:
 					case VJ.CENTER_ALIGN:
-						framePrefs.autoSizingReferencePoint = ASR.RIGHT_CENTER_POINT;
+						frame.textFramePreferences.autoSizingReferencePoint = ASR.RIGHT_CENTER_POINT;
 						break;
 					case VJ.BOTTOM_ALIGN:
-						framePrefs.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT;
+						frame.textFramePreferences.autoSizingReferencePoint = ASR.BOTTOM_RIGHT_POINT;
 						break;
 				}
 				break;
 		}
 
 		// Set frame auto-sizing
-		if (framePrefs.verticalJustification === VJ.JUSTIFY_ALIGN) {
-			framePrefs.autoSizingType = AutoSizingTypeEnum.WIDTH_ONLY;
+		if (frame.textFramePreferences.verticalJustification === VJ.JUSTIFY_ALIGN) {
+			frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.WIDTH_ONLY;
 			return;
 		}
 		if (frame.lines.length === 1) { // Tighten single lines
-			framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
+			frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
 		} else {
-			switch (oldAST) {
+			switch (frame.textFramePreferences.autoSizingType) {
 				case AutoSizingTypeEnum.OFF:
-					framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
+					frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
 					break;
 				case AutoSizingTypeEnum.HEIGHT_AND_WIDTH:
 				case AutoSizingTypeEnum.HEIGHT_AND_WIDTH_PROPORTIONALLY:
-					// Already tightened
-					break;
+					break; // Already tightened
 				case AutoSizingTypeEnum.HEIGHT_ONLY:
 				case AutoSizingTypeEnum.WIDTH_ONLY:
-					// Don't tighten when just the reference point was changed
-					if (framePrefs.autoSizingReferencePoint !== oldASRP) break;
-					// Break lines and increase tightening
+					// The reference point was changed, skip
+					if (frame.textFramePreferences.autoSizingReferencePoint !== old.ASRP) break;
+					// Else freeze paragraphs and increase tightening
 					for (var i = 0, n = frame.paragraphs.length; i < n; i++) freezePara(frame.paragraphs[i]);
-					framePrefs.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
+					frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
 					break;
 			}
 			frame.fit(FitOptions.FRAME_TO_CONTENT);

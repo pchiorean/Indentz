@@ -1,6 +1,6 @@
 /*
-	Batch QR codes 22.11.17
-	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
+	Batch QR codes 23.2.3
+	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds codes to existing documents or to separate files in batch mode, from a list.
 	The list is a 3-column TSV file named 'qr.tsv' with the following format:
@@ -241,6 +241,7 @@ function main() {
 	progressBar.close();
 	if (dataFile.exists && isModified && dataFile.open('w')) {
 		dataFile.encoding = 'UTF-8';
+		dataFile.lineFeed = 'Unix';
 		for (i = 0, n = rawData.length; i < n; i++) {
 			dataFile.writeln(
 				(rawData[i].exported ? '# ' : '') +

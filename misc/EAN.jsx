@@ -1,6 +1,6 @@
 /*
-	EAN code 22.11.6
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	EAN code 23.3.10
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Embeds an EAN code in the selected frame or adds it to a new page.
 
@@ -37,10 +37,9 @@
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'EAN code');
 
 function main() {
-	var doc, page, ui, codeFrame, codeLayer, txtLayer, target, SF;
+	var doc, page, ui, barcode, codeFrame, codeLayer, txtLayer, target, SF;
 	var codeLayerName = 'codes';
 	var txtLayerName = 'text & logos';
-	var barcodes = [];
 	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 	app.scriptPreferences.enableRedraw = false;
 
@@ -58,26 +57,25 @@ function main() {
 	ui.actions = ui.add('group { alignChildren: [ "fill", "top" ], orientation: "column" }');
 		ui.ok = ui.actions.add('button { text: "Ok" }');
 		ui.ok.onClick = function () {
-			var i, bc, rc, accumulator, chr;
-			bc = ui.code.text.replace(/^\s+|\s+$/g, '');
+			var i, buffer, accumulator, chr;
+			buffer = ui.code.text.replace(/^\s+|\s+$/g, '');
 			try {
-				rc = [];
+				barcode = [];
 				accumulator = '';
-				for (i = 0; i < bc.length; i++) {
-					chr = bc[i];
+				for (i = 0; i < buffer.length; i++) {
+					chr = buffer[i];
 					if (chr >= '0' && chr <= '9') { accumulator += chr; continue; }
 					if (chr === 'x' || chr === 'X') {
-						if (i !== 12 || rc.length !== 0) throw Error('X');
+						if (i !== 12 || barcode.length !== 0) throw Error('X');
 						accumulator += 'X';
 						continue;
 					}
-					if (accumulator) { rc.push(accumulator); accumulator = ''; }
+					if (accumulator) { barcode.push(accumulator); accumulator = ''; }
 				}
-				rc.push(accumulator);
-				if (rc.length > 2) throw Error(0);
-				if (rc[0].length !== 8 && rc[0].length !== 12 && rc[0].length !== 13) throw Error(0);
-				if (rc.length === 2 && rc[1].length !== 2 && rc[1].length !== 5) throw Error(0);
-				barcodes.push(rc);
+				barcode.push(accumulator);
+				if (barcode.length > 2) throw Error(0);
+				if (barcode[0].length !== 8 && barcode[0].length !== 12 && barcode[0].length !== 13) throw Error(0);
+				if (barcode.length === 2 && barcode[1].length !== 2 && barcode[1].length !== 5) throw Error(0);
 			} catch (e) {
 				alert('Invalid barcode\nEnter 8 or 13 digits for the code and 2 or 5 digits ' +
 					'for the add-on, separated by a space or a hyphen.');
@@ -154,6 +152,7 @@ function main() {
 		doc.documentPreferences.pageHeight = page.bounds[2] - page.bounds[1];
 		app.activeWindow.zoom(ZoomOptions.FIT_SPREAD);
 	}
+
 	app.select(codeFrame);
 
 	function makeBarcode() {
@@ -167,13 +166,12 @@ function main() {
 				printable: true
 			});
 			txtLayer = doc.layers.item(txtLayerName);
-			if (txtLayer.isValid)
-				codeLayer.move(LocationOptions.AFTER, txtLayer);
+			if (txtLayer.isValid) codeLayer.move(LocationOptions.AFTER, txtLayer);
 		}
 
 		codeFrame = new BarCode(
-			barcodes[0][0].substr(0, 12),
-			barcodes[0][1],
+			barcode[0].substr(0, 12), // code
+			barcode[1], // ext
 			ui.rightMark.value,
 			ui.extOnTop.value
 		);

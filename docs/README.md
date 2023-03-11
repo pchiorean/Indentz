@@ -1,14 +1,10 @@
 # Indentz
 
-<small>[Cleanup](#cleanup) | [Layout](#layout) | [Align](#align) | [Fit](#fit) | [Scale](#scale) | [Proxy](#proxy) | [File](#file) | [Export](#export) | [View](#view) | [Miscellaneous](#miscellaneous) | [Install](#install) | [About](#about)</small>
-
 This is a collection of InDesign scripts for various simple and repetitive tasks.
 
-As an artworker, I often have to perform repeated, tedious, or time-consuming operations. Working from home during the Covid lockdown, I used the extra time to learn a bit of the (now ancient) Extendscript 'art'. 😉 These are simple scripts adapted to my current workflow, and I tried to make them as generic as possible ([suggestions](https://github.com/pchiorean/Indentz/discussions) are welcome). I'm a big fan of shortcuts, so there are suggestions for Mac below (unfortunately they must be added manually from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**).
+I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I made several simple scripts to improve my workflow. Many are meant to be used with shortcuts[^1] (suggestions for Mac below). Some require one or more objects on the page to be selected. Apart from errors, they do their job silently; however, a few[^2] give a report if run with `Ctrl`.
 
-The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (but I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/) for compatibility with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though).
-
----
+The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/), compatibile with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
 ## Usage
 
@@ -244,14 +240,12 @@ Saves a TSV file (compatible with [**`DefaultLayers.jsx`**](#defaultlayersjsx)) 
 #### **`DumpSwatches.jsx`**
 Saves a TSV file (compatible with [**`DefaultSwatches.jsx`**](#defaultswatchesjsx)) containing the names and properties of the active document swatches.
 
----
-
 ### Layout
 
 <small>_**Document setup – page size, margins & columns, guides.**_</small>
 
 #### **`PageSizeFromFilename.jsx`** <small>F3</small>
-Sets the size of the page, the margins, and marks the visible area[^1], getting dimensions from the file name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
+Sets the size of the page, the margins, and marks the visible area[^3], getting dimensions from the file name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
 
 | File name                                       | Total size | Visible area | Bleed |
 |:------------------------------------------------|:-----------|:-------------|:------|
@@ -266,7 +260,7 @@ Resizes the current page to its margins.
 Resizes the page to the selected objects.
 
 #### **`PageMarginsFromScriptName.jsx`**
-Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It's designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword `HW`. Example: `MG5HW10.jsx` sets a value of 5% for the margins and 10% for the HW (`HW` can also be used alone, which sets it to 10%, or omitted, which sets it to 0).
+Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It's designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword `HW` – e.g., `MG5HW10.jsx` sets a value of 5% for the margins and 10% for the HW (`HW` can also be used alone, which sets it to 10%, or omitted, which sets it to 0).
 
 #### **`PageMarginsFromSelection.jsx`** <small>⌥F3</small>
 Sets the page margins from the selected objects.
@@ -276,8 +270,6 @@ If any page objects are selected, it adds guides around them. If nothing is sele
 
 #### **`GuidesDelete.jsx`**
 Deletes all guides from the document.
-
----
 
 ### Align
 
@@ -304,8 +296,6 @@ Toggles **Align To** between selection, margins, page or spread (just run it rep
 #### **`ResetAlignTo.jsx`** <small>⌃Num0</small>
 Resets **Align To** to default (**Align to Selection**).
 
----
-
 ### Fit
 
 <small>_**Reframe selected objects.**_</small>
@@ -322,7 +312,7 @@ The refitting is done by:
 
   Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame.
 
-- **Extending** the edges that touch or are very close to a trigger zone[^2] (either target or visible area).
+- **Extending** the edges that touch or are very close to the trigger zone[^4] (either target or visible area).
 
   Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.
 
@@ -348,7 +338,7 @@ Variants with the suffix **`Forced`** simply reframe the objects to the target a
 #### **`TextAutosize.jsx`** <small>F6</small>
 Auto-sizes the selected text frames to their content. It's designed to be run repeatedly.
 
-The level is increased from **None** to **Height Only** and from **Height Only** to **Height and Width** (single lines are always set **Height and Width**). The reference point is set by the first paragraph alignment and the text frame vertical justification:
+Each run increases the level with one step (from **None** to **Height Only**, and from **Height Only** to **Height and Width**), except single lines, which are always set **Height and Width**. The reference point is set by the first paragraph's alignment and the text frame's vertical justification:
 
 | <small>Paragraph Alignment →<br>↓ Vertical Justification</small> | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png) |
 | :-: | :-: | :-: | :-: |
@@ -356,9 +346,7 @@ The level is increased from **None** to **Height Only** and from **Height Only**
 | ![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png) |
 | ![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png) |
 
-**Note:** A second run will preserve the current auto-sizing if only the alignment is different.
-
----
+**Note:** A second run will preserve the current auto-sizing if only the alignment is changed.
 
 ### Scale
 
@@ -378,8 +366,6 @@ Scale the selected objects to the page size, page margins, or spread bleed. All 
 
 </details>
 
----
-
 ### Proxy
 
 #### **`SetRefPoint*.jsx`**
@@ -397,8 +383,6 @@ Use the numeric keypad to set the reference point used for transformations (simi
 
 </details>
 
----
-
 ### File
 
 #### **`FilesToSpreads.jsx`**
@@ -407,16 +391,14 @@ Combines the open documents, sorted alphabetically.
 #### **`SpreadsToFiles.jsx`**
 Saves each spread of the active document to a separate file.
 
-If the document name ends with a _separator_ (space/dot/underline/hyphen) followed by _a sequence_ of digits or letters _equal_ to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`** / **`Document_B.indd`** / **`Document_C.indd`**. If not autodetected, the script will prompt the user for the list.
+If the file name ends with a _separator_ (space/dot/underline/hyphen) followed by _a sequence_ of digits or letters _equal_ to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`** / **`Document_B.indd`** / **`Document_C.indd`**. If not autodetected, the script will prompt the user for a sequence.
 
-By default, the index will be appended at the end, but you can put a `#` in the document name to place the index at that particular position.
+By default, the index will be appended at the end, but you can put a `#` in the file name to place the index at that particular position.
 
 #### **`LayersToSpreads.jsx`**
 Moves all layers of the active document to separate spreads (the document must have a single spread).
 
 You can use **`SpreadsToFiles.jsx`** to save them in separate documents.
-
----
 
 ### Export
 
@@ -439,17 +421,15 @@ It can also run a JavaScript or AppleScript before exporting, e.g., one of the f
 Creates a frame the size of the page margins on the **visible area** layer. It will use the **Visible area** swatch, which will be created with the values R=255 G=180 B=0 if it doesn't exist.
 
 #### **`PrepareForExport.jsx`**
-Hides **covered areas**, **visible area**, **safety margins**, **safe area**, **segmentation**, **guides**, and all layers starting with either a dot or a hyphen; moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads.
+Hides **covered areas**, **visible area**, **safety area**, **safe area**, **segmentation**, **guides**, and all layers starting with either a dot or a hyphen; moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads.
 
 #### **`ShowDNPLayers.jsx`** / **`HideDNPLayers.jsx`**
-Show or hide the following _do-not-print_ layers: **covered areas**, **visible area**, **\*vi?ib\***, **vis?\***, **safety margins**, **safe area**, **segmentation**, **rahmen** and **sicht\***, and all layers starting with either a dot or a hyphen.
-
----
+Show or hide the following _do-not-print_ layers: **covered areas**, **visible area**, **\*vi?ib\***, **vis?\***, **safety area**, **safe area**, **segmentation**, **rahmen** and **sicht\***, and all layers starting with either a dot or a hyphen.
 
 ### View
 
 #### **`TileAll.jsx`** <small>⇧F4</small>
-Invokes **Window ‣ Arrange ‣ Tile All Vertically** or **Tile All Horizontally**, depending on the current spread orientation.
+Invokes **Window ‣ Arrange ‣ Tile All Vertically**, **Tile All Horizontally**, or **Tile**, depending on the current spread orientation.
 
 #### **`ZoomTo300Percent.jsx`** <small>⌘3</small>
 Zooms current layout window to 300%.
@@ -463,8 +443,6 @@ It resembles **Fit Selection in Window** **<small>(⌥⌘=)</small>**, but with 
 
 #### **`ZoomToSpreads.jsx`** <small>⌥F4</small>
 Zooms on the first 3 spreads.
-
----
 
 ### Miscellaneous
 
@@ -497,7 +475,7 @@ This is a slightly modified version of [**OffsetPath**](https://creativepro.com/
 I fixed some bugs and added a default value, an option to join contours, and support for undoing.
 
 #### **`QR.jsx`** <small>F9</small>
-Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^3]:
+Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^5]:
 
 |             On document             |             On file              |
 |:-----------------------------------:|:--------------------------------:|
@@ -537,7 +515,8 @@ Shows properties and methods of a selected object (for debugging purposes).
 
 ## Install
 
-1. Clone or download from **Code ‣ Download ZIP**. The repository uses dynamically linked libraries from **`lib/`**, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked.
+1. Clone or download from **Code ‣ Download ZIP**.\
+  The repository uses dynamically linked libraries from **`lib/`**, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked.
 2. Open **Window ‣ Utilities ‣ Scripts**.
 3. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
 4. Copy **Indentz** to this folder.
@@ -553,10 +532,14 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: February 1, 2023</small>
+<small>Last updated: March 10, 2023</small>
 
-[^1]: A visible area is a zone delimited by a frame named `<visible area>`, and it's used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size.
+[^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
-[^2]: By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
+[^2]: `DefaultLayers.jsx`, `DefaultSwatches.jsx`, `ReplaceFonts.jsx`, `ReplaceLinks.jsx`, `ReplaceSnippet.jsx`.
 
-[^3]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
+[^3]: A _visible area_ is a zone delimited by a frame named `<visible area>`, and it's used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size.
+
+[^4]: By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
+
+[^5]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.

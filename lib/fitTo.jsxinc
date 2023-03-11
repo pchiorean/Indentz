@@ -1,9 +1,9 @@
 /*
-	FitTo 23.1.31
+	FitTo 23.3.10
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
-	clipping frames that cross the target will be shrinked; ones that touch it or are very close (1% snap zone)
+	clipping frames that cross the target will be confined; ones that touch it or are very close (1% snap zone)
 	will be extended. Rectangular frames and orthogonal lines are directly reframed; rotated objects, ovals,
 	groups, etc. are inserted into a clipping frame that is reframed.
 
@@ -90,27 +90,27 @@ function fitTo(items, scope, target, enforced) {
 	doc.viewPreferences.rulerOrigin = oldRO;
 
 	function fit2Bounds(obj) {
-		var bounds, B, snapDist, O;
+		var bounds, T, snapDist, O;
 		bounds = getBounds(page);
-		// Target bounds
-		B = {
+		// Target properties
+		T = {
 			size: bounds[scope].size,
 			target: bounds[scope][target],
 			visible: bounds[scope].visible,
 			targetSZ: [],
 			visibleSZ: []
 		};
-		if (!B.target) return obj;
+		if (!T.target) return obj;
 		// Target and visible area snap zones
-		snapDist = Math.min(B.visible[2] - B.visible[0], B.visible[3] - B.visible[1]) * SNAP_PCT / 100;
-		B.targetSZ = (target === 'margins') ?
-			[ B.target[0] + snapDist, B.target[1] + snapDist,
-				B.target[2] - snapDist, B.target[3] - snapDist ] :
-			[ B.size[0] + snapDist, B.size[1] + snapDist,
-				B.size[2] - snapDist, B.size[3] - snapDist ];
-		B.visibleSZ = [
-			B.visible[0] + snapDist, B.visible[1] + snapDist,
-			B.visible[2] - snapDist, B.visible[3] - snapDist
+		snapDist = Math.min(T.visible[2] - T.visible[0], T.visible[3] - T.visible[1]) * SNAP_PCT / 100;
+		T.targetSZ = (target === 'margins') ?
+			[ T.target[0] + snapDist, T.target[1] + snapDist,
+				T.target[2] - snapDist, T.target[3] - snapDist ] :
+			[ T.size[0] + snapDist, T.size[1] + snapDist,
+				T.size[2] - snapDist, T.size[3] - snapDist ];
+		T.visibleSZ = [
+			T.visible[0] + snapDist, T.visible[1] + snapDist,
+			T.visible[2] - snapDist, T.visible[3] - snapDist
 		];
 		// Object properties
 		O = {
@@ -120,89 +120,89 @@ function fitTo(items, scope, target, enforced) {
 			child: (obj.pageItems.length === 1 && obj.fillColor.name === 'None') ?
 				obj.pageItems[0].visibleBounds : undefined,
 			// Adjusted bounds
-			shrinked: [],
-			fitted: [],
+			confined: [],
+			extended: [],
 			// Flags
 			isStraight: Boolean(Math.abs(obj.absoluteRotationAngle % 90) === 0),
 			isNotSkewed: Boolean(obj.absoluteShearAngle === 0),
 			hitsVSZ: [ // Track sides that hit the visible area snap zone
-				Boolean(obj.geometricBounds[0] <= B.visibleSZ[0]),
-				Boolean(obj.geometricBounds[1] <= B.visibleSZ[1]),
-				Boolean(obj.geometricBounds[2] >= B.visibleSZ[2]),
-				Boolean(obj.geometricBounds[3] >= B.visibleSZ[3])
+				Boolean(obj.geometricBounds[0] <= T.visibleSZ[0]),
+				Boolean(obj.geometricBounds[1] <= T.visibleSZ[1]),
+				Boolean(obj.geometricBounds[2] >= T.visibleSZ[2]),
+				Boolean(obj.geometricBounds[3] >= T.visibleSZ[3])
 			]
 		};
 
 		// Knowing source/target properties, we compute the new bounds and reframe
 
-		// 1. Checks
+		// 1. Some exceptions
 
-		// -- Cancel if the object is outside the target
-		if (O.visible[1] > B.target[3] || O.visible[3] < B.target[1] || // outside target, h
-			O.visible[0] > B.target[2] || O.visible[2] < B.target[0]    // outside target, v
-		) return undefined;
-
-		// -- Cancel if the object is inside the target and visible area
-		if (O.visible[1] > B.targetSZ[1] && O.visible[3] < B.targetSZ[3] &&  // inside target, h
-			O.visible[0] > B.targetSZ[0] && O.visible[2] < B.targetSZ[2] &&  // inside target, v
-			!O.hitsVSZ[0] && !O.hitsVSZ[1] && !O.hitsVSZ[2] && !O.hitsVSZ[3] // inside visible area
-		) return undefined;
-
-		// 2. Exceptions
+		// -- Skip special items
+		if (!enforced && obj.name === '<visible area>') return obj;
+		if (!enforced && obj.itemLayer.name === 'dielines') return obj;
 
 		// -- Enforced fit simply reframes the objects, except for orthogonal lines, which will be fitted later
-		if (enforced && obj.constructor.name !== 'GraphicLine') { obj.geometricBounds = B.target; return obj; }
+		if (enforced && obj.constructor.name !== 'GraphicLine') { obj.geometricBounds = T.target; return obj; }
 
 		// -- HW has predefined dimensions
 		if (/hw/gi.test(obj.label) &&
 			(obj.constructor.name === 'TextFrame' || obj.constructor.name === 'Rectangle')) {
-			var hwRef = (target === 'margins') ? B.target : B.size;
-			if (B.visible) {
-				hwRef = B.visible;
-				if (target === 'margins') B.target = B.visible;
+			var hwRef = (target === 'margins') ? T.target : T.size;
+			if (T.visible) {
+				hwRef = T.visible;
+				if (target === 'margins') T.target = T.visible;
 			}
 			obj.geometricBounds = [
 				hwRef[2] - (hwRef[2] - hwRef[0]) * Number(HW_PCT) / 100,
-				B.target[1], B.target[2], B.target[3]
+				T.target[1], T.target[2], T.target[3]
 			];
 			// Adjust text position using insets
 			if (obj.constructor.name === 'TextFrame') {
 				obj.textFramePreferences.insetSpacing = [
-					0, hwRef[1] - B.target[1],
-					B.target[2] - hwRef[2], B.target[3] - hwRef[3]
+					0, hwRef[1] - T.target[1],
+					T.target[2] - hwRef[2], T.target[3] - hwRef[3]
 				];
 			}
 			return obj;
 		}
 
-		// -- Skip special items
-		// if (obj.name === '<visible area>') return obj;
-		if (obj.itemLayer.name === 'dielines') return obj;
+		// 1. Check if the object is eligble to be fitted
+
+		// -- Skip if it's outside the target
+		if (O.visible[1] > T.target[3] || O.visible[3] < T.target[1] || // outside target, h
+			O.visible[0] > T.target[2] || O.visible[2] < T.target[0]    // outside target, v
+		) return undefined;
+
+		// -- Skip if it's inside the target and the visible area
+		if (O.visible[1] > T.targetSZ[1] && O.visible[3] < T.targetSZ[3] &&  // inside target, h
+			O.visible[0] > T.targetSZ[0] && O.visible[2] < T.targetSZ[2] &&  // inside target, v
+			!O.hitsVSZ[0] && !O.hitsVSZ[1] && !O.hitsVSZ[2] && !O.hitsVSZ[3] // inside visible area
+		) return undefined;
 
 		// 3. New object bounds are computed in two steps:
 
-		// -- If larger than the target, shrink to it
-		O.shrinked = [
-			O.geometric[2] > B.target[0] ? Math.max(O.visible[0], B.target[0]) : O.geometric[0],
-			O.geometric[3] > B.target[1] ? Math.max(O.visible[1], B.target[1]) : O.geometric[1],
-			O.geometric[0] < B.target[2] ? Math.min(O.visible[2], B.target[2]) : O.geometric[2],
-			O.geometric[1] < B.target[3] ? Math.min(O.visible[3], B.target[3]) : O.geometric[3]
+		// -- If larger than the target, confine to it
+		O.confined = [
+			O.geometric[2] > T.target[0] ? Math.max(O.visible[0], T.target[0]) : O.geometric[0],
+			O.geometric[3] > T.target[1] ? Math.max(O.visible[1], T.target[1]) : O.geometric[1],
+			O.geometric[0] < T.target[2] ? Math.min(O.visible[2], T.target[2]) : O.geometric[2],
+			O.geometric[1] < T.target[3] ? Math.min(O.visible[3], T.target[3]) : O.geometric[3]
 		];
 
 		// -- If smaller, but into the snap zone, extend
-		O.fitted = [
-			O.shrinked[0] > B.targetSZ[0] ? (O.hitsVSZ[0] ? B.target[0] : O.shrinked[0]) : B.target[0],
-			O.shrinked[1] > B.targetSZ[1] ? (O.hitsVSZ[1] ? B.target[1] : O.shrinked[1]) : B.target[1],
-			O.shrinked[2] < B.targetSZ[2] ? (O.hitsVSZ[2] ? B.target[2] : O.shrinked[2]) : B.target[2],
-			O.shrinked[3] < B.targetSZ[3] ? (O.hitsVSZ[3] ? B.target[3] : O.shrinked[3]) : B.target[3]
+		O.extended = [
+			O.confined[0] > T.targetSZ[0] ? (O.hitsVSZ[0] ? T.target[0] : O.confined[0]) : T.target[0],
+			O.confined[1] > T.targetSZ[1] ? (O.hitsVSZ[1] ? T.target[1] : O.confined[1]) : T.target[1],
+			O.confined[2] < T.targetSZ[2] ? (O.hitsVSZ[2] ? T.target[2] : O.confined[2]) : T.target[2],
+			O.confined[3] < T.targetSZ[3] ? (O.hitsVSZ[3] ? T.target[3] : O.confined[3]) : T.target[3]
 		];
 		// -- but limit to child's bounds
 		if (O.child) {
-			O.fitted = [
-				O.child[0] > B.target[0] ? Math.max(O.child[0], O.fitted[0]) : O.fitted[0],
-				O.child[1] > B.target[1] ? Math.max(O.child[1], O.fitted[1]) : O.fitted[1],
-				O.child[2] < B.target[2] ? Math.min(O.child[2], O.fitted[2]) : O.fitted[2],
-				O.child[3] < B.target[3] ? Math.min(O.child[3], O.fitted[3]) : O.fitted[3]
+			O.extended = [
+				O.child[0] > T.target[0] ? Math.max(O.child[0], O.extended[0]) : O.extended[0],
+				O.child[1] > T.target[1] ? Math.max(O.child[1], O.extended[1]) : O.extended[1],
+				O.child[2] < T.target[2] ? Math.min(O.child[2], O.extended[2]) : O.extended[2],
+				O.child[3] < T.target[3] ? Math.min(O.child[3], O.extended[3]) : O.extended[3]
 			];
 		}
 
@@ -212,7 +212,7 @@ function fitTo(items, scope, target, enforced) {
 
 		// -- Already clipped
 		if (clippingFrameRE.test(obj.name) && obj.pageItems[0].isValid) {
-			obj.geometricBounds = O.fitted;
+			obj.geometricBounds = O.extended;
 			return obj;
 		}
 
@@ -220,13 +220,13 @@ function fitTo(items, scope, target, enforced) {
 		if (obj.constructor.name === 'Rectangle' && O.isStraight && O.isNotSkewed &&
 				(obj.pageItems.length === 0 || obj.pageItems.length === 1) &&
 			obj.strokeWeight < 1) {
-			obj.geometricBounds = O.fitted;
+			obj.geometricBounds = O.extended;
 			return obj;
 		}
 
 		// -- Text frames
 		if (obj.constructor.name === 'TextFrame' && O.isStraight && O.isNotSkewed) {
-			obj.geometricBounds = O.fitted;
+			obj.geometricBounds = O.extended;
 			return obj;
 		}
 
@@ -236,28 +236,28 @@ function fitTo(items, scope, target, enforced) {
 			(obj.paths[0].entirePath[0].length === 2 || obj.paths[0].entirePath[1].length === 2));
 		if (isOrthoLine && O.geometric[0] === O.geometric[2]) { // horizontal
 			obj.paths[0].entirePath = [
-				[ enforced ? B.target[1] : O.fitted[1], obj.paths[0].entirePath[0][1] ],
-				[ enforced ? B.target[3] : O.fitted[3], obj.paths[0].entirePath[1][1] ]
+				[ enforced ? T.target[1] : O.extended[1], obj.paths[0].entirePath[0][1] ],
+				[ enforced ? T.target[3] : O.extended[3], obj.paths[0].entirePath[1][1] ]
 			];
 			return obj;
 		}
 		if (isOrthoLine && O.geometric[1] === O.geometric[3]) { // vertical
 			obj.paths[0].entirePath = [
-				[ obj.paths[0].entirePath[0][0], enforced ? B.target[0] : O.fitted[0] ],
-				[ obj.paths[0].entirePath[1][0], enforced ? B.target[2] : O.fitted[2] ]
+				[ obj.paths[0].entirePath[0][0], enforced ? T.target[0] : O.extended[0] ],
+				[ obj.paths[0].entirePath[1][0], enforced ? T.target[2] : O.extended[2] ]
 			];
 			return obj;
 		}
 
-		// -- Groups are always shrinked
-		if (obj.constructor.name === 'Group') return clipObject(O.shrinked);
+		// -- Groups are always confined
+		if (obj.constructor.name === 'Group') return clipObject(O.confined);
 
 		// -- Clip other types
-		return clipObject(O.fitted);
+		return clipObject(O.extended);
 
 		function clipObject(fitMode) {
-			if (O.visible[0] >= B.target[0] && O.visible[1] >= B.target[1] &&
-				O.visible[2] <= B.target[2] && O.visible[3] <= B.target[3]) return obj;
+			if (O.visible[0] >= T.target[0] && O.visible[1] >= T.target[1] &&
+				O.visible[2] <= T.target[2] && O.visible[3] <= T.target[3]) return obj;
 			var frame = doc.rectangles.add(
 				obj.itemLayer,
 				LocationOptions.AFTER, obj,
@@ -282,30 +282,36 @@ function fitTo(items, scope, target, enforced) {
 		function showDebugFrames() {
 			var layer = doc.layers.item('.debug');
 			if (layer.isValid) { layer.locked = false; layer.remove(); }
-			layer = doc.layers.add({ name: '.debug', layerColor: UIColors.BLACK }).move(LocationOptions.AT_END);
-			// createDebugFrame('Black', false, O.fitted, 'O.fitted');
-			// createDebugFrame('Black', false, O.shrinked, 'O.shrinked');
-			if (O.child) createDebugFrame('Yellow', false, O.child, 'child');
-			createDebugFrame('Black',   false, B.target, 'target');
-			createDebugFrame('Cyan',    true,  B.targetSZ, 'target SZ');
-			createDebugFrame('Magenta', true,  B.visibleSZ, 'visible SZ');
-			createDebugFrame('Cyan',    false, bounds.page.margins, 'page margins');
+			layer = doc.layers.add({ name: '.debug', layerColor: UIColors.BLACK }).move(LocationOptions.AT_BEGINNING);
+			createDebugFrame('Cyan', false, true, O.extended, 'O.extended');
+			if (O.child) createDebugFrame('Yellow', false, true, O.child, 'O.child');
+			createDebugFrame('Cyan', false, true, O.confined, 'O.confined');
+			createDebugFrame('Yellow', false, false, T.visible, 'T.visible');
+			createDebugFrame('Yellow', true, false, T.visibleSZ, 'T.visibleSZ');
+			createDebugFrame('Magenta', false, false, T.target, 'T.target');
+			createDebugFrame('Magenta', true, false, T.targetSZ, 'T.targetSZ');
+			// createDebugFrame('Black', false, false, bounds.page.margins, 'bounds.page.margins');
 			layer.locked = true;
 
-			function createDebugFrame(color, /*bool*/isZone, bounds, label) {
+			function createDebugFrame(color, /*bool*/isZone, /*bool*/isDashed, bounds, label) {
 				page.parent.rectangles.add(
 					layer,
 					LocationOptions.AT_END,
 					{
-						name: '<debug frame>',
-						label: label || '',
+						// name: '<debug frame>',
+						name: ('<dbg:' + label + '>') || '',
 						contentType: ContentType.UNASSIGNED,
 						fillColor: 'None',
 						strokeColor: color,
-						strokeWeight: isZone ? snapDist : '1.5 pt',
+						strokeWeight: isZone ? snapDist : '1.0 pt',
 						strokeAlignment: isZone ? StrokeAlignment.OUTSIDE_ALIGNMENT : StrokeAlignment.INSIDE_ALIGNMENT,
-						strokeType: isZone ? '$ID/Solid' : '$ID/Canned Dashed 3x2',
-						transparencySettings: { blendingSettings: { opacity: isZone ? 25 : 100 }},
+						strokeType: isDashed ? '$ID/Canned Dashed 3x2' : '$ID/Solid',
+						transparencySettings: {
+							blendingSettings: {
+								opacity: isZone ? 25 : 100,
+								blendMode: BlendMode.MULTIPLY
+							}
+						},
 						bottomLeftCornerOption:  CornerOptions.NONE,
 						bottomRightCornerOption: CornerOptions.NONE,
 						topLeftCornerOption:     CornerOptions.NONE,

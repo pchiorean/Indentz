@@ -1,6 +1,6 @@
 /*
-	Quick export 22.12.23
-	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
+	Quick export 23.2.7
+	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
 
@@ -773,12 +773,13 @@ function checkFonts() {
 }
 
 function checkTextOverflow() {
-	for (var i = 0; i < doc.allPageItems.length; i++) {
-		if (doc.allPageItems[i].constructor.name === 'TextFrame') {
-			if (doc.allPageItems[i].overflows && doc.allPageItems[i].parentPage) {
-				errors.push(decodeURI(doc.name) + ': Text overflows.');
-				return;
-			}
+	var frm;
+	var frms = doc.allPageItems;
+	while ((frm = frms.shift())) {
+		if (frm.constructor.name !== 'TextFrame') continue;
+		if (frm.overflows && frm.parentPage) {
+			errors.push(decodeURI(doc.name) + ': Text overflows.');
+			return;
 		}
 	}
 }
@@ -1164,6 +1165,8 @@ function saveSettings() {
 	} catch (e) {}
 
 	settingsFile.open('w');
+	settingsFile.encoding = 'UTF-8';
+	settingsFile.lineFeed = 'Unix';
 	settingsFile.write(settings.toSource());
 	settingsFile.close();
 }

@@ -1,6 +1,6 @@
 /*
-	Prepare for export 22.12.17
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Prepare for export 23.2.24
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Hides some layers and moves objects with special colors to separate spreads.
 
@@ -36,12 +36,12 @@ UndoModes.ENTIRE_SCRIPT, 'Prepare for export');
 
 function prepareForExport() {
 	var i, n, l, variants;
-	var infoLayer = doc.layers.item('info');
 	var layerNames = {
 		hidden:   [ '-*', '.*' ],
+		info:     [ 'info' ],
 		covered:  [ 'covered area*' ],
 		visible:  [ 'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ],
-		safe:     [ 'safety margins', 'safe area', 'segmentation' ],
+		safe:     [ 'safety area', 'safety margins', 'safe area', 'segmentation' ],
 		guides:   [ 'guides', 'grid', 'masuratori' ],
 		dielines: [ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ],
 		varnish:  [ 'varnish', 'uv' ],
@@ -51,11 +51,6 @@ function prepareForExport() {
 	var matched = { dielines: [], varnish: [], foil: [], white: [] };
 	app.scriptPreferences.enableRedraw = false;
 
-	// Create or show info layer
-	if (infoLayer.isValid) infoLayer.visible = true;
-	else doc.layers.add({ name: 'info', layerColor: UIColors.CYAN });
-	infoLayer.move(LocationOptions.AT_BEGINNING);
-
 	// Unlock all layers
 	doc.layers.everyItem().locked = false;
 
@@ -63,7 +58,8 @@ function prepareForExport() {
 	for (i = 0, n = doc.layers.length; i < n; i++) {
 		l = doc.layers[i];
 		if (!l.visible) continue;
-		if (l.name === infoLayer.name) continue;
+		if (l.name === layerNames.info[0]) continue;
+
 		for (variants in layerNames) {
 			if (isInArray(l.name, layerNames[variants])) {
 				switch (layerNames[variants][0]) {
@@ -109,6 +105,7 @@ function prepareForExport() {
 			thisSpread = doc.spreads[i];
 			if (!layerHasItems(thisSpread)) continue;
 			nextSpread = thisSpread.duplicate(LocationOptions.AFTER, thisSpread);
+
 			// Step 1: Delete items on 'layer' from this spread
 			items = thisSpread.pageItems.everyItem().getElements();
 			while ((item = items.shift())) {
@@ -117,6 +114,7 @@ function prepareForExport() {
 					if (item.name !== '<page label>') item.remove(); // Preserve page labels
 				}
 			}
+
 			// Step 2: Delete items not on 'layer' from next spread
 			item = null;
 			items = nextSpread.pageItems.everyItem().getElements();
@@ -126,10 +124,16 @@ function prepareForExport() {
 					if (item.name !== '<page label>') item.remove(); // Preserve page labels
 				}
 			}
+
+			// Remove spread if empty
 			if (thisSpread.allPageItems.length === 0 || (thisSpread.allPageItems.length === 1 &&
 				thisSpread.pageItems[0].name === '<page label>')) thisSpread.remove();
-			slugInfo(nextSpread, layer.name); // Label spread with layer name
-			i++; // Skip nextSpread
+
+			// Label spread with layer name
+			addSlugInfo(nextSpread, layer.name);
+
+			// Skip nextSpread
+			i++;
 		}
 		// if (layer.allPageItems.length == 0) layer.remove();
 
@@ -141,15 +145,25 @@ function prepareForExport() {
 			return false;
 		}
 
-		function slugInfo(/*object*/spread, /*string*/label) {
+		function addSlugInfo(/*object*/spread, /*string*/label) {
 			var infoFrame, infoText;
+			var infoLayer = doc.layers.item(layerNames.info[0]);
 			var pageMarksHeight = 15 + UnitValue('1 mm').as('pt');
 			app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
+
+			// Create or show info layer
+			if (infoLayer.isValid) infoLayer.visible = true;
+			else doc.layers.add({ name: 'info', layerColor: UIColors.CYAN });
+			infoLayer.move(LocationOptions.AT_BEGINNING);
+
+			// Adjust slug
 			if (doc.documentPreferences.slugTopOffset < pageMarksHeight +
-				doc.documentPreferences.documentBleedTopOffset) {
+					doc.documentPreferences.documentBleedTopOffset) {
 				doc.documentPreferences.slugTopOffset = pageMarksHeight +
 				doc.documentPreferences.documentBleedTopOffset;
 			}
+
+			// Add text label
 			infoFrame = spread.pageItems.itemByName('<page label>');
 			if (infoFrame.isValid) {
 				if (infoFrame.contents !== label)
@@ -162,7 +176,7 @@ function prepareForExport() {
 					bottomRightCornerOption: CornerOptions.NONE,
 					topLeftCornerOption:     CornerOptions.NONE,
 					topRightCornerOption:    CornerOptions.NONE,
-					contents:  label
+					contents: label
 				});
 				infoText = infoFrame.parentStory.paragraphs.everyItem();
 				infoText.properties = {
@@ -171,7 +185,6 @@ function prepareForExport() {
 					fillColor:      'Registration',
 					strokeWeight:   '0.4 pt',
 					strokeColor:    'Paper',
-					// endJoin:        EndJoin.ROUND_END_JOIN,
 					capitalization: Capitalization.ALL_CAPS
 				};
 				infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
