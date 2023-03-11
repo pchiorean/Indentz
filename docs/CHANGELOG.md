@@ -20,12 +20,16 @@
   **export/MarkVisibleArea, layout/PageSizeFromFilename:** Increased stroke width for large visuals
 - `03/07` [`upd`](https://github.com/pchiorean/Indentz/commit/981fede9a4cb658051a5e2e1fb8eb496288ca77d)
   **export/QuickExport:** Improved speed when checking for text overflow (changed the loop from `for` to `while`)
+- `03/10` [`upd`](https://github.com/pchiorean/Indentz/commit/4d519e29485e8a2f0376dbfe4e6a0153949209d8)
+  **lib/fitTo:** Tweaked debug section; renamed some variables for clarity
 
 ##### Removed features
 
 ##### Bug fixes
 - `02/24` [`fix`](https://github.com/pchiorean/Indentz/commit/fd5a40a300cb56bcc4df54a19a1d780c550cecce)
   **export/PrepareForExport:** Don't add 'info' layer if not actually needed
+- `03/11` [`fix`](https://github.com/pchiorean/Indentz/commit/84214f8a1cdc09d3f493188bdc1f8773404a2e3b)
+  **fit/TextAutosize:** Fixed a bug that in certain circumstances reverted a frame's auto-sizing to height-only
 
 ##### Miscellaneous
 
