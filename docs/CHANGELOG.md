@@ -22,6 +22,8 @@
   **export/QuickExport:** Improved speed when checking for text overflow (changed the loop from `for` to `while`)
 - `03/10` [`upd`](https://github.com/pchiorean/Indentz/commit/4d519e29485e8a2f0376dbfe4e6a0153949209d8)
   **lib/fitTo:** Tweaked debug section; renamed some variables for clarity
+- `03/23` [`upd`]()
+  **misc/EAN:** If multiple objects are selected, the code will be inserted to all of them
 
 ##### Removed features
 
@@ -678,7 +680,6 @@
 - `upd` **lib/replaceText:** Add grep matching
 - `upd` **lib/replaceText:** Take an array of strings as input
 - `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
-- `upd` **misc/EAN:** If multiple objects are selected, insert the code to all
 - `upd` **misc/LabelPageRatios:** Mark outer/inner ratios
 - `upd` **view/ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
 - `upd` Use a custom object style for `<visible area>` frame
