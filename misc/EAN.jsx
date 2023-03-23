@@ -1,5 +1,5 @@
 /*
-	EAN code 23.3.10
+	EAN code 23.3.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Embeds an EAN code in the selected frame or adds it to a new page.
@@ -37,7 +37,7 @@
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'EAN code');
 
 function main() {
-	var doc, page, ui, barcode, codeFrame, codeLayer, txtLayer, target, SF;
+	var doc, page, ui, items, barcode, codeFrame, codeLayer, txtLayer, target, SF;
 	var codeLayerName = 'codes';
 	var txtLayerName = 'text & logos';
 	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
@@ -96,47 +96,49 @@ function main() {
 	// Embed the code in a non-group single selected object; else make a new doc
 	try {
 		doc = app.activeDocument;
-		target = doc.selection[0];
-		makeBarcode();
-		codeFrame.fillColor = 'None';
-		codeFrame.absoluteRotationAngle = target.absoluteRotationAngle;
-		switch (target.absoluteRotationAngle) {
-			case 90:
-				SF = (target.geometricBounds[2] - target.geometricBounds[0]) /
-					(codeFrame.geometricBounds[2] - codeFrame.geometricBounds[0]);
-				doc.align(codeFrame, AlignOptions.RIGHT_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
-				doc.align(codeFrame, AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.KEY_OBJECT, target);
-				break;
-			case -90:
-				SF = (target.geometricBounds[2] - target.geometricBounds[0]) /
-					(codeFrame.geometricBounds[2] - codeFrame.geometricBounds[0]);
-				doc.align(codeFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
-				doc.align(codeFrame, AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.KEY_OBJECT, target);
-				break;
-			case 180:
-				SF = (target.geometricBounds[3] - target.geometricBounds[1]) /
-					(codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1]);
-				doc.align(codeFrame, AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.KEY_OBJECT, target);
-				doc.align(codeFrame, AlignOptions.TOP_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
-				break;
-			default:
-				SF = (target.geometricBounds[3] - target.geometricBounds[1]) /
-					(codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1]);
-				doc.align(codeFrame, AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.KEY_OBJECT, target);
-				doc.align(codeFrame, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
-				break;
+		items = doc.selection;
+		while ((target = items.shift())) {
+			makeBarcode();
+			codeFrame.fillColor = 'None';
+			codeFrame.absoluteRotationAngle = target.absoluteRotationAngle;
+			switch (target.absoluteRotationAngle) {
+				case 90:
+					SF = (target.geometricBounds[2] - target.geometricBounds[0]) /
+						(codeFrame.geometricBounds[2] - codeFrame.geometricBounds[0]);
+					doc.align(codeFrame, AlignOptions.RIGHT_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
+					doc.align(codeFrame, AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.KEY_OBJECT, target);
+					break;
+				case -90:
+					SF = (target.geometricBounds[2] - target.geometricBounds[0]) /
+						(codeFrame.geometricBounds[2] - codeFrame.geometricBounds[0]);
+					doc.align(codeFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
+					doc.align(codeFrame, AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.KEY_OBJECT, target);
+					break;
+				case 180:
+					SF = (target.geometricBounds[3] - target.geometricBounds[1]) /
+						(codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1]);
+					doc.align(codeFrame, AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.KEY_OBJECT, target);
+					doc.align(codeFrame, AlignOptions.TOP_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
+					break;
+				default:
+					SF = (target.geometricBounds[3] - target.geometricBounds[1]) /
+						(codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1]);
+					doc.align(codeFrame, AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.KEY_OBJECT, target);
+					doc.align(codeFrame, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
+					break;
+			}
+			if (codeFrame.pageItems[0].label.length === 8) SF *= 0.76518424396442; // Adjust SF for EAN-8
+			codeFrame.transform(
+				CoordinateSpaces.INNER_COORDINATES,
+				AnchorPoint.BOTTOM_CENTER_ANCHOR,
+				app.transformationMatrices.add({ horizontalScaleFactor: SF, verticalScaleFactor: SF })
+			);
+			app.select(codeFrame);
+			app.cut();
+			app.select(target);
+			app.pasteInto();
+			codeFrame = target;
 		}
-		if (codeFrame.pageItems[0].label.length === 8) SF *= 0.76518424396442; // Adjust SF for EAN-8
-		codeFrame.transform(
-			CoordinateSpaces.INNER_COORDINATES,
-			AnchorPoint.BOTTOM_CENTER_ANCHOR,
-			app.transformationMatrices.add({ horizontalScaleFactor: SF, verticalScaleFactor: SF })
-		);
-		app.select(codeFrame);
-		app.cut();
-		app.select(target);
-		app.pasteInto();
-		codeFrame = target;
 	} catch (e) {
 		if (codeFrame.isValid) codeFrame.remove();
 		doc = app.documents.add();
