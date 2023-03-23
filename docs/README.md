@@ -2,9 +2,9 @@
 
 This is a collection of InDesign scripts for various simple and repetitive tasks.
 
-I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I made several simple scripts to improve my workflow. Many are meant to be used with shortcuts[^1] (suggestions for Mac below). Some require one or more objects on the page to be selected. Apart from errors, they do their job silently; however, a few[^2] give a report if run with `Ctrl`.
+I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I wrote several simple scripts to improve my workflow. Most are meant to be used with shortcuts[^1] (suggestions for Mac below). Some require one or more objects on the page to be selected. Apart from error alerts, they do their job silently; however, some[^2] give a report if run with `Ctrl`.
 
-The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/), compatibile with CS6). I'm a graphic designer, not a programmer, so do expect oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
+The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/), compatibile with CS6). I'm a graphic designer, not a programmer, so be prepared for oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
 ## Usage
 
@@ -73,13 +73,14 @@ Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample]
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or one relative to `reference/path` if defined;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined `reference/path`;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
 
-- Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- Blank lines are ignored;
+- Everything after a `#` is ignored (used for commenting);
+- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 #### **`DefaultSwatches.jsx`**
@@ -109,13 +110,14 @@ You can use [**`DumpSwatches.jsx`**](#dumpswatchesjsx) to save a tab delimited l
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or one relative to `reference/path` if defined;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined `reference/path`;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
 
-- Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- Blank lines are ignored;
+- Everything after a `#` is ignored (used for commenting);
+- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -136,13 +138,14 @@ You can use [**`ShowFonts.jsx`**](#showfontsjsx) from [**Miscellaneous**](#misce
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or one relative to `reference/path` if defined;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined `reference/path`;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
 
-- Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- Blank lines are ignored;
+- Everything after a `#` is ignored (used for commenting);
+- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -162,7 +165,7 @@ Replaces document links using a TSV data file named **`links.tsv`** ([sample](sa
 > **Relink to** (also see **Additional features** below):
 > - An absolute path of the form `/absolute/path/to/img1.psd`;
 > - A relative path which is:
->   - relative by default to the document `Links` folder (`img2.psd`);
+>   - relative (by default) to the document `Links` folder (`img2.psd`);
 >   - relative to `reference/path` defined by a previous `@includepath` statement (`img3.psd` and `subfolder/img4.psd`).
 > 
 > **Document links:**
@@ -176,13 +179,14 @@ Quoting the paths is not required.
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or one relative to `reference/path` if defined;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined `reference/path`;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
 
-- Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- Blank lines are ignored;
+- Everything after a `#` is ignored (used for commenting);
+- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -211,13 +215,14 @@ For example, 'The sample is for free' will be replaced with 'Das Sample ist kost
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or one relative to `reference/path` if defined;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined `reference/path`;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
 
-- Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- Blank lines are ignored;
+- Everything after a `#` is ignored (used for commenting);
+- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 </details>
@@ -532,7 +537,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: March 10, 2023</small>
+<small>Last updated: March 23, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 

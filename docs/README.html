@@ -264,8 +264,8 @@ pre[data-line] .line-highlight[data-end]:after {
       <h1 class="mume-header" id="indentz">Indentz</h1>
 
 <p>This is a collection of InDesign scripts for various simple and repetitive tasks.</p>
-<p>I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I made several simple scripts to improve my workflow. Many are meant to be used with shortcuts<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> (suggestions for Mac below). Some require one or more objects on the page to be selected. Apart from errors, they do their job silently; however, a few<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> give a report if run with <code>Ctrl</code>.</p>
-<p>The code was developed and tested in Adobe InDesign CC 2020&#x2013;2023 on Mac (I mostly used <a href="https://www.indesignjs.de/extendscriptAPI/indesign8/">InDesign ExtendScript API 8.0</a>, compatibile with CS6). I&#x2019;m a graphic designer, not a programmer, so do expect oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though!).</p>
+<p>I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I wrote several simple scripts to improve my workflow. Most are meant to be used with shortcuts<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> (suggestions for Mac below). Some require one or more objects on the page to be selected. Apart from error alerts, they do their job silently; however, some<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> give a report if run with <code>Ctrl</code>.</p>
+<p>The code was developed and tested in Adobe InDesign CC 2020&#x2013;2023 on Mac (I mostly used <a href="https://www.indesignjs.de/extendscriptAPI/indesign8/">InDesign ExtendScript API 8.0</a>, compatibile with CS6). I&#x2019;m a graphic designer, not a programmer, so be prepared for oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though!).</p>
 <h2 class="mume-header" id="usage">Usage</h2>
 
 <h3 class="mume-header" id="cleanup">Cleanup</h3>
@@ -378,13 +378,14 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or one relative to <code>reference/path</code> if defined;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined <code>reference/path</code>;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
 <p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
 <ul>
-<li>Blank lines and those starting with <code>#</code> (comments) are ignored;</li>
-<li>The fields can be visually aligned with spaces that will be removed at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
+<li>Blank lines are ignored;</li>
+<li>Everything after a <code>#</code> is ignored (used for commenting);</li>
+<li>The fields can be visually aligned with spaces that will be ignored at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
 <li>A very long line can be broken into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</li>
 </ul>
 <h4 class="mume-header" id="defaultswatchesjsx"><strong><code>DefaultSwatches.jsx</code></strong></h4>
@@ -448,13 +449,14 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or one relative to <code>reference/path</code> if defined;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined <code>reference/path</code>;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
 <p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
 <ul>
-<li>Blank lines and those starting with <code>#</code> (comments) are ignored;</li>
-<li>The fields can be visually aligned with spaces that will be removed at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
+<li>Blank lines are ignored;</li>
+<li>Everything after a <code>#</code> is ignored (used for commenting);</li>
+<li>The fields can be visually aligned with spaces that will be ignored at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
 <li>A very long line can be broken into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</li>
 </ul>
 </details>
@@ -496,13 +498,14 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or one relative to <code>reference/path</code> if defined;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined <code>reference/path</code>;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
 <p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
 <ul>
-<li>Blank lines and those starting with <code>#</code> (comments) are ignored;</li>
-<li>The fields can be visually aligned with spaces that will be removed at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
+<li>Blank lines are ignored;</li>
+<li>Everything after a <code>#</code> is ignored (used for commenting);</li>
+<li>The fields can be visually aligned with spaces that will be ignored at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
 <li>A very long line can be broken into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</li>
 </ul>
 </details>
@@ -549,7 +552,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <li>An absolute path of the form <code>/absolute/path/to/img1.psd</code>;</li>
 <li>A relative path which is:
 <ul>
-<li>relative by default to the document <code>Links</code> folder (<code>img2.psd</code>);</li>
+<li>relative (by default) to the document <code>Links</code> folder (<code>img2.psd</code>);</li>
 <li>relative to <code>reference/path</code> defined by a previous <code>@includepath</code> statement (<code>img3.psd</code> and <code>subfolder/img4.psd</code>).</li>
 </ul>
 </li>
@@ -565,13 +568,14 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or one relative to <code>reference/path</code> if defined;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined <code>reference/path</code>;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
 <p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
 <ul>
-<li>Blank lines and those starting with <code>#</code> (comments) are ignored;</li>
-<li>The fields can be visually aligned with spaces that will be removed at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
+<li>Blank lines are ignored;</li>
+<li>Everything after a <code>#</code> is ignored (used for commenting);</li>
+<li>The fields can be visually aligned with spaces that will be ignored at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
 <li>A very long line can be broken into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</li>
 </ul>
 </details>
@@ -638,13 +642,14 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative to the current data file, or one relative to <code>reference/path</code> if defined;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined <code>reference/path</code>;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
 <p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
 <ul>
-<li>Blank lines and those starting with <code>#</code> (comments) are ignored;</li>
-<li>The fields can be visually aligned with spaces that will be removed at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
+<li>Blank lines are ignored;</li>
+<li>Everything after a <code>#</code> is ignored (used for commenting);</li>
+<li>The fields can be visually aligned with spaces that will be ignored at processing (I use <a href="https://code.visualstudio.com">VS&#xA0;Code</a> and <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&#xA0;CSV</a>);</li>
 <li>A very long line can be broken into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</li>
 </ul>
 </details>
@@ -1140,7 +1145,7 @@ The repository uses dynamically linked libraries from <strong><code>lib/</code><
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>Thanks to Adrian Frigioiu for bug reports and feedback.</p>
-<p><small>Last updated: March 10, 2023</small></p>
+<p><small>Last updated: March 23, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
