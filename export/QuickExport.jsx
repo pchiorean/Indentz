@@ -1,5 +1,5 @@
 /*
-	Quick export 23.2.7
+	Quick export 23.4.2
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -1003,10 +1003,8 @@ function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
 }
 
 function readSettings() {
-	try {
-		settings = $.evalFile(settingsFile);
-		if (settings.version === undefined || settings.version !== VER) setDefaults();
-	} catch (e) { setDefaults(); }
+	try { settings = $.evalFile(settingsFile); } catch (e) { setDefaults(); }
+	if (settings.version === undefined || settings.version !== VER) setDefaults();
 
 	// Preset
 	ui.preset1.isOn.value = settings.presets.preset1.active;
@@ -1088,9 +1086,9 @@ function readSettings() {
 	}
 
 	function setDefaults() {
+		if(settingsFile.exists) alert('Preferences were reset.\nEither the file was an old version, or it was corrupt.');
 		try { settingsFile.remove(); } catch (e) {}
 		settings = defaults;
-		if(settingsFile.exists) alert('Preferences were reset.\nEither the file was an old version, or it was corrupt.');
 	}
 }
 
