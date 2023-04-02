@@ -22,8 +22,10 @@
   **export/QuickExport:** Improved speed when checking for text overflow (changed the loop from `for` to `while`)
 - `03/10` [`upd`](https://github.com/pchiorean/Indentz/commit/4d519e29485e8a2f0376dbfe4e6a0153949209d8)
   **lib/fitTo:** Tweaked debug section; renamed some variables for clarity
-- `03/23` [`upd`]()
+- `03/23` [`upd`](https://github.com/pchiorean/Indentz/commit/26d261d09d2a2c3a65bcff7a24a65a3a047c31b3)
   **misc/EAN:** If multiple objects are selected, the code will be inserted to all of them
+- `04/02` [`upd`](https://github.com/pchiorean/Indentz/commit/c68da2a712c6a67686329f28b80bea9fdff1b985)
+  **export/QuickExport:** Don't display preferences reset warning on first run (revisited)
 
 ##### Removed features
 
@@ -32,6 +34,8 @@
   **export/PrepareForExport:** Don't add 'info' layer if not actually needed
 - `03/11` [`fix`](https://github.com/pchiorean/Indentz/commit/84214f8a1cdc09d3f493188bdc1f8773404a2e3b)
   **fit/TextAutosize:** Fixed a bug that in certain circumstances reverted a frame's auto-sizing to height-only
+- `04/02` [`fix`](https://github.com/pchiorean/Indentz/commit/04edf0d97127b5472c4217d52354ff8cb16fd236)
+  **lib/ParseDataFile and related:** Converted documents actually have a path (d'oh!), so don't skip looking for the local data file
 
 ##### Miscellaneous
 
@@ -659,7 +663,6 @@
 
 ##### Updates
 
-- `brk` **cleanup/DefaultLayers:** Add column for locked status
 - `brk` **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
 - `upd` **cleanup/DefaultSwatches:** Check color values on parsing
 - `upd` **cleanup/ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
@@ -683,6 +686,7 @@
 - `upd` **misc/LabelPageRatios:** Mark outer/inner ratios
 - `upd` **view/ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
 - `upd` Use a custom object style for `<visible area>` frame
+- `brk` `?` **cleanup/DefaultLayers:** Add column for locked status
 - `upd` `?` **export/QuickExport:** JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 - `upd` `?` **lib/isInArray:** Add regex matching to `searchValue`
 - `upd` `?` Add a 'Canceling, please wait...' note when canceling batch processes
