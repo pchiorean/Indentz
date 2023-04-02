@@ -1,5 +1,9 @@
 # Helper functions
 
+Various functions used by the main scripts. They are included in the body of the script using the `#include` directive (you can also use `// @include`). Example:
+
+    // @include '../lib/isInArray.jsxinc';
+
 ### addGuide(_target, [layer], HorV, location, [label], [type]_)
 
 Adds a custom ruler guide. I use it to make grids for several brands, for which I have a hard time remembering the properties of the different guide lines. With the `preset` parameter I standardize guide types: symmetry axes, sections and subsections, product alignment and so on.
