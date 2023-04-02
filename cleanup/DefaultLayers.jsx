@@ -1,6 +1,6 @@
 /*
-	Default layers 22.12.9
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Default layers 23.4.2
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds/merges layers from a 6-column TSV file named 'layers.tsv':
 
@@ -62,11 +62,14 @@ function main() {
 	var parsed = { header: [], data: [], errors: [] };
 	var data = { records: [], status: { info: [], warn: [], fail: [] } };
 	var counter = { add: 0, merge: 0 };
+	var docHasPath = (function () {
+		var ret = false;
+		try { ret = !!doc.filePath; } catch (e) {}
+		return ret;
+	}());
 
-	if (doc.converted && VERBOSITY > 0) {
-		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
-			'The default swatch substitution list will be used.');
-	}
+	if (!docHasPath && VERBOSITY > 0)
+		alert('Can\'t get document path.\nThe default swatch substitution list will be used.');
 
 	// Get raw data from TSV
 	if (!(file = getDataFile(dataFileName))) { // No data file found

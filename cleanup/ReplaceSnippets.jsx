@@ -1,6 +1,6 @@
 ﻿/*
-	Replace text snippets 22.12.4
-	(c) 2022 Paul Chiorean (jpeg@basement.ro)
+	Replace text snippets 23.4.2
+	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces a list of snippets from a 5-column TSV file named `snippets.tsv`:
 
@@ -62,11 +62,14 @@ function main() {
 	var parsed = { header: [], data: [], errors: [] };
 	var data = { records: [], status: { info: [], warn: [], fail: [] } };
 	var counter = 0;
+	var docHasPath = (function () {
+		var ret = false;
+		try { ret = !!doc.filePath; } catch (e) {}
+		return ret;
+	}());
 
-	if (doc.converted && VERBOSITY > 0) {
-		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
-			'The default swatch substitution list will be used.');
-	}
+	if (!docHasPath && VERBOSITY > 0)
+		alert('Can\'t get document path.\nThe default swatch substitution list will be used.');
 
 	// Get raw data from TSV
 	if (!(file = getDataFile(dataFileName))) { // No data file found

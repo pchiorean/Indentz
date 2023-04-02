@@ -109,14 +109,20 @@ function getDataFile(name, skipLocal) {
 	var file = '';
 	var doc = app.activeDocument;
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
+	var docHasPath = (function () {
+		var ret = false;
+		try { ret = !!doc.filePath; } catch (e) {}
+		return ret;
+	}());
+
 	if (name.constructor.name !== 'Array') name = Array(name);
 
 	for (var i = 0; i < name.length; i++) {
 		if (!skipLocal) {
-			if (doc && doc.saved && (file = File(doc.filePath + '/_'    + name[i])) && file.exists) return file;
-			if (doc && doc.saved && (file = File(doc.filePath + '/'     + name[i])) && file.exists) return file;
-			if (doc && doc.saved && (file = File(doc.filePath + '/../_' + name[i])) && file.exists) return file;
-			if (doc && doc.saved && (file = File(doc.filePath + '/../'  + name[i])) && file.exists) return file;
+			if (docHasPath && (file = File(doc.filePath + '/_'    + name[i])) && file.exists) return file;
+			if (docHasPath && (file = File(doc.filePath + '/'     + name[i])) && file.exists) return file;
+			if (docHasPath && (file = File(doc.filePath + '/../_' + name[i])) && file.exists) return file;
+			if (docHasPath && (file = File(doc.filePath + '/../'  + name[i])) && file.exists) return file;
 		}
 		if ((file = File(Folder.desktop + '/'    + name[i])) && file.exists) return file;
 		if ((file = File(script.path    + '/'    + name[i])) && file.exists) return file;

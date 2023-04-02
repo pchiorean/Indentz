@@ -1,5 +1,5 @@
 /*
-	Replace links 23.2.22
+	Replace links 23.4.2
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces document links from a 2-column TSV file named `links.tsv`:
@@ -67,11 +67,14 @@ function main() {
 		for (i = 0; i < links.length; i++) s.push(links[i].name);
 		return s;
 	}());
+	var docHasPath = (function () {
+		var ret = false;
+		try { ret = !!doc.filePath; } catch (e) {}
+		return ret;
+	}());
 
-	if (doc.converted && VERBOSITY > 0) {
-		alert('Can\'t get document path.\nThe document was converted from a previous InDesign version. ' +
-			'The default swatch substitution list will be used.');
-	}
+	if (!docHasPath && VERBOSITY > 0)
+		alert('Can\'t get document path.\nThe default swatch substitution list will be used.');
 
 	// Get raw data from TSV
 	if (!(file = getDataFile(dataFileName))) { // No data file found
