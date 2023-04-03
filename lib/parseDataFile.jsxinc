@@ -101,6 +101,9 @@
  * Returns the first occurrence of file `name`, first searching for a local one (in the current
  * folder or the parent folder of the active document), then a default one (on the desktop or next
  * to the running script). It also matches local files starting with `_`, which take precedence.
+ * @version 23.4.2
+ * @author Paul Chiorean <jpeg@basement.ro>
+ * @license MIT
  * @param {(string|string[])} name - The file name, or an array of file names.
  * @param {boolean} [skipLocal=false] - If `true`, don't search locally.
  * @returns {File|void} - File object if found, else `undefined`.
