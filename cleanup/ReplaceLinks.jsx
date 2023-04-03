@@ -49,7 +49,6 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'isInArray.jsxinc';
 // @include 'progressBar.jsxinc';
 // @include 'report.jsxinc';
-// @include 'log.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace links');
