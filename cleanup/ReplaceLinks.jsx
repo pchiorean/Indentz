@@ -1,5 +1,5 @@
 /*
-	Replace links 23.4.2
+	Replace links 23.4.3
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces document links from a 2-column TSV file named `links.tsv`:
@@ -49,6 +49,7 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'isInArray.jsxinc';
 // @include 'progressBar.jsxinc';
 // @include 'report.jsxinc';
+// @include 'log.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace links');
@@ -231,6 +232,9 @@ function main() {
 	 * Returns the first occurrence of file `name`, first searching for a local one (in the current
 	 * folder or the parent folder of the active document), then a default one (on the desktop or next
 	 * to the running script). It also matches local files starting with `_`, which take precedence.
+	 * @version 23.4.2
+	 * @author Paul Chiorean <jpeg@basement.ro>
+	 * @license MIT
 	 * @param {(string|string[])} name - The file name, or an array of file names.
 	 * @param {boolean} [skipLocal=false] - If `true`, don't search locally.
 	 * @returns {File|void} - File object if found, else `undefined`.
@@ -239,14 +243,20 @@ function main() {
 		var file = '';
 		var doc = app.activeDocument;
 		var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
+		var docHasPath = (function () {
+			var ret = false;
+			try { ret = !!doc.filePath; } catch (e) {}
+			return ret;
+		}());
+
 		if (name.constructor.name !== 'Array') name = Array(name);
 
 		for (var i = 0; i < name.length; i++) {
 			if (!skipLocal) {
-				if (doc && doc.saved && (file = File(doc.filePath + '/_'    + name[i])) && file.exists) return file;
-				if (doc && doc.saved && (file = File(doc.filePath + '/'     + name[i])) && file.exists) return file;
-				if (doc && doc.saved && (file = File(doc.filePath + '/../_' + name[i])) && file.exists) return file;
-				if (doc && doc.saved && (file = File(doc.filePath + '/../'  + name[i])) && file.exists) return file;
+				if (docHasPath && (file = File(doc.filePath + '/_'    + name[i])) && file.exists) return file;
+				if (docHasPath && (file = File(doc.filePath + '/'     + name[i])) && file.exists) return file;
+				if (docHasPath && (file = File(doc.filePath + '/../_' + name[i])) && file.exists) return file;
+				if (docHasPath && (file = File(doc.filePath + '/../'  + name[i])) && file.exists) return file;
 			}
 			if ((file = File(Folder.desktop + '/'    + name[i])) && file.exists) return file;
 			if ((file = File(script.path    + '/'    + name[i])) && file.exists) return file;
