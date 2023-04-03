@@ -106,7 +106,7 @@ function main() {
 					&& links[i].status !== LinkStatus.LINK_OUT_OF_DATE)
 				continue;
 			stat(data.status, data.records[j].source,
-				'Relinked \'' + decodeURI(links[i].name) + '\' with \'' + data.records[j].newLink + '\'.', 0);
+				'Relinked \'' + decodeURI(links[i].name) + '\' with \'' + decodeURI(data.records[j].newLink) + '\'.', 0);
 			links[i].relink(File(data.records[j].newLink));
 			counter++;
 			if (ScriptUI.environment.keyboardState.keyName === 'Escape') exit();
