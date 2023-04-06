@@ -6,8 +6,6 @@
 
 ##### Updates
 
-- `02/03` [`upd`](https://github.com/pchiorean/Indentz/commit/bdd9d16c1a28598a7461c4f429d1c591728caff9)
-  **cleanup/DumpLayers, DumpSwatches, export/QuickExport, lib/log, report** Set linefeed to Unix
 - `02/03` [`upd`](https://github.com/pchiorean/Indentz/commit/6d294984e6df49ca1d80c363e249d65304acdb9f)
   **export/Hide/ShowDNPLayers, PrepareForExport** Renamed 'Safety margins' to 'Safety area'
 - `02/07` [`upd`](https://github.com/pchiorean/Indentz/commit/73ca242a907c01f14b2f61dc1ea6953a8f6cfab5)
@@ -23,19 +21,27 @@
 - `03/10` [`upd`](https://github.com/pchiorean/Indentz/commit/4d519e29485e8a2f0376dbfe4e6a0153949209d8)
   **lib/fitTo:** Tweaked debug section; renamed some variables for clarity
 - `03/23` [`upd`](https://github.com/pchiorean/Indentz/commit/26d261d09d2a2c3a65bcff7a24a65a3a047c31b3)
-  **misc/EAN:** If multiple objects are selected, the code will be inserted to all of them
-- `04/02` [`upd`](https://github.com/pchiorean/Indentz/commit/c68da2a712c6a67686329f28b80bea9fdff1b985)
-  **export/QuickExport:** Don't display preferences reset warning on first run (revisited)
+  **misc/EAN:** If multiple objects are selected, the code will be inserted into all of them
 
 ##### Removed features
 
 ##### Bug fixes
+- `02/03` [`upd`](https://github.com/pchiorean/Indentz/commit/bdd9d16c1a28598a7461c4f429d1c591728caff9)
+  **cleanup/DumpLayers, DumpSwatches, export/QuickExport, lib/log, report** Set linefeed to Unix
 - `02/24` [`fix`](https://github.com/pchiorean/Indentz/commit/fd5a40a300cb56bcc4df54a19a1d780c550cecce)
   **export/PrepareForExport:** Don't add 'info' layer if not actually needed
 - `03/11` [`fix`](https://github.com/pchiorean/Indentz/commit/84214f8a1cdc09d3f493188bdc1f8773404a2e3b)
   **fit/TextAutosize:** Fixed a bug that in certain circumstances reverted a frame's auto-sizing to height-only
+- `04/02` [`upd`](https://github.com/pchiorean/Indentz/commit/c68da2a712c6a67686329f28b80bea9fdff1b985)
+  **export/QuickExport:** Don't display preferences reset warning on first run (revisited)
 - `04/02` [`fix`](https://github.com/pchiorean/Indentz/commit/04edf0d97127b5472c4217d52354ff8cb16fd236)
   **lib/ParseDataFile and related:** Converted documents actually have a path (d'oh!), so don't skip looking for the local data file
+- `04/03` [`fix`](https://github.com/pchiorean/Indentz/commit/2e8d29bdc4fecffdfd75a530a3666169be7b236c)
+  **cleanup/ReplaceLinks:** Forgot to update `getDataFile()` (this script has the libs included)
+- `04/03` [`fix`](https://github.com/pchiorean/Indentz/commit/55383fbc2c2805849c41355e2a27276b1bcdeb00)
+  **cleanup/ReplaceLinks:** Properly URI-decode the file names when reporting replaced links
+- `04/06` [`fix`](https://github.com/pchiorean/Indentz/commit/7598eca8e4e99ca41dcf268439d79252a363e667)
+  **misc/EAN:** Fixed a regression from commit `26d261d` (03/23) that made some naive assumptions about the active document and/or selection
 
 ##### Miscellaneous
 
