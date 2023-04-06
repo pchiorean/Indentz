@@ -504,7 +504,8 @@ Does the same thing as **`QR`** but in a non-interactive way: retrieves a list o
 > **Code**: any string\
 > **On doc**: any string: on existing document; empty or missing: on separate file
 
-The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence. Blank lines and those starting with `#` are ignored (this will confuse Excel).
+The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence.\
+Blank lines are ignored; everything after a `#` (comments) is ignored.
 
 You can insert `|` for manually splitting the label into several lines.
 
@@ -537,7 +538,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: March 23, 2023</small>
+<small>Last updated: April 6, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
