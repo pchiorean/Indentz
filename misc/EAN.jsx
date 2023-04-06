@@ -1,8 +1,8 @@
 /*
-	EAN code 23.3.23
+	EAN code 23.4.6
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
-	Embeds an EAN code in the selected frame or adds it to a new page.
+	Embeds an EAN code in the selected frames or adds it to a new page.
 
 	The code that generates the EAN code was borrowed from
 	'EAN Barcode Generator' by Konstantin Smorodsky.
@@ -37,7 +37,10 @@
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'EAN code');
 
 function main() {
-	var doc, page, ui, items, barcode, codeFrame, codeLayer, txtLayer, target, SF;
+	var doc, page, oldSelection,
+		ui, items, barcode,
+		codeFrame, codeLayer, txtLayer,
+		target, SF;
 	var codeLayerName = 'codes';
 	var txtLayerName = 'text & logos';
 	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
@@ -93,12 +96,13 @@ function main() {
 	};
 	if (ui.show() === 2) exit();
 
-	// Embed the code in a non-group single selected object; else make a new doc
-	try {
+	// Embed the code in the selected objects, else make a new doc
+	if (app.documents.length > 0 && app.selection.length > 0) {
 		doc = app.activeDocument;
+		oldSelection = doc.selection;
 		items = doc.selection;
 		while ((target = items.shift())) {
-			makeBarcode();
+			codeFrame = makeBarcode();
 			codeFrame.fillColor = 'None';
 			codeFrame.absoluteRotationAngle = target.absoluteRotationAngle;
 			switch (target.absoluteRotationAngle) {
@@ -127,7 +131,7 @@ function main() {
 					doc.align(codeFrame, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
 					break;
 			}
-			if (codeFrame.pageItems[0].label.length === 8) SF *= 0.76518424396442; // Adjust SF for EAN-8
+			if (codeFrame.pageItems[0].label.length === 8) SF *= 0.76518424396442; // Adjust scale factor for EAN-8
 			codeFrame.transform(
 				CoordinateSpaces.INNER_COORDINATES,
 				AnchorPoint.BOTTOM_CENTER_ANCHOR,
@@ -139,11 +143,11 @@ function main() {
 			app.pasteInto();
 			codeFrame = target;
 		}
-	} catch (e) {
-		if (codeFrame.isValid) codeFrame.remove();
+		app.select(oldSelection);
+	} else {
 		doc = app.documents.add();
 		page = doc.pages[0];
-		makeBarcode();
+		codeFrame = makeBarcode();
 		page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
 		page.reframe(CoordinateSpaces.SPREAD_COORDINATES, [
 			codeFrame.resolve(AnchorPoint.TOP_LEFT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0],
@@ -153,9 +157,8 @@ function main() {
 		doc.documentPreferences.pageWidth  = page.bounds[3] - page.bounds[0];
 		doc.documentPreferences.pageHeight = page.bounds[2] - page.bounds[1];
 		app.activeWindow.zoom(ZoomOptions.FIT_SPREAD);
+		app.select(codeFrame);
 	}
-
-	app.select(codeFrame);
 
 	function makeBarcode() {
 		codeLayer = doc.layers.item(codeLayerName);
@@ -170,7 +173,6 @@ function main() {
 			txtLayer = doc.layers.item(txtLayerName);
 			if (txtLayer.isValid) codeLayer.move(LocationOptions.AFTER, txtLayer);
 		}
-
 		codeFrame = new BarCode(
 			barcode[0].substr(0, 12), // code
 			barcode[1], // ext
@@ -178,6 +180,7 @@ function main() {
 			ui.extOnTop.value
 		);
 		codeFrame.itemLayer = codeLayer;
+		return codeFrame;
 	}
 
 	/**
