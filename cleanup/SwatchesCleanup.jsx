@@ -1,27 +1,31 @@
 /*
-	Cleanup swatches 22.2.13
-	Paul Chiorean (jpeg@basement.ro)
+	Cleanup swatches 23.5.3
+	Paul Chiorean <jpeg@basement.ro>
 
 	Converts RGB swatches to CMYK, renames them to 'C= M= Y= K=' format, deletes unused.
 */
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(addUnnamedColors, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Add unnamed colors');
-app.doScript(convertRGB2CMYK, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Convert RGB process colors to CMYK');
-app.doScript(normalizeCMYK, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Normalize similar CMYK swatches');
-app.doScript(deleteUnusedSwatches, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Delete unused swatches');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
+	UndoModes.ENTIRE_SCRIPT, 'Cleanup swatches');
 
-// Add Unnamed Colors
-function addUnnamedColors() {
+function main() {
+	// Add unnamed colors
 	if ((menu = app.menuActions.item('$ID/Add Unnamed Colors')).enabled) menu.invoke();
-	try { doc.colors.itemByName('C=0 M=0 Y=0 K=0').remove('Paper'); } catch (e) {}
-	try { doc.colors.itemByName('C=0 M=0 Y=0 K=100').remove('Black'); } catch (e) {}
+
+	convertRGB2CMYK(); // Convert RGB process colors to CMYK
+	normalizeCMYK(); // Normalize similar CMYK swatches
+
+	// Delete unused and odd swatches
+	var c;
+	var swa = doc.unusedSwatches;
+	while ((c = swa.shift())) if (c.name !== '') c.remove();
+
 	try { doc.colors.itemByName('R=0 G=0 B=0').remove('Black'); } catch (e) {}
+	try { doc.colors.itemByName('C=0 M=0 Y=0 K=100').remove('Black'); } catch (e) {}
+	try { doc.colors.itemByName('C=0 M=0 Y=0 K=0').remove('Paper'); } catch (e) {}
+	try { doc.colors.itemByName('BLANCO').remove('Paper'); } catch (e) {}
 }
 
 // Modified from ConvertRGBtoCMYK.jsx by Dave Saunders
@@ -67,10 +71,4 @@ function normalizeCMYK() {
 		if (k === o.name) continue; // No need to rename
 		try { t.name = k; } catch (e) {} // Prevent read-only errors
 	}
-}
-
-function deleteUnusedSwatches() {
-	var c;
-	var swa = doc.unusedSwatches;
-	while ((c = swa.shift())) if (c.name !== '') c.remove();
 }
