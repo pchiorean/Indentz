@@ -1,6 +1,6 @@
 /*
-	Default preferences 22.11.13
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Default preferences 23.5.3
+	(c) 2020-2022 Paul Chiorean <jpeg@basement.ro>
 
 	Sets default preferences.
 
@@ -80,10 +80,8 @@ app.doScript(function () {
 			}
 		},
 		pasteboardPreferences: {
-			// pasteboardMargins: ["150mm", "25mm"],
 			previewBackgroundColor: UIColors.LIGHT_GRAY
 		},
-		rgbProfile: 'sRGB IEC61966-2.1',
 		selection: [],
 		textDefaults: { paragraphShadingOn: false },
 		textPreferences: {
@@ -109,11 +107,6 @@ app.doScript(function () {
 		},
 		zeroPoint: [ 0, 0 ]
 	};
-	try {
-		doc.cmykProfile = 'ISO Coated v2 (ECI)';
-	} catch (e) {
-		doc.cmykProfile = 'Coated FOGRA39 (ISO 12647-2:2004)';
-	}
 },
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Set preferences');
