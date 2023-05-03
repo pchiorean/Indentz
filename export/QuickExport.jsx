@@ -1,5 +1,5 @@
 /*
-	Quick export 23.4.2
+	Quick export 23.5.3
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -53,7 +53,7 @@ var docs = [];
 var layersState = [];
 var pbWidth = 50;
 
-var VER = '2.8';
+var VER = '3.5';
 var defaults = {
 	presets: {
 		preset1: {
@@ -95,10 +95,11 @@ var defaults = {
 			folder: ''
 		},
 		options: {
-			subfolders: true,
-			split: false,
 			updatelinks: true,
+			dnp: false,
 			save: true,
+			split: false,
+			subfolders: true,
 			close: true
 		}
 	},
@@ -202,6 +203,8 @@ ui.output = ui.main.add('panel { text: "Output folder and options", alignChildre
 	ui.output.options = ui.output.add('group { alignChildren: "top", margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 15 }');
 		ui.output.opt1 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
 			ui.output.options.updateLinks = ui.output.opt1.add('checkbox { text: "Update out of date links" }');
+			ui.output.options.dnp = ui.output.opt1.add('checkbox { text: "Exclude do-not-print layers" }');
+			ui.output.options.dnp.helpTip = 'Don\'t export layers beginning with \'.\' or \'-\'';
 			ui.output.options.docSave = ui.output.opt1.add('group');
 				ui.output.options.docSave.isOn = ui.output.options.docSave.add('checkbox { text: "Save:" }');
 				ui.output.options.docSave.scope = ui.output.options.docSave.add('group');
@@ -212,14 +215,14 @@ ui.output = ui.main.add('panel { text: "Output folder and options", alignChildre
 					ui.output.options.docSave.scope.all.helpTip = "Save all documents (using 'Save as\u2026')";
 			ui.output.options.docSaveAs = ui.output.opt1.add('checkbox { text: "Use \'Save as\u2026\' to reduce documents size" }');
 			ui.output.options.docSaveAs.helpTip = 'Documents will be saved as new to remove cruft and reduce their size';
-			ui.output.options.docClose = ui.output.opt1.add('checkbox { text: "Close documents after export" }');
-			ui.output.options.docClose.enabled = !folderMode;
 		ui.output.options.add('panel', undefined, undefined).alignment = 'fill';
 		ui.output.opt2 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
 			ui.output.options.split = ui.output.opt2.add('checkbox { text: "Export separate pages/spreads" }');
 			ui.output.options.subfolders = ui.output.opt2.add('checkbox { text: "Sort files by suffix into subfolders" }');
 			ui.output.options.subfolders.helpTip = "Use the text in the 'suffix' field as the destination subfolder.\nEverything after '+' is ignored (e.g., files with 'print+diecut'\nwill be exported to 'print')";
 			ui.output.options.overwrite = ui.output.opt2.add('checkbox { text: "Overwrite existing files" }');
+			ui.output.options.docClose = ui.output.opt2.add('checkbox { text: "Close documents after export" }');
+			ui.output.options.docClose.enabled = !folderMode;
 
 // -- Actions
 ui.actions = ui.add('group { orientation: "row" }');
@@ -722,10 +725,10 @@ while ((doc = docs.shift())) {
 		if (/^_print/i.test(suffix) && doc.layers.itemByName('foil').isValid)     suffix += '+foil';
 		if (/^_print/i.test(suffix) && doc.layers.itemByName('varnish').isValid)  suffix += '+varnish';
 
-		// Hack: Hide dot-layers when exporting with a 'print' suffix
-		for (i = 0; i < doc.layers.length; i++) {
-			if (!/^\./.test(doc.layers[i].name)) continue;
-			if (/print(\+.+)?$/i.test(exp.preset.selection.text)) doc.layers[i].visible = false;
+		// Hide do-not-print layers
+		if (ui.output.options.dnp) {
+			for (i = 0; i < doc.layers.length; i++)
+				if (/^[.-]/.test(doc.layers[i].name)) doc.layers[i].visible = false;
 		}
 
 		// Run script
@@ -1063,11 +1066,12 @@ function readSettings() {
 	// Output options
 	ui.output.dest.folder.text = settings.output.dest.folder;
 	ui.output.dest.isOn.value = settings.output.dest.active;
-	ui.output.options.subfolders.value = settings.output.options.subfolders;
-	ui.output.options.split.value = settings.output.options.split;
 	ui.output.options.updateLinks.value = settings.output.options.updatelinks;
+	ui.output.options.dnp.value = settings.output.options.dnp;
 	ui.output.options.docSave.isOn.value = settings.output.options.save;
 	ui.output.options.docSaveAs.value = false;
+	ui.output.options.split.value = settings.output.options.split;
+	ui.output.options.subfolders.value = settings.output.options.subfolders;
 	ui.output.options.docClose.value = settings.output.options.close;
 
 	// Init
@@ -1146,10 +1150,11 @@ function saveSettings() {
 				folder: ui.output.dest.path.exists ? decodeURI(ui.output.dest.path.fullName) : ''
 			},
 			options: {
-				subfolders: ui.output.options.subfolders.value,
-				split: ui.output.options.split.value,
 				updatelinks: ui.output.options.updateLinks.value,
+				dnp: ui.output.options.dnp.value,
 				save: ui.output.options.docSave.isOn.value,
+				split: ui.output.options.split.value,
+				subfolders: ui.output.options.subfolders.value,
 				close: ui.output.options.docClose.value
 			}
 		},
