@@ -1,8 +1,8 @@
 /*
-	Page ratios 22.11.17
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Page ratios 23.5.3
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
-	Adds a label (ratio) on each page's slug.
+	Adds a label with the visible area and margins ratio on each page's slug.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -10,16 +10,24 @@
 
 if (!(doc = app.activeDocument)) exit();
 
+// @includepath '.;./lib;../lib';
+// @include 'getBounds.jsxinc';
+
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Label page ratios');
 
 function main() {
-	var bounds;
+	var visible, margins;
 	for (var i = 0, n = doc.pages.length; i < n; i++) {
-		bounds = boundsPageMargins(doc.pages.item(i));
+		visible = getBounds(doc.pages.item(i)).page.visible;
+		margins = getBounds(doc.pages.item(i)).page.margins;
 		slugInfo(
 			doc.pages.item(i),
-			((bounds[3] - bounds[1]) / (bounds[2] - bounds[0])).toFixed(3)
+			'Visible R:' +
+			((visible[3] - visible[1]) / (visible[2] - visible[0])).toFixed(3) +
+			'\u2003Margins R:' +
+			((margins[3] - margins[1]) / (margins[2] - margins[0])).toFixed(3),
+			false
 		);
 	}
 
@@ -70,7 +78,8 @@ function main() {
 			strokeWeight:   '0.4 pt',
 			strokeColor:    'Paper',
 			// endJoin:        EndJoin.ROUND_END_JOIN,
-			capitalization: isCaps ? Capitalization.ALL_CAPS : Capitalization.NORMAL
+			capitalization: isCaps ? Capitalization.ALL_CAPS : Capitalization.NORMAL,
+			horizontalScale: 100
 		};
 		infoFrame.fit(FitOptions.FRAME_TO_CONTENT);
 		infoFrame.textFramePreferences.properties = {
@@ -113,18 +122,5 @@ function main() {
 				]);
 				break;
 		}
-	}
-
-	function boundsPageMargins(page) {
-		return [
-			page.bounds[0] + page.marginPreferences.top,
-			(page.side === PageSideOptions.LEFT_HAND) ?
-				page.bounds[1] + page.marginPreferences.right :
-				page.bounds[1] + page.marginPreferences.left,
-			page.bounds[2] - page.marginPreferences.bottom,
-			(page.side === PageSideOptions.LEFT_HAND) ?
-				page.bounds[3] - page.marginPreferences.left :
-				page.bounds[3] - page.marginPreferences.right
-		];
 	}
 }
