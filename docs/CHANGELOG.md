@@ -22,6 +22,14 @@
   **lib/fitTo:** Tweaked debug section; renamed some variables for clarity
 - `03/23` [`upd`](https://github.com/pchiorean/Indentz/commit/26d261d09d2a2c3a65bcff7a24a65a3a047c31b3)
   **misc/EAN:** If multiple objects are selected, the code will be inserted into all of them
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/66e77c839e9de0fc06a6f67988fbf02041f7acaf)
+  **export/QuickExport:** Added an option to exclude do-not-print layers (any layer beginning with '.' or '-')
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/29e40eae2bc22bc6dc6ceca9ceba9733eb9f00a7)
+  **cleanup/DefaultPrefs:** Removed color profile settings
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/7e2f37b856cf4879d89f43934fbc33702559e4ba)
+  **cleanup/SwatchesCleanup:** Delete unused swatches was moved as the last step
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/7210d51f060231925cecf794ee8d2ebd685e1fc2)
+  **misc/LabelPageRatios:** Now marks outer (visible area, or page size if undefined) and inner (margins) ratios
 
 ##### Removed features
 
@@ -671,6 +679,7 @@
 
 - `brk` **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
 - `upd` **cleanup/DefaultSwatches:** Check color values on parsing
+- `upd` **cleanup/DocCleanup:** Delete empty color groups
 - `upd` **cleanup/ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
 - `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
 - `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
@@ -689,7 +698,6 @@
 - `upd` **lib/replaceText:** Add grep matching
 - `upd` **lib/replaceText:** Take an array of strings as input
 - `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
-- `upd` **misc/LabelPageRatios:** Mark outer/inner ratios
 - `upd` **view/ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
 - `upd` Use a custom object style for `<visible area>` frame
 - `brk` `?` **cleanup/DefaultLayers:** Add column for locked status
