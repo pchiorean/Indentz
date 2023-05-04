@@ -1,5 +1,5 @@
 /*
-	Quick export 23.5.3
+	Quick export 23.5.4
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -726,7 +726,7 @@ while ((doc = docs.shift())) {
 		if (/^_print/i.test(suffix) && doc.layers.itemByName('varnish').isValid)  suffix += '+varnish';
 
 		// Hide do-not-print layers
-		if (ui.output.options.dnp) {
+		if (ui.output.options.dnp.value) {
 			for (i = 0; i < doc.layers.length; i++)
 				if (/^[.-]/.test(doc.layers[i].name)) doc.layers[i].visible = false;
 		}
