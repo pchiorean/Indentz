@@ -1,6 +1,6 @@
 /*
-	Add page guides 22.7.16
-	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
+	Add page guides 23.5.10
+	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds guides on pages' edges and inner centers or selected objects' edges.
 
@@ -22,7 +22,7 @@ function main() {
 	var items = doc.selection;
 	var targetBounds = [];
 	var flgExit = false;
-	var guidesLayerName = 'guides';
+	var guidesLayerName = '.guides';
 	var hwLayerName = 'HW';
 	var HW = 10 / 100;
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;

@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 23.1.29
+	Document cleanup 23.5.10
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
@@ -146,15 +146,20 @@ UndoModes.ENTIRE_SCRIPT, 'Convert empty frames to graphic frames');
 progressBar.update();
 app.doScript(function () {
 	var layer;
-	if ((layer = doc.layers.itemByName('visible area')).isValid) { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('safety area')).isValid)  { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('dielines')).isValid)     { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('varnish')).isValid)      { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('guides')).isValid)       { layer.visible = true; layer.locked = false; }
-	if ((layer = doc.layers.itemByName('HW')).isValid)           { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('bg')).isValid)           { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('text & logos')).isValid) { layer.visible = true; doc.activeLayer = layer; }
-	else if ((layer = doc.layers.itemByName('artwork')).isValid) { layer.visible = true; doc.activeLayer = layer; }
+	if ((layer = doc.layers.itemByName('.guides')).isValid)       { layer.visible = true; layer.locked = false; }
+	if ((layer = doc.layers.itemByName('.safety area')).isValid)  { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('.visible area')).isValid) { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('.covered area')).isValid) { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('dielines')).isValid)      { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('varnish')).isValid)       { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('HW')).isValid)            { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('text & logos')).isValid)  { layer.visible = true; layer.locked = false; }
+	if ((layer = doc.layers.itemByName('artwork')).isValid)       { layer.visible = true; layer.locked = false; }
+	if ((layer = doc.layers.itemByName('bg')).isValid)            { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('.reference')).isValid)    { layer.visible = false; layer.locked = true; }
+
+	if ((layer = doc.layers.itemByName('text & logos')).isValid)  doc.activeLayer = layer;
+	else if ((layer = doc.layers.itemByName('artwork')).isValid)  doc.activeLayer = layer;
 },
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Show/hide layers');

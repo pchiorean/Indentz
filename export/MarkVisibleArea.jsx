@@ -1,5 +1,5 @@
 /*
-	Mark visible area 23.2.23
+	Mark visible area 23.5.10
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Creates on each page a 'visible area' frame the size of the page margins.
@@ -20,7 +20,7 @@ function main() {
 	var page, mgs,
 		visLayer, dieLayer,
 		oldFrame, frames;
-	var visLayerName = getLayer([ 'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ]);
+	var visLayerName = getLayer([ '.visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ]);
 	var dieLayerName = getLayer([ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ]);
 	var visFrame = {
 		swatchName: 'Visible area',
