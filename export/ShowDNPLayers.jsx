@@ -1,5 +1,5 @@
 /*
-	Show DNP layers 23.2.3
+	Show DNP layers 23.5.10
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Shows DO-NOT-PRINT layers.
@@ -14,10 +14,9 @@ if (app.documents.length === 0) exit();
 	var layerNames = [
 		'-*', '.*',
 		'covered area*',
-		'visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*',
-		'safety area', 'safety margins', 'safe area', 'segmentation',
-		'guides', 'grid', 'masuratori',
-		'rahmen', 'sicht*'
+		'visible area', 'rahmen', 'sicht*', '*vi?ib*',
+		'safe*area', 'safe*margins', 'segmentation',
+		'guides', 'grid', 'masuratori'
 	];
 
 	for (var i = 0, n = doc.layers.length; i < n; i++)
