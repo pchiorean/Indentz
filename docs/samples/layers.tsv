@@ -1,12 +1,37 @@
-Name         	Color      	Visible 	Printable 	Order 	Variants
-dielines     	Magenta    	yes     	yes       	above 	cut*, decoupe, die, die*cut, stanz*
-covered area 	Red        	yes     	yes       	above 	covered area*, verdeckte flächen
-visible area 	Yellow     	yes     	yes       	above 	nicht sicht*, rahmen, safe area, sicht*, *vi?ib*, vis?*
+Name          	Color      	Visible 	Printable 	Order  	Variants
 
-guides       	Magenta    	yes     	no        	above 	abstände, grid, masuratori
-text & logos 	Green      	yes     	yes       	above 	copy, headline*, hl, logo, text*, txt, typ?
-artwork      	Light Blue 	yes     	yes       	above 	aw, design, layout*
-bg           	Red        	yes     	yes       	below 	back, *background*, bgg, fond, hg, hintergrund*
+# Do-not-print layers
+.guides       	Magenta    	yes     	no        	top    	abstände, grid, guides, masuratori, vermassung
+.placeholder  	Magenta    	no      	yes       	above  	placeholder
+.segmentation 	Grid Green 	yes     	yes       	above  	segmentation, split
+.safety area  	Grid Green 	yes     	yes       	above  	safe*area, safe*margins
+.visible area 	Yellow     	yes     	yes       	above  	nicht sicht*, rahmen, sicht*, *vi?ib*
+.covered area 	Red        	yes     	yes       	above  	covered area*, verdeckte flächen
+.reference    	Black      	no      	no        	bottom 	reference, referinta, template, vorlage
+
+# Info
+media         	Cyan       	no      	yes       	above
+info          	Cyan       	no      	yes       	above  	id, info copy, ratio
+placement     	Gray       	no      	yes       	above
+
+# Technical
+dielines      	Red        	yes     	yes       	above  	cut, cutcontour, cut*line*, decoupe, die, die*cut*, falz, mark, stanz*, sichtmass*kontur, stafo
+varnish       	Yellow     	no      	yes       	above  	uv
+foil          	Gold       	no      	yes       	above
+white         	Cute Teal  	no      	yes       	above
+cutout        	Gray       	no      	yes       	above
+
+# Artwork
+HW            	Light Gray 	no      	yes       	above  	*hw*, todesbalken, wh
+on top        	Light Blue 	no      	yes       	above  	ecken
+disruptors    	Gold       	no      	yes       	above  	offer, preis, price, pricetag, störer
+labels        	Gold       	no      	yes       	above  	new
+text & logos  	Green      	no      	yes       	above  	copy, dots, headline*, hl, logo, logos, tab, text*, txt, typ?, *signet
+terms         	Gray       	no      	yes       	above  	disclaimer*, legal*, validity
+codes         	Grid Green 	no      	yes       	above  	code*, bar*code*, ean*, qr, qr?code
+products      	Blue       	no      	yes       	above  	device*, pack*, packshot*, päckli, product*, tin*
+artwork       	Light Blue 	no      	yes       	above  	aw, brand arrow, velo_arrow, bullseye, design, element?, farbebene, freisteller, images, inner frame dot, layout*, RZ
+bg            	Red        	no      	yes       	below  	back, *background*, bgg, fond, hg, hintergrund*
 
 # <Name>: layer name
 # <Color>: layer color (defaults to Light Blue; see UIColors.txt for color names)
