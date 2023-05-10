@@ -4,6 +4,11 @@
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
 
+	[TODO]
+	- [ ] Update workflow and UI
+	- [ ] Change output folder text to 'Using document folders'
+	- [ ] Missing `updateOKStatus()` check for unsaved document
+
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
 
@@ -89,19 +94,17 @@ var defaults = {
 			}
 		}
 	},
-	output: {
-		dest: {
+	options: {
+		updatelinks: true,
+		skipdnp: false,
+		split: false,
+		save: true,
+		close: true,
+		destination: {
 			active: false,
 			folder: ''
 		},
-		options: {
-			updatelinks: true,
-			dnp: false,
-			save: true,
-			split: false,
-			subfolders: true,
-			close: true
-		}
+		subfolders: true
 	},
 	position: '',
 	version: VER
@@ -119,16 +122,16 @@ ui.main = ui.add('group { margins: 0, orientation: "column", preferredSize: [ 59
 
 // -- Input source
 if (folderMode) {
-	ui.input = ui.main.add('panel { text: "Input folder", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
+	ui.input = ui.main.add('panel { alignment: "fill", text: "Source", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
 		ui.input.source = ui.input.add('group { margins: 0, orientation: "row", spacing: 10 }');
-			ui.input.source.folder = ui.input.source.add('edittext { preferredSize: [ 458, 24 ], properties: { readonly: false } }');
+			ui.input.source.folder = ui.input.source.add('edittext { preferredSize: [ 458, 24 ] }');
 			ui.input.source.browse = ui.input.source.add('button { text: "Browse", preferredSize: [ 100, 24 ] }');
 		ui.input.options = ui.input.add('group { margins: 0, orientation: "row", spacing: 10 }');
 			ui.input.options.subfolders = ui.input.options.add('checkbox { text: "Include subfolders", alignment: "bottom" }');
 }
 
 // -- Export options
-ui.presets = ui.main.add('panel { text: "Export presets", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
+ui.presets = ui.main.add('panel { alignment: "fill", text: "Export presets", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
 	ui.preset1 = ui.presets.add('group { margins: 0, orientation: "row", spacing: 10 }');
 		ui.preset1.isOn = ui.preset1.add('checkbox { alignment: "bottom" }');
 		ui.preset1.preset = ui.preset1.add('dropdownlist', undefined, exportPresetsPDF);
@@ -195,34 +198,38 @@ ui.presets = ui.main.add('panel { text: "Export presets", alignChildren: "left",
 		ui.preset2.script.browse = ui.preset2.script.add('button { text: "Browse", preferredSize: [ 100, 24 ] }');
 
 // -- Output options
-ui.output = ui.main.add('panel { text: "Output folder and options", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
-	ui.output.dest = ui.output.add('group { margins: 0, orientation: "row", spacing: 10 }');
-		ui.output.dest.isOn = ui.output.dest.add('checkbox { alignment: "bottom" }');
-		ui.output.dest.folder = ui.output.dest.add('edittext { preferredSize: [ 430, 24 ], properties: { readonly: false } }');
-		ui.output.dest.browse = ui.output.dest.add('button { text: "Browse", preferredSize: [ 100, 24 ] }');
-	ui.output.options = ui.output.add('group { alignChildren: "top", margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 15 }');
-		ui.output.opt1 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
-			ui.output.options.updateLinks = ui.output.opt1.add('checkbox { text: "Update out of date links" }');
-			ui.output.options.dnp = ui.output.opt1.add('checkbox { text: "Exclude do-not-print layers" }');
-			ui.output.options.dnp.helpTip = 'Don\'t export layers beginning with \'.\' or \'-\'';
-			ui.output.options.docSave = ui.output.opt1.add('group');
-				ui.output.options.docSave.isOn = ui.output.options.docSave.add('checkbox { text: "Save:" }');
-				ui.output.options.docSave.scope = ui.output.options.docSave.add('group');
-					ui.output.options.docSave.scope.mod = ui.output.options.docSave.scope.add('radiobutton { text: "only modified" }');
-					ui.output.options.docSave.scope.mod.helpTip = 'Save only modified documents';
-					ui.output.options.docSave.scope.mod.value = true;
-					ui.output.options.docSave.scope.all = ui.output.options.docSave.scope.add('radiobutton { text: "all documents" }');
-					ui.output.options.docSave.scope.all.helpTip = "Save all documents (using 'Save as\u2026')";
-			ui.output.options.docSaveAs = ui.output.opt1.add('checkbox { text: "Use \'Save as\u2026\' to reduce documents size" }');
-			ui.output.options.docSaveAs.helpTip = 'Documents will be saved as new to remove cruft and reduce their size';
-		ui.output.options.add('panel', undefined, undefined).alignment = 'fill';
-		ui.output.opt2 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
-			ui.output.options.split = ui.output.opt2.add('checkbox { text: "Export separate pages/spreads" }');
-			ui.output.options.subfolders = ui.output.opt2.add('checkbox { text: "Sort files by suffix into subfolders" }');
+ui.output = ui.main.add('panel { alignment: "fill", text: "Destination", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "column", spacing: 10 }');
+	ui.output.destination = ui.output.add('group { margins: 0, orientation: "row", spacing: 10 }');
+		ui.output.destination.isOn = ui.output.destination.add('checkbox { alignment: "bottom" }');
+		ui.output.destination.folder = ui.output.destination.add('edittext { preferredSize: [ 430, 24 ] }');
+		ui.output.destination.browse = ui.output.destination.add('button { text: "Browse", preferredSize: [ 100, 24 ] }');
+	ui.output.options = ui.output.add('group { margins: 0, orientation: "row", spacing: 20 }');
+		ui.output.options.opt1 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", preferredSize: [ 232, -1 ], spacing: 5 }');
+			ui.output.options.subfolders = ui.output.options.opt1.add('checkbox { text: "Sort files by suffix into subfolders" }');
 			ui.output.options.subfolders.helpTip = "Use the text in the 'suffix' field as the destination subfolder.\nEverything after '+' is ignored (e.g., files with 'print+diecut'\nwill be exported to 'print')";
-			ui.output.options.overwrite = ui.output.opt2.add('checkbox { text: "Overwrite existing files" }');
-			ui.output.options.docClose = ui.output.opt2.add('checkbox { text: "Close documents after export" }');
-			ui.output.options.docClose.enabled = !folderMode;
+		ui.output.options.opt2 = ui.output.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
+			ui.output.options.overwrite = ui.output.options.opt2.add('checkbox { text: "Overwrite existing files" }');
+
+// -- Document options
+ui.options = ui.main.add('panel { alignment: "fill", text: "Options", alignChildren: "left", margins: [ 10, 15, 10, 10 ], orientation: "row", spacing: 20 }');
+	ui.options.opt1 = ui.options.add('group { alignChildren: "left", margins: 0, orientation: "column", preferredSize: [ 232, -1 ], spacing: 5 }');
+		ui.options.updateLinks = ui.options.opt1.add('checkbox { text: "Update out of date links" }');
+		ui.options.skipdnp = ui.options.opt1.add('checkbox { text: "Skip do-not-print layers" }');
+		ui.options.skipdnp.helpTip = 'Layers with names beginning with a dot or a hyphen\n(e.g., \'.safety area\') can be automatically skipped';
+		ui.options.split = ui.options.opt1.add('checkbox { text: "Export separate pages/spreads" }');
+	ui.options.opt2 = ui.options.add('group { alignChildren: "left", margins: 0, orientation: "column", spacing: 5 }');
+		ui.options.docSave = ui.options.opt2.add('group');
+			ui.options.docSave.isOn = ui.options.docSave.add('checkbox { text: "Save:" }');
+			ui.options.docSave.scope = ui.options.docSave.add('group');
+				ui.options.docSave.scope.mod = ui.options.docSave.scope.add('radiobutton { text: "modified" }');
+				ui.options.docSave.scope.mod.helpTip = 'Save only modified documents';
+				ui.options.docSave.scope.mod.value = true;
+				ui.options.docSave.scope.all = ui.options.docSave.scope.add('radiobutton { text: "all documents" }');
+				ui.options.docSave.scope.all.helpTip = "Save all documents (using 'Save as\u2026')";
+		ui.options.docSaveAs = ui.options.opt2.add('checkbox { text: "Use \'Save as\u2026\' to reduce documents size" }');
+		ui.options.docSaveAs.helpTip = 'Documents will be saved as new to remove cruft and reduce their size';
+		ui.options.docClose = ui.options.opt2.add('checkbox { text: "Close documents after export" }');
+		ui.options.docClose.enabled = !folderMode;
 
 // -- Actions
 ui.actions = ui.add('group { orientation: "row" }');
@@ -239,9 +246,9 @@ ui.actions.ok = ui.actions.add('button { text: "Start", preferredSize: [ 80, -1 
 
 // UI callback functions
 
-// -- Input source
+// -- Source folder and options
 if (folderMode) {
-	ui.text = 'Select an input folder';
+	ui.text = 'Select a source folder';
 	ui.input.source.browse.onClick = function () {
 		var ff = Folder.selectDialog('Select a folder:');
 		if (ff != null) ui.input.source.folder.text = ff;
@@ -258,7 +265,7 @@ if (folderMode) {
 		}
 		updateOKStatus();
 	};
-	ui.output.options.docClose.helpTip = 'In batch folder mode documents are always closed after export';
+	ui.options.docClose.helpTip = 'In batch folder mode documents are always closed after export';
 }
 
 // -- Export options
@@ -528,49 +535,49 @@ ui.preset2.bleedValue.onDeactivate = function () {
 };
 
 // -- Output options
-ui.output.dest.isOn.onClick = function () {
-	ui.output.dest.folder.enabled = ui.output.dest.browse.enabled = this.value;
-	ui.output.dest.folder.onChange();
+ui.output.destination.isOn.onClick = function () {
+	ui.output.destination.folder.enabled = ui.output.destination.browse.enabled = this.value;
+	ui.output.destination.folder.onChange();
 };
-ui.output.dest.browse.onClick = function () {
+ui.output.destination.browse.onClick = function () {
 	var ff = Folder.selectDialog('Select a folder:');
-	if (ff != null) ui.output.dest.folder.text = ff;
-	ui.output.dest.folder.onChange();
+	if (ff != null) ui.output.destination.folder.text = ff;
+	ui.output.destination.folder.onChange();
 };
-ui.output.dest.folder.onChange = function () {
+ui.output.destination.folder.onChange = function () {
 	var ff;
-	if (Folder(ui.output.dest.folder.text).exists) {
-		ui.output.dest.path = Folder(ui.output.dest.folder.text);
-		ff = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
-		ui.output.dest.folder.text = ff;
+	if (Folder(ui.output.destination.folder.text).exists) {
+		ui.output.destination.path = Folder(ui.output.destination.folder.text);
+		ff = WIN ? decodeURI(ui.output.destination.path.fsName) : decodeURI(ui.output.destination.path.fullName);
+		ui.output.destination.folder.text = ff;
 	} else {
-		ui.output.dest.path = false;
+		ui.output.destination.path = false;
 	}
 	updateOKStatus();
 };
 
-ui.output.options.docSave.isOn.onClick = function () {
-	ui.output.options.docSave.scope.enabled = this.value;
-	ui.output.options.docSaveAs.enabled = this.value;
+ui.options.docSave.isOn.onClick = function () {
+	ui.options.docSave.scope.enabled = this.value;
+	ui.options.docSaveAs.enabled = this.value;
 };
-ui.output.options.docSave.scope.mod.onClick = function () {
-	if (this.value) ui.output.options.docSave.isOn.value = true;
+ui.options.docSave.scope.mod.onClick = function () {
+	if (this.value) ui.options.docSave.isOn.value = true;
 };
-ui.output.options.docSave.scope.all.onClick = function () {
-	if (this.value) ui.output.options.docSave.isOn.value = true;
-	ui.output.options.docSaveAs.enabled = this.value;
-	ui.output.options.docSaveAs.value = this.value;
+ui.options.docSave.scope.all.onClick = function () {
+	if (this.value) ui.options.docSave.isOn.value = true;
+	ui.options.docSaveAs.enabled = this.value;
+	ui.options.docSaveAs.value = this.value;
 };
-ui.output.options.docSaveAs.onClick = function () {
-	if (!this.value) ui.output.options.docSave.scope.mod.value = true;
+ui.options.docSaveAs.onClick = function () {
+	if (!this.value) ui.options.docSave.scope.mod.value = true;
 };
 
 function updateOKStatus() {
 	// Enable/disable 'Start' button
 	ui.actions.ok.enabled = // If (a) && (b) && (c):
-		(folderMode ? !!ui.input.source.path : true) &&               // a) If in batch folder mode, it must be valid
-		(ui.output.dest.isOn.value ? !!ui.output.dest.path : true) && // b) If custom output folder, it must be valid
-		(ui.preset1.isOn.value || ui.preset2.isOn.value);             // c) At least a preset must be selected
+		(folderMode ? !!ui.input.source.path : true) &&                             // a) If in batch folder mode, it must be valid
+		(ui.output.destination.isOn.value ? !!ui.output.destination.path : true) && // b) If custom output folder, it must be valid
+		(ui.preset1.isOn.value || ui.preset2.isOn.value);                           // c) At least a preset must be selected
 
 	// Update help tips
 	if (folderMode) { // Batch folder mode
@@ -582,26 +589,26 @@ function updateOKStatus() {
 				'Error: Folder not found';
 		}
 	}
-	if (ui.output.dest.isOn.value) { // Custom output folder
-		if (ui.output.dest.folder.text.length === 0) {
-			ui.output.dest.folder.helpTip = 'Select a folder';
+	if (ui.output.destination.isOn.value) { // Custom output folder
+		if (ui.output.destination.folder.text.length === 0) {
+			ui.output.destination.folder.helpTip = 'Select a folder';
 		} else {
-			ui.output.dest.folder.helpTip = ui.output.dest.path ?
-				(WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName)) :
+			ui.output.destination.folder.helpTip = ui.output.destination.path ?
+				(WIN ? decodeURI(ui.output.destination.path.fsName) : decodeURI(ui.output.destination.path.fullName)) :
 				'Error: Folder not found';
 		}
-	} else {
-		ui.output.dest.folder.helpTip = 'Using document folders';
+	} else { // Disabled: using document folders
+		ui.output.destination.folder.helpTip = 'Using document folders';
 	}
 	ui.actions.ok.helpTip = ui.actions.ok.enabled ? '' : 'Error';
 
 	// Display errors in titlebar and 'Start' help tip
 	if (folderMode) { // Batch folder mode
 		if (ui.input.source.folder.text.length === 0) {
-			ui.text = ui.actions.ok.helpTip = 'Select an input folder';
+			ui.text = ui.actions.ok.helpTip = 'Select a source folder';
 			return;
 		} else if (!ui.input.source.path) {
-			ui.text = ui.actions.ok.helpTip = 'Error: Input folder not found';
+			ui.text = ui.actions.ok.helpTip = 'Error: Source folder not found';
 			return;
 		}
 	}
@@ -609,11 +616,11 @@ function updateOKStatus() {
 		ui.text = ui.actions.ok.helpTip = 'Select an export preset';
 		return;
 	}
-	if (ui.output.dest.isOn.value) { // Custom output folder
-		if (ui.output.dest.folder.text.length === 0) {
+	if (ui.output.destination.isOn.value) { // Custom output folder
+		if (ui.output.destination.folder.text.length === 0) {
 			ui.text = ui.actions.ok.helpTip = 'Select an output folder';
 			return;
-		} else if (!ui.output.dest.path) {
+		} else if (!ui.output.destination.path) {
 			ui.text = ui.actions.ok.helpTip = 'Error: Output folder not found';
 			return;
 		}
@@ -692,14 +699,14 @@ while ((doc = docs.shift())) {
 
 	// Get base folder
 	baseFolder = decodeURI(doc.filePath);
-	if (ui.output.dest.isOn.value && ui.output.dest.path) {
-		if (!ui.output.dest.path.exists) ui.output.dest.path.create();
-		baseFolder = WIN ? decodeURI(ui.output.dest.path.fsName) : decodeURI(ui.output.dest.path.fullName);
+	if (ui.output.destination.isOn.value && ui.output.destination.path) {
+		if (!ui.output.destination.path.exists) ui.output.destination.path.create();
+		baseFolder = WIN ? decodeURI(ui.output.destination.path.fsName) : decodeURI(ui.output.destination.path.fullName);
 	}
 
 	checkFonts();
 	checkTextOverflow();
-	if (ui.output.options.updateLinks.value) updateLinks();
+	if (ui.options.updateLinks.value) updateLinks();
 
 	// Export preset loop
 	old.docSpreads = doc.spreads.length; // Save initial spreads count for extendRange hack (see doExport())
@@ -721,15 +728,9 @@ while ((doc = docs.shift())) {
 		if (/^_print/i.test(suffix) &&
 				(doc.layers.itemByName('dielines').isValid || doc.layers.itemByName('diecut').isValid))
 			suffix += '+diecut';
-		if (/^_print/i.test(suffix) && doc.layers.itemByName('white').isValid)    suffix += '+white';
-		if (/^_print/i.test(suffix) && doc.layers.itemByName('foil').isValid)     suffix += '+foil';
-		if (/^_print/i.test(suffix) && doc.layers.itemByName('varnish').isValid)  suffix += '+varnish';
-
-		// Hide do-not-print layers
-		if (ui.output.options.dnp.value) {
-			for (i = 0; i < doc.layers.length; i++)
-				if (/^[.-]/.test(doc.layers[i].name)) doc.layers[i].visible = false;
-		}
+		if (/^_print/i.test(suffix) && doc.layers.itemByName('white').isValid)   suffix += '+white';
+		if (/^_print/i.test(suffix) && doc.layers.itemByName('foil').isValid)    suffix += '+foil';
+		if (/^_print/i.test(suffix) && doc.layers.itemByName('varnish').isValid) suffix += '+varnish';
 
 		// Run script
 		if (exp.script.enabled && exp.script.isOn.value && exp.script.path.exists) {
@@ -738,7 +739,13 @@ while ((doc = docs.shift())) {
 			app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 		}
 
-		doExport(exp.asSpreads.value, ui.output.options.split.value, exp.preset.selection.text);
+		// Hide do-not-print layers
+		if (ui.options.skipdnp.value) {
+			for (i = 0; i < doc.layers.length; i++)
+				if (/^[.-]/.test(doc.layers[i].name)) doc.layers[i].visible = false;
+		}
+
+		doExport(exp.asSpreads.value, ui.options.split.value, exp.preset.selection.text);
 
 		restoreLayersState();
 	}
@@ -748,16 +755,16 @@ while ((doc = docs.shift())) {
 	doc.viewPreferences.verticalMeasurementUnits = old.verticalMeasurementUnits;
 
 	// Save and close
-	if (ui.output.options.docSave.isOn.value) {
-		if (ui.output.options.docSave.scope.mod.value) {
+	if (ui.options.docSave.isOn.value) {
+		if (ui.options.docSave.scope.mod.value) {
 			if (doc.modified) {
-				doc.save(ui.output.options.docSaveAs.enabled && ui.output.options.docSaveAs.value ?
+				doc.save(ui.options.docSaveAs.enabled && ui.options.docSaveAs.value ?
 					File(doc.fullName) : undefined);
 			}
 		} else { doc.save(File(doc.fullName)); }
 	}
 	if (folderMode) doc.close(SaveOptions.NO);
-	else if (ui.output.options.docClose.value) doc.close(SaveOptions.NO);
+	else if (ui.options.docClose.value) doc.close(SaveOptions.NO);
 }
 
 // Finish
@@ -1063,22 +1070,24 @@ function readSettings() {
 	}
 	ui.preset2.script.isOn.value = !!ui.preset2.script.path && settings.presets.preset2.script.active;
 
-	// Output options
-	ui.output.dest.folder.text = settings.output.dest.folder;
-	ui.output.dest.isOn.value = settings.output.dest.active;
-	ui.output.options.updateLinks.value = settings.output.options.updatelinks;
-	ui.output.options.dnp.value = settings.output.options.dnp;
-	ui.output.options.docSave.isOn.value = settings.output.options.save;
-	ui.output.options.docSaveAs.value = false;
-	ui.output.options.split.value = settings.output.options.split;
-	ui.output.options.subfolders.value = settings.output.options.subfolders;
-	ui.output.options.docClose.value = settings.output.options.close;
+	// Options
+	ui.options.updateLinks.value = settings.options.updatelinks;
+	ui.options.skipdnp.value = settings.options.skipdnp;
+	ui.options.split.value = settings.options.split;
+	ui.options.docSave.isOn.value = settings.options.save;
+	ui.options.docSaveAs.value = false;
+	ui.options.docClose.value = settings.options.close;
+	ui.output.destination.isOn.value = settings.options.destination.active;
+	ui.output.destination.folder.text = settings.options.destination.folder;
+	if (!Folder(ui.output.destination.folder.text).exists) ui.output.destination.isOn.value = false;
+	ui.output.options.subfolders.value = settings.options.subfolders;
+	ui.output.options.overwrite.value = false;
 
 	// Init
 	ui.preset1.isOn.onClick();
 	ui.preset2.isOn.onClick();
-	ui.output.dest.isOn.onClick();
-	ui.output.options.docSave.isOn.onClick();
+	ui.output.destination.isOn.onClick();
+	ui.options.docSave.isOn.onClick();
 	updateOKStatus();
 
 	function findPresetIndex(/*string*/presetName, /*array*/presetsArray) {
@@ -1144,19 +1153,17 @@ function saveSettings() {
 				}
 			}
 		},
-		output: {
-			dest: {
-				active: ui.output.dest.isOn.value,
-				folder: ui.output.dest.path.exists ? decodeURI(ui.output.dest.path.fullName) : ''
+		options: {
+			updatelinks: ui.options.updateLinks.value,
+			skipdnp: ui.options.skipdnp.value,
+			split: ui.options.split.value,
+			save: ui.options.docSave.isOn.value,
+			close: ui.options.docClose.value,
+			destination: {
+				active: ui.output.destination.isOn.value,
+				folder: ui.output.destination.path.exists ? decodeURI(ui.output.destination.path.fullName) : ''
 			},
-			options: {
-				updatelinks: ui.output.options.updateLinks.value,
-				dnp: ui.output.options.dnp.value,
-				save: ui.output.options.docSave.isOn.value,
-				split: ui.output.options.split.value,
-				subfolders: ui.output.options.subfolders.value,
-				close: ui.output.options.docClose.value
-			}
+			subfolders: ui.output.options.subfolders.value
 		},
 		position: [ ui.location[0], ui.location[1] ],
 		version: VER
