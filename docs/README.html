@@ -325,6 +325,14 @@ pre[data-line] .line-highlight[data-end]:after {
 </thead>
 <tbody>
 <tr>
+<td style="text-align:left"><strong>.visible area</strong></td>
+<td style="text-align:left">Yellow</td>
+<td style="text-align:left">yes</td>
+<td style="text-align:left">yes</td>
+<td style="text-align:left">above</td>
+<td style="text-align:left">nicht sicht*, rahmen, sicht*, <em>vi?ib</em></td>
+</tr>
+<tr>
 <td style="text-align:left"><strong>dielines</strong></td>
 <td style="text-align:left">Magenta</td>
 <td style="text-align:left">yes</td>
@@ -341,6 +349,14 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:left">copy, headline*, hl, text*, txt, typ?</td>
 </tr>
 <tr>
+<td style="text-align:left"><strong>artwork</strong></td>
+<td style="text-align:left">Light Blue</td>
+<td style="text-align:left">no</td>
+<td style="text-align:left">yes</td>
+<td style="text-align:left">above</td>
+<td style="text-align:left">aw, design, element?, layout*</td>
+</tr>
+<tr>
 <td style="text-align:left"><strong>bg</strong></td>
 <td style="text-align:left">Red</td>
 <td style="text-align:left"></td>
@@ -349,12 +365,12 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:left">back, *background*, bgg, fond, hg, hintergrund*</td>
 </tr>
 <tr>
-<td style="text-align:left"><strong>template</strong></td>
-<td style="text-align:left">Gray</td>
+<td style="text-align:left"><strong>.reference</strong></td>
+<td style="text-align:left">Black</td>
 <td style="text-align:left">no</td>
 <td style="text-align:left">no</td>
 <td style="text-align:left">bottom</td>
-<td style="text-align:left"></td>
+<td style="text-align:left">refer*, template, vorlage</td>
 </tr>
 <tr>
 <td style="text-align:left">&#x2026;</td>
@@ -378,7 +394,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined <code>reference/path</code>;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be absolute or relative &#x2013; by default is relative to the data file folder, but if you defined a <code>reference/path</code>, it will be relative to that;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
 <p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
@@ -449,7 +465,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined <code>reference/path</code>;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be absolute or relative &#x2013; by default is relative to the data file folder, but if you defined a <code>reference/path</code>, it will be relative to that;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
 <p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
@@ -498,7 +514,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined <code>reference/path</code>;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be absolute or relative &#x2013; by default is relative to the data file folder, but if you defined a <code>reference/path</code>, it will be relative to that;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
 <p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
@@ -559,8 +575,8 @@ pre[data-line] .line-highlight[data-end]:after {
 </ul>
 <p><strong>Document links:</strong></p>
 <ul>
-<li>If empty, the <em>name</em> from the first column will be used (so that if it&#x2019;s in the document, it will be replaced);</li>
 <li>One or more document link names; it&#x2019;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>).</li>
+<li>If empty, the <em>name</em> from the first column will be used (so that if it&#x2019;s in the document, it will be replaced);</li>
 </ul>
 </blockquote>
 <p>Quoting the paths is not required.</p>
@@ -568,7 +584,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined <code>reference/path</code>;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be absolute or relative &#x2013; by default is relative to the data file folder, but if you defined a <code>reference/path</code>, it will be relative to that;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
 <p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
@@ -642,7 +658,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>A line may also contain a <em>statement</em>:</p>
 <ul>
 <li><code>@includepath</code> <code>reference/path</code> &#x2013; defines a folder to which subsequent relative paths will refer;</li>
-<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined <code>reference/path</code>;</li>
+<li><code>@include</code> <code>path/to/other.tsv</code> &#x2013; includes another TSV file at this position; <code>path/to</code> may be absolute or relative &#x2013; by default is relative to the data file folder, but if you defined a <code>reference/path</code>, it will be relative to that;</li>
 <li><code>@defaults</code> &#x2013; includes the global data file;</li>
 </ul>
 <p>There&#x2019;s also some non-standard stuff that will confuse Excel et al.:</p>
@@ -783,7 +799,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><small><em><strong>Reframe selected objects.</strong></em></small></p>
 <h4 class="mume-header" id="fittojsx"><strong><code>FitTo*.jsx</code></strong></h4>
 
-<p>These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area). Example for running <code>FitToPageBleed.jsx</code> (&#x21E7;F11) on selected frames:</p>
+<p>These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area). Example for running <strong><code>FitToPageBleed.jsx</code></strong> (&#x21E7;F11) on selected frames:</p>
 <p><img src="img/fit.png" alt="Example"></p>
 <p>The refitting is done by:</p>
 <ul>
@@ -1007,13 +1023,14 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:</p>
 <h4 class="mume-header" id="markvisibleareajsx"><strong><code>MarkVisibleArea.jsx</code></strong></h4>
 
-<p>Creates a frame the size of the page margins on the <strong>visible area</strong> layer. It will use the <strong>Visible area</strong> swatch, which will be created with the values R=255 G=180 B=0 if it doesn&#x2019;t exist.</p>
+<p>Creates a frame the size of the page margins on the <strong>.visible area</strong> layer. It will use the <strong>Visible area</strong> swatch, which will be created with the values R=255 G=180 B=0 if it doesn&#x2019;t exist.</p>
 <h4 class="mume-header" id="prepareforexportjsx"><strong><code>PrepareForExport.jsx</code></strong></h4>
 
-<p>Hides <strong>covered areas</strong>, <strong>visible area</strong>, <strong>safety area</strong>, <strong>safe area</strong>, <strong>segmentation</strong>, <strong>guides</strong>, and all layers starting with either a dot or a hyphen; moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads.</p>
+<p>Hides some <em>do-not-print</em> layers: <strong>covered area</strong>, <strong>visible area</strong>, <strong>safety area</strong>, <strong>segmentation</strong>, and all layers starting with either a dot or a hyphen (for the full list see the script).</p>
+<p>Moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads.</p>
 <h4 class="mume-header" id="showdnplayersjsx--hidednplayersjsx"><strong><code>ShowDNPLayers.jsx</code></strong> / <strong><code>HideDNPLayers.jsx</code></strong></h4>
 
-<p>Show or hide the following <em>do-not-print</em> layers: <strong>covered areas</strong>, <strong>visible area</strong>, <strong>*vi?ib*</strong>, <strong>vis?*</strong>, <strong>safety area</strong>, <strong>safe area</strong>, <strong>segmentation</strong>, <strong>rahmen</strong> and <strong>sicht*</strong>, and all layers starting with either a dot or a hyphen.</p>
+<p>Show or hide some <em>do-not-print</em> layers: <strong>covered area</strong>, <strong>visible area</strong>, <strong>safety area</strong>, <strong>segmentation</strong>, and all layers starting with either a dot or a hyphen (for the full list see the script).</p>
 <h3 class="mume-header" id="view">View</h3>
 
 <h4 class="mume-header" id="tilealljsx-smallf4small"><strong><code>TileAll.jsx</code></strong> <small>&#x21E7;F4</small></h4>
@@ -1146,7 +1163,7 @@ The repository uses dynamically linked libraries from <strong><code>lib/</code><
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>Thanks to Adrian Frigioiu for bug reports and feedback.</p>
-<p><small>Last updated: April 6, 2023</small></p>
+<p><small>Last updated: May 10, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">

@@ -53,13 +53,15 @@ Sets some preferences for the active document. You should customize them to your
 #### **`DefaultLayers.jsx`**
 Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample](samples/layers.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
-| Name         | Color   | Visible | Printable | Order  | Variants                                           |
-|:-------------|:--------|:--------|:----------|:-------|:---------------------------------------------------|
-| **dielines** | Magenta | yes     | yes       | above  | cut\*, decoupe, die, die\*cut, stanz\*             |
-| **text**     | Green   |         |           |        | copy, headline\*, hl, text\*, txt, typ?            |
-| **bg**       | Red     |         |           | below  | back, \*background\*, bgg, fond, hg, hintergrund\* |
-| **template** | Gray    | no      | no        | bottom |                                                    |
-| ...          |         |         |           |        |                                                    |
+| Name              | Color      | Visible | Printable | Order  | Variants                                           |
+|:------------------|:-----------|:--------|:----------|:-------|:---------------------------------------------------|
+| **.visible area** | Yellow     | yes     | yes       | above  | nicht sicht*, rahmen, sicht*, *vi?ib*              |
+| **dielines**      | Magenta    | yes     | yes       | above  | cut\*, decoupe, die, die\*cut, stanz\*             |
+| **text**          | Green      |         |           |        | copy, headline\*, hl, text\*, txt, typ?            |
+| **artwork**       | Light Blue | no      | yes       | above  | aw, design, element?, layout*                      |
+| **bg**            | Red        |         |           | below  | back, \*background\*, bgg, fond, hg, hintergrund\* |
+| **.reference**    | Black      | no      | no        | bottom | refer*, template, vorlage                          |
+| ...               |            |         |           |        |                                                    |
 
 > **Name**: Layer name\
 > **Color**: Layer color (defaults to `Light Blue`; see [**`UIColors.txt`**](misc/UIColors.txt) for color names)\
@@ -73,7 +75,7 @@ Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample]
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined `reference/path`;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be absolute or relative – by default is relative to the data file folder, but if you defined a `reference/path`, it will be relative to that;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -110,7 +112,7 @@ You can use [**`DumpSwatches.jsx`**](#dumpswatchesjsx) to save a tab delimited l
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined `reference/path`;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be absolute or relative – by default is relative to the data file folder, but if you defined a `reference/path`, it will be relative to that;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -138,7 +140,7 @@ You can use [**`ShowFonts.jsx`**](#showfontsjsx) from [**Miscellaneous**](#misce
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined `reference/path`;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be absolute or relative – by default is relative to the data file folder, but if you defined a `reference/path`, it will be relative to that;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -169,8 +171,8 @@ Replaces document links using a TSV data file named **`links.tsv`** ([sample](sa
 >   - relative to `reference/path` defined by a previous `@includepath` statement (`img3.psd` and `subfolder/img4.psd`).
 > 
 > **Document links:**
-> - If empty, the _name_ from the first column will be used (so that if it's in the document, it will be replaced);
 > - One or more document link names; it's case insensitive and can take simple wildcards (`?` and `*`).
+> - If empty, the _name_ from the first column will be used (so that if it's in the document, it will be replaced);
 
 Quoting the paths is not required.
 
@@ -179,7 +181,7 @@ Quoting the paths is not required.
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined `reference/path`;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be absolute or relative – by default is relative to the data file folder, but if you defined a `reference/path`, it will be relative to that;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -215,7 +217,7 @@ For example, 'The sample is for free' will be replaced with 'Das Sample ist kost
 A line may also contain a _statement_:
 
 - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative (by default) to the current data file, or relative to a previously defined `reference/path`;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be absolute or relative – by default is relative to the data file folder, but if you defined a `reference/path`, it will be relative to that;
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -307,7 +309,7 @@ Resets **Align To** to default (**Align to Selection**).
 
 #### **`FitTo*.jsx`**
 
-These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area). Example for running `FitToPageBleed.jsx` (⇧F11) on selected frames:
+These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area). Example for running **`FitToPageBleed.jsx`** (⇧F11) on selected frames:
 
 ![Example](img/fit.png)
 
@@ -423,13 +425,15 @@ If **Sort files by suffix into subfolders** is checked, files will be exported i
 It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:
 
 #### **`MarkVisibleArea.jsx`**
-Creates a frame the size of the page margins on the **visible area** layer. It will use the **Visible area** swatch, which will be created with the values R=255 G=180 B=0 if it doesn't exist.
+Creates a frame the size of the page margins on the **.visible area** layer. It will use the **Visible area** swatch, which will be created with the values R=255 G=180 B=0 if it doesn't exist.
 
 #### **`PrepareForExport.jsx`**
-Hides **covered areas**, **visible area**, **safety area**, **safe area**, **segmentation**, **guides**, and all layers starting with either a dot or a hyphen; moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads.
+Hides some _do-not-print_ layers: **covered area**, **visible area**, **safety area**, **segmentation**, and all layers starting with either a dot or a hyphen (for the full list see the script).
+
+Moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads.
 
 #### **`ShowDNPLayers.jsx`** / **`HideDNPLayers.jsx`**
-Show or hide the following _do-not-print_ layers: **covered areas**, **visible area**, **\*vi?ib\***, **vis?\***, **safety area**, **safe area**, **segmentation**, **rahmen** and **sicht\***, and all layers starting with either a dot or a hyphen.
+Show or hide some _do-not-print_ layers: **covered area**, **visible area**, **safety area**, **segmentation**, and all layers starting with either a dot or a hyphen (for the full list see the script).
 
 ### View
 
@@ -538,7 +542,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: April 6, 2023</small>
+<small>Last updated: May 10, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
