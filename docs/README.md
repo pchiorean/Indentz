@@ -38,7 +38,6 @@ Sets some preferences for the active document. You should customize them to your
 > **Preferences ‣ Grids:** Baseline Grid Color: R=230 G=230 B=230\
 > **Preferences ‣ Guides & Pasteboard:** Preview Background Color: Light Gray\
 > **Edit ‣ Transparency Blend Space:** Document CMYK\
-> **Edit ‣ Color Settings ‣ Working Spaces**: RGB Profile: sRGB IEC61966-2.1; CMYK Profile: ISO Coated v2 (ECI), fallback to Coated FOGRA39 (ISO 12647-2:2004)\
 > **View:** Show Rulers\
 > **View ‣ Extras:** Show Frame Edges\
 > **View ‣ Grids & Guides:** Show Guides; Unlock Guides; Snap to Guides\
