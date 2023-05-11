@@ -1,25 +1,33 @@
 /*
-	Replace links 23.4.3
+	Replace links 23.5.11
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
-	Replaces document links from a 2-column TSV file named `links.tsv`:
+	Replaces document links using a 2-column TSV file named `links.tsv`:
 
-	New link path            | Document links
-	path/to/img1.psd         | img1.*
-	@includepath path/to
-	img2-cmyk.tif            | img2_lowres.jpg, img2-rgb.*
-	img3.tif                 | [img3.tif]
+	Relink to                   | Document links
+	/absolute/path/to/img1.psd  | img1_lowres.jpg, img1-rgb.*
+	img2.psd                    | img2.*
+	@includepath reference/path
+	img3.psd
+	subfolder/img4.psd
 	...
 
-	<New link path>: an absolute path, or relative to the data file, or relative to `@includepath`
-	<Document links>: a list of document links that will be relinked if found (case insensitive;
-		`*` and `?` wildcards accepted); if the list is empty, the new link`s name will be used.
+	<Relink to>:
+	- An absolute path of the form `/absolute/path/to/img1.psd`
+	- A relative path which is:
+		- relative (by default) to the document `Links` folder
+		- relative to `reference/path` defined by a previous `@includepath` statement
+			(`img3.psd` and `subfolder/img4.psd`)
+	<Document links>:
+	- One or more document link names; it's case insensitive and can take simple wildcards (`?` and `*`)
+	- If empty, the name from the first column will be used
 
-	The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
-	(on the desktop, next to the script, or in Indentz root); local files and files starting with `_` take precedence.
-	Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
-	Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
-	The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+	The TSV file must be saved locally (in the active document folder or its parent) or as a global
+	default (on the desktop, next to the script, or in Indentz root); local files and those starting
+	with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
+	A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
+	or `@include path/to/another.tsv` for other data file. The path can be absolute, or relative to
+	the data file; a default path can be set with `@includepath path/to`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

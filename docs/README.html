@@ -575,8 +575,8 @@ pre[data-line] .line-highlight[data-end]:after {
 </ul>
 <p><strong>Document links:</strong></p>
 <ul>
-<li>One or more document link names; it&#x2019;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>).</li>
-<li>If empty, the <em>name</em> from the first column will be used (so that if it&#x2019;s in the document, it will be replaced);</li>
+<li>One or more document link names; it&#x2019;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>);</li>
+<li>If empty, the <em>name</em> from the first column will be used (so that if it&#x2019;s in the document, it will be replaced).</li>
 </ul>
 </blockquote>
 <p>Quoting the paths is not required.</p>
@@ -1095,7 +1095,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </tbody>
 </table>
 <p>If the document name ends with a <em>separator</em> (space/dot/underline/hyphen) followed by a <em>sequence</em> of digits or letters <em>equal</em> to the number of spreads, the letter corresponding to the spread index will be appended to each code/file &#x2013; e.g., for a document with three spreads named <strong><code>Document_ABC.indd</code></strong>, the script will generate <strong><code>Document_A_QR.pdf</code></strong>, <strong><code>Document_B_QR.pdf</code></strong> and <strong><code>Document_C_QR.pdf</code></strong>.</p>
-<p>You can insert <code>|</code> for manually splitting the label into several lines.</p>
+<p>You can use <code>|</code> for manually splitting the label into several lines.</p>
 <h4 class="mume-header" id="qrbatchjsx-smallf9small"><strong><code>QRBatch.jsx</code></strong> <small>&#x21E7;F9</small></h4>
 
 <p>Does the same thing as <strong><code>QR</code></strong> but in a non-interactive way: retrieves a list of codes from a TSV data file named <strong><code>qr.tsv</code></strong> (<a href="samples/qr.tsv">sample</a>) and adds them to existing documents or creates separate files (the suffix thing applies here as well):</p>
@@ -1137,7 +1137,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </blockquote>
 <p>The TSV file must be saved locally (in the active document folder); files starting with <code>_</code> take precedence.<br>
 Blank lines are ignored; everything after a <code>#</code> (comments) is ignored.</p>
-<p>You can insert <code>|</code> for manually splitting the label into several lines.</p>
+<p>You can use <code>|</code> for manually splitting the label into several lines.</p>
 <h4 class="mume-header" id="showfontsjsx"><strong><code>ShowFonts.jsx</code></strong></h4>
 
 <p>Shows all fonts used in the active document.</p>
@@ -1163,7 +1163,7 @@ The repository uses dynamically linked libraries from <strong><code>lib/</code><
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>Thanks to Adrian Frigioiu for bug reports and feedback.</p>
-<p><small>Last updated: May 10, 2023</small></p>
+<p><small>Last updated: May 11, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">

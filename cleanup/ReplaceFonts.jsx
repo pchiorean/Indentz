@@ -1,19 +1,20 @@
 ﻿/*
-	Replace fonts 23.4.2
+	Replace fonts 23.5.11
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
-	Replaces fonts from a 4-column TSV file named `fonts.tsv`:
+	Replaces fonts using a 4-column TSV file named `fonts.tsv`:
 
-	Old font | Style   | New font       | Style
-	Arial    | Regular | Helvetica Neue | Regular
-	Arial    | Bold    | Helvetica Neue | Bold
+	Old font family | Style   | New font family       | Style
+	Arial           | Regular | Helvetica Neue        | Regular
+	Arial           | Bold    | Helvetica Neue        | Bold
 	...
 
-	The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
-	(on the desktop, next to the script, or in Indentz root); local files and files starting with `_` take precedence.
-	Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
-	Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
-	The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+	The TSV file must be saved locally (in the active document folder or its parent) or as a global
+	default (on the desktop, next to the script, or in Indentz root); local files and those starting
+	with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
+	A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
+	or `@include path/to/another.tsv` for other data file. The path can be absolute, or relative to
+	the data file; a default path can be set with `@includepath path/to`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

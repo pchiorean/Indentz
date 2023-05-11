@@ -7,12 +7,12 @@ File 3_AC  	Code 3
 # <Code>: any string
 # <On doc>: any string: on existing document; empty or missing: on separate file
 
-# You can insert `|` for manually splitting the label into several lines.
+# You can use `|` for manually splitting the label into several lines.
 #
-# If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters
-# equal to the number of spreads, the code of each spread will have the appropriate suffix; when separate files are
-# generated, they will be named in the same way (e.g., for `Document_ABC.indd` with three spreads, `Document_A_QR.pdf`,
-# `Document_B_QR.pdf` and `Document_C_QR.pdf` will be generated).
+# If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence
+# of digits or letters equal to the number of spreads, the letter corresponding to the spread index
+# will be appended to each code/file (e.g., for a document with three spreads named `Document_ABC.indd`,
+# the script will generate `Document_A_QR.pdf`, `Document_B_QR.pdf` and `Document_C_QR.pdf`.
 #
-# The TSV file must be saved locally (in the active document folder).
-# Files starting with `_` take precedence. Blank lines and those starting with # are ignored.
+# The TSV file must be saved locally (in the active document folder); files starting with `_`
+# take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.

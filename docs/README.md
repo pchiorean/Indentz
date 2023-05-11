@@ -171,8 +171,8 @@ Replaces document links using a TSV data file named **`links.tsv`** ([sample](sa
 >   - relative to `reference/path` defined by a previous `@includepath` statement (`img3.psd` and `subfolder/img4.psd`).
 > 
 > **Document links:**
-> - One or more document link names; it's case insensitive and can take simple wildcards (`?` and `*`).
-> - If empty, the _name_ from the first column will be used (so that if it's in the document, it will be replaced);
+> - One or more document link names; it's case insensitive and can take simple wildcards (`?` and `*`);
+> - If empty, the _name_ from the first column will be used (so that if it's in the document, it will be replaced).
 
 Quoting the paths is not required.
 
@@ -492,7 +492,7 @@ Adds a QR code on each spread of the active document (outside visible area, if p
 
 If the document name ends with a _separator_ (space/dot/underline/hyphen) followed by a _sequence_ of digits or letters _equal_ to the number of spreads, the letter corresponding to the spread index will be appended to each code/file – e.g., for a document with three spreads named **`Document_ABC.indd`**, the script will generate **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`** and **`Document_C_QR.pdf`**.
 
-You can insert `|` for manually splitting the label into several lines.
+You can use `|` for manually splitting the label into several lines.
 
 #### **`QRBatch.jsx`** <small>⇧F9</small>
 Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV data file named **`qr.tsv`** ([sample](samples/qr.tsv)) and adds them to existing documents or creates separate files (the suffix thing applies here as well):
@@ -511,7 +511,7 @@ Does the same thing as **`QR`** but in a non-interactive way: retrieves a list o
 The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence.\
 Blank lines are ignored; everything after a `#` (comments) is ignored.
 
-You can insert `|` for manually splitting the label into several lines.
+You can use `|` for manually splitting the label into several lines.
 
 
 #### **`ShowFonts.jsx`**
@@ -542,7 +542,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: May 10, 2023</small>
+<small>Last updated: May 11, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 

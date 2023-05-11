@@ -1,8 +1,8 @@
 ﻿/*
-	Replace text snippets 23.4.2
+	Replace text snippets 23.5.11
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
-	Replaces a list of snippets from a 5-column TSV file named `snippets.tsv`:
+	Replaces a list of snippets using a 5-column TSV file named `snippets.tsv`:
 
 	Find what              | Change to                 | Case sensitive | Whole word | Scope
 	English instructions   | Deutsche anleitung        | yes            | yes
@@ -12,16 +12,17 @@
 	...
 
 	<Find what>: text to be replaced (you can use find and replace special characters)
-	<Change to>: the new text
+	<Change to>: the replacement text
 	<Case sensitive>: `yes` or `no` (defaults to `yes`)
 	<Whole word>: `yes` or `no` (defaults to `yes`)
-	<Scope>: replacement will only be done if the document name matches this regular expression
+	<Scope>: replacement will only be done if the document name matches the regular expression (case sensitive)
 
-	The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
-	(on the desktop, next to the script, or in Indentz root); local files and files starting with `_` take precedence.
-	Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
-	Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
-	The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+	The TSV file must be saved locally (in the active document folder or its parent) or as a global
+	default (on the desktop, next to the script, or in Indentz root); local files and those starting
+	with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
+	A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
+	or `@include path/to/another.tsv` for other data file. The path can be absolute, or relative to
+	the data file; a default path can be set with `@includepath path/to`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

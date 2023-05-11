@@ -1,8 +1,8 @@
 /*
-	Default swatches 23.4.2
+	Default swatches 23.5.11
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
-	Adds swatches from a 5-column TSV file named `swatches.tsv`:
+	Adds swatches using a 5-column TSV file named `swatches.tsv`:
 
 	Name       | Color Model | Color Space | Values       | Variants
 	Rich Black | process     | cmyk        | 60 40 40 100 |
@@ -13,18 +13,19 @@
 	<Name>: swatch name
 	<Color model>: `process` or `spot` (defaults to `process`)
 	<Color space>: `cmyk`, `rgb` or `lab` (defaults to `cmyk`)
-	<Values>: (can be separated by ` `, `,`, `|` or `/`)
-		3 values in 0-255 range for RGB;
-		4 values in 0-100 range for CMYK;
-		3 values in 0-100 (L), -128-127 (A and B) range for Lab
+	<Values>: a list of numbers separated by space (` `), comma (`,`), pipe (`|`) or slash (`/`):
+	- 3 values in 0-255 range for RGB
+	- 4 values in 0-100 range for CMYK
+	- 3 values in 0-100 (L), -128-127 (A and B) range for Lab
 	<Variants>: a list of swatches that will be replaced by the base swatch
 		(case insensitive; `*` and `?` wildcards accepted)
 
-	The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
-	(on the desktop, next to the script, or in Indentz root); local files and files starting with `_` take precedence.
-	Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
-	Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
-	The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
+	The TSV file must be saved locally (in the active document folder or its parent) or as a global
+	default (on the desktop, next to the script, or in Indentz root); local files and those starting
+	with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
+	A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
+	or `@include path/to/another.tsv` for other data file. The path can be absolute, or relative to
+	the data file; a default path can be set with `@includepath path/to`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
