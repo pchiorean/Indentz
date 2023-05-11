@@ -54,12 +54,12 @@ Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample]
 
 | Name              | Color      | Visible | Printable | Order  | Variants                                           |
 |:------------------|:-----------|:--------|:----------|:-------|:---------------------------------------------------|
-| **.visible area** | Yellow     | yes     | yes       | above  | nicht sicht*, rahmen, sicht*, *vi?ib*              |
+| **.visible area** | Yellow     | yes     | yes       | above  | nicht sicht\*, rahmen, sicht\*, \*vi?ib\*          |
 | **dielines**      | Magenta    | yes     | yes       | above  | cut\*, decoupe, die, die\*cut, stanz\*             |
 | **text**          | Green      |         |           |        | copy, headline\*, hl, text\*, txt, typ?            |
-| **artwork**       | Light Blue | no      | yes       | above  | aw, design, element?, layout*                      |
+| **artwork**       | Light Blue | no      | yes       | above  | aw, design, element?, layout\*                     |
 | **bg**            | Red        |         |           | below  | back, \*background\*, bgg, fond, hg, hintergrund\* |
-| **.reference**    | Black      | no      | no        | bottom | refer*, template, vorlage                          |
+| **.reference**    | Black      | no      | no        | bottom | refer\*, template, vorlage                         |
 | ...               |            |         |           |        |                                                    |
 
 > **Name**: Layer name\
@@ -154,14 +154,14 @@ There's also some non-standard stuff that will confuse Excel et al.:
 #### **`ReplaceLinks.jsx`** <small>⌥F8</small>
 Replaces document links using a TSV data file named **`links.tsv`** ([sample](samples/links.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
 
-| Relink to                         | Document links              |
-|:----------------------------------|:----------------------------|
-| **/absolute/path/to/img1.psd**    | img1_lowres.jpg, img1-rgb.* |
-| **img2.psd**                      | img2.*                      |
-| **`@includepath` reference/path** |                             |
-| **img3.psd**                      |                             |
-| **subfolder/img4.psd**            |                             |
-| ...                               |                             |
+| Relink to                         | Document links               |
+|:----------------------------------|:-----------------------------|
+| **/absolute/path/to/img1.psd**    | img1_lowres.jpg, img1-rgb.\* |
+| **img2.psd**                      | img2.\*                      |
+| **`@includepath` reference/path** |                              |
+| **img3.psd**                      |                              |
+| **subfolder/img4.psd**            |                              |
+| ...                               |                              |
 
 > **Relink to** (also see **Additional features** below):
 > - An absolute path of the form `/absolute/path/to/img1.psd`;
@@ -308,19 +308,17 @@ Resets **Align To** to default (**Align to Selection**).
 
 #### **`FitTo*.jsx`**
 
-These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area). Example for running **`FitToPageBleed.jsx`** (⇧F11) on selected frames:
+These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area). For example, running **`FitToPageBleed.jsx`** (⇧F11) on these two frames will expand the yellow one and shrink the red frame to the page bleed:
 
 ![Example](img/fit.png)
 
 The refitting is done by:
 
-- **Shrinking** the edges that hang outside the specified area.
-
-  Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame.
+- **Shrinking** the edges that hang outside the specified area;
 
 - **Extending** the edges that touch or are very close to the trigger zone[^4] (either target or visible area).
 
-  Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.
+**Note:** Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame. Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.
 
 Variants with the suffix **`Forced`** simply reframe the objects to the target area.
 
@@ -342,9 +340,9 @@ Variants with the suffix **`Forced`** simply reframe the objects to the target a
 </details>
 
 #### **`TextAutosize.jsx`** <small>F6</small>
-Auto-sizes the selected text frames to their content. It's designed to be run repeatedly.
+Auto-sizes the selected text frames to their content.
 
-Each run increases the level with one step (from **None** to **Height Only**, and from **Height Only** to **Height and Width**), except single lines, which are always set **Height and Width**. The reference point is set by the first paragraph's alignment and the text frame's vertical justification:
+It's designed to be run repeatedly. Each run increases the level with one step (from **None** to **Height Only**, and from **Height Only** to **Height and Width**), except single lines, which are always set **Height and Width**. The reference point is set by the first paragraph's alignment and the text frame's vertical justification:
 
 | <small>Paragraph Alignment →<br>↓ Vertical Justification</small> | ![¶ Align left](img/paragraphalign-L.png) | ![¶ Align center](img/paragraphalign-C.png) | ![¶ Align right](img/paragraphalign-R.png) |
 | :-: | :-: | :-: | :-: |
@@ -404,7 +402,7 @@ By default, the index will be appended at the end, but you can put a `#` in the 
 #### **`LayersToSpreads.jsx`**
 Moves all layers of the active document to separate spreads (the document must have a single spread).
 
-You can use **`SpreadsToFiles.jsx`** to save them in separate documents.
+You can use **`SpreadsToFiles.jsx`** to split them in separate documents.
 
 ### Export
 
@@ -424,7 +422,7 @@ If **Sort files by suffix into subfolders** is checked, files will be exported i
 It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:
 
 #### **`MarkVisibleArea.jsx`**
-Creates a frame the size of the page margins on the **.visible area** layer. It will use the **Visible area** swatch, which will be created with the values R=255 G=180 B=0 if it doesn't exist.
+Creates a frame the size of the page margins that marks a _visible area_ (see [**`PageSizeFromFilename.jsx`**](#pagesizefromfilenamejsx-f3)). It will use the **Visible area** swatch, which will be created with the values R=255 G=180 B=0 if it doesn't exist.
 
 #### **`PrepareForExport.jsx`**
 Hides some _do-not-print_ layers: **covered area**, **visible area**, **safety area**, **segmentation**, and all layers starting with either a dot or a hyphen (for the full list see the script).
@@ -473,7 +471,9 @@ Adds a custom label on the current page slug, on the **info** layer (Helvetica R
 ![Label Page](img/labelpage.png)
 
 #### **`LabelPageRatios.jsx`**
-Adds a label with the page aspect ratio, on the slug of each page, on the **info** layer.
+Adds a label with the _visible area_ ratio and page margins ratio on the slug of each page.
+
+**Note:** If the visible area is not defined, it defaults to the page size.
 
 #### **`OffsetPaths.jsx`**
 This is a slightly modified version of [**OffsetPath**](https://creativepro.com/indesign-cad-tool/) by Olav Martin Kvern, which uses a clever method to create paths around selected objects at a custom offset distance:

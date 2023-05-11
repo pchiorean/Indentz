@@ -329,7 +329,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <td style="text-align:left">yes</td>
 <td style="text-align:left">yes</td>
 <td style="text-align:left">above</td>
-<td style="text-align:left">nicht sicht*, rahmen, sicht*, <em>vi?ib</em></td>
+<td style="text-align:left">nicht sicht*, rahmen, sicht*, *vi?ib*</td>
 </tr>
 <tr>
 <td style="text-align:left"><strong>dielines</strong></td>
@@ -798,19 +798,18 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><small><em><strong>Reframe selected objects.</strong></em></small></p>
 <h4 class="mume-header" id="fittojsx"><strong><code>FitTo*.jsx</code></strong></h4>
 
-<p>These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area). Example for running <strong><code>FitToPageBleed.jsx</code></strong> (&#x21E7;F11) on selected frames:</p>
+<p>These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area). For example, running <strong><code>FitToPageBleed.jsx</code></strong> (&#x21E7;F11) on these two frames will expand the yellow one and shrink the red frame to the page bleed:</p>
 <p><img src="img/fit.png" alt="Example"></p>
 <p>The refitting is done by:</p>
 <ul>
 <li>
-<p><strong>Shrinking</strong> the edges that hang outside the specified area.</p>
-<p>Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame.</p>
+<p><strong>Shrinking</strong> the edges that hang outside the specified area;</p>
 </li>
 <li>
 <p><strong>Extending</strong> the edges that touch or are very close to the trigger zone<sup class="footnote-ref"><a href="#fn4" id="fnref4">[4]</a></sup> (either target or visible area).</p>
-<p>Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.</p>
 </li>
 </ul>
+<p><strong>Note:</strong> Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame. Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.</p>
 <p>Variants with the suffix <strong><code>Forced</code></strong> simply reframe the objects to the target area.</p>
 <details><summary><strong>Shortcuts</strong></summary>
 <table>
@@ -877,8 +876,8 @@ pre[data-line] .line-highlight[data-end]:after {
 </details>
 <h4 class="mume-header" id="textautosizejsx-smallf6small"><strong><code>TextAutosize.jsx</code></strong> <small>F6</small></h4>
 
-<p>Auto-sizes the selected text frames to their content. It&#x2019;s designed to be run repeatedly.</p>
-<p>Each run increases the level with one step (from <strong>None</strong> to <strong>Height Only</strong>, and from <strong>Height Only</strong> to <strong>Height and Width</strong>), except single lines, which are always set <strong>Height and Width</strong>. The reference point is set by the first paragraph&#x2019;s alignment and the text frame&#x2019;s vertical justification:</p>
+<p>Auto-sizes the selected text frames to their content.</p>
+<p>It&#x2019;s designed to be run repeatedly. Each run increases the level with one step (from <strong>None</strong> to <strong>Height Only</strong>, and from <strong>Height Only</strong> to <strong>Height and Width</strong>), except single lines, which are always set <strong>Height and Width</strong>. The reference point is set by the first paragraph&#x2019;s alignment and the text frame&#x2019;s vertical justification:</p>
 <table>
 <thead>
 <tr>
@@ -1008,7 +1007,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="layerstospreadsjsx"><strong><code>LayersToSpreads.jsx</code></strong></h4>
 
 <p>Moves all layers of the active document to separate spreads (the document must have a single spread).</p>
-<p>You can use <strong><code>SpreadsToFiles.jsx</code></strong> to save them in separate documents.</p>
+<p>You can use <strong><code>SpreadsToFiles.jsx</code></strong> to split them in separate documents.</p>
 <h3 class="mume-header" id="export">Export</h3>
 
 <h4 class="mume-header" id="quickexportjsx-smallesmall"><strong><code>QuickExport.jsx</code></strong> <small>&#x2303;E</small></h4>
@@ -1022,7 +1021,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:</p>
 <h4 class="mume-header" id="markvisibleareajsx"><strong><code>MarkVisibleArea.jsx</code></strong></h4>
 
-<p>Creates a frame the size of the page margins on the <strong>.visible area</strong> layer. It will use the <strong>Visible area</strong> swatch, which will be created with the values R=255 G=180 B=0 if it doesn&#x2019;t exist.</p>
+<p>Creates a frame the size of the page margins that marks a <em>visible area</em> (see <a href="#pagesizefromfilenamejsx-f3"><strong><code>PageSizeFromFilename.jsx</code></strong></a>). It will use the <strong>Visible area</strong> swatch, which will be created with the values R=255 G=180 B=0 if it doesn&#x2019;t exist.</p>
 <h4 class="mume-header" id="prepareforexportjsx"><strong><code>PrepareForExport.jsx</code></strong></h4>
 
 <p>Hides some <em>do-not-print</em> layers: <strong>covered area</strong>, <strong>visible area</strong>, <strong>safety area</strong>, <strong>segmentation</strong>, and all layers starting with either a dot or a hyphen (for the full list see the script).</p>
@@ -1068,7 +1067,8 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><img src="img/labelpage.png" alt="Label Page"></p>
 <h4 class="mume-header" id="labelpageratiosjsx"><strong><code>LabelPageRatios.jsx</code></strong></h4>
 
-<p>Adds a label with the page aspect ratio, on the slug of each page, on the <strong>info</strong> layer.</p>
+<p>Adds a label with the <em>visible area</em> ratio and page margins ratio on the slug of each page.</p>
+<p><strong>Note:</strong> If the visible area is not defined, it defaults to the page size.</p>
 <h4 class="mume-header" id="offsetpathsjsx"><strong><code>OffsetPaths.jsx</code></strong></h4>
 
 <p>This is a slightly modified version of <a href="https://creativepro.com/indesign-cad-tool/"><strong>OffsetPath</strong></a> by Olav Martin Kvern, which uses a clever method to create paths around selected objects at a custom offset distance:</p>
