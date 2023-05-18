@@ -1,20 +1,29 @@
 /*
-	Batch QR codes 23.2.3
+	Batch QR codes 23.5.18
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
-	Adds codes to existing documents or to separate files in batch mode, from a list.
-	The list is a 3-column TSV file named 'qr.tsv' with the following format:
+	Adds codes to existing documents or to separate files in batch mode,
+	using a 3-column TSV file named 'qr.tsv':
 
-	Filename | Code   | On doc
-	File 1   | Code 1 | +
-	File 2   | Code 2 |
+	Filename   | Code   | On doc
+	File 1     | Code 1 | +
+	File 2_ABC | Code 2 | +
+	File 3_AC  | Code 3
 	...
-	1. <Filename>: document name,
-	2. <Code>: any string,
-	3. <On doc>: any string: on existing document; empty or missing: on separate file
 
-	The file can be saved in the current folder, on the desktop, or next to the script.
-	Blank lines and those starting with '#' are ignored.
+	<Filename>: document name
+	<Code>: any string
+	<On doc>: any string: on existing document; empty or missing: on separate file
+
+	You can use `|` for manually splitting the label into several lines.
+
+	If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence
+	of digits or letters equal to the number of spreads, the letter corresponding to the spread index
+	will be appended to each code/file (e.g., for a document with three spreads named `Document_ABC.indd`,
+	the script will generate `Document_A_QR.pdf`, `Document_B_QR.pdf` and `Document_C_QR.pdf`.
+
+	The TSV file must be saved locally (in the active document folder); files starting with `_`
+	take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
