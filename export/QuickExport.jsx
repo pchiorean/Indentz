@@ -1,13 +1,8 @@
 /*
-	Quick export 23.5.4
+	Quick export 23.5.9-dev
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
-
-	[TODO]
-	- [ ] Update workflow and UI
-	- [ ] Change output folder text to 'Using document folders'
-	- [ ] Missing `updateOKStatus()` check for unsaved document
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
