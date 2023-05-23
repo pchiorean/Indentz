@@ -4,10 +4,11 @@ Name          	Color      	Visible 	Printable 	Order  	Variants
 .guides       	Magenta    	yes     	no        	top    	abstände, grid, guides, masuratori, vermassung
 .placeholder  	Magenta    	no      	yes       	above  	placeholder
 .segmentation 	Grid Green 	yes     	yes       	above  	segmentation, split
+.fold         	Grid Green 	yes     	yes       	above  	fold, falz
 .safety area  	Grid Green 	yes     	yes       	above  	safe*area, safe*margins
 .visible area 	Yellow     	yes     	yes       	above  	nicht sicht*, rahmen, sicht*, *vi?ib*
 .covered area 	Red        	yes     	yes       	above  	covered area*, verdeckte flächen
-.reference    	Black      	no      	no        	bottom 	reference, referinta, template, vorlage
+.reference    	Black      	no      	no        	bottom 	refer*, template, vorlage
 
 # Info
 media         	Cyan       	no      	yes       	above
@@ -40,9 +41,8 @@ bg            	Red        	no      	yes       	below  	back, *background*, bgg, 
 # <Order>: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`)
 # <Variants>: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards accepted)
 #
-# The TSV file must be saved locally (in the active document folder or its parent) or as a global
-# default (on the desktop, next to the script, or in Indentz root); local files and those starting
-# with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
-# A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
-# or `@include path/to/another.tsv` for other data file. The path can be absolute, or relative to
-# the data file; a default path can be set with `@includepath path/to`.
+# The TSV file must be saved locally (in the active document folder or its parent folder) or as a global default
+# (on the desktop, next to the script, or in Indentz root); local files and files starting with `_` take precedence.
+# Blank lines and those prefixed with `#` are ignored. A line ending in `\` continues on the next line.
+# Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
+# The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.

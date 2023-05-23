@@ -1,5 +1,5 @@
 /*
-	Prepare for export 23.5.10
+	Prepare for export 23.5.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Hides some layers and moves objects with special colors to separate spreads.
@@ -42,6 +42,7 @@ function prepareForExport() {
 		covered:  [ 'covered area*' ],
 		visible:  [ 'visible area', 'rahmen', 'sicht*', '*vi?ib*' ],
 		safe:     [ 'safe*area', 'safe*margins', 'segmentation' ],
+		fold:     [ 'fold', 'falz' ],
 		guides:   [ 'guides', 'grid', 'masuratori' ],
 		dielines: [ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ],
 		varnish:  [ 'varnish', 'uv' ],
@@ -67,6 +68,7 @@ function prepareForExport() {
 					case layerNames.covered[0]:
 					case layerNames.visible[0]:
 					case layerNames.safe[0]:
+					case layerNames.fold[0]:
 					case layerNames.guides[0]:
 						l.visible = false;
 						break;
