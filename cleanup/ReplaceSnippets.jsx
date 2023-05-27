@@ -1,5 +1,5 @@
 ﻿/*
-	Replace text snippets 23.5.11
+	Replace text snippets 23.5.27
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces a list of snippets using a 5-column TSV file named `snippets.tsv`:
@@ -116,6 +116,9 @@ function main() {
 			stat(data.status, data.records[i].source, '\'' + data.records[i].findWhat + '\' is not found.', 0);
 		}
 	}
+	app.findTextPreferences   = NothingEnum.NOTHING;
+	app.changeTextPreferences = NothingEnum.NOTHING;
+
 
 	// Closing up
 	if (VERBOSITY > 0) {
