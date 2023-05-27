@@ -1,0 +1,4 @@
+function alignTextToBottom(/*textframe*/item) {
+	item.textFramePreferences.verticalJustification = VerticalJustification.BOTTOM_ALIGN;
+	return item;
+}
