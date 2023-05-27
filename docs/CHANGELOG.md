@@ -2,12 +2,12 @@
 
 ### [Development version](https://github.com/pchiorean/Indentz/compare/23.2.1...dev)
 
-##### New features
-
-##### Updates
-
+- `02/03` [`upd`](https://github.com/pchiorean/Indentz/commit/bdd9d16c1a28598a7461c4f429d1c591728caff9)
+  **cleanup/DumpLayers, DumpSwatches, export/QuickExport, lib/log, report** Set linefeed to Unix
 - `02/03` [`upd`](https://github.com/pchiorean/Indentz/commit/6d294984e6df49ca1d80c363e249d65304acdb9f)
   **export/Hide/ShowDNPLayers, PrepareForExport** Renamed 'Safety margins' to 'Safety area'
+- `02/03` [`ref`](https://github.com/pchiorean/Indentz/commit/43a0c4fc7329de94f8b13a07bcec21b8c377e16a)
+  **export/MarkVisibleArea, layout/PageSizeFromFilename** Renamed 'findLayer' to 'getLayer'
 - `02/07` [`upd`](https://github.com/pchiorean/Indentz/commit/73ca242a907c01f14b2f61dc1ea6953a8f6cfab5)
   **lib/fitTo** Bump priority of enforced fitting
 - `02/22` [`upd`](https://github.com/pchiorean/Indentz/commit/ce11e9620ea2ca1ed62b9fa4c9ce73a4430e9801)
@@ -16,30 +16,16 @@
   **cleanup/ReplaceLinks** Skipped reporting status for unused links
 - `02/23` [`upd`](https://github.com/pchiorean/Indentz/commit/def4661ad77f65261b2c0e4ac40cbb21b1d5bf5f)
   **export/MarkVisibleArea, layout/PageSizeFromFilename:** Increased stroke width for large visuals
+- `02/24` [`fix`](https://github.com/pchiorean/Indentz/commit/fd5a40a300cb56bcc4df54a19a1d780c550cecce)
+  **export/PrepareForExport:** Don't add 'info' layer if not actually needed
 - `03/07` [`upd`](https://github.com/pchiorean/Indentz/commit/981fede9a4cb658051a5e2e1fb8eb496288ca77d)
   **export/QuickExport:** Improved speed when checking for text overflow (changed the loop from `for` to `while`)
 - `03/10` [`upd`](https://github.com/pchiorean/Indentz/commit/4d519e29485e8a2f0376dbfe4e6a0153949209d8)
   **lib/fitTo:** Tweaked debug section; renamed some variables for clarity
-- `03/23` [`upd`](https://github.com/pchiorean/Indentz/commit/26d261d09d2a2c3a65bcff7a24a65a3a047c31b3)
-  **misc/EAN:** If multiple objects are selected, the code will be inserted into all of them
-- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/66e77c839e9de0fc06a6f67988fbf02041f7acaf)
-  **export/QuickExport:** Added an option to exclude do-not-print layers (any layer beginning with '.' or '-')
-- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/29e40eae2bc22bc6dc6ceca9ceba9733eb9f00a7)
-  **cleanup/DefaultPrefs:** Removed color profile settings
-- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/7e2f37b856cf4879d89f43934fbc33702559e4ba)
-  **cleanup/SwatchesCleanup:** Delete unused swatches was moved as the last step
-- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/7210d51f060231925cecf794ee8d2ebd685e1fc2)
-  **misc/LabelPageRatios:** Now marks outer (visible area, or page size if undefined) and inner (margins) ratios
-
-##### Removed features
-
-##### Bug fixes
-- `02/03` [`upd`](https://github.com/pchiorean/Indentz/commit/bdd9d16c1a28598a7461c4f429d1c591728caff9)
-  **cleanup/DumpLayers, DumpSwatches, export/QuickExport, lib/log, report** Set linefeed to Unix
-- `02/24` [`fix`](https://github.com/pchiorean/Indentz/commit/fd5a40a300cb56bcc4df54a19a1d780c550cecce)
-  **export/PrepareForExport:** Don't add 'info' layer if not actually needed
 - `03/11` [`fix`](https://github.com/pchiorean/Indentz/commit/84214f8a1cdc09d3f493188bdc1f8773404a2e3b)
   **fit/TextAutosize:** Fixed a bug that in certain circumstances reverted a frame's auto-sizing to height-only
+- `03/23` [`upd`](https://github.com/pchiorean/Indentz/commit/26d261d09d2a2c3a65bcff7a24a65a3a047c31b3)
+  **misc/EAN:** If multiple objects are selected, the code will be inserted into all of them
 - `04/02` [`upd`](https://github.com/pchiorean/Indentz/commit/c68da2a712c6a67686329f28b80bea9fdff1b985)
   **export/QuickExport:** Don't display preferences reset warning on first run (revisited)
 - `04/02` [`fix`](https://github.com/pchiorean/Indentz/commit/04edf0d97127b5472c4217d52354ff8cb16fd236)
@@ -50,11 +36,35 @@
   **cleanup/ReplaceLinks:** Properly URI-decode the file names when reporting replaced links
 - `04/06` [`fix`](https://github.com/pchiorean/Indentz/commit/7598eca8e4e99ca41dcf268439d79252a363e667)
   **misc/EAN:** Fixed a regression from commit `26d261d` (03/23) that made some naive assumptions about the active document and/or selection
-
-##### Miscellaneous
-
-- `02/03` [`ref`](https://github.com/pchiorean/Indentz/commit/43a0c4fc7329de94f8b13a07bcec21b8c377e16a)
-  **export/MarkVisibleArea, layout/PageSizeFromFilename** Renamed 'findLayer' to 'getLayer'
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/66e77c839e9de0fc06a6f67988fbf02041f7acaf)
+  **export/QuickExport:** Added an option to exclude do-not-print layers (any layer beginning with '.' or '-')
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/29e40eae2bc22bc6dc6ceca9ceba9733eb9f00a7)
+  **cleanup/DefaultPrefs:** Removed color profile settings
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/7e2f37b856cf4879d89f43934fbc33702559e4ba)
+  **cleanup/SwatchesCleanup:** Delete unused swatches was moved as the last step
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/7210d51f060231925cecf794ee8d2ebd685e1fc2)
+  **misc/LabelPageRatios:** Now marks outer (visible area, or page size if undefined) and inner (margins) ratios
+- `05/04` [`fix`](https://github.com/pchiorean/Indentz/commit/3b27e37768aaf98c6d31adb6c8b27a953b9f531c)
+  **export/QuickExport:** Fixed a regression from commit `66e77c8` (05/03): it was not actually checking 'Exclude do-not-print layers' value
+- `05/10` [`brk`](https://github.com/pchiorean/Indentz/commit/10a48905bb36fe79677fc186bf06bebe3635719b)
+  **cleanup/DocCleanup; export/MarkVisibleArea; layout/GuidesAdd, PageMarginsFromScriptName, PageSizeFromFilename:**
+  Renamed do-not-print layers to '.layername' (e.g., `.visible area`)
+- `05/10` [`upd`](https://github.com/pchiorean/Indentz/commit/cc9732494dc69e9f4accc66b44dcf0c151a14362)
+  **export/Hide/ShowDNPLayers, PrepareForExport:** Tweaked the layers names wildcards
+- `05/11` [`doc`](https://github.com/pchiorean/Indentz/commit/56219100cbc7318f41153419930abc422f384548)
+  Updated TSV samples
+- `05/23` [`upd`](https://github.com/pchiorean/Indentz/commit/b32837ef7bff11de28a49c20d69cf330ed321630)
+  **export/Hide/ShowDNPLayers, PrepareForExport:** Added 'fold' to do-not-print layers
+- `05/27` [`fix`](https://github.com/pchiorean/Indentz/commit/fd588e8f4a05526caa2412e18c6021daa3ecb5fd)
+  **cleanup/ReplaceSnippets:** F/R settings were not cleared when script finished; fixed
+- `05/27` [`new`](https://github.com/pchiorean/Indentz/commit/9dc9097d630145156f6595e8a3048a368cf28a74)
+  **lib/alignTextToBottom:** Added a helper function to align text to bottom of frame
+- `05/27` [`new`](https://github.com/pchiorean/Indentz/commit/2c1828316dbeabf66558a0104a5e2fa9e5766666)
+  **lib/getPageItem:** Added a helper function to get a text frame with a specified name
+- `05/27` [`new`](https://github.com/pchiorean/Indentz/commit/5bc6aa2d7b653a485eba194eb2e1dd303f01f035)
+  **lib/saveLayersState:** Added a helper function to save/restore layers state (TO DO: refactor to a proper function expression)
+- `05/27` [`doc`](https://github.com/pchiorean/Indentz/commit/2202825cd4265fcfa6d251a04c730991d51e3054)
+  Updated TSV samples
 
 ### [23.2.1](https://github.com/pchiorean/Indentz/releases/tag/23.2.1)
 
@@ -672,7 +682,7 @@
 - `new` **export/QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
 - `new` **file/SpreadsToLayers**
 - `new` Add an '.ini' file for custom user settings
-- `new` 'Send \[selection\] to layer...'
+- `new` 'Send selection to layer...'
 - `new` `?` **file/LayersToFiles**
 
 ##### Updates
@@ -682,6 +692,7 @@
 - `upd` **cleanup/DocCleanup:** Delete empty color groups
 - `upd` **cleanup/ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
 - `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
+- `brk` **cleanup/ReplaceSnippets:** Extend Scope to layers/pages etc
 - `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
 - `brk` **export/MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
 - `new` **export/QuickExport:** Add a preflight dropbox
@@ -695,6 +706,7 @@
 - `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
 - `upd` **layout/PageSizeFromSelection:** Use outlined text bounds for text frames
 - `upd` **layout/PageSizeFromSelection:** Without selection fit all pages to their contents
+- `upd` **lib/log:** Update string formatting (see [this](https://github.com/SerenityOS/serenity/blob/c61bb1706f4fd4bdc6363df93e0d8f31709123ff/Documentation/StringFormatting.md) spec)
 - `upd` **lib/replaceText:** Add grep matching
 - `upd` **lib/replaceText:** Take an array of strings as input
 - `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
