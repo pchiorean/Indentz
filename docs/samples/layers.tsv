@@ -26,17 +26,19 @@ cutout        	Gray       	no      	yes       	above
 HW            	Light Gray 	no      	yes       	above  	*hw*, todesbalken, wh
 on top        	Light Blue 	no      	yes       	above  	ecken
 disruptors    	Gold       	no      	yes       	above  	offer, preis, price, pricetag, störer
-labels        	Gold       	no      	yes       	above  	new
 text & logos  	Green      	no      	yes       	above  	copy, dots, headline*, hl, logo, logos, tab, text*, txt, typ?, *signet
 terms         	Gray       	no      	yes       	above  	disclaimer*, legal*, validity
 codes         	Grid Green 	no      	yes       	above  	code*, bar*code*, ean*, qr, qr?code
+labels over   	Gold       	no      	yes       	above  	new
 products      	Blue       	no      	yes       	above  	device*, pack*, packshot*, päckli, product*, tin*
-artwork       	Light Blue 	no      	yes       	above  	aw, brand arrow, velo_arrow, bullseye, design, element?, farbebene, freisteller, images, inner frame dot, layout*, RZ
+labels under  	Gold       	no      	yes       	above
+artwork       	Light Blue 	no      	yes       	above  	aw, bullseye, design, element?, images, inner frame dot, layout*, RZ
+shard         	Light Blue 	no      	yes       	above  	brand arrow, velo_arrow, farbebene, freisteller, shard
 bg            	Red        	no      	yes       	below  	back, *background*, bgg, fond, hg, hintergrund*
 
 # <Name>: layer name
 # <Color>: layer color (defaults to Light Blue; see UIColors.txt for color names)
-# <Visible>: `yes` or `no` (defaults to `yes`)
+# <Visible>: ``yes` or `no` (defaults to `yes`)
 # <Printable>: `yes` or `no` (defaults to `yes`)
 # <Order>: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`)
 # <Variants>: a list of layers that will be merged with the base layer (case insensitive; `*` and `?` wildcards accepted)
