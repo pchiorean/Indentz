@@ -7,6 +7,7 @@
  */
 function getPageItem(name, target, layer) {
 	var item, items;
+	if (!target) target = app.activeDocument;
 	if (Object.prototype.hasOwnProperty.call(target, 'allPageItems')) {
 		items = target.allPageItems;
 		if (layer) {
@@ -14,6 +15,32 @@ function getPageItem(name, target, layer) {
 			if (!layer.isValid) layer = undefined;
 		}
 		while ((item = items.shift())) {
+			if (item.name !== name) continue;
+			if (layer) if (item.itemLayer.name !== layer.name) continue;
+			return item;
+		}
+	}
+	return false;
+}
+
+/**
+ * Returns the first text frame with a specified name, optionally from a specified layer.
+ * @param {string} name - The name of the text frame to search.
+ * @param {Object} target - A container for text frames.
+ * @param {String} [layer] - Look only for objects from this layer. (Optional.)
+ * @returns {TextFrame|false}
+ */
+function getTextFrame(name, target, layer) {
+	var item, items;
+	if (!target) target = app.activeDocument;
+	if (Object.prototype.hasOwnProperty.call(target, 'allPageItems')) {
+		items = target.allPageItems;
+		if (layer) {
+			layer = app.activeDocument.layers.item(layer);
+			if (!layer.isValid) layer = undefined;
+		}
+		while ((item = items.shift())) {
+			if (frm.constructor.name !== 'TextFrame') continue;
 			if (item.name !== name) continue;
 			if (layer) if (item.itemLayer.name !== layer.name) continue;
 			return item;
