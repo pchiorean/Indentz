@@ -1,0 +1,28 @@
+var layersState = [];
+
+function saveLayersState() {
+	var i, l;
+	for (i = 0; i < doc.layers.length; i++) {
+		l = doc.layers[i];
+		layersState.push({
+			layer:     l.name,
+			locked:    l.locked,
+			printable: l.printable,
+			visible:   l.visible
+		});
+		if (l.locked) l.locked = false;
+	}
+}
+
+function restoreLayersState() {
+	var i, l;
+	for (i = 0; i < layersState.length; i++) {
+		l = doc.layers.itemByName(layersState[i].layer);
+		if (l.isValid) {
+			l.locked    = layersState[i].locked;
+			l.printable = layersState[i].printable;
+			l.visible   = layersState[i].visible;
+		}
+	}
+	layersState = [];
+}
