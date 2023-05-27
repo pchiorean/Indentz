@@ -266,7 +266,7 @@ Resizes the current page to its margins.
 Resizes the page to the selected objects.
 
 #### **`PageMarginsFromScriptName.jsx`**
-Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It's designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword `HW` – e.g., `MG5HW10.jsx` sets a value of 5% for the margins and 10% for the HW (`HW` can also be used alone, which sets it to 10%, or omitted, which sets it to 0).
+Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It's designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword `HW` – e.g., **`MG5HW10.jsx`** sets a value of 5% for the margins and 10% for the HW (`HW` can also be used alone, which sets it to 10%, or omitted, which sets it to 0).
 
 #### **`PageMarginsFromSelection.jsx`** <small>⌥F3</small>
 Sets the page margins from the selected objects.
@@ -297,7 +297,8 @@ Use the numeric keypad to instantly align the selected object to the **Align To*
 #### **`ToggleAlignTo.jsx`** <small>Num0</small>
 Toggles **Align To** between selection, margins, page or spread (just run it repeatedly):
 
-![Align Panel screenshot](img/alignto.png)
+![Align Panel](img/alignto.png)
+
 
 #### **`ResetAlignTo.jsx`** <small>⌃Num0</small>
 Resets **Align To** to default (**Align to Selection**).
@@ -307,8 +308,9 @@ Resets **Align To** to default (**Align to Selection**).
 <small>_**Reframe selected objects.**_</small>
 
 #### **`FitTo*.jsx`**
+These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area).
 
-These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area). For example, running **`FitToPageBleed.jsx`** (⇧F11) on these two frames will expand the yellow one and shrink the red frame to the page bleed:
+For example, running **`FitToPageBleed.jsx`** (⇧F11) on these two frames will expand the yellow one and shrink the red frame to the page bleed:
 
 ![Example](img/fit.png)
 
@@ -407,19 +409,34 @@ You can use **`SpreadsToFiles.jsx`** to split them in separate documents.
 ### Export
 
 #### **`QuickExport.jsx`** <small>⌃E</small>
-Exports to PDF all opened documents or, with nothing opened, all documents from a folder.
+My workflow requires frequent changes to export settings, and the standard export dialog is complex, with quite a few tabs and options. I used to have a lot of Adobe PDF Presets with only a few differences, that had to be constantly kept up-to-date.
+I made this script to reduce the number of presets to the essential and also have, at a glance, the most common settings I need. I also added the ability to run additional scripts and a few other useful features that make my job easier.
 
-For convenience, some export options can be easily changed from the preset settings: resolution, export as pages/spreads, include crop marks, page information, slug area, and you can set a custom bleed.
-
-There are two export presets that can be used simultaneously or one at a time:
+It exports all opened documents (or, with nothing opened, all documents from a folder), with two workflows that can be used simultaneously or one at a time:
 
 ![Quick export](img/script-quickexport.png)
 
-The text from the **Suffix** field will be appended to the name of the exported file (everything in the preset name after the last `_` will be autodetected as suffix).
+The options are grouped into several categories. I will explain just some of them, most being self-explanatory:
 
-If **Sort files by suffix into subfolders** is checked, files will be exported in subfolders named using the suffix text up to the first `+` character. For example, for a `print+diecut` suffix, the PDF will be saved as **`Document_print+diecut.pdf`** in a subfolder named **`print`**.
+##### Preset options
+First, you select an Adobe PDF Preset. You can override some of it's options with a few clicks: crop marks, page information, to include or not the slug area, to export as pages or as spreads, resolution, bleed.
 
-It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:
+##### Document actions
+**Skip do-not-print layers** will not export layers with names beginning with a dot or a hyphen (e.g., **.safety area**).
+
+**Run a script** will run a JavaScript or AppleScript before exporting (e.g., one of the other scripts from this section).
+
+##### Output destination
+**Export in a custom folder:** By default, the files are exported to the same folder as the source document, but you can choose another folder.
+
+**Add a suffix:** This text will be appended to the name of the exported file. A preset can be 'paired' with a suffix by adding it to its name after the _last_ underscore: e.g., when you select `X4_350dpi_print`, the suffix will be changed to `print`.
+
+If **Sort files by suffix into subfolders** is also checked, each file will be saved in a subfolder named after the suffix text, up to the first `+` character: e.g., for a `print+diecut` suffix, the PDF will be saved as **`Document_print+diecut.pdf`**, in a subfolder named **`print`**.
+
+##### Source updating
+After export, the source documents can be updated if they have changed, or saving can be enforced for all documents (in this case **Save as…** will be used).
+
+**Save as…** is useful for reducing the size of documents that have been modified many times (regular saving just adds a log with the last changes and every save adds up).
 
 #### **`MarkVisibleArea.jsx`**
 Creates a frame the size of the page margins that marks a _visible area_ (see [**`PageSizeFromFilename.jsx`**](#pagesizefromfilenamejsx-f3)). It will use the **Visible area** swatch, which will be created with the values R=255 G=180 B=0 if it doesn't exist.
@@ -524,8 +541,8 @@ Shows properties and methods of a selected object (for debugging purposes).
 
 ## Install
 
-1. Clone or download from **Code ‣ Download ZIP**.\
-  The repository uses dynamically linked libraries from **`lib/`**, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked.
+1. Clone or download from **Code ‣ Download ZIP**, or download the latest release.\
+**Note:** The scripts from the repository recycle many bits of code, using dynamically linked libraries from **`lib/`**, meaning that the folder structure should to be preserved if downloading the scripts in this way. If you prefer stand-alone scripts or just pick some as needed, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked[^6].
 2. Open **Window ‣ Utilities ‣ Scripts**.
 3. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
 4. Copy **Indentz** to this folder.
@@ -541,7 +558,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: May 11, 2023</small>
+<small>Last updated: May 28, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
@@ -552,3 +569,5 @@ Thanks to Adrian Frigioiu for bug reports and feedback.
 [^4]: By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
 
 [^5]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
+
+[^6]: Releases may be old, however. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch. This is what I actually use every day, so it's kind of tested, but… beware. ;)

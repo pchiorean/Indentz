@@ -730,7 +730,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p>Resizes the page to the selected objects.</p>
 <h4 class="mume-header" id="pagemarginsfromscriptnamejsx"><strong><code>PageMarginsFromScriptName.jsx</code></strong></h4>
 
-<p>Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It&#x2019;s designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword <code>HW</code> &#x2013; e.g., <code>MG5HW10.jsx</code> sets a value of 5% for the margins and 10% for the HW (<code>HW</code> can also be used alone, which sets it to 10%, or omitted, which sets it to 0).</p>
+<p>Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It&#x2019;s designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword <code>HW</code> &#x2013; e.g., <strong><code>MG5HW10.jsx</code></strong> sets a value of 5% for the margins and 10% for the HW (<code>HW</code> can also be used alone, which sets it to 10%, or omitted, which sets it to 0).</p>
 <h4 class="mume-header" id="pagemarginsfromselectionjsx-smallf3small"><strong><code>PageMarginsFromSelection.jsx</code></strong> <small>&#x2325;F3</small></h4>
 
 <p>Sets the page margins from the selected objects.</p>
@@ -789,7 +789,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="togglealigntojsx-smallnum0small"><strong><code>ToggleAlignTo.jsx</code></strong> <small>Num0</small></h4>
 
 <p>Toggles <strong>Align To</strong> between selection, margins, page or spread (just run it repeatedly):</p>
-<p><img src="img/alignto.png" alt="Align Panel screenshot"></p>
+<p><img src="img/alignto.png" alt="Align Panel"></p>
 <h4 class="mume-header" id="resetaligntojsx-smallnum0small"><strong><code>ResetAlignTo.jsx</code></strong> <small>&#x2303;Num0</small></h4>
 
 <p>Resets <strong>Align To</strong> to default (<strong>Align to Selection</strong>).</p>
@@ -798,7 +798,8 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><small><em><strong>Reframe selected objects.</strong></em></small></p>
 <h4 class="mume-header" id="fittojsx"><strong><code>FitTo*.jsx</code></strong></h4>
 
-<p>These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area). For example, running <strong><code>FitToPageBleed.jsx</code></strong> (&#x21E7;F11) on these two frames will expand the yellow one and shrink the red frame to the page bleed:</p>
+<p>These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area).</p>
+<p>For example, running <strong><code>FitToPageBleed.jsx</code></strong> (&#x21E7;F11) on these two frames will expand the yellow one and shrink the red frame to the page bleed:</p>
 <p><img src="img/fit.png" alt="Example"></p>
 <p>The refitting is done by:</p>
 <ul>
@@ -1012,13 +1013,27 @@ pre[data-line] .line-highlight[data-end]:after {
 
 <h4 class="mume-header" id="quickexportjsx-smallesmall"><strong><code>QuickExport.jsx</code></strong> <small>&#x2303;E</small></h4>
 
-<p>Exports to PDF all opened documents or, with nothing opened, all documents from a folder.</p>
-<p>For convenience, some export options can be easily changed from the preset settings: resolution, export as pages/spreads, include crop marks, page information, slug area, and you can set a custom bleed.</p>
-<p>There are two export presets that can be used simultaneously or one at a time:</p>
+<p>My workflow requires frequent changes to export settings, and the standard export dialog is complex, with quite a few tabs and options. I used to have a lot of Adobe PDF Presets with only a few differences, that had to be constantly kept up-to-date.
+I made this script to reduce the number of presets to the essential and also have, at a glance, the most common settings I need. I also added the ability to run additional scripts and a few other useful features that make my job easier.</p>
+<p>It exports all opened documents (or, with nothing opened, all documents from a folder), with two workflows that can be used simultaneously or one at a time:</p>
 <p><img src="img/script-quickexport.png" alt="Quick export"></p>
-<p>The text from the <strong>Suffix</strong> field will be appended to the name of the exported file (everything in the preset name after the last <code>_</code> will be autodetected as suffix).</p>
-<p>If <strong>Sort files by suffix into subfolders</strong> is checked, files will be exported in subfolders named using the suffix text up to the first <code>+</code> character. For example, for a <code>print+diecut</code> suffix, the PDF will be saved as <strong><code>Document_print+diecut.pdf</code></strong> in a subfolder named <strong><code>print</code></strong>.</p>
-<p>It can also run a JavaScript or AppleScript before exporting, e.g., one of the following:</p>
+<p>The options are grouped into several categories. I will explain just some of them, most being self-explanatory:</p>
+<h5 class="mume-header" id="preset-options">Preset options</h5>
+
+<p>First, you select an Adobe PDF Preset. You can override some of it&#x2019;s options with a few clicks: crop marks, page information, to include or not the slug area, to export as pages or as spreads, resolution, bleed.</p>
+<h5 class="mume-header" id="document-actions">Document actions</h5>
+
+<p><strong>Skip do-not-print layers</strong> will not export layers with names beginning with a dot or a hyphen (e.g., <strong>.safety area</strong>).</p>
+<p><strong>Run a script</strong> will run a JavaScript or AppleScript before exporting (e.g., one of the other scripts from this section).</p>
+<h5 class="mume-header" id="output-destination">Output destination</h5>
+
+<p><strong>Export in a custom folder:</strong> By default, the files are exported to the same folder as the source document, but you can choose another folder.</p>
+<p><strong>Add a suffix:</strong> This text will be appended to the name of the exported file. A preset can be &#x2018;paired&#x2019; with a suffix by adding it to its name after the <em>last</em> underscore: e.g., when you select <code>X4_350dpi_print</code>, the suffix will be changed to <code>print</code>.</p>
+<p>If <strong>Sort files by suffix into subfolders</strong> is also checked, each file will be saved in a subfolder named after the suffix text, up to the first <code>+</code> character: e.g., for a <code>print+diecut</code> suffix, the PDF will be saved as <strong><code>Document_print+diecut.pdf</code></strong>, in a subfolder named <strong><code>print</code></strong>.</p>
+<h5 class="mume-header" id="source-updating">Source updating</h5>
+
+<p>After export, the source documents can be updated if they have changed, or saving can be enforced for all documents (in this case <strong>Save as&#x2026;</strong> will be used).</p>
+<p><strong>Save as&#x2026;</strong> is useful for reducing the size of documents that have been modified many times (regular saving just adds a log with the last changes and every save adds up).</p>
 <h4 class="mume-header" id="markvisibleareajsx"><strong><code>MarkVisibleArea.jsx</code></strong></h4>
 
 <p>Creates a frame the size of the page margins that marks a <em>visible area</em> (see <a href="#pagesizefromfilenamejsx-f3"><strong><code>PageSizeFromFilename.jsx</code></strong></a>). It will use the <strong>Visible area</strong> swatch, which will be created with the values R=255 G=180 B=0 if it doesn&#x2019;t exist.</p>
@@ -1149,8 +1164,8 @@ Blank lines are ignored; everything after a <code>#</code> (comments) is ignored
 <h2 class="mume-header" id="install">Install</h2>
 
 <ol>
-<li>Clone or download from <strong>Code &#x2023; Download ZIP</strong>.<br>
-The repository uses dynamically linked libraries from <strong><code>lib/</code></strong>, so the folder structure should be preserved; if you prefer stand-alone scripts, download the latest <a href="https://github.com/pchiorean/Indentz/releases">release</a>, where they are statically linked.</li>
+<li>Clone or download from <strong>Code &#x2023; Download ZIP</strong>, or download the latest release.<br>
+<strong>Note:</strong> The scripts from the repository recycle many bits of code, using dynamically linked libraries from <strong><code>lib/</code></strong>, meaning that the folder structure should to be preserved if downloading the scripts in this way. If you prefer stand-alone scripts or just pick some as needed, download the latest <a href="https://github.com/pchiorean/Indentz/releases">release</a>, where they are statically linked<sup class="footnote-ref"><a href="#fn6" id="fnref6">[6]</a></sup>.</li>
 <li>Open <strong>Window &#x2023; Utilities &#x2023; Scripts</strong>.</li>
 <li>Right-click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
 <li>Copy <strong>Indentz</strong> to this folder.</li>
@@ -1162,7 +1177,7 @@ The repository uses dynamically linked libraries from <strong><code>lib/</code><
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>Thanks to Adrian Frigioiu for bug reports and feedback.</p>
-<p><small>Last updated: May 11, 2023</small></p>
+<p><small>Last updated: May 28, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
@@ -1175,6 +1190,8 @@ The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.tx
 <li id="fn4" class="footnote-item"><p>By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant <code>SNAP_PCT</code> from <code>fitTo()</code>. <a href="#fnref4" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
 <li id="fn5" class="footnote-item"><p>The codes are used by a customer who needs to manage POS posters in multiple locations and languages. <a href="#fnref5" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+</li>
+<li id="fn6" class="footnote-item"><p>Releases may be old, however. The latest version is in the <a href="https://github.com/pchiorean/Indentz/tree/dev">dev</a> branch. This is what I actually use every day, so it&#x2019;s kind of tested, but&#x2026; beware. &#x1F609; <a href="#fnref6" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
 </ol>
 </section>
