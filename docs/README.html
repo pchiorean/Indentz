@@ -691,7 +691,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <p><small><em><strong>Document setup &#x2013; page size, margins &amp; columns, guides.</strong></em></small></p>
 <h4 class="mume-header" id="pagesizefromfilenamejsx-smallf3small"><strong><code>PageSizeFromFilename.jsx</code></strong> <small>F3</small></h4>
 
-<p>Sets the size of the page, the margins, and marks the visible area<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>, getting dimensions from the file name. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
+<p>Sets the size of the page, the margins, and marks the <em>visible area</em><sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup>, getting dimensions from the file name. It looks for pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). If only one pair is found, it sets the size of the page. If two are found (e.g., <code>000x000_000x000</code>), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:</p>
 <table>
 <thead>
 <tr>
@@ -811,7 +811,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </li>
 </ul>
 <p><strong>Note:</strong> Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame. Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.</p>
-<p>Variants with the suffix <strong><code>Forced</code></strong> simply reframe the objects to the target area.</p>
+<p><strong><code>*Forced.jsx</code></strong> variants simply reframe the objects to the target area.</p>
 <details><summary><strong>Shortcuts</strong></summary>
 <table>
 <thead>
@@ -1008,7 +1008,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="layerstospreadsjsx"><strong><code>LayersToSpreads.jsx</code></strong></h4>
 
 <p>Moves all layers of the active document to separate spreads (the document must have a single spread).</p>
-<p>You can use <strong><code>SpreadsToFiles.jsx</code></strong> to split them in separate documents.</p>
+<p>You may use <strong><code>SpreadsToFiles.jsx</code></strong> to split the result into separate documents.</p>
 <h3 class="mume-header" id="export">Export</h3>
 
 <h4 class="mume-header" id="quickexportjsx-smallesmall"><strong><code>QuickExport.jsx</code></strong> <small>&#x2303;E</small></h4>
@@ -1017,7 +1017,7 @@ pre[data-line] .line-highlight[data-end]:after {
 I made this script to reduce the number of presets to the essential and also have, at a glance, the most common settings I need. I also added the ability to run additional scripts and a few other useful features that make my job easier.</p>
 <p>It exports all opened documents (or, with nothing opened, all documents from a folder), with two workflows that can be used simultaneously or one at a time:</p>
 <p><img src="img/script-quickexport.png" alt="Quick export"></p>
-<p>The options are grouped into several categories. I will explain just some of them, most being self-explanatory:</p>
+<p>The options are grouped into several categories. I will only go through some of them, most being self-explanatory:</p>
 <h5 class="mume-header" id="preset-options">Preset options</h5>
 
 <p>First, you select an Adobe PDF Preset. You can override some of it&#x2019;s options with a few clicks: crop marks, page information, to include or not the slug area, to export as pages or as spreads, resolution, bleed.</p>
@@ -1025,22 +1025,22 @@ I made this script to reduce the number of presets to the essential and also hav
 
 <p><strong>Skip do-not-print layers</strong> will not export layers with names beginning with a dot or a hyphen (e.g., <strong>.safety area</strong>).</p>
 <p><strong>Run a script</strong> will run a JavaScript or AppleScript before exporting (e.g., one of the other scripts from this section).</p>
-<h5 class="mume-header" id="output-destination">Output destination</h5>
+<h5 class="mume-header" id="export-destination">Export destination</h5>
 
-<p><strong>Export in a custom folder:</strong> By default, the files are exported to the same folder as the source document, but you can choose another folder.</p>
+<p><strong>Export in a custom folder:</strong> By default, the files are exported in the same folder as the source document, but you can choose a custom one.</p>
 <p><strong>Add a suffix:</strong> This text will be appended to the name of the exported file. A preset can be &#x2018;paired&#x2019; with a suffix by adding it to its name after the <em>last</em> underscore: e.g., when you select <code>X4_350dpi_print</code>, the suffix will be changed to <code>print</code>.</p>
-<p>If <strong>Sort files by suffix into subfolders</strong> is also checked, each file will be saved in a subfolder named after the suffix text, up to the first <code>+</code> character: e.g., for a <code>print+diecut</code> suffix, the PDF will be saved as <strong><code>Document_print+diecut.pdf</code></strong>, in a subfolder named <strong><code>print</code></strong>.</p>
+<p>If <strong>Sort files by suffix into subfolders</strong> is also checked, each file will be saved in a subfolder named after the suffix, up to the first <code>+</code> character: e.g., for a <code>print+diecut</code> suffix, the PDF will be saved as <strong><code>Document_print+diecut.pdf</code></strong>, in a subfolder named <strong><code>print</code></strong>.</p>
 <h5 class="mume-header" id="source-updating">Source updating</h5>
 
 <p>After export, the source documents can be updated if they have changed, or saving can be enforced for all documents (in this case <strong>Save as&#x2026;</strong> will be used).</p>
-<p><strong>Save as&#x2026;</strong> is useful for reducing the size of documents that have been modified many times (regular saving just adds a log with the last changes and every save adds up).</p>
+<p><strong>Save as&#x2026;</strong> is useful for reducing the size of documents that have been modified many times (on a regular save the document grows with a log of the last changes).</p>
 <h4 class="mume-header" id="markvisibleareajsx"><strong><code>MarkVisibleArea.jsx</code></strong></h4>
 
-<p>Creates a frame the size of the page margins that marks a <em>visible area</em> (see <a href="#pagesizefromfilenamejsx-f3"><strong><code>PageSizeFromFilename.jsx</code></strong></a>). It will use the <strong>Visible area</strong> swatch, which will be created with the values R=255 G=180 B=0 if it doesn&#x2019;t exist.</p>
+<p>Creates a frame the size of the page margins that marks a <em>visible area</em><sup class="footnote-ref"><a href="#fn3" id="fnref3:1">[3:1]</a></sup>. It will use an existing <strong>Visible area</strong> swatch, or will create one with the values R=255 G=180 B=0.</p>
 <h4 class="mume-header" id="prepareforexportjsx"><strong><code>PrepareForExport.jsx</code></strong></h4>
 
 <p>Hides some <em>do-not-print</em> layers: <strong>covered area</strong>, <strong>visible area</strong>, <strong>safety area</strong>, <strong>segmentation</strong>, and all layers starting with either a dot or a hyphen (for the full list see the script).</p>
-<p>Moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads.</p>
+<p>Moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads and labels them.</p>
 <h4 class="mume-header" id="showdnplayersjsx--hidednplayersjsx"><strong><code>ShowDNPLayers.jsx</code></strong> / <strong><code>HideDNPLayers.jsx</code></strong></h4>
 
 <p>Show or hide some <em>do-not-print</em> layers: <strong>covered area</strong>, <strong>visible area</strong>, <strong>safety area</strong>, <strong>segmentation</strong>, and all layers starting with either a dot or a hyphen (for the full list see the script).</p>
@@ -1185,7 +1185,7 @@ The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.tx
 </li>
 <li id="fn2" class="footnote-item"><p><code>DefaultLayers.jsx</code>, <code>DefaultSwatches.jsx</code>, <code>ReplaceFonts.jsx</code>, <code>ReplaceLinks.jsx</code>, <code>ReplaceSnippet.jsx</code>. <a href="#fnref2" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
-<li id="fn3" class="footnote-item"><p>A <em>visible area</em> is a zone delimited by a frame named <code>&lt;visible area&gt;</code>, and it&#x2019;s used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size. <a href="#fnref3" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
+<li id="fn3" class="footnote-item"><p>A <em>visible area</em> is a zone delimited by a frame named <code>&lt;visible area&gt;</code>, and it&#x2019;s used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size. <a href="#fnref3" class="footnote-backref">&#x21A9;&#xFE0E;</a> <a href="#fnref3:1" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>
 <li id="fn4" class="footnote-item"><p>By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant <code>SNAP_PCT</code> from <code>fitTo()</code>. <a href="#fnref4" class="footnote-backref">&#x21A9;&#xFE0E;</a></p>
 </li>

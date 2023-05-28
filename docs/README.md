@@ -251,7 +251,7 @@ Saves a TSV file (compatible with [**`DefaultSwatches.jsx`**](#defaultswatchesjs
 <small>_**Document setup – page size, margins & columns, guides.**_</small>
 
 #### **`PageSizeFromFilename.jsx`** <small>F3</small>
-Sets the size of the page, the margins, and marks the visible area[^3], getting dimensions from the file name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
+Sets the size of the page, the margins, and marks the _visible area_[^3], getting dimensions from the file name. It looks for pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). If only one pair is found, it sets the size of the page. If two are found (e.g., `000x000_000x000`), the larger pair sets the page size, the smaller pair the visible area. If a one- or two-digit sequence follows, it sets the bleed. Example:
 
 | File name                                       | Total size | Visible area | Bleed |
 |:------------------------------------------------|:-----------|:-------------|:------|
@@ -322,7 +322,7 @@ The refitting is done by:
 
 **Note:** Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame. Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.
 
-Variants with the suffix **`Forced`** simply reframe the objects to the target area.
+**`*Forced.jsx`** variants simply reframe the objects to the target area.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -404,7 +404,7 @@ By default, the index will be appended at the end, but you can put a `#` in the 
 #### **`LayersToSpreads.jsx`**
 Moves all layers of the active document to separate spreads (the document must have a single spread).
 
-You can use **`SpreadsToFiles.jsx`** to split them in separate documents.
+You may use **`SpreadsToFiles.jsx`** to split the result into separate documents.
 
 ### Export
 
@@ -416,7 +416,7 @@ It exports all opened documents (or, with nothing opened, all documents from a f
 
 ![Quick export](img/script-quickexport.png)
 
-The options are grouped into several categories. I will explain just some of them, most being self-explanatory:
+The options are grouped into several categories. I will only go through some of them, most being self-explanatory:
 
 ##### Preset options
 First, you select an Adobe PDF Preset. You can override some of it's options with a few clicks: crop marks, page information, to include or not the slug area, to export as pages or as spreads, resolution, bleed.
@@ -426,25 +426,25 @@ First, you select an Adobe PDF Preset. You can override some of it's options wit
 
 **Run a script** will run a JavaScript or AppleScript before exporting (e.g., one of the other scripts from this section).
 
-##### Output destination
-**Export in a custom folder:** By default, the files are exported to the same folder as the source document, but you can choose another folder.
+##### Export destination
+**Export in a custom folder:** By default, the files are exported in the same folder as the source document, but you can choose a custom one.
 
 **Add a suffix:** This text will be appended to the name of the exported file. A preset can be 'paired' with a suffix by adding it to its name after the _last_ underscore: e.g., when you select `X4_350dpi_print`, the suffix will be changed to `print`.
 
-If **Sort files by suffix into subfolders** is also checked, each file will be saved in a subfolder named after the suffix text, up to the first `+` character: e.g., for a `print+diecut` suffix, the PDF will be saved as **`Document_print+diecut.pdf`**, in a subfolder named **`print`**.
+If **Sort files by suffix into subfolders** is also checked, each file will be saved in a subfolder named after the suffix, up to the first `+` character: e.g., for a `print+diecut` suffix, the PDF will be saved as **`Document_print+diecut.pdf`**, in a subfolder named **`print`**.
 
 ##### Source updating
 After export, the source documents can be updated if they have changed, or saving can be enforced for all documents (in this case **Save as…** will be used).
 
-**Save as…** is useful for reducing the size of documents that have been modified many times (regular saving just adds a log with the last changes and every save adds up).
+**Save as…** is useful for reducing the size of documents that have been modified many times (on a regular save the document grows with a log of the last changes).
 
 #### **`MarkVisibleArea.jsx`**
-Creates a frame the size of the page margins that marks a _visible area_ (see [**`PageSizeFromFilename.jsx`**](#pagesizefromfilenamejsx-f3)). It will use the **Visible area** swatch, which will be created with the values R=255 G=180 B=0 if it doesn't exist.
+Creates a frame the size of the page margins that marks a _visible area_[^3]. It will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
 
 #### **`PrepareForExport.jsx`**
 Hides some _do-not-print_ layers: **covered area**, **visible area**, **safety area**, **segmentation**, and all layers starting with either a dot or a hyphen (for the full list see the script).
 
-Moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads.
+Moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads and labels them.
 
 #### **`ShowDNPLayers.jsx`** / **`HideDNPLayers.jsx`**
 Show or hide some _do-not-print_ layers: **covered area**, **visible area**, **safety area**, **segmentation**, and all layers starting with either a dot or a hyphen (for the full list see the script).
