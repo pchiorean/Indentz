@@ -1,6 +1,6 @@
 /*
-	Label page 22.11.17
-	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
+	Label page 23.5.28
+	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a custom label on the current page's slug.
 
@@ -50,8 +50,6 @@ function main() {
 		var items = page.pageItems.everyItem().getElements();
 		var infoLayerName = 'info';
 		var infoLayer = doc.layers.item(infoLayerName);
-		var idLayerName = 'id';
-		var idLayer = doc.layers.item(idLayerName);
 
 		app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 		isCaps  = (isCaps  === undefined) ? true : isCaps;
@@ -66,8 +64,7 @@ function main() {
 				printable:  true
 			});
 		}
-		if (idLayer.isValid) infoLayer.move(LocationOptions.after, idLayer);
-		else infoLayer.move(LocationOptions.AT_BEGINNING);
+		infoLayer.move(LocationOptions.AT_BEGINNING);
 		// Remove old page labels
 		while ((item = items.shift()))
 			if (item.name === '<page label>') { item.itemLayer.locked = false; item.remove(); }

@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 23.5.18
+	Batch QR codes 23.5.28
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds codes to existing documents or to separate files in batch mode,
@@ -268,8 +268,8 @@ function main() {
 		var i, p, pp, page, tgBounds, tgSize, labelFrame, codeFrame, qrGroup, labelSize, codeSize, labelText, suffix;
 		var target = app.open(File(currentPath + '/' + item.fn));
 		if (target.converted) { errors.push(decodeURI(target.name) + ' must be converted; skipped.'); return false; }
-		var idLayer = makeIDLayer(target);
-		target.activeLayer = idLayer;
+		var infoLayer = makeInfoLayer(target);
+		target.activeLayer = infoLayer;
 		suffix = RegExp('[ ._-][a-zA-Z0-9]{' + target.spreads.length + '}$', 'i')
 			.exec((/\./g.test(target.name) && target.name.slice(0, target.name.lastIndexOf('.'))) || target.name);
 		suffix = suffix == null ? '' : String(suffix);
@@ -297,7 +297,7 @@ function main() {
 			}
 			labelFrame = page.textFrames.add({
 				label: 'QR',
-				itemLayer: idLayer.name,
+				itemLayer: infoLayer.name,
 				fillColor:   'None',
 				strokeColor: 'None',
 				bottomLeftCornerOption:  CornerOptions.NONE,
@@ -340,7 +340,7 @@ function main() {
 			target.align(labelFrame, AlignOptions.TOP_EDGES,  AlignDistributeBounds.PAGE_BOUNDS);
 			// Add code
 			codeFrame = page.rectangles.add({
-				itemLayer: idLayer.name,
+				itemLayer: infoLayer.name,
 				label: 'QR',
 				fillColor:   'Paper',
 				strokeColor: 'None',
@@ -419,11 +419,11 @@ function main() {
 			var labelFrame, codeFrame, qrGroup, targetFolder, ancillaryFile, pdfFile;
 			var target = app.documents.add();
 			var page = target.pages[0];
-			var idLayer = makeIDLayer(target);
+			var infoLayer = makeInfoLayer(target);
 			// Add label
 			labelFrame = page.textFrames.add({
 				label: 'QR',
-				itemLayer: idLayer.name,
+				itemLayer: infoLayer.name,
 				fillColor:   'None',
 				strokeColor: 'None',
 				bottomLeftCornerOption:  CornerOptions.NONE,
@@ -466,7 +466,7 @@ function main() {
 			};
 			// Add code
 			codeFrame = page.rectangles.add({
-				itemLayer: idLayer.name,
+				itemLayer: infoLayer.name,
 				label: 'QR',
 				bottomLeftCornerOption:  CornerOptions.NONE,
 				bottomRightCornerOption: CornerOptions.NONE,
@@ -635,23 +635,19 @@ function main() {
 		}
 	}
 
-	function makeIDLayer(document) {
-		var idLayerName = 'ID';
-		var idLayer = document.layers.item(idLayerName);
-		var hwLayerName = 'HW';
-		var hwLayer = document.layers.item(hwLayerName);
-		if (!idLayer.isValid) {
+	function makeInfoLayer(document) {
+		var infoLayerName = 'info';
+		var infoLayer = document.layers.item(infoLayerName);
+		if (!infoLayer.isValid) {
 			document.layers.add({
-				name: idLayerName,
+				name: infoLayerName,
 				layerColor: UIColors.CYAN,
 				visible: true,
 				locked: false,
 				printable: true
 			});
 		}
-		if (hwLayer.isValid)
-			idLayer.move(LocationOptions.BEFORE, hwLayer);
-			else idLayer.move(LocationOptions.AT_BEGINNING);
-		return idLayer;
+		infoLayer.move(LocationOptions.AT_BEGINNING);
+		return infoLayer;
 	}
 }

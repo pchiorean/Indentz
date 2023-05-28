@@ -1,6 +1,6 @@
 /*
-	QR code 22.11.17
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	QR code 23.5.28
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a QR code to the current document or to a separate file.
 
@@ -85,8 +85,8 @@ function main() {
 
 	function putCodeOnDocument() {
 		var i, p, pp, page, spread, tgBounds, tgSize, labelFrame, codeFrame, qrGroup, labelSize, codeSize, labelText;
-		var idLayer = makeIDLayer(doc);
-		doc.activeLayer = idLayer;
+		var infoLayer = makeInfoLayer(doc);
+		doc.activeLayer = infoLayer;
 		for (i = 0; i < doc.spreads.length; i++) {
 			spread = doc.spreads[i];
 			page = spread.pages[0];
@@ -104,7 +104,7 @@ function main() {
 			else labelText = codeText;
 			labelFrame = page.textFrames.add({
 				label: 'QR',
-				itemLayer: idLayer.name,
+				itemLayer: infoLayer.name,
 				fillColor:   'None',
 				strokeColor: 'None',
 				bottomLeftCornerOption:  CornerOptions.NONE,
@@ -147,7 +147,7 @@ function main() {
 			doc.align(labelFrame, AlignOptions.TOP_EDGES,  AlignDistributeBounds.PAGE_BOUNDS);
 			// Add code
 			codeFrame = page.rectangles.add({
-				itemLayer: idLayer.name,
+				itemLayer: infoLayer.name,
 				label: 'QR',
 				fillColor:   'Paper',
 				strokeColor: 'None',
@@ -213,11 +213,11 @@ function main() {
 			var labelFrame, codeFrame, qrGroup, targetFolder, ancillaryFile, pdfFile;
 			var target = app.documents.add();
 			var page = target.pages[0];
-			var idLayer = makeIDLayer(target);
+			var infoLayer = makeInfoLayer(target);
 			// Add label
 			labelFrame = page.textFrames.add({
 				label: 'QR',
-				itemLayer: idLayer.name,
+				itemLayer: infoLayer.name,
 				fillColor: 'None',
 				strokeColor: 'None',
 				bottomLeftCornerOption:  CornerOptions.NONE,
@@ -260,7 +260,7 @@ function main() {
 			};
 			// Add code
 			codeFrame = page.rectangles.add({
-				itemLayer: idLayer.name,
+				itemLayer: infoLayer.name,
 				label: 'QR',
 				bottomLeftCornerOption:  CornerOptions.NONE,
 				bottomRightCornerOption: CornerOptions.NONE,
@@ -428,23 +428,19 @@ function main() {
 		}
 	}
 
-	function makeIDLayer(document) {
-		var idLayerName = 'ID';
-		var idLayer = document.layers.item(idLayerName);
-		var hwLayerName = 'HW';
-		var hwLayer = document.layers.item(hwLayerName);
-		if (!idLayer.isValid) {
+	function makeInfoLayer(document) {
+		var infoLayerName = 'info';
+		var infoLayer = document.layers.item(infoLayerName);
+		if (!infoLayer.isValid) {
 			document.layers.add({
-				name: idLayerName,
+				name: infoLayerName,
 				layerColor: UIColors.CYAN,
 				visible: true,
 				locked: false,
 				printable: true
 			});
 		}
-		if (hwLayer.isValid)
-			idLayer.move(LocationOptions.BEFORE, hwLayer);
-			else idLayer.move(LocationOptions.AT_BEGINNING);
-		return idLayer;
+		infoLayer.move(LocationOptions.AT_BEGINNING);
+		return infoLayer;
 	}
 }
