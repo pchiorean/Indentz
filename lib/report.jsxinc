@@ -2,7 +2,7 @@
  * Displays a message in a scrollable list with optional filtering and/or compact mode.
  * Inspired by this snippet by Peter Kahrel:
  * http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250
- * @version 23.2.3
+ * @version 23.5.29
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string|string[]} message - Message to be displayed. Can be a string or a strings array.
@@ -55,11 +55,11 @@ function report(message, title, showFilter, showCompact) {
 	list.minimumSize.height = 100; list.maximumSize.height = 1024;
 
 	// Actions
-	ui.g = ui.add('group');
-		ui.save = ui.g.add('button { text: "Save" }');
+	ui.actions = ui.add('group');
+		ui.save = ui.actions.add('button { text: "Save" }');
 		ui.save.onClick = function () {
 			var file;
-			if (app.activeDocument && app.activeDocument.saved)
+			if (aapp.windows.length > 0 && pp.activeDocument && app.activeDocument.saved)
 				file = File(app.activeDocument.filePath + '/report.txt').saveDlg();
 			else file = File(Folder.desktop + '/report.txt').saveDlg();
 			if (file == null) return;
@@ -70,8 +70,8 @@ function report(message, title, showFilter, showCompact) {
 			file.close();
 			ui.close();
 		};
-		ui.g.add('button { text: "Close", properties: { name: "ok" } }');
-		ui.g.ok.active = true;
+		ui.actions.add('button { text: "Close", properties: { name: "ok" } }');
+		ui.actions.ok.active = true;
 
 	ui.onShow = function () {
 		if (app.windows.length > 0) {
