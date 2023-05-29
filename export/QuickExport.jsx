@@ -1,5 +1,5 @@
 /*
-	Quick export 23.5.27-dev
+	Quick export 23.5.29-dev
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -27,6 +27,8 @@
 */
 
 // @includepath '.;./lib;../lib';
+// @include 'isInArray.jsxinc';
+// @include 'naturalSorter.jsxinc';
 // @include 'progressBar.jsxinc';
 // @include 'report.jsxinc';
 
@@ -105,6 +107,12 @@ function QuickExport() {
 			}
 		},
 		docClose: true,
+		dnpLayers: 'covered area*'
+			+ '\nfold,falz'
+			+ '\nguides,grid,masuratori'
+			+ '\nsafe*area,safe*margins'
+			+ '\nsegmentation'
+			+ '\nvi?ible area,rahmen,sicht*',
 		position: '',
 		version: VER
 	};
@@ -132,10 +140,8 @@ function QuickExport() {
 
 				// Settings
 				ui[workflow].container = ui[workflow].add('group { orientation: "column", alignChildren: [ "left", "top" ] }');
-
 				ui[workflow].preset = ui[workflow].container.add('dropdownlist', undefined, exportPresetsPDF);
 				ui[workflow].preset.preferredSize = [ ui.cWidth, 24 ];
-
 				ui[workflow].po = ui[workflow].container.add('group { orientation: "row", margins: [ 0, 0, 0, -5 ], alignChildren: [ "left", "top" ] }');
 					ui[workflow].po.c1 = ui[workflow].po.add('group { orientation: "column", spacing: 5, alignChildren: [ "left", "top" ], preferredSize: [ 125, -1 ] }');
 						ui[workflow].cropMarks = ui[workflow].po.c1.add('checkbox { text: "Crop marks", preferredSize: [ -1, 24 ] }');
@@ -151,24 +157,22 @@ function QuickExport() {
 							ui[workflow].customBleed.isOn = ui[workflow].customBleed.add('checkbox { text: "Custom bleed:", alignment: "bottom", preferredSize: [ 104, -1 ] }');
 							ui[workflow].customBleed.isOn.helpTip = 'Override document bleed';
 							ui[workflow].customBleed.et = ui[workflow].customBleed.add('edittext { characters: 4, justify: "center", preferredSize: [ 45, 24 ] }');
-
 				ui[workflow].container.add('panel { alignment: "fill" }');
-
 				ui[workflow].updateLinks = ui[workflow].container.add('checkbox { text: "Update out of date links" }');
-				ui[workflow].skipDNP = ui[workflow].container.add('checkbox { text: "Skip do-not-print layers" }');
-				ui[workflow].skipDNP.helpTip = 'Layers with names beginning with a dot or a hyphen\n(e.g., \'.safety area\') can be automatically skipped';
-
+				ui[workflow].skipDNP_ = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, -5 ] }');
+					ui[workflow].skipDNP = ui[workflow].skipDNP_.add('checkbox { text: "Skip do-not-print layers", alignment: "bottom" }');
+					ui[workflow].skipDNP.helpTip = 'Layers with names beginning with a dot or a hyphen\n(e.g., \'.safety area\') can be automatically skipped';
+					ui[workflow].skipDNP_.add('group').preferredSize.width = ui.cWidth - 245;
+					ui[workflow].editDNP = ui[workflow].skipDNP_.add('button { text: "Edit list", preferredSize: [ 64, 24 ] }');
 				ui[workflow].script = ui[workflow].container.add('group { orientation: "column", alignChildren: [ "left", "top" ] }');
-					ui[workflow].script._ = ui[workflow].script.add('group { orientation: "row", margins: [ 0, -5, 0, -5 ] }');
+					ui[workflow].script._ = ui[workflow].script.add('group { orientation: "row", margins: [ 0, 0, 0, -5 ] }');
 						ui[workflow].script.isOn = ui[workflow].script._.add('checkbox { text: "Run a script:", alignment: "bottom" }');
 						ui[workflow].script.isOn.helpTip = 'Run a JavaScript or AppleScript before exporting';
 						ui[workflow].script._.add('group').preferredSize.width = ui.cWidth - 176;
 						ui[workflow].script.browse = ui[workflow].script._.add('button { text: "Browse", preferredSize: [ 64, 24 ] }');
 					ui[workflow].script.file = ui[workflow].script.add('edittext');
 					ui[workflow].script.file.preferredSize = [ ui.cWidth, 24 ];
-
 				ui[workflow].container.add('panel { alignment: "fill" }');
-
 				ui[workflow].destination = ui[workflow].container.add('group { orientation: "column", alignChildren: [ "left", "top" ] }');
 					ui[workflow].destination._ = ui[workflow].destination.add('group { orientation: "row", margins: [ 0, 0, 0, -5 ] }');
 						ui[workflow].destination.isOn = ui[workflow].destination._.add('checkbox { text: "Export in a custom folder:", alignment: "bottom" }');
@@ -176,28 +180,22 @@ function QuickExport() {
 						ui[workflow].destination.browse = ui[workflow].destination._.add('button { text: "Browse", preferredSize: [ 64, 24 ] }');
 					ui[workflow].destination.folder = ui[workflow].destination.add('edittext');
 					ui[workflow].destination.folder.preferredSize = [ ui.cWidth, 24 ];
-
-				ui[workflow].split = ui[workflow].container.add('checkbox { text: "Export as separate pages/spreads" }');
-
 				ui[workflow].suffix = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, 0 ] }');
 					ui[workflow].suffix.isOn = ui[workflow].suffix.add('checkbox { text: "Add a suffix:", alignment: "bottom", preferredSize: [ 125, -1 ] }');
 					ui[workflow].suffix.isOn.helpTip = 'Append a suffix to the exported file name';
 					ui[workflow].suffix.et = ui[workflow].suffix.add('edittext { preferredSize: [ 159, 24 ] }');
 					ui[workflow].suffix.et.helpTip = 'Append this text to the exported file name';
-
 				ui[workflow].subfolders = ui[workflow].container.add('checkbox { text: "Sort files by suffix into subfolders" }');
 				ui[workflow].subfolders.helpTip = 'Use the suffix field as the destination subfolder.\nNote: everything after a \'+\' is ignored (e.g., files with\na \'print+diecut\' suffix will be exported to \'print\')';
+				ui[workflow].split = ui[workflow].container.add('checkbox { text: "Export as separate pages/spreads" }');
 				ui[workflow].overwrite = ui[workflow].container.add('checkbox { text: "Overwrite existing files" }');
-
 				ui[workflow].container.add('panel { alignment: "fill" }');
-
 				ui[workflow].docSave = ui[workflow].container.add('group { orientation: "row" }');
 					ui[workflow].docSave.isOn = ui[workflow].docSave.add('checkbox { text: "Save:" }');
 					ui[workflow].docSave.scope = ui[workflow].docSave.add('group { margins: [ 0, -1, 0, 0 ] }');
 						ui[workflow].docSave.scope.mod = ui[workflow].docSave.scope.add('radiobutton { text: "modified" }');
 						ui[workflow].docSave.scope.mod.value = true;
 						ui[workflow].docSave.scope.all = ui[workflow].docSave.scope.add('radiobutton { text: "all documents" }');
-
 				ui[workflow].saveAs = ui[workflow].container.add('checkbox { text: "Use \'Save as\u2026\' to reduce documents size" }');
 			},
 			events: function (workflow) {
@@ -244,7 +242,6 @@ function QuickExport() {
 
 					this.helpTip = (function (/*pdfExportPreset*/preset) {
 						var msg = [];
-
 						msg.push('Profile: ' +
 							(preset.pdfDestinationProfile.constructor.name === 'String'
 								? preset.effectivePDFDestinationProfile
@@ -253,14 +250,12 @@ function QuickExport() {
 									.replace('use ', '')
 							)
 						);
-
 						if (preset.standardsCompliance !== PDFXStandards.NONE) {
 							msg.push('Standard: ' +
 								String(preset.standardsCompliance).toLowerCase()
 									.replace(/^(pdfx)(.+?)(\d{4})(_standard)$/, 'PDF/X-$2:$3')
 							);
 						}
-
 						msg.push('Color space: ' +
 							String(preset.pdfColorSpace).toLowerCase()
 								.replace(/_/g, ' ')
@@ -268,7 +263,6 @@ function QuickExport() {
 								.replace('rgb', 'RGB')
 								.replace('cmyk', 'CMYK')
 						);
-
 						if (preset.colorBitmapSampling === Sampling.NONE) {
 							msg.push('Sampling: none');
 						} else {
@@ -276,7 +270,6 @@ function QuickExport() {
 								.replace(/_/g, ' '));
 							msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
 						}
-
 						msg.push('Compression: ' +
 							String(preset.colorBitmapCompression).toLowerCase()
 								.replace(/_/g, ' ')
@@ -288,7 +281,6 @@ function QuickExport() {
 								.replace(/_/g, ' '));
 						}
 						msg.push('\nExport as ' + (preset.exportReaderSpreads ? 'spreads' : 'pages'));
-
 						if (preset.useDocumentBleedWithPDF) {
 							msg.push('Use document bleed');
 						} else {
@@ -298,7 +290,6 @@ function QuickExport() {
 									.replace(/\.?0+$/, '') + ' mm'
 							);
 						}
-
 						if (preset.cropMarks
 								|| preset.pageInformationMarks
 								|| preset.includeSlugWithPDF
@@ -311,7 +302,6 @@ function QuickExport() {
 									.replace(/, $/, '')
 							);
 						}
-
 						return msg.join('\n');
 					}(pdfExpPreset));
 				};
@@ -333,6 +323,7 @@ function QuickExport() {
 						this.parent.et.helpTip = 'Using profile resolution';
 					}
 				};
+
 				ui[workflow].customDPI.et.onDeactivate = function () {
 					this.text = Number(this.text.replace(/[^\d.,]/gi, '').replace(',', '.'));
 					if (isNaN(this.text) || this.text < 9 || this.text > 2400) {
@@ -352,6 +343,7 @@ function QuickExport() {
 						this.parent.et.helpTip = 'Using documend bleed';
 					}
 				};
+
 				ui[workflow].customBleed.et.onDeactivate = function () {
 					if (this.text === '') this.text = '0';
 					this.text = Number(this.text.replace(/[^\d.,]/gi, '').replace(',', '.'));
@@ -361,16 +353,66 @@ function QuickExport() {
 					}
 				};
 
+				ui[workflow].editDNP.onClick = function () {
+					var w = new Window('dialog { orientation: "column", alignChildren: [ "left", "top" ], margins: [ 16, 13, 16, 16 ], spacing: 10 }');
+					w.text = 'Edit do-not-print layers';
+
+					w.legend = w.add('group { orientation: "column", alignChildren: [ "left", "top" ], spacing: 0 }');
+					w.legend.add('statictext { text: "Enter a list of layers to be skipped on export." }');
+					w.legend.add('statictext { text: "Layers with names beginning with a dot or a hyphen" }');
+					w.legend.add('statictext { text: "(e.g., \'.safety area\') will be automatically skipped." }');
+					w.legend.add('statictext');
+					w.legend.add('statictext { text: "You can use a \'?\' wildcard for any character, or a \'*\'" }');
+					w.legend.add('statictext { text: "for zero or more characters." }');
+
+					w.list = w.add('edittext { justify: "left", properties: { multiline: true, scrollable: true } }');
+					w.list.preferredSize = [ 320, 152 ];
+					w.list.text = settings.dnpLayers;
+
+					w.actions = w.add('group { orientation: "row", margins: [ -1, 4, -1, -1 ] }');
+					w.actions.reset = w.actions.add('button { text: "Reset", preferredSize: [ 80, 24 ] }');
+					w.actions.add('group').preferredSize.width = 50;
+					w.actions.add('button { text: "Cancel", preferredSize: [ 80, 24 ] }');
+					w.actions.ok = w.actions.add('button { text: "Ok", preferredSize: [ 80, 24 ] }');
+
+					w.list.onDeactivate = function () {
+						w.list.text = w.list.text
+							.replace(/\|/g, '\n')       // Convert '|' to CR
+							.replace(/(\s)+/g, '$1')    // Compact whitespace
+							.replace(/^\s+|\s+$/g, ''); // Trim whitespaces at both ends
+						w.list.text = w.list.text
+							.replace(/( ?, ?)+/g, ',')  // Compact commas
+							.replace(/^,+|,+$/gm, '')   // Trim commas at both ends
+							.replace(/,/g, ', ');       // Add a space after commas
+					};
+
+					w.actions.reset.onClick = function () {
+						w.list.text = defaults.dnpLayers.replace(/\|/g, '\n');
+						w.list.onDeactivate();
+					};
+
+					w.actions.ok.onClick = function () {
+						settings.dnpLayers = w.list.text;
+						w.close();
+					};
+
+					w.onShow = function () { w.center(ui); };
+
+					w.show();
+				};
+
 				ui[workflow].script.isOn.onClick = function () {
 					this.parent.parent.browse.enabled = this.value;
 					this.parent.parent.file.enabled = this.value;
 					this.parent.parent.file.onChange();
 				};
+
 				ui[workflow].script.browse.onClick = function () {
 					var f = File.openDialog('Select a script:');
 					if (f != null) this.parent.parent.file.text = f;
 					this.parent.parent.file.onChange();
 				};
+
 				ui[workflow].script.file.onChange = function () {
 					if (this.parent.path && decodeURI(this.parent.path.name) === this.text) return;
 					var newFile = File(this.text);
@@ -384,9 +426,11 @@ function QuickExport() {
 					}
 					updateStatus();
 				};
+
 				ui[workflow].script.file.onActivate = function () {
 					if (this.parent.path) this.text = decodeURI(this.parent.path);
 				};
+
 				ui[workflow].script.file.onDeactivate = function () {
 					this.onChange();
 				};
@@ -397,11 +441,13 @@ function QuickExport() {
 
 					this.parent.parent.folder.onChange();
 				};
+
 				ui[workflow].destination.browse.onClick = function () {
 					var ff = Folder.selectDialog('Select a folder:');
 					if (ff != null) this.parent.parent.folder.text = ff;
 					this.parent.parent.folder.onChange();
 				};
+
 				ui[workflow].destination.folder.onChange = function () {
 					if (this.parent.path && decodeURI(this.parent.path.name) === this.text) {
 						updateStatus();
@@ -424,9 +470,11 @@ function QuickExport() {
 					}
 					updateStatus();
 				};
+
 				ui[workflow].destination.folder.onActivate = function () {
 					if (this.parent.path) this.text = decodeURI(this.parent.path);
 				};
+
 				ui[workflow].destination.folder.onDeactivate = function () {
 					this.onChange();
 				};
@@ -435,6 +483,7 @@ function QuickExport() {
 					this.parent.et.enabled = this.value;
 					this.parent.parent.parent.subfolders.enabled = this.value && this.parent.et.text.length > 0;
 				};
+
 				ui[workflow].suffix.et.onChange = function () {
 					var str = this.text
 						.replace(/^\s+|\s+$/g, '')
@@ -443,6 +492,7 @@ function QuickExport() {
 					if (this.text !== str) this.text = str;
 					this.parent.parent.parent.subfolders.enabled = (this.text.length > 0);
 				};
+
 				ui[workflow].suffix.et.onDeactivate = function () {
 					this.onChange();
 				};
@@ -451,6 +501,7 @@ function QuickExport() {
 					this.parent.scope.enabled = this.value;
 					this.parent.parent.parent.saveAs.enabled = this.value;
 				};
+
 				ui[workflow].docSave.scope.all.onClick = function () {
 					this.parent.parent.parent.parent.saveAs.value = this.value;
 				};
@@ -460,11 +511,10 @@ function QuickExport() {
 				};
 			}
 		};
+
 		var prefs = {
 			read: function () {
-				try { settings = $.evalFile(settingsFile); } catch (e) {
-					this.reset();
-				}
+				try { settings = $.evalFile(settingsFile); } catch (e) { this.reset(); }
 				if (settings.version === undefined || settings.version !== VER) this.reset();
 
 				for (var i = 1, workflow; i <= 2; i++) {
@@ -483,28 +533,25 @@ function QuickExport() {
 					ui[workflow].customBleed.et.text = settings[workflow].presetOptions.customBleed.value;
 					ui[workflow].updateLinks.value = settings[workflow].docActions.updateLinks;
 					ui[workflow].skipDNP.value = settings[workflow].docActions.skipDNP;
-
 					ui[workflow].script.file.text = settings[workflow].docActions.script.value;
 					ui[workflow].script.isOn.value = settings[workflow].docActions.script.active;
-
 					ui[workflow].destination.folder.text = settings[workflow].outputOptions.destination.value;
 					ui[workflow].destination.isOn.value = settings[workflow].outputOptions.destination.active;
-
-					ui[workflow].split.value = settings[workflow].outputOptions.split;
-
 					ui[workflow].suffix.et.text = settings[workflow].outputOptions.suffix.value;
 					ui[workflow].suffix.isOn.value = settings[workflow].outputOptions.suffix.active;
 					ui[workflow].suffix.et.onChange();
-
 					ui[workflow].subfolders.value = settings[workflow].outputOptions.subfolders;
+					ui[workflow].split.value = settings[workflow].outputOptions.split;
+					ui[workflow].overwrite.value = settings[workflow].outputOptions.overwrite;
 					ui[workflow].docSave.isOn.value = settings[workflow].outputOptions.docSave.active;
 					ui[workflow].docSave.scope.mod.value = settings[workflow].outputOptions.docSave.scope[0];
 					ui[workflow].docSave.scope.all.value = settings[workflow].outputOptions.docSave.scope[1];
 					ui[workflow].saveAs.value = settings[workflow].outputOptions.docSave.saveAs;
-					ui[workflow].overwrite.value = settings[workflow].outputOptions.overwrite;
 				}
 				ui.actions.docClose.value = settings.docClose;
-
+				settings.dnpLayers = settings.dnpLayers
+					.replace(/,/g, ', ')
+					.replace(/\|/g, '\n');
 				ui.workflow1.isOn.onClick();
 				ui.workflow2.isOn.onClick();
 
@@ -516,8 +563,8 @@ function QuickExport() {
 					return 0;
 				}
 			},
-			save: function () {
 
+			save: function () {
 				for (var i = 1, workflow; i <= 2; i++) {
 					workflow = 'workflow' + i;
 					settings[workflow] = {};
@@ -526,24 +573,24 @@ function QuickExport() {
 					settings[workflow].presetName = ui[workflow].preset.selection.text;
 					settings[workflow].presetOptions = {
 						cropMarks: ui[workflow].cropMarks.value,
-						pageInfo:  ui[workflow].pageInfo.value,
-						slugArea:  ui[workflow].slugArea.value,
+						pageInfo: ui[workflow].pageInfo.value,
+						slugArea: ui[workflow].slugArea.value,
 						asSpreads: ui[workflow].asSpreads.value,
 						customDPI: {
 							active: ui[workflow].customDPI.isOn.value,
-							value:  ui[workflow].customDPI.et.text
+							value: ui[workflow].customDPI.et.text
 						},
 						customBleed: {
 							active: ui[workflow].customBleed.isOn.value,
-							value:  ui[workflow].customBleed.et.text
+							value: ui[workflow].customBleed.et.text
 						}
 					};
 					settings[workflow].docActions = {
 						updateLinks: ui[workflow].updateLinks.value,
-						skipDNP:     ui[workflow].skipDNP.value,
+						skipDNP: ui[workflow].skipDNP.value,
 						script: {
 							active: ui[workflow].script.isOn.value,
-							value:  ui[workflow].script.path.exists
+							value: ui[workflow].script.path.exists
 								? decodeURI(ui[workflow].script.path.fullName)
 								: ''
 						}
@@ -551,17 +598,17 @@ function QuickExport() {
 					settings[workflow].outputOptions = {
 						destination: {
 							active: ui[workflow].destination.isOn.value,
-							value:  ui[workflow].destination.path.exists
+							value: ui[workflow].destination.path.exists
 								? decodeURI(ui[workflow].destination.path.fullName)
 								: ''
 						},
-						split: ui[workflow].split.value,
 						suffix: {
 							active: ui[workflow].suffix.isOn.value,
-							value:  ui[workflow].suffix.et.text
+							value: ui[workflow].suffix.et.text
 						},
 						subfolders: ui[workflow].subfolders.value,
-						overwrite:  ui[workflow].overwrite.value,
+						split: ui[workflow].split.value,
+						overwrite: ui[workflow].overwrite.value,
 						docSave: {
 							active: ui[workflow].docSave.isOn.value,
 							scope: [
@@ -573,6 +620,10 @@ function QuickExport() {
 					};
 				}
 				settings.docClose = ui.actions.docClose.value;
+				settings.docClose = ui.actions.docClose.value;
+				settings.dnpLayers = settings.dnpLayers
+					.replace(/ *, +/g, ',')
+					.replace(/\n|\r/g, '|');
 				settings.position = [ ui.location[0], ui.location[1] ];
 				settings.version = VER;
 
@@ -616,14 +667,14 @@ function QuickExport() {
 		}
 
 		// -- Workflows
-		ui.presets = ui.add('panel { text: "Export", orientation: "row", margins: [ 10, 15, 10, 5 ] }');
+		ui.presets = ui.add('panel { text: "Export", orientation: "row", margins: [ 10, 10, 10, 5 ] }');
 		ui.presets.alignChildren = [ 'fill', 'top' ];
 		createWorkflowUI.column('workflow1');
 		ui.presets.add('panel { alignment: "fill" }');
 		createWorkflowUI.column('workflow2');
 
 		// -- Actions
-		ui.actions = ui.add('group { orientation: "row", alignChildren: [ "left", "center" ] }');
+		ui.actions = ui.add('group { orientation: "row", alignChildren: [ "left", "center" ], margins: [ -1, 4, -1, -1 ] }');
 
 		if (ADV) {
 			ui.actions.resetPrefs = ui.actions.add('button { text: "Reset preferences", preferredSize: [ 137, 24 ] }');
@@ -737,6 +788,7 @@ function QuickExport() {
 
 				if (ui[workflow].destination.isOn.value) {
 					if (ui[workflow].destination.folder.text.length === 0) {
+						// ui[workflow].destination.folder.text =
 						ui[workflow].destination.folder.helpTip = 'Select a folder';
 					} else {
 						ui[workflow].destination.folder.helpTip = ui[workflow].destination.path
@@ -827,7 +879,7 @@ function QuickExport() {
 		} else {
 			docs = app.documents.everyItem().getElements();
 			while ((doc = docs.shift())) try { names.push(doc.fullName); } catch (e) { names.push(doc.name); }
-			names.sort();
+			names.sort(naturalSorter);
 			docs = [];
 			while ((name = names.shift())) docs.push(app.documents.itemByName(name));
 		}
@@ -895,10 +947,22 @@ function QuickExport() {
 				if (exp.suffix.isOn.value && /^_print/i.test(suffix)) {
 					if (((layer = doc.layers.itemByName('dielines')).isValid
 						|| (layer = doc.layers.itemByName('diecut')).isValid
-						|| (layer = doc.layers.itemByName('die cut')).isValid) && layer.printable) suffix += '+diecut';
-					if ((layer = doc.layers.itemByName('white')).isValid && layer.printable) suffix += '+white';
-					if ((layer = doc.layers.itemByName('foil')).isValid && layer.printable) suffix += '+foil';
-					if ((layer = doc.layers.itemByName('varnish')).isValid && layer.printable) suffix += '+varnish';
+						|| (layer = doc.layers.itemByName('die cut')).isValid)
+						&& layer.visible
+						&& layer.printable
+					) suffix += '+diecut';
+					if ((layer = doc.layers.itemByName('white')).isValid
+						&& layer.visible
+						&& layer.printable
+					) suffix += '+white';
+					if ((layer = doc.layers.itemByName('foil')).isValid
+						&& layer.visible
+						&& layer.printable
+					) suffix += '+foil';
+					if ((layer = doc.layers.itemByName('varnish')).isValid
+						&& layer.visible
+						&& layer.printable
+					) suffix += '+varnish';
 				}
 
 				// Run script
@@ -910,8 +974,11 @@ function QuickExport() {
 
 				// Hide do-not-print layers
 				if (exp.skipDNP.value) {
-					for (i = 0; i < doc.layers.length; i++)
-						if (/^[.-]/.test(doc.layers[i].name)) doc.layers[i].visible = false;
+					for (i = 0; i < doc.layers.length; i++) {
+						if (/^[.-]/.test(doc.layers[i].name)
+								|| isInArray(doc.layers[i].name, settings.dnpLayers.split(/[,\r|\n]/g)))
+							doc.layers[i].visible = false;
+					}
 				}
 
 				exportDoc(exp.asSpreads.value, exp.split.value, exp.preset.selection.text);
@@ -925,8 +992,10 @@ function QuickExport() {
 				// Update documents
 				if (exp.docSave.isOn.value) {
 					if (exp.docSave.scope.mod.value) {
-						if (doc.modified)
-							doc.save(exp.saveAs.enabled && exp.saveAs.value ? File(doc.fullName) : undefined);
+						if (doc.modified) {
+							doc.save(exp.saveAs.enabled && exp.saveAs.value ?
+								File(doc.fullName) : undefined);
+						}
 					} else {
 						doc.save(File(doc.fullName));
 					}
@@ -1206,27 +1275,5 @@ function QuickExport() {
 		try { progressBar.close(); } catch (e) {}
 		if (errors.length > 0) report(errors, 'Errors', 'auto', true);
 		exit();
-	}
-
-	// https://stackoverflow.com/questions/2802341/javascript-natural-sort-of-alphanumerical-strings/2802804#2802804
-	function naturalSorter(as, bs) {
-		var a, b, a1, b1, n, L;
-		var i = 0;
-		var rx = /(\.\d+)|(\d+(\.\d+)?)|([^\d.]+)|(\.\D+)|(\.$)/g;
-		if (as === bs) return 0;
-		a = as.toString().toLowerCase().match(rx);
-		b = bs.toString().toLowerCase().match(rx);
-		L = a.length;
-		while (i < L) {
-			if (!b[i]) return 1;
-			a1 = a[i];
-			b1 = b[i++];
-			if (a1 !== b1) {
-				n = a1 - b1;
-				if (!isNaN(n)) return n;
-				return a1 > b1 ? 1 : -1;
-			}
-		}
-		return b[i] ? -1 : 0;
 	}
 }
