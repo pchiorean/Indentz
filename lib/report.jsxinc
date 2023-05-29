@@ -59,7 +59,7 @@ function report(message, title, showFilter, showCompact) {
 		ui.save = ui.actions.add('button { text: "Save" }');
 		ui.save.onClick = function () {
 			var file;
-			if (aapp.windows.length > 0 && pp.activeDocument && app.activeDocument.saved)
+			if (app.windows.length > 0 && app.activeDocument && app.activeDocument.saved)
 				file = File(app.activeDocument.filePath + '/report.txt').saveDlg();
 			else file = File(Folder.desktop + '/report.txt').saveDlg();
 			if (file == null) return;
