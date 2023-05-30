@@ -1,5 +1,5 @@
 /*
-	Quick export 23.5.29-dev
+	Quick export 23.5.30-dev
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -32,8 +32,7 @@
 // @include 'progressBar.jsxinc';
 // @include 'report.jsxinc';
 
-app.doScript(QuickExport, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'QuickExport');
+app.doScript(QuickExport, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'QuickExport');
 
 function QuickExport() {
 	var doc, settings, ui, progressBar;
@@ -67,7 +66,6 @@ function QuickExport() {
 				customBleed: { active: false, value: '' }
 			},
 			docActions: {
-				updateLinks: true,
 				skipDNP: false,
 				script: { active: false, value: '' }
 			},
@@ -93,7 +91,6 @@ function QuickExport() {
 				customBleed: { active: false, value: '' }
 			},
 			docActions: {
-				updateLinks: true,
 				skipDNP: false,
 				script: { active: false, value: '' }
 			},
@@ -106,6 +103,7 @@ function QuickExport() {
 				docSave: { active: true, scope: [ true, false ], saveAs: false }
 			}
 		},
+		updateVersion: false,
 		docClose: true,
 		dnpLayers: 'covered area*'
 			+ '\nfold,falz'
@@ -157,6 +155,7 @@ function QuickExport() {
 							ui[workflow].customBleed.isOn = ui[workflow].customBleed.add('checkbox { text: "Custom bleed:", alignment: "bottom", preferredSize: [ 104, -1 ] }');
 							ui[workflow].customBleed.isOn.helpTip = 'Override document bleed';
 							ui[workflow].customBleed.et = ui[workflow].customBleed.add('edittext { characters: 4, justify: "center", preferredSize: [ 45, 24 ] }');
+
 				ui[workflow].container.add('panel { alignment: "fill" }');
 				ui[workflow].updateLinks = ui[workflow].container.add('checkbox { text: "Update out of date links" }');
 				ui[workflow].skipDNP_ = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, -5 ] }');
@@ -172,6 +171,7 @@ function QuickExport() {
 						ui[workflow].script.browse = ui[workflow].script._.add('button { text: "Browse", preferredSize: [ 64, 24 ] }');
 					ui[workflow].script.file = ui[workflow].script.add('edittext');
 					ui[workflow].script.file.preferredSize = [ ui.cWidth, 24 ];
+
 				ui[workflow].container.add('panel { alignment: "fill" }');
 				ui[workflow].destination = ui[workflow].container.add('group { orientation: "column", alignChildren: [ "left", "top" ] }');
 					ui[workflow].destination._ = ui[workflow].destination.add('group { orientation: "row", margins: [ 0, 0, 0, -5 ] }');
@@ -189,6 +189,7 @@ function QuickExport() {
 				ui[workflow].subfolders.helpTip = 'Use the suffix field as the destination subfolder.\nNote: everything after a \'+\' is ignored (e.g., files with\na \'print+diecut\' suffix will be exported to \'print\')';
 				ui[workflow].split = ui[workflow].container.add('checkbox { text: "Export as separate pages/spreads" }');
 				ui[workflow].overwrite = ui[workflow].container.add('checkbox { text: "Overwrite existing files" }');
+
 				ui[workflow].container.add('panel { alignment: "fill" }');
 				ui[workflow].docSave = ui[workflow].container.add('group { orientation: "row" }');
 					ui[workflow].docSave.isOn = ui[workflow].docSave.add('checkbox { text: "Save:" }');
@@ -242,6 +243,7 @@ function QuickExport() {
 
 					this.helpTip = (function (/*pdfExportPreset*/preset) {
 						var msg = [];
+
 						msg.push('Profile: ' +
 							(preset.pdfDestinationProfile.constructor.name === 'String'
 								? preset.effectivePDFDestinationProfile
@@ -250,12 +252,26 @@ function QuickExport() {
 									.replace('use ', '')
 							)
 						);
+
 						if (preset.standardsCompliance !== PDFXStandards.NONE) {
 							msg.push('Standard: ' +
 								String(preset.standardsCompliance).toLowerCase()
 									.replace(/^(pdfx)(.+?)(\d{4})(_standard)$/, 'PDF/X-$2:$3')
 							);
 						}
+
+						msg.push('Compatibility: Acrobat ' +
+							(function (str) {
+								return {
+									4: '4 (PDF 1.3)',
+									5: '5 (PDF 1.4)',
+									6: '6 (PDF 1.5)',
+									7: '7 (PDF 1.6)',
+									8: '8/9 (PDF 1.7)'
+								}[str] || str;
+							}(String(preset.acrobatCompatibility).replace('ACROBAT_', '')))
+						);
+
 						msg.push('Color space: ' +
 							String(preset.pdfColorSpace).toLowerCase()
 								.replace(/_/g, ' ')
@@ -263,6 +279,7 @@ function QuickExport() {
 								.replace('rgb', 'RGB')
 								.replace('cmyk', 'CMYK')
 						);
+
 						if (preset.colorBitmapSampling === Sampling.NONE) {
 							msg.push('Sampling: none');
 						} else {
@@ -270,17 +287,21 @@ function QuickExport() {
 								.replace(/_/g, ' '));
 							msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
 						}
+
 						msg.push('Compression: ' +
 							String(preset.colorBitmapCompression).toLowerCase()
 								.replace(/_/g, ' ')
 								.replace(' compression', '')
 						);
+
 						if (preset.colorBitmapCompression !== BitmapCompression.NONE
 								&& preset.colorBitmapCompression !== BitmapCompression.ZIP) {
 							msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase()
 								.replace(/_/g, ' '));
 						}
+
 						msg.push('\nExport as ' + (preset.exportReaderSpreads ? 'spreads' : 'pages'));
+
 						if (preset.useDocumentBleedWithPDF) {
 							msg.push('Use document bleed');
 						} else {
@@ -290,6 +311,7 @@ function QuickExport() {
 									.replace(/\.?0+$/, '') + ' mm'
 							);
 						}
+
 						if (preset.cropMarks
 								|| preset.pageInformationMarks
 								|| preset.includeSlugWithPDF
@@ -302,6 +324,7 @@ function QuickExport() {
 									.replace(/, $/, '')
 							);
 						}
+
 						return msg.join('\n');
 					}(pdfExpPreset));
 				};
@@ -310,7 +333,6 @@ function QuickExport() {
 					var pdfExpPreset = app.pdfExportPresets.item(ui[workflow].preset.selection.text);
 
 					this.parent.et.enabled = this.value;
-
 					if (pdfExpPreset.colorBitmapSampling === Sampling.NONE) {
 						this.parent.et.enabled = false;
 						this.parent.et.text = '';
@@ -334,7 +356,6 @@ function QuickExport() {
 
 				ui[workflow].customBleed.isOn.onClick = function () {
 					this.parent.et.enabled = this.value;
-
 					if (this.parent.et.enabled) {
 						this.parent.et.helpTip = 'Enter a value between 0 and 152.4 (mm)';
 						this.parent.et.onDeactivate();
@@ -358,22 +379,20 @@ function QuickExport() {
 					w.text = 'Edit do-not-print layers';
 
 					w.legend = w.add('group { orientation: "column", alignChildren: [ "left", "top" ], spacing: 0 }');
-					w.legend.add('statictext { text: "Enter a list of layers to be skipped on export." }');
-					w.legend.add('statictext { text: "Layers with names beginning with a dot or a hyphen" }');
-					w.legend.add('statictext { text: "(e.g., \'.safety area\') will be automatically skipped." }');
-					w.legend.add('statictext');
-					w.legend.add('statictext { text: "You can use a \'?\' wildcard for any character, or a \'*\'" }');
-					w.legend.add('statictext { text: "for zero or more characters." }');
-
+						w.legend.add('statictext { text: "Enter a list of layers to be skipped on export." }');
+						w.legend.add('statictext { text: "Layers with names beginning with a dot or a hyphen" }');
+						w.legend.add('statictext { text: "(e.g., \'.safety area\') will be automatically skipped." }');
+						w.legend.add('statictext');
+						w.legend.add('statictext { text: "You can use a \'?\' wildcard for any character, or a \'*\'" }');
+						w.legend.add('statictext { text: "for zero or more characters." }');
 					w.list = w.add('edittext { justify: "left", properties: { multiline: true, scrollable: true } }');
-					w.list.preferredSize = [ 320, 152 ];
-					w.list.text = settings.dnpLayers;
-
+						w.list.preferredSize = [ 320, 152 ];
+						w.list.text = settings.dnpLayers;
 					w.actions = w.add('group { orientation: "row", margins: [ -1, 4, -1, -1 ] }');
-					w.actions.reset = w.actions.add('button { text: "Reset", preferredSize: [ 80, 24 ] }');
-					w.actions.add('group').preferredSize.width = 50;
-					w.actions.add('button { text: "Cancel", preferredSize: [ 80, 24 ] }');
-					w.actions.ok = w.actions.add('button { text: "Ok", preferredSize: [ 80, 24 ] }');
+						w.actions.reset = w.actions.add('button { text: "Reset", preferredSize: [ 80, 24 ] }');
+						w.actions.add('group').preferredSize.width = 50;
+						w.actions.add('button { text: "Cancel", preferredSize: [ 80, 24 ] }');
+						w.actions.ok = w.actions.add('button { text: "Ok", preferredSize: [ 80, 24 ] }');
 
 					w.list.onDeactivate = function () {
 						w.list.text = w.list.text
@@ -415,6 +434,7 @@ function QuickExport() {
 
 				ui[workflow].script.file.onChange = function () {
 					if (this.parent.path && decodeURI(this.parent.path.name) === this.text) return;
+
 					var newFile = File(this.text);
 					if (newFile.exists
 						&& (WIN ? /\.(jsx*(bin)*)$/i.test(newFile) : /\.(jsx*(bin)*|scpt)$/i.test(newFile))) {
@@ -438,7 +458,6 @@ function QuickExport() {
 				ui[workflow].destination.isOn.onClick = function () {
 					this.parent.parent.folder.enabled =
 					this.parent.parent.browse.enabled = this.value;
-
 					this.parent.parent.folder.onChange();
 				};
 
@@ -482,6 +501,7 @@ function QuickExport() {
 				ui[workflow].suffix.isOn.onClick = function () {
 					this.parent.et.enabled = this.value;
 					this.parent.parent.parent.subfolders.enabled = this.value && this.parent.et.text.length > 0;
+					ui[workflow].suffix.et.onChange();
 				};
 
 				ui[workflow].suffix.et.onChange = function () {
@@ -511,7 +531,6 @@ function QuickExport() {
 				};
 			}
 		};
-
 		var prefs = {
 			read: function () {
 				try { settings = $.evalFile(settingsFile); } catch (e) { this.reset(); }
@@ -539,7 +558,6 @@ function QuickExport() {
 					ui[workflow].destination.isOn.value = settings[workflow].outputOptions.destination.active;
 					ui[workflow].suffix.et.text = settings[workflow].outputOptions.suffix.value;
 					ui[workflow].suffix.isOn.value = settings[workflow].outputOptions.suffix.active;
-					ui[workflow].suffix.et.onChange();
 					ui[workflow].subfolders.value = settings[workflow].outputOptions.subfolders;
 					ui[workflow].split.value = settings[workflow].outputOptions.split;
 					ui[workflow].overwrite.value = settings[workflow].outputOptions.overwrite;
@@ -548,10 +566,13 @@ function QuickExport() {
 					ui[workflow].docSave.scope.all.value = settings[workflow].outputOptions.docSave.scope[1];
 					ui[workflow].saveAs.value = settings[workflow].outputOptions.docSave.saveAs;
 				}
+				ui.actions.updateVersion.value = settings.updateVersion;
 				ui.actions.docClose.value = settings.docClose;
+
 				settings.dnpLayers = settings.dnpLayers
 					.replace(/,/g, ', ')
 					.replace(/\|/g, '\n');
+
 				ui.workflow1.isOn.onClick();
 				ui.workflow2.isOn.onClick();
 
@@ -563,7 +584,6 @@ function QuickExport() {
 					return 0;
 				}
 			},
-
 			save: function () {
 				for (var i = 1, workflow; i <= 2; i++) {
 					workflow = 'workflow' + i;
@@ -619,7 +639,7 @@ function QuickExport() {
 						}
 					};
 				}
-				settings.docClose = ui.actions.docClose.value;
+				settings.updateVersion = ui.actions.updateVersion.value;
 				settings.docClose = ui.actions.docClose.value;
 				settings.dnpLayers = settings.dnpLayers
 					.replace(/ *, +/g, ',')
@@ -652,9 +672,7 @@ function QuickExport() {
 		ui.preferredSize.width = ui.wWidth;
 		ui.text = title;
 
-		// UI elements
-
-		// -- Input source
+		// Input source
 		if (isFolderMode) {
 			ui.input = ui.add('panel { text: "Select a source folder", orientation: "column", margins: [ 10, 15, 10, 5 ] }');
 			ui.input.alignChildren = 'left';
@@ -666,36 +684,28 @@ function QuickExport() {
 					ui.input.options.subfolders = ui.input.options.add('checkbox { text: "Include subfolders" }');
 		}
 
-		// -- Workflows
+		// Workflows
 		ui.presets = ui.add('panel { text: "Export", orientation: "row", margins: [ 10, 10, 10, 5 ] }');
 		ui.presets.alignChildren = [ 'fill', 'top' ];
 		createWorkflowUI.column('workflow1');
 		ui.presets.add('panel { alignment: "fill" }');
 		createWorkflowUI.column('workflow2');
 
-		// -- Actions
+		// Actions
 		ui.actions = ui.add('group { orientation: "row", alignChildren: [ "left", "center" ], margins: [ -1, 4, -1, -1 ] }');
-
-		if (ADV) {
-			ui.actions.resetPrefs = ui.actions.add('button { text: "Reset preferences", preferredSize: [ 137, 24 ] }');
-		} else {
-			ui.actions.savePrefs = ui.actions.add('checkbox { text: "Update preferences", alignment: "bottom", preferredSize: [ 137, -1 ] }');
-			ui.actions.savePrefs.value = true;
-		}
-
-		ui.actions.docClose = ui.actions.add('checkbox { text: "Close documents after export", alignment: "bottom" }');
-		ui.actions.docClose.value = true;
-		ui.actions.docClose.enabled = !isFolderMode;
-		if (isFolderMode) ui.actions.docClose.helpTip = 'In batch folder mode documents are always closed after export';
-
-		ui.actions.add('group').preferredSize.width = ui.wWidth - 529;
-
-		ui.actions.add('button { text: "Cancel", preferredSize: [ 80, 24 ], properties: { name: "cancel" } }');
-		ui.actions.ok = ui.actions.add('button { text: "Start", preferredSize: [ 80, 24 ], properties: { name: "ok" } }');
+			ui.actions.updateVersion = ui.actions.add('checkbox { text: "Update [Converted] documents", alignment: "bottom" }');
+			ui.actions.updateVersion.helpTip = 'When unchecked, [Converted] documents will be skipped';
+			ui.actions.docClose = ui.actions.add('checkbox { text: "Close documents after export", alignment: "bottom" }');
+			ui.actions.docClose.value = true;
+			ui.actions.docClose.enabled = !isFolderMode;
+			if (isFolderMode) ui.actions.docClose.helpTip = 'In batch folder mode documents are always closed after export';
+			ui.actions.add('group').preferredSize.width = ui.wWidth - 300-217-73;
+				ui.actions.add('button { text: "Cancel", preferredSize: [ 80, 24 ], properties: { name: "cancel" } }');
+				ui.actions.ok = ui.actions.add('button { text: "Start", preferredSize: [ 80, 24 ], properties: { name: "ok" } }');
 
 		// UI events
 
-		// -- Input source
+		// Input source
 		if (isFolderMode) {
 			ui.input.source.browse.onClick = function () {
 				var ff = Folder.selectDialog('Select a folder:');
@@ -716,23 +726,21 @@ function QuickExport() {
 			};
 		}
 
-		// -- Workflows
+		// Workflows
 		createWorkflowUI.events('workflow1');
 		createWorkflowUI.events('workflow2');
 
-		// -- Actions
-		if (ADV) {
-			ui.actions.resetPrefs.onClick = function () {
-				try { settingsFile.remove(); } catch (e) {}
-				prefs.read();
-			};
-		} else {
-			ui.actions.savePrefs.onClick = function () {
-				if (this.value) prefs.save();
-			};
-		}
+		// Actions
+		ui.actions.updateVersion.onClick = function () {
+			if (this.value) {
+				ui.workflow1.docSave.isOn.value = true;
+				if (ui.workflow1.isOn) ui.workflow1.docSave.isOn.onClick();
+				ui.workflow2.docSave.isOn.value = true;
+				if (ui.workflow2.isOn) ui.workflow2.docSave.isOn.onClick();
+			}
+		};
 
-		// Show/Close
+		// Show / Close
 		ui.onShow = function () {
 			prefs.read();
 			if (settings.position !== '') {
@@ -746,8 +754,9 @@ function QuickExport() {
 			}
 			updateStatus();
 		};
+
 		ui.onClose = function () {
-			if (ui.actions.savePrefs.value) prefs.save();
+			if (!ScriptUI.environment.keyboardState.altKey) prefs.save();
 		};
 
 		return ui.show();
@@ -829,7 +838,7 @@ function QuickExport() {
 				workflow = 'workflow' + i;
 
 				// If running a script, it must be valid
-				if (ui[workflow].script.isOn.value) {
+				if (ui[workflow].isOn.value && ui[workflow].script.isOn.value) {
 					if (ui[workflow].script.file.text.length === 0) {
 						ui.actions.ok.helpTip = ui.text =
 							workflow.replace('workflow', 'Workflow #') + ': Select a script';
@@ -844,7 +853,7 @@ function QuickExport() {
 				}
 
 				// If exporting in a custom output folder, it must be valid
-				if (ui[workflow].destination.isOn.value) {
+				if (ui[workflow].isOn.value && ui[workflow].destination.isOn.value) {
 					if (ui[workflow].destination.folder.text.length === 0) {
 						ui.actions.ok.helpTip = ui.text =
 							workflow.replace('workflow', 'Workflow #') + ': Select an output folder';
@@ -870,7 +879,7 @@ function QuickExport() {
 
 		app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 
-		// Get a sorted document list
+		// Get documents list
 		if (isFolderMode) {
 			docs = ui.input.options.subfolders.value
 				? getFilesRecursively(ui.input.source.path).sort(naturalSorter)
@@ -894,15 +903,35 @@ function QuickExport() {
 			if (isFolderMode) {
 				if (doc.exists) {
 					doc = app.open(doc);
-				} else { errors.push(decodeURI(doc) + ': Not found; skipped.'); continue; }
+				} else {
+					errors.push(decodeURI(doc) + ': Not found; skipped.');
+					continue;
+				}
 				if (doc.converted) {
-					errors.push(decodeURI(doc.name) + ': Must be converted; skipped.');
-					doc.close(SaveOptions.NO); continue;
+					if (ui.actions.updateVersion.value) {
+						doc.save(File(doc.filePath + '/' + doc.name));
+						errors.push(decodeURI(doc.name) + ': Converted from old version.');
+					} else {
+						errors.push(decodeURI(doc.name) + ': Must be converted; skipped.');
+						doc.close(SaveOptions.NO);
+						continue;
+					}
 				}
 			} else {
 				app.activeDocument = doc;
-				if (doc.converted) { errors.push(decodeURI(doc.name) + ': Must be converted; skipped.'); continue; }
-				if (!doc.saved) { errors.push(decodeURI(doc.name) + ': Is not saved; skipped.'); continue; }
+				if (doc.converted) {
+					if (ui.actions.updateVersion.value) {
+						doc.save(File(doc.filePath + '/' + doc.name));
+						errors.push(decodeURI(doc.name) + ': Converted from old version.');
+					} else {
+						errors.push(decodeURI(doc.name) + ': Must be converted; skipped.');
+						continue;
+					}
+				}
+				if (!doc.saved) {
+					errors.push(decodeURI(doc.name) + ': Is not saved; skipped.');
+					continue;
+				}
 			}
 
 			// Set measurement units
@@ -943,6 +972,22 @@ function QuickExport() {
 					if (!Folder(baseFolder + '/' + subfolder).exists) Folder(baseFolder + '/' + subfolder).create();
 				}
 
+				// Run script
+				if (exp.script.isOn.value) {
+					runScript(exp.script.path);
+					app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
+					app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+				}
+
+				// Hide do-not-print layers
+				if (exp.skipDNP.value) {
+					for (i = 0; i < doc.layers.length; i++) {
+						if (/^[.-]/.test(doc.layers[i].name)
+								|| isInArray(doc.layers[i].name, settings.dnpLayers.split(/[,\r|\n]/g)))
+							doc.layers[i].visible = false;
+					}
+				}
+
 				// Hack: Append special folder names to the suffix
 				if (exp.suffix.isOn.value && /^_print/i.test(suffix)) {
 					if (((layer = doc.layers.itemByName('dielines')).isValid
@@ -963,22 +1008,6 @@ function QuickExport() {
 						&& layer.visible
 						&& layer.printable
 					) suffix += '+varnish';
-				}
-
-				// Run script
-				if (exp.script.isOn.value) {
-					runScript(exp.script.path);
-					app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
-					app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
-				}
-
-				// Hide do-not-print layers
-				if (exp.skipDNP.value) {
-					for (i = 0; i < doc.layers.length; i++) {
-						if (/^[.-]/.test(doc.layers[i].name)
-								|| isInArray(doc.layers[i].name, settings.dnpLayers.split(/[,\r|\n]/g)))
-							doc.layers[i].visible = false;
-					}
 				}
 
 				exportDoc(exp.asSpreads.value, exp.split.value, exp.preset.selection.text);
@@ -1241,8 +1270,7 @@ function QuickExport() {
 					lPg = doc.pages.item(pageRange.slice(pageRange.lastIndexOf('-') + 1));
 				} else { fPg = lPg = doc.pages.item(pageRange); }
 				spreadWidth = (target.constructor.name === 'Spreads' ? lPg.bounds[3] : fPg.bounds[3]) - fPg.bounds[1];
-				if (spreadWidth < UnitValue('335 pt').as('mm'))
-					app.pdfExportPreferences.pageInformationMarks = false;
+				if (spreadWidth < UnitValue('335 pt').as('mm')) app.pdfExportPreferences.pageInformationMarks = false;
 
 				// Export
 				doc.exportFile(ExportFormat.PDF_TYPE, File(filename), false);
