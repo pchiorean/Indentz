@@ -1,5 +1,5 @@
 /*
-	Quick export 23.5.30-dev
+	Quick export 23.5.31-dev
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -63,7 +63,8 @@ function QuickExport() {
 				slugArea: true,
 				asSpreads: true,
 				customDPI: { active: false, value: '' },
-				customBleed: { active: false, value: '' }
+				customBleed: { active: false, value: '' },
+				exportLayers: false
 			},
 			docActions: {
 				skipDNP: false,
@@ -88,7 +89,8 @@ function QuickExport() {
 				slugArea: true,
 				asSpreads: true,
 				customDPI: { active: false, value: '' },
-				customBleed: { active: false, value: '' }
+				customBleed: { active: false, value: '' },
+				exportLayers: false
 			},
 			docActions: {
 				skipDNP: false,
@@ -147,6 +149,7 @@ function QuickExport() {
 						ui[workflow].slugArea = ui[workflow].po.c1.add('checkbox { text: "Include slug area", preferredSize: [ -1, 24 ] }');
 					ui[workflow].po.c2 = ui[workflow].po.add('group { orientation: "column", spacing: 5, alignChildren: [ "left", "top" ] }');
 						ui[workflow].asSpreads = ui[workflow].po.c2.add('checkbox { text: "Export as spreads" }');
+						ui[workflow].asSpreads.helpTip = 'Exports pages together as if they\nwere printed on the same sheet';
 						ui[workflow].customDPI = ui[workflow].po.c2.add('group { orientation: "row" }');
 							ui[workflow].customDPI.isOn = ui[workflow].customDPI.add('checkbox { text: "Custom DPI:", alignment: "bottom", preferredSize: [ 104, -1 ] }');
 							ui[workflow].customDPI.isOn.helpTip = 'Override profile resolution';
@@ -155,14 +158,16 @@ function QuickExport() {
 							ui[workflow].customBleed.isOn = ui[workflow].customBleed.add('checkbox { text: "Custom bleed:", alignment: "bottom", preferredSize: [ 104, -1 ] }');
 							ui[workflow].customBleed.isOn.helpTip = 'Override document bleed';
 							ui[workflow].customBleed.et = ui[workflow].customBleed.add('edittext { characters: 4, justify: "center", preferredSize: [ 45, 24 ] }');
+				ui[workflow].exportLayers = ui[workflow].container.add('checkbox { text: "Create Acrobat layers" }');
+				ui[workflow].exportLayers.helpTip = 'Saves each InDesign layer as an Acrobat layer\nwithin the PDF (available for PDF 1.5 or later)';
 
 				ui[workflow].container.add('panel { alignment: "fill" }');
 				ui[workflow].updateLinks = ui[workflow].container.add('checkbox { text: "Update out of date links" }');
-				ui[workflow].skipDNP_ = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, -5 ] }');
-					ui[workflow].skipDNP = ui[workflow].skipDNP_.add('checkbox { text: "Skip do-not-print layers", alignment: "bottom" }');
-					ui[workflow].skipDNP.helpTip = 'Layers with names beginning with a dot or a hyphen\n(e.g., \'.safety area\') can be automatically skipped';
-					ui[workflow].skipDNP_.add('group').preferredSize.width = ui.cWidth - 245;
-					ui[workflow].editDNP = ui[workflow].skipDNP_.add('button { text: "Edit list", preferredSize: [ 64, 24 ] }');
+				ui[workflow].skipDNP = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, -5 ] }');
+					ui[workflow].skipDNP.isOn = ui[workflow].skipDNP.add('checkbox { text: "Skip do-not-print layers", alignment: "bottom" }');
+					ui[workflow].skipDNP.isOn.helpTip = 'Layers with names beginning with a dot or a hyphen\n(e.g., \'.safety area\') can be automatically skipped';
+					ui[workflow].skipDNP.add('group').preferredSize.width = ui.cWidth - 245;
+					ui[workflow].skipDNP.editList = ui[workflow].skipDNP.add('button { text: "Edit list", preferredSize: [ 64, 24 ] }');
 				ui[workflow].script = ui[workflow].container.add('group { orientation: "column", alignChildren: [ "left", "top" ] }');
 					ui[workflow].script._ = ui[workflow].script.add('group { orientation: "row", margins: [ 0, 0, 0, -5 ] }');
 						ui[workflow].script.isOn = ui[workflow].script._.add('checkbox { text: "Run a script:", alignment: "bottom" }');
@@ -176,6 +181,7 @@ function QuickExport() {
 				ui[workflow].destination = ui[workflow].container.add('group { orientation: "column", alignChildren: [ "left", "top" ] }');
 					ui[workflow].destination._ = ui[workflow].destination.add('group { orientation: "row", margins: [ 0, 0, 0, -5 ] }');
 						ui[workflow].destination.isOn = ui[workflow].destination._.add('checkbox { text: "Export in a custom folder:", alignment: "bottom" }');
+						ui[workflow].destination.isOn.helpTip = 'By default, the files are exported in the same folder as\nthe source document, but you can choose a custom one';
 						ui[workflow].destination._.add('group').preferredSize.width = ui.cWidth - 254;
 						ui[workflow].destination.browse = ui[workflow].destination._.add('button { text: "Browse", preferredSize: [ 64, 24 ] }');
 					ui[workflow].destination.folder = ui[workflow].destination.add('edittext');
@@ -206,9 +212,10 @@ function QuickExport() {
 
 					ui[workflow].customDPI.isOn.onClick();
 					ui[workflow].customBleed.isOn.onClick();
+					ui[workflow].skipDNP.isOn.onClick();
+					ui[workflow].suffix.isOn.onClick();
 					ui[workflow].script.isOn.onClick();
 					ui[workflow].destination.isOn.onClick();
-					ui[workflow].suffix.isOn.onClick();
 					ui[workflow].docSave.isOn.onClick();
 					ui[workflow].saveAs.onClick();
 				};
@@ -221,6 +228,10 @@ function QuickExport() {
 					ui[workflow].pageInfo.value = pdfExpPreset.pageInformationMarks;
 					ui[workflow].slugArea.value = pdfExpPreset.includeSlugWithPDF;
 					ui[workflow].asSpreads.value = pdfExpPreset.exportReaderSpreads;
+
+					ui[workflow].exportLayers.value = pdfExpPreset.exportLayers;
+					ui[workflow].exportLayers.enabled =
+						Number(String(pdfExpPreset.acrobatCompatibility).replace('ACROBAT_', '')) >= 6;
 
 					ui[workflow].customDPI.isOn.value = false;
 					ui[workflow].customDPI.isOn.enabled = !(pdfExpPreset.colorBitmapSampling === Sampling.NONE);
@@ -239,7 +250,7 @@ function QuickExport() {
 					}
 
 					ui[workflow].suffix.et.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
-					ui[workflow].suffix.et.onChange();
+					ui[workflow].suffix.isOn.onClick();
 
 					this.helpTip = (function (/*pdfExportPreset*/preset) {
 						var msg = [];
@@ -293,7 +304,6 @@ function QuickExport() {
 								.replace(/_/g, ' ')
 								.replace(' compression', '')
 						);
-
 						if (preset.colorBitmapCompression !== BitmapCompression.NONE
 								&& preset.colorBitmapCompression !== BitmapCompression.ZIP) {
 							msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase()
@@ -374,7 +384,11 @@ function QuickExport() {
 					}
 				};
 
-				ui[workflow].editDNP.onClick = function () {
+				ui[workflow].skipDNP.isOn.onClick = function () {
+					this.parent.editList.enabled = this.value;
+				};
+
+				ui[workflow].skipDNP.editList.onClick = function () {
 					var w = new Window('dialog { orientation: "column", alignChildren: [ "left", "top" ], margins: [ 16, 13, 16, 16 ], spacing: 10 }');
 					w.text = 'Edit do-not-print layers';
 
@@ -434,7 +448,6 @@ function QuickExport() {
 
 				ui[workflow].script.file.onChange = function () {
 					if (this.parent.path && decodeURI(this.parent.path.name) === this.text) return;
-
 					var newFile = File(this.text);
 					if (newFile.exists
 						&& (WIN ? /\.(jsx*(bin)*)$/i.test(newFile) : /\.(jsx*(bin)*|scpt)$/i.test(newFile))) {
@@ -501,7 +514,7 @@ function QuickExport() {
 				ui[workflow].suffix.isOn.onClick = function () {
 					this.parent.et.enabled = this.value;
 					this.parent.parent.parent.subfolders.enabled = this.value && this.parent.et.text.length > 0;
-					ui[workflow].suffix.et.onChange();
+					this.parent.et.onChange();
 				};
 
 				ui[workflow].suffix.et.onChange = function () {
@@ -550,8 +563,9 @@ function QuickExport() {
 					ui[workflow].customDPI.et.text = settings[workflow].presetOptions.customDPI.value;
 					ui[workflow].customBleed.isOn.value = settings[workflow].presetOptions.customBleed.active;
 					ui[workflow].customBleed.et.text = settings[workflow].presetOptions.customBleed.value;
+					ui[workflow].exportLayers.value = settings[workflow].presetOptions.exportLayers;
 					ui[workflow].updateLinks.value = settings[workflow].docActions.updateLinks;
-					ui[workflow].skipDNP.value = settings[workflow].docActions.skipDNP;
+					ui[workflow].skipDNP.isOn.value = settings[workflow].docActions.skipDNP;
 					ui[workflow].script.file.text = settings[workflow].docActions.script.value;
 					ui[workflow].script.isOn.value = settings[workflow].docActions.script.active;
 					ui[workflow].destination.folder.text = settings[workflow].outputOptions.destination.value;
@@ -568,7 +582,6 @@ function QuickExport() {
 				}
 				ui.actions.updateVersion.value = settings.updateVersion;
 				ui.actions.docClose.value = settings.docClose;
-
 				settings.dnpLayers = settings.dnpLayers
 					.replace(/,/g, ', ')
 					.replace(/\|/g, '\n');
@@ -603,11 +616,12 @@ function QuickExport() {
 						customBleed: {
 							active: ui[workflow].customBleed.isOn.value,
 							value: ui[workflow].customBleed.et.text
-						}
+						},
+						exportLayers: ui[workflow].exportLayers.value
 					};
 					settings[workflow].docActions = {
 						updateLinks: ui[workflow].updateLinks.value,
-						skipDNP: ui[workflow].skipDNP.value,
+						skipDNP: ui[workflow].skipDNP.isOn.value,
 						script: {
 							active: ui[workflow].script.isOn.value,
 							value: ui[workflow].script.path.exists
@@ -694,12 +708,12 @@ function QuickExport() {
 		// Actions
 		ui.actions = ui.add('group { orientation: "row", alignChildren: [ "left", "center" ], margins: [ -1, 4, -1, -1 ] }');
 			ui.actions.updateVersion = ui.actions.add('checkbox { text: "Update [Converted] documents", alignment: "bottom" }');
-			ui.actions.updateVersion.helpTip = 'When unchecked, [Converted] documents will be skipped';
+			ui.actions.updateVersion.helpTip = 'Automatically upgrade [Converted] documents\n(if unchecked, they will be skipped)';
 			ui.actions.docClose = ui.actions.add('checkbox { text: "Close documents after export", alignment: "bottom" }');
 			ui.actions.docClose.value = true;
 			ui.actions.docClose.enabled = !isFolderMode;
 			if (isFolderMode) ui.actions.docClose.helpTip = 'In batch folder mode documents are always closed after export';
-			ui.actions.add('group').preferredSize.width = ui.wWidth - 300-217-73;
+			ui.actions.add('group').preferredSize.width = ui.wWidth - 590;
 				ui.actions.add('button { text: "Cancel", preferredSize: [ 80, 24 ], properties: { name: "cancel" } }');
 				ui.actions.ok = ui.actions.add('button { text: "Start", preferredSize: [ 80, 24 ], properties: { name: "ok" } }');
 
@@ -900,6 +914,7 @@ function QuickExport() {
 
 		// Documents loop
 		while ((doc = docs.shift())) {
+			// Open docs (optionally upgrade from old versions)
 			if (isFolderMode) {
 				if (doc.exists) {
 					doc = app.open(doc);
@@ -980,7 +995,7 @@ function QuickExport() {
 				}
 
 				// Hide do-not-print layers
-				if (exp.skipDNP.value) {
+				if (exp.skipDNP.isOn.value) {
 					for (i = 0; i < doc.layers.length; i++) {
 						if (/^[.-]/.test(doc.layers[i].name)
 								|| isInArray(doc.layers[i].name, settings.dnpLayers.split(/[,\r|\n]/g)))
