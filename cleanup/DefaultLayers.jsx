@@ -1,5 +1,5 @@
 /*
-	Default layers 23.5.11
+	Default layers 23.6.20
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds/merges layers using a 6-column TSV file named `layers.tsv`:
@@ -71,7 +71,7 @@ function main() {
 		return ret;
 	}());
 
-	if (!docHasPath && VERBOSITY > 0)
+	if (!docHasPath && VERBOSITY > 1)
 		alert('Can\'t get document path.\nThe default swatch substitution list will be used.');
 
 	// Get raw data from TSV

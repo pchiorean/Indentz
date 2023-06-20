@@ -74,7 +74,7 @@ function main() {
 		return ret;
 	}());
 
-	if (!docHasPath && VERBOSITY > 0)
+	if (!docHasPath && VERBOSITY > 1)
 		alert('Can\'t get document path.\nThe default swatch substitution list will be used.');
 
 	// Get raw data from TSV

@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 23.5.11
+	Replace fonts 23.6.20
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces fonts using a 4-column TSV file named `fonts.tsv`:
@@ -61,7 +61,7 @@ function main() {
 		return ret;
 	}());
 
-	if (!docHasPath && VERBOSITY > 0)
+	if (!docHasPath && VERBOSITY > 1)
 		alert('Can\'t get document path.\nThe default swatch substitution list will be used.');
 
 	// Get raw data from TSV

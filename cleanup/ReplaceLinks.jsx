@@ -1,5 +1,5 @@
 /*
-	Replace links 23.5.11
+	Replace links 23.6.20
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces document links using a 2-column TSV file named `links.tsv`:
@@ -81,7 +81,7 @@ function main() {
 		return ret;
 	}());
 
-	if (!docHasPath && VERBOSITY > 0)
+	if (!docHasPath && VERBOSITY > 1)
 		alert('Can\'t get document path.\nThe default swatch substitution list will be used.');
 
 	// Get raw data from TSV
@@ -110,7 +110,7 @@ function main() {
 			data.records[j].newLink = compactRelPath(data.records[j].newLink);
 			if (!isInArray(links[i].name, data.records[j].oldLinks)) continue; // Skip not matched
 			if (File(links[i].filePath).fullName === File(data.records[j].newLink).fullName // Skip self
-					&& links[i].status !== LinkStatus.LINK_OUT_OF_DATE)
+					&& links[i].status !== LinkStatus.LINK_OUT_OF_DATE) // [TODO] CHECK THIS SHIT
 				continue;
 			stat(data.status, data.records[j].source,
 				'Relinked \'' + decodeURI(links[i].name) + '\' with \'' + decodeURI(data.records[j].newLink) + '\'.', 0);
