@@ -1,6 +1,6 @@
 /*
-	Align to center 22.10.28
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Align to center 23.6.29
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Aligns the selected objects to the center of the 'Align To' setting.
 
@@ -40,8 +40,10 @@ function main(selection) {
 		pasteRemembersLayers: app.clipboardPreferences.pasteRemembersLayers
 	};
 	var ADP = app.alignDistributePreferences.alignDistributeBounds;
+
 	// If we have a key object, align to it and exit
 	if (doc.selectionKeyObject) { align(selection); return; }
+
 	// Group multiple items
 	app.generalPreferences.ungroupRemembersLayers = true;
 	app.clipboardPreferences.pasteRemembersLayers = true;
@@ -51,15 +53,16 @@ function main(selection) {
 	} else {
 		item = selection[0];
 	}
+
 	// Align, ungroup and restore initial selection (sans key object)
 	if (ADP === AlignDistributeBounds.ITEM_BOUNDS) ADP = AlignDistributeBounds.PAGE_BOUNDS;
 	align(item);
 	if (item.name === '<align group>') item.ungroup();
 	app.select(old.selection);
+
 	// Restore layer grouping settings
 	app.generalPreferences.ungroupRemembersLayers = old.ungroupRemembersLayers;
 	app.clipboardPreferences.pasteRemembersLayers = old.pasteRemembersLayers;
-
 
 	function align(objects) {
 		switch (selectOption()) {
@@ -112,15 +115,15 @@ function main(selection) {
 			ui.main.alignChildren = [ 'left', 'top' ];
 				ui.main.add('radiobutton { text: "Horizontal" }');
 				ui.main.add('radiobutton { text: "Vertical" }');
-				ui.main.add('radiobutton { text: "Vertical (HW)" }')
+				ui.main.add('radiobutton { text: "Vertical w/o 10%", helpTip: "Ignore the bottom 10%" }')
 					.enabled = (ADP !== AlignDistributeBounds.KEY_OBJECT);
 				ui.main.add('radiobutton { text: "Both" }');
 				ui.main.children[0].active = ui.main.children[0].value = true;
 			ui.actions = ui.add('group', undefined, { name: 'actions' });
 			ui.actions.orientation = 'column';
 			ui.actions.alignChildren = [ 'fill', 'top' ];
-				ui.actions.add('button { text: "Ok", name: "ok" }');
-				ui.actions.add('button { text: "Cancel", name: "cancel" }');
+				ui.actions.add('button { text: "Ok" }');
+				ui.actions.add('button { text: "Cancel" }');
 
 			ui.onShow = function () {
 				ui.frameLocation = [
