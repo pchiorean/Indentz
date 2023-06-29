@@ -1,5 +1,5 @@
 /*
-	Quick export 23.5.31-dev
+	Quick export 23.6.29-dev
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -699,7 +699,7 @@ function QuickExport() {
 		}
 
 		// Workflows
-		ui.presets = ui.add('panel { text: "Export", orientation: "row", margins: [ 10, 10, 10, 5 ] }');
+		ui.presets = ui.add('panel { orientation: "row", margins: [ 10, 10, 10, 5 ] }');
 		ui.presets.alignChildren = [ 'fill', 'top' ];
 		createWorkflowUI.column('workflow1');
 		ui.presets.add('panel { alignment: "fill" }');
