@@ -1,6 +1,6 @@
 /**
  * Matches a string against elements of an array, using wildcards and case sensitivity.
- * @version 22.2.10
+ * @version 23.6.2
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} searchValue - String to be matched.
@@ -13,11 +13,11 @@
 function isInArray(searchValue, array, caseSensitive) {
 	caseSensitive = (caseSensitive === undefined) ? false : caseSensitive;
 	for (var i = 0, n = array.length; i < n; i++) {
-		if (RegExp('^' + array[i]
+		if (RegExp('^' + array[i].toString()
 			.replace(/[|^$(.)[\]{+}\\]/g, '\\$&')       // Escape regex tokens, pass '*' and '?'
 			.replace(/\*/g, '.*').replace(/\?/g, '.') + // '*' and '?' wildcards
 			'$', caseSensitive ? '' : 'i'               // Case sensitivity flag
-		).test(searchValue)) return true;
+		).test(searchValue.toString())) return true;
 	}
 	return false;
 }
