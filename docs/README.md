@@ -409,37 +409,37 @@ You may use **`SpreadsToFiles.jsx`** to split the result into separate documents
 ### Export
 
 #### **`QuickExport.jsx`** <small>⌃E</small>
-My workflow requires frequent changes to export settings, and the standard export dialog is complex, with quite a few tabs and options. I used to have a lot of Adobe PDF Presets with only a few differences, that had to be constantly kept up-to-date.
-I made this script to reduce the number of presets to the essential and also have, at a glance, the most common settings I need. I also added the ability to run additional scripts and a few other useful features that make my job easier.
-
-It exports all opened documents (or, with nothing opened, all documents from a folder), with two workflows that can be used simultaneously or one at a time:
-
-![Quick export](img/script-quickexport.png)
+My workflow requires frequent changes to export settings, and the standard export dialog is complex, with quite a few tabs and options. I used to have a lot of Adobe PDF Presets with few differences, that had to be constantly kept up-to-date.
+I made this script to have, at a glance, the most common settings I need, and also to reduce the number of presets to the essential. I also added the ability to run additional scripts and a few other useful features that make my job easier.
 
 The options are grouped into several categories. I will only go through some of them, most being self-explanatory:
 
+![Quick export](img/script-quickexport.png)
+![](img/script-quickexport-legend.svg)
+
+##### Source folder
+By default all open documents will be exported. If nothing is open, you can select a folder as the source.
+
 ##### Preset options
-First, you select an Adobe PDF Preset. You can override some of it's options with a few clicks: crop marks, page information, to include or not the slug area, to export as pages or as spreads, resolution, bleed.
+First, you select an Adobe PDF Preset. You can override some of it's options with a few clicks: crop marks, page information, to include or not the slug area, to export as pages or as spreads, resolution, bleed etc.
 
 ##### Document actions
 **Skip do-not-print layers** will not export layers with names beginning with a dot or a hyphen (e.g., **.safety area**).
 
 **Run a script** will run a JavaScript or AppleScript before exporting (e.g., one of the other scripts from this section).
 
-##### Export destination
+##### Output options
 **Export in a custom folder:** By default, the files are exported in the same folder as the source document, but you can choose a custom one.
 
-**Add a suffix:** This text will be appended to the name of the exported file. A preset can be 'paired' with a suffix by adding it to its name after the _last_ underscore: e.g., when you select `X4_350dpi_print`, the suffix will be changed to `print`.
+**Add a suffix:** This text will be appended to the name of the exported file. A preset can be 'paired' with a suffix by adding it to its name after the _last_ underscore: e.g., when you select `X4_350dpi_39L300_print`, the suffix will be changed to `print`.
 
 If **Sort files by suffix into subfolders** is also checked, each file will be saved in a subfolder named after the suffix, up to the first `+` character: e.g., for a `print+diecut` suffix, the PDF will be saved as **`Document_print+diecut.pdf`**, in a subfolder named **`print`**.
 
-##### Source updating
-After export, the source documents can be updated if they have changed, or saving can be enforced for all documents (in this case **Save as…** will be used).
-
-**Save as…** is useful for reducing the size of documents that have been modified many times (on a regular save the document grows with a log of the last changes).
+##### Updating source
+After export, the source documents can be updated if they have changed, or saving can be enforced for all documents (in this case **Save as**[^5] will be used).
 
 #### **`MarkVisibleArea.jsx`**
-Creates a frame the size of the page margins that marks a _visible area_[^3]. It will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
+Creates a frame the size of the page margins that marks a _visible area_. It will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
 
 #### **`PrepareForExport.jsx`**
 Hides some _do-not-print_ layers: **covered area**, **visible area**, **safety area**, **segmentation**, and all layers starting with either a dot or a hyphen (for the full list see the script).
@@ -500,7 +500,7 @@ This is a slightly modified version of [**OffsetPath**](https://creativepro.com/
 I fixed some bugs and added a default value, an option to join contours, and support for undoing.
 
 #### **`QR.jsx`** <small>F9</small>
-Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files[^5]:
+Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files:
 
 |             On document             |             On file              |
 |:-----------------------------------:|:--------------------------------:|
@@ -558,7 +558,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: May 28, 2023</small>
+<small>Last updated: June 29, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
@@ -568,6 +568,6 @@ Thanks to Adrian Frigioiu for bug reports and feedback.
 
 [^4]: By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
 
-[^5]: The codes are used by a customer who needs to manage POS posters in multiple locations and languages.
+[^5]: **Save as** is useful for reducing the size of documents that have been modified many times (on each regular save the document grows with the last changes).
 
-[^6]: Releases may be old, however. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch. This is what I actually use every day, so it's kind of tested, but… beware. ;)
+[^6]: Releases may be old, however. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch – this is what I actually use every day, so it's kind of tested, but… beware. ;)
