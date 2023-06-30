@@ -65,6 +65,22 @@
   **lib/saveLayersState:** Added a helper function to save/restore layers state (TO DO: refactor to a proper function expression)
 - `05/27` [`doc`](https://github.com/pchiorean/Indentz/commit/2202825cd4265fcfa6d251a04c730991d51e3054)
   Updated TSV samples
+- `05/28` [`upd`](https://github.com/pchiorean/Indentz/commit/dd89d4e85fe7be5ace18cede1b41cc1b5e8dffaf)
+  **misc/LabelPage\*, QR\*:** Replaced 'ID' with 'info' to simplify layer management
+- `05/29` [`fix`](https://github.com/pchiorean/Indentz/commit/cb97111206e3af1d138f9383dc0d09d5dfd2c743)
+          [`fix`](https://github.com/pchiorean/Indentz/commit/4a10ac84f46f1c5cb71ecb5c21bb5d4e49c9b7b7)
+  **lib/report:** Saving the report was not possible when there are no open documents; fixed
+- `05/29` [`upd`](https://github.com/pchiorean/Indentz/commit/73acffe8774ab3d1fd523ec4249798f2c9ec1ced)
+  **cleanup/DocCleanup:** Protect empty frames from the '.guides' layer
+- `06/20` [`upd`](https://github.com/pchiorean/Indentz/commit/5d553fa94bdf1049a91fc14109fc8dc9151e2de1)
+  **cleanup/DefaultLayers, DefaultSwatches, ReplaceFonts, ReplaceLinks, ReplaceSnippets:**
+  Increased verbosity level for 'document has no path' alert, so it's now muted by default
+- `05/29` [`ref`](https://github.com/pchiorean/Indentz/commit/52b7ffb2057fa3033801d851cfe8cb104dba3afa)
+  **align/AlignToC:** Renamed the HW vertical alignment label to something more generic
+- `06/30` [`ref`](https://github.com/pchiorean/Indentz/commit/70a977ea8c011194c9078231965eba09889be620)
+  **export/QuickExport:** Removed main panel label
+- `06/30` [`fix`](https://github.com/pchiorean/Indentz/commit/4fc58cd0a599202f1d322ffc8cd45434e7b836e9)
+  **lib/isInArray:** Ensure that arguments are always treated as strings
 
 ### [23.2.1](https://github.com/pchiorean/Indentz/releases/tag/23.2.1)
 
@@ -674,11 +690,13 @@
 
 ##### New features
 
-- `new` **lib/dbg:** Add a stopwatch
+- `new` **lib/dbg:** Add a timer
 - `new` **cleanup/DefaultSwatches:** Add tints support
+- `new` **cleanup/DefaultSwatches:** Add gradients support
 - `new` **cleanup/DefaultSwatches:** Add groups support
-- `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
+- `new` **export/QuickExport:** Add a preflight option
 - `new` **export/QuickExport:** Add INDD (with or without package) export profile
+- `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
 - `new` **export/QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
 - `new` **file/SpreadsToLayers**
 - `new` Add an '.ini' file for custom user settings
@@ -688,6 +706,7 @@
 ##### Updates
 
 - `brk` **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
+- `upd` **cleanup/DefaultSwatches:** Add "cXXmXXyXXkXX" default variant
 - `upd` **cleanup/DefaultSwatches:** Check color values on parsing
 - `upd` **cleanup/DocCleanup:** Delete empty color groups
 - `upd` **cleanup/ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
@@ -695,11 +714,8 @@
 - `brk` **cleanup/ReplaceSnippets:** Extend Scope to layers/pages etc
 - `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
 - `brk` **export/MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
-- `new` **export/QuickExport:** Add a preflight dropbox
 - `upd` **export/QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
-- `upd` **export/QuickExport:** Default document PDF standard from a saved label
-- `upd` **export/QuickExport:** Skip file export when links queued to be updated are missing
-- `upd` **export/QuickExport:** Use custom bleed T/L/B/R from PDF preset, but display only max. value
+- `upd` **export/QuickExport:** Create destination folder if it doesn't exist
 - `upd` **export/Show/HideDNPLayers:** Take layers from a TSV
 - `upd` **file/SpreadsToFiles:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
 - `upd` **layout/PageMarginsFromSelection:** Set the margins of every page touched by the selection
@@ -713,19 +729,21 @@
 - `upd` **view/ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
 - `upd` Use a custom object style for `<visible area>` frame
 - `brk` `?` **cleanup/DefaultLayers:** Add column for locked status
-- `upd` `?` **export/QuickExport:** JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 - `upd` `?` **lib/isInArray:** Add regex matching to `searchValue`
 - `upd` `?` Add a 'Canceling, please wait...' note when canceling batch processes
+- `upd` `?` JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 
 ##### Removed features
 
 ##### Bug fixes
 
+- `fix` **cleanup/DocCleanup:** Exclude "empty" text-on-path frames
 - `fix` **cleanup/ReplaceLinks:** When relinking layered graphics, try to restore layers' visibility; inhibit alert and report culprits at finish
 - `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
 - `fix` **export/QuickExport:** Fix low-res export for embedded .indd files
 - `fix` **export/QuickExport:** Report layer overrides
 - `fix` **export/QuickExport:** Restore cropping mode when relinking files
+- `fix` **export/QuickExport:** Skip export when links are to be updated but are missing
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `fix` **fit/TextAutoSize:** Check `baselineShift`
 - `fix` **layout/PageSizeFromFilename:** Error on pages set to 1:X scale
