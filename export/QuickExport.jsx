@@ -1,5 +1,5 @@
 /*
-	Quick export 23.6.29-dev
+	Quick export 23.6.30-dev
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -707,13 +707,13 @@ function QuickExport() {
 
 		// Actions
 		ui.actions = ui.add('group { orientation: "row", alignChildren: [ "left", "center" ], margins: [ -1, 4, -1, -1 ] }');
-			ui.actions.updateVersion = ui.actions.add('checkbox { text: "Update [Converted] documents", alignment: "bottom" }');
+			ui.actions.updateVersion = ui.actions.add('checkbox { text: "Upgrade [Converted] documents", alignment: "bottom" }');
 			ui.actions.updateVersion.helpTip = 'Automatically upgrade [Converted] documents\n(if unchecked, they will be skipped)';
 			ui.actions.docClose = ui.actions.add('checkbox { text: "Close documents after export", alignment: "bottom" }');
 			ui.actions.docClose.value = true;
 			ui.actions.docClose.enabled = !isFolderMode;
 			if (isFolderMode) ui.actions.docClose.helpTip = 'In batch folder mode documents are always closed after export';
-			ui.actions.add('group').preferredSize.width = ui.wWidth - 590;
+			ui.actions.add('group').preferredSize.width = ui.wWidth - 598;
 				ui.actions.add('button { text: "Cancel", preferredSize: [ 80, 24 ], properties: { name: "cancel" } }');
 				ui.actions.ok = ui.actions.add('button { text: "Start", preferredSize: [ 80, 24 ], properties: { name: "ok" } }');
 
