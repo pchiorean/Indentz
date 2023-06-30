@@ -2,7 +2,7 @@
 
 This is a collection of InDesign scripts for various simple and repetitive tasks.
 
-I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I wrote several simple scripts to improve my workflow. Most are meant to be used with shortcuts[^1] (suggestions for Mac below). Some require one or more objects on the page to be selected. Apart from error alerts, they do their job silently; however, some[^2] give a report if run with `Ctrl`.
+I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I wrote several simple scripts to improve my workflow. Most are meant to be used with shortcuts[^1] (suggestions for the Mac platform below). Some require one or more objects on the page to be selected. Apart from error alerts, they do their job silently; however, some[^2] give a report if run with `Ctrl`.
 
 The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/), compatibile with CS6). I'm a graphic designer, not a programmer, so be prepared for oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
@@ -308,7 +308,7 @@ Resets **Align To** to default (**Align to Selection**).
 <small>_**Reframe selected objects.**_</small>
 
 #### **`FitTo*.jsx`**
-These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or visible area).
+These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed or _visible area_[^3]).
 
 For example, running **`FitToPageBleed.jsx`** (⇧F11) on these two frames will expand the yellow one and shrink the red frame to the page bleed:
 
@@ -316,13 +316,13 @@ For example, running **`FitToPageBleed.jsx`** (⇧F11) on these two frames will 
 
 The refitting is done by:
 
-- **Shrinking** the edges that hang outside the specified area;
+- **Shrinking** the edges that hang outside the target area;
 
-- **Extending** the edges that touch or are very close to the trigger zone[^4] (either target or visible area).
+- **Extending** the edges that touch or are very close[^4] to a trigger zone (which is either the target or the visible area).
 
 **Note:** Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame. Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.
 
-**`*Forced.jsx`** variants simply reframe the objects to the target area.
+The **`*Forced.jsx`** variants simply reframe the objects to the target area.
 
 <details><summary><strong>Shortcuts</strong></summary>
 
@@ -409,37 +409,43 @@ You may use **`SpreadsToFiles.jsx`** to split the result into separate documents
 ### Export
 
 #### **`QuickExport.jsx`** <small>⌃E</small>
-My workflow requires frequent changes to export settings, and the standard export dialog is complex, with quite a few tabs and options. I used to have a lot of Adobe PDF Presets with few differences, that had to be constantly kept up-to-date.
-I made this script to have, at a glance, the most common settings I need, and also to reduce the number of presets to the essential. I also added the ability to run additional scripts and a few other useful features that make my job easier.
+My workflow requires frequent changes to export settings, and the native export dialog has quite a few tabs and options, so I used to have a lot of Adobe PDF Presets with just a few differences. For many years I used Peter Kahrel's wonderful [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), but I've always wanted a tool tailored to my needs. I made this script to have all the frequently changed settings easily accessible and thus reduce the number of presets to the essential ones, and also added some features that make my life easier.
 
-The options are grouped into several categories. I will only go through some of them, most being self-explanatory:
+There are two selectable workflows, with the options grouped into several categories. I will review only those that, in my opinion, are not self-explanatory:
 
 ![Quick export](img/script-quickexport.png)
 ![](img/script-quickexport-legend.svg)
 
-##### Source folder
-By default all open documents will be exported. If nothing is open, you can select a folder as the source.
+**Source folder:**
+- By default all open documents will be exported. If nothing is open, you can select a folder as the source.
 
-##### Preset options
-First, you select an Adobe PDF Preset. You can override some of it's options with a few clicks: crop marks, page information, to include or not the slug area, to export as pages or as spreads, resolution, bleed etc.
+**Preset options:**
+- After selecting an Adobe PDF Preset you can override some of its options with just a few clicks: crop marks, page information, to include or not the slug area, to export as pages or as spreads, resolution, bleed etc.
 
-##### Document actions
-**Skip do-not-print layers** will not export layers with names beginning with a dot or a hyphen (e.g., **.safety area**).
+**Document actions:**
+- **Skip do-not-print layers** will not export layers with names beginning with a dot or a hyphen (e.g., **.safety area**); you can also define a custom list with **Edit list**.
 
-**Run a script** will run a JavaScript or AppleScript before exporting (e.g., one of the other scripts from this section).
+- **Run a script** will run a JavaScript or AppleScript before exporting (e.g., one of the other scripts from this section).
 
-##### Output options
-**Export in a custom folder:** By default, the files are exported in the same folder as the source document, but you can choose a custom one.
+**Output options:**
+- **Export in a custom folder:** By default, the files are exported in the same folder as the source document, but you can choose a custom one.
 
-**Add a suffix:** This text will be appended to the name of the exported file. A preset can be 'paired' with a suffix by adding it to its name after the _last_ underscore: e.g., when you select `X4_350dpi_39L300_print`, the suffix will be changed to `print`.
+- **Add a suffix:** This text will be appended to the name of the exported file. A preset can be 'paired' with a suffix by adding it to its name after the _last_ underscore: e.g., when you select `X4_350dpi_39L300_print`, the suffix will be changed to `print`.
 
-If **Sort files by suffix into subfolders** is also checked, each file will be saved in a subfolder named after the suffix, up to the first `+` character: e.g., for a `print+diecut` suffix, the PDF will be saved as **`Document_print+diecut.pdf`**, in a subfolder named **`print`**.
+- If **Sort files by suffix into subfolders** is also checked, each file will be saved in a subfolder named after the suffix, up to the first `+` character: e.g., for a `print+diecut` suffix, the PDF will be saved as **`print/Document_print+diecut.pdf`**.
 
-##### Updating source
-After export, the source documents can be updated if they have changed, or saving can be enforced for all documents (in this case **Save as**[^5] will be used).
+**Updating source:**
+- After export, modified documents can be updated (maybe you want to preserve changes made by a script).
+
+- Also, you can enforce a **Save as**[^5] for all documents.
+
+**Global options:**
+- **Upgrade [Converted] documents**: Automatically upgrade documents from previus versions of InDesign (if unchecked, they will be skipped).
+
+**Note:** If you click **Start** while pressing the **Opt/Alt** key, the script will run without saving the settings.
 
 #### **`MarkVisibleArea.jsx`**
-Creates a frame the size of the page margins that marks a _visible area_. It will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
+Creates a frame the size of the page margins that marks the _visible area_[^3]. It will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
 
 #### **`PrepareForExport.jsx`**
 Hides some _do-not-print_ layers: **covered area**, **visible area**, **safety area**, **segmentation**, and all layers starting with either a dot or a hyphen (for the full list see the script).
@@ -488,7 +494,7 @@ Adds a custom label on the current page slug, on the **info** layer (Helvetica R
 ![Label Page](img/labelpage.png)
 
 #### **`LabelPageRatios.jsx`**
-Adds a label with the _visible area_ ratio and page margins ratio on the slug of each page.
+Adds a label with the _visible area_[^3] ratio and page margins ratio on the slug of each page.
 
 **Note:** If the visible area is not defined, it defaults to the page size.
 
@@ -500,7 +506,7 @@ This is a slightly modified version of [**OffsetPath**](https://creativepro.com/
 I fixed some bugs and added a default value, an option to join contours, and support for undoing.
 
 #### **`QR.jsx`** <small>F9</small>
-Adds a QR code on each spread of the active document (outside visible area, if possible) or to separate PDF files:
+Adds a QR code on each spread of the active document (outside _visible area_[^3], if possible) or to separate PDF files:
 
 |             On document             |             On file              |
 |:-----------------------------------:|:--------------------------------:|
@@ -558,16 +564,16 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: June 29, 2023</small>
+<small>Last updated: June 30, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
 [^2]: `DefaultLayers.jsx`, `DefaultSwatches.jsx`, `ReplaceFonts.jsx`, `ReplaceLinks.jsx`, `ReplaceSnippet.jsx`.
 
-[^3]: A _visible area_ is a zone delimited by a frame named `<visible area>`, and it's used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size.
+[^3]: A _visible area_ is a custom zone delimited by a frame named `<visible area>`, and it's used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size.
 
-[^4]: By default, the trigger zone is 1% of the visible area. The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
+[^4]: By default, this distance is 1% of the _visible area_. The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
 
-[^5]: **Save as** is useful for reducing the size of documents that have been modified many times (on each regular save the document grows with the last changes).
+[^5]: **Save as** is useful for reducing the size of documents that have been modified many times (on each regular save the document grows with the latest changes).
 
 [^6]: Releases may be old, however. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch – this is what I actually use every day, so it's kind of tested, but… beware. ;)
