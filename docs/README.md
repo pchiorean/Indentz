@@ -409,7 +409,7 @@ You may use **`SpreadsToFiles.jsx`** to split the result into separate documents
 ### Export
 
 #### **`QuickExport.jsx`** <small>⌃E</small>
-My workflow requires frequent changes to export settings; the native export dialog has quite a few tabs and options, so I used to have a lot of Adobe PDF Presets with just a few differences. For many years I used Peter Kahrel's wonderful [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), but I've always wanted a tool tailored to my needs. I made this script to have the frequently changed settings easily accessible and thus reduce the number of presets to the essential ones, and also added some features that make my life easier.
+My workflow requires frequent changes to export settings; the native export dialog has quite a few tabs and options, so I used to have a lot of Adobe PDF Presets with just a few differences. For many years I used Peter Kahrel's wonderful [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), but I've always wanted a tool tailored to my needs. I made this script to have the frequently changed settings easily accessible and thus reduce the number of presets to the essential; I also added some other features that make my life easier.
 
 There are two selectable workflows, with the options grouped into several categories. I will review the not self-explanatory ones:
 
@@ -435,14 +435,14 @@ There are two selectable workflows, with the options grouped into several catego
 - If **Sort files by suffix into subfolders** is also checked, each file will be saved in a subfolder named after the suffix, up to the first `+` character: e.g., for a `print+diecut` suffix, the PDF will be saved as **`print/Document_print+diecut.pdf`**.
 
 **Updating source:**
-- After export, modified documents can be updated (maybe you want to preserve changes made by a script).
+- After export, modified documents can be updated or not (e.g., you want to preserve changes made by a script).
 
 - You can also enforce a **Save as** for all documents. This is useful for reducing the size of documents that have been modified many times (on each regular save the document grows with the latest changes).
 
 **Global options:**
 - **Upgrade [Converted] documents**: Upgrade documents from previous versions of InDesign, or skip them.
 
-**Note:** If you click **Start** while pressing the **Opt/Alt** key, the script will run without saving the settings.
+**Note:** If you keep the **Opt/Alt** key pressed while clicking **Start**, the script will run without saving the settings.
 
 #### **`MarkVisibleArea.jsx`**
 Creates a frame the size of the page margins that marks the _visible area_[^3]. It will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
