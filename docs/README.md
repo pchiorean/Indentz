@@ -318,7 +318,7 @@ The refitting is done by:
 
 - **Shrinking** the edges that hang outside the target area;
 
-- **Extending** the edges that touch or are very close[^4] to a trigger zone (which is either the target or the visible area).
+- **Extending** the edges that touch or are very close to a trigger zone (which is either the target or the visible area). By default this snap zone is 1% of the visible area[^4].
 
 **Note:** Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a clipping frame. Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.
 
@@ -399,7 +399,7 @@ Saves each spread of the active document to a separate file.
 
 If the file name ends with a _separator_ (space/dot/underline/hyphen) followed by _a sequence_ of digits or letters _equal_ to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`** / **`Document_B.indd`** / **`Document_C.indd`**. If not autodetected, the script will prompt the user for a sequence.
 
-By default, the index will be appended at the end, but you can put a `#` in the file name to place the index at that particular position.
+By default the index will be appended at the end, but you can put a `#` in the file name to place the index at that particular position.
 
 #### **`LayersToSpreads.jsx`**
 Moves all layers of the active document to separate spreads (the document must have a single spread).
@@ -409,9 +409,9 @@ You may use **`SpreadsToFiles.jsx`** to split the result into separate documents
 ### Export
 
 #### **`QuickExport.jsx`** <small>⌃E</small>
-My workflow requires frequent changes to export settings, and the native export dialog has quite a few tabs and options, so I used to have a lot of Adobe PDF Presets with just a few differences. For many years I used Peter Kahrel's wonderful [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), but I've always wanted a tool tailored to my needs. I made this script to have all the frequently changed settings easily accessible and thus reduce the number of presets to the essential ones, and also added some features that make my life easier.
+My workflow requires frequent changes to export settings; the native export dialog has quite a few tabs and options, so I used to have a lot of Adobe PDF Presets with just a few differences. For many years I used Peter Kahrel's wonderful [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), but I've always wanted a tool tailored to my needs. I made this script to have the frequently changed settings easily accessible and thus reduce the number of presets to the essential ones, and also added some features that make my life easier.
 
-There are two selectable workflows, with the options grouped into several categories. I will review only those that, in my opinion, are not self-explanatory:
+There are two selectable workflows, with the options grouped into several categories. I will review the not self-explanatory ones:
 
 ![Quick export](img/script-quickexport.png)
 ![](img/script-quickexport-legend.svg)
@@ -428,7 +428,7 @@ There are two selectable workflows, with the options grouped into several catego
 - **Run a script** will run a JavaScript or AppleScript before exporting (e.g., one of the other scripts from this section).
 
 **Output options:**
-- **Export in a custom folder:** By default, the files are exported in the same folder as the source document, but you can choose a custom one.
+- **Export in a custom folder:** By default the files are exported in the same folder as the source document, but you can choose a custom one.
 
 - **Add a suffix:** This text will be appended to the name of the exported file. A preset can be 'paired' with a suffix by adding it to its name after the _last_ underscore: e.g., when you select `X4_350dpi_39L300_print`, the suffix will be changed to `print`.
 
@@ -437,10 +437,10 @@ There are two selectable workflows, with the options grouped into several catego
 **Updating source:**
 - After export, modified documents can be updated (maybe you want to preserve changes made by a script).
 
-- Also, you can enforce a **Save as**[^5] for all documents.
+- You can also enforce a **Save as** for all documents. This is useful for reducing the size of documents that have been modified many times (on each regular save the document grows with the latest changes).
 
 **Global options:**
-- **Upgrade [Converted] documents**: Automatically upgrade documents from previus versions of InDesign (if unchecked, they will be skipped).
+- **Upgrade [Converted] documents**: Upgrade documents from previous versions of InDesign, or skip them.
 
 **Note:** If you click **Start** while pressing the **Opt/Alt** key, the script will run without saving the settings.
 
@@ -548,7 +548,7 @@ Shows properties and methods of a selected object (for debugging purposes).
 ## Install
 
 1. Clone or download from **Code ‣ Download ZIP**, or download the latest release.\
-**Note:** The scripts from the repository recycle many bits of code, using dynamically linked libraries from **`lib/`**, meaning that the folder structure should to be preserved if downloading the scripts in this way. If you prefer stand-alone scripts or just pick some as needed, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked[^6].
+**Note:** The scripts from the repository recycle many bits of code, using dynamically linked libraries from **`lib/`**, meaning that the folder structure should to be preserved if downloading the scripts in this way. If you prefer stand-alone scripts or just pick some as needed, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked[^5].
 2. Open **Window ‣ Utilities ‣ Scripts**.
 3. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
 4. Copy **Indentz** to this folder.
@@ -564,7 +564,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: June 30, 2023</small>
+<small>Last updated: July 5, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
@@ -572,8 +572,6 @@ Thanks to Adrian Frigioiu for bug reports and feedback.
 
 [^3]: A _visible area_ is a custom zone delimited by a frame named `<visible area>`, and it's used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size.
 
-[^4]: By default, this distance is 1% of the _visible area_. The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
+[^4]: The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
 
-[^5]: **Save as** is useful for reducing the size of documents that have been modified many times (on each regular save the document grows with the latest changes).
-
-[^6]: Releases may be old, however. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch – this is what I actually use every day, so it's kind of tested, but… beware. ;)
+[^5]: Releases may be old, however. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch – this is what I actually use every day, so it's kind of tested, but… beware. ;)
