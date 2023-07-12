@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 23.5.29
+	Document cleanup 23.7.12
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
@@ -148,6 +148,7 @@ app.doScript(function () {
 	var layer;
 	if ((layer = doc.layers.itemByName('.guides')).isValid)       { layer.visible = true; layer.locked = false; }
 	if ((layer = doc.layers.itemByName('.safety area')).isValid)  { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('.segmentation')).isValid) { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('.visible area')).isValid) { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('.covered area')).isValid) { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('dielines')).isValid)      { layer.visible = true; layer.locked = true; }
