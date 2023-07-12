@@ -81,6 +81,14 @@
   **export/QuickExport:** Removed main panel label
 - `06/30` [`fix`](https://github.com/pchiorean/Indentz/commit/4fc58cd0a599202f1d322ffc8cd45434e7b836e9)
   **lib/isInArray:** Ensure that arguments are always treated as strings
+- `07/12` [`upd`](https://github.com/pchiorean/Indentz/commit/9bc31b1b6596278e2e52ecfe69deb8f5ae039aa5)
+  **cleanup/DefaultPrefs:** Reset default text wrap mode
+- `07/12` [`upd`](https://github.com/pchiorean/Indentz/commit/486f5642680bb06f4480d8f761164d0b42846713)
+  **cleanup/DocCleanup:** Added '.segmentation' to 'Show/hide layers'
+- `07/12` [`upd`](https://github.com/pchiorean/Indentz/commit/00293f306215e4fc31e6d1667c7ce07428612b11)
+  **cleanup/DumpLayers, DumpSwatches:** Display an alert if document has no valid path; update header
+- `07/12` [`new`](https://github.com/pchiorean/Indentz/commit/bb1a25a3dda439b572537e54a8d0dbf3b3ee8dbb)
+  **cleanup/DumpLinks:** Added a script to dump document links to a TSV file
 
 ### [23.2.1](https://github.com/pchiorean/Indentz/releases/tag/23.2.1)
 
