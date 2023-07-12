@@ -1,5 +1,5 @@
 /*
-	Default preferences 23.5.3
+	Default preferences 23.7.12
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Sets default preferences.
@@ -90,6 +90,9 @@ app.doScript(function () {
 			leadingKeyIncrement: '0.5pt',
 			typographersQuotes: true,
 			useParagraphLeading: true
+		},
+		textWrapPreferences: {
+			textWrapMode: TextWrapModes.NONE
 		},
 		transparencyPreferences: {
 			blendingSpace: BlendingSpace.CMYK
