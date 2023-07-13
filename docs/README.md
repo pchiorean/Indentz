@@ -104,7 +104,7 @@ Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sam
 >
 > **Variants**: a list of swatches that will be replaced by the base swatch; it's case insensitive and can take simple wildcards (`?` and `*`)
 
-You can use [**`DumpSwatches.jsx`**](#dumpswatchesjsx) to save a tab delimited list of swatches from any document.
+You can use [**`DumpSwatches.jsx`**](#dumpswatchesjsx) to save a tab delimited list of swatches from the active document.
 
 <details><summary><strong>Additional features</strong></summary>
 
@@ -173,7 +173,8 @@ Replaces document links using a TSV data file named **`links.tsv`** ([sample](sa
 > - One or more document link names; it's case insensitive and can take simple wildcards (`?` and `*`);
 > - If empty, the _name_ from the first column will be used (so that if it's in the document, it will be replaced).
 
-Quoting the paths is not required.
+Quoting the paths is not required.\
+You can use [**`DumpLinks.jsx`**](#dumplinksjsx) to save a list of links from the active document.
 
 <details><summary><strong>Additional features</strong></summary>
 
@@ -567,7 +568,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: July 12, 2023</small>
+<small>Last updated: July 13, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
