@@ -264,7 +264,7 @@ pre[data-line] .line-highlight[data-end]:after {
       <h1 class="mume-header" id="indentz">Indentz</h1>
 
 <p>This is a collection of InDesign scripts for various simple and repetitive tasks.</p>
-<p>I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I wrote several simple scripts to improve my workflow. Most are meant to be used with shortcuts<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> (suggestions for the Mac platform below). Some require one or more objects on the page to be selected. Apart from error alerts, they do their job silently; however, some<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> give a report if run with <code>Ctrl</code>.</p>
+<p>I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I wrote several simple scripts to improve my workflow. Most are meant to be used with shortcuts<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup> (suggestions for the Mac platform below). Some require one or more objects on the page to be selected. Apart from error alerts, they do their job silently; however, some<sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup> give a report if run with <strong>Ctrl</strong>.</p>
 <p>The code was developed and tested in Adobe InDesign CC 2020&#x2013;2023 on Mac (I mostly used <a href="https://www.indesignjs.de/extendscriptAPI/indesign8/">InDesign ExtendScript API 8.0</a>, compatibile with CS6). I&#x2019;m a graphic designer, not a programmer, so be prepared for oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though!).</p>
 <h2 class="mume-header" id="usage">Usage</h2>
 
@@ -274,7 +274,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <h4 class="mume-header" id="defaultprefsjsx"><strong><code>DefaultPrefs.jsx</code></strong></h4>
 
 <p>Sets some preferences for the active document. You should customize them to your workflow by editing the script.</p>
-<details><summary><strong>Details</strong></summary>
+<details><summary><strong>Click here for details</strong></summary>
 <p><strong>Application:</strong></p>
 <blockquote>
 <p><strong>Preferences &#x2023; General:</strong> Prevent Selection of Locked Objects<br>
@@ -305,6 +305,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Windows &#x2023; Effects:</strong> Blending Mode: Normal; Opacity: 100%<br>
 <strong>Windows &#x2023; Output &#x2023; Attributes:</strong> Nonprinting: Off<br>
 <strong>Windows &#x2023; Pages:</strong> Allow Document Pages to Shuffle<br>
+<strong>Windows &#x2023; Text Wrap:</strong> No text wrap<br>
 <strong>Windows &#x2023; Type &amp; Tables &#x2023; Paragraph:</strong> Shading: Off</p>
 </blockquote>
 </details>
@@ -387,7 +388,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <strong>Visible</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>)<br>
 <strong>Printable</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>)<br>
 <strong>Order</strong>: <code>above</code> or <code>below</code> existing layers, or <code>top</code>/<code>bottom</code> (defaults to <code>above</code>)<br>
-<strong>Variants</strong>: A list of layers that will be merged with the base layer; it&#x2019;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>)</p>
+<strong>Variants</strong>: A list of layers that will be merged with the base layer; it&#x2019;s case insensitive and can take simple wildcards (<code>?</code> for exactly one character and <code>*</code> for zero or more characters)</p>
 </blockquote>
 <p><strong>Additional features:</strong></p>
 <p>A line may also contain a <em>statement</em>:</p>
@@ -457,7 +458,7 @@ pre[data-line] .line-highlight[data-end]:after {
 <li>4 values in 0&#x2013;100 range for CMYK</li>
 <li>3 values in 0&#x2013;100 (L), &#x2013;128&#x2013;127 (A and B) range for Lab</li>
 </ul>
-<p><strong>Variants</strong>: a list of swatches that will be replaced by the base swatch; it&#x2019;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>)</p>
+<p><strong>Variants</strong>: a list of swatches that will be replaced by the base swatch; it&#x2019;s case insensitive and can take simple wildcards (<code>?</code> for exactly one character and <code>*</code> for zero or more characters)</p>
 </blockquote>
 <p>You can use <a href="#dumpswatchesjsx"><strong><code>DumpSwatches.jsx</code></strong></a> to save a tab delimited list of swatches from the active document.</p>
 <details><summary><strong>Additional features</strong></summary>
@@ -574,7 +575,7 @@ pre[data-line] .line-highlight[data-end]:after {
 </ul>
 <p><strong>Document links:</strong></p>
 <ul>
-<li>One or more document link names; it&#x2019;s case insensitive and can take simple wildcards (<code>?</code> and <code>*</code>);</li>
+<li>One or more document link names; it&#x2019;s case insensitive and can take simple wildcards (<code>?</code> for exactly one character and <code>*</code> for zero or more characters);</li>
 <li>If empty, the <em>name</em> from the first column will be used (so that if it&#x2019;s in the document, it will be replaced).</li>
 </ul>
 </blockquote>
@@ -674,7 +675,21 @@ You can use <a href="#dumplinksjsx"><strong><code>DumpLinks.jsx</code></strong><
 <p>Unnaplies paragraph/character/object styles from the selected objects or all objects in the document if nothing is selected.</p>
 <h4 class="mume-header" id="doccleanupjsx-smallf2small"><strong><code>DocCleanup.jsx</code></strong> <small>F2</small></h4>
 
-<p>It runs <a href="#defaultprefsjsx"><strong><code>DefaultPrefs.jsx</code></strong></a>; deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.</p>
+<p>Performs a sequence of actions designed to bring the document to an approximately &#x201C;clean&#x201D; state:</p>
+<ul>
+<li>Sets some preferences (it runs <a href="#defaultprefsjsx"><strong><code>DefaultPrefs.jsx</code></strong></a>);</li>
+<li>Unlocks all objects and resets their scaling to 100%;</li>
+<li>Deletes hidden objects (after confirmation);</li>
+<li>Deletes empty frames (after confirmation);</li>
+<li>Deletes unused swatches, layers and spreads;</li>
+<li>Converts empty text frames to generic frames;</li>
+<li>Converts empty frames to graphic frames;</li>
+<li>Resets default transparency effects;</li>
+<li>Resets visibility of some technical layers;</li>
+<li>Hides &#x2018;invisible&#x2019; characters;</li>
+<li>Turns off URLs auto-updating;</li>
+<li>Sets the pasteboard margins.</li>
+</ul>
 <h4 class="mume-header" id="removescriptlabelsjsx"><strong><code>RemoveScriptLabels.jsx</code></strong></h4>
 
 <p>Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.</p>

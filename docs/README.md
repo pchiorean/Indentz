@@ -2,7 +2,7 @@
 
 This is a collection of InDesign scripts for various simple and repetitive tasks.
 
-I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I wrote several simple scripts to improve my workflow. Most are meant to be used with shortcuts[^1] (suggestions for the Mac platform below). Some require one or more objects on the page to be selected. Apart from error alerts, they do their job silently; however, some[^2] give a report if run with `Ctrl`.
+I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I wrote several simple scripts to improve my workflow. Most are meant to be used with shortcuts[^1] (suggestions for the Mac platform below). Some require one or more objects on the page to be selected. Apart from error alerts, they do their job silently; however, some[^2] give a report if run with **Ctrl**.
 
 The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/), compatibile with CS6). I'm a graphic designer, not a programmer, so be prepared for oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
@@ -15,7 +15,7 @@ The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (I mos
 #### **`DefaultPrefs.jsx`**
 Sets some preferences for the active document. You should customize them to your workflow by editing the script.
 
-<details><summary><strong>Details</strong></summary>
+<details><summary><strong>Click here for details</strong></summary>
 
 **Application:**
 > **Preferences ‣ General:** Prevent Selection of Locked Objects\
@@ -45,6 +45,7 @@ Sets some preferences for the active document. You should customize them to your
 > **Windows ‣ Effects:** Blending Mode: Normal; Opacity: 100%\
 > **Windows ‣ Output ‣ Attributes:** Nonprinting: Off\
 > **Windows ‣ Pages:** Allow Document Pages to Shuffle\
+> **Windows ‣ Text Wrap:** No text wrap\
 > **Windows ‣ Type & Tables ‣ Paragraph:** Shading: Off
 
 </details>
@@ -67,7 +68,7 @@ Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample]
 > **Visible**: `yes` or `no` (defaults to `yes`)\
 > **Printable**: `yes` or `no` (defaults to `yes`)\
 > **Order**: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`)\
-> **Variants**: A list of layers that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` and `*`)
+> **Variants**: A list of layers that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters)
 
 **Additional features:**
 
@@ -102,7 +103,7 @@ Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sam
 > - 4 values in 0–100 range for CMYK
 > - 3 values in 0–100 (L), –128–127 (A and B) range for Lab
 >
-> **Variants**: a list of swatches that will be replaced by the base swatch; it's case insensitive and can take simple wildcards (`?` and `*`)
+> **Variants**: a list of swatches that will be replaced by the base swatch; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters)
 
 You can use [**`DumpSwatches.jsx`**](#dumpswatchesjsx) to save a tab delimited list of swatches from the active document.
 
@@ -170,7 +171,7 @@ Replaces document links using a TSV data file named **`links.tsv`** ([sample](sa
 >   - relative to `reference/path` defined by a previous `@includepath` statement (`img3.psd` and `subfolder/img4.psd`).
 > 
 > **Document links:**
-> - One or more document link names; it's case insensitive and can take simple wildcards (`?` and `*`);
+> - One or more document link names; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters);
 > - If empty, the _name_ from the first column will be used (so that if it's in the document, it will be replaced).
 
 Quoting the paths is not required.\
@@ -233,7 +234,20 @@ There's also some non-standard stuff that will confuse Excel et al.:
 Unnaplies paragraph/character/object styles from the selected objects or all objects in the document if nothing is selected.
 
 #### **`DocCleanup.jsx`** <small>F2</small>
-It runs [**`DefaultPrefs.jsx`**](#defaultprefsjsx); deletes unused swatches, layers and spreads; unlocks all objects and resets their scaling to 100%; optionally deletes hidden objects; resets default transparency effects; converts empty text frames to generic frames and empty frames to graphic frames; sets tight pasteboard margins.
+Performs a sequence of actions designed to bring the document to an approximately "clean" state:
+
+- Sets some preferences (it runs [**`DefaultPrefs.jsx`**](#defaultprefsjsx));
+- Unlocks all objects and resets their scaling to 100%;
+- Deletes hidden objects (after confirmation);
+- Deletes empty frames (after confirmation);
+- Deletes unused swatches, layers and spreads;
+- Converts empty text frames to generic frames;
+- Converts empty frames to graphic frames;
+- Resets default transparency effects;
+- Resets visibility of some technical layers;
+- Hides 'invisible' characters;
+- Turns off URLs auto-updating;
+- Sets the pasteboard margins.
 
 #### **`RemoveScriptLabels.jsx`**
 Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects or all objects in the document if nothing is selected.
