@@ -244,7 +244,7 @@ Converts process RGB swatches to CMYK and renames them to 'C= M= Y= K=' forma
 Saves a TSV file (compatible with [**`DefaultLayers.jsx`**](#defaultlayersjsx)) containing the names and properties of the active document layers.
 
 #### **`DumpLinks.jsx`**
-Saves a TSV file (compatible with [**`ReplaceLinks.jsx`**](#replacelinksjsx-⌥f8)) containing the links of the active document.
+Saves a TSV file (compatible with [**`ReplaceLinks.jsx`**](#replacelinksjsx-f8)) containing the links of the active document.
 
 #### **`DumpSwatches.jsx`**
 Saves a TSV file (compatible with [**`DefaultSwatches.jsx`**](#defaultswatchesjsx)) containing the names and properties of the active document swatches.
