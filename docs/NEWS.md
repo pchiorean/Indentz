@@ -1,29 +1,49 @@
-### What's new in [23.2.1](https://github.com/pchiorean/Indentz/releases/tag/23.2.1)
+### What's new in [23.7.15](https://github.com/pchiorean/Indentz/releases/tag/23.7.15)
 
 #### Cleanup
 
-- **DefaultPrefs:** Changed **General ‣ Object Editing ‣ When Scaling** to **Apply to Content**.
-- **DefaultLayers:** You can now order layers to `top` or `bottom` using these keywords.
-- **DocCleanup:** Minor tweaks and fixes.
-- **RemoveScriptLabels:** Renamed from **misc/LabelsCleanup**.
+- **DefaultPrefs:**
+  - The default text wrap mode is now off.
+  - Removed color profile settings.
+- **DocCleanup:**
+  - Empty frames from '.guides' are protected from deletion.
+  - Added '.segmentation' to 'Show/hide layers' list.
+- Added **DumpLinks:** Saves document's links to a TSV file compatible with **ReplaceLinks**.
+- **ReplaceLinks:** Improved reports (shown when run with **Ctrl** key pressed).
+- **ReplaceSnippets:** **Find/Change** settings are now cleared when script finishes.
+- **SwatchesCleanup:** Moved deletion of unused swatches as the last step.
+
+#### Fit
+
+- **TextAutosize:** Fixed a bug that in certain circumstances reverted a frame's auto-sizing to height-only.
 
 #### Export
 
 - **QuickExport:**
-  - Preferences will be silently created on first run.
-  - Added a fix for queued documents that disappear before the actual export.
-
-#### Layout
-
-- Added **PageMarginsFromScriptName:** Sets the page margins and optionally the HW area (expressed in percentage of the visible/page area), getting the values from the script name. It's designed to be duplicated and renamed to customize the values, using one or two numbers and the keyword `HW`. Example: `MG5HW10.jsx` sets a value of 5% for the margins and 10% for the HW (`HW` can also be used alone, which sets it to 10%, or omitted, which sets it to 0).
+  - Major UI refactoring: most of the common options have been moved to workflows to make them more independent (in the future it will be possible to create presets).
+  - Added an option to create Acrobat layers.
+  - Added an option to exclude any layer beginning with '.' or '-' (_do-not-print_ layers). You can also add a custom layer list or use the default one.
+  - Added an option to automatically upgrade documents from previous versions of InDesign.
+  - `hack` There is a hack that automatically appends the names of technical layers like 'dielines,' 'varnish,' etc., to the suffix; unfortunately it used to add them even if the layers were not actually exported. Fixed.
+  - If you keep the **Opt/Alt** key pressed while clicking **Start**, the script will run without saving the settings.
+- **Hide/ShowDNPLayers, PrepareForExport:** Tweaked the internal list of _do-not-print_ layers.
+- **PrepareForExport:** No longer creates an 'info' layer if not actually needed.
 
 #### View
 
-- **ZoomToSelection/Spreads:** When zooming to page include the slug if preview mode is off.
-- Added **ZoomTo300Percent:** Zooms the current view to 300%.
+- **TileAll:** Documents with square formats will use the generic **Window ‣ Arrange ‣ Tile**.
 
 #### Misc
 
-- **QR, QRBatch:** Minor tweaks and fixes.
+- **EAN:** The code will be inserted into all selected objects.
+
+- **LabelPageRatios:** Now both outer (visible area, or page size if undefined) and inner ratios (margins) will be marked.
+
+#### Other
+
+- Added a dot prefix to _do-not-print_ layers (e.g., '.visible area').
+- Replaced layer 'ID' with 'info' to simplify layer management.
+- Increased stroke width when marking the visible area for large visuals.
+- Improved feedback when the current document doesn't have a valid path.
 
 For other changes not mentioned here see the full [changelog](CHANGELOG.md).

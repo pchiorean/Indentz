@@ -1,33 +1,80 @@
-## Changelog
+<!-- ## [Development version](https://github.com/pchiorean/Indentz/compare/23.7.15...dev) -->
 
-### [Development version](https://github.com/pchiorean/Indentz/compare/23.2.1...dev)
+## [Releases](https://github.com/pchiorean/Indentz/releases)
+
+#### [23.7.15](https://github.com/pchiorean/Indentz/releases/tag/23.7.15)
+
+##### New features
+
+- `02/22` [`upd`](https://github.com/pchiorean/Indentz/commit/ce11e9620ea2ca1ed62b9fa4c9ce73a4430e9801)
+  **view/TileAll:** Added generic tiling for square formats
+- `03/23` [`upd`](https://github.com/pchiorean/Indentz/commit/26d261d09d2a2c3a65bcff7a24a65a3a047c31b3)
+  **misc/EAN:** If multiple objects are selected, the code will be inserted into all of them
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/66e77c839e9de0fc06a6f67988fbf02041f7acaf)
+  **export/QuickExport:** Added an option to exclude do-not-print layers (any layer beginning with '.' or '-')
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/7210d51f060231925cecf794ee8d2ebd685e1fc2)
+  **misc/LabelPageRatios:** Now marks outer (visible area, or page size if undefined) and inner (margins) ratios
+- `05/27` [`new`](https://github.com/pchiorean/Indentz/commit/9dc9097d630145156f6595e8a3048a368cf28a74)
+  **lib/alignTextToBottom:** Added a helper function to align text to bottom of frame
+- `05/27` [`new`](https://github.com/pchiorean/Indentz/commit/2c1828316dbeabf66558a0104a5e2fa9e5766666)
+  **lib/getPageItem:** Added a helper function to get a text frame with a specified name
+- `05/27` [`new`](https://github.com/pchiorean/Indentz/commit/5bc6aa2d7b653a485eba194eb2e1dd303f01f035)
+  **lib/saveLayersState:** Added a helper function to save/restore layers state (TO DO: refactor to a proper function expression)
+- `07/12` [`new`](https://github.com/pchiorean/Indentz/commit/bb1a25a3dda439b572537e54a8d0dbf3b3ee8dbb)
+  **cleanup/DumpLinks:** Added a script to dump document links to a TSV file
+
+##### Updates
 
 - `02/03` [`upd`](https://github.com/pchiorean/Indentz/commit/bdd9d16c1a28598a7461c4f429d1c591728caff9)
-  **cleanup/DumpLayers, DumpSwatches, export/QuickExport, lib/log, report** Set linefeed to Unix
+  **cleanup/DumpLayers, DumpSwatches, export/QuickExport, lib/log, report:** Set linefeed to Unix
 - `02/03` [`upd`](https://github.com/pchiorean/Indentz/commit/6d294984e6df49ca1d80c363e249d65304acdb9f)
-  **export/Hide/ShowDNPLayers, PrepareForExport** Renamed 'Safety margins' to 'Safety area'
-- `02/03` [`ref`](https://github.com/pchiorean/Indentz/commit/43a0c4fc7329de94f8b13a07bcec21b8c377e16a)
-  **export/MarkVisibleArea, layout/PageSizeFromFilename** Renamed 'findLayer' to 'getLayer'
+  **export/Hide/ShowDNPLayers, PrepareForExport:** Renamed 'Safety margins' to 'Safety area'
 - `02/07` [`upd`](https://github.com/pchiorean/Indentz/commit/73ca242a907c01f14b2f61dc1ea6953a8f6cfab5)
-  **lib/fitTo** Bump priority of enforced fitting
-- `02/22` [`upd`](https://github.com/pchiorean/Indentz/commit/ce11e9620ea2ca1ed62b9fa4c9ce73a4430e9801)
-  **view/TileAll** Added generic tiling for square formats
+  **lib/fitTo:** Bump priority of enforced fitting
 - `02/22` [`upd`](https://github.com/pchiorean/Indentz/commit/eb0a3cdb3a61480d2aa8381b7141dac49840aae3)
-  **cleanup/ReplaceLinks** Skipped reporting status for unused links
+  **cleanup/ReplaceLinks:** Skipped reporting status for unused links
 - `02/23` [`upd`](https://github.com/pchiorean/Indentz/commit/def4661ad77f65261b2c0e4ac40cbb21b1d5bf5f)
   **export/MarkVisibleArea, layout/PageSizeFromFilename:** Increased stroke width for large visuals
-- `02/24` [`fix`](https://github.com/pchiorean/Indentz/commit/fd5a40a300cb56bcc4df54a19a1d780c550cecce)
-  **export/PrepareForExport:** Don't add 'info' layer if not actually needed
 - `03/07` [`upd`](https://github.com/pchiorean/Indentz/commit/981fede9a4cb658051a5e2e1fb8eb496288ca77d)
   **export/QuickExport:** Improved speed when checking for text overflow (changed the loop from `for` to `while`)
 - `03/10` [`upd`](https://github.com/pchiorean/Indentz/commit/4d519e29485e8a2f0376dbfe4e6a0153949209d8)
   **lib/fitTo:** Tweaked debug section; renamed some variables for clarity
-- `03/11` [`fix`](https://github.com/pchiorean/Indentz/commit/84214f8a1cdc09d3f493188bdc1f8773404a2e3b)
-  **fit/TextAutosize:** Fixed a bug that in certain circumstances reverted a frame's auto-sizing to height-only
-- `03/23` [`upd`](https://github.com/pchiorean/Indentz/commit/26d261d09d2a2c3a65bcff7a24a65a3a047c31b3)
-  **misc/EAN:** If multiple objects are selected, the code will be inserted into all of them
 - `04/02` [`upd`](https://github.com/pchiorean/Indentz/commit/c68da2a712c6a67686329f28b80bea9fdff1b985)
   **export/QuickExport:** Don't display preferences reset warning on first run (revisited)
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/7e2f37b856cf4879d89f43934fbc33702559e4ba)
+  **cleanup/SwatchesCleanup:** Delete unused swatches was moved as the last step
+- `05/10` [`brk`](https://github.com/pchiorean/Indentz/commit/10a48905bb36fe79677fc186bf06bebe3635719b)
+  **cleanup/DocCleanup; export/MarkVisibleArea; layout/GuidesAdd, PageMarginsFromScriptName, PageSizeFromFilename:**
+  Renamed do-not-print layers to '.layername' (e.g., `.visible area`)
+- `05/10` [`upd`](https://github.com/pchiorean/Indentz/commit/cc9732494dc69e9f4accc66b44dcf0c151a14362)
+  **export/Hide/ShowDNPLayers, PrepareForExport:** Tweaked the layers names wildcards
+- `05/23` [`upd`](https://github.com/pchiorean/Indentz/commit/b32837ef7bff11de28a49c20d69cf330ed321630)
+  **export/Hide/ShowDNPLayers, PrepareForExport:** Added 'fold' to do-not-print layers
+- `05/28` [`upd`](https://github.com/pchiorean/Indentz/commit/dd89d4e85fe7be5ace18cede1b41cc1b5e8dffaf)
+  **misc/LabelPage\*, QR\*:** Replaced 'ID' with 'info' to simplify layer management
+- `05/29` [`upd`](https://github.com/pchiorean/Indentz/commit/73acffe8774ab3d1fd523ec4249798f2c9ec1ced)
+  **cleanup/DocCleanup:** Empty frames from '.guides' layer are protected from deletion
+- `06/20` [`upd`](https://github.com/pchiorean/Indentz/commit/5d553fa94bdf1049a91fc14109fc8dc9151e2de1)
+  **cleanup/DefaultLayers, DefaultSwatches, ReplaceFonts, ReplaceLinks, ReplaceSnippets:**
+  Increased verbosity level for 'document has no path' alert, so it's now muted by default
+- `07/12` [`upd`](https://github.com/pchiorean/Indentz/commit/9bc31b1b6596278e2e52ecfe69deb8f5ae039aa5)
+  **cleanup/DefaultPrefs:** Reset default text wrap mode
+- `07/12` [`upd`](https://github.com/pchiorean/Indentz/commit/486f5642680bb06f4480d8f761164d0b42846713)
+  **cleanup/DocCleanup:** Added '.segmentation' to 'Show/hide layers'
+- `07/12` [`upd`](https://github.com/pchiorean/Indentz/commit/00293f306215e4fc31e6d1667c7ce07428612b11)
+  **cleanup/DumpLayers, DumpSwatches:** Display an alert if document has no valid path; update header
+
+##### Removed features
+
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/29e40eae2bc22bc6dc6ceca9ceba9733eb9f00a7)
+  **cleanup/DefaultPrefs:** Removed color profile settings
+
+##### Bug fixes
+
+- `02/24` [`fix`](https://github.com/pchiorean/Indentz/commit/fd5a40a300cb56bcc4df54a19a1d780c550cecce)
+  **export/PrepareForExport:** Don't add 'info' layer if not actually needed
+- `03/11` [`fix`](https://github.com/pchiorean/Indentz/commit/84214f8a1cdc09d3f493188bdc1f8773404a2e3b)
+  **fit/TextAutosize:** Fixed a bug that in certain circumstances reverted a frame's auto-sizing to height-only
 - `04/02` [`fix`](https://github.com/pchiorean/Indentz/commit/04edf0d97127b5472c4217d52354ff8cb16fd236)
   **lib/ParseDataFile and related:** Converted documents actually have a path (d'oh!), so don't skip looking for the local data file
 - `04/03` [`fix`](https://github.com/pchiorean/Indentz/commit/2e8d29bdc4fecffdfd75a530a3666169be7b236c)
@@ -36,61 +83,30 @@
   **cleanup/ReplaceLinks:** Properly URI-decode the file names when reporting replaced links
 - `04/06` [`fix`](https://github.com/pchiorean/Indentz/commit/7598eca8e4e99ca41dcf268439d79252a363e667)
   **misc/EAN:** Fixed a regression from commit `26d261d` (03/23) that made some naive assumptions about the active document and/or selection
-- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/66e77c839e9de0fc06a6f67988fbf02041f7acaf)
-  **export/QuickExport:** Added an option to exclude do-not-print layers (any layer beginning with '.' or '-')
-- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/29e40eae2bc22bc6dc6ceca9ceba9733eb9f00a7)
-  **cleanup/DefaultPrefs:** Removed color profile settings
-- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/7e2f37b856cf4879d89f43934fbc33702559e4ba)
-  **cleanup/SwatchesCleanup:** Delete unused swatches was moved as the last step
-- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/7210d51f060231925cecf794ee8d2ebd685e1fc2)
-  **misc/LabelPageRatios:** Now marks outer (visible area, or page size if undefined) and inner (margins) ratios
 - `05/04` [`fix`](https://github.com/pchiorean/Indentz/commit/3b27e37768aaf98c6d31adb6c8b27a953b9f531c)
   **export/QuickExport:** Fixed a regression from commit `66e77c8` (05/03): it was not actually checking 'Exclude do-not-print layers' value
-- `05/10` [`brk`](https://github.com/pchiorean/Indentz/commit/10a48905bb36fe79677fc186bf06bebe3635719b)
-  **cleanup/DocCleanup; export/MarkVisibleArea; layout/GuidesAdd, PageMarginsFromScriptName, PageSizeFromFilename:**
-  Renamed do-not-print layers to '.layername' (e.g., `.visible area`)
-- `05/10` [`upd`](https://github.com/pchiorean/Indentz/commit/cc9732494dc69e9f4accc66b44dcf0c151a14362)
-  **export/Hide/ShowDNPLayers, PrepareForExport:** Tweaked the layers names wildcards
-- `05/11` [`doc`](https://github.com/pchiorean/Indentz/commit/56219100cbc7318f41153419930abc422f384548)
-  Updated TSV samples
-- `05/23` [`upd`](https://github.com/pchiorean/Indentz/commit/b32837ef7bff11de28a49c20d69cf330ed321630)
-  **export/Hide/ShowDNPLayers, PrepareForExport:** Added 'fold' to do-not-print layers
 - `05/27` [`fix`](https://github.com/pchiorean/Indentz/commit/fd588e8f4a05526caa2412e18c6021daa3ecb5fd)
   **cleanup/ReplaceSnippets:** F/R settings were not cleared when script finished; fixed
-- `05/27` [`new`](https://github.com/pchiorean/Indentz/commit/9dc9097d630145156f6595e8a3048a368cf28a74)
-  **lib/alignTextToBottom:** Added a helper function to align text to bottom of frame
-- `05/27` [`new`](https://github.com/pchiorean/Indentz/commit/2c1828316dbeabf66558a0104a5e2fa9e5766666)
-  **lib/getPageItem:** Added a helper function to get a text frame with a specified name
-- `05/27` [`new`](https://github.com/pchiorean/Indentz/commit/5bc6aa2d7b653a485eba194eb2e1dd303f01f035)
-  **lib/saveLayersState:** Added a helper function to save/restore layers state (TO DO: refactor to a proper function expression)
-- `05/27` [`doc`](https://github.com/pchiorean/Indentz/commit/2202825cd4265fcfa6d251a04c730991d51e3054)
-  Updated TSV samples
-- `05/28` [`upd`](https://github.com/pchiorean/Indentz/commit/dd89d4e85fe7be5ace18cede1b41cc1b5e8dffaf)
-  **misc/LabelPage\*, QR\*:** Replaced 'ID' with 'info' to simplify layer management
 - `05/29` [`fix`](https://github.com/pchiorean/Indentz/commit/cb97111206e3af1d138f9383dc0d09d5dfd2c743)
           [`fix`](https://github.com/pchiorean/Indentz/commit/4a10ac84f46f1c5cb71ecb5c21bb5d4e49c9b7b7)
   **lib/report:** Saving the report was not possible when there are no open documents; fixed
-- `05/29` [`upd`](https://github.com/pchiorean/Indentz/commit/73acffe8774ab3d1fd523ec4249798f2c9ec1ced)
-  **cleanup/DocCleanup:** Protect empty frames from the '.guides' layer
-- `06/20` [`upd`](https://github.com/pchiorean/Indentz/commit/5d553fa94bdf1049a91fc14109fc8dc9151e2de1)
-  **cleanup/DefaultLayers, DefaultSwatches, ReplaceFonts, ReplaceLinks, ReplaceSnippets:**
-  Increased verbosity level for 'document has no path' alert, so it's now muted by default
+- `06/30` [`fix`](https://github.com/pchiorean/Indentz/commit/4fc58cd0a599202f1d322ffc8cd45434e7b836e9)
+  **lib/isInArray:** Ensure that arguments are always treated as strings
+
+##### Miscellaneous
+
+- `02/03` [`ref`](https://github.com/pchiorean/Indentz/commit/43a0c4fc7329de94f8b13a07bcec21b8c377e16a)
+  **export/MarkVisibleArea, layout/PageSizeFromFilename:** Renamed 'findLayer' to 'getLayer'
+- `05/11` [`doc`](https://github.com/pchiorean/Indentz/commit/56219100cbc7318f41153419930abc422f384548)
+  Updated TSV samples
+- `05/27` [`doc`](https://github.com/pchiorean/Indentz/commit/2202825cd4265fcfa6d251a04c730991d51e3054)
+  Updated TSV samples
 - `05/29` [`ref`](https://github.com/pchiorean/Indentz/commit/52b7ffb2057fa3033801d851cfe8cb104dba3afa)
   **align/AlignToC:** Renamed the HW vertical alignment label to something more generic
 - `06/30` [`ref`](https://github.com/pchiorean/Indentz/commit/70a977ea8c011194c9078231965eba09889be620)
   **export/QuickExport:** Removed main panel label
-- `06/30` [`fix`](https://github.com/pchiorean/Indentz/commit/4fc58cd0a599202f1d322ffc8cd45434e7b836e9)
-  **lib/isInArray:** Ensure that arguments are always treated as strings
-- `07/12` [`upd`](https://github.com/pchiorean/Indentz/commit/9bc31b1b6596278e2e52ecfe69deb8f5ae039aa5)
-  **cleanup/DefaultPrefs:** Reset default text wrap mode
-- `07/12` [`upd`](https://github.com/pchiorean/Indentz/commit/486f5642680bb06f4480d8f761164d0b42846713)
-  **cleanup/DocCleanup:** Added '.segmentation' to 'Show/hide layers'
-- `07/12` [`upd`](https://github.com/pchiorean/Indentz/commit/00293f306215e4fc31e6d1667c7ce07428612b11)
-  **cleanup/DumpLayers, DumpSwatches:** Display an alert if document has no valid path; update header
-- `07/12` [`new`](https://github.com/pchiorean/Indentz/commit/bb1a25a3dda439b572537e54a8d0dbf3b3ee8dbb)
-  **cleanup/DumpLinks:** Added a script to dump document links to a TSV file
 
-### [23.2.1](https://github.com/pchiorean/Indentz/releases/tag/23.2.1)
+#### [23.2.1](https://github.com/pchiorean/Indentz/releases/tag/23.2.1)
 
 ##### New features
 
@@ -176,7 +192,7 @@
 - `01/29` [`ref`](https://github.com/pchiorean/Indentz/commit/a6049074c5ece2b8115eeaaae9a0a734b456b4cf)
   **lib/fitTo:** Small improvements to the code legibility
 
-### [22.11.10](https://github.com/pchiorean/Indentz/releases/tag/22.11.10)
+#### [22.11.10](https://github.com/pchiorean/Indentz/releases/tag/22.11.10)
 
 ##### New features
 
@@ -249,7 +265,7 @@
 - `11/09` [`ref`](https://github.com/pchiorean/Indentz/commit/f1940a37cdf5cf5588e53fa57afe70f3bf52f2fc)
   **scale/ScaleTo...:** Minor changes to scaling function
 
-### [22.9.25](https://github.com/pchiorean/Indentz/releases/tag/22.9.25)
+#### [22.9.25](https://github.com/pchiorean/Indentz/releases/tag/22.9.25)
 
 ##### New features
 
@@ -312,7 +328,7 @@
 - [`doc`](https://github.com/pchiorean/Indentz/commit/c6559f2827361c20aa3f172a0743a9e8549f73ea)
   **lib/parseDataFile and related:** Changed 'prefixed' to 'starting'
 
-### [22.8.22](https://github.com/pchiorean/Indentz/releases/tag/22.8.22)
+#### [22.8.22](https://github.com/pchiorean/Indentz/releases/tag/22.8.22)
 
 ##### New features
 
@@ -385,7 +401,7 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/00415e83ac739a5c3c0328358f0d38a6af1185c0)
   Added an `#includepath` directive with a list of fallback folders
 
-### [22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
+#### [22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
 ##### New features
 
@@ -426,7 +442,7 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2d43649c6fcb012b8ab4ed28901059245415829a)
   **lib/Report:** Increased maximum width
 
-### [22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
+#### [22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
 
 ##### New features
 
@@ -477,7 +493,7 @@
 - [`doc`](https://github.com/pchiorean/Indentz/commit/14f7688731f5ba609c84530fee67600a55248e0b)
   **lib/ReplaceLink, ReplaceLinks:** Clarified/removed a mention about local links
 
-### [22.3.11](https://github.com/pchiorean/Indentz/releases/tag/22.3.11)
+#### [22.3.11](https://github.com/pchiorean/Indentz/releases/tag/22.3.11)
 
 ##### New features
 
@@ -520,7 +536,7 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/5fbd56abfeb7a46fd5e8bec0bb2e48d419573a90)
   Renamed **lib/isIn** to **isInArray**
 
-### [22.2.9](https://github.com/pchiorean/Indentz/releases/tag/22.2.9)
+#### [22.2.9](https://github.com/pchiorean/Indentz/releases/tag/22.2.9)
 
 ##### New features
 
@@ -687,7 +703,7 @@
 - [`doc`](https://github.com/pchiorean/Indentz/commit/c8dd950b8167d4a30148c866da25e91694f9416c)
   Added a changelog
 
-### [21.9.20](https://github.com/pchiorean/Indentz/tree/723c2fe6c71c9d5a4586f2b7685628fe0d788258)
+#### [21.9.20](https://github.com/pchiorean/Indentz/tree/723c2fe6c71c9d5a4586f2b7685628fe0d788258)
 
 - [`ref`](https://github.com/pchiorean/Indentz/commit/51bb19d2d7074181c5acacc8dd52931bfd3263c5)
   [`upd`](https://github.com/pchiorean/Indentz/commit/8982a3fde7956ac83372ba140a773a05dff929e2)
