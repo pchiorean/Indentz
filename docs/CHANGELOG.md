@@ -698,7 +698,8 @@
 
 ##### New features
 
-- `new` **lib/dbg:** Add a timer
+- `new` **lib/log:** Add a timer
+- `new` **lib/replaceLink:** Add page parameter
 - `new` **cleanup/DefaultSwatches:** Add tints support
 - `new` **cleanup/DefaultSwatches:** Add gradients support
 - `new` **cleanup/DefaultSwatches:** Add groups support
@@ -763,6 +764,7 @@
 ##### Miscellaneous
 
 - `doc` Add a mention about canceling the ongoing operation with 'Esc'
+- `org` **lib/log:** Rename to `debug.jsxinc`
 
 ---
 
