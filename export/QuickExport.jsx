@@ -1,5 +1,5 @@
 /*
-	Quick export 23.6.30-dev
+	Quick export 23.7.15
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -181,7 +181,7 @@ function QuickExport() {
 				ui[workflow].destination = ui[workflow].container.add('group { orientation: "column", alignChildren: [ "left", "top" ] }');
 					ui[workflow].destination._ = ui[workflow].destination.add('group { orientation: "row", margins: [ 0, 0, 0, -5 ] }');
 						ui[workflow].destination.isOn = ui[workflow].destination._.add('checkbox { text: "Export in a custom folder:", alignment: "bottom" }');
-						ui[workflow].destination.isOn.helpTip = 'By default, the files are exported in the same folder as\nthe source document, but you can choose a custom one';
+						ui[workflow].destination.isOn.helpTip = 'By default the files are exported in the same folder as\nthe source document, but you can choose a custom one';
 						ui[workflow].destination._.add('group').preferredSize.width = ui.cWidth - 254;
 						ui[workflow].destination.browse = ui[workflow].destination._.add('button { text: "Browse", preferredSize: [ 64, 24 ] }');
 					ui[workflow].destination.folder = ui[workflow].destination.add('edittext');
