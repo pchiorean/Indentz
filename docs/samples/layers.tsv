@@ -2,7 +2,6 @@ Name          	Color      	Visible 	Printable 	Order  	Variants
 
 # Do-not-print layers
 .guides       	Magenta    	yes     	no        	top    	abstände, grid, guides, masuratori, vermassung
-.placeholder  	Magenta    	no      	yes       	above  	placeholder
 .segmentation 	Grid Green 	yes     	yes       	above  	segmentation, split
 .fold         	Grid Green 	yes     	yes       	above  	fold, falz
 .safety area  	Grid Green 	yes     	yes       	above  	safe*area, safe*margins
@@ -14,6 +13,7 @@ Name          	Color      	Visible 	Printable 	Order  	Variants
 media         	Cyan       	no      	yes       	above
 info          	Cyan       	no      	yes       	above  	id, info copy, ratio
 placement     	Gray       	no      	yes       	above
+placeholder   	Magenta    	no      	yes       	above  	placeholder
 
 # Technical
 dielines      	Red        	yes     	yes       	above  	cut, cutcontour, cut*line*, decoupe, die, die*cut*, falz, mark, stanz*, sichtmass*kontur, stafo
