@@ -7,6 +7,7 @@ Name                               |     Fn | Description
 `DefaultSwatches.jsx`              |        | Adds swatches from a list
 `DocCleanup.jsx`                   |     F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling
 `DumpLayers.jsx`                   |        | Saves document's layers to a TSV file compatible with `DefaultLayers.jsx`
+`DumpLinks.jsx`                    |        | Saves document's links to a TSV file compatible with `ReplaceLinks.jsx`
 `DumpSwatches.jsx`                 |        | Saves document's swatches to a TSV file compatible with `DefaultSwatches.jsx`
 `ReplaceFonts.jsx`                 |        | Replaces fonts from a substitution list
 `ReplaceLinks.jsx`                 |    ⌥F8 | Replaces document links from a substitution list
