@@ -1233,6 +1233,7 @@ function QuickExport() {
 				app.pdfExportPreferences.pageInformationMarks = exp.pageInfo.value;
 				app.pdfExportPreferences.includeSlugWithPDF = exp.slugArea.value;
 				app.pdfExportPreferences.exportReaderSpreads = exp.asSpreads.value;
+				app.pdfExportPreferences.exportLayers = exp.exportLayers.enabled && exp.exportLayers.value;
 
 				// Custom DPI
 				if (exp.customDPI.isOn.value && app.pdfExportPreferences.colorBitmapSampling !== Sampling.NONE) {
