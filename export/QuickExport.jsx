@@ -1,5 +1,5 @@
 /*
-	Quick export 23.7.15
+	Quick export 23.7.17
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -329,8 +329,8 @@ function QuickExport() {
 							msg.push('Include ' +
 								((preset.cropMarks ? 'crop marks, ' : '') +
 								(preset.pageInformationMarks ? 'page info, ' : '') +
-								(preset.includeSlugWithPDF ? 'slug area' : '') +
-								(preset.exportLayers ? 'layers' : ''))
+								(preset.includeSlugWithPDF ? 'slug area, ' : '') +
+								(preset.exportLayers ? 'layers, ' : ''))
 									.replace(/, $/, '')
 							);
 						}
