@@ -19,33 +19,15 @@ Adds a custom ruler guide. I use it to make grids for several brands, for which 
 |`[label]`|`string`||The label of the guide. *(Optional.)*|
 |`[preset]`|`number`||A customized set of properties, see source. *(Optional.)*|
 
----
+### alignTextToBottom(_item_) ⇒ _item_
 
-### log(_message_)
-
-Appends a debugging line to a file saved on the desktop with the name of the running script (e.g., `active-script.log`), containing a timestamp, a stack trace, and a message. Without arguments, it just appends an empty line. It's a crude, but effective tool.
+Sets a given text frame's vertical justification preference to align to bottom. Returns the text frame object.
 
 ##### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
-|`message`|`string`|A list of messages (`part1`, `part2`, `part3`, etc.) that will be appended to the timestamp and the stack trace; you can append them to the previous line using `+` as the first part (or an empty string to skip the separator).|
-
-##### Example:
-
-```js
-log('Data file: \'' + decodeURI(dataFile.name) + '\'');
-// <snip>
-log('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
-```
-
-```
-2021-07-31 18:48:02.609 main::parseDataFile:: Data file: 'test.tsv' | Records: 14 | Layouts: 2
-└─────────────────────┘ └───────────────────┘ └───────────────────┘   └─────────┘   └────────┘
-       typestamp                stack             message part1          part2         part3
-```
-
----
+|`item`|`textFrame`|The text frame.|
 
 ### fitTo(_items, [scope], [target], [forced]_)
 
@@ -77,8 +59,6 @@ app.doScript(
     UndoModes.ENTIRE_SCRIPT, 'Fit to page bleed'
 );
 ```
-
----
 
 ### getBounds(_page_) ⇒ \{Object\}
 
@@ -134,8 +114,6 @@ bounds.spread.margins; // [ 20, 20, 277, 400 ]
 bounds[scope][target]; // [ 20, 20, 277, 400 ]
 ```
 
----
-
 ### getDropShadow(_item_) ⇒ \{Object\}
 
 Gets a page item's drop shadow properties.
@@ -149,8 +127,6 @@ Gets a page item's drop shadow properties.
 ##### Returns:
 
 The page item's drop shadow properties (`item.transparencySettings.dropShadowSettings`).
-
----
 
 ### setDropShadow(_item, set_)
 
@@ -170,8 +146,6 @@ var shadow = getDropShadow(item1);
 setDropShadow(item2, shadow);
 ```
 
----
-
 ### getPageItem(_name, target, [layer]_) ⇒ \{PageItem\} | undefined
 
 Gets a page item by name, optionally from a layer.
@@ -188,8 +162,6 @@ Gets a page item by name, optionally from a layer.
 
 The first page item with the specified `name`, optionally from the specified `layer`.
 
----
-
 ### getScriptsFolder() ⇒ 'path/to/folder/' | undefined
 
 Detects the user scripts folder searching for the string 'Scripts Panel' in `$.includePath`, returning a string with the path followed by '/', or `undefined`.
@@ -199,8 +171,6 @@ Detects the user scripts folder searching for the string 'Scripts Panel' in `$.i
 ```js
 $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
 ```
-
----
 
 ### isInArray(_searchValue, array, [caseSensitive]_) ⇒ \{Boolean\}
 
@@ -226,7 +196,29 @@ var array = [ 'bar*code*', 'code*', 'EAN*' ];
 isInArray(searchValue, array) // True: matches 2nd array element
 ```
 
----
+### log(_message_)
+
+Appends a debugging line to a file saved on the desktop with the name of the running script (e.g., `active-script.log`), containing a timestamp, a stack trace, and a message. Without arguments, it just appends an empty line. It's a crude, but effective tool.
+
+##### Parameters:
+
+|Name|Type|Description|
+|:--:|:--:|--|
+|`message`|`string`|A list of messages (`part1`, `part2`, `part3`, etc.) that will be appended to the timestamp and the stack trace; you can append them to the previous line using `+` as the first part (or an empty string to skip the separator).|
+
+##### Example:
+
+```js
+log('Data file: \'' + decodeURI(dataFile.name) + '\'');
+// <snip>
+log('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
+```
+
+```
+2021-07-31 18:48:02.609 main::parseDataFile:: Data file: 'test.tsv' | Records: 14 | Layouts: 2
+└─────────────────────┘ └───────────────────┘ └───────────────────┘   └─────────┘   └────────┘
+       typestamp                stack             message part1          part2         part3
+```
 
 ### moveToLayer(_item, layer, [position]_)
 
@@ -240,7 +232,35 @@ Moves an item to another layer, optionally sending it to the front or back.
 |`layer`|`object`|The target layer.|
 |`[position]`|`string`|`front`/`top` or `back`/`bottom`: Sends the item to the front or back of its layer. *(Optional.)*|
 
----
+### naturalSorter(_str1, str2_) ⇒ \{Boolean\}
+
+Used as a user-supplied function to `array.sort()`, it sorts a string array to a natural order, e.g.,
+
+```
+123asd
+19asd
+12345asd
+asd123
+asd12
+```
+
+turns into
+
+```
+19asd
+123asd
+12345asd
+asd12
+asd123
+```
+
+##### Example:
+
+```js
+array = array.sort(naturalSorter);
+```
+
+[Source](https://stackoverflow.com/questions/2802341/javascript-natural-sort-of-alphanumerical-strings/2802804#2802804).
 
 ### parseDataFile(_dataFile_) ⇒ \{Object\}
 
@@ -253,16 +273,17 @@ Reads a TSV (tab-separated-values) file.
 |`dataFile`|`File`||A tab-separated-values file (object).|
 |`[defaultName]`|`string|string[]`||Default data file name, or an array of file names (used for `@defaults`).|
 
-The parser has some non-standard features:
+A line may also contain a _statement_:
 
-- A line may contain a _statement_:
+- `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be absolute or relative – by default is relative to the data file folder, but if you defined a `reference/path`, it will be relative to that;
+- `@defaults` – includes the global data file;
 
-  - `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-  - `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be an absolute path, one relative to the current data file, or a path relative to `reference/path` if defined;
-  - `@defaults` – includes the global data file (see `getDataFile()` below);
+There's also some non-standard stuff that will confuse Excel et al.:
 
-- Blank lines and those starting with `#` (comments) are ignored;
-- The fields can be visually aligned with spaces that will be removed at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- Blank lines are ignored;
+- Everything after a `#` is ignored (used for commenting);
+- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 ##### Returns:
@@ -366,7 +387,7 @@ See, for example, `DefaultLayers.jsx` for an actual implementation.
 
 There are some additional functions in this file, one being:
 
-### getDataFile(_dataFile, [skipLocal]_) ⇒ \{File\} | undefined
+#### getDataFile(_dataFile, [skipLocal]_) ⇒ \{File\} | undefined
 
 Gets the first occurrence of a file from a list of predefined folders.
 
@@ -391,8 +412,6 @@ The first occurrence of `dataFile`, first searching for a local one (in the curr
   3. `~/Desktop/dataFile`
   4. `script/folder/dataFile`
   5. `script/folder/../dataFile`
-
----
 
 ### progressBar
 
@@ -493,8 +512,6 @@ progressBar.close();
 
 ![](../docs/img/lib/progress-bar-mini.png)
 
----
-
 ### replaceLink(_oldLinks, newLink_) ⇒ \{Boolean\}
 
 Replaces a link or a list of links with a different one. A selection limits the scope.
@@ -517,8 +534,6 @@ replaceLink('link1.jpg', 'link1.psd'); // Both links are in the same folder
 replaceLink('link1.jpg', 'path/to/link1.psd');
 replaceLink([ 'link1.jpg', 'link1.png' ], 'link1.psd');
 ```
-
----
 
 ### replaceSwatch(_oldNames, newName, [newValues]_) ⇒ \{Boolean\}
 
@@ -544,8 +559,6 @@ replaceSwatch('Red', 'Blue', [ 100, 70, 0, 0 ]); // 'Blue' will be created if it
 replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 ```
 
----
-
 ### replaceText(_findWhat, changeTo, [wholeWord]_) ⇒ \{Boolean\}
 
 Replaces a text with another.
@@ -568,8 +581,6 @@ Returns `true` if a replacement was made, `false` if not.
 replaceText('11.10.', '13.12.2021');
 replaceText('\\\\', '\u000A', false); // Replace '\\' with Forced Line Break
 ```
-
----
 
 ### report(_message, title, [showFilter], [showCompact]_)
 
@@ -600,3 +611,24 @@ report(message, 'Sample alert', true);
 ![Alert with filter](../docs/img/lib/report-filter.png)
 
 <small>Last updated: December 23, 2022</small>
+
+### saveLayersState() / restoreLayersState()
+
+Saves/restores some properties ('locked', 'printable', 'visible') of all layers in the active document, using the `layersState` array.
+
+### truncateString(_str_) ⇒ _str_
+
+Truncates a string to a certain length, preserving it's end and replacing the first part with an ellipsis.
+
+##### Parameters:
+
+|Name|Type|Description|
+|:--:|:--:|--|
+|`str`|`string`|The string.|
+|`length`|`number`|The length.|
+
+### unique(_array_) ⇒ _array_
+
+Returns an array containing only the unique elements of the original array.
+
+[Source](http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/)
