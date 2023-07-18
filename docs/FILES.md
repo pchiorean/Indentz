@@ -5,15 +5,15 @@ Name                               |     Fn | Description
 `DefaultLayers.jsx`                |        | Adds/merges layers from a list
 `DefaultPrefs.jsx`                 |        | Sets default preferences
 `DefaultSwatches.jsx`              |        | Adds swatches from a list
-`DocCleanup.jsx`                   |     F2 | Changes some settings, cleans up swatches/layers/pages and resets scaling
+`DocCleanup.jsx`                   |     F2 | Changes some settings, cleans up swatches/layers/pages and other things
 `DumpLayers.jsx`                   |        | Saves document's layers to a TSV file compatible with `DefaultLayers.jsx`
 `DumpLinks.jsx`                    |        | Saves document's links to a TSV file compatible with `ReplaceLinks.jsx`
 `DumpSwatches.jsx`                 |        | Saves document's swatches to a TSV file compatible with `DefaultSwatches.jsx`
+`RemoveScriptLabels.jsx`           |        | Removes all script labels from all or selected objects
 `ReplaceFonts.jsx`                 |        | Replaces fonts from a substitution list
 `ReplaceLinks.jsx`                 |    ⌥F8 | Replaces document links from a substitution list
 `ReplaceSnippets.jsx`              |    ⌥F6 | Replaces text snippets from a substitution list
-`RemoveScriptLabels.jsx`           |        | Removes all script labels from all or selected objects
-`SwatchesCleanup.jsx`              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to C= M= Y= K=, deletes unused
+`SwatchesCleanup.jsx`              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to 'C= M= Y= K=' format, deletes unused
 **Layout**                         |        | **Document setup - page size, margins & columns, guides**
 `GuidesAdd.jsx`                    |        | Adds guides on pages' edges and inner centers or selected objects' edges
 `GuidesDelete.jsx`                 |        | Deletes all guides from the document
@@ -92,7 +92,7 @@ Name                               |     Fn | Description
 `ClipUndo.jsx`                     |  ⌃Num* | Releases selected objects from their clipping frames
 `EAN.jsx`                          |    ⌥F9 | Embeds an EAN code in the selected frames or adds it to a new page
 `LabelPage.jsx`                    |        | Adds a custom label on the current page's slug
-`LabelPageRatios.jsx`              |        | Adds a label (ratio) on each page's slug
+`LabelPageRatios.jsx`              |        | Adds a label with the visible area and margins ratio on each page's slug
 `OffsetPaths.jsx`                  |        | Uses InDesign's text wrap feature to create offset/inset paths
 `QR.jsx`                           |     F9 | Adds a QR code to the current document or to a separate file
 `QRBatch.jsx`                      |    ⇧F9 | Adds codes to existing documents or to separate files in batch mode, from a list
