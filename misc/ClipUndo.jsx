@@ -1,6 +1,6 @@
 /*
-	Undo clipping 21.9.20
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Undo clipping 23.7.18
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Releases selected objects from their clipping frames.
 
@@ -26,7 +26,7 @@ function main() {
 	app.clipboardPreferences.pasteRemembersLayers = true;
 	// Restore clipped objects
 	while ((item = items.shift())) {
-		if (item.parent.constructor.name !== 'Spread') continue;
+		if (!/spread/i.test(item.parent.constructor.name)) continue;
 		if (!clippingFrameRE.test(item.name)) continue;
 		undoClip(item);
 	}

@@ -6,8 +6,7 @@
  * @returns {pageItem} - Returns the `item`.
  */
 function moveToLayer(item, layer, order) {
-	while (item.parent.constructor.name !== 'Spread'
-		&& item.parent.constructor.name !== 'MasterSpread') item = item.parent;
+	while (!/spread/i.test(item.parent.constructor.name)) item = item.parent;
 
 	if (item.parent.parent.layers.item(layer).isValid) {
 		if (item.itemLayer !== layer) item.itemLayer = layer;

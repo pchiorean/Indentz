@@ -1,5 +1,5 @@
 /*
-	FitTo 23.3.10
+	FitTo 23.7.18
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
@@ -72,7 +72,7 @@ function fitTo(items, scope, target, enforced) {
 
 	while ((item = items.shift())) {
 		if (!Object.prototype.hasOwnProperty.call(item, 'parentPage')) continue;
-		if (item.parent.constructor.name !== 'Spread') continue;
+		if (!/spread/i.test(item.parent.constructor.name)) continue;
 		if ((page = item.parentPage)) { // Skip objects on pasteboard
 			if ((isFitted = fit2Bounds(item))) newSelection.push(isFitted); else newSelection.push(item);
 		} else if (enforced) { // When enforced, include objects on the pasteboard

@@ -1,6 +1,6 @@
 /*
-	Clip 22.6.28
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Clip 23.7.18
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Clips selected objects in a clipping frame (or releases them if already clipped).
 
@@ -26,7 +26,7 @@ function main(selection) {
 
 	// Exceptions
 	// -- Only clip objects directly on spread
-	if (item.parent.constructor.name !== 'Spread') {
+	if (!/spread/i.test(item.parent.constructor.name)) {
 		alert('Can\'t clip this, try selecting the parent.');
 		cleanupAndExit();
 	}
