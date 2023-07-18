@@ -1,8 +1,8 @@
-<!-- ## [Development version](https://github.com/pchiorean/Indentz/compare/23.7.15...dev) -->
+<!-- ## [Development version](https://github.com/pchiorean/Indentz/compare/23.7.18...dev) -->
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
-#### [23.7.15](https://github.com/pchiorean/Indentz/releases/tag/23.7.15)
+#### [23.7.18](https://github.com/pchiorean/Indentz/releases/tag/23.7.18)
 
 ##### New features
 
@@ -63,6 +63,8 @@
   **cleanup/DocCleanup:** Added '.segmentation' to 'Show/hide layers'
 - `07/12` [`upd`](https://github.com/pchiorean/Indentz/commit/00293f306215e4fc31e6d1667c7ce07428612b11)
   **cleanup/DumpLayers, DumpSwatches:** Display an alert if document has no valid path; update header
+- `07/18` [`upd`](https://github.com/pchiorean/Indentz/commit/831c9ad4cd64e27ec607f0c7dd4a5ecbf31fd409)
+  **lib/fitTo, moveToLayer, misc/Clip, ClipUndo:** Added `MasterSpread` as a valid parent, thus scripts also work on the parent/master pages
 
 ##### Removed features
 
@@ -92,6 +94,10 @@
   **lib/report:** Saving the report was not possible when there are no open documents; fixed
 - `06/30` [`fix`](https://github.com/pchiorean/Indentz/commit/4fc58cd0a599202f1d322ffc8cd45434e7b836e9)
   **lib/isInArray:** Ensure that arguments are always treated as strings
+- `07/17` [`fix`](https://github.com/pchiorean/Indentz/commit/b68d06f7a3b083ebaeabffa8726ba4c688112f15)
+  **export/QuickExport:** Fixed a typo in the preset help tip
+- `07/17` [`fix`](https://github.com/pchiorean/Indentz/commit/1f15b2fd4a59251057ce847b53b6756f73c98f06)
+  **export/QuickExport:** 'Create Acrobat layers' checkbox was ignored on export; fixed
 
 ##### Miscellaneous
 
@@ -247,7 +253,7 @@
 - `11/06` [`fix`](https://github.com/pchiorean/Indentz/commit/0710d21d149e102191e29177ec78acfb89ba8903)
   **misc/QR, QRBatch:** Enforced label's leading to auto, 100%
 - `11/07` [`fix`](https://github.com/pchiorean/Indentz/commit/87870d075dd1c58644cbcb25828a20d08b49ca5b)
-  **export/QuickExport:** Fixed and improved the preset tooltip info; linked DPI availability to the profile sampling setting (on loading profile)
+  **export/QuickExport:** Fixed and improved the preset helptip info; linked DPI availability to the profile sampling setting (on loading profile)
 - `11/07` [`fix`](https://github.com/pchiorean/Indentz/commit/8dcdbb5b5f8451765800ea0c5c69568fcd367183)
   **export/QuickExport:** Preserved custom bleed from the PDF preset
 - `11/08` [`fix`](https://github.com/pchiorean/Indentz/commit/972742b3976d0261e59b6a94a440632444e1dd9e)

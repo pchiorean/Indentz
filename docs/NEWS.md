@@ -1,4 +1,4 @@
-### What's new in [23.7.15](https://github.com/pchiorean/Indentz/releases/tag/23.7.15)
+### What's new in [23.7.18](https://github.com/pchiorean/Indentz/releases/tag/23.7.18)
 
 #### Cleanup
 
@@ -45,5 +45,6 @@
 - Replaced layer 'ID' with 'info' to simplify layer management.
 - Increased stroke width when marking the visible area for large visuals.
 - Improved feedback when the current document doesn't have a valid path.
+- Added `MasterSpread` as a valid parent, thus scripts also work on the parent/master pages.
 
 For other changes not mentioned here see the full [changelog](CHANGELOG.md).
