@@ -1,8 +1,8 @@
 /*
-	Page ratios 23.5.28
+	Page ratios 23.7.21
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
-	Adds a label with the visible area and margins ratio on each page's slug.
+	Adds a label with the page/visible area/margins' ratio on each page's slug.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -17,18 +17,45 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Label page ratios');
 
 function main() {
-	var visible, margins;
-	for (var i = 0, n = doc.pages.length; i < n; i++) {
-		visible = getBounds(doc.pages.item(i)).page.visible;
-		margins = getBounds(doc.pages.item(i)).page.margins;
-		slugInfo(
-			doc.pages.item(i),
-			'Visible R:' +
-			((visible[3] - visible[1]) / (visible[2] - visible[0])).toFixed(3) +
-			'\u2003Margins R:' +
-			((margins[3] - margins[1]) / (margins[2] - margins[0])).toFixed(3),
-			false
-		);
+	var i, n, page, pgB, mgB, visB, hasVisArea, hasMargins;
+	var msg = '';
+
+	for (i = 0, n = doc.pages.length; i < n; i++) {
+		page = doc.pages.item(i);
+		pgB  = getBounds(page).page.size;
+		visB = getBounds(page).page.visible;
+		mgB  = getBounds(page).page.margins;
+
+		hasVisArea = round(visB[0], 10) !== round(pgB[0], 10)
+			|| round(visB[1], 10) !== round(pgB[1], 10)
+			|| round(visB[2], 10) !== round(pgB[2], 10)
+			|| round(visB[3], 10) !== round(pgB[3], 10);
+		hasMargins = (page.marginPreferences.top +
+			page.marginPreferences.left +
+			page.marginPreferences.bottom +
+			page.marginPreferences.right > 0)
+			&& (round(visB[0], 10) !== round(mgB[0], 10)
+			|| round(visB[1], 10) !== round(mgB[1], 10)
+			|| round(visB[2], 10) !== round(mgB[2], 10)
+			|| round(visB[3], 10) !== round(mgB[3], 10));
+
+		msg = (hasVisArea || hasMargins ? 'Ratios:\u2003Page:' : 'Page ratio:') +
+			fix((pgB[3] - pgB[1]) / (pgB[2] - pgB[0]));
+		if (hasVisArea) msg += '\u2003Visible area:' + fix((visB[3] - visB[1]) / (visB[2] - visB[0]));
+		if (hasMargins) msg += '\u2003Margins:' + fix((mgB[3] - mgB[1]) / (mgB[2] - mgB[0]));
+
+		slugInfo(doc.pages.item(i), msg, false, true);
+	}
+
+	function round(/*number*/number, /*number*/decimals) {
+		decimals = decimals || 3;
+		var multiplier = Math.pow(10, decimals);
+		return Math.round(number * multiplier) / multiplier;
+	}
+
+	function fix(/*number*/number, /*number*/decimals) {
+		decimals = decimals || 3;
+		return number.toFixed(decimals).replace(/\.?0+$/, '');
 	}
 
 	function slugInfo(/*object*/page, /*string*/label, /*bool*/isCaps, /*bool*/isOnTop) {
