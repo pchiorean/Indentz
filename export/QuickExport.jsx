@@ -1,5 +1,5 @@
 /*
-	Quick export 23.7.17
+	Quick export 23.7.27
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -919,15 +919,15 @@ function QuickExport() {
 				if (doc.exists) {
 					doc = app.open(doc);
 				} else {
-					errors.push(decodeURI(doc) + ': Not found; skipped.');
+					errors.push(decodeURI(doc) + ': [ERR] Not found; skipped.');
 					continue;
 				}
 				if (doc.converted) {
 					if (ui.actions.updateVersion.value) {
 						doc.save(File(doc.filePath + '/' + doc.name));
-						errors.push(decodeURI(doc.name) + ': Converted from old version.');
+						errors.push(decodeURI(doc.name) + ': [INFO] Converted from old version.');
 					} else {
-						errors.push(decodeURI(doc.name) + ': Must be converted; skipped.');
+						errors.push(decodeURI(doc.name) + ': [ERR] Must be converted; skipped.');
 						doc.close(SaveOptions.NO);
 						continue;
 					}
@@ -937,14 +937,14 @@ function QuickExport() {
 				if (doc.converted) {
 					if (ui.actions.updateVersion.value) {
 						doc.save(File(doc.filePath + '/' + doc.name));
-						errors.push(decodeURI(doc.name) + ': Converted from old version.');
+						errors.push(decodeURI(doc.name) + ': [INFO] Converted from old version.');
 					} else {
-						errors.push(decodeURI(doc.name) + ': Must be converted; skipped.');
+						errors.push(decodeURI(doc.name) + ': [ERR] Must be converted; skipped.');
 						continue;
 					}
 				}
 				if (!doc.saved) {
-					errors.push(decodeURI(doc.name) + ': Is not saved; skipped.');
+					errors.push(decodeURI(doc.name) + ': [ERR] Is not saved; skipped.');
 					continue;
 				}
 			}
@@ -1055,7 +1055,7 @@ function QuickExport() {
 			var usedFonts = doc.fonts.everyItem().getElements();
 			for (var i = 0, n = usedFonts.length; i < n; i++) {
 				if (usedFonts[i].status !== FontStatus.INSTALLED) {
-					errors.push(decodeURI(doc.name) + ": Font '" + usedFonts[i].name.replace(/\t/g, ' ') + "' is " +
+					errors.push(decodeURI(doc.name) + ": [ERR] Font '" + usedFonts[i].name.replace(/\t/g, ' ') + "' is " +
 						String(usedFonts[i].status).toLowerCase().replace(/_/g, ' '));
 				}
 			}
@@ -1067,7 +1067,7 @@ function QuickExport() {
 			while ((frm = frms.shift())) {
 				if (frm.constructor.name !== 'TextFrame') continue;
 				if (frm.overflows && frm.parentPage) {
-					errors.push(decodeURI(doc.name) + ': Text overflows.');
+					errors.push(decodeURI(doc.name) + ': [ERR] Text overflows.');
 					return;
 				}
 			}
@@ -1082,7 +1082,7 @@ function QuickExport() {
 						break;
 					case LinkStatus.LINK_MISSING:
 					case LinkStatus.LINK_INACCESSIBLE:
-						errors.push(decodeURI(doc.name) + ": Link '" + doc.links[i].name + "' not found.");
+						errors.push(decodeURI(doc.name) + ": [ERR] Link '" + doc.links[i].name + "' not found.");
 						break;
 				}
 			}
@@ -1096,7 +1096,7 @@ function QuickExport() {
 					UndoModes.ENTIRE_SCRIPT, 'Run script'
 				);
 			} catch (e) {
-				errors.push(decodeURI(doc.name) + ': Script returned "' +
+				errors.push(decodeURI(doc.name) + ': [ERR] Script returned "' +
 					e.toString().replace(/\r|\n/g, '\u00B6') + '" (line: ' + e.line + ')');
 			}
 
