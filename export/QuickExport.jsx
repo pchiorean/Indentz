@@ -27,6 +27,7 @@
 */
 
 // @includepath '.;./lib;../lib';
+// @include 'getFilesRecursively.jsxinc';
 // @include 'isInArray.jsxinc';
 // @include 'naturalSorter.jsxinc';
 // @include 'progressBar.jsxinc';
@@ -896,7 +897,7 @@ function QuickExport() {
 		// Get documents list
 		if (isFolderMode) {
 			docs = ui.input.options.subfolders.value
-				? getFilesRecursively(ui.input.source.path).sort(naturalSorter)
+				? getFilesRecursively(ui.input.source.path, true, 'indd').sort(naturalSorter)
 				: ui.input.source.path.getFiles('*.indd').sort(naturalSorter);
 			if (docs.length === 0) { alert('No InDesign documents found.'); cleanupAndExit(); }
 		} else {
@@ -1193,7 +1194,7 @@ function QuickExport() {
 
 				// Get a list of existing PDFs
 				if (exp.subfolders.value) {
-					pdfFiles = getFilesRecursively(Folder(folder), 'pdf');
+					pdfFiles = getFilesRecursively(Folder(folder), true, 'pdf');
 				} else {
 					pdfFiles = Folder(folder).getFiles(function (f) {
 						if (!(f instanceof File) || !/\.pdf$/i.test(f)) return false;
@@ -1298,18 +1299,6 @@ function QuickExport() {
 				// Export
 				doc.exportFile(ExportFormat.PDF_TYPE, File(filename), false);
 			}
-		}
-
-		function getFilesRecursively(/*Folder*/folder, /*string*/extension) {
-			var file;
-			var files = [];
-			var fileList = folder.getFiles();
-			for (var i = 0, n = fileList.length; i < n; i++) {
-				file = fileList[i];
-				if (file instanceof Folder) files = files.concat(getFilesRecursively(file, extension));
-				else if (file instanceof File && file.name.match(RegExp('\.' + extension + '$', 'i'))) files.push(file);
-			}
-			return files;
 		}
 
 		function zeroPad(/*number*/number, /*number*/digits) {
