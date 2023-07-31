@@ -1,8 +1,8 @@
 /*
-	Page ratios 23.7.21
+	Page ratios 23.7.31
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
-	Adds a label with the page/visible area/margins' ratio on each page's slug.
+	Adds a label with the page/visible area/margins' ratios on each page's slug.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
