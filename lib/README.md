@@ -114,6 +114,34 @@ bounds.spread.margins; // [ 20, 20, 277, 400 ]
 bounds[scope][target]; // [ 20, 20, 277, 400 ]
 ```
 
+### getFilesRecursively(_folder, [subfolders], [extension]_) ⇒ \{Array\}
+
+Recursively get files from a folder and its subfolders.
+
+##### Parameters:
+
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|--|
+|`folder`|`Folder`||The source folder (object).|
+|`[subfolders]`|`boolean`|`false`|If `true`, include subfolders. (Optional.)|
+|`[extension]`|`string`|`any`|Extension to include; if undefined, will match any extension. You can combine multiple extensions with regex OR, i.e. `indd|tif|txt` (Optional.)|
+
+##### Returns:
+
+An array of found folders (as objects).
+
+##### Example:
+
+```js
+var files = getFilesRecursively(folder, true, "indd");
+for (var i = 0; i < files.length; i++) {
+	// Do something with each file
+}
+```
+
+Author: [William Campbell](https://community.adobe.com/t5/user/viewprofilepage/user-id/8505462) | 
+[Source](https://community.adobe.com/t5/indesign-discussions/get-indd-files-from-folder-and-its-subfolders/m-p/12621330#M459355)
+
 ### getDropShadow(_item_) ⇒ \{Object\}
 
 Gets a page item's drop shadow properties.
@@ -609,8 +637,6 @@ report(message, 'Sample alert', true);
 ```
 
 ![Alert with filter](../docs/img/lib/report-filter.png)
-
-<small>Last updated: December 23, 2022</small>
 
 ### saveLayersState() / restoreLayersState()
 
