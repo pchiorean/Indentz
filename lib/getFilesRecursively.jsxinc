@@ -1,4 +1,15 @@
-// https://community.adobe.com/t5/indesign-discussions/get-indd-files-from-folder-and-its-subfolders/m-p/12621330#M459355
+/**
+ * Recursively get files from a folder and its subfolders.
+ * @author William Campbell <https://community.adobe.com/t5/user/viewprofilepage/user-id/8505462>
+ * @source https://community.adobe.com/t5/indesign-discussions/get-indd-files-from-folder-and-its-subfolders/m-p/12621330#M459355
+ * @param {Folder} folder - The source folder.
+ * @param {boolean} [subfolders=false] - If `true`, include subfolders. (Optional.)
+ * @param {string} [extension] - Extension to include; if undefined, will match any extension. You can combine multiple extensions with regex OR, i.e. `indd|tif|txt` (Optional.)
+ * @returns {Folder[]} - An array of found folders (objects).
+ * @example
+ * var files = getFilesRecursively(folder, true, "indd");
+ * for (var i = 0; i < files.length; i++) {} // Do something with each file
+ */
 function getFilesRecursively(/*object*/folder, /*boolean*/subfolders, /*regex*/extension) {
 	var f, ff, i;
 	var d = [];
