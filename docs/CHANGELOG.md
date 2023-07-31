@@ -1,4 +1,11 @@
-<!-- ## [Development version](https://github.com/pchiorean/Indentz/compare/23.7.18...dev) -->
+## [Development version](https://github.com/pchiorean/Indentz/compare/23.7.18...dev)
+
+- `07/21` [`upd`](https://github.com/pchiorean/Indentz/commit/4bfef0ec89bd1b19e0b7b06e1825efb1a8048c12)
+  **misc/LabelPageRatios:** Improved label info: page > visible > margins
+- `27/07` [`upd`](https://github.com/pchiorean/Indentz/commit/ff18eeb9c5efa4621ab3aca1887f4f731712d54f)
+  **export/QuickExport:** Added error levels to reports
+- `31/07` [`upd`](https://github.com/pchiorean/Indentz/commit/d77f2257d3e278fa5ad2db270cf33da8ffc73f05)
+  **export/QuickExport:** Now it gets the last exported file index from all subfolders
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
