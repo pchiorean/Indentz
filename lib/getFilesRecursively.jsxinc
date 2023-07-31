@@ -1,0 +1,13 @@
+// https://community.adobe.com/t5/indesign-discussions/get-indd-files-from-folder-and-its-subfolders/m-p/12621330#M459355
+function getFilesRecursively(/*object*/folder, /*boolean*/subfolders, /*regex*/extension) {
+	var f, ff, i;
+	var d = [];
+	var pattern = new RegExp('\.' + extension + '$', 'i');
+	ff = folder.getFiles();
+	for (i = 0; i < ff.length; i++) {
+		f = ff[i];
+		if (f instanceof Folder && subfolders) d = d.concat(getFilesRecursively(f, subfolders, extension));
+		else if (f instanceof File && !f.hidden && (extension === undefined || pattern.test(f.name))) d.push(f);
+	}
+	return d;
+}
