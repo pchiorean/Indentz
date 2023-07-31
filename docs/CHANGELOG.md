@@ -6,6 +6,8 @@
   **export/QuickExport:** Added error levels to reports
 - `31/07` [`upd`](https://github.com/pchiorean/Indentz/commit/d77f2257d3e278fa5ad2db270cf33da8ffc73f05)
   **export/QuickExport:** Now it gets the last exported file index from all subfolders
+- `31/07` [`upd`](https://github.com/pchiorean/Indentz/commit/f721aab40c27fd774c25423ffff2b1a0824e3b4d)
+  **export/QuickExport:** Switched `getFilesRecursively()` to an external lib
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
