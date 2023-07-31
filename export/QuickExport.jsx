@@ -1,5 +1,5 @@
 /*
-	Quick export 23.7.27
+	Quick export 23.7.31
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -1183,16 +1183,23 @@ function QuickExport() {
 			}
 
 			function uniqueName(/*string*/filename, /*string*/folder, /*bool*/overwrite) {
+				var pdfFiles;
 				var pdfName = filename + '.pdf';
 				var unique = folder + '/' + pdfName;
 				var baseRE = RegExp('^' +
 					filename.replace(regexTokensRE, '\\$&') + // Escape regex tokens
 					(suffix ? '[ _-]*' : '[ _-]+') +
 					'\\d+.*.pdf$', 'i');
-				var pdfFiles = Folder(folder).getFiles(function (f) {
-					if (!(f instanceof File) || !/\.pdf$/i.test(f)) return false;
-					return baseRE.test(decodeURI(f.name));
-				});
+
+				// Get a list of existing PDFs
+				if (exp.subfolders.value) {
+					pdfFiles = getFilesRecursively(Folder(folder), 'pdf');
+				} else {
+					pdfFiles = Folder(folder).getFiles(function (f) {
+						if (!(f instanceof File) || !/\.pdf$/i.test(f)) return false;
+						return baseRE.test(decodeURI(f.name));
+					});
+				}
 
 				// Find the last index
 				var fileIndex;
@@ -1293,14 +1300,14 @@ function QuickExport() {
 			}
 		}
 
-		function getFilesRecursively(/*Folder*/folder) {
+		function getFilesRecursively(/*Folder*/folder, /*string*/extension) {
 			var file;
 			var files = [];
 			var fileList = folder.getFiles();
 			for (var i = 0, n = fileList.length; i < n; i++) {
 				file = fileList[i];
-				if (file instanceof Folder) files = files.concat(getFilesRecursively(file));
-				else if (file instanceof File && file.name.match(/\.indd$/i)) files.push(file);
+				if (file instanceof Folder) files = files.concat(getFilesRecursively(file, extension));
+				else if (file instanceof File && file.name.match(RegExp('\.' + extension + '$', 'i'))) files.push(file);
 			}
 			return files;
 		}
