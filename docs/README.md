@@ -450,7 +450,7 @@ There are two selectable workflows, with the options grouped into several catego
 
 - **Add a suffix:** This text will be appended to the name of the exported file. A preset can be 'paired' with a suffix by adding it to its name after the _last_ underscore: e.g., when you select `X4_350dpi_39L300_print`, the suffix will be changed to `print`.
 
-- If **Overwrite existing files** is not checked, the exported file will have a unique name — e.g., if the suffix is `preview`, if there is already a `Document_preview.pdf` in the export folder, the file will be saved as `Document_preview2.pdf`, or whichever index is next.
+- **Overwrite existing files:** If unchecked, the file will get a unique name by incrementing its index – for example, we'll use `Document_preview3.pdf` if there is already a `Document_preview2.pdf` in the export folder. **Note:** When computing the index, the script "sees" files in subfolders; overwriting does not.
 
 - **Sort files by suffix into subfolders**: Each file will be saved in a subfolder named after the suffix, up to the first `+` character: e.g., for a `print+diecut` suffix, the PDF will be saved as **`print/Document_print+diecut.pdf`**.
 
@@ -584,7 +584,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: July 31, 2023</small>
+<small>Last updated: August 3, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 

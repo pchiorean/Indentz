@@ -1062,7 +1062,7 @@ You can use <a href="#dumplinksjsx"><strong><code>DumpLinks.jsx</code></strong><
 <p><strong>Add a suffix:</strong> This text will be appended to the name of the exported file. A preset can be &#x2018;paired&#x2019; with a suffix by adding it to its name after the <em>last</em> underscore: e.g., when you select <code>X4_350dpi_39L300_print</code>, the suffix will be changed to <code>print</code>.</p>
 </li>
 <li>
-<p>If <strong>Overwrite existing files</strong> is not checked, the exported file will have a unique name &#x2014; e.g., if the suffix is <code>preview</code>, if there is already a <code>Document_preview.pdf</code> in the export folder, the file will be saved as <code>Document_preview2.pdf</code>, or whichever index is next.</p>
+<p><strong>Overwrite existing files:</strong> If unchecked, the file will get a unique name by incrementing its index &#x2013; for example, we&#x2019;ll use <code>Document_preview3.pdf</code> if there is already a <code>Document_preview2.pdf</code> in the export folder. <strong>Note:</strong> When computing the index, the script &#x201C;sees&#x201D; files in subfolders; overwriting does not.</p>
 </li>
 <li>
 <p><strong>Sort files by suffix into subfolders</strong>: Each file will be saved in a subfolder named after the suffix, up to the first <code>+</code> character: e.g., for a <code>print+diecut</code> suffix, the PDF will be saved as <strong><code>print/Document_print+diecut.pdf</code></strong>.</p>
@@ -1225,7 +1225,7 @@ Blank lines are ignored; everything after a <code>#</code> (comments) is ignored
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla&#x2019;s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>Thanks to Adrian Frigioiu for bug reports and feedback.</p>
-<p><small>Last updated: July 31, 2023</small></p>
+<p><small>Last updated: August 3, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
