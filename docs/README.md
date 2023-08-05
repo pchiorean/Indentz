@@ -448,11 +448,13 @@ There are two selectable workflows, with the options grouped into several catego
 **Output options:**
 - **Export in a custom folder:** By default the files are exported in the same folder as the source document, but you can choose a custom one.
 
-- **Add a suffix:** This text will be appended to the name of the exported file. A preset can be 'paired' with a suffix by adding it to its name after the _last_ underscore: e.g., when you select `X4_350dpi_39L300_print`, the suffix will be changed to `print`.
+- **Add a suffix:** This text will be appended to the name of the exported files. **Note:** A preset can be 'paired' with a suffix by adding it to its name after the _last_ underscore: e.g., when you select `X4_350dpi_39L300_print`, the suffix will be automatically changed to `print`.
 
-- **Overwrite existing files:** If unchecked, the file will get a unique name by incrementing its index – for example, we'll use `Document_preview3.pdf` if there is already a `Document_preview2.pdf` in the export folder. **Note:** When computing the index, the script "sees" files in subfolders; overwriting does not.
+- **Sort files into subfolders by suffix**: Files will be exported in a subfolder named after the suffix, up to the first `+` character: e.g., for `print` we'll export as **`print/Document_print.pdf`**; for `print+diecut` the PDF will be exported as **`print/Document_print+diecut.pdf`**.
 
-- **Sort files by suffix into subfolders**: Each file will be saved in a subfolder named after the suffix, up to the first `+` character: e.g., for a `print+diecut` suffix, the PDF will be saved as **`print/Document_print+diecut.pdf`**.
+- **Sort files into subfolders by date**: Files will be exported in a subfolder named **`MM.DD`** (current month/day).
+
+- **Overwrite existing files:** If unchecked, the files will get unique names by incrementing their index – for example, we'll use `Document_preview3.pdf` if there is already a `Document_preview2.pdf` in the export folder or its subfolders. If checked, the index will not be incremented and the files will be overwritten _if_ the destination is the same.
 
 **Updating source:**
 - After export, modified documents can be updated or not (e.g., you want to preserve changes made by a script).
@@ -584,7 +586,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: August 3, 2023</small>
+<small>Last updated: August 5, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
