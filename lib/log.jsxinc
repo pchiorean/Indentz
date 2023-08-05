@@ -1,12 +1,13 @@
 /**
  * Appends a debugging line to a file saved on the desktop with the name of the running script
  * (e.g. `active-script.log`). If no arguments are given, it just appends an empty line.
- * @version 23.2.3
+ * @version 23.8.5
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} message - A list of messages (`part1`, `part2`, `part3`, etc.) that will
  * be appended to the timestamp and the stack trace; you can append them to the previous line
- * using `+` as the first argument, or an empty string (``) to skip the separator.
+ * using `+` as the first argument, or an empty string (``) to skip the separator. `^` or `$`
+ * as the first ergument defines the start or the end of a block.
  * @example
  * log('Data file: \'' + decodeURI(dataFile.name) + '\'');
  * log('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
@@ -18,6 +19,7 @@
 function log(/*?message list*/) {
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	var debugFile = File(Folder.desktop + '/' + script.name.slice(0, script.name.lastIndexOf('.')) + '.log');
+	var padding = (!debugFile.exists || debugFile.length === 0) ? '' : '\n';
 	var t = new Date();
 	var time = t.getFullYear()           + '-' +
 		pad(t.getMonth() + 1,    2, '0') + '-' +
@@ -26,9 +28,13 @@ function log(/*?message list*/) {
 		pad(t.getMinutes(),      2, '0') + ':' +
 		pad(t.getSeconds(),      2, '0') + '.' +
 		pad(t.getMilliseconds(), 3, '0') + ' ';
-	var line = parseArgs([].slice.call(arguments), ' | ');
+	var folding = [ '\u250C\u2500 ', '\u2502 ', '\u2514\u2500 ' ];
+	var message = '';
+	var line;
 
-	if (!line) return;
+	if (arguments.length === 0) line = padding;
+	else if (arguments[0] == null) line = '\nFUBAR'; // [TODO]
+	else line = parseArgs([].slice.call(arguments), ' | ');
 
 	debugFile.open('a');
 	debugFile.encoding = 'UTF-8';
@@ -37,14 +43,26 @@ function log(/*?message list*/) {
 	debugFile.close();
 
 	function parseArgs(args, sep) {
-		var padding = (!debugFile.exists || debugFile.length === 0) ? '' : '\n';
-		var message = '';
-
-		if (args.length === 0) return padding;
 		switch (args[0].toString().toLowerCase()) {
-			case '': args.shift(); break;
-			case '+': args.shift(); message = sep; break;
-			default: message = padding + time + stack();
+			case '': // Append to previous line (no separator)
+				args.shift();
+				break;
+			case '+': // Append to previous line (with separator)
+				args.shift();
+				message = sep;
+				break;
+			case '^': // Folding block start
+				args.shift();
+				message = padding + time + stack() + folding[0] +
+					$.stack.split(/[\n]/).slice(-3, -2);
+				break;
+			case '$': // Folding block end
+				args.shift();
+				message = padding + time + stack() + folding[2] +
+					$.stack.split(/[\n]/).slice(-3, -2)[0].replace(/\(.*\)/, '()');
+				break;
+			default: // Standard message
+				message = padding + time + stack() + folding[1];
 		}
 
 		return message + args.join(sep).replace(/\r|\n/g, '\u00B6');
