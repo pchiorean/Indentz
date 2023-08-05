@@ -1,13 +1,19 @@
 ## [Development version](https://github.com/pchiorean/Indentz/compare/23.7.18...dev)
 
 - `07/21` [`upd`](https://github.com/pchiorean/Indentz/commit/4bfef0ec89bd1b19e0b7b06e1825efb1a8048c12)
-  **misc/LabelPageRatios:** Improved label info: page > visible > margins
-- `27/07` [`upd`](https://github.com/pchiorean/Indentz/commit/ff18eeb9c5efa4621ab3aca1887f4f731712d54f)
+  **misc/LabelPageRatios:** Improved label info: page ‣ visible ‣ margins: displays the page ratio and the visible area ratio; if the visible area is not defined, it fallbacks to the margins ratio.
+- `07/27` [`upd`](https://github.com/pchiorean/Indentz/commit/ff18eeb9c5efa4621ab3aca1887f4f731712d54f)
   **export/QuickExport:** Added error levels to reports
-- `31/07` [`upd`](https://github.com/pchiorean/Indentz/commit/d77f2257d3e278fa5ad2db270cf33da8ffc73f05)
+- `07/31` [`upd`](https://github.com/pchiorean/Indentz/commit/d77f2257d3e278fa5ad2db270cf33da8ffc73f05)
   **export/QuickExport:** Now it gets the last exported file index from all subfolders
-- `31/07` [`upd`](https://github.com/pchiorean/Indentz/commit/f721aab40c27fd774c25423ffff2b1a0824e3b4d)
+- `07/31` [`upd`](https://github.com/pchiorean/Indentz/commit/f721aab40c27fd774c25423ffff2b1a0824e3b4d)
   **export/QuickExport:** Switched `getFilesRecursively()` to an external lib
+- `08/05` [`new`](https://github.com/pchiorean/Indentz/commit/868944d0557d7c199cf080107569eba6ebc6105a)
+  **export/QuickExport:** Added sorting by date (`MM.DD`) and miscellaneous fixes
+- `08/05` [`fix`](https://github.com/pchiorean/Indentz/commit/632950b79926381ae88076bd94eac591bb551799)
+  **lib/getFilesRecursively:** Fixed a missing backslash in the regex expression
+- `08/05` [`new`](https://github.com/pchiorean/Indentz/commit/f2ecc11eb80cf50bdd50ca7cc79730e03bf6ea5e)
+  **lib/log:** Added statements for start/end of blocks (`^` and `$`)
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -799,7 +805,7 @@
 
 ---
 
-**Legend**
+## Legend
 
 `new` - new features or first release\
 `brk` - changes in existing functionality that break compatibility\
