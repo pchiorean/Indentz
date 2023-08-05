@@ -1,5 +1,5 @@
 /*
-	Quick export 23.7.31
+	Quick export 23.8.5
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -52,7 +52,10 @@ function QuickExport() {
 		destination: {}
 	};
 	var isFolderMode = (app.documents.length === 0);
-	var VER = '3.6';
+	var MMDD = zeroPad((new Date()).getMonth() + 1, 2) +
+		'.' + zeroPad((new Date()).getDate(), 2);
+
+	var VER = '3.8';
 	var defaults = {
 		workflow1: {
 			active: true,
@@ -68,14 +71,16 @@ function QuickExport() {
 				exportLayers: false
 			},
 			docActions: {
+				updateLinks: true,
 				skipDNP: false,
 				script: { active: false, value: '' }
 			},
 			outputOptions: {
 				destination: { active: false, value: '' },
-				split: false,
 				suffix: { active: true, value: ''},
-				subfolders: true,
+				sortBySuffix: true,
+				sortByDate: false,
+				split: false,
 				overwrite: false,
 				docSave: { active: true, scope: [ true, false ], saveAs: false }
 			}
@@ -94,14 +99,16 @@ function QuickExport() {
 				exportLayers: false
 			},
 			docActions: {
+				updateLinks: true,
 				skipDNP: false,
 				script: { active: false, value: '' }
 			},
 			outputOptions: {
 				destination: { active: false, value: '' },
-				split: false,
 				suffix: { active: true, value: ''},
-				subfolders: true,
+				sortBySuffix: true,
+				sortByDate: false,
+				split: false,
 				overwrite: false,
 				docSave: { active: true, scope: [ true, false ], saveAs: false }
 			}
@@ -123,7 +130,429 @@ function QuickExport() {
 	app.pdfExportPreferences.viewPDF = false;
 
 	if (showDialog() === 1) main();
-	cleanupAndExit();
+	cleanup();
+	exit();
+
+	function main() {
+		var name, maxCounter, exp, suffix, layer, baseFolder, destFolder, subSuffix, subDate;
+		var names = [];
+		var docs = [];
+		var layersState = [];
+		var pbWidth = 50;
+
+		app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+
+		// Get documents list
+		if (isFolderMode) {
+			docs = ui.input.options.subfolders.value
+				? getFilesRecursively(ui.input.source.path, true, 'indd').sort(naturalSorter)
+				: ui.input.source.path.getFiles('*.indd').sort(naturalSorter);
+			if (docs.length === 0) { alert('No InDesign documents found.'); cleanup(); }
+		} else {
+			docs = app.documents.everyItem().getElements();
+			while ((doc = docs.shift())) try { names.push(doc.fullName); } catch (e) { names.push(doc.name); }
+			names.sort(naturalSorter);
+			docs = [];
+			while ((name = names.shift())) docs.push(app.documents.itemByName(name));
+		}
+
+		// Init progress bar
+		maxCounter = docs.length * ((ui.workflow1.isOn.value ? 1 : 0) + (ui.workflow2.isOn.value ? 1 : 0));
+		for (i = 0, n = docs.length; i < n; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
+		progressBar = new ProgressBar('Exporting', maxCounter, pbWidth + 10);
+
+		// Documents loop
+		while ((doc = docs.shift())) {
+			// Open docs (optionally upgrade from old versions)
+			if (isFolderMode) {
+				if (doc.exists) {
+					doc = app.open(doc);
+				} else {
+					errors.push(decodeURI(doc) + ': [ERR] Not found; skipped.');
+					continue;
+				}
+				if (doc.converted) {
+					if (ui.actions.updateVersion.value) {
+						doc.save(File(doc.filePath + '/' + doc.name));
+						errors.push(decodeURI(doc.name) + ': [INFO] Converted from old version.');
+					} else {
+						errors.push(decodeURI(doc.name) + ': [ERR] Must be converted; skipped.');
+						doc.close(SaveOptions.NO);
+						continue;
+					}
+				}
+			} else {
+				app.activeDocument = doc;
+				if (doc.converted) {
+					if (ui.actions.updateVersion.value) {
+						doc.save(File(doc.filePath + '/' + doc.name));
+						errors.push(decodeURI(doc.name) + ': [INFO] Converted from old version.');
+					} else {
+						errors.push(decodeURI(doc.name) + ': [ERR] Must be converted; skipped.');
+						continue;
+					}
+				}
+				if (!doc.saved) {
+					errors.push(decodeURI(doc.name) + ': [ERR] Is not saved; skipped.');
+					continue;
+				}
+			}
+
+			// Set measurement units
+			old.horizontalMeasurementUnits = doc.viewPreferences.horizontalMeasurementUnits;
+			old.verticalMeasurementUnits = doc.viewPreferences.verticalMeasurementUnits;
+			doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;
+			doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
+
+			checkFonts();
+			checkTextOverflow();
+
+			// Workflows loop
+			old.docSpreads = doc.spreads.length; // Save initial spreads count for 'asPairs' (see 'exportDoc()')
+			for (var step = 1; step < 3; step++) {
+				exp = ui['workflow' + step]; // Current workflow
+				if (!exp.isOn.value) continue;
+
+				saveLayersState();
+
+				// Update links
+				if (exp.updateLinks.value) updateLinks();
+
+				// Get base folder
+				baseFolder = decodeURI(doc.filePath);
+				if (exp.destination.isOn.value) {
+					baseFolder =
+						WIN ? decodeURI(exp.destination.path.fsName) : decodeURI(exp.destination.path.fullName);
+				}
+
+				// Get suffix
+				suffix = '';
+				if (exp.suffix.isOn.value) suffix = exp.suffix.et.text ? ('_' + exp.suffix.et.text) : '';
+
+				// Create subfolders
+				destFolder = baseFolder;
+				subSuffix = '';
+				subDate = '';
+				if (exp.sortBySuffix.value && suffix) {
+					subSuffix = suffix.replace(/^_/, '').replace(/\+.*$/, '').replace(/^\s+|\s+$/g, '');
+					destFolder = baseFolder + '/' + subSuffix;
+					if (!Folder(destFolder).exists) Folder(destFolder).create();
+				}
+				if (exp.sortByDate.value) {
+					subDate = MMDD;
+					if (!Folder(destFolder + '/' + subDate).exists) Folder(destFolder + '/' + subDate).create();
+				}
+
+				// Run script
+				if (exp.script.isOn.value) {
+					runScript(exp.script.path);
+					app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
+					app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+				}
+
+				// Hide do-not-print layers
+				if (exp.skipDNP.isOn.value) {
+					for (i = 0; i < doc.layers.length; i++) {
+						if (/^[.-]/.test(doc.layers[i].name)
+								|| isInArray(doc.layers[i].name, settings.dnpLayers.split(/[,\r|\n]/g)))
+							doc.layers[i].visible = false;
+					}
+				}
+
+				// Hack: Append special folder names to the suffix
+				if (exp.suffix.isOn.value && /^_print/i.test(suffix)) {
+					if (((layer = doc.layers.itemByName('dielines')).isValid
+						|| (layer = doc.layers.itemByName('diecut')).isValid
+						|| (layer = doc.layers.itemByName('die cut')).isValid)
+						&& layer.visible
+						&& layer.printable
+					) suffix += '+diecut';
+					if ((layer = doc.layers.itemByName('white')).isValid
+						&& layer.visible
+						&& layer.printable
+					) suffix += '+white';
+					if ((layer = doc.layers.itemByName('foil')).isValid
+						&& layer.visible
+						&& layer.printable
+					) suffix += '+foil';
+					if ((layer = doc.layers.itemByName('varnish')).isValid
+						&& layer.visible
+						&& layer.printable
+					) suffix += '+varnish';
+				}
+
+				doExport(exp.asSpreads.value, exp.split.value, exp.preset.selection.text);
+
+				restoreLayersState();
+
+				// Restore measurement units
+				doc.viewPreferences.horizontalMeasurementUnits = old.horizontalMeasurementUnits;
+				doc.viewPreferences.verticalMeasurementUnits = old.verticalMeasurementUnits;
+
+				// Update documents
+				if (exp.docSave.isOn.value) {
+					if (exp.docSave.scope.mod.value) {
+						if (doc.modified) {
+							doc.save(exp.saveAs.enabled && exp.saveAs.value ?
+								File(doc.fullName) : undefined);
+						}
+					} else {
+						doc.save(File(doc.fullName));
+					}
+				}
+			}
+
+			// Close document
+			if (isFolderMode) doc.close(SaveOptions.NO);
+			else if (ui.actions.docClose.value) doc.close(SaveOptions.NO);
+		}
+
+		function checkFonts() {
+			var usedFonts = doc.fonts.everyItem().getElements();
+			for (var i = 0, n = usedFonts.length; i < n; i++) {
+				if (usedFonts[i].status !== FontStatus.INSTALLED) {
+					errors.push(decodeURI(doc.name) + ": [ERR] Font '" + usedFonts[i].name.replace(/\t/g, ' ') + "' is " +
+						String(usedFonts[i].status).toLowerCase().replace(/_/g, ' '));
+				}
+			}
+		}
+
+		function checkTextOverflow() {
+			var frm;
+			var frms = doc.allPageItems;
+			while ((frm = frms.shift())) {
+				if (frm.constructor.name !== 'TextFrame') continue;
+				if (frm.overflows && frm.parentPage) {
+					errors.push(decodeURI(doc.name) + ': [ERR] Text overflows.');
+					return;
+				}
+			}
+		}
+
+		function updateLinks() {
+			for (var i = 0, n = doc.links.length; i < n; i++) {
+				if (!doc.links[i].parent.parent.parentPage) continue;
+				switch (doc.links[i].status) {
+					case LinkStatus.LINK_OUT_OF_DATE:
+						doc.links[i].update();
+						break;
+					case LinkStatus.LINK_MISSING:
+					case LinkStatus.LINK_INACCESSIBLE:
+						errors.push(decodeURI(doc.name) + ": [ERR] Link '" + doc.links[i].name + "' not found.");
+						break;
+				}
+			}
+		}
+
+		function runScript(/*File*/scriptPath) {
+			try {
+				app.doScript(scriptPath,
+					getScriptLanguage(scriptPath.fsName.replace(/^.*\./, '')),
+					undefined,
+					UndoModes.ENTIRE_SCRIPT, 'Run script'
+				);
+			} catch (e) {
+				errors.push(decodeURI(doc.name) + ': [ERR] Script returned "' +
+					e.toString().replace(/\r|\n/g, '\u00B6') + '" (line: ' + e.line + ')');
+			}
+
+			function getScriptLanguage(/*string*/ext) {
+				return {
+					scpt:   WIN ? undefined : ScriptLanguage.APPLESCRIPT_LANGUAGE,
+					js:     ScriptLanguage.JAVASCRIPT,
+					jsx:    ScriptLanguage.JAVASCRIPT,
+					jsxbin: ScriptLanguage.JAVASCRIPT
+				}[ext];
+			}
+		}
+
+		function saveLayersState() {
+			var i, l;
+			for (i = 0; i < doc.layers.length; i++) {
+				l = doc.layers[i];
+				layersState.push({
+					layer:     l.name,
+					locked:    l.locked,
+					printable: l.printable,
+					visible:   l.visible
+				});
+				if (l.locked) l.locked = false;
+			}
+		}
+
+		function restoreLayersState() {
+			var i, l;
+			for (i = 0; i < layersState.length; i++) {
+				l = doc.layers.itemByName(layersState[i].layer);
+				if (l.isValid) {
+					l.locked    = layersState[i].locked;
+					l.printable = layersState[i].printable;
+					l.visible   = layersState[i].visible;
+				}
+			}
+			layersState = [];
+		}
+
+		function doExport(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
+			var fileSufx, destination, asPairs, range;
+			var scope = asSpreads ? doc.spreads : doc.pages;
+			var isCombo = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*\+\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig.test(decodeURI(doc.name));
+			var baseName = decodeURI(doc.name).replace(/\.indd$/i, '');
+
+			if (split && !isCombo) { // Export separate pages
+				// Note: if a script doubles the number of pages/spreads, we'll exports pairs
+				asPairs = (doc.spreads.length === old.docSpreads * 2) && asSpreads;
+				fileSufx = RegExp('([ ._-])([a-zA-Z]{' +
+					(asPairs ? scope.length / 2 : scope.length) + '})$', 'i').exec(baseName);
+				progressBar.update();
+				progressBar.init2(scope.length);
+
+				for (var i = 0, n = scope.length; i < n; i++) {
+					// Add a page/spread index
+					destination = baseName;
+					if (fileSufx) { // Already has an index
+						destination = destination.replace(RegExp(fileSufx[0] + '$'), '') +
+							fileSufx[1] + fileSufx[2][asPairs && !(i % 2) ? i / 2 : i];
+					} else if (scope.length > 1) { // Add index only if needed
+						destination += '_' + zeroPad(asPairs && !(i % 2) ? i / 2 + 1 : i + 1, String(n).length);
+					}
+					// Get a unique file path for export
+					destination = getUniquePath(destination + suffix);
+					// Get page range
+					if (asSpreads) { // Export as spreads
+						range = String(scope[i].pages[0].documentOffset + 1) + '-' +
+							String(scope[asPairs ? i + 1 : i].pages[-1].documentOffset + 1);
+						if (asPairs && !(i % 2)) i++;
+					} else { // Export as pages
+						range = String(scope[i].documentOffset + 1);
+					}
+					progressBar.update2();
+					progressBar.msg(baseFolder === decodeURI(doc.filePath) ?
+						decodeURI(File(destination).name) :
+						destination);
+					exportToPDF(destination, range, app.pdfExportPresets.item(preset));
+				}
+			} else { // Export all pages
+				destination = getUniquePath(baseName + suffix);
+				progressBar.update();
+				progressBar.msg(baseFolder === decodeURI(doc.filePath) ?
+					decodeURI(File(destination).name) :
+					destination);
+				exportToPDF(destination, PageRange.ALL_PAGES, app.pdfExportPresets.item(preset));
+			}
+
+			function getUniquePath(/*string*/filename) {
+				var pdfFiles, fileIndex, fileLastIndex, fileNextIndex, unique;
+				var fileIndexRE = RegExp('^'
+					+ filename.replace(regexTokensRE, '\\$&') // Escape regex tokens
+					+ '(?:[ _-]*)' // Separator
+					+ '(\\d+)?'    // Previous index
+					+ '(?:.*)$');  // Extra stuff
+
+				// Get a list of existing PDFs
+				pdfFiles = getFilesRecursively(Folder(baseFolder), true, 'pdf');
+				if (pdfFiles.length > 0) pdfFiles = pdfFiles.sort(naturalSorter);
+
+				// Get the last index
+				fileLastIndex = 0;
+				for (var i = 0, n = pdfFiles.length; i < n; i++) {
+					fileIndex = fileIndexRE.exec(decodeURI(pdfFiles[i].name).replace(/\.pdf$/i, ''));
+					if (fileIndex)
+						fileLastIndex = Math.max(fileLastIndex, isNaN(fileIndex[1]) ? 1 : Number(fileIndex[1]));
+				}
+
+				// Get the next index
+				fileNextIndex = exp.overwrite.value ? fileLastIndex : fileLastIndex + 1;
+				fileNextIndex = (fileNextIndex === 0 || fileNextIndex === 1) ? '' : String(fileNextIndex);
+
+				unique = destFolder
+					+ (exp.sortByDate.value ? '/' + subDate : '')
+					+ '/' + filename
+					+ (!suffix && fileNextIndex ? ' ' : '')
+					+ fileNextIndex
+					+ '.pdf';
+
+				return unique;
+			}
+
+			function exportToPDF(/*string*/filename, /*string|Enum*/pageRange, /*pdfExportPreset*/pdfPreset) {
+				if (ScriptUI.environment.keyboardState.keyName === 'Escape') cleanup();
+				var fPg, lPg, spreadWidth;
+
+				// Load preset settings
+				for (var key in pdfPreset) {
+					if (Object.prototype.hasOwnProperty.call(pdfPreset, key))
+						try { app.pdfExportPreferences[key] = pdfPreset[key]; } catch (e) {}
+				}
+
+				// Override some settings
+				app.pdfExportPreferences.pageRange = pageRange;
+				app.pdfExportPreferences.cropMarks = exp.cropMarks.value;
+				app.pdfExportPreferences.pageInformationMarks = exp.pageInfo.value;
+				app.pdfExportPreferences.includeSlugWithPDF = exp.slugArea.value;
+				app.pdfExportPreferences.exportReaderSpreads = exp.asSpreads.value;
+				app.pdfExportPreferences.exportLayers = exp.exportLayers.enabled && exp.exportLayers.value;
+
+				// Custom DPI
+				if (exp.customDPI.isOn.value && app.pdfExportPreferences.colorBitmapSampling !== Sampling.NONE) {
+					app.pdfExportPreferences.colorBitmapSamplingDPI = Number(exp.customDPI.et.text);
+					app.pdfExportPreferences.grayscaleBitmapSamplingDPI = Number(exp.customDPI.et.text);
+					app.pdfExportPreferences.monochromeBitmapSamplingDPI = (function (/*number*/dpi) {
+						if (dpi <= 96) return 300;
+						else if (dpi <= 150) return 600;
+						else if (dpi < 300) return 1200;
+						return 2400;
+					}(Number(exp.customDPI.et.text)));
+				}
+
+				// Custom bleed
+				app.pdfExportPreferences.useDocumentBleedWithPDF = !exp.customBleed.isOn.value;
+				if (app.pdfExportPreferences.useDocumentBleedWithPDF) {
+					app.pdfExportPreferences.pageMarksOffset = Math.min(
+						Math.max(
+							doc.documentPreferences.documentBleedTopOffset,
+							doc.documentPreferences.documentBleedInsideOrLeftOffset,
+							doc.documentPreferences.documentBleedBottomOffset,
+							doc.documentPreferences.documentBleedOutsideOrRightOffset
+						) + 1, // Offset page marks 1 mm --
+						UnitValue('72 pt').as('mm')); // -- but limit to 72 pt
+				} else {
+					app.pdfExportPreferences.bleedTop =
+					app.pdfExportPreferences.bleedBottom =
+					app.pdfExportPreferences.bleedInside =
+					app.pdfExportPreferences.bleedOutside = Number(exp.customBleed.et.text);
+					app.pdfExportPreferences.pageMarksOffset =
+						Math.min(app.pdfExportPreferences.bleedTop + 1, UnitValue('72 pt').as('mm'));
+				}
+
+				// Hack: omit printer's marks if bleed is zero --
+				// if (doc.documentPreferences.documentBleedTopOffset +
+				// 	doc.documentPreferences.documentBleedInsideOrLeftOffset +
+				// 	doc.documentPreferences.documentBleedBottomOffset +
+				// 	doc.documentPreferences.documentBleedOutsideOrRightOffset === 0 &&
+				// 	!app.pdfExportPreferences.includeSlugWithPDF) { // -- but not if user wants slug
+				// 	app.pdfExportPreferences.cropMarks = false;
+				// 	app.pdfExportPreferences.pageInformationMarks = false;
+				// }
+
+				// Hack: don't include page information on pages with very small widths
+				if (pageRange === PageRange.ALL_PAGES) {
+					fPg = scope.constructor.name === 'Spreads' ? scope[0].pages[0]  : scope[0];
+					lPg = scope.constructor.name === 'Spreads' ? scope[0].pages[-1] : scope[0];
+				} else if (/-/.test(pageRange)) {
+					fPg = doc.pages.item(pageRange.slice(0, pageRange.lastIndexOf('-')));
+					lPg = doc.pages.item(pageRange.slice(pageRange.lastIndexOf('-') + 1));
+				} else { fPg = lPg = doc.pages.item(pageRange); }
+				spreadWidth = (scope.constructor.name === 'Spreads' ? lPg.bounds[3] : fPg.bounds[3]) - fPg.bounds[1];
+				if (spreadWidth < UnitValue('335 pt').as('mm')) app.pdfExportPreferences.pageInformationMarks = false;
+
+				// Export
+				if (exp.overwrite.value && File(filename).exists)
+					try { File(filename).remove(); } catch (e) {}
+				doc.exportFile(ExportFormat.PDF_TYPE, File(filename), false);
+			}
+		}
+	}
 
 	function showDialog() {
 		var exportPresetsPDF = app.pdfExportPresets.everyItem().name.sort(naturalSorter);
@@ -139,7 +568,7 @@ function QuickExport() {
 				ui[workflow].label = ui[workflow]._.add('edittext { justify: "center", preferredSize: [ 159, 24 ] }');
 				ui[workflow].label.helpTip = 'Add a descriptive label';
 
-				// Settings
+				// Preset options
 				ui[workflow].container = ui[workflow].add('group { orientation: "column", alignChildren: [ "left", "top" ] }');
 				ui[workflow].preset = ui[workflow].container.add('dropdownlist', undefined, exportPresetsPDF);
 				ui[workflow].preset.preferredSize = [ ui.cWidth, 24 ];
@@ -162,6 +591,7 @@ function QuickExport() {
 				ui[workflow].exportLayers = ui[workflow].container.add('checkbox { text: "Create Acrobat layers" }');
 				ui[workflow].exportLayers.helpTip = 'Saves each InDesign layer as an Acrobat layer\nwithin the PDF (available for PDF 1.5 or later)';
 
+				// Document actions
 				ui[workflow].container.add('panel { alignment: "fill" }');
 				ui[workflow].updateLinks = ui[workflow].container.add('checkbox { text: "Update out of date links" }');
 				ui[workflow].skipDNP = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, -5 ] }');
@@ -178,6 +608,7 @@ function QuickExport() {
 					ui[workflow].script.file = ui[workflow].script.add('edittext');
 					ui[workflow].script.file.preferredSize = [ ui.cWidth, 24 ];
 
+				// Output options
 				ui[workflow].container.add('panel { alignment: "fill" }');
 				ui[workflow].destination = ui[workflow].container.add('group { orientation: "column", alignChildren: [ "left", "top" ] }');
 					ui[workflow].destination._ = ui[workflow].destination.add('group { orientation: "row", margins: [ 0, 0, 0, -5 ] }');
@@ -192,11 +623,14 @@ function QuickExport() {
 					ui[workflow].suffix.isOn.helpTip = 'Append a suffix to the exported file name';
 					ui[workflow].suffix.et = ui[workflow].suffix.add('edittext { preferredSize: [ 159, 24 ] }');
 					ui[workflow].suffix.et.helpTip = 'Append this text to the exported file name';
-				ui[workflow].subfolders = ui[workflow].container.add('checkbox { text: "Sort files by suffix into subfolders" }');
-				ui[workflow].subfolders.helpTip = 'Use the suffix field as the destination subfolder.\nNote: everything after a \'+\' is ignored (e.g., files with\na \'print+diecut\' suffix will be exported to \'print\')';
+				ui[workflow].sortBySuffix = ui[workflow].container.add('checkbox { text: "Sort files into subfolders by suffix" }');
+				ui[workflow].sortBySuffix.helpTip = 'Use the suffix field as the destination subfolder.\nNote: everything after a \'+\' is ignored (e.g., files with\na \'print+diecut\' suffix will be exported to \'print\')';
+				ui[workflow].sortByDate = ui[workflow].container.add('checkbox { text: "Sort files into subfolders by date" }');
+				ui[workflow].sortByDate.helpTip = 'Sort in subfolders with the current date (\'MM.DD\')';
 				ui[workflow].split = ui[workflow].container.add('checkbox { text: "Export as separate pages/spreads" }');
 				ui[workflow].overwrite = ui[workflow].container.add('checkbox { text: "Overwrite existing files" }');
 
+				// Updating source
 				ui[workflow].container.add('panel { alignment: "fill" }');
 				ui[workflow].docSave = ui[workflow].container.add('group { orientation: "row" }');
 					ui[workflow].docSave.isOn = ui[workflow].docSave.add('checkbox { text: "Save:" }');
@@ -514,7 +948,7 @@ function QuickExport() {
 
 				ui[workflow].suffix.isOn.onClick = function () {
 					this.parent.et.enabled = this.value;
-					this.parent.parent.parent.subfolders.enabled = this.value && this.parent.et.text.length > 0;
+					this.parent.parent.parent.sortBySuffix.enabled = this.value && this.parent.et.text.length > 0;
 					this.parent.et.onChange();
 				};
 
@@ -524,7 +958,7 @@ function QuickExport() {
 						.replace(invalidFilenameChars, '')
 						.replace(/^_/, '');
 					if (this.text !== str) this.text = str;
-					this.parent.parent.parent.subfolders.enabled = (this.text.length > 0);
+					this.parent.parent.parent.sortBySuffix.enabled = (this.text.length > 0);
 				};
 
 				ui[workflow].suffix.et.onDeactivate = function () {
@@ -573,7 +1007,8 @@ function QuickExport() {
 					ui[workflow].destination.isOn.value = settings[workflow].outputOptions.destination.active;
 					ui[workflow].suffix.et.text = settings[workflow].outputOptions.suffix.value;
 					ui[workflow].suffix.isOn.value = settings[workflow].outputOptions.suffix.active;
-					ui[workflow].subfolders.value = settings[workflow].outputOptions.subfolders;
+					ui[workflow].sortBySuffix.value = settings[workflow].outputOptions.sortBySuffix;
+					ui[workflow].sortByDate.value = settings[workflow].outputOptions.sortByDate;
 					ui[workflow].split.value = settings[workflow].outputOptions.split;
 					ui[workflow].overwrite.value = settings[workflow].outputOptions.overwrite;
 					ui[workflow].docSave.isOn.value = settings[workflow].outputOptions.docSave.active;
@@ -641,7 +1076,8 @@ function QuickExport() {
 							active: ui[workflow].suffix.isOn.value,
 							value: ui[workflow].suffix.et.text
 						},
-						subfolders: ui[workflow].subfolders.value,
+						sortBySuffix: ui[workflow].sortBySuffix.value,
+						sortByDate: ui[workflow].sortByDate.value,
 						split: ui[workflow].split.value,
 						overwrite: ui[workflow].overwrite.value,
 						docSave: {
@@ -885,435 +1321,17 @@ function QuickExport() {
 		}
 	}
 
-	function main() {
-		var name, maxCounter, exp, baseFolder, subfolder, suffix, layer;
-		var names = [];
-		var docs = [];
-		var layersState = [];
-		var pbWidth = 50;
-
-		app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
-
-		// Get documents list
-		if (isFolderMode) {
-			docs = ui.input.options.subfolders.value
-				? getFilesRecursively(ui.input.source.path, true, 'indd').sort(naturalSorter)
-				: ui.input.source.path.getFiles('*.indd').sort(naturalSorter);
-			if (docs.length === 0) { alert('No InDesign documents found.'); cleanupAndExit(); }
-		} else {
-			docs = app.documents.everyItem().getElements();
-			while ((doc = docs.shift())) try { names.push(doc.fullName); } catch (e) { names.push(doc.name); }
-			names.sort(naturalSorter);
-			docs = [];
-			while ((name = names.shift())) docs.push(app.documents.itemByName(name));
-		}
-
-		// Init progress bar
-		maxCounter = docs.length * ((ui.workflow1.isOn.value ? 1 : 0) + (ui.workflow2.isOn.value ? 1 : 0));
-		for (i = 0, n = docs.length; i < n; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
-		progressBar = new ProgressBar('Exporting', maxCounter, pbWidth + 10);
-
-		// Documents loop
-		while ((doc = docs.shift())) {
-			// Open docs (optionally upgrade from old versions)
-			if (isFolderMode) {
-				if (doc.exists) {
-					doc = app.open(doc);
-				} else {
-					errors.push(decodeURI(doc) + ': [ERR] Not found; skipped.');
-					continue;
-				}
-				if (doc.converted) {
-					if (ui.actions.updateVersion.value) {
-						doc.save(File(doc.filePath + '/' + doc.name));
-						errors.push(decodeURI(doc.name) + ': [INFO] Converted from old version.');
-					} else {
-						errors.push(decodeURI(doc.name) + ': [ERR] Must be converted; skipped.');
-						doc.close(SaveOptions.NO);
-						continue;
-					}
-				}
-			} else {
-				app.activeDocument = doc;
-				if (doc.converted) {
-					if (ui.actions.updateVersion.value) {
-						doc.save(File(doc.filePath + '/' + doc.name));
-						errors.push(decodeURI(doc.name) + ': [INFO] Converted from old version.');
-					} else {
-						errors.push(decodeURI(doc.name) + ': [ERR] Must be converted; skipped.');
-						continue;
-					}
-				}
-				if (!doc.saved) {
-					errors.push(decodeURI(doc.name) + ': [ERR] Is not saved; skipped.');
-					continue;
-				}
-			}
-
-			// Set measurement units
-			old.horizontalMeasurementUnits = doc.viewPreferences.horizontalMeasurementUnits;
-			old.verticalMeasurementUnits = doc.viewPreferences.verticalMeasurementUnits;
-			doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;
-			doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
-
-			checkFonts();
-			checkTextOverflow();
-
-			// Workflows loop
-			old.docSpreads = doc.spreads.length; // Save initial spreads count for extendRange hack (see exportDoc())
-			for (var step = 1; step < 3; step++) {
-				exp = ui['workflow' + step]; // Current workflow
-				if (!exp.isOn.value) continue;
-
-				saveLayersState();
-
-				// Update links
-				if (exp.updateLinks.value) updateLinks();
-
-				// Get base folder
-				baseFolder = decodeURI(doc.filePath);
-				if (exp.destination.isOn.value) {
-					baseFolder =
-						WIN ? decodeURI(exp.destination.path.fsName) : decodeURI(exp.destination.path.fullName);
-				}
-
-				// Get suffix
-				suffix = '';
-				if (exp.suffix.isOn.value) suffix = exp.suffix.et.text ? ('_' + exp.suffix.et.text) : '';
-
-				// Create subfolder
-				subfolder = '';
-				if (exp.subfolders.value && suffix) {
-					subfolder = suffix.replace(/^_/, '').replace(/\+.*$/, '').replace(/^\s+|\s+$/g, '');
-					if (!Folder(baseFolder + '/' + subfolder).exists) Folder(baseFolder + '/' + subfolder).create();
-				}
-
-				// Run script
-				if (exp.script.isOn.value) {
-					runScript(exp.script.path);
-					app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
-					app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
-				}
-
-				// Hide do-not-print layers
-				if (exp.skipDNP.isOn.value) {
-					for (i = 0; i < doc.layers.length; i++) {
-						if (/^[.-]/.test(doc.layers[i].name)
-								|| isInArray(doc.layers[i].name, settings.dnpLayers.split(/[,\r|\n]/g)))
-							doc.layers[i].visible = false;
-					}
-				}
-
-				// Hack: Append special folder names to the suffix
-				if (exp.suffix.isOn.value && /^_print/i.test(suffix)) {
-					if (((layer = doc.layers.itemByName('dielines')).isValid
-						|| (layer = doc.layers.itemByName('diecut')).isValid
-						|| (layer = doc.layers.itemByName('die cut')).isValid)
-						&& layer.visible
-						&& layer.printable
-					) suffix += '+diecut';
-					if ((layer = doc.layers.itemByName('white')).isValid
-						&& layer.visible
-						&& layer.printable
-					) suffix += '+white';
-					if ((layer = doc.layers.itemByName('foil')).isValid
-						&& layer.visible
-						&& layer.printable
-					) suffix += '+foil';
-					if ((layer = doc.layers.itemByName('varnish')).isValid
-						&& layer.visible
-						&& layer.printable
-					) suffix += '+varnish';
-				}
-
-				exportDoc(exp.asSpreads.value, exp.split.value, exp.preset.selection.text);
-
-				restoreLayersState();
-
-				// Restore measurement units
-				doc.viewPreferences.horizontalMeasurementUnits = old.horizontalMeasurementUnits;
-				doc.viewPreferences.verticalMeasurementUnits = old.verticalMeasurementUnits;
-
-				// Update documents
-				if (exp.docSave.isOn.value) {
-					if (exp.docSave.scope.mod.value) {
-						if (doc.modified) {
-							doc.save(exp.saveAs.enabled && exp.saveAs.value ?
-								File(doc.fullName) : undefined);
-						}
-					} else {
-						doc.save(File(doc.fullName));
-					}
-				}
-			}
-
-			// Close document
-			if (isFolderMode) doc.close(SaveOptions.NO);
-			else if (ui.actions.docClose.value) doc.close(SaveOptions.NO);
-		}
-
-		function checkFonts() {
-			var usedFonts = doc.fonts.everyItem().getElements();
-			for (var i = 0, n = usedFonts.length; i < n; i++) {
-				if (usedFonts[i].status !== FontStatus.INSTALLED) {
-					errors.push(decodeURI(doc.name) + ": [ERR] Font '" + usedFonts[i].name.replace(/\t/g, ' ') + "' is " +
-						String(usedFonts[i].status).toLowerCase().replace(/_/g, ' '));
-				}
-			}
-		}
-
-		function checkTextOverflow() {
-			var frm;
-			var frms = doc.allPageItems;
-			while ((frm = frms.shift())) {
-				if (frm.constructor.name !== 'TextFrame') continue;
-				if (frm.overflows && frm.parentPage) {
-					errors.push(decodeURI(doc.name) + ': [ERR] Text overflows.');
-					return;
-				}
-			}
-		}
-
-		function updateLinks() {
-			for (var i = 0, n = doc.links.length; i < n; i++) {
-				if (!doc.links[i].parent.parent.parentPage) continue;
-				switch (doc.links[i].status) {
-					case LinkStatus.LINK_OUT_OF_DATE:
-						doc.links[i].update();
-						break;
-					case LinkStatus.LINK_MISSING:
-					case LinkStatus.LINK_INACCESSIBLE:
-						errors.push(decodeURI(doc.name) + ": [ERR] Link '" + doc.links[i].name + "' not found.");
-						break;
-				}
-			}
-		}
-
-		function runScript(/*File*/scriptPath) {
-			try {
-				app.doScript(scriptPath,
-					getScriptLanguage(scriptPath.fsName.replace(/^.*\./, '')),
-					undefined,
-					UndoModes.ENTIRE_SCRIPT, 'Run script'
-				);
-			} catch (e) {
-				errors.push(decodeURI(doc.name) + ': [ERR] Script returned "' +
-					e.toString().replace(/\r|\n/g, '\u00B6') + '" (line: ' + e.line + ')');
-			}
-
-			function getScriptLanguage(/*string*/ext) {
-				return {
-					scpt:   WIN ? undefined : ScriptLanguage.APPLESCRIPT_LANGUAGE,
-					js:     ScriptLanguage.JAVASCRIPT,
-					jsx:    ScriptLanguage.JAVASCRIPT,
-					jsxbin: ScriptLanguage.JAVASCRIPT
-				}[ext];
-			}
-		}
-
-		function saveLayersState() {
-			var i, l;
-			for (i = 0; i < doc.layers.length; i++) {
-				l = doc.layers[i];
-				layersState.push({
-					layer:     l.name,
-					locked:    l.locked,
-					printable: l.printable,
-					visible:   l.visible
-				});
-				if (l.locked) l.locked = false;
-			}
-		}
-
-		function restoreLayersState() {
-			var i, l;
-			for (i = 0; i < layersState.length; i++) {
-				l = doc.layers.itemByName(layersState[i].layer);
-				if (l.isValid) {
-					l.locked    = layersState[i].locked;
-					l.printable = layersState[i].printable;
-					l.visible   = layersState[i].visible;
-				}
-			}
-			layersState = [];
-		}
-
-		function exportDoc(/*bool*/asSpreads, /*bool*/split, /*string*/preset) {
-			var fileSufx, fn, extendRange, range;
-			var target = asSpreads ? doc.spreads : doc.pages;
-			var isCombo = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*\+\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig.test(decodeURI(doc.name));
-			var baseName = decodeURI(doc.name).replace(/\.indd$/i, '');
-
-			if (split && !isCombo) { // Export separate pages
-				// Note: if a script doubles the number of pages/spreads, the extendRange hack exports them as pairs
-				extendRange = (doc.spreads.length === old.docSpreads * 2) && exp.asSpreads.value;
-				fileSufx = RegExp('([ ._-])([a-zA-Z]{' +
-					(extendRange ? target.length / 2 : target.length) + '})$', 'i').exec(baseName);
-				progressBar.update();
-				progressBar.init2(target.length);
-
-				for (var i = 0, n = target.length; i < n; i++) {
-					// Add a page/spread index
-					fn = baseName;
-					if (fileSufx) { // The target already has an index
-						fn = fn.replace(RegExp(fileSufx[0] + '$'), '') +
-							fileSufx[1] + fileSufx[2][extendRange && !(i % 2) ? i / 2 : i];
-					} else if (target.length > 1) { // Add index only if needed
-						fn += '_' + zeroPad(extendRange && !(i % 2) ? i / 2 + 1 : i + 1, String(n).length);
-					}
-					// Get unique export file name
-					fn = uniqueName(fn + suffix, baseFolder + (subfolder ? '/' + subfolder : ''), exp.overwrite.value);
-					// Get page range
-					if (asSpreads) { // Export as spreads
-						range = String(target[i].pages[0].documentOffset + 1) + '-' +
-							String(target[extendRange ? i + 1 : i].pages[-1].documentOffset + 1);
-						if (extendRange && !(i % 2)) i++;
-					} else { // Export as pages
-						range = String(target[i].documentOffset + 1);
-					}
-					progressBar.update2();
-					progressBar.msg(baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn);
-					exportToPDF(fn, range, app.pdfExportPresets.item(preset));
-				}
-			} else { // Export all pages
-				baseName += suffix;
-				fn = uniqueName(baseName, baseFolder + (subfolder ? '/' + subfolder : ''), exp.overwrite.value);
-				progressBar.update();
-				progressBar.msg(baseFolder === decodeURI(doc.filePath) ? decodeURI(File(fn).name) : fn);
-				exportToPDF(fn, PageRange.ALL_PAGES, app.pdfExportPresets.item(preset));
-			}
-
-			function uniqueName(/*string*/filename, /*string*/folder, /*bool*/overwrite) {
-				var pdfFiles;
-				var pdfName = filename + '.pdf';
-				var unique = folder + '/' + pdfName;
-				var baseRE = RegExp('^' +
-					filename.replace(regexTokensRE, '\\$&') + // Escape regex tokens
-					(suffix ? '[ _-]*' : '[ _-]+') +
-					'\\d+.*.pdf$', 'i');
-
-				// Get a list of existing PDFs
-				if (exp.subfolders.value) {
-					pdfFiles = getFilesRecursively(Folder(folder), true, 'pdf');
-				} else {
-					pdfFiles = Folder(folder).getFiles(function (f) {
-						if (!(f instanceof File) || !/\.pdf$/i.test(f)) return false;
-						return baseRE.test(decodeURI(f.name));
-					});
-				}
-
-				// Find the last index
-				var fileIndex;
-				var fileIndexRE = RegExp('^' +
-					filename.replace(regexTokensRE, '\\$&') + // Escape regex tokens
-					(suffix ? '[ _-]*' : '[ _-]+') +
-					'(\\d+)([ _-]*v *\\d*)?([ _-]*copy *\\d*)?([ _-]*v *\\d*)?$', 'i');
-				var fileLastIndex = 0;
-				for (var i = 0, n = pdfFiles.length; i < n; i++) {
-					fileIndex = fileIndexRE.exec(decodeURI(pdfFiles[i].name).replace(/\.pdf$/i, ''));
-					if (fileIndex) fileLastIndex = Math.max(fileLastIndex, Number(fileIndex[1]));
-				}
-
-				// Get unique name: no index means index = 1, so set it to 2, else increment it; add a space if needed
-				if (fileLastIndex === 0) {
-					if (!overwrite)
-						if (File(unique).exists) unique = unique.replace(/\.pdf$/i, '') + (suffix ? '' : ' ') + '2.pdf';
-				} else {
-					if (!overwrite) fileLastIndex++;
-					unique = unique.replace(/\.pdf$/i, '') + (suffix ? '' : ' ') + String(fileLastIndex) + '.pdf';
-				}
-				return unique;
-			}
-
-			function exportToPDF(/*string*/filename, /*string|Enum*/pageRange, /*pdfExportPreset*/pdfPreset) {
-				if (ScriptUI.environment.keyboardState.keyName === 'Escape') cleanupAndExit();
-				var fPg, lPg, spreadWidth;
-
-				// Load preset settings
-				for (var key in pdfPreset) {
-					if (Object.prototype.hasOwnProperty.call(pdfPreset, key))
-						try { app.pdfExportPreferences[key] = pdfPreset[key]; } catch (e) {}
-				}
-
-				// Override some settings
-				app.pdfExportPreferences.pageRange = pageRange;
-				app.pdfExportPreferences.cropMarks = exp.cropMarks.value;
-				app.pdfExportPreferences.pageInformationMarks = exp.pageInfo.value;
-				app.pdfExportPreferences.includeSlugWithPDF = exp.slugArea.value;
-				app.pdfExportPreferences.exportReaderSpreads = exp.asSpreads.value;
-				app.pdfExportPreferences.exportLayers = exp.exportLayers.enabled && exp.exportLayers.value;
-
-				// Custom DPI
-				if (exp.customDPI.isOn.value && app.pdfExportPreferences.colorBitmapSampling !== Sampling.NONE) {
-					app.pdfExportPreferences.colorBitmapSamplingDPI = Number(exp.customDPI.et.text);
-					app.pdfExportPreferences.grayscaleBitmapSamplingDPI = Number(exp.customDPI.et.text);
-					app.pdfExportPreferences.monochromeBitmapSamplingDPI = (function (/*number*/dpi) {
-						if (dpi <= 96) return 300;
-						else if (dpi <= 150) return 600;
-						else if (dpi < 300) return 1200;
-						return 2400;
-					}(Number(exp.customDPI.et.text)));
-				}
-
-				// Custom bleed
-				app.pdfExportPreferences.useDocumentBleedWithPDF = !exp.customBleed.isOn.value;
-				if (app.pdfExportPreferences.useDocumentBleedWithPDF) {
-					app.pdfExportPreferences.pageMarksOffset = Math.min(
-						Math.max(
-							doc.documentPreferences.documentBleedTopOffset,
-							doc.documentPreferences.documentBleedInsideOrLeftOffset,
-							doc.documentPreferences.documentBleedBottomOffset,
-							doc.documentPreferences.documentBleedOutsideOrRightOffset
-						) + 1, // Offset page marks 1 mm --
-						UnitValue('72 pt').as('mm')); // -- but limit to 72 pt
-				} else {
-					app.pdfExportPreferences.bleedTop =
-					app.pdfExportPreferences.bleedBottom =
-					app.pdfExportPreferences.bleedInside =
-					app.pdfExportPreferences.bleedOutside = Number(exp.customBleed.et.text);
-					app.pdfExportPreferences.pageMarksOffset =
-						Math.min(app.pdfExportPreferences.bleedTop + 1, UnitValue('72 pt').as('mm'));
-				}
-
-				// Hack: omit printer's marks if bleed is zero --
-				// if (doc.documentPreferences.documentBleedTopOffset +
-				// 	doc.documentPreferences.documentBleedInsideOrLeftOffset +
-				// 	doc.documentPreferences.documentBleedBottomOffset +
-				// 	doc.documentPreferences.documentBleedOutsideOrRightOffset === 0 &&
-				// 	!app.pdfExportPreferences.includeSlugWithPDF) { // -- but not if user wants slug
-				// 	app.pdfExportPreferences.cropMarks = false;
-				// 	app.pdfExportPreferences.pageInformationMarks = false;
-				// }
-
-				// Hack: don't include page information on pages with very small widths
-				if (pageRange === PageRange.ALL_PAGES) {
-					fPg = target.constructor.name === 'Spreads' ? target[0].pages[0]  : target[0];
-					lPg = target.constructor.name === 'Spreads' ? target[0].pages[-1] : target[0];
-				} else if (/-/.test(pageRange)) {
-					fPg = doc.pages.item(pageRange.slice(0, pageRange.lastIndexOf('-')));
-					lPg = doc.pages.item(pageRange.slice(pageRange.lastIndexOf('-') + 1));
-				} else { fPg = lPg = doc.pages.item(pageRange); }
-				spreadWidth = (target.constructor.name === 'Spreads' ? lPg.bounds[3] : fPg.bounds[3]) - fPg.bounds[1];
-				if (spreadWidth < UnitValue('335 pt').as('mm')) app.pdfExportPreferences.pageInformationMarks = false;
-
-				// Export
-				doc.exportFile(ExportFormat.PDF_TYPE, File(filename), false);
-			}
-		}
-
-		function zeroPad(/*number*/number, /*number*/digits) {
-			number = number.toString();
-			while (number.length < digits) number = '0' + number;
-			return Number(number);
-		}
+	function zeroPad(/*number*/number, /*number*/digits) {
+		number = number.toString();
+		while (number.length < digits) number = '0' + number;
+		return number;
 	}
 
-	function cleanupAndExit() {
+	function cleanup() {
 		app.scriptPreferences.measurementUnit = old.measurementUnit;
 		app.scriptPreferences.userInteractionLevel = old.userInteractionLevel;
 		app.pdfExportPreferences.viewPDF = old.viewPDF;
 		try { progressBar.close(); } catch (e) {}
 		if (errors.length > 0) report(errors, 'Errors', 'auto', true);
-		exit();
 	}
 }
