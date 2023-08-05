@@ -226,13 +226,20 @@ isInArray(searchValue, array) // True: matches 2nd array element
 
 ### log(_message_)
 
-Appends a debugging line to a file saved on the desktop with the name of the running script (e.g., `active-script.log`), containing a timestamp, a stack trace, and a message. Without arguments, it just appends an empty line. It's a crude, but effective tool.
+Appends a debugging line to a file saved on the desktop with the name of the running script (e.g., `active-script.log`), containing a timestamp, a stack trace, and a message.
 
 ##### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
-|`message`|`string`|A list of messages (`part1`, `part2`, `part3`, etc.) that will be appended to the timestamp and the stack trace; you can append them to the previous line using `+` as the first part (or an empty string to skip the separator).|
+|`message`|`string`|A comma separated list of messages (`part1`, `part2`, `part3`, etc.) that will be displayed after a timestamp and the stack trace.|
+
+Without arguments it just appends an empty line.
+
+The first argument can be a statement:
+- `+`: appends to the previous line;
+- empty string: appends to the previous line, but skipping the separator;
+- `^` or `$`: marks the start or end of a block.
 
 ##### Example:
 
