@@ -1,5 +1,5 @@
 /*
-	Dump links 23.7.11
+	Dump links 23.8.6
 	(c) 2023 Paul Chiorean <jpeg@basement.ro>
 
 	Saves document's links to a TSV file compatible with `ReplaceLinks.jsx`
@@ -35,7 +35,7 @@ linkS = (function () {
 	return s;
 }());
 linkS = unique(linkS);
-while ((l = linkS.shift())) dataFile.writeln('\t' + File(l).fullName);
+while ((l = linkS.shift())) dataFile.writeln(File(l).fullName);
 dataFile.close();
 
 // Get unique array elements
