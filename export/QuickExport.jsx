@@ -1,5 +1,5 @@
 /*
-	Quick export 23.8.5
+	Quick export 23.8.6
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -52,8 +52,8 @@ function QuickExport() {
 		destination: {}
 	};
 	var isFolderMode = (app.documents.length === 0);
-	var MMDD = zeroPad((new Date()).getMonth() + 1, 2) +
-		'.' + zeroPad((new Date()).getDate(), 2);
+	var MMDD = zeroPad((new Date()).getMonth() + 1, 2)
+		+ '.' + zeroPad((new Date()).getDate(), 2);
 
 	var VER = '3.8';
 	var defaults = {
@@ -158,7 +158,7 @@ function QuickExport() {
 
 		// Init progress bar
 		maxCounter = docs.length * ((ui.workflow1.isOn.value ? 1 : 0) + (ui.workflow2.isOn.value ? 1 : 0));
-		for (i = 0, n = docs.length; i < n; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
+		for (i = 0; i < docs.length; i++) pbWidth = Math.max(pbWidth, decodeURI(docs[i].name).length);
 		progressBar = new ProgressBar('Exporting', maxCounter, pbWidth + 10);
 
 		// Documents loop
@@ -210,7 +210,7 @@ function QuickExport() {
 			// Workflows loop
 			old.docSpreads = doc.spreads.length; // Save initial spreads count for 'asPairs' (see 'exportDoc()')
 			for (var step = 1; step < 3; step++) {
-				exp = ui['workflow' + step]; // Current workflow
+				exp = ui['workflow' + step]; // `exp` = the current workflow
 				if (!exp.isOn.value) continue;
 
 				saveLayersState();
@@ -221,8 +221,9 @@ function QuickExport() {
 				// Get base folder
 				baseFolder = decodeURI(doc.filePath);
 				if (exp.destination.isOn.value) {
-					baseFolder =
-						WIN ? decodeURI(exp.destination.path.fsName) : decodeURI(exp.destination.path.fullName);
+					baseFolder = WIN
+						? decodeURI(exp.destination.path.fsName)
+						: decodeURI(exp.destination.path.fullName);
 				}
 
 				// Get suffix
@@ -234,7 +235,9 @@ function QuickExport() {
 				subSuffix = '';
 				subDate = '';
 				if (exp.sortBySuffix.value && suffix) {
-					subSuffix = suffix.replace(/^_/, '').replace(/\+.*$/, '').replace(/^\s+|\s+$/g, '');
+					subSuffix = suffix.replace(/^_/, '')
+						.replace(/\+.*$/, '')
+						.replace(/^\s+|\s+$/g, '');
 					destFolder = baseFolder + '/' + subSuffix;
 					if (!Folder(destFolder).exists) Folder(destFolder).create();
 				}
@@ -259,7 +262,7 @@ function QuickExport() {
 					}
 				}
 
-				// Hack: Append special folder names to the suffix
+				// Hack: Append special layers names to the suffix
 				if (exp.suffix.isOn.value && /^_print/i.test(suffix)) {
 					if (((layer = doc.layers.itemByName('dielines')).isValid
 						|| (layer = doc.layers.itemByName('diecut')).isValid
@@ -293,8 +296,9 @@ function QuickExport() {
 				if (exp.docSave.isOn.value) {
 					if (exp.docSave.scope.mod.value) {
 						if (doc.modified) {
-							doc.save(exp.saveAs.enabled && exp.saveAs.value ?
-								File(doc.fullName) : undefined);
+							doc.save(exp.saveAs.enabled && exp.saveAs.value
+								? File(doc.fullName)
+								: undefined);
 						}
 					} else {
 						doc.save(File(doc.fullName));
@@ -311,8 +315,11 @@ function QuickExport() {
 			var usedFonts = doc.fonts.everyItem().getElements();
 			for (var i = 0, n = usedFonts.length; i < n; i++) {
 				if (usedFonts[i].status !== FontStatus.INSTALLED) {
-					errors.push(decodeURI(doc.name) + ": [ERR] Font '" + usedFonts[i].name.replace(/\t/g, ' ') + "' is " +
-						String(usedFonts[i].status).toLowerCase().replace(/_/g, ' '));
+					errors.push(decodeURI(doc.name)
+						+ ": [ERR] Font '" + usedFonts[i].name.replace(/\t/g, ' ')
+						+ "' is "
+						+ String(usedFonts[i].status).toLowerCase().replace(/_/g, ' ')
+					);
 				}
 			}
 		}
@@ -338,7 +345,11 @@ function QuickExport() {
 						break;
 					case LinkStatus.LINK_MISSING:
 					case LinkStatus.LINK_INACCESSIBLE:
-						errors.push(decodeURI(doc.name) + ": [ERR] Link '" + doc.links[i].name + "' not found.");
+						errors.push(decodeURI(doc.name)
+							+ ": [ERR] Link '"
+							+ doc.links[i].name
+							+ "' not found."
+						);
 						break;
 				}
 			}
@@ -352,13 +363,16 @@ function QuickExport() {
 					UndoModes.ENTIRE_SCRIPT, 'Run script'
 				);
 			} catch (e) {
-				errors.push(decodeURI(doc.name) + ': [ERR] Script returned "' +
-					e.toString().replace(/\r|\n/g, '\u00B6') + '" (line: ' + e.line + ')');
+				errors.push(decodeURI(doc.name)
+					+ ': [ERR] Script returned "'
+					+ e.toString().replace(/\r|\n/g, '\u00B6')
+					+ '" (line: ' + e.line + ')'
+				);
 			}
 
 			function getScriptLanguage(/*string*/ext) {
 				return {
-					scpt:   WIN ? undefined : ScriptLanguage.APPLESCRIPT_LANGUAGE,
+					scpt: WIN ? undefined : ScriptLanguage.APPLESCRIPT_LANGUAGE,
 					js:     ScriptLanguage.JAVASCRIPT,
 					jsx:    ScriptLanguage.JAVASCRIPT,
 					jsxbin: ScriptLanguage.JAVASCRIPT
@@ -399,80 +413,91 @@ function QuickExport() {
 			var isCombo = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*\+\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig.test(decodeURI(doc.name));
 			var baseName = decodeURI(doc.name).replace(/\.indd$/i, '');
 
-			if (split && !isCombo) { // Export separate pages
-				// Note: if a script doubles the number of pages/spreads, we'll exports pairs
+			if (split && !isCombo) { // Export separate pages or spreads
+				// If the document name ends with a separator (space/dot/underline/hyphen)
+				// followed by a sequence of letters equal to the number of spreads, each
+				// exported spread will have the letter corresponding to its index appended
+				// to the name: `Doc_ABC` -> 'Doc_A, Doc_B, Doc_C.
+				// Note: If a script doubles the number of spreads, we'll split by pairs
 				asPairs = (doc.spreads.length === old.docSpreads * 2) && asSpreads;
-				fileSufx = RegExp('([ ._-])([a-zA-Z]{' +
-					(asPairs ? scope.length / 2 : scope.length) + '})$', 'i').exec(baseName);
+				fileSufx = RegExp('([ ._-])([a-zA-Z]{'
+					+ (asPairs ? scope.length / 2 : scope.length)
+					+ '})$', 'i').exec(baseName);
 				progressBar.update();
 				progressBar.init2(scope.length);
 
 				for (var i = 0, n = scope.length; i < n; i++) {
 					// Add a page/spread index
 					destination = baseName;
-					if (fileSufx) { // Already has an index
-						destination = destination.replace(RegExp(fileSufx[0] + '$'), '') +
-							fileSufx[1] + fileSufx[2][asPairs && !(i % 2) ? i / 2 : i];
-					} else if (scope.length > 1) { // Add index only if needed
+					if (fileSufx) { // It has an `_ABC` index
+						destination = destination.replace(RegExp(fileSufx[0] + '$'), '')
+							+ fileSufx[1]
+							+ fileSufx[2][asPairs && !(i % 2) ? i / 2 : i];
+					} else if (scope.length > 1) { // Add numeric index
 						destination += '_' + zeroPad(asPairs && !(i % 2) ? i / 2 + 1 : i + 1, String(n).length);
 					}
+
 					// Get a unique file path for export
 					destination = getUniquePath(destination + suffix);
+
 					// Get page range
 					if (asSpreads) { // Export as spreads
-						range = String(scope[i].pages[0].documentOffset + 1) + '-' +
-							String(scope[asPairs ? i + 1 : i].pages[-1].documentOffset + 1);
+						range = String(scope[i].pages[0].documentOffset + 1)
+							+ '-'
+							+ String(scope[asPairs ? i + 1 : i].pages[-1].documentOffset + 1);
 						if (asPairs && !(i % 2)) i++;
 					} else { // Export as pages
 						range = String(scope[i].documentOffset + 1);
 					}
+
 					progressBar.update2();
-					progressBar.msg(baseFolder === decodeURI(doc.filePath) ?
-						decodeURI(File(destination).name) :
-						destination);
+					progressBar.msg(baseFolder === decodeURI(doc.filePath)
+						? decodeURI(File(destination).name)
+						: destination);
+
 					exportToPDF(destination, range, app.pdfExportPresets.item(preset));
 				}
 			} else { // Export all pages
 				destination = getUniquePath(baseName + suffix);
+
 				progressBar.update();
-				progressBar.msg(baseFolder === decodeURI(doc.filePath) ?
-					decodeURI(File(destination).name) :
-					destination);
+				progressBar.msg(baseFolder === decodeURI(doc.filePath)
+					? decodeURI(File(destination).name)
+					: destination);
+
 				exportToPDF(destination, PageRange.ALL_PAGES, app.pdfExportPresets.item(preset));
 			}
 
 			function getUniquePath(/*string*/filename) {
-				var pdfFiles, fileIndex, fileLastIndex, fileNextIndex, unique;
-				var fileIndexRE = RegExp('^'
-					+ filename.replace(regexTokensRE, '\\$&') // Escape regex tokens
-					+ '(?:[ _-]*)' // Separator
-					+ '(\\d+)?'    // Previous index
-					+ '(?:.*)$');  // Extra stuff
+				var pdfFiles, fileIndexRE, fileIndex, lastIndex, nextIndex;
 
 				// Get a list of existing PDFs
 				pdfFiles = getFilesRecursively(Folder(baseFolder), true, 'pdf');
 				if (pdfFiles.length > 0) pdfFiles = pdfFiles.sort(naturalSorter);
 
-				// Get the last index
-				fileLastIndex = 0;
+				// Get the last index by matching 'filename [separator] ([previous index]) [stuff]
+				lastIndex = 0;
+				fileIndexRE = RegExp('^'
+					+ filename.replace(regexTokensRE, '\\$&') // Escape regex tokens
+					+ '(?:[ _-]*)' // Separator
+					+ '(\\d+)?'    // Previous index
+					+ '(?:.*)$');  // Extra stuff
 				for (var i = 0, n = pdfFiles.length; i < n; i++) {
 					fileIndex = fileIndexRE.exec(decodeURI(pdfFiles[i].name).replace(/\.pdf$/i, ''));
 					if (fileIndex)
-						fileLastIndex = Math.max(fileLastIndex, isNaN(fileIndex[1]) ? 1 : Number(fileIndex[1]));
+						lastIndex = Math.max(lastIndex, isNaN(fileIndex[1]) ? 1 : Number(fileIndex[1]));
 				}
 
-				// Get the next index
-				fileNextIndex = exp.overwrite.value ? fileLastIndex : fileLastIndex + 1;
-				fileNextIndex = (fileNextIndex === 0 || fileNextIndex === 1) ? '' : String(fileNextIndex);
+				// Get the next index; add only values > 1
+				nextIndex = exp.overwrite.value ? lastIndex : lastIndex + 1;
+				nextIndex = nextIndex > 1 ? String(nextIndex) : '';
 
-				unique = destFolder
-					+ (exp.sortByDate.value ? '/' + subDate : '')
-					+ '/' + filename
-					+ (!suffix && fileNextIndex ? ' ' : '')
-					+ fileNextIndex
+				return destFolder                       // Base folder + [suffix]
+					+ (exp.sortByDate.value ? '/' + subDate : '') // [Date subfolder]
+					+ '/' + filename                    // Base filename
+					+ (!suffix && nextIndex ? ' ' : '') // [Separator]
+					+ nextIndex                         // Index
 					+ '.pdf';
-
-				return unique;
 			}
 
 			function exportToPDF(/*string*/filename, /*string|Enum*/pageRange, /*pdfExportPreset*/pdfPreset) {
@@ -525,17 +550,17 @@ function QuickExport() {
 						Math.min(app.pdfExportPreferences.bleedTop + 1, UnitValue('72 pt').as('mm'));
 				}
 
-				// Hack: omit printer's marks if bleed is zero --
-				// if (doc.documentPreferences.documentBleedTopOffset +
-				// 	doc.documentPreferences.documentBleedInsideOrLeftOffset +
-				// 	doc.documentPreferences.documentBleedBottomOffset +
-				// 	doc.documentPreferences.documentBleedOutsideOrRightOffset === 0 &&
-				// 	!app.pdfExportPreferences.includeSlugWithPDF) { // -- but not if user wants slug
+				// Hack: Omit printer's marks if bleed is zero --
+				// if ((doc.documentPreferences.documentBleedTopOffset
+				// 		+ doc.documentPreferences.documentBleedInsideOrLeftOffset
+				// 		+ doc.documentPreferences.documentBleedBottomOffset
+				// 		+ doc.documentPreferences.documentBleedOutsideOrRightOffset === 0)
+				// 		&& !app.pdfExportPreferences.includeSlugWithPDF) { // -- but not if user wants slug
 				// 	app.pdfExportPreferences.cropMarks = false;
 				// 	app.pdfExportPreferences.pageInformationMarks = false;
 				// }
 
-				// Hack: don't include page information on pages with very small widths
+				// Hack: Don't include page information on pages with very small widths
 				if (pageRange === PageRange.ALL_PAGES) {
 					fPg = scope.constructor.name === 'Spreads' ? scope[0].pages[0]  : scope[0];
 					lPg = scope.constructor.name === 'Spreads' ? scope[0].pages[-1] : scope[0];
@@ -680,7 +705,8 @@ function QuickExport() {
 						ui[workflow].customBleed.isOn.onClick();
 						ui[workflow].customBleed.et.text =
 							Math.max(pdfExpPreset.bleedTop, pdfExpPreset.bleedInside,
-							pdfExpPreset.bleedBottom, pdfExpPreset.bleedOutside).toFixed(2)
+							pdfExpPreset.bleedBottom, pdfExpPreset.bleedOutside)
+								.toFixed(2)
 								.replace(/\.?0+$/, '');
 					}
 
@@ -690,24 +716,26 @@ function QuickExport() {
 					this.helpTip = (function (/*pdfExportPreset*/preset) {
 						var msg = [];
 
-						msg.push('Profile: ' +
-							(preset.pdfDestinationProfile.constructor.name === 'String'
+						msg.push('Profile: '
+							+ (preset.pdfDestinationProfile.constructor.name === 'String'
 								? preset.effectivePDFDestinationProfile
-								: String(preset.pdfDestinationProfile).toLowerCase()
+								: String(preset.pdfDestinationProfile)
+									.toLowerCase()
 									.replace(/_/g, ' ')
 									.replace('use ', '')
 							)
 						);
 
 						if (preset.standardsCompliance !== PDFXStandards.NONE) {
-							msg.push('Standard: ' +
-								String(preset.standardsCompliance).toLowerCase()
+							msg.push('Standard: '
+								+ String(preset.standardsCompliance)
+									.toLowerCase()
 									.replace(/^(pdfx)(.+?)(\d{4})(_standard)$/, 'PDF/X-$2:$3')
 							);
 						}
 
-						msg.push('Compatibility: Acrobat ' +
-							(function (str) {
+						msg.push('Compatibility: Acrobat '
+							+ (function (str) {
 								return {
 									4: '4 (PDF 1.3)',
 									5: '5 (PDF 1.4)',
@@ -718,8 +746,9 @@ function QuickExport() {
 							}(String(preset.acrobatCompatibility).replace('ACROBAT_', '')))
 						);
 
-						msg.push('Color space: ' +
-							String(preset.pdfColorSpace).toLowerCase()
+						msg.push('Color space: '
+							+ String(preset.pdfColorSpace)
+								.toLowerCase()
 								.replace(/_/g, ' ')
 								.replace(' color space', '')
 								.replace('rgb', 'RGB')
@@ -729,20 +758,26 @@ function QuickExport() {
 						if (preset.colorBitmapSampling === Sampling.NONE) {
 							msg.push('Sampling: none');
 						} else {
-							msg.push('Sampling: ' + String(preset.colorBitmapSampling).toLowerCase()
-								.replace(/_/g, ' '));
+							msg.push('Sampling: '
+								+ String(preset.colorBitmapSampling)
+									.toLowerCase()
+									.replace(/_/g, ' '));
 							msg.push('Resolution: ' + preset.colorBitmapSamplingDPI + ' dpi');
 						}
 
-						msg.push('Compression: ' +
-							String(preset.colorBitmapCompression).toLowerCase()
+						msg.push('Compression: '
+							+ String(preset.colorBitmapCompression)
+								.toLowerCase()
 								.replace(/_/g, ' ')
 								.replace(' compression', '')
 						);
 						if (preset.colorBitmapCompression !== BitmapCompression.NONE
 								&& preset.colorBitmapCompression !== BitmapCompression.ZIP) {
-							msg.push('Quality: ' + String(preset.colorBitmapQuality).toLowerCase()
-								.replace(/_/g, ' '));
+							msg.push('Quality: '
+								+ String(preset.colorBitmapQuality)
+									.toLowerCase()
+									.replace(/_/g, ' ')
+							);
 						}
 
 						msg.push('\nExport as ' + (preset.exportReaderSpreads ? 'spreads' : 'pages'));
@@ -750,8 +785,8 @@ function QuickExport() {
 						if (preset.useDocumentBleedWithPDF) {
 							msg.push('Use document bleed');
 						} else {
-							msg.push('Use custom bleed: ' +
-								Math.max(preset.bleedTop, preset.bleedInside, preset.bleedBottom, preset.bleedOutside)
+							msg.push('Use custom bleed: '
+								+ Math.max(preset.bleedTop, preset.bleedInside, preset.bleedBottom, preset.bleedOutside)
 									.toFixed(2)
 									.replace(/\.?0+$/, '') + ' mm'
 							);
@@ -761,12 +796,12 @@ function QuickExport() {
 								|| preset.pageInformationMarks
 								|| preset.includeSlugWithPDF
 								|| preset.exportLayers) {
-							msg.push('Include ' +
-								((preset.cropMarks ? 'crop marks, ' : '') +
-								(preset.pageInformationMarks ? 'page info, ' : '') +
-								(preset.includeSlugWithPDF ? 'slug area, ' : '') +
-								(preset.exportLayers ? 'layers, ' : ''))
-									.replace(/, $/, '')
+							msg.push('Include '
+								+ ((preset.cropMarks ? 'crop marks, ' : '')
+									+ (preset.pageInformationMarks ? 'page info, ' : '')
+									+ (preset.includeSlugWithPDF ? 'slug area, ' : '')
+									+ (preset.exportLayers ? 'layers, ' : '')
+								).replace(/, $/, '')
 							);
 						}
 
@@ -792,7 +827,10 @@ function QuickExport() {
 				};
 
 				ui[workflow].customDPI.et.onDeactivate = function () {
-					this.text = Number(this.text.replace(/[^\d.,]/gi, '').replace(',', '.'));
+					this.text = Number(this.text
+						.replace(/[^\d.,]/gi, '')
+						.replace(',', '.')
+					);
 					if (isNaN(this.text) || this.text < 9 || this.text > 2400) {
 						this.parent.isOn.value = false;
 						this.parent.isOn.onClick();
@@ -812,7 +850,10 @@ function QuickExport() {
 
 				ui[workflow].customBleed.et.onDeactivate = function () {
 					if (this.text === '') this.text = '0';
-					this.text = Number(this.text.replace(/[^\d.,]/gi, '').replace(',', '.'));
+					this.text = Number(this.text
+						.replace(/[^\d.,]/gi, '')
+						.replace(',', '.')
+					);
 					if (isNaN(this.text) || UnitValue(this.text, 'mm').as('pt') > 432.0001) {
 						this.parent.isOn.value = false;
 						this.parent.isOn.onClick();
@@ -885,7 +926,11 @@ function QuickExport() {
 					if (this.parent.path && decodeURI(this.parent.path.name) === this.text) return;
 					var newFile = File(this.text);
 					if (newFile.exists
-						&& (WIN ? /\.(jsx*(bin)*)$/i.test(newFile) : /\.(jsx*(bin)*|scpt)$/i.test(newFile))) {
+							&& (WIN
+								? /\.(jsx*(bin)*)$/i.test(newFile)
+								: /\.(jsx*(bin)*|scpt)$/i.test(newFile)
+							)
+						) {
 						this.parent.path = newFile;
 						this.text = decodeURI(newFile.name);
 						this.helpTip = WIN ? decodeURI(newFile.fsName) : decodeURI(newFile.fullName);
@@ -948,7 +993,7 @@ function QuickExport() {
 
 				ui[workflow].suffix.isOn.onClick = function () {
 					this.parent.et.enabled = this.value;
-					this.parent.parent.parent.sortBySuffix.enabled = this.value && this.parent.et.text.length > 0;
+					this.parent.parent.parent.sortBySuffix.enabled = (this.value && this.parent.et.text.length > 0);
 					this.parent.et.onChange();
 				};
 
@@ -990,31 +1035,31 @@ function QuickExport() {
 					ui[workflow].label.text = settings[workflow].label;
 					ui[workflow].preset.selection =
 						findPresetIndex(settings[workflow].presetName, ui[workflow].preset.items);
-					ui[workflow].cropMarks.value = settings[workflow].presetOptions.cropMarks;
-					ui[workflow].pageInfo.value = settings[workflow].presetOptions.pageInfo;
-					ui[workflow].slugArea.value = settings[workflow].presetOptions.slugArea;
-					ui[workflow].asSpreads.value = settings[workflow].presetOptions.asSpreads;
-					ui[workflow].customDPI.isOn.value = settings[workflow].presetOptions.customDPI.active;
-					ui[workflow].customDPI.et.text = settings[workflow].presetOptions.customDPI.value;
-					ui[workflow].customBleed.isOn.value = settings[workflow].presetOptions.customBleed.active;
-					ui[workflow].customBleed.et.text = settings[workflow].presetOptions.customBleed.value;
-					ui[workflow].exportLayers.value = settings[workflow].presetOptions.exportLayers;
-					ui[workflow].updateLinks.value = settings[workflow].docActions.updateLinks;
-					ui[workflow].skipDNP.isOn.value = settings[workflow].docActions.skipDNP;
-					ui[workflow].script.file.text = settings[workflow].docActions.script.value;
-					ui[workflow].script.isOn.value = settings[workflow].docActions.script.active;
+					ui[workflow].cropMarks.value         = settings[workflow].presetOptions.cropMarks;
+					ui[workflow].pageInfo.value          = settings[workflow].presetOptions.pageInfo;
+					ui[workflow].slugArea.value          = settings[workflow].presetOptions.slugArea;
+					ui[workflow].asSpreads.value         = settings[workflow].presetOptions.asSpreads;
+					ui[workflow].customDPI.isOn.value    = settings[workflow].presetOptions.customDPI.active;
+					ui[workflow].customDPI.et.text       = settings[workflow].presetOptions.customDPI.value;
+					ui[workflow].customBleed.isOn.value  = settings[workflow].presetOptions.customBleed.active;
+					ui[workflow].customBleed.et.text     = settings[workflow].presetOptions.customBleed.value;
+					ui[workflow].exportLayers.value      = settings[workflow].presetOptions.exportLayers;
+					ui[workflow].updateLinks.value       = settings[workflow].docActions.updateLinks;
+					ui[workflow].skipDNP.isOn.value      = settings[workflow].docActions.skipDNP;
+					ui[workflow].script.file.text        = settings[workflow].docActions.script.value;
+					ui[workflow].script.isOn.value       = settings[workflow].docActions.script.active;
 					ui[workflow].destination.folder.text = settings[workflow].outputOptions.destination.value;
-					ui[workflow].destination.isOn.value = settings[workflow].outputOptions.destination.active;
-					ui[workflow].suffix.et.text = settings[workflow].outputOptions.suffix.value;
-					ui[workflow].suffix.isOn.value = settings[workflow].outputOptions.suffix.active;
-					ui[workflow].sortBySuffix.value = settings[workflow].outputOptions.sortBySuffix;
-					ui[workflow].sortByDate.value = settings[workflow].outputOptions.sortByDate;
-					ui[workflow].split.value = settings[workflow].outputOptions.split;
-					ui[workflow].overwrite.value = settings[workflow].outputOptions.overwrite;
-					ui[workflow].docSave.isOn.value = settings[workflow].outputOptions.docSave.active;
+					ui[workflow].destination.isOn.value  = settings[workflow].outputOptions.destination.active;
+					ui[workflow].suffix.et.text          = settings[workflow].outputOptions.suffix.value;
+					ui[workflow].suffix.isOn.value       = settings[workflow].outputOptions.suffix.active;
+					ui[workflow].sortBySuffix.value      = settings[workflow].outputOptions.sortBySuffix;
+					ui[workflow].sortByDate.value        = settings[workflow].outputOptions.sortByDate;
+					ui[workflow].split.value             = settings[workflow].outputOptions.split;
+					ui[workflow].overwrite.value         = settings[workflow].outputOptions.overwrite;
+					ui[workflow].docSave.isOn.value      = settings[workflow].outputOptions.docSave.active;
 					ui[workflow].docSave.scope.mod.value = settings[workflow].outputOptions.docSave.scope[0];
 					ui[workflow].docSave.scope.all.value = settings[workflow].outputOptions.docSave.scope[1];
-					ui[workflow].saveAs.value = settings[workflow].outputOptions.docSave.saveAs;
+					ui[workflow].saveAs.value            = settings[workflow].outputOptions.docSave.saveAs;
 				}
 				ui.actions.updateVersion.value = settings.updateVersion;
 				ui.actions.docClose.value = settings.docClose;
@@ -1038,29 +1083,29 @@ function QuickExport() {
 					workflow = 'workflow' + i;
 					settings[workflow] = {};
 					settings[workflow].active = ui[workflow].isOn.value;
-					settings[workflow].label = ui[workflow].label.text;
+					settings[workflow].label  = ui[workflow].label.text;
 					settings[workflow].presetName = ui[workflow].preset.selection.text;
 					settings[workflow].presetOptions = {
 						cropMarks: ui[workflow].cropMarks.value,
-						pageInfo: ui[workflow].pageInfo.value,
-						slugArea: ui[workflow].slugArea.value,
+						pageInfo:  ui[workflow].pageInfo.value,
+						slugArea:  ui[workflow].slugArea.value,
 						asSpreads: ui[workflow].asSpreads.value,
 						customDPI: {
 							active: ui[workflow].customDPI.isOn.value,
-							value: ui[workflow].customDPI.et.text
+							value:  ui[workflow].customDPI.et.text
 						},
 						customBleed: {
 							active: ui[workflow].customBleed.isOn.value,
-							value: ui[workflow].customBleed.et.text
+							value:  ui[workflow].customBleed.et.text
 						},
 						exportLayers: ui[workflow].exportLayers.value
 					};
 					settings[workflow].docActions = {
 						updateLinks: ui[workflow].updateLinks.value,
-						skipDNP: ui[workflow].skipDNP.isOn.value,
+						skipDNP:     ui[workflow].skipDNP.isOn.value,
 						script: {
 							active: ui[workflow].script.isOn.value,
-							value: ui[workflow].script.path.exists
+							value:  ui[workflow].script.path.exists
 								? decodeURI(ui[workflow].script.path.fullName)
 								: ''
 						}
@@ -1068,16 +1113,16 @@ function QuickExport() {
 					settings[workflow].outputOptions = {
 						destination: {
 							active: ui[workflow].destination.isOn.value,
-							value: ui[workflow].destination.path.exists
+							value:  ui[workflow].destination.path.exists
 								? decodeURI(ui[workflow].destination.path.fullName)
 								: ''
 						},
 						suffix: {
 							active: ui[workflow].suffix.isOn.value,
-							value: ui[workflow].suffix.et.text
+							value:  ui[workflow].suffix.et.text
 						},
 						sortBySuffix: ui[workflow].sortBySuffix.value,
-						sortByDate: ui[workflow].sortByDate.value,
+						sortByDate:   ui[workflow].sortByDate.value,
 						split: ui[workflow].split.value,
 						overwrite: ui[workflow].overwrite.value,
 						docSave: {
@@ -1227,7 +1272,8 @@ function QuickExport() {
 					ui.input.source.folder.helpTip = 'Select a folder';
 				} else {
 					ui.input.source.folder.helpTip = ui.input.source.path
-						? (WIN ? decodeURI(ui.input.source.path.fsName) : decodeURI(ui.input.source.path.fullName))
+						? (WIN ? decodeURI(ui.input.source.path.fsName)
+							: decodeURI(ui.input.source.path.fullName))
 						: 'Folder not found';
 				}
 			}
@@ -1248,7 +1294,6 @@ function QuickExport() {
 
 				if (ui[workflow].destination.isOn.value) {
 					if (ui[workflow].destination.folder.text.length === 0) {
-						// ui[workflow].destination.folder.text =
 						ui[workflow].destination.folder.helpTip = 'Select a folder';
 					} else {
 						ui[workflow].destination.folder.helpTip = ui[workflow].destination.path
@@ -1268,11 +1313,13 @@ function QuickExport() {
 			// If in batch folder mode, it must be valid
 			if (isFolderMode) {
 				if (ui.input.source.folder.text.length === 0) {
-					ui.text = ui.actions.ok.helpTip = 'Select a source folder';
+					ui.text =
+					ui.actions.ok.helpTip = 'Select a source folder';
 					ui.actions.ok.enabled = false;
 					return;
 				} else if (!ui.input.source.path) {
-					ui.text = ui.actions.ok.helpTip = 'Error: Source folder not found';
+					ui.text =
+					ui.actions.ok.helpTip = 'Error: Source folder not found';
 					ui.actions.ok.enabled = false;
 					return;
 				}
@@ -1280,7 +1327,8 @@ function QuickExport() {
 
 			// At least a preset must be selected
 			if (!ui.workflow1.isOn.value && !ui.workflow2.isOn.value) {
-				ui.text = ui.actions.ok.helpTip = 'Select a workflow';
+				ui.text =
+				ui.actions.ok.helpTip = 'Select a workflow';
 				ui.actions.ok.enabled = false;
 				return;
 			}
@@ -1291,13 +1339,16 @@ function QuickExport() {
 				// If running a script, it must be valid
 				if (ui[workflow].isOn.value && ui[workflow].script.isOn.value) {
 					if (ui[workflow].script.file.text.length === 0) {
-						ui.actions.ok.helpTip = ui.text =
-							workflow.replace('workflow', 'Workflow #') + ': Select a script';
+						ui.actions.ok.helpTip =
+						ui.text = workflow.replace('workflow', 'Workflow #')
+							+ ': Select a script';
 						ui.actions.ok.enabled = false;
 						return;
 					} else if (!ui[workflow].script.path) {
-						ui.actions.ok.helpTip = ui.text =
-							'Error: ' + workflow.replace('workflow', 'Workflow #') + ': Script not found';
+						ui.actions.ok.helpTip =
+						ui.text = 'Error: '
+							+ workflow.replace('workflow', 'Workflow #')
+							+ ': Script not found';
 						ui.actions.ok.enabled = false;
 						return;
 					}
@@ -1306,13 +1357,16 @@ function QuickExport() {
 				// If exporting in a custom output folder, it must be valid
 				if (ui[workflow].isOn.value && ui[workflow].destination.isOn.value) {
 					if (ui[workflow].destination.folder.text.length === 0) {
-						ui.actions.ok.helpTip = ui.text =
-							workflow.replace('workflow', 'Workflow #') + ': Select an output folder';
+						ui.actions.ok.helpTip =
+						ui.text = workflow.replace('workflow', 'Workflow #')
+							+ ': Select an output folder';
 						ui.actions.ok.enabled = false;
 						return;
 					} else if (!ui[workflow].destination.path) {
-						ui.actions.ok.helpTip = ui.text =
-							'Error: ' + workflow.replace('workflow', 'Workflow #') + ': Output folder not found';
+						ui.actions.ok.helpTip =
+						ui.text = 'Error: '
+							+ workflow.replace('workflow', 'Workflow #')
+							+ ': Output folder not found';
 						ui.actions.ok.enabled = false;
 						return;
 					}
