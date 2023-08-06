@@ -39,7 +39,6 @@ function QuickExport() {
 	var doc, settings, ui, progressBar;
 	var errors = [];
 	var title = 'Quick Export';
-	var ADV = ScriptUI.environment.keyboardState.altKey;
 	var WIN = (File.fs === 'Windows');
 	var invalidFilenameChars = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
 	var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
@@ -144,9 +143,8 @@ function QuickExport() {
 
 		// Get documents list
 		if (isFolderMode) {
-			docs = ui.input.options.subfolders.value
-				? getFilesRecursively(ui.input.source.path, true, 'indd').sort(naturalSorter)
-				: ui.input.source.path.getFiles('*.indd').sort(naturalSorter);
+			docs = getFilesRecursively(Folder(ui.input.source.path), ui.input.options.subfolders.value, 'indd')
+				.sort(naturalSorter);
 			if (docs.length === 0) { alert('No InDesign documents found.'); cleanup(); }
 		} else {
 			docs = app.documents.everyItem().getElements();
@@ -222,8 +220,8 @@ function QuickExport() {
 				baseFolder = decodeURI(doc.filePath);
 				if (exp.destination.isOn.value) {
 					baseFolder = WIN
-						? decodeURI(exp.destination.path.fsName)
-						: decodeURI(exp.destination.path.fullName);
+						? decodeURI(Folder(exp.destination.path).fsName)
+						: decodeURI(Folder(exp.destination.path).fullName);
 				}
 
 				// Get suffix
@@ -248,7 +246,7 @@ function QuickExport() {
 
 				// Run script
 				if (exp.script.isOn.value) {
-					runScript(exp.script.path);
+					runScript(File(exp.script.path));
 					app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 					app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 				}
@@ -319,6 +317,7 @@ function QuickExport() {
 						+ ": [ERR] Font '" + usedFonts[i].name.replace(/\t/g, ' ')
 						+ "' is "
 						+ String(usedFonts[i].status).toLowerCase().replace(/_/g, ' ')
+						+ '.'
 					);
 				}
 			}
@@ -330,7 +329,11 @@ function QuickExport() {
 			while ((frm = frms.shift())) {
 				if (frm.constructor.name !== 'TextFrame') continue;
 				if (frm.overflows && frm.parentPage) {
-					errors.push(decodeURI(doc.name) + ': [ERR] Text overflows.');
+					errors.push(decodeURI(doc.name)
+						+ ': [ERR] Text overflows on page '
+						+ frm.parentPage.name
+						+ '.'
+					);
 					return;
 				}
 			}
@@ -348,7 +351,9 @@ function QuickExport() {
 						errors.push(decodeURI(doc.name)
 							+ ": [ERR] Link '"
 							+ doc.links[i].name
-							+ "' not found."
+							+ "' not found on page "
+							+ doc.links[i].parent.parent.parentPage.name
+							+ '.'
 						);
 						break;
 				}
@@ -366,7 +371,8 @@ function QuickExport() {
 				errors.push(decodeURI(doc.name)
 					+ ': [ERR] Script returned "'
 					+ e.toString().replace(/\r|\n/g, '\u00B6')
-					+ '" (line: ' + e.line + ')'
+					+ '" (line: '
+					+ e.line + ').'
 				);
 			}
 
@@ -923,7 +929,8 @@ function QuickExport() {
 				};
 
 				ui[workflow].script.file.onChange = function () {
-					if (this.parent.path && decodeURI(this.parent.path.name) === this.text) return;
+					if (File(this.parent.path).exists
+						&& decodeURI(File(this.parent.path).name) === this.text) return;
 					var newFile = File(this.text);
 					if (newFile.exists
 							&& (WIN
@@ -931,17 +938,20 @@ function QuickExport() {
 								: /\.(jsx*(bin)*|scpt)$/i.test(newFile)
 							)
 						) {
-						this.parent.path = newFile;
+						this.parent.path = decodeURI(newFile);
 						this.text = decodeURI(newFile.name);
-						this.helpTip = WIN ? decodeURI(newFile.fsName) : decodeURI(newFile.fullName);
+						this.helpTip = WIN
+							? decodeURI(newFile.fsName)
+							: decodeURI(newFile.fullName);
 					} else {
-						this.parent.path = false;
+						this.parent.path = this.text;
 					}
 					updateStatus();
 				};
 
 				ui[workflow].script.file.onActivate = function () {
-					if (this.parent.path) this.text = decodeURI(this.parent.path);
+					if (File(this.parent.path).exists)
+						this.text = decodeURI(File(this.parent.path));
 				};
 
 				ui[workflow].script.file.onDeactivate = function () {
@@ -961,7 +971,8 @@ function QuickExport() {
 				};
 
 				ui[workflow].destination.folder.onChange = function () {
-					if (this.parent.path && decodeURI(this.parent.path.name) === this.text) {
+					if (Folder(this.parent.path).exists
+							&& decodeURI(Folder(this.parent.path).name) === this.text) {
 						updateStatus();
 						return;
 					}
@@ -974,17 +985,20 @@ function QuickExport() {
 
 					var newFolder = Folder(this.text);
 					if (newFolder.exists) {
-						this.parent.path = newFolder;
+						this.parent.path = decodeURI(newFolder);
 						this.text = decodeURI(newFolder.name);
-						this.helpTip = WIN ? decodeURI(newFolder.fsName) : decodeURI(newFolder.fullName);
+						this.helpTip = WIN
+							? decodeURI(newFolder.fsName)
+							: decodeURI(newFolder.fullName);
 					} else {
-						this.parent.path = false;
+						this.parent.path = this.text;
 					}
 					updateStatus();
 				};
 
 				ui[workflow].destination.folder.onActivate = function () {
-					if (this.parent.path) this.text = decodeURI(this.parent.path);
+					if (Folder(this.parent.path).exists)
+						this.text = decodeURI(Folder(this.parent.path));
 				};
 
 				ui[workflow].destination.folder.onDeactivate = function () {
@@ -1026,6 +1040,7 @@ function QuickExport() {
 		};
 		var prefs = {
 			read: function () {
+				if (settingsFile.length === 0) this.reset();
 				try { settings = $.evalFile(settingsFile); } catch (e) { this.reset(); }
 				if (settings.version === undefined || settings.version !== VER) this.reset();
 
@@ -1105,17 +1120,15 @@ function QuickExport() {
 						skipDNP:     ui[workflow].skipDNP.isOn.value,
 						script: {
 							active: ui[workflow].script.isOn.value,
-							value:  ui[workflow].script.path.exists
-								? decodeURI(ui[workflow].script.path.fullName)
-								: ''
+							value:  ui[workflow].script.path
 						}
 					};
+					if (ui[workflow].destination.path === 'Using documents folders')
+						ui[workflow].destination.path = old.destination[workflow] || '';
 					settings[workflow].outputOptions = {
 						destination: {
 							active: ui[workflow].destination.isOn.value,
-							value:  ui[workflow].destination.path.exists
-								? decodeURI(ui[workflow].destination.path.fullName)
-								: ''
+							value:  ui[workflow].destination.path
 						},
 						suffix: {
 							active: ui[workflow].suffix.isOn.value,
@@ -1210,13 +1223,13 @@ function QuickExport() {
 			};
 
 			ui.input.source.folder.onChange = function () {
-				var ff;
 				if (Folder(this.text).exists) {
-					this.parent.path = Folder(this.text);
-					ff = WIN ? decodeURI(this.parent.path.fsName) : decodeURI(this.parent.path.fullName);
-					this.text = ff;
+					this.parent.path = this.text;
+					this.text = WIN
+						? decodeURI(Folder(this.parent.path).fsName)
+						: decodeURI(Folder(this.parent.path).fullName);
 				} else {
-					this.parent.path = false;
+					this.parent.path = this.text;
 				}
 				updateStatus();
 			};
@@ -1271,9 +1284,10 @@ function QuickExport() {
 				if (ui.input.source.folder.text.length === 0) {
 					ui.input.source.folder.helpTip = 'Select a folder';
 				} else {
-					ui.input.source.folder.helpTip = ui.input.source.path
-						? (WIN ? decodeURI(ui.input.source.path.fsName)
-							: decodeURI(ui.input.source.path.fullName))
+					ui.input.source.folder.helpTip = Folder(ui.input.source.path).exists
+						? (WIN
+							? decodeURI(Folder(ui.input.source.path).fsName)
+							: decodeURI(Folder(ui.input.source.path).fullName))
 						: 'Folder not found';
 				}
 			}
@@ -1285,9 +1299,10 @@ function QuickExport() {
 					if (ui[workflow].script.file.text.length === 0) {
 						ui[workflow].script.file.helpTip = 'Select a script';
 					} else {
-						ui[workflow].script.file.helpTip = ui[workflow].script.path
-							? (WIN ? decodeURI(ui[workflow].script.path.fsName)
-								: decodeURI(ui[workflow].script.path.fullName))
+						ui[workflow].script.file.helpTip = File(ui[workflow].script.path).exists
+							? (WIN
+								? decodeURI(File(ui[workflow].script.path).fsName)
+								: decodeURI(File(ui[workflow].script.path).fullName))
 							: 'File not found';
 					}
 				}
@@ -1296,13 +1311,15 @@ function QuickExport() {
 					if (ui[workflow].destination.folder.text.length === 0) {
 						ui[workflow].destination.folder.helpTip = 'Select a folder';
 					} else {
-						ui[workflow].destination.folder.helpTip = ui[workflow].destination.path
-							? (WIN ? decodeURI(ui[workflow].destination.path.fsName)
-								: decodeURI(ui[workflow].destination.path.fullName))
+						ui[workflow].destination.folder.helpTip = Folder(ui[workflow].destination.path).exists
+							? (WIN
+								? decodeURI(Folder(ui[workflow].destination.path).fsName)
+								: decodeURI(Folder(ui[workflow].destination.path).fullName))
 							: 'Folder not found';
 					}
 				} else { // Using documents folders
-					if (ui[workflow].destination.path) old.destination[workflow] = ui[workflow].destination.path;
+					if (Folder(ui[workflow].destination.path).exists)
+						old.destination[workflow] = ui[workflow].destination.path;
 					ui[workflow].destination.folder.text =
 					ui[workflow].destination.folder.helpTip = 'Using documents folders';
 				}
@@ -1317,7 +1334,7 @@ function QuickExport() {
 					ui.actions.ok.helpTip = 'Select a source folder';
 					ui.actions.ok.enabled = false;
 					return;
-				} else if (!ui.input.source.path) {
+				} else if (!Folder(ui.input.source.path).exists) {
 					ui.text =
 					ui.actions.ok.helpTip = 'Error: Source folder not found';
 					ui.actions.ok.enabled = false;
@@ -1344,7 +1361,7 @@ function QuickExport() {
 							+ ': Select a script';
 						ui.actions.ok.enabled = false;
 						return;
-					} else if (!ui[workflow].script.path) {
+					} else if (!File(ui[workflow].script.path).exists) {
 						ui.actions.ok.helpTip =
 						ui.text = 'Error: '
 							+ workflow.replace('workflow', 'Workflow #')
@@ -1362,7 +1379,7 @@ function QuickExport() {
 							+ ': Select an output folder';
 						ui.actions.ok.enabled = false;
 						return;
-					} else if (!ui[workflow].destination.path) {
+					} else if (!Folder(ui[workflow].destination.path).exists) {
 						ui.actions.ok.helpTip =
 						ui.text = 'Error: '
 							+ workflow.replace('workflow', 'Workflow #')
