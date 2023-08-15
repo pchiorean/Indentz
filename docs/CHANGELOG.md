@@ -14,6 +14,8 @@
   **lib/getFilesRecursively:** Fixed a missing backslash in the regex expression
 - `08/05` [`new`](https://github.com/pchiorean/Indentz/commit/f2ecc11eb80cf50bdd50ca7cc79730e03bf6ea5e)
   **lib/log:** Added statements for start/end of blocks (`^` and `$`)
+- `08/06` [`ref`](https://github.com/pchiorean/Indentz/commit/0f5e5c46bf55272edcd10a28a890f7c4f8fb3736)
+  **export/QuickExport:** Tidy up; add some comments
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
