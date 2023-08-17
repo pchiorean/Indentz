@@ -1,5 +1,5 @@
 /*
-	Clip 23.7.18
+	Clip 23.8.17
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Clips selected objects in a clipping frame (or releases them if already clipped).
@@ -44,10 +44,10 @@ function main(selection) {
 		item = doc.groups.add(items);
 		item.name = '<auto clipping group>';
 		bounds = item.visibleBounds;
-	} else if (selection.length === 1 &&
-			selection[0].constructor.name === 'TextFrame' &&
-			(selection[0].contents.replace(/^\s+|\s+$/g, '')).length > 0) {
-		// Special case: text frames
+	} else if (selection.length === 1 // Special case: text frames
+		&& selection[0].constructor.name === 'TextFrame'
+		&& (selection[0].contents.replace(/^\s+|\s+$/g, '')).length > 0
+		&& item.fillColor === 'None') {
 		outlines = selection[0].createOutlines(false);
 		bounds = [
 			item.geometricBounds[0], outlines[0].geometricBounds[1],
