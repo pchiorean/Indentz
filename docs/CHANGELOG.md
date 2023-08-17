@@ -16,6 +16,8 @@
   **lib/log:** Added statements for start/end of blocks (`^` and `$`)
 - `08/06` [`ref`](https://github.com/pchiorean/Indentz/commit/0f5e5c46bf55272edcd10a28a890f7c4f8fb3736)
   **export/QuickExport:** Tidy up; add some comments
+- `08/17` [`fix`](https://github.com/pchiorean/Indentz/commit/bbc94446bcbaded81ec592042e4398f6385b97b0)
+  **misc/Clip:** Text frames are width-fitted by temporarily outlining the text; this fix skips color-filled frames
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
