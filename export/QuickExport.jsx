@@ -1,5 +1,5 @@
 /*
-	Quick export 23.8.6
+	Quick export 23.8.18
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -483,11 +483,20 @@ function QuickExport() {
 
 				// Get the last index by matching 'filename [separator] ([previous index]) [stuff]
 				lastIndex = 0;
+				// fileIndexRE = RegExp('^'
+				// 	+ filename.replace(regexTokensRE, '\\$&') // Escape regex tokens
+				// 	+ '(?:[ _-]*)' // [Separator]
+				// 	+ '(\\d+)?'    // Previous index
+				// 	+ '(?:.*)$');  // Extra stuff
 				fileIndexRE = RegExp('^'
 					+ filename.replace(regexTokensRE, '\\$&') // Escape regex tokens
-					+ '(?:[ _-]*)' // Separator
-					+ '(\\d+)?'    // Previous index
-					+ '(?:.*)$');  // Extra stuff
+					+ '(?:[ _-]*)'            // [Separator]
+					+ '(\\d+)?'               // Previous index
+					+ '(?:[ _-]*v *\\d*)?'    // [Ancillary: 'vX']
+					+ '(?:[ _-]*copy *\\d*)?' // [Ancillary: 'copyX']
+					+ '(?:[ _-]*v *\\d*)?'    // [Ancillary: 'vX']
+					+ '(?:.*)$'               // [Extra stuff]
+					, 'i');
 				for (var i = 0, n = pdfFiles.length; i < n; i++) {
 					fileIndex = fileIndexRE.exec(decodeURI(pdfFiles[i].name).replace(/\.pdf$/i, ''));
 					if (fileIndex)
@@ -498,11 +507,11 @@ function QuickExport() {
 				nextIndex = exp.overwrite.value ? lastIndex : lastIndex + 1;
 				nextIndex = nextIndex > 1 ? String(nextIndex) : '';
 
-				return destFolder                       // Base folder + [suffix]
+				return destFolder                                 // Base folder + [suffix]
 					+ (exp.sortByDate.value ? '/' + subDate : '') // [Date subfolder]
-					+ '/' + filename                    // Base filename
-					+ (!suffix && nextIndex ? ' ' : '') // [Separator]
-					+ nextIndex                         // Index
+					+ '/' + filename                              // Base filename
+					+ (!suffix && nextIndex ? ' ' : '')           // [Separator]
+					+ nextIndex                                   // Index
 					+ '.pdf';
 			}
 
