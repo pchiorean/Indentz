@@ -18,6 +18,10 @@
   **export/QuickExport:** Tidy up; add some comments
 - `08/17` [`fix`](https://github.com/pchiorean/Indentz/commit/bbc94446bcbaded81ec592042e4398f6385b97b0)
   **misc/Clip:** Text frames are width-fitted by temporarily outlining the text; this fix skips color-filled frames
+- `08/21` [`new`](https://github.com/pchiorean/Indentz/commit/9dfb241366dfa79765ff5db67b9775d1f1dab15c)
+  **lib/parseDataFile, stat:** Moved `stat()` to a separate file
+- `08/21` [`upd`](https://github.com/pchiorean/Indentz/commit/ecc6a3c37c8615f5219728b375ff28b28ef289c0)
+  **cleanup/DefaultLayers; export/QuickExport; misc/QR, QRBatch:** Switched to `stat()` for error reporting
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
