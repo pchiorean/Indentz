@@ -570,7 +570,7 @@ Shows properties and methods of a selected object (for debugging purposes).
 ## Install
 
 1. Clone or download from **Code ‣ Download ZIP**, or download the latest release.\
-**Note:** The scripts from the repository recycle many bits of code, using dynamically linked libraries from **`lib/`**, meaning that the folder structure should to be preserved if downloading the scripts in this way. If you prefer stand-alone scripts or just pick some as needed, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked[^5].
+**Note:** The scripts from the repository recycle many bits of code, using dynamically linked libraries from **`lib/`**, meaning that the folder structure should be preserved if downloading the scripts in this way. If you prefer stand-alone scripts or just pick some as needed, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked[^5].
 2. Open **Window ‣ Utilities ‣ Scripts**.
 3. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
 4. Copy **Indentz** to this folder.
@@ -586,7 +586,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: August 5, 2023</small>
+<small>Last updated: August 21, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
