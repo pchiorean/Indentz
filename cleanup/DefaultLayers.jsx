@@ -1,5 +1,5 @@
 /*
-	Default layers 23.6.20
+	Default layers 23.8.21
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds/merges layers using a 6-column TSV file named `layers.tsv`:
@@ -53,6 +53,7 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'isInArray.jsxinc';
 // @include 'parseDataFile.jsxinc';
 // @include 'report.jsxinc';
+// @include 'stat.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Default layers');

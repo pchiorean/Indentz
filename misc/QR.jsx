@@ -1,5 +1,5 @@
 /*
-	QR code 23.5.28
+	QR code 23.8.21
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a QR code to the current document or to a separate file.
@@ -30,6 +30,7 @@
 // @include 'getBounds.jsxinc';
 // @include 'progressBar.jsxinc';
 // @include 'report.jsxinc';
+// @include 'stat.jsxinc';
 
 doc = (app.documents.length === 0) ? app.documents.add() : app.activeDocument;
 var currentPath = doc.saved ? doc.filePath : '';
@@ -39,7 +40,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 
 function main() {
 	var baseName, suffix, ui, codeText, onDoc;
-	var errors = [];
+	var status = [];
 	baseName = /\./g.test(doc.name) ? doc.name.slice(0, doc.name.lastIndexOf('.')) : doc.name;
 	// baseName = baseName.replace(/_QR$/i, '');
 	suffix = RegExp('[ ._-][a-zA-Z0-9]{' + doc.spreads.length + '}$', 'i').exec(baseName);
@@ -81,7 +82,7 @@ function main() {
 	codeText = ui.label.text.replace(/^\s+|\s+$/g, '');
 	if (!codeText) { main(); exit(); }
 	if (onDoc) putCodeOnDocument(); else saveCodeOnSeparateFile();
-	if (errors.length > 0) report(errors, 'Errors');
+	if (status.length > 0) report(status, 'Errors');
 
 	function putCodeOnDocument() {
 		var i, p, pp, page, spread, tgBounds, tgSize, labelFrame, codeFrame, qrGroup, labelSize, codeSize, labelText;
@@ -309,7 +310,7 @@ function main() {
 				// If text overflows keep file opened
 				target.textPreferences.showInvisibles = true;
 				target.save(ancillaryFile);
-				errors.push(ancillaryFile.name + ': Text overflows.');
+				stat(status, ancillaryFile.name, 'Text overflows.', 1);
 			}
 			setPDFExportPreferences();
 			target.exportFile(ExportFormat.pdfType, File(pdfFile), false);

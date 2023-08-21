@@ -1,5 +1,5 @@
 /*
-	Quick export 23.8.18
+	Quick export 23.8.21
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -32,12 +32,13 @@
 // @include 'naturalSorter.jsxinc';
 // @include 'progressBar.jsxinc';
 // @include 'report.jsxinc';
+// @include 'stat.jsxinc';
 
 app.doScript(QuickExport, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'QuickExport');
 
 function QuickExport() {
 	var doc, settings, ui, progressBar;
-	var errors = [];
+	var status = [];
 	var title = 'Quick Export';
 	var WIN = (File.fs === 'Windows');
 	var invalidFilenameChars = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
@@ -166,15 +167,15 @@ function QuickExport() {
 				if (doc.exists) {
 					doc = app.open(doc);
 				} else {
-					errors.push(decodeURI(doc) + ': [ERR] Not found; skipped.');
+					stat(status, decodeURI(doc), 'Not found; skipped.', 1);
 					continue;
 				}
 				if (doc.converted) {
 					if (ui.actions.updateVersion.value) {
 						doc.save(File(doc.filePath + '/' + doc.name));
-						errors.push(decodeURI(doc.name) + ': [INFO] Converted from old version.');
+						stat(status, decodeURI(doc.name), 'Converted from old version.', 0);
 					} else {
-						errors.push(decodeURI(doc.name) + ': [ERR] Must be converted; skipped.');
+						stat(status, decodeURI(doc.name), 'Must be converted; skipped.', 1);
 						doc.close(SaveOptions.NO);
 						continue;
 					}
@@ -184,14 +185,14 @@ function QuickExport() {
 				if (doc.converted) {
 					if (ui.actions.updateVersion.value) {
 						doc.save(File(doc.filePath + '/' + doc.name));
-						errors.push(decodeURI(doc.name) + ': [INFO] Converted from old version.');
+						stat(status, decodeURI(doc.name), 'Converted from old version.', 0);
 					} else {
-						errors.push(decodeURI(doc.name) + ': [ERR] Must be converted; skipped.');
+						stat(status, decodeURI(doc.name), 'Must be converted; skipped.', 1);
 						continue;
 					}
 				}
 				if (!doc.saved) {
-					errors.push(decodeURI(doc.name) + ': [ERR] Is not saved; skipped.');
+					stat(status, decodeURI(doc.name), 'Is not saved; skipped.', 1);
 					continue;
 				}
 			}
@@ -313,12 +314,12 @@ function QuickExport() {
 			var usedFonts = doc.fonts.everyItem().getElements();
 			for (var i = 0, n = usedFonts.length; i < n; i++) {
 				if (usedFonts[i].status !== FontStatus.INSTALLED) {
-					errors.push(decodeURI(doc.name)
-						+ ": [ERR] Font '" + usedFonts[i].name.replace(/\t/g, ' ')
+					stat(status, decodeURI(doc.name),
+						"Font '" + usedFonts[i].name.replace(/\t/g, ' ')
 						+ "' is "
 						+ String(usedFonts[i].status).toLowerCase().replace(/_/g, ' ')
 						+ '.'
-					);
+					, 1);
 				}
 			}
 		}
@@ -329,11 +330,11 @@ function QuickExport() {
 			while ((frm = frms.shift())) {
 				if (frm.constructor.name !== 'TextFrame') continue;
 				if (frm.overflows && frm.parentPage) {
-					errors.push(decodeURI(doc.name)
-						+ ': [ERR] Text overflows on page '
+					stat(status, decodeURI(doc.name),
+						'Text overflows on page '
 						+ frm.parentPage.name
 						+ '.'
-					);
+					, 1);
 					return;
 				}
 			}
@@ -348,13 +349,13 @@ function QuickExport() {
 						break;
 					case LinkStatus.LINK_MISSING:
 					case LinkStatus.LINK_INACCESSIBLE:
-						errors.push(decodeURI(doc.name)
-							+ ": [ERR] Link '"
+						stat(status, decodeURI(doc.name),
+							"Link '"
 							+ doc.links[i].name
 							+ "' not found on page "
 							+ doc.links[i].parent.parent.parentPage.name
 							+ '.'
-						);
+						, 1);
 						break;
 				}
 			}
@@ -368,12 +369,12 @@ function QuickExport() {
 					UndoModes.ENTIRE_SCRIPT, 'Run script'
 				);
 			} catch (e) {
-				errors.push(decodeURI(doc.name)
-					+ ': [ERR] Script returned "'
+				stat(status, decodeURI(doc.name),
+					'Script returned "'
 					+ e.toString().replace(/\r|\n/g, '\u00B6')
 					+ '" (line: '
 					+ e.line + ').'
-				);
+				, 1);
 			}
 
 			function getScriptLanguage(/*string*/ext) {
@@ -1412,6 +1413,6 @@ function QuickExport() {
 		app.scriptPreferences.userInteractionLevel = old.userInteractionLevel;
 		app.pdfExportPreferences.viewPDF = old.viewPDF;
 		try { progressBar.close(); } catch (e) {}
-		if (errors.length > 0) report(errors, 'Errors', 'auto', true);
+		if (status.length > 0) report(status, 'Errors', 'auto', true);
 	}
 }

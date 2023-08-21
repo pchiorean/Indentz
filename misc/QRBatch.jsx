@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 23.5.28
+	Batch QR codes 23.8.21
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds codes to existing documents or to separate files in batch mode,
@@ -51,8 +51,9 @@
 // @include 'getBounds.jsxinc';
 // @include 'progressBar.jsxinc';
 // @include 'report.jsxinc';
+// @include 'stat.jsxinc';
 
-var errors = [];
+var status = [];
 var currentPath;
 if (app.documents.length > 0) {
 	doc = app.activeDocument;
@@ -121,7 +122,7 @@ function main() {
 		dataFile = '';
 		rawData = [];
 		validLines = [];
-		errors = [];
+		status = [];
 		pbWidth = 64;
 		ui.list.removeAll();
 		if (/QR Codes$/g.test(decodeURI(currentPath))) currentPath = currentPath.parent;
@@ -145,16 +146,16 @@ function main() {
 				if (!isEmpty && !isComment && !isHeader) {
 					if (record[0]) {
 						if ((fC = record[0].match(invalidFilenameChars))) {
-							errors.push('Line ' + line + ': Forbidden characters in file name: \'' +
-							fC.join('\', \'') + '\'.');
+							stat(status, 'Line ' + line, 'Forbidden characters in file name: \'' +
+							fC.join('\', \'') + '\'.', 1);
 						}
 						if (!/\.indd$/i.test(record[0])) record[0] += '.indd';
 						if (record[2] && !File(currentPath + '/' + record[0]).exists)
-							errors.push('Line ' + line + ": File '" + record[0] + "' not found.");
-						if (!record[1]) errors.push('Line ' + line + ': Missing code.');
+							stat(status, 'Line ' + line, "File '" + record[0] + "' not found.", -1);
+						if (!record[1]) stat(status, 'Line ' + line, 'Missing code.', -1);
 						pbWidth = Math.max(pbWidth, record[0].length);
-					} else { errors.push('Line ' + line + ': Missing file name.'); }
-					if (errors.length === 0) validLines.push(line);
+					} else { stat(status, 'Line ' + line, ': Missing file name.', -1); }
+					if (status.length === 0) validLines.push(line);
 				}
 				rawData.push({
 					fn: record[0],
@@ -201,19 +202,19 @@ function main() {
 		} else {
 			ui.text = (WIN ? decodeURI(dataFile.fsName) : decodeURI(dataFile.fullName)) + ' \u2013 ' +
 				queue.length + ' record' + (queue.length === 1 ? '' : 's') +
-				(errors.length > 0 ? ' | ' + errors.length + ' error' + (errors.length === 1 ? '' : 's') : '');
+				(status.length > 0 ? ' | ' + status.length + ' error' + (status.length === 1 ? '' : 's') : '');
 		}
-		ui.options.start.enabled = queue.length > 0 && (errors.length === 0 || ui.list.selection);
+		ui.options.start.enabled = queue.length > 0 && (status.length === 0 || ui.list.selection);
 		ui.options.reload.enabled = !!currentPath;
 		ui.options.reload.visible = dataFile.exists;
-		ui.options.err.visible = ui.options.div1.visible = (errors.length > 0);
-		if (errors.length > 0) ui.options.err.active = true;
+		ui.options.err.visible = ui.options.div1.visible = (status.length > 0);
+		if (status.length > 0) ui.options.err.active = true;
 		else if (!dataFile.exists) ui.options.browse.active = true;
 		else if (queue.length === 0 && !ui.list.selection) ui.options.reload.active = true;
 		else ui.list.active = true;
 	};
 	ui.list.onDoubleClick = function () { dataFile.execute(); };
-	ui.options.err.onClick = function () { report(errors, 'Errors', 'auto'); };
+	ui.options.err.onClick = function () { report(status, 'Errors', 'auto'); };
 	ui.options.browse.onClick = function () {
 		var folder = Folder.selectDialog('Select a folder containing the data file:');
 		if (folder && folder !== currentPath) {
@@ -232,7 +233,7 @@ function main() {
 
 	// Processing
 	if (ui.show() === 2) exit();
-	errors = [];
+	status = [];
 	isModified = false;
 	progressBar = new ProgressBar('Processing', queue.length, pbWidth);
 	for (i = 0, n = queue.length; i < n; i++) {
@@ -261,13 +262,13 @@ function main() {
 		}
 		dataFile.close();
 	}
-	if (errors.length > 0) report(errors, 'Errors', 'auto');
+	if (status.length > 0) report(status, 'Errors', 'auto');
 	app.scriptPreferences.userInteractionLevel = oldUIL;
 
 	function putCodeOnDocument() {
 		var i, p, pp, page, tgBounds, tgSize, labelFrame, codeFrame, qrGroup, labelSize, codeSize, labelText, suffix;
 		var target = app.open(File(currentPath + '/' + item.fn));
-		if (target.converted) { errors.push(decodeURI(target.name) + ' must be converted; skipped.'); return false; }
+		if (target.converted) { stat(status, decodeURI(target.name), 'Must be converted; skipped.', -1); return false; }
 		var infoLayer = makeInfoLayer(target);
 		target.activeLayer = infoLayer;
 		suffix = RegExp('[ ._-][a-zA-Z0-9]{' + target.spreads.length + '}$', 'i')
@@ -515,7 +516,7 @@ function main() {
 				// If text overflows keep file opened
 				target.textPreferences.showInvisibles = true;
 				target.save(ancillaryFile);
-				errors.push(ancillaryFile.name + ': Text overflows.');
+				stat(status, ancillaryFile.name, 'Text overflows.', 1);
 				return false;
 			}
 			setPDFExportPreferences();
