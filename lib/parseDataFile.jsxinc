@@ -3,14 +3,17 @@
  * Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
  * Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
  * The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
- * @version 22.12.4
+ * @version 23.8.21
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {File} dataFile - A tab-separated-values file (object).
  * @param {(string|string[])} [defaultName] - Default data file name, or an array of file names (used for `@defaults`).
  * @returns {{ header: [], data: [ { record: [], source: [] }, {}, ... ], errors: [] }}
  */
- function parseDataFile(dataFile, defaultName) {
+
+// @include 'stat.jsxinc';
+
+function parseDataFile(dataFile, defaultName) {
 	var record, part, src, includeFolder;
 	var parsed = { header: [], data: [], errors: [] };
 	var isHeaderFound = false;
@@ -141,20 +144,4 @@ function compactRelPath(/*string*/str) {
 		.replace(/\/+/g, '/');             // Compact '//'
 	if (/\/\.{2}\//.test(str)) str = compactRelPath(str);
 	return str;
-}
-
-function stat(/*array|object*/target, /*string*/src, /*string*/msg, /*0=info|1=warn|-1=fail*/type) {
-	var sep = ' :: ';
-	type = (function (t) { // Numeric code => string (key)
-		return {
-			 '0': 'info',
-			 '1': 'warn',
-			'-1': 'fail'
-		}[t] || 'warn';
-	}(type));
-
-	if (target instanceof Array) target.push(src + sep + msg);
-	else target[type].push(src + sep + msg);
-
-	return src + sep + msg;
 }

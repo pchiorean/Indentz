@@ -1,0 +1,15 @@
+function stat(/*array|object*/target, /*string*/src, /*string*/msg, /*0=info|1=warn|-1=error*/level) {
+	var sep = ' :: ';
+	level = (function (t) { // Numeric code => string (key)
+		return {
+			 '0': 'info',
+			 '1': 'warn',
+			'-1': 'error'
+		}[t] || 'warn';
+	}(level));
+
+	if (target instanceof Array) target.push(src + sep + '[' + level.toUpperCase() + '] ' + msg);
+	else target[level].push(src + sep + msg);
+
+	return src + sep + msg;
+}
