@@ -22,6 +22,10 @@
   **lib/parseDataFile, stat:** Moved `stat()` to a separate file
 - `08/21` [`upd`](https://github.com/pchiorean/Indentz/commit/ecc6a3c37c8615f5219728b375ff28b28ef289c0)
   **cleanup/DefaultLayers; export/QuickExport; misc/QR, QRBatch:** Switched to `stat()` for error reporting
+- `08/29` [`upd`](https://github.com/pchiorean/Indentz/commit/a223444bf91c64ba5eeab2e41f38b3c1e03d196a)
+  **export/QuickExport:** Improved persistence of output folder when saving settings
+- `08/29` [`upd`](https://github.com/pchiorean/Indentz/commit/6103d8cd5c77b0cc0507b287f5d28fba987882ba)
+  **lib/log:** Improved folding block presentation
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
