@@ -1,7 +1,7 @@
 /**
  * Appends a debugging line to a file saved on the desktop with the name of the running script
  * (e.g. `active-script.log`). If no arguments are given, it just appends an empty line.
- * @version 23.8.5
+ * @version 23.8.29
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} message - A list of messages (`part1`, `part2`, `part3`, etc.) that will
@@ -49,17 +49,19 @@ function log(/*?message list*/) {
 				break;
 			case '+': // Append to previous line (with separator)
 				args.shift();
-				message = sep;
+				if (args.length > 0) message += sep;
 				break;
 			case '^': // Folding block start
 				args.shift();
 				message = padding + time + stack() + folding[0] +
 					$.stack.split(/[\n]/).slice(-3, -2);
+				if (args.length > 0) message += sep;
 				break;
 			case '$': // Folding block end
 				args.shift();
 				message = padding + time + stack() + folding[2] +
 					$.stack.split(/[\n]/).slice(-3, -2)[0].replace(/\(.*\)/, '()');
+				if (args.length > 0) message += sep;
 				break;
 			default: // Standard message
 				message = padding + time + stack() + folding[1];
