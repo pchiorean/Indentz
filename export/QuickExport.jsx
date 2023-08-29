@@ -1,5 +1,5 @@
 /*
-	Quick export 23.8.21
+	Quick export 23.8.29
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -48,8 +48,7 @@ function QuickExport() {
 	var old = {
 		measurementUnit: app.scriptPreferences.measurementUnit,
 		userInteractionLevel: app.scriptPreferences.userInteractionLevel,
-		viewPDF: app.pdfExportPreferences.viewPDF,
-		destination: {}
+		viewPDF: app.pdfExportPreferences.viewPDF
 	};
 	var isFolderMode = (app.documents.length === 0);
 	var MMDD = zeroPad((new Date()).getMonth() + 1, 2)
@@ -77,7 +76,7 @@ function QuickExport() {
 			},
 			outputOptions: {
 				destination: { active: false, value: '' },
-				suffix: { active: true, value: ''},
+				suffix: { active: true, value: '' },
 				sortBySuffix: true,
 				sortByDate: false,
 				split: false,
@@ -105,7 +104,7 @@ function QuickExport() {
 			},
 			outputOptions: {
 				destination: { active: false, value: '' },
-				suffix: { active: true, value: ''},
+				suffix: { active: true, value: '' },
 				sortBySuffix: true,
 				sortByDate: false,
 				split: false,
@@ -751,14 +750,14 @@ function QuickExport() {
 						}
 
 						msg.push('Compatibility: Acrobat '
-							+ (function (str) {
+							+ (function (ver) {
 								return {
 									4: '4 (PDF 1.3)',
 									5: '5 (PDF 1.4)',
 									6: '6 (PDF 1.5)',
 									7: '7 (PDF 1.6)',
 									8: '8/9 (PDF 1.7)'
-								}[str] || str;
+								}[ver] || ver;
 							}(String(preset.acrobatCompatibility).replace('ACROBAT_', '')))
 						);
 
@@ -956,7 +955,7 @@ function QuickExport() {
 					} else {
 						this.parent.path = this.text;
 					}
-					updateStatus();
+					checkStatus();
 				};
 
 				ui[workflow].script.file.onActivate = function () {
@@ -971,6 +970,14 @@ function QuickExport() {
 				ui[workflow].destination.isOn.onClick = function () {
 					this.parent.parent.folder.enabled =
 					this.parent.parent.browse.enabled = this.value;
+
+					if (this.value) {
+						if (this.parent.parent.folder.text === 'Using documents folders')
+							this.parent.parent.folder.text = this.parent.parent.path;
+					} else {
+						this.parent.parent.folder.text = 'Using documents folders';
+					}
+
 					this.parent.parent.folder.onChange();
 				};
 
@@ -983,14 +990,8 @@ function QuickExport() {
 				ui[workflow].destination.folder.onChange = function () {
 					if (Folder(this.parent.path).exists
 							&& decodeURI(Folder(this.parent.path).name) === this.text) {
-						updateStatus();
+						checkStatus();
 						return;
-					}
-
-					if (this.enabled && this.text === 'Using documents folders') {
-						this.text = old.destination[workflow]
-							? old.destination[workflow]
-							: settings[workflow].outputOptions.destination.value;
 					}
 
 					var newFolder = Folder(this.text);
@@ -1001,14 +1002,14 @@ function QuickExport() {
 							? decodeURI(newFolder.fsName)
 							: decodeURI(newFolder.fullName);
 					} else {
-						this.parent.path = this.text;
+						if (this.text !== 'Using documents folders') this.parent.path = this.text;
+						this.helpTip = 'Folder not found';
 					}
-					updateStatus();
+					checkStatus();
 				};
 
 				ui[workflow].destination.folder.onActivate = function () {
-					if (Folder(this.parent.path).exists)
-						this.text = decodeURI(Folder(this.parent.path));
+					this.text = this.parent.path;
 				};
 
 				ui[workflow].destination.folder.onDeactivate = function () {
@@ -1074,6 +1075,7 @@ function QuickExport() {
 					ui[workflow].script.file.text        = settings[workflow].docActions.script.value;
 					ui[workflow].script.isOn.value       = settings[workflow].docActions.script.active;
 					ui[workflow].destination.folder.text = settings[workflow].outputOptions.destination.value;
+					ui[workflow].destination.path        = settings[workflow].outputOptions.destination.value;
 					ui[workflow].destination.isOn.value  = settings[workflow].outputOptions.destination.active;
 					ui[workflow].suffix.et.text          = settings[workflow].outputOptions.suffix.value;
 					ui[workflow].suffix.isOn.value       = settings[workflow].outputOptions.suffix.active;
@@ -1133,12 +1135,10 @@ function QuickExport() {
 							value:  ui[workflow].script.path
 						}
 					};
-					if (ui[workflow].destination.path === 'Using documents folders')
-						ui[workflow].destination.path = old.destination[workflow] || '';
 					settings[workflow].outputOptions = {
 						destination: {
 							active: ui[workflow].destination.isOn.value,
-							value:  ui[workflow].destination.path
+							value:  ui[workflow].destination.path || ''
 						},
 						suffix: {
 							active: ui[workflow].suffix.isOn.value,
@@ -1241,7 +1241,7 @@ function QuickExport() {
 				} else {
 					this.parent.path = this.text;
 				}
-				updateStatus();
+				checkStatus();
 			};
 		}
 
@@ -1271,7 +1271,7 @@ function QuickExport() {
 						(app.activeWindow.bounds[0] + app.activeWindow.bounds[2] - ui.frameSize.height) / 2
 				];
 			}
-			updateStatus();
+			checkStatus();
 		};
 
 		ui.onClose = function () {
@@ -1280,7 +1280,7 @@ function QuickExport() {
 
 		return ui.show();
 
-		function updateStatus() {
+		function checkStatus() {
 			var i, workflow;
 
 			// Start with a clean state
@@ -1328,9 +1328,6 @@ function QuickExport() {
 							: 'Folder not found';
 					}
 				} else { // Using documents folders
-					if (Folder(ui[workflow].destination.path).exists)
-						old.destination[workflow] = ui[workflow].destination.path;
-					ui[workflow].destination.folder.text =
 					ui[workflow].destination.folder.helpTip = 'Using documents folders';
 				}
 			}
