@@ -454,15 +454,15 @@ There are two selectable workflows, with the options grouped into several catego
 
 - **Sort files into subfolders by date**: Files will be exported in a subfolder named **`MM.DD`** (current month/day).
 
-- **Overwrite existing files:** If unchecked, the files will get unique names by incrementing their index – for example, we'll export as `Document_preview3.pdf` if there is already a `Document_preview2.pdf` in the export folder or its subfolders. If checked, the index will not be incremented and the files will be overwritten _if_ the destination is the same.
+- **Overwrite existing files:** The files will be overwritten _if_ the destination is the same. If unchecked, the files will get unique names by incrementing their index – for example, we'll export as `Document_preview3.pdf` if there is already a `Document_preview2.pdf` in the export folder or its subfolders.
 
 **Updating source:**
-- After export, modified documents can be updated or not (e.g., you want to preserve changes made by a script).
+- **Save modified:**: After export, modified documents can be updated (e.g., if you want to preserve changes made by a script).
 
-- You can also enforce a **Save as** for all documents. This is useful for reducing the size of documents that have been modified many times (on each regular save the document grows with the latest changes).
+- **Save all documents:** Documents will be saved regardless if modified or not. You can also enforce a **Save as** for all documents – this is useful for reducing the size of documents that have been modified many times (on each regular save the document grows with the latest changes).
 
 **Global options:**
-- **Upgrade [Converted] documents**: Upgrade documents from previous versions of InDesign, or skip them.
+- **Upgrade [Converted] documents**: Upgrade or skip documents from previous versions of InDesign.
 
 **Note:** If you keep the **Opt/Alt** key pressed while clicking **Start**, the script will run without saving the settings.
 
@@ -586,7 +586,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: August 21, 2023</small>
+<small>Last updated: August 29, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
