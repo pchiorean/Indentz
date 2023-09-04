@@ -37,7 +37,7 @@
 app.doScript(QuickExport, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'QuickExport');
 
 function QuickExport() {
-	var doc, settings, ui, progressBar;
+	var doc, settings, ui, progressBar, timer, elapsed;
 	var status = [];
 	var title = 'Quick Export';
 	var WIN = (File.fs === 'Windows');
@@ -140,6 +140,13 @@ function QuickExport() {
 		var pbWidth = 50;
 
 		app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
+
+		// Start timer
+		timer = {
+			setStartTime: function () { d = new Date(); time = d.getTime(); },
+			getDiff: function () { d = new Date(); t = d.getTime() - time; time = d.getTime(); return t; }
+		};
+		timer.setStartTime();
 
 		// Get documents list
 		if (isFolderMode) {
@@ -1411,6 +1418,14 @@ function QuickExport() {
 		app.scriptPreferences.userInteractionLevel = old.userInteractionLevel;
 		app.pdfExportPreferences.viewPDF = old.viewPDF;
 		try { progressBar.close(); } catch (e) {}
-		if (status.length > 0) report(status, 'Errors', 'auto', true);
+
+		// Show report
+		elapsed = (timer.getDiff() / 1000).toFixed(1);
+		if (status.length > 0) {
+			report(status,
+				'Finished in ' + elapsed + ' seconds' +
+				(status.length > 0 ? (' | ' + status.length + ' warning' + (status.length === 1 ? '' : 's')) : ''),
+				'auto', true);
+		} else if (elapsed >= 10) { alert('Finished in ' + elapsed + ' seconds.'); }
 	}
 }
