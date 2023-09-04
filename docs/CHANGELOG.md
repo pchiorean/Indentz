@@ -26,6 +26,13 @@
   **export/QuickExport:** Improved persistence of output folder when saving settings
 - `08/29` [`upd`](https://github.com/pchiorean/Indentz/commit/6103d8cd5c77b0cc0507b287f5d28fba987882ba)
   **lib/log:** Improved folding block presentation
+- `09/04` [`fix`](https://github.com/pchiorean/Indentz/commit/ff5328e8772aec7258219ffd23c5235d7058cc51)
+  **export/QuickExport:** When 'Escape' was detected, we performed the cleanup but not the exit. Fixed.
+- `09/04` [`new`](https://github.com/pchiorean/Indentz/commit/06b495d58ee34da17157e631311becd45f54e9b0)
+          [`fix`](https://github.com/pchiorean/Indentz/commit/ddd2dedf4c73c89145692dddec285fed60dbb24e)
+  **export/QuickExport:** Added an elapsed time alert at the end (for durations longer than 9 seconds)
+- `09/04` [`ref`](https://github.com/pchiorean/Indentz/commit/ddd2dedf4c73c89145692dddec285fed60dbb24e)
+  **export/QuickExport:** Added `beautifyPath()` to simplify platform-dependent path display
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
