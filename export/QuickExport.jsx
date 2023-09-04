@@ -37,7 +37,7 @@
 app.doScript(QuickExport, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'QuickExport');
 
 function QuickExport() {
-	var doc, settings, ui, progressBar, timer, elapsed;
+	var doc, settings, ui, progressBar, elapsed;
 	var status = [];
 	var title = 'Quick Export';
 	var WIN = (File.fs === 'Windows');
@@ -53,6 +53,10 @@ function QuickExport() {
 	var isFolderMode = (app.documents.length === 0);
 	var MMDD = zeroPad((new Date()).getMonth() + 1, 2)
 		+ '.' + zeroPad((new Date()).getDate(), 2);
+	var timer = {
+		setStartTime: function () { d = new Date(); time = d.getTime(); },
+		getDiff: function () { d = new Date(); t = d.getTime() - time; time = d.getTime(); return t; }
+	};
 
 	var VER = '3.8';
 	var defaults = {
@@ -128,9 +132,20 @@ function QuickExport() {
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
 	app.pdfExportPreferences.viewPDF = false;
 
-	if (showDialog() === 1) main();
-	cleanup();
-	exit();
+	if (showDialog() === 1) {
+		timer.setStartTime();
+		main();
+
+		// Show report
+		elapsed = (timer.getDiff() / 1000).toFixed(1);
+		if (status.length > 0) {
+			report(status,
+				'Finished in ' + elapsed + ' seconds' +
+				(status.length > 0 ? (' | ' + status.length + ' warning' + (status.length === 1 ? '' : 's')) : ''),
+				'auto', true);
+		} else if (elapsed >= 10) { alert('Finished in ' + elapsed + ' seconds.'); }
+	}
+	cleanupAndExit();
 
 	function main() {
 		var name, maxCounter, exp, suffix, layer, baseFolder, destFolder, subSuffix, subDate;
@@ -141,18 +156,11 @@ function QuickExport() {
 
 		app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 
-		// Start timer
-		timer = {
-			setStartTime: function () { d = new Date(); time = d.getTime(); },
-			getDiff: function () { d = new Date(); t = d.getTime() - time; time = d.getTime(); return t; }
-		};
-		timer.setStartTime();
-
 		// Get documents list
 		if (isFolderMode) {
 			docs = getFilesRecursively(Folder(ui.input.source.path), ui.input.options.subfolders.value, 'indd')
 				.sort(naturalSorter);
-			if (docs.length === 0) { alert('No InDesign documents found.'); cleanup(); }
+			if (docs.length === 0) { alert('No InDesign documents found.'); cleanupAndExit(); }
 		} else {
 			docs = app.documents.everyItem().getElements();
 			while ((doc = docs.shift())) try { names.push(doc.fullName); } catch (e) { names.push(doc.name); }
@@ -225,11 +233,7 @@ function QuickExport() {
 
 				// Get base folder
 				baseFolder = decodeURI(doc.filePath);
-				if (exp.destination.isOn.value) {
-					baseFolder = WIN
-						? decodeURI(Folder(exp.destination.path).fsName)
-						: decodeURI(Folder(exp.destination.path).fullName);
-				}
+				if (exp.destination.isOn.value) baseFolder = beautifyPath(Folder(exp.destination.path));
 
 				// Get suffix
 				suffix = '';
@@ -385,7 +389,7 @@ function QuickExport() {
 
 			function getScriptLanguage(/*string*/ext) {
 				return {
-					scpt: WIN ? undefined : ScriptLanguage.APPLESCRIPT_LANGUAGE,
+					scpt:   WIN ? undefined : ScriptLanguage.APPLESCRIPT_LANGUAGE,
 					js:     ScriptLanguage.JAVASCRIPT,
 					jsx:    ScriptLanguage.JAVASCRIPT,
 					jsxbin: ScriptLanguage.JAVASCRIPT
@@ -523,7 +527,7 @@ function QuickExport() {
 			}
 
 			function exportToPDF(/*string*/filename, /*string|Enum*/pageRange, /*pdfExportPreset*/pdfPreset) {
-				if (ScriptUI.environment.keyboardState.keyName === 'Escape') { cleanup(); exit(); }
+				if (ScriptUI.environment.keyboardState.keyName === 'Escape') cleanupAndExit();
 				var fPg, lPg, spreadWidth;
 
 				// Load preset settings
@@ -597,7 +601,7 @@ function QuickExport() {
 				if (exp.overwrite.value && File(filename).exists)
 					try { File(filename).remove(); } catch (e) {}
 				doc.exportFile(ExportFormat.PDF_TYPE, File(filename), false);
-				if (ScriptUI.environment.keyboardState.keyName === 'Escape') { cleanup(); exit(); }
+				if (ScriptUI.environment.keyboardState.keyName === 'Escape') cleanupAndExit();
 			}
 		}
 	}
@@ -957,9 +961,7 @@ function QuickExport() {
 						) {
 						this.parent.path = decodeURI(newFile);
 						this.text = decodeURI(newFile.name);
-						this.helpTip = WIN
-							? decodeURI(newFile.fsName)
-							: decodeURI(newFile.fullName);
+						this.helpTip = beautifyPath(newFile);
 					} else {
 						this.parent.path = this.text;
 					}
@@ -1006,9 +1008,7 @@ function QuickExport() {
 					if (newFolder.exists) {
 						this.parent.path = decodeURI(newFolder);
 						this.text = decodeURI(newFolder.name);
-						this.helpTip = WIN
-							? decodeURI(newFolder.fsName)
-							: decodeURI(newFolder.fullName);
+						this.helpTip = beautifyPath(newFolder);
 					} else {
 						if (this.text !== 'Using documents folders') this.parent.path = this.text;
 						this.helpTip = 'Folder not found';
@@ -1243,9 +1243,7 @@ function QuickExport() {
 			ui.input.source.folder.onChange = function () {
 				if (Folder(this.text).exists) {
 					this.parent.path = this.text;
-					this.text = WIN
-						? decodeURI(Folder(this.parent.path).fsName)
-						: decodeURI(Folder(this.parent.path).fullName);
+					this.text = beautifyPath(Folder(this.parent.path));
 				} else {
 					this.parent.path = this.text;
 				}
@@ -1303,9 +1301,7 @@ function QuickExport() {
 					ui.input.source.folder.helpTip = 'Select a folder';
 				} else {
 					ui.input.source.folder.helpTip = Folder(ui.input.source.path).exists
-						? (WIN
-							? decodeURI(Folder(ui.input.source.path).fsName)
-							: decodeURI(Folder(ui.input.source.path).fullName))
+						? beautifyPath(Folder(ui.input.source.path))
 						: 'Folder not found';
 				}
 			}
@@ -1318,9 +1314,7 @@ function QuickExport() {
 						ui[workflow].script.file.helpTip = 'Select a script';
 					} else {
 						ui[workflow].script.file.helpTip = File(ui[workflow].script.path).exists
-							? (WIN
-								? decodeURI(File(ui[workflow].script.path).fsName)
-								: decodeURI(File(ui[workflow].script.path).fullName))
+							? beautifyPath(File(ui[workflow].script.path))
 							: 'File not found';
 					}
 				}
@@ -1330,9 +1324,7 @@ function QuickExport() {
 						ui[workflow].destination.folder.helpTip = 'Select a folder';
 					} else {
 						ui[workflow].destination.folder.helpTip = Folder(ui[workflow].destination.path).exists
-							? (WIN
-								? decodeURI(Folder(ui[workflow].destination.path).fsName)
-								: decodeURI(Folder(ui[workflow].destination.path).fullName))
+							? beautifyPath(Folder(ui[workflow].destination.path))
 							: 'Folder not found';
 					}
 				} else { // Using documents folders
@@ -1407,25 +1399,23 @@ function QuickExport() {
 		}
 	}
 
+	function beautifyPath(/*File|Folder*/f) {
+		return WIN
+			? decodeURI(f.fsName)
+			: decodeURI(f.fullName);
+	}
+
 	function zeroPad(/*number*/number, /*number*/digits) {
 		number = number.toString();
 		while (number.length < digits) number = '0' + number;
 		return number;
 	}
 
-	function cleanup() {
+	function cleanupAndExit() {
 		app.scriptPreferences.measurementUnit = old.measurementUnit;
 		app.scriptPreferences.userInteractionLevel = old.userInteractionLevel;
 		app.pdfExportPreferences.viewPDF = old.viewPDF;
 		try { progressBar.close(); } catch (e) {}
-
-		// Show report
-		elapsed = (timer.getDiff() / 1000).toFixed(1);
-		if (status.length > 0) {
-			report(status,
-				'Finished in ' + elapsed + ' seconds' +
-				(status.length > 0 ? (' | ' + status.length + ' warning' + (status.length === 1 ? '' : 's')) : ''),
-				'auto', true);
-		} else if (elapsed >= 10) { alert('Finished in ' + elapsed + ' seconds.'); }
+		exit();
 	}
 }
