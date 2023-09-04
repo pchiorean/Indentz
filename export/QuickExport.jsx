@@ -1,5 +1,5 @@
 /*
-	Quick export 23.8.29
+	Quick export 23.9.4
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -516,7 +516,7 @@ function QuickExport() {
 			}
 
 			function exportToPDF(/*string*/filename, /*string|Enum*/pageRange, /*pdfExportPreset*/pdfPreset) {
-				if (ScriptUI.environment.keyboardState.keyName === 'Escape') cleanup();
+				if (ScriptUI.environment.keyboardState.keyName === 'Escape') { cleanup(); exit(); }
 				var fPg, lPg, spreadWidth;
 
 				// Load preset settings
@@ -590,6 +590,7 @@ function QuickExport() {
 				if (exp.overwrite.value && File(filename).exists)
 					try { File(filename).remove(); } catch (e) {}
 				doc.exportFile(ExportFormat.PDF_TYPE, File(filename), false);
+				if (ScriptUI.environment.keyboardState.keyName === 'Escape') { cleanup(); exit(); }
 			}
 		}
 	}
