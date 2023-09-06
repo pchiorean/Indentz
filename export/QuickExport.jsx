@@ -1,5 +1,5 @@
 /*
-	Quick export 23.9.4
+	Quick export 23.9.6
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -135,6 +135,7 @@ function QuickExport() {
 	if (showDialog() === 1) {
 		timer.setStartTime();
 		main();
+		cleanup();
 
 		// Show report
 		elapsed = (timer.getDiff() / 1000).toFixed(1);
@@ -144,8 +145,10 @@ function QuickExport() {
 				(status.length > 0 ? (' | ' + status.length + ' warning' + (status.length === 1 ? '' : 's')) : ''),
 				'auto', true);
 		} else if (elapsed >= 10) { alert('Finished in ' + elapsed + ' seconds.'); }
+	} else {
+		cleanup();
 	}
-	cleanupAndExit();
+	exit();
 
 	function main() {
 		var name, maxCounter, exp, suffix, layer, baseFolder, destFolder, subSuffix, subDate;
@@ -160,7 +163,7 @@ function QuickExport() {
 		if (isFolderMode) {
 			docs = getFilesRecursively(Folder(ui.input.source.path), ui.input.options.subfolders.value, 'indd')
 				.sort(naturalSorter);
-			if (docs.length === 0) { alert('No InDesign documents found.'); cleanupAndExit(); }
+			if (docs.length === 0) { alert('No InDesign documents found.'); cleanup(); exit(); }
 		} else {
 			docs = app.documents.everyItem().getElements();
 			while ((doc = docs.shift())) try { names.push(doc.fullName); } catch (e) { names.push(doc.name); }
@@ -527,7 +530,7 @@ function QuickExport() {
 			}
 
 			function exportToPDF(/*string*/filename, /*string|Enum*/pageRange, /*pdfExportPreset*/pdfPreset) {
-				if (ScriptUI.environment.keyboardState.keyName === 'Escape') cleanupAndExit();
+				if (ScriptUI.environment.keyboardState.keyName === 'Escape') { cleanup(); exit(); }
 				var fPg, lPg, spreadWidth;
 
 				// Load preset settings
@@ -601,7 +604,7 @@ function QuickExport() {
 				if (exp.overwrite.value && File(filename).exists)
 					try { File(filename).remove(); } catch (e) {}
 				doc.exportFile(ExportFormat.PDF_TYPE, File(filename), false);
-				if (ScriptUI.environment.keyboardState.keyName === 'Escape') cleanupAndExit();
+				if (ScriptUI.environment.keyboardState.keyName === 'Escape') { cleanup(); exit(); }
 			}
 		}
 	}
@@ -1411,11 +1414,10 @@ function QuickExport() {
 		return number;
 	}
 
-	function cleanupAndExit() {
+	function cleanup() {
 		app.scriptPreferences.measurementUnit = old.measurementUnit;
 		app.scriptPreferences.userInteractionLevel = old.userInteractionLevel;
 		app.pdfExportPreferences.viewPDF = old.viewPDF;
 		try { progressBar.close(); } catch (e) {}
-		exit();
 	}
 }
