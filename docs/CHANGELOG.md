@@ -33,6 +33,15 @@
   **export/QuickExport:** Added an elapsed time alert at the end (for durations longer than 9 seconds)
 - `09/04` [`ref`](https://github.com/pchiorean/Indentz/commit/ddd2dedf4c73c89145692dddec285fed60dbb24e)
   **export/QuickExport:** Added `beautifyPath()` to simplify platform-dependent path display
+- `09/06` [`fix`](https://github.com/pchiorean/Indentz/commit/fe6dc8d64277a367c86f9d63feca006531eebf10)
+  **export/QuickExport:** Do cleanup before displaying the report
+- `09/11` [`new`](https://github.com/pchiorean/Indentz/commit/a1500c1b6ee88e04ea79e57fa6420e966da0108c)
+  **misc/EAN:** Sequentially insert a list of barcodes into all selected objects
+- `09/11` [`fix`](https://github.com/pchiorean/Indentz/commit/473ef02662d0f51dcd8f9c30d736c70719d23781)
+  **view/ZoomToSelection, ZoomToSpreads:** Fixed the acceptable zoom range
+
+<!-- ### TODO
+- `fix` `?` **DefaultSwatches:** Split processing into 2 steps: 1) Create swatches; 2) Merge swatches -->
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -791,6 +800,7 @@
 - `upd` **lib/replaceText:** Add grep matching
 - `upd` **lib/replaceText:** Take an array of strings as input
 - `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
+- `upd` **lib/report:** Make window resizable
 - `upd` **view/ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
 - `upd` Use a custom object style for `<visible area>` frame
 - `brk` `?` **cleanup/DefaultLayers:** Add column for locked status
