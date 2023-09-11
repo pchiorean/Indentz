@@ -1,11 +1,11 @@
 /*
-	EAN code 23.4.6
+	Generate EAN Codes 23.9.11
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
-	Embeds an EAN code in the selected frames or adds it to a new page.
+	Inserts EAN codes into the selected frames or in a new document.
 
-	The code that generates the EAN code was borrowed from
-	'EAN Barcode Generator' by Konstantin Smorodsky.
+	The code that generates the EAN code (`BarCode()`) was borrowed
+	from 'EAN Barcode Generator' by Konstantin Smorodsky.
 	https://github.com/smorodsky/ean-barcode-generator
 
 	Released under MIT License:
@@ -31,45 +31,69 @@
 */
 
 // @includepath '.;./lib;../lib';
-// @include 'getBounds.jsxinc';
-// @include 'report.jsxinc';
+// @include 'progressBar.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'EAN code');
 
 function main() {
-	var doc, page, oldSelection,
-		ui, items, barcode,
-		codeFrame, codeLayer, txtLayer,
-		target, SF;
+	var doc, page, ui, items, codeFrame, codeLayer, txtLayer, target, SF, oldCenter, newCenter, progressBar;
+	var barcode = [];
+	var barcodes = [];
+	var selection = [];
+	var rows = Math.min(Math.max(6, selection.length), 20); // Keep rows between 6 and 20
 	var codeLayerName = 'codes';
 	var txtLayerName = 'text & logos';
+	if (app.layoutWindows.length > 0) selection = app.selection;
+
 	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 	app.scriptPreferences.enableRedraw = false;
 
-	ui = new Window('dialog { alignChildren: [ "left", "fill" ], orientation: "row", text: "Generate EAN Code" }');
+	ui = new Window('dialog { alignChildren: [ "left", "fill" ], orientation: "row", text: "Generate EAN Codes" }');
 	ui.main = ui.add('panel { alignChildren: [ "fill", "center" ], orientation: "column" }');
-		ui.code = ui.main.add('edittext { active: true, properties: { enterKeySignalsOnChange: true } }');
-		ui.code.helpTip = 'Enter 8 or 13 digits for the code and 2 or 5 digits\nfor the add-on, separated by a space or a hyphen';
-		ui.code.preferredSize.width = 291;
-		ui.code.active = true;
-		ui.options = ui.main.add('group { margins: [ 0, 5, 0, 0 ], orientation: "row", spacing: 15 }');
-			ui.rightMark = ui.options.add('checkbox { text: "Quiet Zone indicator" }');
+		ui.legend = ui.main.add('group { orientation: "column", alignChildren: [ "left", "top" ], spacing: 0 }');
+		if (selection.length > 0) {
+				ui.legend.add('statictext { text: "This script inserts EAN-8 or EAN-13" }');
+				ui.legend.add('statictext { text: "barcodes into the selected frames." }');
+			} else {
+				ui.legend.add('statictext { text: "This script creates EAN-8 or EAN-13" }');
+				ui.legend.add('statictext { text: "barcodes in a new document." }');
+			}
+			ui.legend.add('statictext');
+			ui.legend.add('statictext { text: "Enter 8 or 13 digits for codes and" }');
+			ui.legend.add('statictext { text: "2 or 5 digits for EAN-2/5 addons" }');
+			ui.legend.add('statictext { text: "(separated by a space or a hyphen):" }');
+		ui.code = ui.main.add('edittext { active: true, properties: { multiline: true, scrolling: true, enterKeySignalsOnChange: true } }');
+			ui.code.characters = 22;
+			ui.code.preferredSize.height = rows * 15 + 2;
+			ui.code.active = true;
+		ui.options = ui.main.add('group { orientation: "column", alignChildren: [ "left", "top" ], margins: [ 0, 5, 0, 0 ], spacing: 5 }');
+			ui.rightMark = ui.options.add('checkbox { text: "Quiet Zone indicator (>)" }');
+			ui.rightMark.helpTip = 'Add a \'>\' on the right to mark Quiet Zones that are\nnecessary for barcode scanners to work properly';
 			ui.rightMark.value = true;
-			ui.extOnTop = ui.options.add('checkbox { text: "Add-on text on top" }');
+			ui.extOnTop = ui.options.add('checkbox { text: "Put addon text on top" }');
 			ui.extOnTop.value = false;
 	ui.actions = ui.add('group { alignChildren: [ "fill", "top" ], orientation: "column" }');
 		ui.ok = ui.actions.add('button { text: "Ok" }');
-		ui.ok.onClick = function () {
-			var i, buffer, accumulator, chr;
-			buffer = ui.code.text.replace(/^\s+|\s+$/g, '');
+		ui.actions.add('button { text: "Cancel" }');
+
+	ui.code.onChanging = function () {
+		this.text = this.text.replace(/[,;\t\n\r]/g, '\n');
+	};
+	ui.ok.onClick = function () {
+		var i, j, buffer, accumulator, chr;
+		buffer = ui.code.text
+			.replace(/^\s+|\s+$/g, '') // Trim whitespaces at both ends
+			.split(/ *[,;\t\n\r] */);  // Split into multiple candidates
+		barcodes = [];
+		for (i = 0; i < buffer.length; i++) {
 			try {
 				barcode = [];
 				accumulator = '';
-				for (i = 0; i < buffer.length; i++) {
-					chr = buffer[i];
+				for (j = 0; j < buffer[i].length; j++) {
+					chr = buffer[i][j];
 					if (chr >= '0' && chr <= '9') { accumulator += chr; continue; }
 					if (chr === 'x' || chr === 'X') {
-						if (i !== 12 || barcode.length !== 0) throw Error('X');
+						if (j !== 12 || barcode.length !== 0) throw Error(0);
 						accumulator += 'X';
 						continue;
 					}
@@ -79,15 +103,16 @@ function main() {
 				if (barcode.length > 2) throw Error(0);
 				if (barcode[0].length !== 8 && barcode[0].length !== 12 && barcode[0].length !== 13) throw Error(0);
 				if (barcode.length === 2 && barcode[1].length !== 2 && barcode[1].length !== 5) throw Error(0);
+				barcodes.push(barcode); // [ [ code1, ext1 ], [ code2, ext2 ], ... ]
 			} catch (e) {
-				alert('Invalid barcode\nEnter 8 or 13 digits for the code and 2 or 5 digits ' +
+				alert('Invalid barcode: ' + buffer[i] + '\nEnter 8 or 13 digits for the code and 2 or 5 digits ' +
 					'for the add-on, separated by a space or a hyphen.');
 				ui.code.active = true;
 				return;
 			}
-			ui.close();
-		};
-		ui.actions.add('button { text: "Cancel" }');
+		}
+		ui.close();
+	};
 	ui.onShow = function () {
 		ui.frameLocation = [
 			(app.activeWindow.bounds[1] + app.activeWindow.bounds[3] - ui.frameSize.width) / 2,
@@ -96,14 +121,26 @@ function main() {
 	};
 	if (ui.show() === 2) exit();
 
+	if (barcodes.length === 0) exit();
+
 	// Embed the code in the selected objects, else make a new doc
-	if (app.documents.length > 0 && app.selection.length > 0) {
+	if (app.documents.length > 0 && selection.length > 0) {
 		doc = app.activeDocument;
-		oldSelection = doc.selection;
-		items = doc.selection;
-		while ((target = items.shift())) {
-			codeFrame = makeBarcode();
+		items = selection;
+
+		if (items.length > 2) progressBar = new ProgressBar(ui.text, items.length);
+
+		for (i = 0; i < items.length; i++) {
+			if (progressBar) progressBar.update();
+			target = items[i];
+
+			// If one barcode, use it for all selected items, else insert sequentially
+			if (barcodes[i] || barcodes.length === 1)
+				codeFrame = makeBarcode(barcodes.length === 1 ? barcodes[0] : barcodes[i]);
+			else continue;
+
 			codeFrame.fillColor = 'None';
+
 			codeFrame.absoluteRotationAngle = target.absoluteRotationAngle;
 			switch (target.absoluteRotationAngle) {
 				case 90:
@@ -131,36 +168,63 @@ function main() {
 					doc.align(codeFrame, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
 					break;
 			}
-			if (codeFrame.pageItems[0].label.length === 8) SF *= 0.76518424396442; // Adjust scale factor for EAN-8
+			if (codeFrame.pageItems[0].label.length === 8) SF *= 0.76518424396442; // Adjust scale factor for EAN-8's narrower width
 			codeFrame.transform(
 				CoordinateSpaces.INNER_COORDINATES,
 				AnchorPoint.BOTTOM_CENTER_ANCHOR,
 				app.transformationMatrices.add({ horizontalScaleFactor: SF, verticalScaleFactor: SF })
 			);
-			app.select(codeFrame);
-			app.cut();
-			app.select(target);
-			app.pasteInto();
-			codeFrame = target;
+
+			oldCenter = codeFrame.pageItems[0].resolve(
+				[ [ 0.5, 0.5 ], BoundingBoxLimits.GEOMETRIC_PATH_BOUNDS ],
+				CoordinateSpaces.SPREAD_COORDINATES
+			)[0];
+			target.contentPlace(codeFrame);
+			codeFrame.remove();
+			newCenter = target.pageItems[0].resolve(
+				[ [ 0.5, 0.5 ], BoundingBoxLimits.GEOMETRIC_PATH_BOUNDS ],
+				CoordinateSpaces.SPREAD_COORDINATES
+			)[0];
+			target.pageItems[0].move(undefined, [
+				UnitValue(oldCenter[0] - newCenter[0], 'pt').as('mm'),
+				UnitValue(oldCenter[1] - newCenter[1], 'pt').as('mm')
+			]);
 		}
-		app.select(oldSelection);
+		app.select(selection);
 	} else {
 		doc = app.documents.add();
-		page = doc.pages[0];
-		codeFrame = makeBarcode();
-		page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
-		page.reframe(CoordinateSpaces.SPREAD_COORDINATES, [
-			codeFrame.resolve(AnchorPoint.TOP_LEFT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0],
-			codeFrame.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0]
-		]);
-		doc.pasteboardPreferences.pasteboardMargins = [ 0, 0 ];
-		doc.documentPreferences.pageWidth  = page.bounds[3] - page.bounds[0];
-		doc.documentPreferences.pageHeight = page.bounds[2] - page.bounds[1];
-		app.activeWindow.zoom(ZoomOptions.FIT_SPREAD);
-		app.select(codeFrame);
+		doc.documentPreferences.pageWidth  = '58.19 mm';
+		doc.documentPreferences.pageHeight = '27.93 mm';
+
+		if (barcodes.length > 2) progressBar = new ProgressBar(ui.text, barcodes.length);
+
+		for (i = 0; i < barcodes.length; i++) {
+			if (progressBar) progressBar.update();
+
+			page = i === 0 ? doc.pages[0] : doc.pages.add();
+			app.activeWindow.activePage = page;
+			app.activeWindow.zoom(ZoomOptions.FIT_SPREAD);
+
+			codeFrame = makeBarcode(barcodes[i], page);
+
+			page.marginPreferences.properties = { top: 0, left: 0, bottom: 0, right: 0 };
+			page.reframe(CoordinateSpaces.SPREAD_COORDINATES, [
+				codeFrame.resolve(AnchorPoint.TOP_LEFT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0],
+				codeFrame.resolve(AnchorPoint.BOTTOM_RIGHT_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES)[0]
+			]);
+			doc.pasteboardPreferences.pasteboardMargins = [ 0, 0 ];
+		}
+
+		doc.layers.item(-1).remove();
+		app.activeWindow.activePage = doc.pages[0];
+		app.activeWindow.zoomPercentage = 150;
+		app.activeWindow.screenMode = ScreenModeOptions.PREVIEW_TO_PAGE;
+		app.select(null);
 	}
 
-	function makeBarcode() {
+	if (progressBar) progressBar.close();
+
+	function makeBarcode(code, page) {
 		codeLayer = doc.layers.item(codeLayerName);
 		if (!codeLayer.isValid) {
 			doc.layers.add({
@@ -173,13 +237,16 @@ function main() {
 			txtLayer = doc.layers.item(txtLayerName);
 			if (txtLayer.isValid) codeLayer.move(LocationOptions.AFTER, txtLayer);
 		}
+
 		codeFrame = new BarCode(
-			barcode[0].substr(0, 12), // code
-			barcode[1], // ext
+			code[0].substr(0, 12), // code
+			code[1], // ext
 			ui.rightMark.value,
-			ui.extOnTop.value
+			ui.extOnTop.value,
+			page
 		);
 		codeFrame.itemLayer = codeLayer;
+
 		return codeFrame;
 	}
 
@@ -189,10 +256,9 @@ function main() {
 	 * https://github.com/smorodsky/ean-barcode-generator
 	 *
 	 * Changes by Paul Chiorean <jpeg@basement.ro>:
-	 * - Removed `page` argument;
-	 * - Embedded barcode in frame;
 	 * - Refactored functions.
-	 * @version J22.11.6
+	 * - Return the barcode embedded in a frame;
+	 * @version 23.9.8-PC
 	 * @author Konstantin Smorodsky
 	 * @license MIT
 	 * @param {String} code - A string of 9 or 13 digits for the code.
@@ -201,7 +267,7 @@ function main() {
 	 * @param {Boolean} extOnTop - Put add-on text on top
 	 * @returns {Rectangle} - The barcode as a compound path embedded in a white rectangle
 	 */
-	function BarCode(code, ext, rightMark, extOnTop) {
+	function BarCode(code, ext, rightMark, extOnTop, page) {
 		var pos, frame, oldCenter, newCenter;
 		var bcPolygon       = null;  // Main object (black)
 		var lineWidth       =  0.33; // mm
@@ -216,7 +282,6 @@ function main() {
 		var charHeight      =  2.75;
 		var charHSpace      =  0.33; // Отступ при нижнем расположении цифр
 		var addonCharHSpace =  0.33; // Min 0.16
-		var page = app.activeWindow.activePage;
 		var EANData = {
 			main: [ // See http://en.wikipedia.org/wiki/European_Article_Number
 				'LLLLLL', 'LLGLGG', 'LLGGLG', 'LLGGGL', 'LGLLGG',
@@ -570,6 +635,7 @@ function main() {
 				}
 			}
 		};
+		page = page || app.activeWindow.activePage;
 
 		// Build code + add-on + quiet zone
 		ext = ext || '';
