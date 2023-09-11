@@ -539,7 +539,9 @@ Releases one or several objects from their clipping frames (you can select any o
 **Shortcut:** ⌃Num\*
 
 #### **`EAN.jsx`**
-This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, modified to embed a code in the selected rectangle: if we have a page object (ideally a rectangle) selected, the script embeds an EAN code in it, scaled to width. If nothing is selected, creates a new document.
+This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, that generates a document containing a user-provided sequence of barcodes. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I wanted to insert them semi-automatically instead of having to manually copy/paste and scale each one, so I made a simplified version that either inserted a single barcode directly into the selected object or created it in a new document. Later, however, I extended it to insert a sequence of barcodes in a multiple selection; eventually, I ended up reproducing much of the functionality of the original script. 🙂 The routine that generates the barcode is taken from the original script, refactored to make it standalone, and the rest of the code is original.
+
+When nothing is selected, it creates a new document with each barcode on one page. If there are multiple frames (ideally rectangles) selected, the barcodes will be inserted in the order they were selected; if we have one barcode and multiple frames, the same barcode will be inserted into all of them.
 
 Enter 8 or 13 digits for the code itself; if you have an add-on, add a hyphen and another 2 or 5 digits.
 
@@ -626,7 +628,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: September 6, 2023</small>
+<small>Last updated: September 11, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
