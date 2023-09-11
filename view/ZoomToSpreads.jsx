@@ -1,6 +1,6 @@
 /*
-	Zoom to spreads 22.12.23
-	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
+	Zoom to spreads 23.9.11
+	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Zooms to the current spread (if N = 1) or the first N spreads (if N > 1).
 
@@ -110,7 +110,7 @@ tgt = {
 w.zoom(ZoomOptions.FIT_PAGE);
 
 zoom = Math.min(scr.width / tgt.width, scr.height / tgt.height) * zF * 100;
-zoom = (Math.max(5, zoom), Math.min(zoom, 4000)); // Keep it in 5-4000% range
+zoom = Math.min(Math.max(5, zoom), 4000); // Keep it in 5-4000% range
 
 // Zoom to target
 if (N > 1 && selection.length === 0)
