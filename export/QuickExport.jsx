@@ -1,5 +1,5 @@
 /*
-	Quick export 23.9.6
+	Quick export 23.9.12
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -51,11 +51,18 @@ function QuickExport() {
 		viewPDF: app.pdfExportPreferences.viewPDF
 	};
 	var isFolderMode = (app.documents.length === 0);
-	var MMDD = zeroPad((new Date()).getMonth() + 1, 2)
-		+ '.' + zeroPad((new Date()).getDate(), 2);
 	var timer = {
-		setStartTime: function () { d = new Date(); time = d.getTime(); },
-		getDiff: function () { d = new Date(); t = d.getTime() - time; time = d.getTime(); return t; }
+		start: function () { d = new Date(); time = d.getTime(); },
+		getDiff: function () { d = new Date(); t = d.getTime() - time; time = d.getTime(); return t; },
+		secondsToHHMMSS: function (sec) {
+			var hours = Math.floor(sec / 3600);
+			var minutes = Math.floor((sec % 3600) / 60);
+			var seconds = sec % 60;
+			return ((hours > 0 ? hours + 'h ' : '')
+				+ (minutes > 0 ? minutes + 'm ' : '')
+				+ (seconds > 0 ? seconds + 's ' : '')).replace(/\s*$/, '');
+		},
+		MMDD: zeroPad((new Date()).getMonth() + 1, 2) + '.' + zeroPad((new Date()).getDate(), 2)
 	};
 
 	var VER = '3.8';
@@ -133,7 +140,7 @@ function QuickExport() {
 	app.pdfExportPreferences.viewPDF = false;
 
 	if (showDialog() === 1) {
-		timer.setStartTime();
+		timer.start();
 		main();
 		cleanup();
 
@@ -141,10 +148,10 @@ function QuickExport() {
 		elapsed = (timer.getDiff() / 1000).toFixed(1);
 		if (status.length > 0) {
 			report(status,
-				'Finished in ' + elapsed + ' seconds' +
+				'Finished in ' + timer.secondsToHHMMSS(elapsed) +
 				(status.length > 0 ? (' | ' + status.length + ' warning' + (status.length === 1 ? '' : 's')) : ''),
 				'auto', true);
-		} else if (elapsed >= 10) { alert('Finished in ' + elapsed + ' seconds.'); }
+		} else if (elapsed >= 10) { alert('Finished in ' + timer.secondsToHHMMSS(elapsed) + '.'); }
 	} else {
 		cleanup();
 	}
@@ -254,7 +261,7 @@ function QuickExport() {
 					if (!Folder(destFolder).exists) Folder(destFolder).create();
 				}
 				if (exp.sortByDate.value) {
-					subDate = MMDD;
+					subDate = timer.MMDD;
 					if (!Folder(destFolder + '/' + subDate).exists) Folder(destFolder + '/' + subDate).create();
 				}
 
