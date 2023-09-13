@@ -454,7 +454,7 @@ There are two selectable workflows, with the options grouped into several catego
 ![](img/script-quickexport-legend.svg)
 
 **Source folder:**
-- By default all open documents will be exported. If nothing is open, you can select a folder as the source.
+- By default, all open documents will be exported. If nothing is open, this option allows you to select a folder as the source.
 
 **Preset options:**
 - After selecting an Adobe PDF Preset you can override some of its options with just a few clicks: crop marks, page information, to include or not the slug area, to export as pages or as spreads, resolution, bleed etc.
@@ -476,7 +476,7 @@ There are two selectable workflows, with the options grouped into several catego
 - **Overwrite existing files:** The files will be overwritten _if_ the destination is the same. If unchecked, the files will get unique names by incrementing their index – for example, we'll export as `Document_preview3.pdf` if there is already a `Document_preview2.pdf` in the export folder or its subfolders.
 
 **Updating source:**
-- **Save modified:**: After export, modified documents can be updated (e.g., if you want to preserve changes made by a script).
+- **Save modified:** After export, modified documents can be updated (e.g., if you want to preserve changes made by a script).
 
 - **Save all documents:** Documents will be saved regardless if modified or not. You can also enforce a **Save as** for all documents – this is useful for reducing the size of documents that have been modified many times (on each regular save the document grows with the latest changes).
 
@@ -539,7 +539,7 @@ Releases one or several objects from their clipping frames (you can select any o
 **Shortcut:** ⌃Num\*
 
 #### **`EAN.jsx`**
-This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, that generates a document containing a user-provided sequence of barcodes. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I wanted to insert them semi-automatically instead of having to manually copy/paste and scale each one, so I made a simplified version that either inserted a single barcode directly into the selected object or created it in a new document. Later, however, I extended it to insert a sequence of barcodes in a multiple selection; eventually, I ended up reproducing much of the functionality of the original script. 🙂 The routine that generates the barcode is taken from the original script, refactored to make it standalone, and the rest of the code is original.
+This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, which generates a document containing a user-provided sequence of barcodes. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I wanted to insert them semi-automatically instead of having to manually copy/paste and scale each one, so I made a simplified version that either inserted a single barcode directly into the selected object or created it in a new document. Later, however, I extended it to insert a sequence of barcodes in a multiple selection; eventually, I ended up reproducing much of the functionality of the original script. 🙂 The routine that generates the barcode is taken from the original script, refactored to make it standalone, and the rest of the code is original.
 
 When nothing is selected, it creates a new document with each barcode on one page. If there are multiple frames (ideally rectangles) selected, the barcodes will be inserted in the order they were selected; if we have one barcode and multiple frames, the same barcode will be inserted into all of them.
 
@@ -628,7 +628,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: September 11, 2023</small>
+<small>Last updated: September 13, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 

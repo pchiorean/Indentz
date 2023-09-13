@@ -1318,7 +1318,7 @@ You can use <a href="#dumplinksjsx"><strong><code>DumpLinks.jsx</code></strong><
 " alt=""></p>
 <p><strong>Source folder:</strong></p>
 <ul>
-<li>By default all open documents will be exported. If nothing is open, you can select a folder as the source.</li>
+<li>By default, all open documents will be exported. If nothing is open, this option allows you to select a folder as the source.</li>
 </ul>
 <p><strong>Preset options:</strong></p>
 <ul>
@@ -1354,7 +1354,7 @@ You can use <a href="#dumplinksjsx"><strong><code>DumpLinks.jsx</code></strong><
 <p><strong>Updating source:</strong></p>
 <ul>
 <li>
-<p><strong>Save modified:</strong>: After export, modified documents can be updated (e.g., if you want to preserve changes made by a script).</p>
+<p><strong>Save modified:</strong> After export, modified documents can be updated (e.g., if you want to preserve changes made by a script).</p>
 </li>
 <li>
 <p><strong>Save all documents:</strong> Documents will be saved regardless if modified or not. You can also enforce a <strong>Save as</strong> for all documents – this is useful for reducing the size of documents that have been modified many times (on each regular save the document grows with the latest changes).</p>
@@ -1412,7 +1412,7 @@ You can use <a href="#dumplinksjsx"><strong><code>DumpLinks.jsx</code></strong><
 <p><strong>Shortcut:</strong> ⌃Num*</p>
 <h4 class="crossnote-header" id="eanjsx"><strong><code>EAN.jsx</code></strong></h4>
 
-<p>This script is inspired by <a href="https://github.com/smorodsky/ean-barcode-generator"><strong>EAN Barcode Generator</strong></a> by Konstantin Smorodsky, that generates a document containing a user-provided sequence of barcodes. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I wanted to insert them semi-automatically instead of having to manually copy/paste and scale each one, so I made a simplified version that either inserted a single barcode directly into the selected object or created it in a new document. Later, however, I extended it to insert a sequence of barcodes in a multiple selection; eventually, I ended up reproducing much of the functionality of the original script. 🙂 The routine that generates the barcode is taken from the original script, refactored to make it standalone, and the rest of the code is original.</p>
+<p>This script is inspired by <a href="https://github.com/smorodsky/ean-barcode-generator"><strong>EAN Barcode Generator</strong></a> by Konstantin Smorodsky, which generates a document containing a user-provided sequence of barcodes. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I wanted to insert them semi-automatically instead of having to manually copy/paste and scale each one, so I made a simplified version that either inserted a single barcode directly into the selected object or created it in a new document. Later, however, I extended it to insert a sequence of barcodes in a multiple selection; eventually, I ended up reproducing much of the functionality of the original script. 🙂 The routine that generates the barcode is taken from the original script, refactored to make it standalone, and the rest of the code is original.</p>
 <p>When nothing is selected, it creates a new document with each barcode on one page. If there are multiple frames (ideally rectangles) selected, the barcodes will be inserted in the order they were selected; if we have one barcode and multiple frames, the same barcode will be inserted into all of them.</p>
 <p>Enter 8 or 13 digits for the code itself; if you have an add-on, add a hyphen and another 2 or 5 digits.</p>
 <p><strong>Shortcut:</strong> ⌥F9</p>
@@ -1520,7 +1520,7 @@ Blank lines are ignored; everything after a <code>#</code> (comments) is ignored
 The code is released under the MIT License (see <a href="LICENSE.txt">LICENSE.txt</a>).</p>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="http://jongware.mit.edu">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla’s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials or code by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel/indesignjs">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others.</p>
 <p>Thanks to Adrian Frigioiu for bug reports and feedback.</p>
-<p><small>Last updated: September 11, 2023</small></p>
+<p><small>Last updated: September 13, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
