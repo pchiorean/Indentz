@@ -39,6 +39,8 @@
   **misc/EAN:** Sequentially insert a list of barcodes into all selected objects
 - `09/11` [`fix`](https://github.com/pchiorean/Indentz/commit/473ef02662d0f51dcd8f9c30d736c70719d23781)
   **view/ZoomToSelection, ZoomToSpreads:** Fixed the acceptable zoom range
+- `09/12` [`upd`](https://github.com/pchiorean/Indentz/commit/d58f5c3bf2a3dedef7e136fc800bedc85bfb0dd1)
+  **export/QuickExport:** Improved timer display: 'Xh Xm Xs'
 
 <!-- ### TODO
 - `fix` `?` **DefaultSwatches:** Split processing into 2 steps: 1) Create swatches; 2) Merge swatches -->
