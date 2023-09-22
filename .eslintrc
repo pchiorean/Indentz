@@ -336,10 +336,10 @@
 			"warn",
 			"always"
 		],
-		// "operator-linebreak": [
-		// 	"warn",
-		// 	"after"
-		// ],
+		"operator-linebreak": [
+			"warn",
+			"before"
+		],
 		"padded-blocks": [
 			"warn",
 			"never"
