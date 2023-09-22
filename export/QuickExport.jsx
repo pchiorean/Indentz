@@ -1,5 +1,5 @@
 /*
-	Quick export 23.9.12
+	Quick export 23.9.22
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -51,18 +51,23 @@ function QuickExport() {
 		viewPDF: app.pdfExportPreferences.viewPDF
 	};
 	var isFolderMode = (app.documents.length === 0);
-	var timer = {
-		start: function () { d = new Date(); time = d.getTime(); },
-		getDiff: function () { d = new Date(); t = d.getTime() - time; time = d.getTime(); return t; },
-		secondsToHHMMSS: function (sec) {
+	var time = {
+		MMDD: zeroPad((new Date()).getMonth() + 1, 2) + '.' + zeroPad((new Date()).getDate(), 2),
+		stopwatchStart: function () { swStart = new Date().getTime(); },
+		stopwatchElapsed: function () {
+			swElapsed = new Date().getTime() - swStart;
+			swStart = new Date().getTime();
+			return (swElapsed / 1000);
+		},
+		secondsToHMS: function (sec) {
 			var hours = Math.floor(sec / 3600);
 			var minutes = Math.floor((sec % 3600) / 60);
 			var seconds = sec % 60;
 			return ((hours > 0 ? hours + 'h ' : '')
 				+ (minutes > 0 ? minutes + 'm ' : '')
-				+ (seconds > 0 ? seconds + 's ' : '')).replace(/\s*$/, '');
-		},
-		MMDD: zeroPad((new Date()).getMonth() + 1, 2) + '.' + zeroPad((new Date()).getDate(), 2)
+				+ (seconds > 0 ? seconds.toFixed(1).replace(/\.0$/, '') + 's ' : ''))
+					.replace(/\s*$/, '');
+		}
 	};
 
 	var VER = '3.8';
@@ -140,18 +145,18 @@ function QuickExport() {
 	app.pdfExportPreferences.viewPDF = false;
 
 	if (showDialog() === 1) {
-		timer.start();
+		time.stopwatchStart();
 		main();
 		cleanup();
 
 		// Show report
-		elapsed = (timer.getDiff() / 1000).toFixed(1);
+		elapsed = time.stopwatchElapsed();
 		if (status.length > 0) {
 			report(status,
-				'Finished in ' + timer.secondsToHHMMSS(elapsed) +
-				(status.length > 0 ? (' | ' + status.length + ' warning' + (status.length === 1 ? '' : 's')) : ''),
+				'Finished in ' + time.secondsToHMS(elapsed)
+					+ (status.length > 0 ? (' | ' + status.length + ' warning' + (status.length === 1 ? '' : 's')) : ''),
 				'auto', true);
-		} else if (elapsed >= 10) { alert('Finished in ' + timer.secondsToHHMMSS(elapsed) + '.'); }
+		} else if (elapsed >= 10) { alert('Finished in ' + time.secondsToHMS(elapsed) + '.'); }
 	} else {
 		cleanup();
 	}
@@ -261,7 +266,7 @@ function QuickExport() {
 					if (!Folder(destFolder).exists) Folder(destFolder).create();
 				}
 				if (exp.sortByDate.value) {
-					subDate = timer.MMDD;
+					subDate = time.MMDD;
 					if (!Folder(destFolder + '/' + subDate).exists) Folder(destFolder + '/' + subDate).create();
 				}
 
@@ -1283,8 +1288,8 @@ function QuickExport() {
 			} else if (app.windows.length > 0) { // Center in current window
 				ui.frameLocation = [
 					(app.activeWindow.bounds[1] + app.activeWindow.bounds[3] - ui.frameSize.width) / 2,
-					app.activeWindow.bounds[0] +
-						(app.activeWindow.bounds[0] + app.activeWindow.bounds[2] - ui.frameSize.height) / 2
+					app.activeWindow.bounds[0]
+						+ (app.activeWindow.bounds[0] + app.activeWindow.bounds[2] - ui.frameSize.height) / 2
 				];
 			}
 			checkStatus();
