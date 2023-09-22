@@ -1,5 +1,5 @@
 /*
-	Mark visible area 23.5.10
+	Mark visible area 23.9.22
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Creates on each page a 'visible area' frame the size of the page margins.
@@ -99,11 +99,11 @@ function main() {
 			topRightCornerOption:    CornerOptions.NONE,
 			geometricBounds: [
 				page.bounds[0] + mgs.top,
-				(page.side === PageSideOptions.LEFT_HAND) ?
-					page.bounds[1] + mgs.right : page.bounds[1] + mgs.left,
+				(page.side === PageSideOptions.LEFT_HAND)
+					? page.bounds[1] + mgs.right : page.bounds[1] + mgs.left,
 				page.bounds[2] - mgs.bottom,
-				(page.side === PageSideOptions.LEFT_HAND) ?
-					page.bounds[3] - mgs.left : page.bounds[3] - mgs.right
+				(page.side === PageSideOptions.LEFT_HAND)
+					? page.bounds[3] - mgs.left : page.bounds[3] - mgs.right
 			]
 		});
 		visLayer.locked = true;

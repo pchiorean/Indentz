@@ -1,5 +1,5 @@
 /*
-	FitTo 23.7.18
+	FitTo 23.9.22
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
@@ -103,10 +103,10 @@ function fitTo(items, scope, target, enforced) {
 		if (!T.target) return obj;
 		// Target and visible area snap zones
 		snapDist = Math.min(T.visible[2] - T.visible[0], T.visible[3] - T.visible[1]) * SNAP_PCT / 100;
-		T.targetSZ = (target === 'margins') ?
-			[ T.target[0] + snapDist, T.target[1] + snapDist,
-				T.target[2] - snapDist, T.target[3] - snapDist ] :
-			[ T.size[0] + snapDist, T.size[1] + snapDist,
+		T.targetSZ = (target === 'margins')
+			? [ T.target[0] + snapDist, T.target[1] + snapDist,
+				T.target[2] - snapDist, T.target[3] - snapDist ]
+			: [ T.size[0] + snapDist, T.size[1] + snapDist,
 				T.size[2] - snapDist, T.size[3] - snapDist ];
 		T.visibleSZ = [
 			T.visible[0] + snapDist, T.visible[1] + snapDist,
@@ -117,8 +117,8 @@ function fitTo(items, scope, target, enforced) {
 			// Initial bounds
 			geometric: obj.geometricBounds,
 			visible: obj.visibleBounds,
-			child: (obj.pageItems.length === 1 && obj.fillColor.name === 'None') ?
-				obj.pageItems[0].visibleBounds : undefined,
+			child: (obj.pageItems.length === 1 && obj.fillColor.name === 'None')
+				? obj.pageItems[0].visibleBounds : undefined,
 			// Adjusted bounds
 			confined: [],
 			extended: [],

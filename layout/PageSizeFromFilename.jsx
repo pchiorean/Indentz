@@ -1,5 +1,5 @@
 /*
-	Page size from file name 23.5.10
+	Page size from file name 23.9.22
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Sets every page size and margins according to the file name.
@@ -243,11 +243,13 @@ function main() {
 			topRightCornerOption:    CornerOptions.NONE,
 			geometricBounds: [
 				page.bounds[0] + PM.top,
-				(page.side === PageSideOptions.LEFT_HAND) ?
-					page.bounds[1] + PM.right : page.bounds[1] + PM.left,
+				(page.side === PageSideOptions.LEFT_HAND)
+					? page.bounds[1] + PM.right
+					: page.bounds[1] + PM.left,
 				page.bounds[2] - PM.bottom,
-				(page.side === PageSideOptions.LEFT_HAND) ?
-					page.bounds[3] - PM.left : page.bounds[3] - PM.right
+				(page.side === PageSideOptions.LEFT_HAND)
+					? page.bounds[3] - PM.left
+					: page.bounds[3] - PM.right
 			]
 		});
 		visLayer.locked = true;

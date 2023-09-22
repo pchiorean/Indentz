@@ -192,9 +192,9 @@ function main() {
 		} else { queue = validLines; }
 		if (queue.length === 0) {
 			if (currentPath) {
-				ui.text = (dataFile.exists ?
-					(WIN ? decodeURI(dataFile.fsName) : decodeURI(dataFile.fullName)) + ' \u2013 0 records' :
-					'No data file in ' + decodeURI(currentPath) + '/');
+				ui.text = (dataFile.exists
+					? (WIN ? decodeURI(dataFile.fsName) : decodeURI(dataFile.fullName)) + ' \u2013 0 records'
+					: 'No data file in ' + decodeURI(currentPath) + '/');
 			} else {
 				ui.text = 'Select a folder containing the data file';
 			}

@@ -58,9 +58,9 @@ for (spread = 0; spread < doc.spreads.length; spread++) {
 	for (i = 0; i < doc.spreads.length; i++) if (i !== spread) r.push(i);
 	// Get unique name
 	targetFile = File(currentPath + '/'
-		+ uniqueName(customPosition ?
-			(customPosition[1] + template[spread + 1] + customPosition[2]) : // Custom position
-			(baseName + template[0] + template[spread + 1]) // Default position
+		+ uniqueName(customPosition
+			? (customPosition[1] + template[spread + 1] + customPosition[2]) // Custom position
+			: (baseName + template[0] + template[spread + 1]) // Default position
 		) + '.indd');
 	// Disable user interaction and open a copy
 	progressBar.update();

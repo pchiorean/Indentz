@@ -1,5 +1,5 @@
 /*
-	Page margins and HW from the script name 23.5.10
+	Page margins and HW from the script name 23.9.22
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	By default it sets the page margins to 5% of the visible/page area for
@@ -198,11 +198,13 @@ function grid() {
 				}()),
 				bleed: [
 					page.bounds[0] - bleed.top,
-					page.bounds[1] - ((page === fPg) ?
-						((fPg.side === PSO.LEFT_HAND) ? bleed.right : bleed.left) : 0),
+					page.bounds[1] - ((page === fPg)
+						? ((fPg.side === PSO.LEFT_HAND) ? bleed.right : bleed.left)
+						: 0),
 					page.bounds[2] + bleed.bottom,
-					page.bounds[3] + ((fPg === lPg) ?
-						((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right) : (page === lPg ? bleed.right : 0))
+					page.bounds[3] + ((fPg === lPg)
+						? ((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right)
+						: (page === lPg ? bleed.right : 0))
 				]
 			},
 			spread: {
@@ -225,13 +227,13 @@ function grid() {
 						bounds = [
 							Math.min(fm.bounds[0] + fm.marginPreferences.top,
 								lm.bounds[0] + lm.marginPreferences.top),
-							fm.bounds[1] + ((fm.side === PSO.LEFT_HAND) ?
-								fm.marginPreferences.right : fm.marginPreferences.left),
+							fm.bounds[1] + ((fm.side === PSO.LEFT_HAND)
+								? fm.marginPreferences.right : fm.marginPreferences.left),
 							Math.max(lm.bounds[2] - lm.marginPreferences.bottom,
 								fm.bounds[2] - fm.marginPreferences.bottom),
-							lm.bounds[3] - ((fm === lm) ?
-								((fm.side === PSO.LEFT_HAND) ? fm.marginPreferences.left : fm.marginPreferences.right) :
-								lm.marginPreferences.right)
+							lm.bounds[3] - ((fm === lm)
+								? ((fm.side === PSO.LEFT_HAND) ? fm.marginPreferences.left : fm.marginPreferences.right)
+								: lm.marginPreferences.right)
 						];
 					}
 					return bounds;
@@ -260,9 +262,9 @@ function grid() {
 					fPg.bounds[0] - bleed.top,
 					fPg.bounds[1] - ((fPg.side === PSO.LEFT_HAND) ? bleed.right : bleed.left),
 					lPg.bounds[2] + bleed.bottom,
-					lPg.bounds[3] + ((fPg === lPg) ?
-						((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right) :
-						bleed.right)
+					lPg.bounds[3] + ((fPg === lPg)
+						? ((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right)
+						: bleed.right)
 				]
 			}
 		};

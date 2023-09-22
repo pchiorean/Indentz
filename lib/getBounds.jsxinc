@@ -1,5 +1,5 @@
 /*
-	GetBounds 23.1.29
+	GetBounds 23.9.22
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Returns an object containing the geometric bounds of the given page, its parent spread,
@@ -142,11 +142,13 @@ function getBounds(page) {
 			}()),
 			bleed: [
 				page.bounds[0] - bleed.top,
-				page.bounds[1] - ((page === fPg) ?
-					((fPg.side === PSO.LEFT_HAND) ? bleed.right : bleed.left) : 0),
+				page.bounds[1] - ((page === fPg)
+					? ((fPg.side === PSO.LEFT_HAND) ? bleed.right : bleed.left)
+					: 0),
 				page.bounds[2] + bleed.bottom,
-				page.bounds[3] + ((fPg === lPg) ?
-					((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right) : (page === lPg ? bleed.right : 0))
+				page.bounds[3] + ((fPg === lPg)
+					? ((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right)
+					: (page === lPg ? bleed.right : 0))
 			],
 			width: page.bounds[3] - page.bounds[1],
 			height: page.bounds[2] - page.bounds[0]
@@ -171,13 +173,13 @@ function getBounds(page) {
 					bounds = [
 						Math.min(fm.bounds[0] + fm.marginPreferences.top,
 							lm.bounds[0] + lm.marginPreferences.top),
-						fm.bounds[1] + ((fm.side === PSO.LEFT_HAND) ?
-							fm.marginPreferences.right : fm.marginPreferences.left),
+						fm.bounds[1] + ((fm.side === PSO.LEFT_HAND)
+							? fm.marginPreferences.right : fm.marginPreferences.left),
 						Math.max(lm.bounds[2] - lm.marginPreferences.bottom,
 							fm.bounds[2] - fm.marginPreferences.bottom),
-						lm.bounds[3] - ((fm === lm) ?
-							((fm.side === PSO.LEFT_HAND) ? fm.marginPreferences.left : fm.marginPreferences.right) :
-							lm.marginPreferences.right)
+						lm.bounds[3] - ((fm === lm)
+							? ((fm.side === PSO.LEFT_HAND) ? fm.marginPreferences.left : fm.marginPreferences.right)
+							: lm.marginPreferences.right)
 					];
 				}
 				return bounds;
@@ -226,9 +228,9 @@ function getBounds(page) {
 				fPg.bounds[0] - bleed.top,
 				fPg.bounds[1] - ((fPg.side === PSO.LEFT_HAND) ? bleed.right : bleed.left),
 				lPg.bounds[2] + bleed.bottom,
-				lPg.bounds[3] + ((fPg === lPg) ?
-					((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right) :
-					bleed.right)
+				lPg.bounds[3] + ((fPg === lPg)
+					? ((fPg.side === PSO.LEFT_HAND) ? bleed.left : bleed.right)
+					: bleed.right)
 			],
 			width: lPg.bounds[3] - fPg.bounds[1],
 			height: lPg.bounds[2] - fPg.bounds[0]

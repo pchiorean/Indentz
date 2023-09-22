@@ -1,6 +1,6 @@
 /*
-	Scale to spread bleed (top/bottom) 22.11.17
-	(c) 2021-2022 Paul Chiorean (jpeg@basement.ro)
+	Scale to spread bleed (top/bottom) 23.9.22
+	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Scales the selected objects to the spread bleed top/bottom size.
 
@@ -128,9 +128,9 @@ function main(selection) {
 			fPg.bounds[0] - bleed.top,
 			fPg.bounds[1] - ((fPg.side === PageSideOptions.LEFT_HAND) ? bleed.right : bleed.left),
 			lPg.bounds[2] + bleed.bottom,
-			lPg.bounds[3] + ((fPg === lPg) ?
-				((fPg.side === PageSideOptions.LEFT_HAND) ? bleed.left : bleed.right) :
-				bleed.right)
+			lPg.bounds[3] + ((fPg === lPg)
+				? ((fPg.side === PageSideOptions.LEFT_HAND) ? bleed.left : bleed.right)
+				: bleed.right)
 		];
 	}
 }
