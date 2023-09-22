@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 23.6.20
+	Replace fonts 23.9.22
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces fonts using a 4-column TSV file named `fonts.tsv`:
@@ -67,10 +67,10 @@ function main() {
 	// Get raw data from TSV
 	if (!(file = getDataFile(dataFileName))) { // No data file found
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate a substitution list \'' +
-				(dataFileName.constructor.name === 'Array' ? dataFileName.join('\' or \'') : dataFileName) +
-				'\'.\nThe file must be saved in the current folder, on the desktop, or next to the script. ' +
-				'Check docs for details.');
+			alert('Can\'t locate a substitution list \''
+				+ (dataFileName.constructor.name === 'Array' ? dataFileName.join('\' or \'') : dataFileName)
+				+ '\'.\nThe file must be saved in the current folder, on the desktop, or next to the script. '
+				+ 'Check docs for details.');
 		}
 		exit();
 	}
@@ -94,9 +94,9 @@ function main() {
 		if (doc.changeText().length > 0) {
 			counter++;
 			stat(data.status, data.records[i].source,
-				'Replaced \'' +
-				data.records[i].findWhat.replace('\t', ' ') + '\' with \'' +
-				data.records[i].changeTo.replace('\t', ' ') + '\'.', 0);
+				'Replaced \''
+				+ data.records[i].findWhat.replace('\t', ' ') + '\' with \''
+				+ data.records[i].changeTo.replace('\t', ' ') + '\'.', 0);
 		} else {
 			stat(data.status, data.records[i].source,
 				'Skipped \'' + data.records[i].findWhat.replace('\t', ' ') + '\' because it\'s not in use.', 0);

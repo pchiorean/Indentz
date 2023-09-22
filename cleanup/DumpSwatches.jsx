@@ -1,5 +1,5 @@
 /*
-	Dump swatches 23.7.12
+	Dump swatches 23.9.22
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Saves document's swatches to a TSV file compatible with `DefaultSwatches.jsx`
@@ -47,10 +47,10 @@ while ((c = cols.shift())) {
 		.test($.global.localize(c.name))) continue;
 	for (i = (k = c.colorValue).length; i--; k[i] = Math.round(k[i])); // Round values
 	dataFile.writeln(
-		c.name + '\t' +
-		String(c.model).replace(/ColorModel\./i, '').toLowerCase() + '\t' +
-		String(c.space).replace(/ColorSpace\./i, '').toLowerCase() + '\t' +
-		k.join(' ')
+		c.name + '\t'
+		+ String(c.model).replace(/ColorModel\./i, '').toLowerCase() + '\t'
+		+ String(c.space).replace(/ColorSpace\./i, '').toLowerCase() + '\t'
+		+ k.join(' ')
 	);
 }
 

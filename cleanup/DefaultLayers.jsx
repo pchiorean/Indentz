@@ -1,5 +1,5 @@
 /*
-	Default layers 23.8.21
+	Default layers 23.9.22
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds/merges layers using a 6-column TSV file named `layers.tsv`:
@@ -53,7 +53,6 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'isInArray.jsxinc';
 // @include 'parseDataFile.jsxinc';
 // @include 'report.jsxinc';
-// @include 'stat.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Default layers');
@@ -78,10 +77,10 @@ function main() {
 	// Get raw data from TSV
 	if (!(file = getDataFile(dataFileName))) { // No data file found
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate a substitution list \'' +
-				(dataFileName.constructor.name === 'Array' ? dataFileName.join('\' or \'') : dataFileName) +
-				'\'.\nThe file must be saved in the current folder, on the desktop, or next to the script. ' +
-				'Check docs for details.');
+			alert('Can\'t locate a substitution list \''
+				+ (dataFileName.constructor.name === 'Array' ? dataFileName.join('\' or \'') : dataFileName)
+				+ '\'.\nThe file must be saved in the current folder, on the desktop, or next to the script. '
+				+ 'Check docs for details.');
 		}
 		exit();
 	}

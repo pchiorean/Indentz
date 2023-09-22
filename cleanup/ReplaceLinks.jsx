@@ -1,5 +1,5 @@
 /*
-	Replace links 23.6.20
+	Replace links 23.9.22
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces document links using a 2-column TSV file named `links.tsv`:
@@ -87,10 +87,10 @@ function main() {
 	// Get raw data from TSV
 	if (!(file = getDataFile(dataFileName))) { // No data file found
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate a substitution list \'' +
-				(dataFileName.constructor.name === 'Array' ? dataFileName.join('\' or \'') : dataFileName) +
-				'\'.\nThe file must be saved in the current folder, on the desktop, or next to the script. ' +
-				'Check docs for details.');
+			alert('Can\'t locate a substitution list \''
+				+ (dataFileName.constructor.name === 'Array' ? dataFileName.join('\' or \'') : dataFileName)
+				+ '\'.\nThe file must be saved in the current folder, on the desktop, or next to the script. '
+				+ 'Check docs for details.');
 		}
 		exit();
 	}
@@ -332,21 +332,5 @@ function main() {
 			}
 			return r;
 		}
-	}
-
-	function stat(/*array|object*/target, /*string*/src, /*string*/msg, /*0=info|1=warn|-1=fail*/type) {
-		var sep = ' :: ';
-		type = (function (t) { // Numeric code => string (key)
-			return {
-				 '0': 'info',
-				 '1': 'warn',
-				'-1': 'fail'
-			}[t] || 'warn';
-		}(type));
-
-		if (target instanceof Array) target.push(src + sep + msg);
-		else target[type].push(src + sep + msg);
-
-		return src + sep + msg;
 	}
 }

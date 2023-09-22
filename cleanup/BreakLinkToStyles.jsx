@@ -1,6 +1,6 @@
 /*
-	Break link to styles 22.11.10
-	(c) 2022 Paul Chiorean (jpeg@basement.ro)
+	Break link to styles 23.9.22
+	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Unnaplies paragraph/character/object styles from all or selected objects.
 
@@ -30,10 +30,10 @@ app.doScript(
 		try { app.select(oldSelection); } catch (e) {}
 
 		if (VERBOSE) {
-			alert('Unapplied:\n' +
-				'Paragraph: ' + counter.ps + ' style' + (counter.ps !== 1 && 's') + '\n' +
-				'Character: ' + counter.cs + ' style' + (counter.cs !== 1 && 's') + '\n' +
-				'Object: '    + counter.os + ' style' + (counter.os !== 1 && 's')
+			alert('Unapplied:\n'
+				+ 'Paragraph: ' + counter.ps + ' style' + (counter.ps !== 1 && 's') + '\n'
+				+ 'Character: ' + counter.cs + ' style' + (counter.cs !== 1 && 's') + '\n'
+				+ 'Object: '    + counter.os + ' style' + (counter.os !== 1 && 's')
 			);
 		}
 	},

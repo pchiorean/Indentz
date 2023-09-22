@@ -1,5 +1,5 @@
 /*
-	Generate EAN Codes 23.9.11
+	Generate EAN Codes 23.9.22
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Inserts EAN codes into the selected frames or in a new document.
@@ -105,8 +105,8 @@ function main() {
 				if (barcode.length === 2 && barcode[1].length !== 2 && barcode[1].length !== 5) throw Error(0);
 				barcodes.push(barcode); // [ [ code1, ext1 ], [ code2, ext2 ], ... ]
 			} catch (e) {
-				alert('Invalid barcode: ' + buffer[i] + '\nEnter 8 or 13 digits for the code and 2 or 5 digits ' +
-					'for the add-on, separated by a space or a hyphen.');
+				alert('Invalid barcode: ' + buffer[i] + '\nEnter 8 or 13 digits for the code and 2 or 5 digits '
+					+ 'for the add-on, separated by a space or a hyphen.');
 				ui.code.active = true;
 				return;
 			}

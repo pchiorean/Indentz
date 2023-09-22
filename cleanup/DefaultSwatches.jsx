@@ -1,5 +1,5 @@
 /*
-	Default swatches 23.5.11
+	Default swatches 23.9.22
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds swatches using a 5-column TSV file named `swatches.tsv`:
@@ -56,9 +56,9 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'parseDataFile.jsxinc';
 // @include 'progressBar.jsxinc';
 // @include 'report.jsxinc';
+// @include 'unique.jsxinc';
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Default swatches');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Default swatches');
 
 function main() {
 	var title = 'Default swatches';
@@ -80,10 +80,10 @@ function main() {
 	// Get raw data from TSV
 	if (!(file = getDataFile(dataFileName))) { // No data file found
 		if (VERBOSITY > 1) {
-			alert('Can\'t locate a substitution list \'' +
-				(dataFileName.constructor.name === 'Array' ? dataFileName.join('\' or \'') : dataFileName) +
-				'\'.\nThe file must be saved in the current folder, on the desktop, or next to the script. ' +
-				'Check docs for details.');
+			alert('Can\'t locate a substitution list \''
+				+ (dataFileName.constructor.name === 'Array' ? dataFileName.join('\' or \'') : dataFileName)
+				+ '\'.\nThe file must be saved in the current folder, on the desktop, or next to the script. '
+				+ 'Check docs for details.');
 		}
 		exit();
 	}
@@ -165,8 +165,8 @@ function main() {
 		// Swatch variants (optional)
 		if (tmpData.values) {
 			tmpData.variants = (function (str) {
-			return unique((getCVName(tmpData.space.toString().toLowerCase(), tmpData.values) +
-				(str ? ',' + str : '')).split(/ *, */));
+			return unique((getCVName(tmpData.space.toString().toLowerCase(), tmpData.values)
+				+ (str ? ',' + str : '')).split(/ *, */));
 
 				function getCVName(/*string*/cSpace, /*string*/cVal) {
 					return {
@@ -176,7 +176,7 @@ function main() {
 					}[cSpace];
 				}
 			}(record[4]));
-		}
+		} else { tmpData.variants = []; }
 
 		if (data.status.fail.length > 0) return false;
 		return tmpData;
@@ -184,62 +184,54 @@ function main() {
 
 	function addSwatch(name, model, space, values, variants) {
 		var c, oldName, colors;
-		var newColor = doc.colors.itemByName(name);
+		var newSwatch = doc.colors.itemByName(name);
 
-		if (newColor.isValid) { // Swatch exists
-			newColor.properties = {
+		if (newSwatch.isValid) { // Swatch exists, just update properties
+			newSwatch.properties = {
 				model: model,
 				space: space,
 				colorValue: values
 			};
 		} else { // Add swatch
 			try {
-				newColor = doc.colors.add({
+				newSwatch = doc.colors.add({
 					name: name,
 					model: model || ColorModel.PROCESS,
 					space: space || ColorSpace.CMYK,
 					colorValue: values
 				});
 				counter.add++;
-				stat(data.status, data.records[i].source, 'Added \'' + newColor.name + '\'.', 0);
+				stat(data.status, data.records[i].source, 'Added \'' + newSwatch.name + '\'.', 0);
 			} catch (e) {
-				stat(data.status, data.records[i].source, 'Could not add \'' + name + '\'.', 1);
+				stat(data.status, data.records[i].source, 'Could not add \'' + name + '\'.'
+					+ ' Reason: ' + e.toString().replace(/\r|\n/g, '\u00B6'), 1);
 				return false;
 			}
 		}
+		if (ScriptUI.environment.keyboardState.keyName === 'Escape') exit();
 
 		// Merge variants
 		colors = doc.colors.everyItem().getElements();
 		while ((c = colors.shift())) {
-			if (c === newColor) continue;
+			if (c === newSwatch) continue; // Skip self
 			if (/^(Registration|Paper|Black|Cyan|Magenta|Yellow)$/ // Skip standard colors
 				.test($.global.localize(c.name))) continue;
 			if (c.name === '') continue; // Skip unnamed colors
-			if (isInArray(c.name, variants)) {
+			if (variants.length > 0 && isInArray(c.name, variants)) {
 				try {
 					oldName = c.name;
-					c.remove(newColor);
+					c.remove(newSwatch);
 					counter.merge++;
 					stat(data.status, data.records[i].source,
-						'Merged \'' + oldName + '\' with \'' + newColor.name + '\'.', 0);
+						'Merged \'' + oldName + '\' with \'' + newSwatch.name + '\'.', 0);
 				} catch (e) {
 					stat(data.status, data.records[i].source,
-						'Could not merge \'' + c.name + '\' with \'' + newColor.name + '\'.', 1);
+						'Could not merge \'' + c.name + '\' with \'' + newSwatch.name + '\'.'
+							+ ' Reason: ' + e.toString().replace(/\r|\n/g, '\u00B6'), 1);
 				}
 			}
+			if (ScriptUI.environment.keyboardState.keyName === 'Escape') exit();
 		}
-		return newColor;
-	}
-
-	// Get unique array elements
-	// http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/
-	function unique(/*array*/array) {
-		var i, j;
-		var r = [];
-		o: for (i = 0; i < array.length; i++) {
-			for (j = 0; j < r.length; j++) if (r[j] === array[i]) continue o;
-			if (array[i] !== '') r[r.length] = array[i];
-		}
-		return r;
+		return newSwatch;
 	}
 }

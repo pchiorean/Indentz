@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 23.8.21
+	Batch QR codes 23.9.22
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds codes to existing documents or to separate files in batch mode,
@@ -146,8 +146,8 @@ function main() {
 				if (!isEmpty && !isComment && !isHeader) {
 					if (record[0]) {
 						if ((fC = record[0].match(invalidFilenameChars))) {
-							stat(status, 'Line ' + line, 'Forbidden characters in file name: \'' +
-							fC.join('\', \'') + '\'.', 1);
+							stat(status, 'Line ' + line, 'Forbidden characters in file name: \''
+								+ fC.join('\', \'') + '\'.', 1);
 						}
 						if (!/\.indd$/i.test(record[0])) record[0] += '.indd';
 						if (record[2] && !File(currentPath + '/' + record[0]).exists)
@@ -200,9 +200,9 @@ function main() {
 			}
 			if (!currentPath) ui.options.browse.notify();
 		} else {
-			ui.text = (WIN ? decodeURI(dataFile.fsName) : decodeURI(dataFile.fullName)) + ' \u2013 ' +
-				queue.length + ' record' + (queue.length === 1 ? '' : 's') +
-				(status.length > 0 ? ' | ' + status.length + ' error' + (status.length === 1 ? '' : 's') : '');
+			ui.text = (WIN ? decodeURI(dataFile.fsName) : decodeURI(dataFile.fullName)) + ' \u2013 '
+				+ queue.length + ' record' + (queue.length === 1 ? '' : 's')
+				+ (status.length > 0 ? ' | ' + status.length + ' error' + (status.length === 1 ? '' : 's') : '');
 		}
 		ui.options.start.enabled = queue.length > 0 && (status.length === 0 || ui.list.selection);
 		ui.options.reload.enabled = !!currentPath;
@@ -254,10 +254,10 @@ function main() {
 		dataFile.lineFeed = 'Unix';
 		for (i = 0, n = rawData.length; i < n; i++) {
 			dataFile.writeln(
-				(rawData[i].exported ? '# ' : '') +
-				(rawData[i].fn ? rawData[i].fn : '') +
-				(rawData[i].code ? '\t' + rawData[i].code : '') +
-				(rawData[i].onDoc ? '\t+' : '')
+				(rawData[i].exported ? '# ' : '')
+				+ (rawData[i].fn ? rawData[i].fn : '')
+				+ (rawData[i].code ? '\t' + rawData[i].code : '')
+				+ (rawData[i].onDoc ? '\t+' : '')
 			);
 		}
 		dataFile.close();

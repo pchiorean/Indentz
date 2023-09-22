@@ -1,6 +1,6 @@
 /*
-	Spreads to files 22.8.30
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Spreads to files 23.9.22
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Saves the spreads of the active document in separate files.
 
@@ -57,8 +57,8 @@ for (spread = 0; spread < doc.spreads.length; spread++) {
 	r = [];
 	for (i = 0; i < doc.spreads.length; i++) if (i !== spread) r.push(i);
 	// Get unique name
-	targetFile = File(currentPath + '/' +
-		uniqueName(customPosition ?
+	targetFile = File(currentPath + '/'
+		+ uniqueName(customPosition ?
 			(customPosition[1] + template[spread + 1] + customPosition[2]) : // Custom position
 			(baseName + template[0] + template[spread + 1]) // Default position
 		) + '.indd');
@@ -78,10 +78,10 @@ doc.close(SaveOptions.ASK);
 
 function templateFromUser(str) {
 	if (!str) str = detectedTemplate || defaultTemplate;
-	str = prompt('Please enter an index list.\nThe first character is the separator, the rest will be ' +
-		'added sequentially to each file name; for example \'-123\' will split a 3-spreads document into\n\n' +
-		'Document-1.indd\nDocument-2.indd\nDocument-3.indd\n\nIf the file name contains a "#", the index ' +
-		'will be placed in that position (the separator is ignored).', str);
+	str = prompt('Please enter an index list.\nThe first character is the separator, the rest will be '
+		+ 'added sequentially to each file name; for example \'-123\' will split a 3-spreads document into\n\n'
+		+ 'Document-1.indd\nDocument-2.indd\nDocument-3.indd\n\nIf the file name contains a "#", the index '
+		+ 'will be placed in that position (the separator is ignored).', str);
 	if (!str) exit();
 
 	// Sanitize input
@@ -92,8 +92,8 @@ function templateFromUser(str) {
 	}
 	// -- Separator
 	if (!/[ ._\-~]/.test(str[0])) {
-		alert('You entered an invalid separator, please try again.\nUse only space, period, ' +
-		'underscore, hyphen or tilde.');
+		alert('You entered an invalid separator, please try again.\nUse only space, period, '
+			+ 'underscore, hyphen or tilde.');
 		templateFromUser(str);
 	}
 	// -- Filename

@@ -1,5 +1,5 @@
 /*
-	Label page 23.5.28
+	Label page 23.9.22
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a custom label on the current page's slug.
@@ -103,10 +103,10 @@ function main() {
 		var pageMarksHeight = 15 + UnitValue('1 mm').as('pt');
 		switch (isOnTop) {
 			case true:
-				if (doc.documentPreferences.slugTopOffset < pageMarksHeight +
-					doc.documentPreferences.documentBleedTopOffset) {
-					doc.documentPreferences.slugTopOffset = pageMarksHeight +
-					doc.documentPreferences.documentBleedTopOffset;
+				if (doc.documentPreferences.slugTopOffset < pageMarksHeight
+						+ doc.documentPreferences.documentBleedTopOffset) {
+					doc.documentPreferences.slugTopOffset = pageMarksHeight
+						+ doc.documentPreferences.documentBleedTopOffset;
 				}
 				infoFrame.move([
 					page.bounds[1] + 10,
@@ -118,17 +118,17 @@ function main() {
 				]);
 				break;
 			case false:
-				if (doc.documentPreferences.slugBottomOffset < pageMarksHeight +
-					doc.documentPreferences.documentBleedBottomOffset) {
-					doc.documentPreferences.slugBottomOffset = pageMarksHeight +
-					doc.documentPreferences.documentBleedBottomOffset;
+				if (doc.documentPreferences.slugBottomOffset < pageMarksHeight
+						+ doc.documentPreferences.documentBleedBottomOffset) {
+					doc.documentPreferences.slugBottomOffset = pageMarksHeight
+						+ doc.documentPreferences.documentBleedBottomOffset;
 				}
 				infoFrame.move([
 					page.bounds[1] + 10,
-					page.bounds[2] +
-						UnitValue('1 mm').as('pt') +
-						doc.documentPreferences.documentBleedBottomOffset +
-						(15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2
+					page.bounds[2]
+						+ UnitValue('1 mm').as('pt')
+						+ doc.documentPreferences.documentBleedBottomOffset
+						+ (15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2
 				]);
 				break;
 		}

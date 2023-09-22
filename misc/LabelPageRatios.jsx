@@ -1,5 +1,5 @@
 /*
-	Page ratios 23.7.31
+	Page ratios 23.9.22
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a label with the page/visible area/margins' ratios on each page's slug.
@@ -30,17 +30,17 @@ function main() {
 			|| round(visB[1], 10) !== round(pgB[1], 10)
 			|| round(visB[2], 10) !== round(pgB[2], 10)
 			|| round(visB[3], 10) !== round(pgB[3], 10);
-		hasMargins = (page.marginPreferences.top +
-			page.marginPreferences.left +
-			page.marginPreferences.bottom +
-			page.marginPreferences.right > 0)
+		hasMargins = (page.marginPreferences.top
+			+ page.marginPreferences.left
+			+ page.marginPreferences.bottom
+			+ page.marginPreferences.right > 0)
 			&& (round(visB[0], 10) !== round(mgB[0], 10)
 			|| round(visB[1], 10) !== round(mgB[1], 10)
 			|| round(visB[2], 10) !== round(mgB[2], 10)
 			|| round(visB[3], 10) !== round(mgB[3], 10));
 
-		msg = (hasVisArea || hasMargins ? 'Ratios:\u2003Page:' : 'Page ratio:') +
-			fix((pgB[3] - pgB[1]) / (pgB[2] - pgB[0]));
+		msg = (hasVisArea || hasMargins ? 'Ratios:\u2003Page:' : 'Page ratio:')
+			+ fix((pgB[3] - pgB[1]) / (pgB[2] - pgB[0]));
 		if (hasVisArea) msg += '\u2003Visible area:' + fix((visB[3] - visB[1]) / (visB[2] - visB[0]));
 		if (hasMargins) msg += '\u2003Margins:' + fix((mgB[3] - mgB[1]) / (mgB[2] - mgB[0]));
 
@@ -117,10 +117,10 @@ function main() {
 		var pageMarksHeight = 15 + UnitValue('1 mm').as('pt');
 		switch (isOnTop) {
 			case true:
-				if (doc.documentPreferences.slugTopOffset < pageMarksHeight +
-					doc.documentPreferences.documentBleedTopOffset) {
-					doc.documentPreferences.slugTopOffset = pageMarksHeight +
-					doc.documentPreferences.documentBleedTopOffset;
+				if (doc.documentPreferences.slugTopOffset < pageMarksHeight
+						+ doc.documentPreferences.documentBleedTopOffset) {
+					doc.documentPreferences.slugTopOffset = pageMarksHeight
+						+ doc.documentPreferences.documentBleedTopOffset;
 				}
 				infoFrame.move([
 					page.bounds[1] + 10,
@@ -132,17 +132,17 @@ function main() {
 				]);
 				break;
 			case false:
-				if (doc.documentPreferences.slugBottomOffset < pageMarksHeight +
-					doc.documentPreferences.documentBleedBottomOffset) {
-					doc.documentPreferences.slugBottomOffset = pageMarksHeight +
-					doc.documentPreferences.documentBleedBottomOffset;
+				if (doc.documentPreferences.slugBottomOffset < pageMarksHeight
+						+ doc.documentPreferences.documentBleedBottomOffset) {
+					doc.documentPreferences.slugBottomOffset = pageMarksHeight
+						+ doc.documentPreferences.documentBleedBottomOffset;
 				}
 				infoFrame.move([
 					page.bounds[1] + 10,
-					page.bounds[2] +
-						UnitValue('1 mm').as('pt') +
-						doc.documentPreferences.documentBleedBottomOffset +
-						(15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2
+					page.bounds[2]
+						+ UnitValue('1 mm').as('pt')
+						+ doc.documentPreferences.documentBleedBottomOffset
+						+ (15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2
 				]);
 				break;
 		}

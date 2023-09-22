@@ -1,5 +1,5 @@
 /*
-	Prepare for export 23.5.23
+	Prepare for export 23.9.22
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Hides some layers and moves objects with special colors to separate spreads.
@@ -159,10 +159,10 @@ function prepareForExport() {
 			infoLayer.move(LocationOptions.AT_BEGINNING);
 
 			// Adjust slug
-			if (doc.documentPreferences.slugTopOffset < pageMarksHeight +
-					doc.documentPreferences.documentBleedTopOffset) {
-				doc.documentPreferences.slugTopOffset = pageMarksHeight +
-				doc.documentPreferences.documentBleedTopOffset;
+			if (doc.documentPreferences.slugTopOffset < pageMarksHeight
+					+ doc.documentPreferences.documentBleedTopOffset) {
+				doc.documentPreferences.slugTopOffset = pageMarksHeight
+					+ doc.documentPreferences.documentBleedTopOffset;
 			}
 
 			// Add text label

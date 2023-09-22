@@ -1,5 +1,5 @@
 /*
-	Dump layers 23.7.12
+	Dump layers 23.9.22
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Saves document's layers to a TSV file compatible with `DefaultLayers.jsx`
@@ -43,12 +43,12 @@ dataFile.writeln('Name\tColor\tVisible\tPrintable\tOrder\tVariants'); // Header
 layers = doc.layers.everyItem().getElements();
 while ((l = layers.shift())) {
 	dataFile.writeln(
-		l.name + '\t' +
-		String(l.layerColor)
+		l.name + '\t'
+		+ String(l.layerColor)
 			.replace('UIColors.', '').replace('_', ' ')
-			.toLowerCase() + '\t' +
-		(l.visible ? 'yes' : 'no') + '\t' +
-		(l.printable ? 'yes' : 'no')
+			.toLowerCase() + '\t'
+		+ (l.visible ? 'yes' : 'no') + '\t'
+		+ (l.printable ? 'yes' : 'no')
 	);
 }
 
