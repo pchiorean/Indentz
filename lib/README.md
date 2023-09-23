@@ -93,7 +93,7 @@ An object containing the geometric bounds of `page` and its parent spread, and o
 };
 ```
 
-**Note:** 'visible'/'safety' are areas marked by one or more frames named `<visible area>` or`<safety area>` (or labeled `visible area`/`safety area`). If margins or visible/safety areas are undefined, they fallback to page/spread size.
+**Note:** 'visible'/'safety' are areas marked by one or more frames named `<visible area>` or `<safety area>` (or labeled `visible area`/`safety area`). If margins or visible/safety areas are undefined, they fallback to page/spread size.
 
 #### Example:
 
