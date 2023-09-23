@@ -1,6 +1,6 @@
 /*
-	Files to spreads 21.9.12
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Files to spreads 23.9.23
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Combines the open documents, sorted alphabetically.
 
@@ -8,12 +8,17 @@
 	https://choosealicense.com/licenses/mit/
 */
 
+// @includepath '.;./lib;../lib';
+// @include 'naturalSorter.jsxinc';
+
 if (app.documents.length < 2) exit();
 
-var doc, name, spread, spreads, oldAPS;
+var doc, name, spread, spreads;
 var docs = [];
 var names = [];
-var oldUIL = app.scriptPreferences.userInteractionLevel;
+var old = {
+	UIL: app.scriptPreferences.userInteractionLevel
+};
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
 
 // Get a sorted document list
@@ -23,13 +28,13 @@ while ((doc = docs.shift())) {
 		names.push(doc.name);
 	}
 }
-names.sort();
+names.sort(naturalSorter);
 docs = [];
 while ((name = names.shift())) docs.push(app.documents.itemByName(name));
 
 // Disable page shuffle and join spreads
 target = docs.shift();
-oldAPS = target.documentPreferences.allowPageShuffle;
+old.APS = target.documentPreferences.allowPageShuffle;
 target.documentPreferences.allowPageShuffle = false;
 while ((doc = docs.shift())) {
 	spreads = doc.spreads.everyItem().getElements();
@@ -38,5 +43,5 @@ while ((doc = docs.shift())) {
 }
 
 // Restore settings
-target.documentPreferences.allowPageShuffle = oldAPS;
-app.scriptPreferences.userInteractionLevel = oldUIL;
+target.documentPreferences.allowPageShuffle = old.APS;
+app.scriptPreferences.userInteractionLevel = old.UIL;
