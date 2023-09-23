@@ -1,5 +1,5 @@
 /*
-	Generate EAN Codes 23.9.22
+	Generate EAN Codes 23.9.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Inserts EAN codes into the selected frames or in a new document.
@@ -144,26 +144,26 @@ function main() {
 			codeFrame.absoluteRotationAngle = target.absoluteRotationAngle;
 			switch (target.absoluteRotationAngle) {
 				case 90:
-					SF = (target.geometricBounds[2] - target.geometricBounds[0]) /
-						(codeFrame.geometricBounds[2] - codeFrame.geometricBounds[0]);
+					SF = (target.geometricBounds[2] - target.geometricBounds[0])
+						/ (codeFrame.geometricBounds[2] - codeFrame.geometricBounds[0]);
 					doc.align(codeFrame, AlignOptions.RIGHT_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
 					doc.align(codeFrame, AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.KEY_OBJECT, target);
 					break;
 				case -90:
-					SF = (target.geometricBounds[2] - target.geometricBounds[0]) /
-						(codeFrame.geometricBounds[2] - codeFrame.geometricBounds[0]);
+					SF = (target.geometricBounds[2] - target.geometricBounds[0])
+						/ (codeFrame.geometricBounds[2] - codeFrame.geometricBounds[0]);
 					doc.align(codeFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
 					doc.align(codeFrame, AlignOptions.VERTICAL_CENTERS, AlignDistributeBounds.KEY_OBJECT, target);
 					break;
 				case 180:
-					SF = (target.geometricBounds[3] - target.geometricBounds[1]) /
-						(codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1]);
+					SF = (target.geometricBounds[3] - target.geometricBounds[1])
+						/ (codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1]);
 					doc.align(codeFrame, AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.KEY_OBJECT, target);
 					doc.align(codeFrame, AlignOptions.TOP_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
 					break;
 				default:
-					SF = (target.geometricBounds[3] - target.geometricBounds[1]) /
-						(codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1]);
+					SF = (target.geometricBounds[3] - target.geometricBounds[1])
+						/ (codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1]);
 					doc.align(codeFrame, AlignOptions.HORIZONTAL_CENTERS, AlignDistributeBounds.KEY_OBJECT, target);
 					doc.align(codeFrame, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.KEY_OBJECT, target);
 					break;
@@ -673,8 +673,8 @@ function main() {
 			UnitValue(oldCenter[1] - newCenter[1], 'pt').as('mm')
 		]);
 		frame.name = '<EAN>';
-		frame.pageItems[0].label =
-			(code.length === 12 ? getValidChecksum(code) : code) + (ext && ('-' + ext));
+		frame.pageItems[0].label
+			= (code.length === 12 ? getValidChecksum(code) : code) + (ext && ('-' + ext));
 		return frame;
 
 		function getEAN8(s, p) {
