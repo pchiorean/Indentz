@@ -1,5 +1,5 @@
 /*
-	Align to center 23.6.29
+	Align to center 23.9.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Aligns the selected objects to the center of the 'Align To' setting.
@@ -83,8 +83,8 @@ function main(selection) {
 						break;
 					case AlignDistributeBounds.MARGIN_BOUNDS:
 						objects.move(undefined,
-							[ 0, -((page.bounds[2] - page.bounds[0]) -
-							(page.marginPreferences.top + page.marginPreferences.bottom)) * 0.1 / 2 ]);
+							[ 0, -((page.bounds[2] - page.bounds[0])
+							- (page.marginPreferences.top + page.marginPreferences.bottom)) * 0.1 / 2 ]);
 						break;
 				}
 				break;

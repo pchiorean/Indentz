@@ -1,5 +1,5 @@
 /*
-	Page ratios 23.9.22
+	Page ratios 23.9.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a label with the page/visible area/margins' ratios on each page's slug.
@@ -124,11 +124,11 @@ function main() {
 				}
 				infoFrame.move([
 					page.bounds[1] + 10,
-					page.bounds[0] -
-						doc.documentPreferences.documentBleedTopOffset -
-						UnitValue('1 mm').as('pt') -
-						(15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2 -
-						(infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])
+					page.bounds[0]
+						- doc.documentPreferences.documentBleedTopOffset
+						- UnitValue('1 mm').as('pt')
+						- (15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2
+						- (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])
 				]);
 				break;
 			case false:

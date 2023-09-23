@@ -58,6 +58,7 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'isInArray.jsxinc';
 // @include 'progressBar.jsxinc';
 // @include 'report.jsxinc';
+// @include 'unique.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace links');
@@ -114,7 +115,8 @@ function main() {
 					&& links[i].status !== LinkStatus.LINK_OUT_OF_DATE) // [TODO] CHECK THIS SHIT
 				continue;
 			stat(data.status, data.records[j].source,
-				'Relinked \'' + decodeURI(links[i].name) + '\' with \'' + decodeURI(data.records[j].newLink) + '\'.', 0);
+				'Relinked \'' + decodeURI(links[i].name) + '\' with \''
+					+ decodeURI(data.records[j].newLink) + '\'.', 0);
 			links[i].relink(File(data.records[j].newLink));
 			counter++;
 			if (ScriptUI.environment.keyboardState.keyName === 'Escape') exit();
@@ -321,17 +323,5 @@ function main() {
 		tmpData.oldLinks = oldLinks;
 
 		return tmpData;
-
-		// Get unique array elements
-		// http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/
-		function unique(/*array*/array) {
-			var i, j;
-			var r = [];
-			o: for (i = 0; i < array.length; i++) {
-				for (j = 0; j < r.length; j++) if (r[j] === array[i]) continue o;
-				if (array[i] !== '') r[r.length] = array[i];
-			}
-			return r;
-		}
 	}
 }

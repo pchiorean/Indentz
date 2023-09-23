@@ -1,5 +1,5 @@
 /*
-	Prepare for export 23.9.22
+	Prepare for export 23.9.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Hides some layers and moves objects with special colors to separate spreads.
@@ -128,8 +128,8 @@ function prepareForExport() {
 			}
 
 			// Remove spread if empty
-			if (thisSpread.allPageItems.length === 0 || (thisSpread.allPageItems.length === 1 &&
-				thisSpread.pageItems[0].name === '<page label>')) thisSpread.remove();
+			if (thisSpread.allPageItems.length === 0 || (thisSpread.allPageItems.length === 1
+				&& thisSpread.pageItems[0].name === '<page label>')) thisSpread.remove();
 
 			// Label spread with layer name
 			addSlugInfo(nextSpread, layer.name);
@@ -199,11 +199,11 @@ function prepareForExport() {
 				};
 				infoFrame.move([
 					spread.pages[0].bounds[1] + 10,
-					spread.pages[0].bounds[0] -
-						doc.documentPreferences.documentBleedTopOffset -
-						UnitValue('1 mm').as('pt') -
-						(15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2 -
-						(infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])
+					spread.pages[0].bounds[0]
+						- doc.documentPreferences.documentBleedTopOffset
+						- UnitValue('1 mm').as('pt')
+						- (15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2
+						- (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])
 				]);
 			}
 		}

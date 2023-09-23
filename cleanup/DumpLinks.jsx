@@ -1,5 +1,5 @@
 /*
-	Dump links 23.8.6
+	Dump links 23.9.23
 	(c) 2023 Paul Chiorean <jpeg@basement.ro>
 
 	Saves document's links to a TSV file compatible with `ReplaceLinks.jsx`
@@ -7,6 +7,9 @@
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
 */
+
+// @includepath '.;./lib;../lib';
+// @include 'unique.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
 
@@ -37,15 +40,3 @@ linkS = (function () {
 linkS = unique(linkS);
 while ((l = linkS.shift())) dataFile.writeln(File(l).fullName);
 dataFile.close();
-
-// Get unique array elements
-// http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/
-function unique(/*array*/array) {
-	var i, j;
-	var r = [];
-	o: for (i = 0; i < array.length; i++) {
-		for (j = 0; j < r.length; j++) if (r[j] === array[i]) continue o;
-		if (array[i] !== '') r[r.length] = array[i];
-	}
-	return r;
-}

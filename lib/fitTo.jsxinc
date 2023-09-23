@@ -1,5 +1,5 @@
 /*
-	FitTo 23.9.22
+	FitTo 23.9.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
@@ -79,8 +79,8 @@ function fitTo(items, scope, target, enforced) {
 			pages = app.activeWindow.activeSpread.pages;
 			for (var i = 0, n = pages.length; i < n; i++) {
 				if (item.geometricBounds[3] <= pages[0].bounds[3]) { page = pages[0]; break; }
-				if (item.geometricBounds[1] >= pages[i].bounds[1] &&
-				    item.geometricBounds[3] <= pages[i].bounds[3]) { page = pages[i]; break; }
+				if (item.geometricBounds[1] >= pages[i].bounds[1]
+					&& item.geometricBounds[3] <= pages[i].bounds[3]) { page = pages[i]; break; }
 				if (item.geometricBounds[1] >= pages[-1].bounds[1]) { page = pages[-1]; break; }
 			}
 			if ((isFitted = fit2Bounds(item))) newSelection.push(isFitted); else newSelection.push(item);
@@ -145,8 +145,8 @@ function fitTo(items, scope, target, enforced) {
 		if (enforced && obj.constructor.name !== 'GraphicLine') { obj.geometricBounds = T.target; return obj; }
 
 		// -- HW has predefined dimensions
-		if (/hw/gi.test(obj.label) &&
-			(obj.constructor.name === 'TextFrame' || obj.constructor.name === 'Rectangle')) {
+		if (/hw/gi.test(obj.label)
+				&& (obj.constructor.name === 'TextFrame' || obj.constructor.name === 'Rectangle')) {
 			var hwRef = (target === 'margins') ? T.target : T.size;
 			if (T.visible) {
 				hwRef = T.visible;
@@ -169,14 +169,14 @@ function fitTo(items, scope, target, enforced) {
 		// 1. Check if the object is eligble to be fitted
 
 		// -- Skip if it's outside the target
-		if (O.visible[1] > T.target[3] || O.visible[3] < T.target[1] || // outside target, h
-			O.visible[0] > T.target[2] || O.visible[2] < T.target[0]    // outside target, v
+		if (O.visible[1] > T.target[3] || O.visible[3] < T.target[1]    // outside target, h
+			|| O.visible[0] > T.target[2] || O.visible[2] < T.target[0] // outside target, v
 		) return undefined;
 
 		// -- Skip if it's inside the target and the visible area
-		if (O.visible[1] > T.targetSZ[1] && O.visible[3] < T.targetSZ[3] &&  // inside target, h
-			O.visible[0] > T.targetSZ[0] && O.visible[2] < T.targetSZ[2] &&  // inside target, v
-			!O.hitsVSZ[0] && !O.hitsVSZ[1] && !O.hitsVSZ[2] && !O.hitsVSZ[3] // inside visible area
+		if (O.visible[1] > T.targetSZ[1] && O.visible[3] < T.targetSZ[3]        // inside target, h
+			&& O.visible[0] > T.targetSZ[0] && O.visible[2] < T.targetSZ[2]     // inside target, v
+			&& !O.hitsVSZ[0] && !O.hitsVSZ[1] && !O.hitsVSZ[2] && !O.hitsVSZ[3] // inside visible area
 		) return undefined;
 
 		// 3. New object bounds are computed in two steps:
@@ -217,9 +217,9 @@ function fitTo(items, scope, target, enforced) {
 		}
 
 		// -- Simple rectangles and containers
-		if (obj.constructor.name === 'Rectangle' && O.isStraight && O.isNotSkewed &&
-				(obj.pageItems.length === 0 || obj.pageItems.length === 1) &&
-			obj.strokeWeight < 1) {
+		if (obj.constructor.name === 'Rectangle' && O.isStraight && O.isNotSkewed
+				&& (obj.pageItems.length === 0 || obj.pageItems.length === 1)
+				&& obj.strokeWeight < 1) {
 			obj.geometricBounds = O.extended;
 			return obj;
 		}
@@ -231,9 +231,9 @@ function fitTo(items, scope, target, enforced) {
 		}
 
 		// -- Orthogonal lines
-		var isOrthoLine = (obj.constructor.name === 'GraphicLine' &&
-			obj.paths[0].entirePath.length === 2 &&
-			(obj.paths[0].entirePath[0].length === 2 || obj.paths[0].entirePath[1].length === 2));
+		var isOrthoLine = (obj.constructor.name === 'GraphicLine'
+			&& obj.paths[0].entirePath.length === 2
+			&& (obj.paths[0].entirePath[0].length === 2 || obj.paths[0].entirePath[1].length === 2));
 		if (isOrthoLine && O.geometric[0] === O.geometric[2]) { // horizontal
 			obj.paths[0].entirePath = [
 				[ enforced ? T.target[1] : O.extended[1], obj.paths[0].entirePath[0][1] ],
@@ -256,8 +256,8 @@ function fitTo(items, scope, target, enforced) {
 		return clipObject(O.extended);
 
 		function clipObject(fitMode) {
-			if (O.visible[0] >= T.target[0] && O.visible[1] >= T.target[1] &&
-				O.visible[2] <= T.target[2] && O.visible[3] <= T.target[3]) return obj;
+			if (O.visible[0] >= T.target[0] && O.visible[1] >= T.target[1]
+				&& O.visible[2] <= T.target[2] && O.visible[3] <= T.target[3]) return obj;
 			var frame = doc.rectangles.add(
 				obj.itemLayer,
 				LocationOptions.AFTER, obj,

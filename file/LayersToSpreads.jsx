@@ -1,5 +1,5 @@
 /*
-	Layers to spreads 23.9.22
+	Layers to spreads 23.9.23
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Moves layers of the active document to separate spreads.
@@ -116,11 +116,11 @@ function main() {
 			};
 			infoFrame.move([
 				spread.pages[0].bounds[1] + 10,
-				spread.pages[0].bounds[0] -
-					doc.documentPreferences.documentBleedTopOffset -
-					UnitValue('1 mm').as('pt') -
-					(15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2 -
-					(infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])
+				spread.pages[0].bounds[0]
+					- doc.documentPreferences.documentBleedTopOffset
+					- UnitValue('1 mm').as('pt')
+					- (15 - (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])) / 2
+					- (infoFrame.geometricBounds[2] - infoFrame.geometricBounds[0])
 			]);
 		}
 	}

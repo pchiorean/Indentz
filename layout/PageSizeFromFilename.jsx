@@ -1,5 +1,5 @@
 /*
-	Page size from file name 23.9.22
+	Page size from file name 23.9.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Sets every page size and margins according to the file name.
@@ -181,10 +181,7 @@ function main() {
 
 	function markVisibleArea() {
 		var visLayer, dieLayer, oldFrame, frames;
-		var isLargePage = (
-			(page.bounds[3] - page.bounds[1]) > 666 ||
-			(page.bounds[2] - page.bounds[0]) > 666
-		);
+		var isLargePage = ((page.bounds[3] - page.bounds[1]) > 666 || (page.bounds[2] - page.bounds[0]) > 666);
 		var PM = page.marginPreferences;
 		if (PM.top + PM.left + PM.bottom + PM.right === 0) return;
 		// Make swatch

@@ -1,5 +1,5 @@
 /*
-	Zoom to spreads 23.9.11
+	Zoom to spreads 23.9.23
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Zooms to the current spread (if N = 1) or the first N spreads (if N > 1).
@@ -50,7 +50,7 @@ app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
 // Get viewport bounds
 scr = {
-	width: (w.bounds[3] - w.bounds[1]) - HC,
+	width:  (w.bounds[3] - w.bounds[1]) - HC,
 	height: (w.bounds[2] - w.bounds[0]) - VC
 };
 
@@ -81,11 +81,13 @@ if (selection.length > 0 && selection[0].constructor.name !== 'Guide') {
 	targetBounds[1] = ((N === 1) ? page.parent : doc.spreads[0]).pages[0].resolve(TL, CS_PBRD)[0][0];
 	targetBounds[2] = ((N === 1) ? page.parent : doc.spreads[0]).pages[-1].resolve(BR, CS_PBRD)[0][1];
 	targetBounds[3] = ((N === 1) ? page.parent : doc.spreads[0]).pages[-1].resolve(BR, CS_PBRD)[0][0];
-	for (i = 0; N > 1 && i < doc.spreads.length && i < N; i++) {
-		targetBounds[0] = Math.min(targetBounds[0], doc.spreads[i].pages[0].resolve(TL, CS_PBRD)[0][1]);
-		targetBounds[1] = Math.min(targetBounds[1], doc.spreads[i].pages[0].resolve(TL, CS_PBRD)[0][0]);
-		targetBounds[2] = Math.max(targetBounds[2], doc.spreads[i].pages[-1].resolve(BR, CS_PBRD)[0][1]);
-		targetBounds[3] = Math.max(targetBounds[3], doc.spreads[i].pages[-1].resolve(BR, CS_PBRD)[0][0]);
+	if (N > 1) {
+		for (i = 0; i < doc.spreads.length && i < N; i++) {
+			targetBounds[0] = Math.min(targetBounds[0], doc.spreads[i].pages[0].resolve(TL, CS_PBRD)[0][1]);
+			targetBounds[1] = Math.min(targetBounds[1], doc.spreads[i].pages[0].resolve(TL, CS_PBRD)[0][0]);
+			targetBounds[2] = Math.max(targetBounds[2], doc.spreads[i].pages[-1].resolve(BR, CS_PBRD)[0][1]);
+			targetBounds[3] = Math.max(targetBounds[3], doc.spreads[i].pages[-1].resolve(BR, CS_PBRD)[0][0]);
+		}
 	}
 	if (app.activeWindow.screenMode === ScreenModeOptions.PREVIEW_OFF) {
 		// Include bleed
@@ -110,7 +112,7 @@ tgt = {
 w.zoom(ZoomOptions.FIT_PAGE);
 
 zoom = Math.min(scr.width / tgt.width, scr.height / tgt.height) * zF * 100;
-zoom = Math.min(Math.max(5, zoom), 4000); // Keep it in 5-4000% range
+zoom = Math.min(Math.max(5, zoom), 4000); // Keep zoom in 5-4000% range
 
 // Zoom to target
 if (N > 1 && selection.length === 0)

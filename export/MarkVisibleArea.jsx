@@ -1,5 +1,5 @@
 /*
-	Mark visible area 23.9.22
+	Mark visible area 23.9.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Creates on each page a 'visible area' frame the size of the page margins.
@@ -38,10 +38,7 @@ function main() {
 		page = doc.pages[i];
 		mgs = page.marginPreferences;
 		if (mgs.top + mgs.left + mgs.bottom + mgs.right === 0) continue;
-		isLargePage = (
-			(page.bounds[3] - page.bounds[1]) > 666 ||
-			(page.bounds[2] - page.bounds[0]) > 666
-		);
+		isLargePage = ((page.bounds[3] - page.bounds[1]) > 666 || (page.bounds[2] - page.bounds[0]) > 666);
 
 		// Make swatch
 		if (!doc.colors.itemByName(visFrame.swatchName).isValid) {

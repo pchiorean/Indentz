@@ -53,6 +53,7 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'isInArray.jsxinc';
 // @include 'parseDataFile.jsxinc';
 // @include 'report.jsxinc';
+// @include 'unique.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Default layers');
@@ -209,18 +210,6 @@ function main() {
 				'white'      : UIColors.WHITE,
 				'yellow'     : UIColors.YELLOW
 			}[color.toLowerCase()] || UIColors.LIGHT_BLUE;
-		}
-
-		// Get unique array elements
-		// http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/
-		function unique(/*array*/array) {
-			var i, j;
-			var r = [];
-			o: for (i = 0; i < array.length; i++) {
-				for (j = 0; j < r.length; j++) if (r[j] === array[i]) continue o;
-				if (array[i] !== '') r[r.length] = array[i];
-			}
-			return r;
 		}
 	}
 

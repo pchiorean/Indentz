@@ -1,5 +1,5 @@
 /*
-	QR code 23.8.21
+	QR code 23.9.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a QR code to the current document or to a separate file.
@@ -112,9 +112,9 @@ function main() {
 				bottomRightCornerOption: CornerOptions.NONE,
 				topLeftCornerOption:     CornerOptions.NONE,
 				topRightCornerOption:    CornerOptions.NONE,
-				contents: /\|/g.test(labelText) ?        // If '|' found
-					labelText.replace(/\|/g, '\u000A') : // replace it with Forced Line Break
-					balanceText(labelText, 18)           // else auto balance text
+				contents: /\|/g.test(labelText)          // If '|' found
+					? labelText.replace(/\|/g, '\u000A') // replace it with Forced Line Break
+					: balanceText(labelText, 18)         // else auto balance text
 			});
 			labelFrame.paragraphs.everyItem().properties = {
 				appliedFont: app.fonts.item('Helvetica Neue\tRegular'),
@@ -185,9 +185,9 @@ function main() {
 			codeSize = codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1];
 			doc.align(qrGroup, AlignOptions.LEFT_EDGES,   AlignDistributeBounds.PAGE_BOUNDS);
 			doc.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
-			if ((labelSize.width > tgSize.width && labelSize.height > tgSize.height) ||
-					((labelSize.width + codeSize) > tgSize.width &&
-					(codeSize + UnitValue('2.3 mm').as('pt')) > tgSize.height))
+			if ((labelSize.width > tgSize.width && labelSize.height > tgSize.height)
+					|| ((labelSize.width + codeSize) > tgSize.width
+					&& (codeSize + UnitValue('2.3 mm').as('pt')) > tgSize.height))
 				qrGroup.move(undefined, [ tgSize.width, -tgSize.height ]);
 			qrGroup.ungroup();
 		}
@@ -225,9 +225,9 @@ function main() {
 				bottomRightCornerOption: CornerOptions.NONE,
 				topLeftCornerOption:     CornerOptions.NONE,
 				topRightCornerOption:    CornerOptions.NONE,
-				contents: /\|/g.test(labelText) ?        // If '|' found
-					labelText.replace(/\|/g, '\u000A') : // replace it with Forced Line Break
-					balanceText(labelText, 18)           // else auto balance text
+				contents: /\|/g.test(labelText)          // If '|' found
+					? labelText.replace(/\|/g, '\u000A') // replace it with Forced Line Break
+					: balanceText(labelText, 18)         // else auto balance text
 			});
 			labelFrame.paragraphs.everyItem().properties = {
 				appliedFont: app.fonts.item('Helvetica Neue\tRegular'),

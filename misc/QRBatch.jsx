@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 23.9.22
+	Batch QR codes 23.9.23
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds codes to existing documents or to separate files in batch mode,
@@ -127,10 +127,10 @@ function main() {
 		ui.list.removeAll();
 		if (/QR Codes$/g.test(decodeURI(currentPath))) currentPath = currentPath.parent;
 		if (currentPath && (
-				((dataFile = File(currentPath + '/_qr.tsv')) && dataFile.exists) ||
-				((dataFile = File(currentPath + '/_QR.tsv')) && dataFile.exists) ||
-				((dataFile = File(currentPath + '/qr.tsv'))  && dataFile.exists) ||
-				((dataFile = File(currentPath + '/QR.tsv'))  && dataFile.exists))
+				((dataFile = File(currentPath + '/_qr.tsv')) && dataFile.exists)
+				|| ((dataFile = File(currentPath + '/_QR.tsv')) && dataFile.exists)
+				|| ((dataFile = File(currentPath + '/qr.tsv'))  && dataFile.exists)
+				|| ((dataFile = File(currentPath + '/QR.tsv'))  && dataFile.exists))
 			) {
 			dataFile.open('r');
 			dataFile.encoding = 'UTF-8';
@@ -305,9 +305,9 @@ function main() {
 				bottomRightCornerOption: CornerOptions.NONE,
 				topLeftCornerOption:     CornerOptions.NONE,
 				topRightCornerOption:    CornerOptions.NONE,
-				contents: /\|/g.test(labelText) ?        // If '|' found
-					labelText.replace(/\|/g, '\u000A') : // replace it with Forced Line Break
-					balanceText(labelText, 20)           // else auto balance text
+				contents: /\|/g.test(labelText)          // If '|' found
+					? labelText.replace(/\|/g, '\u000A') // replace it with Forced Line Break
+					: balanceText(labelText, 20)         // else auto balance text
 			});
 			labelFrame.paragraphs.everyItem().properties = {
 				appliedFont: app.fonts.item('Helvetica Neue\tRegular'),
@@ -378,9 +378,9 @@ function main() {
 			codeSize = codeFrame.geometricBounds[3] - codeFrame.geometricBounds[1];
 			target.align(qrGroup, AlignOptions.LEFT_EDGES,   AlignDistributeBounds.PAGE_BOUNDS);
 			target.align(qrGroup, AlignOptions.BOTTOM_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
-			if ((labelSize.width > tgSize.width && labelSize.height > tgSize.height) ||
-				((labelSize.width + codeSize) > tgSize.width &&
-				(codeSize + UnitValue('2.3 mm').as('pt')) > tgSize.height))
+			if ((labelSize.width > tgSize.width && labelSize.height > tgSize.height)
+				|| ((labelSize.width + codeSize) > tgSize.width
+				&& (codeSize + UnitValue('2.3 mm').as('pt')) > tgSize.height))
 				qrGroup.move(undefined, [ tgSize.width, -tgSize.height ]);
 			qrGroup.ungroup();
 		}
@@ -431,9 +431,9 @@ function main() {
 				bottomRightCornerOption: CornerOptions.NONE,
 				topLeftCornerOption:     CornerOptions.NONE,
 				topRightCornerOption:    CornerOptions.NONE,
-				contents: /\|/g.test(labelText) ?        // If '|' found
-					labelText.replace(/\|/g, '\u000A') : // replace it with Forced Line Break
-					balanceText(labelText, 18)           // else auto balance text
+				contents: /\|/g.test(labelText)          // If '|' found
+					? labelText.replace(/\|/g, '\u000A') // replace it with Forced Line Break
+					: balanceText(labelText, 18)         // else auto balance text
 			});
 			labelFrame.paragraphs.everyItem().properties = {
 				appliedFont: app.fonts.item('Helvetica Neue\tRegular'),
