@@ -1,5 +1,5 @@
 /*
-	Page margins from script name 23.5.10
+	Page margins from script name 23.9.23
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	By default it sets the page margins to 5% of the visible/page area for
@@ -10,6 +10,9 @@
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
 */
+
+// @includepath '.;./lib;../lib';
+// @include 'getBounds.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
 
