@@ -1,5 +1,5 @@
 /*
-	Default swatches 23.9.22
+	Default swatches 23.9.23
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds swatches using a 5-column TSV file named `swatches.tsv`:
@@ -7,7 +7,7 @@
 	Name       | Color Model | Color Space | Values       | Variants
 	Rich Black | process     | cmyk        | 60 40 40 100 |
 	RGB Grey   | process     | rgb         | 128 128 128  |
-	Cut        | spot        | cmyk        | 0 100 0 0    | couper, diecut
+	Cut        | spot        | cmyk        | 0 100 0 0    | couper, die*cut
 	...
 
 	<Name>: swatch name
@@ -17,15 +17,15 @@
 	- 3 values in 0-255 range for RGB
 	- 4 values in 0-100 range for CMYK
 	- 3 values in 0-100 (L), -128-127 (A and B) range for Lab
-	<Variants>: a list of swatches that will be replaced by the base swatch
+	<Variants>: a list of swatches separated by comma (`,`) that will be replaced by the base swatch
 		(case insensitive; `*` and `?` wildcards accepted)
 
 	The TSV file must be saved locally (in the active document folder or its parent) or as a global
 	default (on the desktop, next to the script, or in Indentz root); local files and those starting
 	with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
 	A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
-	or `@include path/to/another.tsv` for other data file. The path can be absolute, or relative to
-	the data file; a default path can be set with `@includepath path/to`.
+	or `@include path/to/another.tsv` for other data file. The path can be absolute, or by default
+	relative to the data file; a new default path can be set with `@includepath path/to`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -121,6 +121,22 @@ function main() {
 
 	function checkRecord(/*array*/record) {
 		var tmpData = {};
+		var getCVName = {
+			C0_M0_Y0_K0: function (/*string*/cSpace, /*string*/cVal) {
+				return {
+					cmyk: $.global.localize('C=%1 M=%2 Y=%3 K=%4', cVal[0], cVal[1], cVal[2], cVal[3]),
+					rgb:  $.global.localize('R=%1 G=%2 B=%3', cVal[0], cVal[1], cVal[2]),
+					lab:  $.global.localize('L=%1 a=%2 b=%3', cVal[0], cVal[1], cVal[2])
+				}[cSpace];
+			},
+			c0m0y0k0: function (/*string*/cSpace, /*string*/cVal) {
+				return {
+					cmyk: $.global.localize('c%1m%2y%3k%4', cVal[0], cVal[1], cVal[2], cVal[3]),
+					rgb:  $.global.localize('r%1g%2b%3', cVal[0], cVal[1], cVal[2]),
+					lab:  $.global.localize('l%1a%2b%3', cVal[0], cVal[1], cVal[2])
+				}[cSpace];
+			}
+		};
 
 		tmpData.source = parsed.data[i].source.join(':');
 
@@ -129,6 +145,7 @@ function main() {
 		if (!tmpData.name) stat(data.status, tmpData.source + ':1', 'Missing swatch name.', -1);
 
 		// Color model (optional)
+		if (!record[1]) stat(data.status, tmpData.source + ':2', 'Missing Color model, using Process.', 0);
 		tmpData.model = (function (str) {
 			return { // str => enum
 				process: ColorModel.PROCESS,
@@ -137,6 +154,7 @@ function main() {
 		}(record[1]));
 
 		// Color space (optional)
+		if (!record[1]) stat(data.status, tmpData.source + ':3', 'Missing Color space, using CMYK.', 0);
 		tmpData.space = (function (str) {
 			return { // str => enum
 				cmyk: ColorSpace.CMYK,
@@ -154,29 +172,22 @@ function main() {
 				while ((v = str.shift())) array.push(Number(v));
 				return array;
 			}(record[3]));
-			if ((tmpData.space === ColorSpace.CMYK && tmpData.values.length !== 4) ||
-				(tmpData.space === ColorSpace.RGB  && tmpData.values.length !== 3) ||
-				(tmpData.space === ColorSpace.LAB  && tmpData.values.length !== 3))
+			if ((tmpData.space === ColorSpace.CMYK && tmpData.values.length !== 4)
+				|| (tmpData.space === ColorSpace.RGB && tmpData.values.length !== 3)
+				|| (tmpData.space === ColorSpace.LAB && tmpData.values.length !== 3))
 				stat(data.status, tmpData.source + ':4', 'Mismatched color values.', -1);
 		} else {
 			stat(data.status, tmpData.source + ':4', 'Missing color values.', -1);
 		}
 
 		// Swatch variants (optional)
+		tmpData.variants = [];
 		if (tmpData.values) {
-			tmpData.variants = (function (str) {
-			return unique((getCVName(tmpData.space.toString().toLowerCase(), tmpData.values)
-				+ (str ? ',' + str : '')).split(/ *, */));
-
-				function getCVName(/*string*/cSpace, /*string*/cVal) {
-					return {
-						cmyk: $.global.localize('C=%1 M=%2 Y=%3 K=%4', cVal[0], cVal[1], cVal[2], cVal[3]),
-						rgb:  $.global.localize('R=%1 G=%2 B=%3', cVal[0], cVal[1], cVal[2]),
-						lab:  $.global.localize('L=%1 a=%2 b=%3', cVal[0], cVal[1], cVal[2], cVal[3])
-					}[cSpace];
-				}
-			}(record[4]));
-		} else { tmpData.variants = []; }
+			tmpData.variants.push(getCVName.C0_M0_Y0_K0(tmpData.space.toString().toLowerCase(), tmpData.values));
+			tmpData.variants.push(getCVName.c0m0y0k0(tmpData.space.toString().toLowerCase(), tmpData.values));
+		}
+		if (record[4]) tmpData.variants = tmpData.variants.concat(record[4].split(/ *, */));
+		if (tmpData.variants.length > 2) tmpData.variants = unique(tmpData.variants);
 
 		if (data.status.fail.length > 0) return false;
 		return tmpData;
