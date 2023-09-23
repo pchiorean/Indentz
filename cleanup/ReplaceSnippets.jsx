@@ -1,5 +1,5 @@
 ﻿/*
-	Replace text snippets 23.9.22
+	Replace text snippets 23.9.23
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces a list of snippets using a 5-column TSV file named `snippets.tsv`:
@@ -21,8 +21,8 @@
 	default (on the desktop, next to the script, or in Indentz root); local files and those starting
 	with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
 	A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
-	or `@include path/to/another.tsv` for other data file. The path can be absolute, or relative to
-	the data file; a default path can be set with `@includepath path/to`.
+	or `@include path/to/another.tsv` for other data file. The path can be absolute, or by default
+	relative to the data file; a new default path can be set with `@includepath path/to`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

@@ -1,5 +1,5 @@
 /*
-	Replace links 23.9.22
+	Replace links 23.9.23
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces document links using a 2-column TSV file named `links.tsv`:
@@ -19,15 +19,16 @@
 		- relative to `reference/path` defined by a previous `@includepath` statement
 			(`img3.psd` and `subfolder/img4.psd`)
 	<Document links>:
-	- One or more document link names; it's case insensitive and can take simple wildcards (`?` and `*`)
+	- One or more document link names separated by comma (`,`); it's case insensitive
+	  and can take simple wildcards (`?` and `*`)
 	- If empty, the name from the first column will be used
 
 	The TSV file must be saved locally (in the active document folder or its parent) or as a global
 	default (on the desktop, next to the script, or in Indentz root); local files and those starting
 	with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
 	A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
-	or `@include path/to/another.tsv` for other data file. The path can be absolute, or relative to
-	the data file; a default path can be set with `@includepath path/to`.
+	or `@include path/to/another.tsv` for other data file. The path can be absolute, or by default
+	relative to the data file; a new default path can be set with `@includepath path/to`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
