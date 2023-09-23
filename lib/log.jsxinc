@@ -1,35 +1,55 @@
 /**
  * Appends a debugging line to a file saved on the desktop with the name of the running script
  * (e.g. `active-script.log`). If no arguments are given, it just appends an empty line.
- * @version 23.9.11
+ * @version 23.9.23
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
- * @param {string} message - A list of messages (`part1`, `part2`, `part3`, etc.) that will
- * be appended to the timestamp and the stack trace; you can append them to the previous line
- * using `+` as the first argument, or an empty string (``) to skip the separator. `^` or `$`
- * as the first ergument defines the start or the end of a block.
+ * @param {string} message - A list of messages (`part1`, `part2`, `part3`, etc.) that will be
+ * displayed after the timestamp and the stack trace. The first argument can also be a statement:
+ * - `` (empty string): append to the previous line, without separator;
+ * - `+`: append to the previous line, with separator;
+ * - `!` and `?`: stopwatch start/elapsed time (note: there is a single timer);
+ * - `[` and `]`: mark the start/end of a block.
  * @example
  * log('Data file: \'' + decodeURI(dataFile.name) + '\'');
  * log('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
  * // Output:
  * // 2021-07-31 18:48:02.609 main::parseDataFile:: Data file: 'test.tsv' | Records: 14 | Layouts: 2
  * // └─────────────────────┘ └───────────────────┘ └───────────────────┘   └─────────┘   └────────┘
- * //        typestamp                stack             message part1          part2         part3
+ * //        timestamp                stack             message part1          part2         part3
  */
 function log(/*?message list*/) {
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	var debugFile = File(Folder.desktop + '/' + script.name.slice(0, script.name.lastIndexOf('.')) + '.log');
 	var padding = (!debugFile.exists || debugFile.length === 0) ? '' : '\n';
-	var t = new Date();
-	var time = t.getFullYear()           + '-' +
-		pad(t.getMonth() + 1,    2, '0') + '-' +
-		pad(t.getDate(),         2, '0') + ' ' +
-		pad(t.getHours(),        2, '0') + ':' +
-		pad(t.getMinutes(),      2, '0') + ':' +
-		pad(t.getSeconds(),      2, '0') + '.' +
-		pad(t.getMilliseconds(), 3, '0') + ' ';
-	var folding = [ '\u250C\u2500 ', '\u2502 ', '\u2514\u2500 ' ];
-	var message = '';
+	var time = {
+		now: function () {
+			var t = new Date();
+			return t.getFullYear() + '-'
+				+ pad(t.getMonth() + 1,    2, '0') + '-'
+				+ pad(t.getDate(),         2, '0') + ' '
+				+ pad(t.getHours(),        2, '0') + ':'
+				+ pad(t.getMinutes(),      2, '0') + ':'
+				+ pad(t.getSeconds(),      2, '0') + '.'
+				+ pad(t.getMilliseconds(), 3, '0') + ' ';
+		},
+		stopwatchStart: function () { swStart = new Date().getTime(); },
+		stopwatchElapsed: function () {
+			swElapsed = new Date().getTime() - swStart;
+			swStart = new Date().getTime();
+			return (swElapsed / 1000);
+		},
+		secondsToHMS: function (sec) {
+			var hours = Math.floor(sec / 3600);
+			var minutes = Math.floor((sec % 3600) / 60);
+			var seconds = sec % 60;
+			return ((hours > 0 ? hours + 'h ' : '')
+				+ (minutes > 0 ? minutes + 'm ' : '')
+				+ (seconds > 0 ? seconds.toFixed(2).replace(/\.0$/, '') + 's ' : ''))
+					.replace(/\s*$/, '');
+		}
+	};
+	var block = { start: '\u250C\u2500 ', mid: '\u2502 ', end: '\u2514\u2500 ' };
 	var line;
 
 	if (arguments.length === 0) line = padding;
@@ -43,36 +63,50 @@ function log(/*?message list*/) {
 	debugFile.close();
 
 	function parseArgs(args, sep) {
+		var msg = '';
+		var defMsg = padding + time.now() + stack();
 		switch (args[0].toString().toLowerCase()) {
-			case '': // Append to previous line (no separator)
+			// Append to previous line
+			case '': // No separator
+				args.shift(); break;
+			case '+': // With separator
+				args.shift(); if (args.length > 0) msg += sep; break;
+
+			// Stopwatch
+			case '!': // Start
 				args.shift();
+				time.stopwatchStart();
+				msg = defMsg + block.mid + '[Stopwatch] Start' + (args.length === 0 ? '' : sep);
 				break;
-			case '+': // Append to previous line (with separator)
+			case '?': // Elapsed time
 				args.shift();
-				if (args.length > 0) message += sep;
+				msg = defMsg + block.mid + '[Stopwatch] Elapsed: ' + time.secondsToHMS(time.stopwatchElapsed())
+					+ (args.length === 0 ? '' : sep);
 				break;
-			case '^': // Folding block start
+
+			// Block
+			case '[': // Start
 				args.shift();
-				message = padding + time + stack() + folding[0]
-					+ (args.length === 0 ? $.stack.split(/[\n]/).slice(-3, -2) : '');
+				msg = defMsg + block.start + (args.length === 0 ? $.stack.split(/[\n]/).slice(-3, -2) : '');
 				break;
-			case '$': // Folding block end
+			case ']': // End
 				args.shift();
-				message = padding + time + stack() + folding[2]
-					+ (args.length === 0 ? $.stack.split(/[\n]/).slice(-3, -2) : '');
+				msg = defMsg + block.end + (args.length === 0 ? $.stack.split(/[\n]/).slice(-3, -2) : '');
 				break;
-			default: // Standard message
-				message = padding + time + stack() + folding[1];
+
+			// Standard message
+			default:
+				msg = defMsg + block.mid;
 		}
 
-		return message + args.join(sep).replace(/\r|\n/g, '\u00B6');
+		return msg + args.join(sep).replace(/\r|\n/g, '\u00B6');
 
 		function stack() {
 			var arr = $.stack.split(/[\n]/);
 			arr = arr.slice(1, -3);
-			return arr.length > 0 ?
-				arr.join('::').replace(/\(.*?\)/g, '').replace('anonymous', 'anon') + ':: ' :
-				'';
+			return arr.length > 0
+				? arr.join('::').replace(/\(.*?\)/g, '').replace('anonymous', 'anon') + ':: '
+				: '';
 		}
 	}
 
