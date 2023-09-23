@@ -1,14 +1,14 @@
 # Helper functions
 
-Various functions used by the main scripts. They are included in the body of the script using the `#include` directive (you can also use `// @include`). Example:
+Various functions used in many scripts from this project, linked using the `#include` directive (actually the `// @include` variant). Example:
 
     // @include '../lib/isInArray.jsxinc';
 
-### addGuide(_target, [layer], HorV, location, [label], [type]_)
+## addGuide(_target, [layer], HorV, location, [label], [type]_)
 
-Adds a custom ruler guide. I use it to make grids for several brands, for which I have a hard time remembering the properties of the different guide lines. With the `preset` parameter I standardize guide types: symmetry axes, sections and subsections, product alignment and so on.
+Adds a custom ruler guide. I use it to make grids for several brands, for which I have a hard time remembering the properties of the different guide lines. With the `preset` parameter I can group guides in several types: symmetry axes, sections and subsections, product alignment and so on.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
@@ -17,25 +17,25 @@ Adds a custom ruler guide. I use it to make grids for several brands, for which 
 |`HorV`|`string`||If the string begins with `v`, the guide is vertical, else horizontal.|
 |`location`|`number`||The location at which to place the guide relative to the current ruler zero point.|
 |`[label]`|`string`||The label of the guide. *(Optional.)*|
-|`[preset]`|`number`||A customized set of properties, see source. *(Optional.)*|
+|`[preset]`|`number`||A customized set of properties (see source). *(Optional.)*|
 
-### alignTextToBottom(_item_) ⇒ _item_
+## alignTextToBottom(_item_) ⇒ _item_
 
 Sets a given text frame's vertical justification preference to align to bottom. Returns the text frame object.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`item`|`textFrame`|The text frame.|
 
-### fitTo(_items, [scope], [target], [forced]_)
+## fitTo(_items, [scope], [target], [forced]_)
 
 Reframes the given items to the page/spread's (`scope`) size/margins/visible area/bleed (`target`). If an item is larger than the target, it will be reduced; if it is smaller but inside a 1% 'snap' area, it will be enlarged. Rectangular frames are simply reframed; rotated items, ovals, groups, etc. are inserted in a clipping frame that is reframed.
 
 **Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`. If margins or visible area are undefined, they fallback to page/spread size.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
@@ -44,7 +44,7 @@ Reframes the given items to the page/spread's (`scope`) size/margins/visible are
 |`[target]`|`string`|`size`|`size`, `margins`, `visible` or `bleed`. *(Optional.)*|
 |`[forced]`|`boolean`|`false`|When `true` it just reframes the object without any checks. *(Optional.)*|
 
-##### Example:
+#### Example:
 
 ```js
 fitTo(doc.selection, 'page', 'bleed'); // Fits the selected objects to the page bleed
@@ -60,17 +60,17 @@ app.doScript(
 );
 ```
 
-### getBounds(_page_) ⇒ \{Object\}
+## getBounds(_page_) ⇒ \{Object\}
 
 Computes miscellaneous page boxes of a document page.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`page`|`object`|The target page.|
 
-##### Returns:
+#### Returns:
 
 An object containing the geometric bounds of `page` and its parent spread, and of their margins, visible/safety area and bleed, using the current measurement units:
 
@@ -95,7 +95,7 @@ An object containing the geometric bounds of `page` and its parent spread, and o
 
 **Note:** 'visible'/'safety' are areas marked by one or more frames named `<visible area>` or`<safety area>` (or labeled `visible area`/`safety area`). If margins or visible/safety areas are undefined, they fallback to page/spread size.
 
-##### Example:
+#### Example:
 
 ```js
 var pageSize      = getBounds(page).page.size;      // [ 0, 0, 297, 210 ]
@@ -114,11 +114,11 @@ bounds.spread.margins; // [ 20, 20, 277, 400 ]
 bounds[scope][target]; // [ 20, 20, 277, 400 ]
 ```
 
-### getFilesRecursively(_folder, [subfolders], [extension]_) ⇒ \{Array\}
+## getFilesRecursively(_folder, [subfolders], [extension]_) ⇒ \{Array\}
 
 Recursively get files from a folder and its subfolders.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
@@ -126,11 +126,11 @@ Recursively get files from a folder and its subfolders.
 |`[subfolders]`|`boolean`|`false`|If `true`, include subfolders. (Optional.)|
 |`[extension]`|`string`|`any`|Extension to include; if undefined, will match any extension. You can combine multiple extensions with regex OR, i.e. `indd|tif|txt` (Optional.)|
 
-##### Returns:
+#### Returns:
 
 An array of found folders (as objects).
 
-##### Example:
+#### Example:
 
 ```js
 var files = getFilesRecursively(folder, true, "indd");
@@ -142,43 +142,43 @@ for (var i = 0; i < files.length; i++) {
 Author: [William Campbell](https://community.adobe.com/t5/user/viewprofilepage/user-id/8505462) | 
 [Source](https://community.adobe.com/t5/indesign-discussions/get-indd-files-from-folder-and-its-subfolders/m-p/12621330#M459355)
 
-### getDropShadow(_item_) ⇒ \{Object\}
+## getDropShadow(_item_) ⇒ \{Object\}
 
 Gets a page item's drop shadow properties.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`item`|`pageItem`|The page item from which we take properties.|
 
-##### Returns:
+#### Returns:
 
 The page item's drop shadow properties (`item.transparencySettings.dropShadowSettings`).
 
-### setDropShadow(_item, set_)
+## setDropShadow(_item, set_)
 
 Sets a page item's drop shadow properties from a set saved with `getDropShadow()`.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`item`|`pageItem`|The page item to which we apply properties.|
 |`set`|`object`|A previously saved `transparencySettings.dropShadowSettings` properties set.|
 
-##### Example:
+#### Example:
 
 ```js
 var shadow = getDropShadow(item1);
 setDropShadow(item2, shadow);
 ```
 
-### getPageItem(_name, target, [layer]_) ⇒ \{PageItem\} | undefined
+## getPageItem(_name, target, [layer]_) ⇒ \{PageItem\} | undefined
 
 Gets a page item by name, optionally from a layer.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
@@ -186,25 +186,25 @@ Gets a page item by name, optionally from a layer.
 |`target`|`object`|A `Document`, `Spread`, `Page` or a `MasterSpread`.|
 |`[layer]`|`layer`|Only look for objects from this layer. *(Optional.)*|
 
-##### Returns:
+#### Returns:
 
 The first page item with the specified `name`, optionally from the specified `layer`.
 
-### getScriptsFolder() ⇒ 'path/to/folder/' | undefined
+## getScriptsFolder() ⇒ 'path/to/folder/' | undefined
 
 Detects the user scripts folder searching for the string 'Scripts Panel' in `$.includePath`, returning a string with the path followed by '/', or `undefined`.
 
-##### Example:
+#### Example:
 
 ```js
 $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
 ```
 
-### isInArray(_searchValue, array, [isCaseSensitive]_) ⇒ \{Boolean\}
+## isInArray(_searchValue, array, [isCaseSensitive]_) ⇒ \{Boolean\}
 
-Matches a string against elements of an array, using wildcards and case sensitivity.
+Matches a string against elements of an array.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
@@ -212,11 +212,11 @@ Matches a string against elements of an array, using wildcards and case sensitiv
 |`array`|`array`||An array of strings with optional wildcards: `*` (zero or more characters), `?` (any character).|
 |`[isCaseSensitive]`|`boolean`|`false`|If `true` the search is case sensitive. *(Optional.)*|
 
-##### Returns:
+#### Returns:
 
 Returns `true` for match, `false` for no match.
 
-##### Example:
+#### Example:
 
 ```js
 var searchValue = 'codes';
@@ -224,24 +224,26 @@ var array = [ 'bar*code*', 'code*', 'EAN*' ];
 isInArray(searchValue, array) // True: matches 2nd array element
 ```
 
-### log(_message_)
+## log(_[statement]_, _message_)
 
 Appends a debugging line to a file saved on the desktop with the name of the running script (e.g., `active-script.log`), containing a timestamp, a stack trace, and a message.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
+|`[statement]`|`char`|See description below.|
 |`message`|`string`|A comma separated list of messages (`part1`, `part2`, `part3`, etc.) that will be displayed after a timestamp and the stack trace.|
 
 Without arguments it just appends an empty line.
 
 The first argument can also be a statement:
-- `+`: appends to the previous line;
-- empty string: appends to the previous line, skipping the separator;
-- `^` or `$`: marks the start or end of a block.
+- `` (empty string): append to the previous line, without separator;
+- `+`: append to the previous line, with separator;
+- `!` and `?`: stopwatch start/elapsed time (note: this is a simple, global timer);
+- `[` and `]`: mark the start/end of a block.
 
-##### Example:
+#### Example:
 
 ```js
 log('Data file: \'' + decodeURI(dataFile.name) + '\'');
@@ -255,11 +257,11 @@ log('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
        timestamp                stack             message part1          part2         part3
 ```
 
-### moveToLayer(_item, layer, [position]_)
+## moveToLayer(_item, layer, [position]_)
 
 Moves an item to another layer, optionally sending it to the front or back.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
@@ -267,7 +269,7 @@ Moves an item to another layer, optionally sending it to the front or back.
 |`layer`|`object`|The target layer.|
 |`[position]`|`string`|`front`/`top` or `back`/`bottom`: Sends the item to the front or back of its layer. *(Optional.)*|
 
-### naturalSorter(_str1, str2_) ⇒ \{Boolean\}
+## naturalSorter(_str1, str2_) ⇒ \{Boolean\}
 
 Used as a user-supplied function to `array.sort()`, it sorts a string array to a natural order, e.g.,
 
@@ -289,7 +291,7 @@ asd12
 asd123
 ```
 
-##### Example:
+#### Example:
 
 ```js
 array = array.sort(naturalSorter);
@@ -297,11 +299,11 @@ array = array.sort(naturalSorter);
 
 [Source](https://stackoverflow.com/questions/2802341/javascript-natural-sort-of-alphanumerical-strings/2802804#2802804).
 
-### parseDataFile(_dataFile_) ⇒ \{Object\}
+## parseDataFile(_dataFile_) ⇒ \{Object\}
 
 Reads a TSV (tab-separated-values) file.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
@@ -321,7 +323,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 - The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
-##### Returns:
+#### Returns:
 
 An object containing the records found (strings) and parsing errors, built from the main file plus all included files, structured as follows:
 
@@ -336,7 +338,7 @@ An object containing the records found (strings) and parsing errors, built from 
 }
 ```
 
-##### Example:
+#### Example:
 
 ```js
 var file;
@@ -426,14 +428,14 @@ There are some additional functions in this file, one being:
 
 Gets the first occurrence of a file from a list of predefined folders.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`dataFile`|`string`||A tab-separated-values file (name).|
 |`[skipLocal]`|`boolean`|false|If `true`, don't search locally. *(Optional.)*|
 
-##### Returns:
+#### Returns:
 
 The first occurrence of `dataFile`, first searching for a local one (in the current folder or the parent folder of the active document), then a default one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
 
@@ -448,7 +450,7 @@ The first occurrence of `dataFile`, first searching for a local one (in the curr
   4. `script/folder/dataFile`
   5. `script/folder/../dataFile`
 
-### progressBar
+## progressBar
 
 Creates a palette with two progress bars and a message; the second bar may be used for microsteps (optional).
 
@@ -456,7 +458,7 @@ Creates a palette with two progress bars and a message; the second bar may be us
 
 Initializes the palette. On creation you can set it's width to accomodate a given message length; if omitted, no message is shown (aka mini mode). The secondary progress bar is hidden by default.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
@@ -468,7 +470,7 @@ Initializes the palette. On creation you can set it's width to accomodate a give
 
 Updates the message. If omitted, the previous message is cleared.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
@@ -482,7 +484,7 @@ Increases the value of the main progress bar and updates the counter (not shown 
 
 Sets the number of steps for the secondary progress bar (shown only if the number is greater than 2).
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
@@ -496,7 +498,7 @@ Increases the value of the secondary progress bar.
 
 Closes the progress bar.
 
-##### Example:
+#### Example:
 
 **Dual progress bar:**
 
@@ -547,22 +549,22 @@ progressBar.close();
 
 ![](../docs/img/lib/progress-bar-mini.png)
 
-### replaceLink(_oldLinks, newLink_) ⇒ \{Boolean\}
+## replaceLink(_oldLinks, newLink_) ⇒ \{Boolean\}
 
 Replaces a link or a list of links with a different one. A selection limits the scope.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`oldLinks`|`string` \| `string[]`|A link name, or an array of link names to be replaced.|
 |`newLink`|`string`|New link name (if same folder), or full link path.|
 
-##### Returns:
+#### Returns:
 
 Returns `true` if a replacement was made, `false` if not.
 
-##### Example:
+#### Example:
 
 ```js
 replaceLink('link1.jpg', 'link1.psd'); // Both links are in the same folder
@@ -570,11 +572,11 @@ replaceLink('link1.jpg', 'path/to/link1.psd');
 replaceLink([ 'link1.jpg', 'link1.png' ], 'link1.psd');
 ```
 
-### replaceSwatch(_oldNames, newName, [newValues]_) ⇒ \{Boolean\}
+## replaceSwatch(_oldNames, newName, [newValues]_) ⇒ \{Boolean\}
 
 Replaces a swatch or a list of swatches with a different one. The new swatch is created only if values (CMYK) are provided and it doesn't already exist.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
@@ -582,11 +584,11 @@ Replaces a swatch or a list of swatches with a different one. The new swatch is 
 |`newName`|`string`|New swatch name.|
 |`[newValues]`|`number[]`|Array of 4 values in 0-100 range (CMYK).|
 
-##### Returns:
+#### Returns:
 
 Returns `true` if a replacement was made, `false` if not.
 
-##### Example:
+#### Example:
 
 ```js
 replaceSwatch('Red', 'Blue'); // 'Blue' it's supposed to exist
@@ -594,11 +596,11 @@ replaceSwatch('Red', 'Blue', [ 100, 70, 0, 0 ]); // 'Blue' will be created if it
 replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 ```
 
-### replaceText(_findWhat, changeTo, [wholeWord]_) ⇒ \{Boolean\}
+## replaceText(_findWhat, changeTo, [wholeWord]_) ⇒ \{Boolean\}
 
 Replaces a text with another.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
@@ -606,32 +608,32 @@ Replaces a text with another.
 |`changeTo`|`string`||New text.|
 |`[wholeWord]`|`boolean`|`true` |Match whole words. *(Optional.)*|
 
-##### Returns:
+#### Returns:
 
 Returns `true` if a replacement was made, `false` if not.
 
-##### Example:
+#### Example:
 
 ```js
 replaceText('11.10.', '13.12.2021');
 replaceText('\\\\', '\u000A', false); // Replace '\\' with Forced Line Break
 ```
 
-### report(_message, title, [showFilter], [showCompact]_)
+## report(_message, title, [showFilter], [showCompact]_)
 
 Displays a message in a scrollable list with optional filtering and/or compact mode.
 Inspired by [this](http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250) snippet by Peter Kahrel.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`message`|`string` \| `string[]`||Message to be displayed. Can be a string or a strings array.|
 |`[title]`|`string`|`''`|Dialog title. *(Optional.)*|
-|`[showFilter]`|`boolean` \| `'auto'`|`false`|If `true` it shows a filter field; `auto` shows it automatically if there are more than 20 lines; optional wildcards: `?` (any character), space and `*` (AND), `|` (OR). *(Optional.)*|
+|`[showFilter]`|`boolean` \| `'auto'`|`false`|If `true` it shows a filtering field; `auto` shows it automatically if there are more than 20 lines. Optional wildcards: `?` (any character), space and `*` (AND), `\|` (OR). *(Optional.)*|
 |`[showCompact]`|`boolean`|`false`|If `true` duplicates are removed and the message is sorted. *(Optional.)*|
 
-##### Example:
+#### Example:
 
 ```js
 report(message, 'Sample alert');
@@ -645,22 +647,22 @@ report(message, 'Sample alert', true);
 
 ![Alert with filter](../docs/img/lib/report-filter.png)
 
-### saveLayersState() / restoreLayersState()
+## saveLayersState() / restoreLayersState()
 
 Saves/restores some properties ('locked', 'printable', 'visible') of all layers in the active document, using the `layersState` array.
 
-### truncateString(_str_) ⇒ _str_
+## truncateString(_str_) ⇒ _str_
 
 Truncates a string to a certain length, preserving it's end and replacing the first part with an ellipsis.
 
-##### Parameters:
+#### Parameters:
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`str`|`string`|The string.|
 |`length`|`number`|The length.|
 
-### unique(_array_) ⇒ _array_
+## unique(_array_) ⇒ _array_
 
 Returns an array containing only the unique elements of the original array.
 
