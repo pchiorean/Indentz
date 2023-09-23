@@ -1,23 +1,34 @@
 /**
  * Matches a string against elements of an array, using wildcards and case sensitivity.
- * @version 23.6.2
+ * @version 23.9.23
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} searchValue - String to be matched.
  * @param {array} array - An array of strings; wildcards: '*' (zero or more characters), '?' (any character).
- * @param {boolean} [caseSensitive=false] - If `true` the search is case sensitive. (Optional.)
+ * @param {boolean} [isCaseSensitive=false] - If `true` the search is case sensitive. (Optional.)
  * @returns {boolean} - Returns `true` for match, `false` for no match.
  * @example
  * isInArray('codes', [ 'bar*code*', 'code*', 'EAN*' ]) // Matches 2nd array element
  */
-function isInArray(searchValue, array, caseSensitive) {
-	caseSensitive = (caseSensitive === undefined) ? false : caseSensitive;
-	for (var i = 0, n = array.length; i < n; i++) {
-		if (RegExp('^' + array[i].toString()
-			.replace(/[|^$(.)[\]{+}\\]/g, '\\$&')       // Escape regex tokens, pass '*' and '?'
-			.replace(/\*/g, '.*').replace(/\?/g, '.') + // '*' and '?' wildcards
-			'$', caseSensitive ? '' : 'i'               // Case sensitivity flag
-		).test(searchValue.toString())) return true;
+function isInArray(searchValue, array, isCaseSensitive) {
+	var match;
+	isCaseSensitive = (isCaseSensitive === undefined) ? false : isCaseSensitive;
+	searchValue = isCaseSensitive ? searchValue.toString() : searchValue.toLowerCase();
+
+	for (var i = 0; i < array.length; i++) {
+		match = array[i].toString();
+		if (/[?*]/.test(match)) { // Wildcards
+			match = RegExp('^'
+				+ match
+					.replace(/[|^$(.)[\]{+}\\]/g, '\\$&')     // Escape regex tokens, pass '*' and '?'
+					.replace(/\*/g, '.*').replace(/\?/g, '.') // '*' and '?' wildcards
+				+ '$', isCaseSensitive ? '' : 'i'             // Case sensitivity flag
+			);
+			if (match.test(searchValue)) return true;
+		} else { // Regular string
+			if (isCaseSensitive) match = match.toLowerCase();
+			if (match === searchValue) return true;
+		}
 	}
 	return false;
 }
