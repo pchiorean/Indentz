@@ -200,7 +200,7 @@ Detects the user scripts folder searching for the string 'Scripts Panel' in `$.i
 $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
 ```
 
-### isInArray(_searchValue, array, [caseSensitive]_) ⇒ \{Boolean\}
+### isInArray(_searchValue, array, [isCaseSensitive]_) ⇒ \{Boolean\}
 
 Matches a string against elements of an array, using wildcards and case sensitivity.
 
@@ -210,7 +210,7 @@ Matches a string against elements of an array, using wildcards and case sensitiv
 |:--:|:--:|:--:|--|
 |`searchValue`|`string`||String to be matched.|
 |`array`|`array`||An array of strings with optional wildcards: `*` (zero or more characters), `?` (any character).|
-|`[caseSensitive]`|`boolean`|`false`|If `true` the search is case sensitive. *(Optional.)*|
+|`[isCaseSensitive]`|`boolean`|`false`|If `true` the search is case sensitive. *(Optional.)*|
 
 ##### Returns:
 
@@ -236,9 +236,9 @@ Appends a debugging line to a file saved on the desktop with the name of the run
 
 Without arguments it just appends an empty line.
 
-The first argument can be a statement:
+The first argument can also be a statement:
 - `+`: appends to the previous line;
-- empty string: appends to the previous line, but skipping the separator;
+- empty string: appends to the previous line, skipping the separator;
 - `^` or `$`: marks the start or end of a block.
 
 ##### Example:
@@ -252,7 +252,7 @@ log('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
 ```
 2021-07-31 18:48:02.609 main::parseDataFile:: Data file: 'test.tsv' | Records: 14 | Layouts: 2
 └─────────────────────┘ └───────────────────┘ └───────────────────┘   └─────────┘   └────────┘
-       typestamp                stack             message part1          part2         part3
+       timestamp                stack             message part1          part2         part3
 ```
 
 ### moveToLayer(_item, layer, [position]_)

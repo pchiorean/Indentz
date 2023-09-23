@@ -68,14 +68,14 @@ Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample]
 > **Visible**: `yes` or `no` (defaults to `yes`)\
 > **Printable**: `yes` or `no` (defaults to `yes`)\
 > **Order**: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`)\
-> **Variants**: A list of layers that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters)
+> **Variants**: A list of layers separated by comma (`,`) that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters)
 
 **Additional features:**
 
 A line may also contain a _statement_:
 
-- `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be absolute or relative – by default is relative to the data file folder, but if you defined a `reference/path`, it will be relative to that;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; the path may be absolute or relative – by default is relative to the data file folder;
+- `@includepath` `reference/path` – sets a reference folder for subsequent relative paths; it may be absolute or relative – if relative, it's always to the data file folder
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -103,7 +103,7 @@ Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sam
 > - 4 values in 0–100 range for CMYK
 > - 3 values in 0–100 (L), –128–127 (A and B) range for Lab
 >
-> **Variants**: a list of swatches that will be replaced by the base swatch; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters)
+> **Variants**: a list of swatches separated by comma (`,`) that will be replaced by the base swatch; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters)
 
 You can use [**`DumpSwatches.jsx`**](#dumpswatchesjsx) to save a tab delimited list of swatches from the active document.
 
@@ -111,8 +111,8 @@ You can use [**`DumpSwatches.jsx`**](#dumpswatchesjsx) to save a tab delimited l
 
 A line may also contain a _statement_:
 
-- `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be absolute or relative – by default is relative to the data file folder, but if you defined a `reference/path`, it will be relative to that;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; the path may be absolute or relative – by default is relative to the data file folder;
+- `@includepath` `reference/path` – sets a reference folder for subsequent relative paths; it may be absolute or relative – if relative, it's always to the data file folder
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -139,8 +139,8 @@ You can use [**`ShowFonts.jsx`**](#showfontsjsx) from [**Miscellaneous**](#misce
 
 A line may also contain a _statement_:
 
-- `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be absolute or relative – by default is relative to the data file folder, but if you defined a `reference/path`, it will be relative to that;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; the path may be absolute or relative – by default is relative to the data file folder;
+- `@includepath` `reference/path` – sets a reference folder for subsequent relative paths; it may be absolute or relative – if relative, it's always to the data file folder
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -167,11 +167,11 @@ Replaces document links using a TSV data file named **`links.tsv`** ([sample](sa
 > **Relink to** (also see **Additional features** below):
 > - An absolute path of the form `/absolute/path/to/img1.psd`;
 > - A relative path which is:
->   - relative (by default) to the document `Links` folder (`img2.psd`);
->   - relative to `reference/path` defined by a previous `@includepath` statement (`img3.psd` and `subfolder/img4.psd`).
+>   - relative by default to the document `Links` folder (e.g., `img2.psd`);
+>   - relative to `reference/path` defined by a previous `@includepath` statement (e.g., `img3.psd` and `subfolder/img4.psd`).
 > 
 > **Document links:**
-> - One or more document link names; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters);
+> - One or more document link names separated by comma (`,`); it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters);
 > - If empty, the _name_ from the first column will be used (so that if it's in the document, it will be replaced).
 
 Quoting the paths is not required.\
@@ -181,8 +181,8 @@ You can use [**`DumpLinks.jsx`**](#dumplinksjsx) to save a list of links from th
 
 A line may also contain a _statement_:
 
-- `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be absolute or relative – by default is relative to the data file folder, but if you defined a `reference/path`, it will be relative to that;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; the path may be absolute or relative – by default is relative to the data file folder;
+- `@includepath` `reference/path` – sets a reference folder for subsequent relative paths; it may be absolute or relative – if relative, it's always to the data file folder
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -219,8 +219,8 @@ For example, 'The sample is for free' will be replaced with 'Das Sample ist kost
 
 A line may also contain a _statement_:
 
-- `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be absolute or relative – by default is relative to the data file folder, but if you defined a `reference/path`, it will be relative to that;
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; the path may be absolute or relative – by default is relative to the data file folder;
+- `@includepath` `reference/path` – sets a reference folder for subsequent relative paths; it may be absolute or relative – if relative, it's always to the data file folder
 - `@defaults` – includes the global data file;
 
 There's also some non-standard stuff that will confuse Excel et al.:
@@ -267,7 +267,7 @@ Converts process RGB swatches to CMYK and renames them to 'C= M= Y= K=' forma
 Saves a TSV file (compatible with [**`DefaultLayers.jsx`**](#defaultlayersjsx)) containing the names and properties of the active document layers.
 
 #### **`DumpLinks.jsx`**
-Saves a TSV file (compatible with [**`ReplaceLinks.jsx`**](#replacelinksjsx-f8)) containing the links of the active document.
+Saves a TSV file (compatible with [**`ReplaceLinks.jsx`**](#replacelinksjsx)) containing the links of the active document.
 
 #### **`DumpSwatches.jsx`**
 Saves a TSV file (compatible with [**`DefaultSwatches.jsx`**](#defaultswatchesjsx)) containing the names and properties of the active document swatches.
@@ -628,7 +628,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: September 13, 2023</small>
+<small>Last updated: September 23, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
