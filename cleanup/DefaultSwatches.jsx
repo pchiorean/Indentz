@@ -1,5 +1,5 @@
 /*
-	Default swatches 23.9.23
+	Default swatches 23.9.25
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds swatches using a 5-column TSV file named `swatches.tsv`:
@@ -182,6 +182,7 @@ function main() {
 
 		// Swatch variants (optional)
 		tmpData.variants = [];
+		if (tmpData.name) tmpData.variants.push(tmpData.name.toLowerCase());
 		if (tmpData.values) {
 			tmpData.variants.push(getCVName.C0_M0_Y0_K0(tmpData.space.toString().toLowerCase(), tmpData.values));
 			tmpData.variants.push(getCVName.c0m0y0k0(tmpData.space.toString().toLowerCase(), tmpData.values));
