@@ -1,5 +1,5 @@
 /*
-	Replace links 23.9.23
+	Replace links 23.9.26
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces document links using a 2-column TSV file named `links.tsv`:
@@ -58,6 +58,7 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'isInArray.jsxinc';
 // @include 'progressBar.jsxinc';
 // @include 'report.jsxinc';
+// @include 'stat.jsxinc';
 // @include 'unique.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
