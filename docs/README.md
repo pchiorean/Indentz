@@ -446,9 +446,9 @@ You may use **`SpreadsToFiles.jsx`** to split the result into separate documents
 ### Export
 
 #### **`QuickExport.jsx`**
-My workflow requires frequent changes to export settings; the native export dialog has quite a few tabs and options, so I used to have a lot of Adobe PDF Presets with just a few differences. For many years I used Peter Kahrel's wonderful [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), but I've always wanted a tool tailored to my needs. I made this script to have the frequently changed settings easily accessible and thus reduce the number of presets to the essential; I also added some other features that make my life easier.
+My workflow requires frequent changes to export settings; the native export dialog has quite a few tabs and options, so I used to have a lot of Adobe PDF Presets with slight differences. I've used for years Peter Kahrel's wonderful [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), but I wanted a tool more tailored to my needs. I made this script to make frequently changed settings more easily accessible and thus reduce the number of presets to the essential.
 
-There are two selectable workflows, with the options grouped into several categories. I will review the not self-explanatory ones:
+There are two selectable workflows, with the options grouped into several categories. I will review the ones that are not self-explanatory:
 
 ![Quick export](img/script-quickexport.png)
 ![](img/script-quickexport-legend.svg)
@@ -483,7 +483,7 @@ There are two selectable workflows, with the options grouped into several catego
 **Global options:**
 - **Upgrade [Converted] documents**: Upgrade or skip documents from previous versions of InDesign.
 
-**Note:** If you keep the **Opt/Alt** key pressed while clicking **Start**, the script will run without saving the settings.
+**Note:** The settings are saved every time you run the script, but if you keep the **Opt/Alt** key pressed while clicking **Start**, the script will run without saving them.
 
 **Shortcut:** ⌃E
 
@@ -628,7 +628,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: September 23, 2023</small>
+<small>Last updated: September 26, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
