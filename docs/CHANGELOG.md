@@ -41,9 +41,19 @@
   **view/ZoomToSelection, ZoomToSpreads:** Fixed the acceptable zoom range
 - `09/12` [`upd`](https://github.com/pchiorean/Indentz/commit/d58f5c3bf2a3dedef7e136fc800bedc85bfb0dd1)
   **export/QuickExport:** Improved timer display: 'Xh Xm Xs'
-
-<!-- ### TODO
-- `fix` `?` **DefaultSwatches:** Split processing into 2 steps: 1) Create swatches; 2) Merge swatches -->
+- `09/23` [`upd`](https://github.com/pchiorean/Indentz/commit/992ab910c86dae5a10895e187950d793e7a91c29)
+  **cleanup/DefaultSwatches:** Added "cXXmXXyXXkXX" as a default variant
+- `09/23` [`upd`](https://github.com/pchiorean/Indentz/commit/1cad44d2b866aa7f81a4e0646a9f3016914fa4fc)
+          [`ref`](https://github.com/pchiorean/Indentz/commit/1f9cbe80447a5187c8c1425a223aef82bc6a5f3b)
+  **lib/isInArray:** Used regular matching if no wildcards
+- `09/23` [`new`](https://github.com/pchiorean/Indentz/commit/5a41bd99dea26be6bd649511fc42a65c358b801b)
+  **lib/log:** Added a stopwatch (`!`/`?`); changed statements for blocks to `[`/`]`
+- `09/23` [`upd`](https://github.com/pchiorean/Indentz/commit/772c7aaeda9d637ee31039de5d28c353d02eee1e)
+  **file/FilesToSpreads:** Used natural sorting for files
+- `09/23` [`fix`](https://github.com/pchiorean/Indentz/commit/c27c6887e2ea1d295e10193bfdae4122208eaab8)
+  **layout/PageMarginsFromScriptName:** Included missing `getBounds()` (d'oh!)
+- `09/25` [`upd`](https://github.com/pchiorean/Indentz/commit/f988b4860386a48702971d4587fcd78203d32048)
+  **cleanup/DefaultSwatches:** Added lowercase self as a default variant; this fixes case variations
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -765,25 +775,25 @@
 
 ##### New features
 
-- `new` **lib/log:** Add a timer
 - `new` **lib/replaceLink:** Add page parameter
-- `new` **cleanup/DefaultSwatches:** Add tints support
-- `new` **cleanup/DefaultSwatches:** Add gradients support
 - `new` **cleanup/DefaultSwatches:** Add groups support
+- `new` **cleanup/DefaultSwatches:** Add gradients support
+- `new` **cleanup/DefaultSwatches:** Add tints support
 - `new` **export/QuickExport:** Add a preflight option
 - `new` **export/QuickExport:** Add INDD (with or without package) export profile
 - `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
 - `new` **export/QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
 - `new` **file/SpreadsToLayers**
-- `new` Add an '.ini' file for custom user settings
+- `new` Add an '.ini' file for user global settings
 - `new` 'Send selection to layer...'
 - `new` `?` **file/LayersToFiles**
 
 ##### Updates
 
 - `brk` **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
-- `upd` **cleanup/DefaultSwatches:** Add "cXXmXXyXXkXX" default variant
-- `upd` **cleanup/DefaultSwatches:** Check color values on parsing
+- `upd` **cleanup/DefaultSwatches:** `checkRecord()`: 'Values' ‣ 'Color Space' ‣ 'Color Model' ‣ 'Variants' ‣ 'Name'.\
+  If swatch name is missing, generate a Color Value Name. If color space is missing, use a default depending on color values number and range
+- `upd` **cleanup/DefaultSwatches:** `checkRecord()`: Validate color values (number and range) depending on color space
 - `upd` **cleanup/DocCleanup:** Delete empty color groups
 - `upd` **cleanup/ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
 - `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
