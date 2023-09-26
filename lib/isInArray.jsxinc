@@ -1,6 +1,6 @@
 /**
  * Matches a string against elements of an array, using wildcards and case sensitivity.
- * @version 23.9.23
+ * @version 23.9.26
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} searchValue - String to be matched.
@@ -11,23 +11,22 @@
  * isInArray('codes', [ 'bar*code*', 'code*', 'EAN*' ]) // Matches 2nd array element
  */
 function isInArray(searchValue, array, isCaseSensitive) {
-	var match;
-	isCaseSensitive = (isCaseSensitive === undefined) ? false : isCaseSensitive;
+	var matchValue;
+	isCaseSensitive = Boolean(isCaseSensitive);
 	searchValue = isCaseSensitive ? searchValue.toString() : searchValue.toLowerCase();
 
 	for (var i = 0; i < array.length; i++) {
-		match = array[i].toString();
-		if (/[?*]/.test(match)) { // Wildcards
-			match = RegExp('^'
-				+ match
+		matchValue = isCaseSensitive ? array[i].toString() : array[i].toLowerCase();
+		if (searchValue === matchValue) {
+			return true;
+		} else if (/[?*]/g.test(matchValue)) { // Has wildcards
+			matchValue = RegExp('^'
+				+ matchValue
 					.replace(/[|^$(.)[\]{+}\\]/g, '\\$&')     // Escape regex tokens, pass '*' and '?'
 					.replace(/\*/g, '.*').replace(/\?/g, '.') // '*' and '?' wildcards
 				+ '$', isCaseSensitive ? '' : 'i'             // Case sensitivity flag
 			);
-			if (match.test(searchValue)) return true;
-		} else { // Regular string
-			if (isCaseSensitive) match = match.toLowerCase();
-			if (match === searchValue) return true;
+			if (matchValue.test(searchValue)) return true;
 		}
 	}
 	return false;
