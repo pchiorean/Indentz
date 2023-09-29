@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 23.7.12
+	Document cleanup 23.9.29
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
@@ -14,7 +14,7 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'progressBar.jsxinc';
 
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
-var progressBar = new ProgressBar('Cleanup document', 14);
+var progressBar = new ProgressBar('Cleaning document', 14);
 
 progressBar.update();
 app.doScript(File(script.path + '/DefaultPrefs.jsx'),

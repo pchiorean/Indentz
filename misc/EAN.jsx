@@ -1,5 +1,5 @@
 /*
-	Generate EAN Codes 23.9.23
+	Generate EAN Codes 23.9.29
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Inserts EAN codes into the selected frames or in a new document.
@@ -128,7 +128,7 @@ function main() {
 		doc = app.activeDocument;
 		items = selection;
 
-		if (items.length > 2) progressBar = new ProgressBar(ui.text, items.length);
+		if (items.length > 2) progressBar = new ProgressBar('Generating EAN Codes', items.length);
 
 		for (i = 0; i < items.length; i++) {
 			if (progressBar) progressBar.update();
@@ -196,7 +196,7 @@ function main() {
 		doc.documentPreferences.pageWidth  = '58.19 mm';
 		doc.documentPreferences.pageHeight = '27.93 mm';
 
-		if (barcodes.length > 2) progressBar = new ProgressBar(ui.text, barcodes.length);
+		if (barcodes.length > 2) progressBar = new ProgressBar('Generating EAN Codes', barcodes.length);
 
 		for (i = 0; i < barcodes.length; i++) {
 			if (progressBar) progressBar.update();

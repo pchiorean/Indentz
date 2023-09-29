@@ -1,5 +1,5 @@
 /*
-	Replace links 23.9.26
+	Replace links 23.9.29
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces document links using a 2-column TSV file named `links.tsv`:
@@ -65,7 +65,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Replace links');
 
 function main() {
-	var title = 'Replace links';
+	var title = 'Replacing links';
 	var dataFileName = [ 'links.tsv', 'links.txt' ];
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
 	var file, messages, i, j, d, progressBar;
@@ -106,7 +106,7 @@ function main() {
 	if (data.status.fail.length > 0) { report(data.status.fail, title); exit(); }
 
 	// Processing
-	if (links.length > 2 && data.records.length > 2) progressBar = new ProgressBar(title, links.length);
+	if (links.length > 2 && data.records.length > 2) progressBar = new ProgressBar('Replacing links', links.length);
 	for (i = 0; i < links.length; i++) {
 		if (progressBar) progressBar.update();
 		for (j = 0; j < data.records.length; j++) {

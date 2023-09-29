@@ -1,5 +1,5 @@
 /*
-	QR code 23.9.23
+	QR code 23.9.29
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a QR code to the current document or to a separate file.
@@ -196,7 +196,7 @@ function main() {
 	function saveCodeOnSeparateFile() {
 		var i, targetName, labelText, progressBar;
 		if (suffix.length === doc.spreads.length + 1) {
-			progressBar = new ProgressBar('Saving', doc.spreads.length);
+			progressBar = new ProgressBar('Generating QR Codes', doc.spreads.length);
 			for (i = 0; i < doc.spreads.length; i++) {
 				targetName = baseName.replace(RegExp(suffix + '$'), '') + suffix[0] + suffix[i + 1];
 				labelText = codeText.replace(RegExp(suffix + '$'), '') + suffix[0] + suffix[i + 1];
