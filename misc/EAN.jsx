@@ -36,14 +36,14 @@
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'EAN code');
 
 function main() {
-	var doc, page, ui, items, codeFrame, codeLayer, txtLayer, target, SF, oldCenter, newCenter, progressBar;
+	var doc, page, ui, rows, items, codeFrame, codeLayer, txtLayer, target, SF, oldCenter, newCenter, progressBar;
 	var barcode = [];
 	var barcodes = [];
 	var selection = [];
-	var rows = Math.min(Math.max(6, selection.length), 20); // Keep rows between 6 and 20
 	var codeLayerName = 'codes';
 	var txtLayerName = 'text & logos';
 	if (app.layoutWindows.length > 0) selection = app.selection;
+	rows = Math.min(Math.max(6, selection.length), 20); // Keep list rows between 6 and 20
 
 	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 	app.scriptPreferences.enableRedraw = false;
