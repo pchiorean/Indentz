@@ -155,8 +155,11 @@ function QuickExport() {
 		if (status.length > 0) {
 			report(status,
 				'Finished in ' + time.secondsToHMS(elapsed)
-					+ (status.length > 0 ? (' | ' + status.length + ' warning' + (status.length === 1 ? '' : 's')) : ''),
-				'auto', true);
+					+ (status.length > 0
+						? (' | ' + status.length + ' warning' + (status.length === 1 ? '' : 's'))
+						: ''
+					),
+				'auto', false);
 		} else if (elapsed >= 10) { alert('Finished in ' + time.secondsToHMS(elapsed) + '.'); }
 	} else {
 		cleanup();
@@ -197,7 +200,7 @@ function QuickExport() {
 				if (doc.exists) {
 					doc = app.open(doc);
 				} else {
-					stat(status, decodeURI(doc), 'Not found; skipped.', 1);
+					stat(status, decodeURI(doc), 'Not found; skipped.', -1);
 					continue;
 				}
 				if (doc.converted) {
@@ -205,7 +208,7 @@ function QuickExport() {
 						doc.save(File(doc.filePath + '/' + doc.name));
 						stat(status, decodeURI(doc.name), 'Converted from old version.', 0);
 					} else {
-						stat(status, decodeURI(doc.name), 'Must be converted; skipped.', 1);
+						stat(status, decodeURI(doc.name), 'Must be converted; skipped.', -1);
 						doc.close(SaveOptions.NO);
 						continue;
 					}
@@ -217,12 +220,12 @@ function QuickExport() {
 						doc.save(File(doc.filePath + '/' + doc.name));
 						stat(status, decodeURI(doc.name), 'Converted from old version.', 0);
 					} else {
-						stat(status, decodeURI(doc.name), 'Must be converted; skipped.', 1);
+						stat(status, decodeURI(doc.name), 'Must be converted; skipped.', -1);
 						continue;
 					}
 				}
 				if (!doc.saved) {
-					stat(status, decodeURI(doc.name), 'Is not saved; skipped.', 1);
+					stat(status, decodeURI(doc.name), 'Is not saved; skipped.', -1);
 					continue;
 				}
 			}
@@ -234,8 +237,11 @@ function QuickExport() {
 			doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
 
 			// Global checks
-			checkFonts();
-			checkTextOverflow();
+			checkTextOverflow(); // Text overflows are allowed, but reported
+			if (!checkFonts()) { // Check fonts; skip if missing
+				stat(status, decodeURI(doc.name), 'Missing fonts; skipped.', -1);
+				continue;
+			}
 
 			// Workflows loop
 			old.docSpreads = doc.spreads.length; // Save initial spreads count for 'asPairs' (see 'exportDoc()')
@@ -245,8 +251,11 @@ function QuickExport() {
 
 				saveLayersState();
 
-				// Update links
-				if (exp.updateLinks.value) updateLinks();
+				// Update links; skip if missing
+				if (exp.updateLinks.value && !updateLinks()) {
+					stat(status, decodeURI(doc.name), 'Missing links; skipped.', -1);
+					continue;
+				}
 
 				// Get base folder
 				baseFolder = decodeURI(doc.filePath);
@@ -338,9 +347,11 @@ function QuickExport() {
 		}
 
 		function checkFonts() {
+			var result = true;
 			var usedFonts = doc.fonts.everyItem().getElements();
 			for (var i = 0, n = usedFonts.length; i < n; i++) {
 				if (usedFonts[i].status !== FontStatus.INSTALLED) {
+					result = false;
 					stat(status, decodeURI(doc.name),
 						"Font '" + usedFonts[i].name.replace(/\t/g, ' ')
 						+ "' is "
@@ -349,25 +360,29 @@ function QuickExport() {
 					, 1);
 				}
 			}
+			return result;
 		}
 
 		function checkTextOverflow() {
+			var result = true;
 			var frm;
 			var frms = doc.allPageItems;
 			while ((frm = frms.shift())) {
 				if (frm.constructor.name !== 'TextFrame') continue;
 				if (frm.overflows && frm.parentPage) {
+					result = false;
 					stat(status, decodeURI(doc.name),
 						'Text overflows on page '
 						+ frm.parentPage.name
 						+ '.'
 					, 1);
-					return;
 				}
 			}
+			return result;
 		}
 
 		function updateLinks() {
+			var result = true;
 			for (var i = 0, n = doc.links.length; i < n; i++) {
 				if (!doc.links[i].parent.parent.parentPage) continue;
 				switch (doc.links[i].status) {
@@ -376,6 +391,7 @@ function QuickExport() {
 						break;
 					case LinkStatus.LINK_MISSING:
 					case LinkStatus.LINK_INACCESSIBLE:
+						result = false;
 						stat(status, decodeURI(doc.name),
 							"Link '"
 							+ doc.links[i].name
@@ -383,9 +399,9 @@ function QuickExport() {
 							+ doc.links[i].parent.parent.parentPage.name
 							+ '.'
 						, 1);
-						break;
 				}
 			}
+			return result;
 		}
 
 		function runScript(/*File*/scriptPath) {
@@ -401,7 +417,7 @@ function QuickExport() {
 					+ e.toString().replace(/\r|\n/g, '\u00B6')
 					+ '" (line: '
 					+ e.line + ').'
-				, 1);
+				, -1);
 			}
 
 			function getScriptLanguage(/*string*/ext) {
