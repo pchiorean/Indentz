@@ -1,5 +1,5 @@
 /*
-	Quick export 23.9.22
+	Quick export 23.9.29
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -33,6 +33,7 @@
 // @include 'progressBar.jsxinc';
 // @include 'report.jsxinc';
 // @include 'stat.jsxinc';
+// @include 'unique.jsxinc';
 
 app.doScript(QuickExport, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'QuickExport');
 
@@ -232,6 +233,7 @@ function QuickExport() {
 			doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;
 			doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
 
+			// Global checks
 			checkFonts();
 			checkTextOverflow();
 
@@ -503,21 +505,18 @@ function QuickExport() {
 			function getUniquePath(/*string*/filename) {
 				var pdfFiles, fileIndexRE, fileIndex, lastIndex, nextIndex;
 
-				// Get a list of existing PDFs
-				pdfFiles = getFilesRecursively(Folder(baseFolder), true, 'pdf');
-				if (pdfFiles.length > 0) pdfFiles = pdfFiles.sort(naturalSorter);
+				// Get a list of existing PDFs from the base folder and recursively from the destination folder
+				pdfFiles = getFilesRecursively(Folder(baseFolder), false, 'pdf');
+				if (destFolder !== baseFolder)
+					pdfFiles = pdfFiles.concat(getFilesRecursively(Folder(destFolder), true, 'pdf'));
+				if (pdfFiles.length > 1) pdfFiles = unique(pdfFiles.sort(naturalSorter));
 
 				// Get the last index by matching 'filename [separator] ([previous index]) [stuff]
 				lastIndex = 0;
-				// fileIndexRE = RegExp('^'
-				// 	+ filename.replace(regexTokensRE, '\\$&') // Escape regex tokens
-				// 	+ '(?:[ _-]*)' // [Separator]
-				// 	+ '(\\d+)?'    // Previous index
-				// 	+ '(?:.*)$');  // Extra stuff
 				fileIndexRE = RegExp('^'
 					+ filename.replace(regexTokensRE, '\\$&') // Escape regex tokens
 					+ '(?:[ _-]*)'            // [Separator]
-					+ '(\\d+)?'               // Previous index
+					+ '(\\d+)?'               // [Previous index]
 					+ '(?:[ _-]*v *\\d*)?'    // [Ancillary: 'vX']
 					+ '(?:[ _-]*copy *\\d*)?' // [Ancillary: 'copyX']
 					+ '(?:[ _-]*v *\\d*)?'    // [Ancillary: 'vX']
