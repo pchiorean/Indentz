@@ -1393,16 +1393,18 @@ function QuickExport() {
 				// If exporting in a custom output folder, it must be valid
 				if (ui[workflow].isOn.value && ui[workflow].destination.isOn.value) {
 					if (ui[workflow].destination.folder.text.length === 0) {
-						ui.actions.ok.helpTip =
-						ui.text = workflow.replace('workflow', 'Workflow #')
-							+ ': Select an output folder';
+						ui.actions.ok.helpTip
+							= ui.text
+							= workflow.replace('workflow', 'Workflow #')
+								+ ': Select an output folder';
 						ui.actions.ok.enabled = false;
 						return;
 					} else if (!Folder(ui[workflow].destination.path).exists) {
-						ui.actions.ok.helpTip =
-						ui.text = 'Error: '
-							+ workflow.replace('workflow', 'Workflow #')
-							+ ': Output folder not found';
+						ui.actions.ok.helpTip
+							= ui.text
+							= 'Error: '
+								+ workflow.replace('workflow', 'Workflow #')
+								+ ': Output folder not found';
 						ui.actions.ok.enabled = false;
 						return;
 					}
