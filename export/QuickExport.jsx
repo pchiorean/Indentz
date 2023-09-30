@@ -349,7 +349,7 @@ function QuickExport() {
 				if (usedFonts[i].status !== FontStatus.INSTALLED) {
 					result = false;
 					stat(status, decodeURI(doc.name),
-						"Font '" + usedFonts[i].name.replace(/\t/g, ' ')
+					"Font '" + usedFonts[i].name.replace(/\t/g, ' ')
 						+ "' is "
 						+ String(usedFonts[i].status).toLowerCase().replace(/_/g, ' ')
 						+ '.'
@@ -368,7 +368,7 @@ function QuickExport() {
 				if (frm.overflows && frm.parentPage) {
 					result = false;
 					stat(status, decodeURI(doc.name),
-						'Text overflows on page '
+					'Text overflows on page '
 						+ frm.parentPage.name
 						+ '.'
 					, 1);
@@ -389,7 +389,7 @@ function QuickExport() {
 					case LinkStatus.LINK_INACCESSIBLE:
 						result = false;
 						stat(status, decodeURI(doc.name),
-							"Link '"
+						"Link '"
 							+ doc.links[i].name
 							+ "' not found on page "
 							+ doc.links[i].parent.parent.parentPage.name
@@ -409,7 +409,7 @@ function QuickExport() {
 				);
 			} catch (e) {
 				stat(status, decodeURI(doc.name),
-					'Script returned "'
+				'Script returned "'
 					+ e.toString().replace(/\r|\n/g, '\u00B6')
 					+ '" (line: '
 					+ e.line + ').'
@@ -594,12 +594,13 @@ function QuickExport() {
 						) + 1, // Offset page marks 1 mm --
 						UnitValue('72 pt').as('mm')); // -- but limit to 72 pt
 				} else {
-					app.pdfExportPreferences.bleedTop =
-					app.pdfExportPreferences.bleedBottom =
-					app.pdfExportPreferences.bleedInside =
-					app.pdfExportPreferences.bleedOutside = Number(exp.customBleed.et.text);
-					app.pdfExportPreferences.pageMarksOffset =
-						Math.min(app.pdfExportPreferences.bleedTop + 1, UnitValue('72 pt').as('mm'));
+					app.pdfExportPreferences.bleedTop
+						= app.pdfExportPreferences.bleedBottom
+						= app.pdfExportPreferences.bleedInside
+						= app.pdfExportPreferences.bleedOutside
+						= Number(exp.customBleed.et.text);
+					app.pdfExportPreferences.pageMarksOffset
+						= Math.min(app.pdfExportPreferences.bleedTop + 1, UnitValue('72 pt').as('mm'));
 				}
 
 				// Hack: Omit printer's marks if bleed is zero --
@@ -737,8 +738,8 @@ function QuickExport() {
 					ui[workflow].asSpreads.value = pdfExpPreset.exportReaderSpreads;
 
 					ui[workflow].exportLayers.value = pdfExpPreset.exportLayers;
-					ui[workflow].exportLayers.enabled =
-						Number(String(pdfExpPreset.acrobatCompatibility).replace('ACROBAT_', '')) >= 6;
+					ui[workflow].exportLayers.enabled
+						= Number(String(pdfExpPreset.acrobatCompatibility).replace('ACROBAT_', '')) >= 6;
 
 					ui[workflow].customDPI.isOn.value = false;
 					ui[workflow].customDPI.isOn.enabled = !(pdfExpPreset.colorBitmapSampling === Sampling.NONE);
@@ -750,11 +751,11 @@ function QuickExport() {
 					} else {
 						ui[workflow].customBleed.isOn.value = true;
 						ui[workflow].customBleed.isOn.onClick();
-						ui[workflow].customBleed.et.text =
-							Math.max(pdfExpPreset.bleedTop, pdfExpPreset.bleedInside,
-							pdfExpPreset.bleedBottom, pdfExpPreset.bleedOutside)
-								.toFixed(2)
-								.replace(/\.?0+$/, '');
+						ui[workflow].customBleed.et.text
+							= Math.max(pdfExpPreset.bleedTop, pdfExpPreset.bleedInside,
+								pdfExpPreset.bleedBottom, pdfExpPreset.bleedOutside)
+									.toFixed(2)
+									.replace(/\.?0+$/, '');
 					}
 
 					ui[workflow].suffix.et.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
@@ -998,8 +999,9 @@ function QuickExport() {
 				};
 
 				ui[workflow].destination.isOn.onClick = function () {
-					this.parent.parent.folder.enabled =
-					this.parent.parent.browse.enabled = this.value;
+					this.parent.parent.folder.enabled
+						= this.parent.parent.browse.enabled
+						= this.value;
 
 					if (this.value) {
 						if (this.parent.parent.folder.text === 'Using documents folders')
@@ -1078,8 +1080,8 @@ function QuickExport() {
 					workflow = 'workflow' + i;
 					ui[workflow].isOn.value = settings[workflow].active;
 					ui[workflow].label.text = settings[workflow].label;
-					ui[workflow].preset.selection =
-						findPresetIndex(settings[workflow].presetName, ui[workflow].preset.items);
+					ui[workflow].preset.selection
+						= findPresetIndex(settings[workflow].presetName, ui[workflow].preset.items);
 					ui[workflow].cropMarks.value         = settings[workflow].presetOptions.cropMarks;
 					ui[workflow].pageInfo.value          = settings[workflow].presetOptions.pageInfo;
 					ui[workflow].slugArea.value          = settings[workflow].presetOptions.slugArea;
@@ -1342,13 +1344,15 @@ function QuickExport() {
 			// If in batch folder mode, it must be valid
 			if (isFolderMode) {
 				if (ui.input.source.folder.text.length === 0) {
-					ui.text =
-					ui.actions.ok.helpTip = 'Select a source folder';
+					ui.text
+						= ui.actions.ok.helpTip
+						= 'Select a source folder';
 					ui.actions.ok.enabled = false;
 					return;
 				} else if (!Folder(ui.input.source.path).exists) {
-					ui.text =
-					ui.actions.ok.helpTip = 'Error: Source folder not found';
+					ui.text
+						= ui.actions.ok.helpTip
+						= 'Error: Source folder not found';
 					ui.actions.ok.enabled = false;
 					return;
 				}
@@ -1356,8 +1360,9 @@ function QuickExport() {
 
 			// At least a preset must be selected
 			if (!ui.workflow1.isOn.value && !ui.workflow2.isOn.value) {
-				ui.text =
-				ui.actions.ok.helpTip = 'Select a workflow';
+				ui.text
+					= ui.actions.ok.helpTip
+					= 'Select a workflow';
 				ui.actions.ok.enabled = false;
 				return;
 			}
@@ -1368,16 +1373,18 @@ function QuickExport() {
 				// If running a script, it must be valid
 				if (ui[workflow].isOn.value && ui[workflow].script.isOn.value) {
 					if (ui[workflow].script.file.text.length === 0) {
-						ui.actions.ok.helpTip =
-						ui.text = workflow.replace('workflow', 'Workflow #')
-							+ ': Select a script';
+						ui.actions.ok.helpTip
+							= ui.text
+							= workflow.replace('workflow', 'Workflow #')
+								+ ': Select a script';
 						ui.actions.ok.enabled = false;
 						return;
 					} else if (!File(ui[workflow].script.path).exists) {
-						ui.actions.ok.helpTip =
-						ui.text = 'Error: '
-							+ workflow.replace('workflow', 'Workflow #')
-							+ ': Script not found';
+						ui.actions.ok.helpTip
+							= ui.text
+							= 'Error: '
+								+ workflow.replace('workflow', 'Workflow #')
+								+ ': Script not found';
 						ui.actions.ok.enabled = false;
 						return;
 					}
