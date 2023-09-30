@@ -54,6 +54,18 @@
   **layout/PageMarginsFromScriptName:** Included missing `getBounds()` (d'oh!)
 - `09/25` [`upd`](https://github.com/pchiorean/Indentz/commit/f988b4860386a48702971d4587fcd78203d32048)
   **cleanup/DefaultSwatches:** Added lowercase self as a default variant; this fixes case variations
+- `09/26` [`fix`](https://github.com/pchiorean/Indentz/commit/5e64db84026be92536d5e1c5363380641aa69ff3)
+  **cleanup/ReplaceLinks:** Included missing `stat()` (d'oh!)
+- `09/29` [`fix`](https://github.com/pchiorean/Indentz/commit/0bc45eac1631ef28c131215d5422f275b9b6b3ff)
+  **export/QuickExport:** When checking for the last exported file index limit search to the base folder + destination subfolders
+- `09/29` [`ref`](https://github.com/pchiorean/Indentz/commit/ba1f2d72ef172c67632b8e117a003dd8cbb6a21c)
+  **cleanup/DocCleanup, ReplaceLinks; misc/EAN, QR, QRBatch:** Tweaked progress bar titles
+- `09/29` [`fix`](https://github.com/pchiorean/Indentz/commit/fbde0d900d87d2cfcbacb3b8ebd367cfa245ac07)
+  **misc/EAN.jsx:** List height was supposed to grow depending on selection. Fixed.
+- `09/29` [`fix`](https://github.com/pchiorean/Indentz/commit/d54a2281a9b13128d765038a52c09dddca0ec9aa)
+  **export/QuickExport:** Skip export when missing fonts; skip when links are to be updated but are missing
+- `09/30` [`upd`](https://github.com/pchiorean/Indentz/commit/a0741e03051dd7bdd1e3a346e2f52117b4f94077)
+  **export/QuickExport:** Simplifies source updating to just 'Save' and 'Save as...' options; also fits spread in view
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -800,8 +812,8 @@
 - `brk` **cleanup/ReplaceSnippets:** Extend Scope to layers/pages etc
 - `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
 - `brk` **export/MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
-- `upd` **export/QuickExport:** Change 'Cancel' to 'Reset' and 'Save preferences' to 'Reset preferences' while Opt is pressed
 - `upd` **export/QuickExport:** Create destination folder if it doesn't exist
+- `upd` **export/QuickExport:** Move hacks to advanced options, saved in settings
 - `upd` **export/Show/HideDNPLayers:** Take layers from a TSV
 - `upd` **file/SpreadsToFiles:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
 - `upd` **layout/PageMarginsFromSelection:** Set the margins of every page touched by the selection
@@ -827,15 +839,16 @@
 - `fix` **cleanup/DocCleanup:** Exclude "empty" text-on-path frames
 - `fix` **cleanup/ReplaceLinks:** When relinking layered graphics, try to restore layers' visibility; inhibit alert and report culprits at finish
 - `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
-- `fix` **export/QuickExport:** Fix low-res export for embedded .indd files
-- `fix` **export/QuickExport:** Report layer overrides
+- `fix` **export/QuickExport:** Fallback to '[High Quality Print]' and '[PDF/X-4:2008]' if '_preview' and '_print' are not available
 - `fix` **export/QuickExport:** Restore cropping mode when relinking files
-- `fix` **export/QuickExport:** Skip export when links are to be updated but are missing
+- `fix` **export/QuickExport:** Try to auto-restore layers visibility; report layer overrides at end instead of alerts
+- `fix` **export/QuickExport:** Fix low-res export for embedded .indd files
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `fix` **fit/TextAutoSize:** Check `baselineShift`
 - `fix` **layout/PageSizeFromFilename:** Error on pages set to 1:X scale
 - `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
 - `fix` Nullify large variables on exit
+- `fix` Fix `ui.onShow()` vertical dialog positioning
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
 - `fix` `?!` **misc/EAN:** Preserve clipboard
 
