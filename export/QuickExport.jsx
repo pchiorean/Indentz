@@ -1,5 +1,5 @@
 /*
-	Quick export 23.9.29
+	Quick export 23.9.30
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -71,7 +71,7 @@ function QuickExport() {
 		}
 	};
 
-	var VER = '3.8';
+	var VER = '3.9';
 	var defaults = {
 		workflow1: {
 			active: true,
@@ -98,7 +98,7 @@ function QuickExport() {
 				sortByDate: false,
 				split: false,
 				overwrite: false,
-				docSave: { active: true, scope: [ true, false ], saveAs: false }
+				docSave: { active: true, saveAs: false }
 			}
 		},
 		workflow2: {
@@ -126,7 +126,7 @@ function QuickExport() {
 				sortByDate: false,
 				split: false,
 				overwrite: false,
-				docSave: { active: true, scope: [ true, false ], saveAs: false }
+				docSave: { active: true, saveAs: false }
 			}
 		},
 		updateVersion: false,
@@ -328,16 +328,12 @@ function QuickExport() {
 				doc.viewPreferences.verticalMeasurementUnits = old.verticalMeasurementUnits;
 
 				// Update documents
-				if (exp.docSave.isOn.value) {
-					if (exp.docSave.scope.mod.value) {
-						if (doc.modified) {
-							doc.save(exp.saveAs.enabled && exp.saveAs.value
-								? File(doc.fullName)
-								: undefined);
-						}
-					} else {
-						doc.save(File(doc.fullName));
-					}
+				if (exp.docSave.value) {
+					app.activeWindow.activePage = doc.spreads[0].pages[0];
+					app.activeWindow.zoom(ZoomOptions.FIT_SPREAD);
+
+					if (exp.saveAs.enabled && exp.saveAs.value) doc.save(File(doc.fullName));
+					else if (doc.modified) doc.save();
 				}
 			}
 
@@ -714,13 +710,8 @@ function QuickExport() {
 
 				// Updating source
 				ui[workflow].container.add('panel { alignment: "fill" }');
-				ui[workflow].docSave = ui[workflow].container.add('group { orientation: "row" }');
-					ui[workflow].docSave.isOn = ui[workflow].docSave.add('checkbox { text: "Save:" }');
-					ui[workflow].docSave.scope = ui[workflow].docSave.add('group { margins: [ 0, -1, 0, 0 ] }');
-						ui[workflow].docSave.scope.mod = ui[workflow].docSave.scope.add('radiobutton { text: "modified" }');
-						ui[workflow].docSave.scope.mod.value = true;
-						ui[workflow].docSave.scope.all = ui[workflow].docSave.scope.add('radiobutton { text: "all documents" }');
-				ui[workflow].saveAs = ui[workflow].container.add('checkbox { text: "Use \'Save as\u2026\' to reduce documents size" }');
+				ui[workflow].docSave = ui[workflow].container.add('checkbox { text: "Save modified documents" }');
+				ui[workflow].saveAs = ui[workflow].container.add('checkbox { text: "Use \'Save as\u2026\' to reduce size" }');
 			},
 			events: function (workflow) {
 				ui[workflow].isOn.onClick = function () {
@@ -733,8 +724,7 @@ function QuickExport() {
 					ui[workflow].suffix.isOn.onClick();
 					ui[workflow].script.isOn.onClick();
 					ui[workflow].destination.isOn.onClick();
-					ui[workflow].docSave.isOn.onClick();
-					ui[workflow].saveAs.onClick();
+					ui[workflow].docSave.onClick();
 				};
 
 				ui[workflow].preset.onChange = function () {
@@ -1073,17 +1063,8 @@ function QuickExport() {
 					this.onChange();
 				};
 
-				ui[workflow].docSave.isOn.onClick = function () {
-					this.parent.scope.enabled = this.value;
-					this.parent.parent.parent.saveAs.enabled = this.value;
-				};
-
-				ui[workflow].docSave.scope.all.onClick = function () {
-					this.parent.parent.parent.parent.saveAs.value = this.value;
-				};
-
-				ui[workflow].saveAs.onClick = function () {
-					if (!this.value) this.parent.parent.docSave.scope.mod.value = true;
+				ui[workflow].docSave.onClick = function () {
+					this.parent.parent.saveAs.enabled = this.value;
 				};
 			}
 		};
@@ -1121,9 +1102,7 @@ function QuickExport() {
 					ui[workflow].sortByDate.value        = settings[workflow].outputOptions.sortByDate;
 					ui[workflow].split.value             = settings[workflow].outputOptions.split;
 					ui[workflow].overwrite.value         = settings[workflow].outputOptions.overwrite;
-					ui[workflow].docSave.isOn.value      = settings[workflow].outputOptions.docSave.active;
-					ui[workflow].docSave.scope.mod.value = settings[workflow].outputOptions.docSave.scope[0];
-					ui[workflow].docSave.scope.all.value = settings[workflow].outputOptions.docSave.scope[1];
+					ui[workflow].docSave.value           = settings[workflow].outputOptions.docSave.active;
 					ui[workflow].saveAs.value            = settings[workflow].outputOptions.docSave.saveAs;
 				}
 				ui.actions.updateVersion.value = settings.updateVersion;
@@ -1187,11 +1166,7 @@ function QuickExport() {
 						split: ui[workflow].split.value,
 						overwrite: ui[workflow].overwrite.value,
 						docSave: {
-							active: ui[workflow].docSave.isOn.value,
-							scope: [
-								ui[workflow].docSave.scope.mod.value,
-								ui[workflow].docSave.scope.all.value
-							],
+							active: ui[workflow].docSave.value,
 							saveAs: ui[workflow].saveAs.value
 						}
 					};
@@ -1288,10 +1263,10 @@ function QuickExport() {
 		// Actions
 		ui.actions.updateVersion.onClick = function () {
 			if (this.value) {
-				ui.workflow1.docSave.isOn.value = true;
-				if (ui.workflow1.isOn) ui.workflow1.docSave.isOn.onClick();
-				ui.workflow2.docSave.isOn.value = true;
-				if (ui.workflow2.isOn) ui.workflow2.docSave.isOn.onClick();
+				ui.workflow1.docSave.value = true;
+				if (ui.workflow1.isOn) ui.workflow1.docSave.onClick();
+				ui.workflow2.docSave.value = true;
+				if (ui.workflow2.isOn) ui.workflow2.docSave.onClick();
 			}
 		};
 
