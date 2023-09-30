@@ -448,7 +448,7 @@ You may use **`SpreadsToFiles.jsx`** to split the result into separate documents
 #### **`QuickExport.jsx`**
 My workflow requires frequent changes to export settings; the native export dialog has quite a few tabs and options, so I used to have a lot of Adobe PDF Presets with slight differences. I've used for years Peter Kahrel's wonderful [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), but I wanted a tool more tailored to my needs. I made this script to make frequently changed settings more easily accessible and thus reduce the number of presets to the essential.
 
-There are two selectable workflows, with the options grouped into several categories. I will review the ones that are not self-explanatory:
+There are two selectable workflows, with the options grouped into several categories. I'm only reviewing the ones that aren't self-explanatory:
 
 ![Quick export](img/script-quickexport.png)
 ![](img/script-quickexport-legend.svg)
@@ -476,14 +476,14 @@ There are two selectable workflows, with the options grouped into several catego
 - **Overwrite existing files:** The files will be overwritten _if_ the destination is the same. If unchecked, the files will get unique names by incrementing their index – for example, we'll export as `Document_preview3.pdf` if there is already a `Document_preview2.pdf` in the export folder or its subfolders.
 
 **Updating source:**
-- **Save modified:** After export, modified documents can be updated (e.g., if you want to preserve changes made by a script).
+- **Save modified documents:** Will update source documents after export (e.g., if you want to preserve changes made by a script).
 
-- **Save all documents:** Documents will be saved regardless if modified or not. You can also enforce a **Save as** for all documents – this is useful for reducing the size of documents that have been modified many times (on each regular save the document grows with the latest changes).
+- **Use 'Save as...' to reduce size:** This is useful for reducing the size of documents that have been modified many times (with each regular save the document grows with the latest changes).
 
 **Global options:**
-- **Upgrade [Converted] documents**: Upgrade or skip documents from previous versions of InDesign.
+- **Upgrade [Converted] documents**: Will upgrade documents from previous versions of InDesign.
 
-**Note:** The settings are saved every time you run the script, but if you keep the **Opt/Alt** key pressed while clicking **Start**, the script will run without saving them.
+**Note:** The settings are saved every time you run the script, but if you keep the **Opt/Alt** key pressed while clicking **Start**, the script will not update settings in this session.
 
 **Shortcut:** ⌃E
 
@@ -628,7 +628,7 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu for bug reports and feedback.
 
-<small>Last updated: September 26, 2023</small>
+<small>Last updated: September 30, 2023</small>
 
 [^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
 
