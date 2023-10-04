@@ -1,5 +1,5 @@
 /*
-	Prepare for export 23.9.23
+	Prepare for export 23.10.4
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Hides some layers and moves objects with special colors to separate spreads.
@@ -31,8 +31,7 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(prepareForExport, ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.ENTIRE_SCRIPT, 'Prepare for export');
+app.doScript(prepareForExport, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Prepare for export');
 
 function prepareForExport() {
 	var i, n, l, variants;

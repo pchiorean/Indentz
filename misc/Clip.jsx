@@ -1,5 +1,5 @@
 /*
-	Clip 23.8.17
+	Clip 23.10.4
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Clips selected objects in a clipping frame (or releases them if already clipped).
@@ -10,8 +10,7 @@
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection,
-	UndoModes.ENTIRE_SCRIPT, 'Clipping');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.FAST_ENTIRE_SCRIPT, 'Clipping');
 
 function main(selection) {
 	var bounds, outlines, clipFrame;
@@ -24,13 +23,13 @@ function main(selection) {
 	app.generalPreferences.ungroupRemembersLayers = true;
 	app.clipboardPreferences.pasteRemembersLayers = true;
 
-	// Exceptions
-	// -- Only clip objects directly on spread
+	// Exceptions:
+	// Only clip objects directly on spread
 	if (!/spread/i.test(item.parent.constructor.name)) {
 		alert('Can\'t clip this, try selecting the parent.');
 		cleanupAndExit();
 	}
-	// -- Undo if already clipped
+	// Undo if already clipped
 	if (selection.length === 1 && clippingFrameRE.test(item.name)) {
 		undoClip(item);
 		cleanupAndExit();

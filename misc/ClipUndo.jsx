@@ -1,5 +1,5 @@
 /*
-	Undo clipping 23.7.18
+	Undo clipping 23.10.4
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Releases selected objects from their clipping frames.
@@ -10,8 +10,7 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Unclipping');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Unclipping');
 
 function main() {
 	var item;
@@ -24,12 +23,14 @@ function main() {
 	// Remember layers for grouping/ungrouping
 	app.generalPreferences.ungroupRemembersLayers = true;
 	app.clipboardPreferences.pasteRemembersLayers = true;
+
 	// Restore clipped objects
 	while ((item = items.shift())) {
 		if (!/spread/i.test(item.parent.constructor.name)) continue;
 		if (!clippingFrameRE.test(item.name)) continue;
 		undoClip(item);
 	}
+
 	// Restore layer grouping settings
 	app.generalPreferences.ungroupRemembersLayers = oldURL;
 	app.clipboardPreferences.pasteRemembersLayers = oldPRL;

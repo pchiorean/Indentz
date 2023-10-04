@@ -1,5 +1,5 @@
 /*
-	Offset paths 21.9.22
+	Offset paths 23.10.4
 
 	Use InDesign's text wrap feature to create offset/inset paths.
 
@@ -25,14 +25,13 @@
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection,
-	UndoModes.ENTIRE_SCRIPT, 'Offset paths');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.FAST_ENTIRE_SCRIPT, 'Offset paths');
 
 function main(selection) {
 	var i, ui, joinContours, offsetField, offset;
 	var paths = [];
 	var old = {
-		MU: app.scriptPreferences.measurementUnit,
+		MU:  app.scriptPreferences.measurementUnit,
 		UIL: app.scriptPreferences.userInteractionLevel
 	};
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
@@ -44,9 +43,9 @@ function main(selection) {
 		with (dialogRows.add()) {
 			staticTexts.add({ staticLabel: 'Offset:' });
 			offsetField = measurementEditboxes.add({
-				minWidth: 85,
-				editUnits: MeasurementUnits.MILLIMETERS,
-				editValue: UnitValue('3 mm').as('pt'),
+				minWidth:   85,
+				editUnits:  MeasurementUnits.MILLIMETERS,
+				editValue:  UnitValue('3 mm').as('pt'),
 				smallNudge: 1,
 				largeNudge: 1
 			});
@@ -82,7 +81,7 @@ function main(selection) {
 		newPath = tmpItem.parent.polygons.add();
 		for (i = 0; i < wrapPaths.length; i++) {
 			if (i > 0) newPath.paths.add();
-			newPath.paths.item(i).pathType = wrapPaths.item(i).pathType;
+			newPath.paths.item(i).pathType   = wrapPaths.item(i).pathType;
 			newPath.paths.item(i).entirePath = wrapPaths.item(i).entirePath;
 		}
 		tmpItem.remove();

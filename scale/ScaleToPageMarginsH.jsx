@@ -1,6 +1,6 @@
 /*
-	Scale to page margins (top/bottom) 22.11.9
-	(c) 2020-2022 Paul Chiorean (jpeg@basement.ro)
+	Scale to page margins (top/bottom) 23.10.4
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Scales the selected objects to the page top/bottom margins.
 
@@ -10,8 +10,7 @@
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection,
-	UndoModes.ENTIRE_SCRIPT, 'Scale to page margins');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.FAST_ENTIRE_SCRIPT, 'Scale to page margins');
 
 function main(selection) {
 	var item, page, i, n;
@@ -19,7 +18,7 @@ function main(selection) {
 	var old = {
 		selection: selection,
 		ungroupRemembersLayers: app.generalPreferences.ungroupRemembersLayers,
-		pasteRemembersLayers: app.clipboardPreferences.pasteRemembersLayers
+		pasteRemembersLayers:   app.clipboardPreferences.pasteRemembersLayers
 	};
 
 	// Get selection's parent page

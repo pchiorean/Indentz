@@ -1,5 +1,5 @@
 /*
-	Align to center 23.9.23
+	Align to center 23.10.4
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Aligns the selected objects to the center of the 'Align To' setting.
@@ -28,8 +28,7 @@
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection,
-	UndoModes.ENTIRE_SCRIPT, 'Align to center');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.FAST_ENTIRE_SCRIPT, 'Align to center');
 
 function main(selection) {
 	var item, page;
@@ -37,7 +36,7 @@ function main(selection) {
 	var old = {
 		selection: doc.selection,
 		ungroupRemembersLayers: app.generalPreferences.ungroupRemembersLayers,
-		pasteRemembersLayers: app.clipboardPreferences.pasteRemembersLayers
+		pasteRemembersLayers:   app.clipboardPreferences.pasteRemembersLayers
 	};
 	var ADP = app.alignDistributePreferences.alignDistributeBounds;
 

@@ -1,5 +1,5 @@
 /*
-	Label page 23.9.23
+	Label page 23.10.4
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a custom label on the current page's slug.
@@ -10,8 +10,7 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Label page');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Label page');
 
 function main() {
 	var onTop = true;

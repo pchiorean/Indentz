@@ -1,5 +1,5 @@
 /*
-	Break link to styles 23.9.22
+	Break link to styles 23.10.4
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Unnaplies paragraph/character/object styles from all or selected objects.
@@ -38,5 +38,5 @@ app.doScript(
 		}
 	},
 	ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Break link to styles'
+	UndoModes.FAST_ENTIRE_SCRIPT, 'Break link to styles'
 );

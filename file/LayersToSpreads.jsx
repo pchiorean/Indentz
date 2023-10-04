@@ -1,5 +1,5 @@
 /*
-	Layers to spreads 23.9.23
+	Layers to spreads 23.10.4
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Moves layers of the active document to separate spreads.
@@ -28,10 +28,9 @@
 
 if (!(doc = app.activeDocument)) exit();
 if (doc.layers.length === 1) { alert('Document has only one layer.'); exit(); }
-if (doc.spreads.length > 1) { alert('Document has more than one spread.'); exit(); }
+if (doc.spreads.length > 1)  { alert('Document has more than one spread.'); exit(); }
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.ENTIRE_SCRIPT, 'Layers to spreads');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Layers to spreads');
 
 function main() {
 	var i, item, items, guide, guides, layer, targetSpread;

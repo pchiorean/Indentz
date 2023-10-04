@@ -7,4 +7,5 @@ if (doc.selection.length === 0 || (doc.selection[0].constructor.name === 'Guide'
 
 app.doScript("fitTo(doc.selection, 'spread', 'visible', true)",
 	ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Fit to spread visible area');
+	UndoModes.FAST_ENTIRE_SCRIPT, 'Fit to spread visible area'
+);

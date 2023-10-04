@@ -1,5 +1,5 @@
 /*
-	Page margins from script name 23.9.23
+	Page margins from script name 23.10.4
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	By default it sets the page margins to 5% of the visible/page area for
@@ -12,12 +12,12 @@
 */
 
 // @includepath '.;./lib;../lib';
+// @include 'addGuide.jsxinc';
 // @include 'getBounds.jsxinc';
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(grid, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Set margins');
+app.doScript(grid, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Set margins');
 
 function grid() {
 	var guidesLayer, hwLayer, page, tgBounds, tgSize, MG, RE;
@@ -88,35 +88,5 @@ function grid() {
 		addGuide(page, guidesLayer, 'h', tgBounds[0] + tgSize.height * (1 - HW_PCT / 100) / 2, 'middle', 'x');
 		addGuide(page, guidesLayer, 'v', tgBounds[1] + tgSize.width / 2, 'middle', 'x');
 		addGuide(page, hwLayer, 'h', tgBounds[0] + tgSize.height * (1 - HW_PCT / 100), 'hw', 's');
-	}
-
-	/**
-	 * Adds a custom ruler guide.
-	 * @param {Object} target - A `Document`, `Spread`, `Page` or a `MasterSpread`.
-	 * @param {Layer} [layer=activeLayer] - A target layer; defaults to the active layer. (Optional.)
-	 * @param {string} HorV - If the string begins with `v`, the guide is vertical, else horizontal.
-	 * @param {number} location - The location at which to place the guide relative to the current ruler zero point.
-	 * @param {string} [label] - The label of the guide. (Optional.)
-	 * @param {number} [preset] - A customized set of properties. WIP. (Optional.)
-	 */
-	function addGuide(target, layer, HorV, location, label, preset) {
-		var g = target.guides.add(
-			undefined,
-			{
-				itemLayer:   layer || app.activeDocument.activeLayer,
-				label:       label || '',
-				orientation: (/^v/i.test(HorV)) ? HorizontalOrVertical.VERTICAL : HorizontalOrVertical.HORIZONTAL,
-				location:    location
-			}
-		);
-		switch (preset) {
-			case '-': g.guideColor = app.activeDocument.guidePreferences.rulerGuidesColor; break; // Standard guide
-			case 'x': g.guideColor = UIColors.MAGENTA; break; // Center
-			case 's': g.guideColor = UIColors.GREEN; break; // Section
-			case 'g': g.guideColor = app.smartGuidePreferences.guideColor; g.viewThreshold = 101; break; // Subsection
-			case 'p': g.guideColor = app.activeDocument.pasteboardPreferences.slugGuideColor; g.viewThreshold = 101; break; // Product
-			default:  g.guideColor = UIColors.LIGHT_GRAY; g.viewThreshold = 101; break; // Miscellaneous
-		}
-		return g;
 	}
 }

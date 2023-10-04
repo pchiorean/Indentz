@@ -1,6 +1,6 @@
 /*
-	Page margins from selection 21.9.17
-	(c) 2020-2021 Paul Chiorean (jpeg@basement.ro)
+	Page margins from selection 23.10.4
+	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Sets the page margins to the selected objects bounds.
 
@@ -10,15 +10,16 @@
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection,
-	UndoModes.ENTIRE_SCRIPT, 'Page margins from selection');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.FAST_ENTIRE_SCRIPT, 'Page margins from selection');
 
 function main(selection) {
 	var page, size, i, n;
+
 	// Get selection's parent page
 	for (i = 0, n = selection.length; i < n; i++)
 		if (selection[i].parentPage) { page = doc.pages[selection[i].parentPage.documentOffset]; break; }
 	if (!page) return;
+
 	// Get selection dimensions
 	size = selection[0].geometricBounds;
 	for (i = 1, n = selection.length; i < n; i++) {
@@ -27,6 +28,7 @@ function main(selection) {
 		size[2] = Math.max(selection[i].geometricBounds[2], size[2]);
 		size[3] = Math.max(selection[i].geometricBounds[3], size[3]);
 	}
+
 	// Set page margins
 	page.marginPreferences.properties = {
 		top:          0,

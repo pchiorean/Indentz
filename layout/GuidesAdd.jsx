@@ -1,5 +1,5 @@
 /*
-	Add page guides 23.5.10
+	Add page guides 23.10.4
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds guides on pages' edges and inner centers or selected objects' edges.
@@ -13,8 +13,7 @@ if (!(doc = app.activeDocument)) exit();
 // @includepath '.;./lib;../lib';
 // @include 'addGuide.jsxinc';
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Add page guides');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Add page guides');
 
 function main() {
 	var hwLayer, guidesLayer, page, guide, s, i, n;

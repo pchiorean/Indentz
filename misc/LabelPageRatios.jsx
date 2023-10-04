@@ -1,5 +1,5 @@
 /*
-	Page ratios 23.9.23
+	Page ratios 23.10.4
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a label with the page/visible area/margins' ratios on each page's slug.
@@ -13,8 +13,7 @@ if (!(doc = app.activeDocument)) exit();
 // @includepath '.;./lib;../lib';
 // @include 'getBounds.jsxinc';
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Label page ratios');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Label page ratios');
 
 function main() {
 	var i, n, page, pgB, mgB, visB, hasVisArea, hasMargins;
