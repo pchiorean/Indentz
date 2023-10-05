@@ -1,5 +1,5 @@
 /*
-	Generate EAN Codes 23.9.29
+	Generate EAN Codes 23.10.5
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Inserts EAN codes into the selected frames or in a new document.
@@ -179,6 +179,7 @@ function main() {
 				[ [ 0.5, 0.5 ], BoundingBoxLimits.GEOMETRIC_PATH_BOUNDS ],
 				CoordinateSpaces.SPREAD_COORDINATES
 			)[0];
+			if (target.pageItems.length > 0) target.pageItems.everyItem().remove();
 			target.contentPlace(codeFrame);
 			codeFrame.remove();
 			newCenter = target.pageItems[0].resolve(
