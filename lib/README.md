@@ -341,21 +341,21 @@ An object containing the records found (strings) and parsing errors, built from 
 #### Example:
 
 ```js
-var file;
+var file, d;
 var parsed = { header: [], data: [], errors: [] };
-var data = { records: [], errors: [] };
+var data = { records: [], status: { info: [], warn: [], error: [] } };
 
 if (!(file = getDataFile('data.tsv'))) { alert('No data file found.'); exit(); }
 
-// Parse data file
+// Get raw data from TSV
 parsed = parseDataFile(file, 'data.tsv');
-if (parsed.errors.length > 0) { report(parsed.errors); exit(); }
+if (parsed.errors.length > 0) { report(parsed.errors, title); exit(); }
 
-// Build native objects
+// Build structured data
 for (var i = 0; i < parsed.data.length; i++) {
-    checkRecord(parsed.data[i].record);
+    if ((d = checkRecord(parsed.data[i].record))) data.records.push(d);
 }
-if (data.errors.length > 0) { report(data.errors); exit(); }
+if (data.status.error.length > 0) { report(data.status.error, title); exit(); }
 
 // Main processing
 for (var i = 0; i < data.records.length; i++) {
@@ -371,7 +371,8 @@ function checkRecord(/*array*/record) {
     tmpData.isPrintable = record[3] ? (record[3].toLowerCase() === 'yes') : true;
 
     if (tmpData.name.length === 0) stat(data.status, tmpData.source + ':1', 'Missing layer name.', -1);
-    if (data.status.fail.length > 0) return false;
+    // ...
+    if (data.status.error.length > 0) return false;
     return tmpData;
 }
 
@@ -416,7 +417,7 @@ it will return an object like this:
             source: [ "path/to/another.tsv", 2 ]
         }
     ],
-    errors: [ "path/to/another.tsv:3 :: 'missing.tsv' not found." ]
+    errors: [ "path/to/another.tsv:3 :: [ERROR] File 'missing.tsv' is not found." ]
 }
 ```
 
