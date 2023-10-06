@@ -1,7 +1,8 @@
 ## [Development version](https://github.com/pchiorean/Indentz/compare/23.7.18...dev)
 
 - `07/21` [`upd`](https://github.com/pchiorean/Indentz/commit/4bfef0ec89bd1b19e0b7b06e1825efb1a8048c12)
-  **misc/LabelPageRatios:** Improved label info: page ‣ visible ‣ margins: displays the page ratio and the visible area ratio; if the visible area is not defined, it fallbacks to the margins ratio.
+  **misc/LabelPageRatios:** Improved label info: page ‣ visible ‣ margins: displays the page ratio and the visible area ratio;
+  if the visible area is not defined, it fallbacks to the margins ratio.
 - `07/27` [`upd`](https://github.com/pchiorean/Indentz/commit/ff18eeb9c5efa4621ab3aca1887f4f731712d54f)
   **export/QuickExport:** Added error levels to reports
 - `07/31` [`upd`](https://github.com/pchiorean/Indentz/commit/d77f2257d3e278fa5ad2db270cf33da8ffc73f05)
@@ -36,13 +37,13 @@
 - `09/06` [`fix`](https://github.com/pchiorean/Indentz/commit/fe6dc8d64277a367c86f9d63feca006531eebf10)
   **export/QuickExport:** Do cleanup before displaying the report
 - `09/11` [`new`](https://github.com/pchiorean/Indentz/commit/a1500c1b6ee88e04ea79e57fa6420e966da0108c)
-  **misc/EAN:** Sequentially insert a list of barcodes into all selected objects
+  **misc/EAN:** Sequentially insert a list of barcodes into all selected objects; embedding is done differently, so the clipboard is no longer modified
 - `09/11` [`fix`](https://github.com/pchiorean/Indentz/commit/473ef02662d0f51dcd8f9c30d736c70719d23781)
   **view/ZoomToSelection, ZoomToSpreads:** Fixed the acceptable zoom range
 - `09/12` [`upd`](https://github.com/pchiorean/Indentz/commit/d58f5c3bf2a3dedef7e136fc800bedc85bfb0dd1)
   **export/QuickExport:** Improved timer display: 'Xh Xm Xs'
 - `09/23` [`upd`](https://github.com/pchiorean/Indentz/commit/992ab910c86dae5a10895e187950d793e7a91c29)
-  **cleanup/DefaultSwatches:** Added "cXXmXXyXXkXX" as a default variant
+  **cleanup/DefaultSwatches:** Added 'cXXmXXyXXkXX' as a default variant
 - `09/23` [`upd`](https://github.com/pchiorean/Indentz/commit/1cad44d2b866aa7f81a4e0646a9f3016914fa4fc)
           [`ref`](https://github.com/pchiorean/Indentz/commit/1f9cbe80447a5187c8c1425a223aef82bc6a5f3b)
   **lib/isInArray:** Used regular matching if no wildcards
@@ -66,6 +67,10 @@
   **export/QuickExport:** Skip export when missing fonts; skip when links are to be updated but are missing
 - `09/30` [`upd`](https://github.com/pchiorean/Indentz/commit/a0741e03051dd7bdd1e3a346e2f52117b4f94077)
   **export/QuickExport:** Simplifies source updating to just 'Save' and 'Save as...' options; also fits spread in view
+- `10/05` [`fix`](https://github.com/pchiorean/Indentz/commit/9a329ffaf729895085ded630de446224028b1ff3)
+  **misc/EAN:** Placing code fails when target frames are already populated. Fixed
+- `10/06` [`fix`](https://github.com/pchiorean/Indentz/commit/d11e48a234812aa479c80d81b3c104231e08cf24)
+  **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links/Snippets:** Fixed a reporting bug caused by a previous change in `stat()` ('fail' ‣ 'error') which was not mirrored in 'data.status' (`9dfb241`)
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -812,6 +817,7 @@
 - `brk` **cleanup/ReplaceSnippets:** Extend Scope to layers/pages etc
 - `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
 - `brk` **export/MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
+- `upd` **export/QuickExport:** Automatically add to the suffix all visible & printable layers named '+xxxxxxx'
 - `upd` **export/QuickExport:** Create destination folder if it doesn't exist
 - `upd` **export/QuickExport:** Move hacks to advanced options, saved in settings
 - `upd` **export/Show/HideDNPLayers:** Take layers from a TSV
@@ -825,37 +831,31 @@
 - `upd` **lib/replaceText:** Take an array of strings as input
 - `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
 - `upd` **lib/report:** Make window resizable
-- `upd` **view/ZoomTo...:** Detect monitor resolution and set the zoom coeficient automatically
+- `upd` Change title to 'Canceling, please wait...' when canceling batch processes
 - `upd` Use a custom object style for `<visible area>` frame
 - `brk` `?` **cleanup/DefaultLayers:** Add column for locked status
-- `upd` `?` **lib/isInArray:** Add regex matching to `searchValue`
-- `upd` `?` Add a 'Canceling, please wait...' note when canceling batch processes
 - `upd` `?` JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 
 ##### Removed features
 
 ##### Bug fixes
 
-- `fix` **cleanup/DocCleanup:** Exclude "empty" text-on-path frames
-- `fix` **cleanup/ReplaceLinks:** When relinking layered graphics, try to restore layers' visibility; inhibit alert and report culprits at finish
+- `fix` **cleanup/DocCleanup:** Exclude 'empty' text-on-path frames
+- `fix` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
+- `fix` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility; inhibit alert and report culprits at finish
 - `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
-- `fix` **export/QuickExport:** Fallback to '[High Quality Print]' and '[PDF/X-4:2008]' if '_preview' and '_print' are not available
-- `fix` **export/QuickExport:** Restore cropping mode when relinking files
-- `fix` **export/QuickExport:** Try to auto-restore layers visibility; report layer overrides at end instead of alerts
-- `fix` **export/QuickExport:** Fix low-res export for embedded .indd files
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `fix` **fit/TextAutoSize:** Check `baselineShift`
-- `fix` **layout/PageSizeFromFilename:** Error on pages set to 1:X scale
+- `fix` **layout/PageSizeFromFilename:** Fix errors on pages set to 1:X scale
 - `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
 - `fix` Nullify large variables on exit
 - `fix` Fix `ui.onShow()` vertical dialog positioning
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
-- `fix` `?!` **misc/EAN:** Preserve clipboard
+- `fix` `?` **export/QuickExport:** Fix low-res export for embedded .indd files
 
 ##### Miscellaneous
 
 - `doc` Add a mention about canceling the ongoing operation with 'Esc'
-- `org` **lib/log:** Rename to `debug.jsxinc`
 
 ---
 
