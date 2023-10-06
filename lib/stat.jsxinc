@@ -9,7 +9,7 @@ function stat(/*array|object*/target, /*string*/src, /*string*/msg, /*0=info|1=w
 	}(level));
 
 	if (target instanceof Array) target.push(src + sep + '[' + level.toUpperCase() + '] ' + msg);
-	else target[level].push(src + sep + msg);
+	else target[level].push(src + sep + '[' + level.toUpperCase() + '] ' + msg);
 
 	return src + sep + msg;
 }

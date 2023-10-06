@@ -137,7 +137,7 @@ function main() {
 	 * Blank lines and those starting with `#` are ignored. A line ending in `\` continues on the next line.
 	 * Use `@defaults` to include the global default, or `@include path/to/another.tsv` for other file.
 	 * The path can be absolute, or relative to the data file; a default path can be set with `@includepath path/to`.
-	 * @version 22.12.4-RL
+	 * @version 23.10.6-RL
 	 * @author Paul Chiorean <jpeg@basement.ro>
 	 * @license MIT
 	 * @param {File} dataFile - A tab-separated-values file (object).
@@ -179,7 +179,7 @@ function main() {
 			var include = record.replace(/ +$/g, '').replace(/ ['"]|['"]$/g, '');
 			include = include.match(/^@(include(?:path)?|defaults|default)(?: +)?(.+)?$/i);
 			if (!include) {
-				stat(parsed.errors, src.join(':'), '\'' + record + '\' is not recognized (see docs).');
+				stat(parsed.errors, src.join(':'), '\'' + record + '\' is not recognized (see docs).', -1);
 				return;
 			}
 
@@ -190,9 +190,9 @@ function main() {
 							include[2] = Folder(dataFile.path).absoluteURI + '/' + include[2];
 						include[2] = compactRelPath(include[2]);
 						if (Folder(include[2]).exists) includeFolder = Folder(include[2]);
-						else stat(parsed.errors, src.join(':'), 'Folder \'' + include[2] + '\' is not found.');
+						else stat(parsed.errors, src.join(':'), 'Folder \'' + include[2] + '\' is not found.', -1);
 					} else {
-						stat(parsed.errors, src.join(':'), '\'' + record + '\' is malformed (see docs).');
+						stat(parsed.errors, src.join(':'), '\'' + record + '\' is malformed (see docs).', -1);
 					}
 					return;
 				case 'include':
@@ -205,17 +205,19 @@ function main() {
 						}
 						include[2] = compactRelPath(include[2]);
 						if (!/\.(tsv|txt)$/i.test(include[2])) {
-							stat(parsed.errors, src.join(':'), 'File \'' + decodeURI(include[2]) + '\' is not a TSV file.');
+							stat(parsed.errors, src.join(':'),
+								'File \'' + decodeURI(include[2]) + '\' is not a TSV file.', -1);
 							return;
 						}
 						if (File(include[2]).exists) {
 							includeFile = File(include[2]);
 						} else {
-							stat(parsed.errors, src.join(':'), 'File \'' + decodeURI(include[2]) + '\' is not found.');
+							stat(parsed.errors, src.join(':'),
+								'File \'' + decodeURI(include[2]) + '\' is not found.', -1);
 							return;
 						}
 					} else {
-						stat(parsed.errors, src.join(':'), '\'' + record + '\' is malformed (see docs).');
+						stat(parsed.errors, src.join(':'), '\'' + record + '\' is malformed (see docs).', -1);
 						return;
 					}
 					break;
@@ -225,7 +227,7 @@ function main() {
 					includeFile = getDataFile(defaultName, true);
 					if (!includeFile || !includeFile.exists) {
 						stat(parsed.errors, src.join(':'),
-							'Default list \'' + defaultName.join('\' or \'') + '\' is not found.');
+							'Default list \'' + defaultName.join('\' or \'') + '\' is not found.', -1);
 						return;
 					}
 					break;
