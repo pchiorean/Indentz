@@ -1,5 +1,5 @@
 /*
-	Replace links 23.9.29
+	Replace links 23.10.6
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces document links using a 2-column TSV file named `links.tsv`:
@@ -61,16 +61,15 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'stat.jsxinc';
 // @include 'unique.jsxinc';
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Replace links');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Replace links');
 
 function main() {
 	var title = 'Replacing links';
 	var dataFileName = [ 'links.tsv', 'links.txt' ];
-	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
+	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: only errors, 1: + warnings, 2: + infos
 	var file, messages, i, j, d, progressBar;
 	var parsed = { header: [], data: [], errors: [] };
-	var data = { records: [], status: { info: [], warn: [], fail: [] } };
+	var data = { records: [], status: { info: [], warn: [], error: [] } };
 	var counter = 0;
 	var links = doc.links.everyItem().getElements();
 	var linkS = (function () {
@@ -103,7 +102,7 @@ function main() {
 	// Build structured data
 	for (i = 0; i < parsed.data.length; i++)
 		if ((d = checkRecord(parsed.data[i].record))) data.records.push(d);
-	if (data.status.fail.length > 0) { report(data.status.fail, title); exit(); }
+	if (data.status.error.length > 0) { report(data.status.error, title); exit(); }
 
 	// Processing
 	if (links.length > 2 && data.records.length > 2) progressBar = new ProgressBar('Replacing links', links.length);

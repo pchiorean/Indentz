@@ -1,5 +1,5 @@
 ﻿/*
-	Replace fonts 23.9.22
+	Replace fonts 23.10.6
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces fonts using a 4-column TSV file named `fonts.tsv`:
@@ -44,16 +44,15 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'parseDataFile.jsxinc';
 // @include 'report.jsxinc';
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Replace fonts');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Replace fonts');
 
 function main() {
 	var title = 'Replace fonts';
 	var dataFileName = [ 'fonts.tsv', 'fonts.txt' ];
-	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
+	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: only errors, 1: + warnings, 2: + infos
 	var file, messages, i, n;
 	var parsed = { header: [], data: [], errors: [] };
-	var data = { records: [], status: { info: [], warn: [], fail: [] } };
+	var data = { records: [], status: { info: [], warn: [], error: [] } };
 	var counter = 0;
 	var docHasPath = (function () {
 		var ret = false;
@@ -80,7 +79,7 @@ function main() {
 	// Build structured data
 	for (i = 0; i < parsed.data.length; i++)
 		data.records[i] = checkRecord(parsed.data[i].record);
-	if (data.status.fail.length > 0) { report(data.status.fail, title); exit(); }
+	if (data.status.error.length > 0) { report(data.status.error, title); exit(); }
 
 	// Processing
 	for (i = 0, n = data.records.length; i < n; i++) {
@@ -128,7 +127,7 @@ function main() {
 		tmpData.findWhat = record[0] + '\t' + record[1];
 		tmpData.changeTo = record[2] + '\t' + record[3];
 
-		if (data.status.fail.length > 0) return false;
+		if (data.status.error.length > 0) return false;
 		return tmpData;
 	}
 }

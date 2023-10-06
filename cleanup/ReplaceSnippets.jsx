@@ -1,5 +1,5 @@
 ﻿/*
-	Replace text snippets 23.9.23
+	Replace text snippets 23.10.6
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces a list of snippets using a 5-column TSV file named `snippets.tsv`:
@@ -52,16 +52,15 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'parseDataFile.jsxinc';
 // @include 'report.jsxinc';
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Replace text snippets');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Replace text snippets');
 
 function main() {
 	var title = 'Replace text snippets';
 	var dataFileName = [ 'snippets.tsv', 'snippets.txt' ];
-	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
+	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: only errors, 1: + warnings, 2: + infos
 	var file, messages, i, n;
 	var parsed = { header: [], data: [], errors: [] };
-	var data = { records: [], status: { info: [], warn: [], fail: [] } };
+	var data = { records: [], status: { info: [], warn: [], error: [] } };
 	var counter = 0;
 	var docHasPath = (function () {
 		var ret = false;
@@ -88,7 +87,7 @@ function main() {
 	// Build structured data
 	for (i = 0; i < parsed.data.length; i++)
 		data.records[i] = checkRecord(parsed.data[i].record);
-	if (data.status.fail.length > 0) { report(data.status.fail, title); exit(); }
+	if (data.status.error.length > 0) { report(data.status.error, title); exit(); }
 
 	// Processing
 	for (i = 0, n = data.records.length; i < n; i++) {
@@ -140,7 +139,7 @@ function main() {
 
 		if (!tmpData.findWhat) stat(data.status, tmpData.source + ':1', 'Missing text to be replaced.', -1);
 
-		if (data.status.fail.length > 0) return false;
+		if (data.status.error.length > 0) return false;
 		return tmpData;
 	}
 }

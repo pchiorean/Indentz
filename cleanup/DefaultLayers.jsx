@@ -1,5 +1,5 @@
 /*
-	Default layers 23.9.23
+	Default layers 23.10.6
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds/merges layers using a 6-column TSV file named `layers.tsv`:
@@ -55,16 +55,15 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'report.jsxinc';
 // @include 'unique.jsxinc';
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Default layers');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Default layers');
 
 function main() {
 	var title = 'Default layers';
 	var dataFileName = [ 'layers.tsv', 'layers.txt' ];
-	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: FAIL, 1: +WARN, 2: +INFO
+	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: only errors, 1: + warnings, 2: + infos
 	var file, messages, oldActiveLayer, newLayer, tmpLayer, i;
 	var parsed = { header: [], data: [], errors: [] };
-	var data = { records: [], status: { info: [], warn: [], fail: [] } };
+	var data = { records: [], status: { info: [], warn: [], error: [] } };
 	var counter = { add: 0, merge: 0 };
 	var docHasPath = (function () {
 		var ret = false;
@@ -91,7 +90,7 @@ function main() {
 	// Build structured data
 	for (i = 0; i < parsed.data.length; i++)
 		data.records[i] = checkRecord(parsed.data[i].record);
-	if (data.status.fail.length > 0) { report(data.status.fail, title); exit(); }
+	if (data.status.error.length > 0) { report(data.status.error, title); exit(); }
 
 	// Processing
 	oldActiveLayer = doc.activeLayer; // Save active layer
@@ -167,7 +166,7 @@ function main() {
 
 		if (tmpData.name.length === 0) stat(data.status, tmpData.source + ':1', 'Missing layer name.', -1);
 
-		if (data.status.fail.length > 0) return false;
+		if (data.status.error.length > 0) return false;
 		return tmpData;
 
 		function getUIColor(/*string*/color) {
