@@ -105,7 +105,10 @@ function log(/*?message list*/) {
 			var arr = $.stack.split(/[\n]/);
 			arr = arr.slice(1, -3);
 			return arr.length > 0
-				? arr.join('::').replace(/\(.*?\)/g, '').replace('anonymous', 'anon') + ':: '
+				? arr.join('::')
+					.replace(/\(.*?\)/g, '')
+					.replace('anonymous', 'anon')
+					+ ':: '
 				: '';
 		}
 	}
