@@ -3,5 +3,5 @@ if (!(doc = app.activeDocument)) exit();
 app.doScript(
 	'doc.guides.everyItem().remove()',
 	ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.FAST_ENTIRE_SCRIPT, 'Delete guides'
+	UndoModes.ENTIRE_SCRIPT, 'Delete guides'
 );

@@ -1,5 +1,5 @@
 /*
-	Page margins and HW from the script name 23.10.4
+	Page margins and HW from the script name 23.10.7
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	By default it sets the page margins to 5% of the visible/page area for
@@ -13,7 +13,7 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(grid, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Set margins');
+app.doScript(grid, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Set margins');
 
 function grid() {
 	var guidesLayer, hwLayer, page, tgBounds, tgSize, MG, RE;

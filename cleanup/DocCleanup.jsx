@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 23.10.4
+	Document cleanup 23.10.7
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
@@ -19,7 +19,7 @@ var progressBar = new ProgressBar('Cleaning document', 14);
 progressBar.update();
 app.doScript(File(script.path + '/DefaultPrefs.jsx'),
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Set preferences');
+UndoModes.ENTIRE_SCRIPT, 'Set preferences');
 
 progressBar.update();
 app.doScript(function () {
@@ -31,7 +31,7 @@ app.doScript(function () {
 	hyperLinksPanel.visible = oldHLP;
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Turn off auto update URLs');
+UndoModes.ENTIRE_SCRIPT, 'Turn off auto update URLs');
 
 progressBar.update();
 app.doScript(function () {
@@ -57,7 +57,7 @@ app.doScript(function () {
 	}
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Delete hidden items');
+UndoModes.ENTIRE_SCRIPT, 'Delete hidden items');
 
 progressBar.update();
 app.doScript(function () {
@@ -73,21 +73,21 @@ app.doScript(function () {
 	}
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Delete empty frames');
+UndoModes.ENTIRE_SCRIPT, 'Delete empty frames');
 
 progressBar.update();
 app.doScript(function () {
 	if ((menu = app.menuActions.item('$ID/Clear All Transparency')).enabled) menu.invoke();
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Clear default effects');
+UndoModes.ENTIRE_SCRIPT, 'Clear default effects');
 
 progressBar.update();
 app.doScript(function () {
 	if ((menu = app.menuActions.item('$ID/Delete Unused Layers')).enabled) menu.invoke();
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Delete unused layers');
+UndoModes.ENTIRE_SCRIPT, 'Delete unused layers');
 
 progressBar.update();
 app.doScript(function () {
@@ -97,7 +97,7 @@ app.doScript(function () {
 		if (spread.allPageItems.length === 0 && doc.spreads.length > 1) spread.remove();
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Delete empty spreads');
+UndoModes.ENTIRE_SCRIPT, 'Delete empty spreads');
 
 progressBar.update();
 app.doScript(function () {
@@ -107,7 +107,7 @@ app.doScript(function () {
 		if (swatch.name !== '') swatch.remove();
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Delete unused swatches');
+UndoModes.ENTIRE_SCRIPT, 'Delete unused swatches');
 
 progressBar.update();
 app.doScript(function () {
@@ -124,7 +124,7 @@ app.doScript(function () {
 	}
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Convert empty text frames to generic frames');
+UndoModes.ENTIRE_SCRIPT, 'Convert empty text frames to generic frames');
 
 progressBar.update();
 app.doScript(function () {
@@ -141,7 +141,7 @@ app.doScript(function () {
 	}
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Convert empty frames to graphic frames');
+UndoModes.ENTIRE_SCRIPT, 'Convert empty frames to graphic frames');
 
 progressBar.update();
 app.doScript(function () {
@@ -153,17 +153,18 @@ app.doScript(function () {
 	if ((layer = doc.layers.itemByName('.covered area')).isValid) { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('dielines')).isValid)      { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('varnish')).isValid)       { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('cutout')).isValid)        { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('HW')).isValid)            { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('text & logos')).isValid)  { layer.visible = true; layer.locked = false; }
 	if ((layer = doc.layers.itemByName('artwork')).isValid)       { layer.visible = true; layer.locked = false; }
 	if ((layer = doc.layers.itemByName('bg')).isValid)            { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('.reference')).isValid)    { layer.visible = false; layer.locked = true; }
 
-	if ((layer = doc.layers.itemByName('text & logos')).isValid)  doc.activeLayer = layer;
-	else if ((layer = doc.layers.itemByName('artwork')).isValid)  doc.activeLayer = layer;
+	if ((layer = doc.layers.itemByName('text & logos')).isValid) doc.activeLayer = layer;
+	else if ((layer = doc.layers.itemByName('artwork')).isValid) doc.activeLayer = layer;
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Show/hide layers');
+UndoModes.ENTIRE_SCRIPT, 'Show/hide layers');
 
 progressBar.update();
 doc.textPreferences.showInvisibles = false;
@@ -192,7 +193,7 @@ app.doScript(function () {
 	doc.pasteboardPreferences.pasteboardMargins = [ pbMargins.w, pbMargins.h ];
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Set pasteboard size');
+UndoModes.ENTIRE_SCRIPT, 'Set pasteboard size');
 
 progressBar.close();
 // app.select(null);

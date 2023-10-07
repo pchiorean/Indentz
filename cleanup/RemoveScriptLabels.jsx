@@ -1,5 +1,5 @@
 /*
-	Remove script labels 23.10.4
+	Remove script labels 23.10.7
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Removes all script labels from all or selected objects.
@@ -16,4 +16,4 @@ app.doScript(
 		var items = (doc.selection.length === 0) ? doc.allPageItems : doc.selection;
 		while ((item = items.shift())) item.label = '';
 	},
-	ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Remove script labels');
+	ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Remove script labels');

@@ -1,5 +1,5 @@
 /*
-	Scale to page (left/right) 23.10.4
+	Scale to page (left/right) 23.10.7
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Scales the selected objects to the page left/right size.
@@ -10,7 +10,7 @@
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.FAST_ENTIRE_SCRIPT, 'Scale to page');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Scale to page');
 
 function main(selection) {
 	var item, page, i, n;

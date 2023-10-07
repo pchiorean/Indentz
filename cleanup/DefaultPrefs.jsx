@@ -1,5 +1,5 @@
 /*
-	Default preferences 23.10.4
+	Default preferences 23.10.7
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Sets default preferences.
@@ -112,4 +112,4 @@ app.doScript(function () {
 	};
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.FAST_ENTIRE_SCRIPT, 'Set preferences');
+UndoModes.ENTIRE_SCRIPT, 'Set preferences');

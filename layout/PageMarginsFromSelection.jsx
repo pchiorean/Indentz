@@ -1,5 +1,5 @@
 /*
-	Page margins from selection 23.10.4
+	Page margins from selection 23.10.7
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Sets the page margins to the selected objects bounds.
@@ -10,7 +10,7 @@
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.FAST_ENTIRE_SCRIPT, 'Page margins from selection');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Page margins from selection');
 
 function main(selection) {
 	var page, size, i, n;

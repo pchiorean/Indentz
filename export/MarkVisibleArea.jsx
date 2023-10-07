@@ -1,5 +1,5 @@
 /*
-	Mark visible area 23.10.4
+	Mark visible area 23.10.7
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Creates on each page a 'visible area' frame the size of the page margins.
@@ -13,7 +13,7 @@ if (!(doc = app.activeDocument)) exit();
 // @includepath '.;./lib;../lib';
 // @include 'isInArray.jsxinc';
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Visible area');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Visible area');
 
 function main() {
 	var page, mgs,

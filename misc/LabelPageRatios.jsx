@@ -1,5 +1,5 @@
 /*
-	Page ratios 23.10.4
+	Page ratios 23.10.7
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a label with the page/visible area/margins' ratios on each page's slug.
@@ -13,7 +13,7 @@ if (!(doc = app.activeDocument)) exit();
 // @includepath '.;./lib;../lib';
 // @include 'getBounds.jsxinc';
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Label page ratios');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Label page ratios');
 
 function main() {
 	var i, n, page, pgB, mgB, visB, hasVisArea, hasMargins;
@@ -66,6 +66,7 @@ function main() {
 		app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 		isCaps  = (isCaps  === undefined) ? true : isCaps;
 		isOnTop = (isOnTop === undefined) ? true : isOnTop;
+
 		// Make layer
 		if (!infoLayer.isValid) {
 			doc.layers.add({
@@ -77,10 +78,12 @@ function main() {
 			});
 		}
 		infoLayer.move(LocationOptions.AT_BEGINNING);
+
 		// Remove old page labels
 		while ((item = items.shift()))
 			if (item.name === '<page label>') { item.itemLayer.locked = false; item.remove(); }
-		// Add new label
+
+			// Add new label
 		if (label === '') { label = doc.name; isCaps = false; }
 		label = label.replace(/^\s+|\s+$/g, '');
 		doc.activeLayer = infoLayer;
@@ -112,6 +115,7 @@ function main() {
 			autoSizingType:               AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
 			useNoLineBreaksForAutoSizing: true
 		};
+
 		// Move frame in position
 		var pageMarksHeight = 15 + UnitValue('1 mm').as('pt');
 		switch (isOnTop) {

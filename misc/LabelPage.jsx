@@ -1,5 +1,5 @@
 /*
-	Label page 23.10.4
+	Label page 23.10.7
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a custom label on the current page's slug.
@@ -10,7 +10,7 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Label page');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Label page');
 
 function main() {
 	var onTop = true;
@@ -53,6 +53,7 @@ function main() {
 		app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 		isCaps  = (isCaps  === undefined) ? true : isCaps;
 		isOnTop = (isOnTop === undefined) ? true : isOnTop;
+
 		// Make layer
 		if (!infoLayer.isValid) {
 			doc.layers.add({
@@ -64,9 +65,11 @@ function main() {
 			});
 		}
 		infoLayer.move(LocationOptions.AT_BEGINNING);
+
 		// Remove old page labels
 		while ((item = items.shift()))
 			if (item.name === '<page label>') { item.itemLayer.locked = false; item.remove(); }
+
 		// Add new label
 		if (label === '') { label = doc.name; isCaps = false; }
 		label = label.replace(/^\s+|\s+$/g, '');
@@ -98,6 +101,7 @@ function main() {
 			autoSizingType:               AutoSizingTypeEnum.HEIGHT_AND_WIDTH,
 			useNoLineBreaksForAutoSizing: true
 		};
+
 		// Move frame in position
 		var pageMarksHeight = 15 + UnitValue('1 mm').as('pt');
 		switch (isOnTop) {

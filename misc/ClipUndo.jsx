@@ -1,5 +1,5 @@
 /*
-	Undo clipping 23.10.4
+	Undo clipping 23.10.7
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Releases selected objects from their clipping frames.
@@ -10,7 +10,7 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.FAST_ENTIRE_SCRIPT, 'Unclipping');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Unclipping');
 
 function main() {
 	var item;

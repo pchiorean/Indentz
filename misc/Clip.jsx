@@ -1,5 +1,5 @@
 /*
-	Clip 23.10.4
+	Clip 23.10.7
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Clips selected objects in a clipping frame (or releases them if already clipped).
@@ -10,7 +10,7 @@
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.FAST_ENTIRE_SCRIPT, 'Clipping');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Clipping');
 
 function main(selection) {
 	var bounds, outlines, clipFrame;

@@ -1,15 +1,9 @@
 /*
-	Offset paths 23.10.4
+	Offset paths 23.10.7
 
 	Use InDesign's text wrap feature to create offset/inset paths.
 
-	Original version (c) 2020 Olav Martin Kvern.
-	Distributed by Silicon Publishing, Inc.
-	https://creativepro.com/indesign-cad-tool/
-	https://www.siliconpublishing.com/blog/free-indesign-scripts/
-
-	This is a custom version of the above script with some tweaks:
-
+	This is a modified version of a script by Olav Martin Kvern with some tweaks:
 	- Now takes any objects as source;
 	- Duplicates the source object to avoid some corner cases (e.g., images);
 	- Selects the outlined paths on exit;
@@ -17,15 +11,20 @@
 	- Has an option for joining contours;
 	- Has undo.
 
-	2021/09/22
-	Paul Chiorean <jpeg@basement.ro>
+	Original version (c) 2020 Olav Martin Kvern.
+	Distributed by Silicon Publishing, Inc.
+	https://creativepro.com/indesign-cad-tool/
+	https://www.siliconpublishing.com/blog/free-indesign-scripts/
+
+	2023/10/07 Paul Chiorean <jpeg@basement.ro>
+
 */
 
 /* eslint-disable no-with */
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.FAST_ENTIRE_SCRIPT, 'Offset paths');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Offset paths');
 
 function main(selection) {
 	var i, ui, joinContours, offsetField, offset;
