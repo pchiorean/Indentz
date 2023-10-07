@@ -1,12 +1,12 @@
 # Indentz
 
-This is a collection of InDesign scripts for various simple and repetitive tasks.
+This is a collection of InDesign scripts that I use to improve my DTP workflow, which often involves repetitive, tedious, or time-consuming operations. They are not designed for long documents with flowing text, because I usually work with single-page documents. With few exceptions, the scripts are simple, with minimal interaction, and, apart from warnings, they do their job silently[^1]. I run them through a series of keyboard shortcuts (for which I've made suggestions below).
 
-I often perform repeated, tedious, or time-consuming operations as a DTP operator, so I wrote several simple scripts to improve my workflow. Most are meant to be used with shortcuts[^1] (suggestions for the Mac platform below). Some require one or more objects on the page to be selected. Apart from error alerts, they do their job silently; however, some[^2] give a report if run with **Ctrl**.
+The code is tested in Adobe InDesign CC 2020–2023 on Mac. I'm a graphic designer, not a programmer, so be prepared for oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
-The code was developed and tested in Adobe InDesign CC 2020–2023 on Mac (I mostly used [InDesign ExtendScript API 8.0](https://www.indesignjs.de/extendscriptAPI/indesign8/), compatibile with CS6). I'm a graphic designer, not a programmer, so be prepared for oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
+**Note:** Many scripts recycle bits of code using dynamically linked libraries from **`lib/`**, meaning the folder structure should be preserved after downloading the repository. If you want to use them stand-alone, download the latest [release](https://github.com/pchiorean/Indentz/releases), which is statically linked[^2].
 
-## Usage
+## The scripts
 
 ### Cleanup
 
@@ -51,7 +51,7 @@ Sets some preferences for the active document. You should customize them to your
 </details>
 
 #### **`DefaultLayers.jsx`**
-Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample](samples/layers.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
+Adds a set of layers defined in a TSV data file named **`layers.tsv`** ([sample](samples/layers.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in the **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Name              | Color      | Visible | Printable | Order  | Variants                                           |
 |:------------------|:-----------|:--------|:----------|:-------|:---------------------------------------------------|
@@ -86,7 +86,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 
 #### **`DefaultSwatches.jsx`**
-Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sample](samples/swatches.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
+Adds a set of swatches defined in a TSV data file named **`swatches.tsv`** ([sample](samples/swatches.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in the **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Name           | Color Model | Color Space | Values       | Variants         |
 |:---------------|:------------|:------------|:-------------|:-----------------|
@@ -125,7 +125,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 </details>
 
 #### **`ReplaceFonts.jsx`**
-Replaces document fonts using a TSV data file named **`fonts.tsv`** ([sample](samples/fonts.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
+Replaces document fonts using a TSV data file named **`fonts.tsv`** ([sample](samples/fonts.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in the **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Old font family | Style   | New font family    | Style   |
 |:----------------|:--------|:-------------------|:--------|
@@ -153,7 +153,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 </details>
 
 #### **`ReplaceLinks.jsx`**
-Replaces document links using a TSV data file named **`links.tsv`** ([sample](samples/links.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
+Replaces document links using a TSV data file named **`links.tsv`** ([sample](samples/links.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in the **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Relink to                         | Document links               |
 |:----------------------------------|:-----------------------------|
@@ -197,7 +197,7 @@ There's also some non-standard stuff that will confuse Excel et al.:
 **Shortcut:** ⌥F8
 
 #### **`ReplaceSnippets.jsx`**
-Replaces a list of text snippets using a TSV data file named **`snippets.tsv`** ([sample](samples/snippets.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in **`Indentz`** root); local files and those starting with `_` take precedence:
+Replaces a list of text snippets using a TSV data file named **`snippets.tsv`** ([sample](samples/snippets.tsv)) saved _locally_ (meaning the active document folder or its parent), or as a _global default_ (on the desktop, next to the script, or in the **`Indentz`** root); local files and those starting with `_` take precedence:
 
 | Find what              | Change to                 | Case sensitive | Whole word | Scope |
 |:-----------------------|:--------------------------|:---------------|:-----------|:------|
@@ -611,8 +611,7 @@ Shows properties and methods of a selected object (for debugging purposes).
 
 ## Install
 
-1. Clone or download from **Code ‣ Download ZIP**, or download the latest release.\
-**Note:** The scripts from the repository recycle many bits of code, using dynamically linked libraries from **`lib/`**, meaning that the folder structure should be preserved if downloading the scripts in this way. If you prefer stand-alone scripts or just pick some as needed, download the latest [release](https://github.com/pchiorean/Indentz/releases), where they are statically linked[^5].
+1. Clone or download from **Code ‣ Download ZIP**, or download the latest release.
 2. Open **Window ‣ Utilities ‣ Scripts**.
 3. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
 4. Copy **Indentz** to this folder.
@@ -624,18 +623,16 @@ All scripts are created by me unless otherwise noted.
 © 2020-2023 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the MIT License (see [LICENSE.txt](LICENSE.txt)).
 
-The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](http://jongware.mit.edu) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel/indesignjs), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
+The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](https://community.adobe.com/t5/indesign-discussions/theunis-de-jong-1966-2020/td-p/11653669) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials or code by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others.
 
-Thanks to Adrian Frigioiu for bug reports and feedback.
+Thanks to Adrian Frigioiu and others for bug reports and feedback.
 
-<small>Last updated: September 30, 2023</small>
+<small>Last updated: October 7, 2023</small>
 
-[^1]: You can add shortcuts to scripts from **Edit ‣ Keyboard Shortcuts ‣ Product Area ‣ Scripts**.
+[^1]: Most scripts require at least one open document, and some require at least one object to be selected.
 
-[^2]: `DefaultLayers.jsx`, `DefaultSwatches.jsx`, `ReplaceFonts.jsx`, `ReplaceLinks.jsx`, `ReplaceSnippet.jsx`.
+[^2]: However, releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use every day, so it's kind of tested, but… beware. ;)
 
 [^3]: A _visible area_ is a custom zone delimited by a frame named `<visible area>`, and it's used to mark the visible part of a poster, etc.; some scripts take it into account. When undefined, it fallbacks to the page/spread size.
 
 [^4]: The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
-
-[^5]: Releases may be old, however. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch – this is what I actually use every day, so it's kind of tested, but… beware. ;)
