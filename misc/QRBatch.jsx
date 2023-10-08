@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 23.9.29
+	Batch QR codes 23.10.8
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds codes to existing documents or to separate files in batch mode,
@@ -285,9 +285,11 @@ function main() {
 				width:  tgBounds[1] - page.bounds[1],
 				height: page.bounds[2] - tgBounds[2]
 			};
+
 			// Remove old codes
 			pp = page.pageItems.everyItem().getElements();
 			while ((p = pp.shift())) if (p.label === 'QR') { p.itemLayer.locked = false; p.remove(); }
+
 			// Add label
 			if (suffix.length === target.spreads.length + 1)
 				labelText = item.code.replace(RegExp(suffix + '$'), '') + suffix[0] + suffix[i + 1];
@@ -299,7 +301,7 @@ function main() {
 			labelFrame = page.textFrames.add({
 				label: 'QR',
 				itemLayer: infoLayer.name,
-				fillColor:   'None',
+				fillColor:   'Paper',
 				strokeColor: 'None',
 				bottomLeftCornerOption:  CornerOptions.NONE,
 				bottomRightCornerOption: CornerOptions.NONE,
@@ -339,10 +341,11 @@ function main() {
 			};
 			target.align(labelFrame, AlignOptions.LEFT_EDGES, AlignDistributeBounds.PAGE_BOUNDS);
 			target.align(labelFrame, AlignOptions.TOP_EDGES,  AlignDistributeBounds.PAGE_BOUNDS);
+
 			// Add code
 			codeFrame = page.rectangles.add({
-				itemLayer: infoLayer.name,
 				label: 'QR',
+				itemLayer: infoLayer.name,
 				fillColor:   'Paper',
 				strokeColor: 'None',
 				bottomLeftCornerOption:  CornerOptions.NONE,
@@ -367,7 +370,9 @@ function main() {
 				rightCrop:  UnitValue('2.7 mm').as('pt')
 			};
 			codeFrame.epss[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
+
 			// Reposition
+			codeFrame.sendToBack(labelFrame);
 			qrGroup = page.groups.add([ labelFrame, codeFrame ]);
 			qrGroup.absoluteRotationAngle = 90;
 			// Try to put code outside visible area
@@ -421,6 +426,7 @@ function main() {
 			var target = app.documents.add();
 			var page = target.pages[0];
 			var infoLayer = makeInfoLayer(target);
+
 			// Add label
 			labelFrame = page.textFrames.add({
 				label: 'QR',
@@ -465,10 +471,13 @@ function main() {
 					UnitValue('0.5 mm').as('pt')
 				]
 			};
+
 			// Add code
 			codeFrame = page.rectangles.add({
-				itemLayer: infoLayer.name,
 				label: 'QR',
+				itemLayer: infoLayer.name,
+				fillColor:   'None',
+				strokeColor: 'None',
 				bottomLeftCornerOption:  CornerOptions.NONE,
 				bottomRightCornerOption: CornerOptions.NONE,
 				topLeftCornerOption:     CornerOptions.NONE,
@@ -491,7 +500,9 @@ function main() {
 				rightCrop:  UnitValue('1.640 mm').as('pt')
 			};
 			codeFrame.epss[0].localDisplaySetting = DisplaySettingOptions.HIGH_QUALITY;
+
 			// Reposition
+			codeFrame.sendToBack(labelFrame);
 			qrGroup = page.groups.add([ labelFrame, codeFrame ]);
 			qrGroup.absoluteRotationAngle = 90;
 			page.layoutRule = LayoutRuleOptions.OFF;
@@ -504,6 +515,7 @@ function main() {
 			qrGroup.ungroup();
 			target.documentPreferences.documentBleedUniformSize = true;
 			target.documentPreferences.documentBleedTopOffset = UnitValue('3 mm').as('pt');
+
 			// Export PDF
 			targetFolder = Folder(currentPath + '/QR Codes');
 			targetFolder.create();
@@ -601,6 +613,7 @@ function main() {
 		var lines = [];
 		var word = '';
 		var words = [];
+
 		// 1st pass: break text into words and roughly join them into lines
 		var wordRE = /((.+?)([ _+\-\u2013\u2014]|[a-z]{2}(?=[A-Z]{1}[a-z])|[a-z]{2}(?=[0-9]{3})|(?=[([])))|(.+)/g;
 		words = txt.match(wordRE);
@@ -613,6 +626,7 @@ function main() {
 			}
 		}
 		if (lineBuffer !== '') lines.push(lineBuffer);
+
 		// 2nd pass: balance ragged lines
 		if (lines.length > 1) balanceLines();
 		return lines.join('\u000A');
