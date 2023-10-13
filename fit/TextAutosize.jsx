@@ -1,9 +1,9 @@
 /*
-	Fit frame to text 23.10.7
+	Fit frame to text 23.10.13
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Auto-sizes the text frame to the content from 'None' to 'Height Only' to 'Height and Width'
-	(single lines are always auto-sized 'Height and Width'). A second run tightens auto-sizing.
+	(single lines are always auto-sized 'Height and Width'). A second run increases auto-sizing.
 	The first line's justification sets the horizontal alignment; vertical justification
 	sets the vertical alignment.
 
@@ -36,6 +36,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SC
 function main(selection) {
 	if (Object.prototype.hasOwnProperty.call(selection[0], 'parentTextFrames'))
 		selection = selection[0].parentTextFrames;
+
 	for (var i = 0, n = selection.length; i < n; i++) {
 		if (selection[i].allPageItems.length > 0) { // Also get child text frames
 			for (var j = 0, childs = selection[i].allPageItems, m = childs.length; j < m; j++)
@@ -55,10 +56,9 @@ function main(selection) {
 		// Trim ending whitespace
 		if (!frame.overflows && /\s+$/g.test(frame.contents) && !frame.nextTextFrame)
 			frame.contents = frame.contents.replace(/\s+$/g, '');
+
 		// Disable hyphenation for single lines
 		if (!frame.overflows && frame.lines.length === 1) frame.lines[0].hyphenation = false;
-		// Skip 'HW' frames, they are already set
-		if (/hw/gi.test(frame.label)) return;
 
 		// Detect 1st paragraph's justification
 		if (frame.lines.length === 0) return;
@@ -84,7 +84,7 @@ function main(selection) {
 				break;
 		}
 
-		// Tighten frame
+		// Auto-size frame, 1st pass
 		switch (frame.textFramePreferences.verticalJustification) {
 			case VJ.TOP_ALIGN:
 				frame.textFramePreferences.autoSizingReferencePoint = ASR.TOP_CENTER_POINT;
@@ -115,7 +115,7 @@ function main(selection) {
 		frame.textFramePreferences.useNoLineBreaksForAutoSizing = true;
 		frame.textFramePreferences.autoSizingType = old.AST;
 
-		// Set alignment
+		// Set auto-sizing reference point for alignment
 		switch (align) {
 			case 'left':
 				switch (frame.textFramePreferences.verticalJustification) {
@@ -161,14 +161,14 @@ function main(selection) {
 				break;
 		}
 
-		// Set frame auto-sizing
+		// Auto-size frame, 2nd pass
 		if (frame.textFramePreferences.verticalJustification === VJ.JUSTIFY_ALIGN) {
 			frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.WIDTH_ONLY;
 			return;
 		}
-		if (frame.lines.length === 1) { // Tighten single lines
+		if (frame.lines.length === 1) { // Single lines
 			frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
-		} else {
+		} else { // Multiple lines
 			switch (frame.textFramePreferences.autoSizingType) {
 				case AutoSizingTypeEnum.OFF:
 					frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
@@ -178,9 +178,9 @@ function main(selection) {
 					break; // Already tightened
 				case AutoSizingTypeEnum.HEIGHT_ONLY:
 				case AutoSizingTypeEnum.WIDTH_ONLY:
-					// The reference point was changed, skip
+					// The reference point was changed, skip auto-sizing
 					if (frame.textFramePreferences.autoSizingReferencePoint !== old.ASRP) break;
-					// Else freeze paragraphs and increase tightening
+					// Else freeze paragraphs and increase auto-sizing
 					for (var i = 0, n = frame.paragraphs.length; i < n; i++) freezePara(frame.paragraphs[i]);
 					frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
 					break;
@@ -189,7 +189,7 @@ function main(selection) {
 		}
 	}
 
-	// Modified from Freeze Paragraphs v1.0.2 by Harbs, in-tools.com
+	// Adapted from Freeze Paragraphs v1.0.2 by Harbs, in-tools.com
 	// http://in-tools.com/article/scripts-blog/freeze-composition/
 	function freezePara(paragraph) {
 		for (var i = 0, n = paragraph.lines.length, line; i < n - 1; i++) {
