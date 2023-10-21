@@ -224,7 +224,7 @@ var array = [ 'bar*code*', 'code*', 'EAN*' ];
 isInArray(searchValue, array) // True: matches 2nd array element
 ```
 
-## log(_[statement]_, _message_)
+## log(_[directive]_, _message_)
 
 Appends a debugging line to a file saved on the desktop with the name of the running script (e.g., `active-script.log`), containing a timestamp, a stack trace, and a message.
 
@@ -232,12 +232,12 @@ Appends a debugging line to a file saved on the desktop with the name of the run
 
 |Name|Type|Description|
 |:--:|:--:|--|
-|`[statement]`|`char`|See description below.|
+|`[directive]`|`char`|See description below.|
 |`message`|`string`|A comma separated list of messages (`part1`, `part2`, `part3`, etc.) that will be displayed after a timestamp and the stack trace.|
 
 Without arguments it just appends an empty line.
 
-The first argument can also be a statement:
+The first argument can also be a directive:
 - `` (empty string): append to the previous line, without separator;
 - `+`: append to the previous line, with separator;
 - `!` and `?`: stopwatch start/elapsed time (note: this is a simple, global timer);
@@ -310,18 +310,17 @@ Reads a TSV (tab-separated-values) file.
 |`dataFile`|`File`||A tab-separated-values file (object).|
 |`[defaultName]`|`string|string[]`||Default data file name, or an array of file names (used for `@defaults`).|
 
-A line may also contain a _statement_:
+These data files are regular TSVs with several non-standard features:
 
-- `@includepath` `reference/path` – defines a folder to which subsequent relative paths will refer;
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; `path/to` may be absolute or relative – by default is relative to the data file folder, but if you defined a `reference/path`, it will be relative to that;
-- `@defaults` – includes the global data file;
-
-There's also some non-standard stuff that will confuse Excel et al.:
-
-- Blank lines are ignored;
-- Everything after a `#` is ignored (used for commenting);
+- Blank lines are ignored; everything after a `#` is ignored (comments);
 - The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
+
+A line may also be a _directive_:
+
+- `@includepath` `reference/path/` – sets a reference folder for subsequent relative `@include` paths; it may be absolute or relative (if relative, it's always to the data file folder);
+- `@include` `path/to/other.tsv` – includes another TSV file at this position; the path may be absolute or relative (if relative and a `reference/path/` was not already defined, it also defaults to the data file folder);
+- `@defaults` – includes the global data file;
 
 #### Returns:
 
