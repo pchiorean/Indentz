@@ -1,11 +1,11 @@
 /**
  * Appends a debugging line to a file saved on the desktop with the name of the running script
  * (e.g. `active-script.log`). If no arguments are given, it just appends an empty line.
- * @version 23.9.23
+ * @version 23.10.21
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} message - A list of messages (`part1`, `part2`, `part3`, etc.) that will be
- * displayed after the timestamp and the stack trace. The first argument can also be a statement:
+ * displayed after the timestamp and the stack trace. The first argument can also be a directive:
  * - `` (empty string): append to the previous line, without separator;
  * - `+`: append to the previous line, with separator;
  * - `!` and `?`: stopwatch start/elapsed time (note: there is a single timer);
