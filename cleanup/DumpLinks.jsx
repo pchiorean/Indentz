@@ -1,8 +1,13 @@
 /*
-	Dump links 23.9.23
+	Dump links 23.10.21
 	(c) 2023 Paul Chiorean <jpeg@basement.ro>
 
-	Saves document's links to a TSV file compatible with `ReplaceLinks.jsx`
+	Saves document's links to a TSV file compatible with `ReplaceLinks.jsx`:
+
+	Relink to                  | Links
+	/absolute/path/to/img1.psd
+	/absolute/path/to/img2.psd
+	...
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -29,7 +34,7 @@ dataFile = File(String(doc.filePath + '/' + doc.name).replace(/\.indd$/ig, '_lin
 dataFile.open('w');
 dataFile.encoding = 'UTF-8';
 dataFile.lineFeed = 'Unix';
-dataFile.writeln('Relink to\tDocument links'); // Header
+dataFile.writeln('Relink to\tLinks'); // Header
 
 links = doc.links.everyItem().getElements();
 linkS = (function () {

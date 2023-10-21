@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 23.10.8
+	Batch QR codes 23.10.21
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds codes to existing documents or to separate files in batch mode,
@@ -11,9 +11,9 @@
 	File 3_AC  | Code 3
 	...
 
-	<Filename>: document name
-	<Code>: any string
-	<On doc>: any string: on existing document; empty or missing: on separate file
+	<Filename>: document name;
+	<Code>: any string;
+	<On doc>: any string: on existing document; empty or missing: on separate file.
 
 	You can use `|` for manually splitting the label into several lines.
 

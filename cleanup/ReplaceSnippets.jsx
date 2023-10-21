@@ -1,5 +1,5 @@
 ﻿/*
-	Replace text snippets 23.10.6
+	Replace text snippets 23.10.21
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces a list of snippets using a 5-column TSV file named `snippets.tsv`:
@@ -11,18 +11,18 @@
 	12.06.22               | 13.11.2022
 	...
 
-	<Find what>: text to be replaced (you can use find and replace special characters)
-	<Change to>: the replacement text
-	<Case sensitive>: `yes` or `no` (defaults to `yes`)
-	<Whole word>: `yes` or `no` (defaults to `yes`)
-	<Scope>: replacement will only be done if the document name matches the regular expression (case sensitive)
+	<Find what>: text to be replaced (you can use find and replace special characters);
+	<Change to>: the replacement text;
+	<Case sensitive>: `yes` or `no` (defaults to `yes`);
+	<Whole word>: `yes` or `no` (defaults to `yes`);
+	<Scope>: replacement will only be done if the document name matches the regular expression (case sensitive).
 
 	The TSV file must be saved locally (in the active document folder or its parent) or as a global
 	default (on the desktop, next to the script, or in Indentz root); local files and those starting
 	with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
 	A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
 	or `@include path/to/another.tsv` for other data file. The path can be absolute, or by default
-	relative to the data file; a new default path can be set with `@includepath path/to`.
+	relative to the data file; a new default path can be set with `@includepath path/to/`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

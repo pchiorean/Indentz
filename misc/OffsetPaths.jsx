@@ -11,12 +11,12 @@
 	- Has an option for joining contours;
 	- Has undo.
 
-	Original version (c) 2020 Olav Martin Kvern.
+	Original version: (c) 2020 Olav Martin Kvern.
 	Distributed by Silicon Publishing, Inc.
 	https://creativepro.com/indesign-cad-tool/
 	https://www.siliconpublishing.com/blog/free-indesign-scripts/
 
-	2023/10/07 Paul Chiorean <jpeg@basement.ro>
+	This version: 2023/10/07 Paul Chiorean <jpeg@basement.ro>
 
 */
 

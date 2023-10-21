@@ -1,12 +1,12 @@
 ﻿/*
-	Replace fonts 23.10.6
+	Replace fonts 23.10.21
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces fonts using a 4-column TSV file named `fonts.tsv`:
 
-	Old font family | Style   | New font family       | Style
-	Arial           | Regular | Helvetica Neue        | Regular
-	Arial           | Bold    | Helvetica Neue        | Bold
+	Old font family | Style   | New font family | Style
+	Arial           | Regular | Helvetica Neue  | Regular
+	Arial           | Bold    | Helvetica Neue  | Bold
 	...
 
 	The TSV file must be saved locally (in the active document folder or its parent) or as a global
@@ -14,7 +14,7 @@
 	with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
 	A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
 	or `@include path/to/another.tsv` for other data file. The path can be absolute, or relative to
-	the data file; a default path can be set with `@includepath path/to`.
+	the data file; a default path can be set with `@includepath path/to/`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

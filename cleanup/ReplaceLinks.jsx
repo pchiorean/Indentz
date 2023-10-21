@@ -1,13 +1,13 @@
 /*
-	Replace links 23.10.6
+	Replace links 23.10.21
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces document links using a 2-column TSV file named `links.tsv`:
 
-	Relink to                   | Document links
-	/absolute/path/to/img1.psd  | img1_lowres.jpg, img1-rgb.*
-	img2.psd                    | img2.*
-	@includepath reference/path
+	Relink to                    | Links
+	/absolute/path/to/img1.psd   | img1_lowres.jpg, img1-rgb.*
+	img2.psd                     | img2.*
+	@includepath reference/path/
 	img3.psd
 	subfolder/img4.psd
 	...
@@ -15,20 +15,20 @@
 	<Relink to>:
 	- An absolute path of the form `/absolute/path/to/img1.psd`
 	- A relative path which is:
-		- relative (by default) to the document `Links` folder
-		- relative to `reference/path` defined by a previous `@includepath` statement
-			(`img3.psd` and `subfolder/img4.psd`)
-	<Document links>:
-	- One or more document link names separated by comma (`,`); it's case insensitive
-	  and can take simple wildcards (`?` and `*`)
-	- If empty, the name from the first column will be used
+	  - relative (by default) to the document `Links` folder
+	  - relative to `reference/path/` defined by a previous `@includepath` directive
+	    (`img3.psd` and `subfolder/img4.psd`)
+	<Links>: A list of file names separated by commas, that if present in the document, will be
+	replaced with the link from the first column; it's case insensitive and can take simple
+	wildcards (`?` and `*`). The script will also automatically match the file names from the
+	first column, thus 'Links' can be empty.
 
 	The TSV file must be saved locally (in the active document folder or its parent) or as a global
 	default (on the desktop, next to the script, or in Indentz root); local files and those starting
 	with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
 	A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
 	or `@include path/to/another.tsv` for other data file. The path can be absolute, or by default
-	relative to the data file; a new default path can be set with `@includepath path/to`.
+	relative to the data file; a new default path can be set with `@includepath path/to/`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

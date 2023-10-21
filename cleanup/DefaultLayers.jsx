@@ -1,5 +1,5 @@
 /*
-	Default layers 23.10.6
+	Default layers 23.10.21
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds/merges layers using a 6-column TSV file named `layers.tsv`:
@@ -10,20 +10,20 @@
 	.reference | Black   | no      | no        | bottom
 	...
 
-	<Name>: layer name
-	<Color>: layer color (defaults to Light Blue; see UIColors.txt for color names)
-	<Visible>: `yes` or `no` (defaults to `yes`)
-	<Printable>: `yes` or `no` (defaults to `yes`)
-	<Order>: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`)
+	<Name>: layer name;
+	<Color>: layer color (defaults to Light Blue; see UIColors.txt for color names);
+	<Visible>: `yes` or `no` (defaults to `yes`);
+	<Printable>: `yes` or `no` (defaults to `yes`);
+	<Order>: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`);
 	<Variants>: a list of layers separated by comma (`,`) that will be merged with the base layer
-		(case insensitive; `*` and `?` wildcards accepted)
+	(case insensitive; `*` and `?` wildcards accepted).
 
 	The TSV file must be saved locally (in the active document folder or its parent) or as a global
 	default (on the desktop, next to the script, or in Indentz root); local files and those starting
 	with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
 	A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
 	or `@include path/to/another.tsv` for other data file. The path can be absolute, or by default
-	relative to the data file; a new default path can be set with `@includepath path/to`.
+	relative to the data file; a new default path can be set with `@includepath path/to/`.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
