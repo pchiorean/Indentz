@@ -14,7 +14,7 @@
 - `08/05` [`fix`](https://github.com/pchiorean/Indentz/commit/632950b79926381ae88076bd94eac591bb551799)
   **lib/getFilesRecursively:** Fixed a missing backslash in the regex expression
 - `08/05` [`new`](https://github.com/pchiorean/Indentz/commit/f2ecc11eb80cf50bdd50ca7cc79730e03bf6ea5e)
-  **lib/log:** Added statements for start/end of blocks (`^` and `$`)
+  **lib/log:** Added directives for start/end of blocks (`^` and `$`)
 - `08/06` [`ref`](https://github.com/pchiorean/Indentz/commit/0f5e5c46bf55272edcd10a28a890f7c4f8fb3736)
   **export/QuickExport:** Tidy up; add some comments
 - `08/17` [`fix`](https://github.com/pchiorean/Indentz/commit/bbc94446bcbaded81ec592042e4398f6385b97b0)
@@ -37,7 +37,8 @@
 - `09/06` [`fix`](https://github.com/pchiorean/Indentz/commit/fe6dc8d64277a367c86f9d63feca006531eebf10)
   **export/QuickExport:** Do cleanup before displaying the report
 - `09/11` [`new`](https://github.com/pchiorean/Indentz/commit/a1500c1b6ee88e04ea79e57fa6420e966da0108c)
-  **misc/EAN:** Sequentially insert a list of barcodes into all selected objects; embedding is done differently, so the clipboard is no longer modified
+  **misc/EAN:** Sequentially insert a list of barcodes into all selected objects;
+  embedding is done by `contentPlace()` method, so the clipboard is no longer modified
 - `09/11` [`fix`](https://github.com/pchiorean/Indentz/commit/473ef02662d0f51dcd8f9c30d736c70719d23781)
   **view/ZoomToSelection, ZoomToSpreads:** Fixed the acceptable zoom range
 - `09/12` [`upd`](https://github.com/pchiorean/Indentz/commit/d58f5c3bf2a3dedef7e136fc800bedc85bfb0dd1)
@@ -46,9 +47,9 @@
   **cleanup/DefaultSwatches:** Added 'cXXmXXyXXkXX' as a default variant
 - `09/23` [`upd`](https://github.com/pchiorean/Indentz/commit/1cad44d2b866aa7f81a4e0646a9f3016914fa4fc)
           [`ref`](https://github.com/pchiorean/Indentz/commit/1f9cbe80447a5187c8c1425a223aef82bc6a5f3b)
-  **lib/isInArray:** Used regular matching if no wildcards
+  **lib/isInArray:** Skip regex matching when no wildcards
 - `09/23` [`new`](https://github.com/pchiorean/Indentz/commit/5a41bd99dea26be6bd649511fc42a65c358b801b)
-  **lib/log:** Added a stopwatch (`!`/`?`); changed statements for blocks to `[`/`]`
+  **lib/log:** Added a stopwatch (`!`/`?`); changed directives for blocks to `[`/`]`
 - `09/23` [`upd`](https://github.com/pchiorean/Indentz/commit/772c7aaeda9d637ee31039de5d28c353d02eee1e)
   **file/FilesToSpreads:** Used natural sorting for files
 - `09/23` [`fix`](https://github.com/pchiorean/Indentz/commit/c27c6887e2ea1d295e10193bfdae4122208eaab8)
@@ -64,13 +65,23 @@
 - `09/29` [`fix`](https://github.com/pchiorean/Indentz/commit/fbde0d900d87d2cfcbacb3b8ebd367cfa245ac07)
   **misc/EAN.jsx:** List height was supposed to grow depending on selection. Fixed.
 - `09/29` [`fix`](https://github.com/pchiorean/Indentz/commit/d54a2281a9b13128d765038a52c09dddca0ec9aa)
-  **export/QuickExport:** Skip export when missing fonts; skip when links are to be updated but are missing
+  **export/QuickExport:** Skip export when fonts are missing; skip when links are to be updated but are missing
 - `09/30` [`upd`](https://github.com/pchiorean/Indentz/commit/a0741e03051dd7bdd1e3a346e2f52117b4f94077)
-  **export/QuickExport:** Simplifies source updating to just 'Save' and 'Save as...' options; also fits spread in view
+  **export/QuickExport:** Simplifies source updating to just 'Save' and 'Save as...' options; also fit spread in view
 - `10/05` [`fix`](https://github.com/pchiorean/Indentz/commit/9a329ffaf729895085ded630de446224028b1ff3)
   **misc/EAN:** Placing code fails when target frames are already populated. Fixed
 - `10/06` [`fix`](https://github.com/pchiorean/Indentz/commit/d11e48a234812aa479c80d81b3c104231e08cf24)
-  **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links/Snippets:** Fixed a reporting bug caused by a previous change in `stat()` ('fail' ‣ 'error') which was not mirrored in 'data.status' (`9dfb241`)
+  **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links/Snippets:**
+  Fixed a reporting bug caused by a previous change in `stat()` ('fail' ‣ 'error') which was not mirrored in `data.status` (`9dfb241`)
+- `10/08` [`fix`](https://github.com/pchiorean/Indentz/commit/7cfb2abc8d277da5fc9388aeae065a60586fbf04)
+  **misc/QR, QRBatch:** Set fill/stroke explicitly, don't use defaults
+- `10/13` [`fix`](https://github.com/pchiorean/Indentz/commit/d19a9e1a2cb3c0888b3ac66dd50b6f77a8f2487a)
+  **fit/TextAutosize:** Removed exception for auto-resizing 'hw' text frames
+- `10/13` [`fix`](https://github.com/pchiorean/Indentz/commit/dca267531e311ff3a891e8d677a3831f52deb168)
+  **misc/Clip.jsx:** Fixed a typo from commit `bbc9444` that affected text frames clipping
+
+<!-- - `fix` **layout/Grid\*:** Don't create 'HW' layer/guide if not needed -->
+<!-- - `new` **ShowFonts** → **DumpFonts** -->
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -842,7 +853,7 @@
 
 - `fix` **cleanup/DocCleanup:** Exclude 'empty' text-on-path frames
 - `fix` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
-- `fix` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility; inhibit alert and report culprits at finish
+- `fix` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (for new layers respect **Preferences > File Handling " Links > Hide New layers When Updating or Relinking** setting); inhibit alert and report culprits at finish
 - `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `fix` **fit/TextAutoSize:** Check `baselineShift`
