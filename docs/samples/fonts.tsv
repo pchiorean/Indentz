@@ -15,4 +15,4 @@ Helvetica Neue LT Std 	75 Bold   	Helvetica Neue  	Bold
 # with `_` take precedence. Blank lines are ignored; everything after a `#` (comments) is ignored.
 # A line ending in `\` continues on the next line. Use `@defaults` to include the global default,
 # or `@include path/to/another.tsv` for other data file. The path can be absolute, or by default
-# relative to the data file; a new default path can be set with `@includepath path/to`.
+# relative to the data file; a new default path can be set with `@includepath path/to/`.
