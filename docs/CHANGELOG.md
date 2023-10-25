@@ -28,7 +28,7 @@
 - `08/29` [`upd`](https://github.com/pchiorean/Indentz/commit/6103d8cd5c77b0cc0507b287f5d28fba987882ba)
   **lib/log:** Improved folding block presentation
 - `09/04` [`fix`](https://github.com/pchiorean/Indentz/commit/ff5328e8772aec7258219ffd23c5235d7058cc51)
-  **export/QuickExport:** When 'Escape' was detected, we performed the cleanup but not the exit. Fixed.
+  **export/QuickExport:** When 'Escape' was detected, we performed the cleanup but not the exit; fixed
 - `09/04` [`new`](https://github.com/pchiorean/Indentz/commit/06b495d58ee34da17157e631311becd45f54e9b0)
           [`fix`](https://github.com/pchiorean/Indentz/commit/ddd2dedf4c73c89145692dddec285fed60dbb24e)
   **export/QuickExport:** Added an elapsed time alert at the end (for durations longer than 9 seconds)
@@ -63,13 +63,13 @@
 - `09/29` [`ref`](https://github.com/pchiorean/Indentz/commit/ba1f2d72ef172c67632b8e117a003dd8cbb6a21c)
   **cleanup/DocCleanup, ReplaceLinks; misc/EAN, QR, QRBatch:** Tweaked progress bar titles
 - `09/29` [`fix`](https://github.com/pchiorean/Indentz/commit/fbde0d900d87d2cfcbacb3b8ebd367cfa245ac07)
-  **misc/EAN.jsx:** List height was supposed to grow depending on selection. Fixed.
+  **misc/EAN.jsx:** List height was supposed to grow depending on selection; fixed
 - `09/29` [`fix`](https://github.com/pchiorean/Indentz/commit/d54a2281a9b13128d765038a52c09dddca0ec9aa)
   **export/QuickExport:** Skip export when fonts are missing; skip when links are to be updated but are missing
 - `09/30` [`upd`](https://github.com/pchiorean/Indentz/commit/a0741e03051dd7bdd1e3a346e2f52117b4f94077)
   **export/QuickExport:** Simplifies source updating to just 'Save' and 'Save as...' options; also fit spread in view
 - `10/05` [`fix`](https://github.com/pchiorean/Indentz/commit/9a329ffaf729895085ded630de446224028b1ff3)
-  **misc/EAN:** Placing code fails when target frames are already populated. Fixed
+  **misc/EAN:** Placing code fails when target frames are already populated; fixed
 - `10/06` [`fix`](https://github.com/pchiorean/Indentz/commit/d11e48a234812aa479c80d81b3c104231e08cf24)
   **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links/Snippets:**
   Fixed a reporting bug caused by a previous change in `stat()` ('fail' ‣ 'error') which was not mirrored in `data.status` (`9dfb241`)
@@ -79,8 +79,9 @@
   **fit/TextAutosize:** Removed exception for auto-resizing 'hw' text frames
 - `10/13` [`fix`](https://github.com/pchiorean/Indentz/commit/dca267531e311ff3a891e8d677a3831f52deb168)
   **misc/Clip.jsx:** Fixed a typo from commit `bbc9444` that affected text frames clipping
+- `10/25` [`fix`](https://github.com/pchiorean/Indentz/commit/0609efb24379ac9d772aa37438039162088aeb41)
+  **layout/Grid\*:** 'HW' layer and guide were created even when HW=0; fixed
 
-<!-- - `fix` **layout/Grid\*:** Don't create 'HW' layer/guide if not needed -->
 <!-- - `new` **ShowFonts** → **DumpFonts** -->
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
