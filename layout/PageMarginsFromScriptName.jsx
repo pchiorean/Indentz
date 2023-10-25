@@ -1,5 +1,5 @@
 /*
-	Page margins from script name 23.10.7
+	Page margins from script name 23.10.25
 	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
 
 	By default it sets the page margins to 5% of the visible/page area for
@@ -20,7 +20,7 @@ if (!(doc = app.activeDocument)) exit();
 app.doScript(grid, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Set margins');
 
 function grid() {
-	var guidesLayer, hwLayer, page, tgBounds, tgSize, MG, RE;
+	var oldActiveLayer, guidesLayer, hwLayer, page, tgBounds, tgSize, MG, RE;
 	var guidesLayerName = '.guides';
 	var hwLayerName = 'HW';
 	var MG_PCT = 5;
@@ -30,19 +30,18 @@ function grid() {
 	doc.guidePreferences.guidesLocked = false;
 	doc.guidePreferences.guidesShown = true;
 
+	// Deduce MG and HW from filename
+	RE = File($.fileName).name.match(/\d+/g); // Get all numbers
+	if (RE) { // We have at least 1 match
+		if (RE.length === 1) { // If 1 number, check if it should be MG or HW
+			if (/hw\d+/i.test(File($.fileName).name)) { HW_PCT = Number(RE[0]); } // HW is explicit => HW
+			else if (/hw(?!\d+)/i.test(File($.fileName).name)) { MG_PCT = Number(RE[0]); } // HW is implicit => MG
+			else { MG_PCT = Number(RE[0]); HW_PCT = 0; } // No HW => MG / zero HW
+		} else { MG_PCT = Number(RE[0]); HW_PCT = Number(RE[1]); } // First 2 numbers => MG / HW
+	} else if (!/hw/i.test(File($.fileName).name)) { HW_PCT = 0; } // No match => zero HW
+
 	// Add layers
-	hwLayer = doc.layers.item(hwLayerName);
-	if (hwLayer.isValid) {
-		hwLayer.properties = { visible: true, locked: false };
-	} else {
-		hwLayer = doc.layers.add({
-			name: hwLayerName,
-			layerColor: UIColors.LIGHT_GRAY,
-			visible: true,
-			printable: true,
-			locked: false
-		}).move(LocationOptions.AT_BEGINNING);
-	}
+	oldActiveLayer = doc.activeLayer;
 	guidesLayer = doc.layers.item(guidesLayerName);
 	if (guidesLayer.isValid) {
 		guidesLayer.properties = { visible: true, locked: false };
@@ -55,16 +54,21 @@ function grid() {
 			locked: false
 		}).move(LocationOptions.AT_BEGINNING);
 	}
-
-	// Deduce MG and HW from filename
-	RE = File($.fileName).name.match(/\d+/g); // Get all numbers
-	if (RE) { // We have at least 1 match
-		if (RE.length === 1) { // If 1 number, check if it should be MG or HW
-			if (/hw\d+/i.test(File($.fileName).name)) { HW_PCT = Number(RE[0]); } // HW is explicit => HW
-			else if (/hw(?!\d+)/i.test(File($.fileName).name)) { MG_PCT = Number(RE[0]); } // HW is implicit => MG
-			else { MG_PCT = Number(RE[0]); HW_PCT = 0; } // No HW => MG / zero HW
-		} else { MG_PCT = Number(RE[0]); HW_PCT = Number(RE[1]); } // First 2 numbers => MG / HW
-	} else if (!/hw/i.test(File($.fileName).name)) { HW_PCT = 0; } // No match => zero HW
+	if (HW_PCT > 0) {
+		hwLayer = doc.layers.item(hwLayerName);
+		if (hwLayer.isValid) {
+			hwLayer.properties = { visible: true, locked: false };
+		} else {
+			hwLayer = doc.layers.add({
+				name: hwLayerName,
+				layerColor: UIColors.LIGHT_GRAY,
+				visible: true,
+				printable: true,
+				locked: false
+			}).move(LocationOptions.BEFORE, guidesLayer);
+		}
+	}
+	doc.activeLayer = oldActiveLayer;
 
 	doc.guides.everyItem().remove();
 
@@ -87,6 +91,6 @@ function grid() {
 		// Common guides
 		addGuide(page, guidesLayer, 'h', tgBounds[0] + tgSize.height * (1 - HW_PCT / 100) / 2, 'middle', 'x');
 		addGuide(page, guidesLayer, 'v', tgBounds[1] + tgSize.width / 2, 'middle', 'x');
-		addGuide(page, hwLayer, 'h', tgBounds[0] + tgSize.height * (1 - HW_PCT / 100), 'hw', 's');
+		if (hwLayer) addGuide(page, hwLayer, 'h', tgBounds[0] + tgSize.height * (1 - HW_PCT / 100), 'hw', 's');
 	}
 }
