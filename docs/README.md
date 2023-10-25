@@ -8,9 +8,9 @@ The code is tested in Adobe InDesign CC 2020–2023 on Mac. I'm a graphic design
 
 Most scripts require at least one open document, and some require at least one object to be selected.
 
-**Visible area:** You will come across the term _visible area_ several times. This is a stroked frame that I use to mark the visible part of a layout for the client, and several scripts take it into account for certain actions. It can be created manually (just name it **\<visible area\>**), or can be automatically generated from the document name (or page margins); more details below.
+**Visible area:** You will come across the term _visible area_ several times. This is a stroked frame that I use to mark the visible part of a layout for the client, and several scripts take it into account for certain actions. It can be created manually (just label it **\<visible area\>**), or can be automatically generated from the document name (or page margins); more details below.
 
-**Data files:** Several scripts get their input from external TSV files, first looking for a _local_ one (in the current folder or the parent folder of the active document), then a _default_ one (on the desktop, next to the running script, or in the **`Indentz`** root). They also match local files starting with `_`, which take precedence.
+**Data files:** Several scripts get their input from external TSV files, first looking for a _local_ one (in the current folder or the parent folder of the active document), then a _default_ one (on the desktop, next to the running script, or in the **Indentz** root). They also match local files starting with `_`, which take precedence.
 
 These data files are regular TSVs with several non-standard features:
 
@@ -18,7 +18,7 @@ These data files are regular TSVs with several non-standard features:
 - The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) when creating/editing TSVs);
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 - A line may also be a directive:
-  - **`@includepath`** `reference/path/` – sets a reference folder for subsequent relative **`@include`** paths; it may be absolute or relative (if relative, it's always to the data file folder);
+  - **`@includepath`** `reference/path/` – sets a reference path for subsequent relative **`@include`** directives; it may be absolute or relative (if relative, it's always to the data file folder);
   - **`@include`** `path/to/another.tsv` – includes another TSV file at this position; the path may be absolute or relative (if relative and a `reference/path/` was not already defined, it also defaults to the data file folder);
   - **`@defaults`** – includes the global data file.
 
@@ -158,7 +158,7 @@ Replaces document links using a 2-columns [TSV data file](#preamble) named **`li
   - A relative path which is:
     - relative by default to the document **`Links`** folder (e.g., `img2.psd`);
     - relative to the `reference/path/` defined by a previous **`@includepath`** directive (e.g., `img3.psd` and `subfolder/img4.psd`).
-- **Links:** A list of file names separated by commas, that if present in the document, will be replaced with the link from the first column; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters). The script will also automatically match the _file names_ from the first column, thus **Links** can be empty – e.g., if `img4.psd` appears in the document, it will be replaced by the one in `subfolder/` (which is actually `reference/path/subfolder/`, because the **`@includepath`** redefines the reference folder).
+- **Links:** A list of file names separated by commas, that if present in the document, will be replaced with the link from the first column; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters). The script will also automatically match the _file names_ from the first column, thus **Links** can be empty – e.g., if `img4.psd` appears in the document, it will be replaced by the one in `subfolder/` (which is actually `reference/path/subfolder/`, because the **`@includepath`** above it redefines the reference path).
 
 You can use [**`DumpLinks.jsx`**](#dumplinksjsx) to save a list of links from the active document.
 

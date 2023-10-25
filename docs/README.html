@@ -29,8 +29,8 @@
 <p>The code is tested in Adobe InDesign CC 2020–2023 on Mac. I’m a graphic designer, not a programmer, so be prepared for oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though!).</p>
 <h2 id="preamble">Preamble </h2>
 <p>Most scripts require at least one open document, and some require at least one object to be selected.</p>
-<p><strong>Visible area:</strong> You will come across the term <em>visible area</em> several times. This is a stroked frame that I use to mark the visible part of a layout for the client, and several scripts take it into account for certain actions. It can be created manually (just name it <strong>&lt;visible area&gt;</strong>), or can be automatically generated from the document name (or page margins); more details below.</p>
-<p><strong>Data files:</strong> Several scripts get their input from external TSV files, first looking for a <em>local</em> one (in the current folder or the parent folder of the active document), then a <em>default</em> one (on the desktop, next to the running script, or in the <strong><code>Indentz</code></strong> root). They also match local files starting with <code>_</code>, which take precedence.</p>
+<p><strong>Visible area:</strong> You will come across the term <em>visible area</em> several times. This is a stroked frame that I use to mark the visible part of a layout for the client, and several scripts take it into account for certain actions. It can be created manually (just label it <strong>&lt;visible area&gt;</strong>), or can be automatically generated from the document name (or page margins); more details below.</p>
+<p><strong>Data files:</strong> Several scripts get their input from external TSV files, first looking for a <em>local</em> one (in the current folder or the parent folder of the active document), then a <em>default</em> one (on the desktop, next to the running script, or in the <strong>Indentz</strong> root). They also match local files starting with <code>_</code>, which take precedence.</p>
 <p>These data files are regular TSVs with several non-standard features:</p>
 <ul>
 <li>Blank lines are ignored; everything after a <code>#</code> is ignored (comments);</li>
@@ -38,7 +38,7 @@
 <li>A very long line can be broken into multiple lines with a backslash (<code>\</code>) added at the end of each segment.</li>
 <li>A line may also be a directive:
 <ul>
-<li><strong><code>@includepath</code></strong> <code>reference/path/</code> – sets a reference folder for subsequent relative <strong><code>@include</code></strong> paths; it may be absolute or relative (if relative, it’s always to the data file folder);</li>
+<li><strong><code>@includepath</code></strong> <code>reference/path/</code> – sets a reference path for subsequent relative <strong><code>@include</code></strong> directives; it may be absolute or relative (if relative, it’s always to the data file folder);</li>
 <li><strong><code>@include</code></strong> <code>path/to/another.tsv</code> – includes another TSV file at this position; the path may be absolute or relative (if relative and a <code>reference/path/</code> was not already defined, it also defaults to the data file folder);</li>
 <li><strong><code>@defaults</code></strong> – includes the global data file.</li>
 </ul>
@@ -320,7 +320,7 @@
 </li>
 </ul>
 </li>
-<li><strong>Links:</strong> A list of file names separated by commas, that if present in the document, will be replaced with the link from the first column; it’s case insensitive and can take simple wildcards (<code>?</code> for exactly one character and <code>*</code> for zero or more characters). The script will also automatically match the <em>file names</em> from the first column, thus <strong>Links</strong> can be empty – e.g., if <code>img4.psd</code> appears in the document, it will be replaced by the one in <code>subfolder/</code> (which is actually <code>reference/path/subfolder/</code>, because the <strong><code>@includepath</code></strong> redefines the reference folder).</li>
+<li><strong>Links:</strong> A list of file names separated by commas, that if present in the document, will be replaced with the link from the first column; it’s case insensitive and can take simple wildcards (<code>?</code> for exactly one character and <code>*</code> for zero or more characters). The script will also automatically match the <em>file names</em> from the first column, thus <strong>Links</strong> can be empty – e.g., if <code>img4.psd</code> appears in the document, it will be replaced by the one in <code>subfolder/</code> (which is actually <code>reference/path/subfolder/</code>, because the <strong><code>@includepath</code></strong> above it redefines the reference path).</li>
 </ul>
 <p>You can use <a href="#dumplinksjsx"><strong><code>DumpLinks.jsx</code></strong></a> to save a list of links from the active document.</p>
 <p><strong>Note:</strong> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
