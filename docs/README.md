@@ -15,14 +15,14 @@ Most scripts require at least one open document, and some require at least one o
 These data files are regular TSVs with several non-standard features:
 
 - Blank lines are ignored; everything after a `#` is ignored (comments);
-- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) when creating/editing TSVs);
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 - A line may also be a directive:
   - **`@includepath`** `reference/path/` – sets a reference folder for subsequent relative **`@include`** paths; it may be absolute or relative (if relative, it's always to the data file folder);
   - **`@include`** `path/to/another.tsv` – includes another TSV file at this position; the path may be absolute or relative (if relative and a `reference/path/` was not already defined, it also defaults to the data file folder);
   - **`@defaults`** – includes the global data file.
 
-**Libs:** Many scripts use dynamically linked functions from **`lib/`**, which means that the folder structure should be preserved after downloading the repository. If you download the [latest release](https://github.com/pchiorean/Indentz/releases), which is statically linked[^1], you can use any script stand-alone.
+**Libs:** Many scripts use dynamically linked functions from **`lib/`**, which means that the folder structure should be preserved after downloading the repository. If you download the [latest release](https://github.com/pchiorean/Indentz/releases), which is statically linked, you can use any script stand-alone[^1].
 
 ## The scripts
 
@@ -71,7 +71,7 @@ Sets some preferences for the active document. You should customize them to your
 ---
 
 #### **`DefaultLayers.jsx`**
-Adds a set of layers defined in a 6-columns TSV data file named **`layers.tsv`** ([sample](samples/layers.tsv)):
+Adds a set of layers defined in a 6-columns [TSV data file](#preamble) named **`layers.tsv`** ([sample](samples/layers.tsv)):
 
 | Name              | Color      | Visible | Printable | Order  | Variants                                           |
 |:------------------|:-----------|:--------|:----------|:-------|:---------------------------------------------------|
@@ -97,7 +97,7 @@ Adds a set of layers defined in a 6-columns TSV data file named **`layers.tsv`**
 ---
 
 #### **`DefaultSwatches.jsx`**
-Adds a set of swatches defined in a 5-columns TSV data file named **`swatches.tsv`** ([sample](samples/swatches.tsv)):
+Adds a set of swatches defined in a 5-columns [TSV data file](#preamble) named **`swatches.tsv`** ([sample](samples/swatches.tsv)):
 
 | Name             | Color Model | Color Space | Values       | Variants              |
 |:-----------------|:------------|:------------|:-------------|:----------------------|
@@ -125,7 +125,7 @@ You can use [**`DumpSwatches.jsx`**](#dumpswatchesjsx) to save a tab delimited l
 ---
 
 #### **`ReplaceFonts.jsx`**
-Replaces document fonts using a 4-columns TSV data file named **`fonts.tsv`** ([sample](samples/fonts.tsv)):
+Replaces document fonts using a 4-columns [TSV data file](#preamble) named **`fonts.tsv`** ([sample](samples/fonts.tsv)):
 
 | Old font family | Style   | New font family    | Style   |
 |:----------------|:--------|:-------------------|:--------|
@@ -140,7 +140,7 @@ You can use [**`ShowFonts.jsx`**](#showfontsjsx) from [**Miscellaneous**](#misce
 ---
 
 #### **`ReplaceLinks.jsx`**
-Replaces document links using a 2-columns TSV data file named **`links.tsv`** ([sample](samples/links.tsv)):
+Replaces document links using a 2-columns [TSV data file](#preamble) named **`links.tsv`** ([sample](samples/links.tsv)):
 
 | Relink to                            | Links                        |
 |:-------------------------------------|:-----------------------------|
@@ -169,7 +169,7 @@ You can use [**`DumpLinks.jsx`**](#dumplinksjsx) to save a list of links from th
 ---
 
 #### **`ReplaceSnippets.jsx`**
-Replaces a list of text snippets using a 5-columns TSV data file named **`snippets.tsv`** ([sample](samples/snippets.tsv)):
+Replaces a list of text snippets using a 5-columns [TSV data file](#preamble) named **`snippets.tsv`** ([sample](samples/snippets.tsv)):
 
 | Find what              | Change to                 | Case sensitive | Whole word | Scope |
 |:-----------------------|:--------------------------|:---------------|:-----------|:------|
@@ -480,7 +480,7 @@ You may use **`SpreadsToFiles.jsx`** to split the result into separate documents
 ### Export
 
 #### **`QuickExport.jsx`**
-For a long time, I exported documents to PDF with [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), Peter Kahrel's "Swiss army knife", but I needed a tool tailored to my specific needs. My workflow requires frequent changes to export settings, and I wanted to have direct access to some of them (the native export dialog has quite a few tabs and options!). There are two selectable workflows, with the options grouped into several categories. I'm only reviewing the ones that aren't self-explanatory:
+For a long time, I exported documents to PDF with [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), Peter Kahrel's "Swiss army knife", but I needed a tool tailored to my specific needs. My workflow requires frequent changes to export settings, and I wanted direct access to some of them (the native export dialog has quite a few tabs and options!). There are two selectable workflows, with the options grouped into several categories. I'm only reviewing the ones that aren't self-explanatory:
 
 ![Quick export](img/script-quickexport.png)
 ![](img/script-quickexport-legend.svg)
@@ -646,7 +646,7 @@ Adds a QR code on each spread of the active document (outside _visible area_, if
 |:-----------------------------------:|:--------------------------------:|
 | ![QR on document](img/qr-ondoc.png) | ![QR on file](img/qr-onfile.png) |
 
-If the document name ends with a _separator_ (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, the letter corresponding to the spread index will be appended to each code/file – e.g., for a document with three spreads named **`Document_ABC.indd`**, the script will generate **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`** and **`Document_C_QR.pdf`**.
+If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads (a _suffix_), the letter corresponding to the spread index will be appended to each code/file – e.g., for a document with three spreads named **`Document_ABC.indd`**, the script will generate **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`** and **`Document_C_QR.pdf`**.
 
 You can use `|` for manually splitting the label into several lines.
 
@@ -690,7 +690,9 @@ Shows all color profiles available to InDesign.
 ---
 
 #### **`ShowProperties.jsx`**
-Shows properties and methods of a selected object (for debugging purposes).
+Shows properties and methods of a selected object for debugging purposes.
+
+Inspired by [**showProps()**](https://github.com/grefel/indesignjs/blob/version2/Allgemeine_Skripte/EigenschaftenAnzeigen.jsx) by Gregor Fellenz and [**pub.inspect()**](https://github.com/basiljs/basil.js/blob/23b60f16f3088ae9df624d6d9a52a890114fcae0/src/includes/environment.js#L722) from basil.js.
 
 **Suggested shortcut:** `F1`
 
@@ -710,7 +712,7 @@ Thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2023 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: October 21, 2023</small>
+<small>Last updated: October 25, 2023</small>
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use every day, so it's kind of tested, but… beware. ;)
 
