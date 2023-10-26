@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 23.10.7
+	Document cleanup 23.10.26
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
@@ -66,6 +66,7 @@ app.doScript(function () {
 	while ((item = items.shift())) {
 		if (/Oval|Rectangle|Polygon/.test(item.constructor.name)
 				&& item.allPageItems.length === 0
+				&& item.textPaths.length === 0
 				&& item.strokeWeight === 0 && item.fillColor.name === 'None') {
 			if (delEmpty === undefined) delEmpty = confirm('Delete empty frames?');
 			if (delEmpty && !/\.?guides/.test(item.itemLayer.name)) item.remove();
