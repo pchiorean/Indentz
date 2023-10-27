@@ -8,7 +8,7 @@ Various functions used in many scripts from this project, linked using the `#inc
 
 Adds a custom ruler guide. I use it to make grids for several brands, for which I have a hard time remembering the properties of the different guide lines. With the `preset` parameter I can group guides in several types: symmetry axes, sections and subsections, product alignment and so on.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
@@ -23,7 +23,7 @@ Adds a custom ruler guide. I use it to make grids for several brands, for which 
 
 Sets a given text frame's vertical justification preference to align to bottom. Returns the text frame object.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
@@ -31,11 +31,11 @@ Sets a given text frame's vertical justification preference to align to bottom. 
 
 ## fitTo(_items, [scope], [target], [forced]_)
 
-Reframes the given items to the page/spread's (`scope`) size/margins/visible area/bleed (`target`). If an item is larger than the target, it will be reduced; if it is smaller but inside a 1% 'snap' area, it will be enlarged. Rectangular frames are simply reframed; rotated items, ovals, groups, etc. are inserted in a clipping frame that is reframed.
+Reframes the given items to the page/spread's _(scope)_ size/margins/visible area/bleed _(target)_. If an item is larger than the target, it will be reduced; if it is smaller but inside a 1% 'snap' area, it will be enlarged. Rectangular frames are simply reframed; rotated items, ovals, groups, etc. are inserted in a clipping frame that is reframed.
 
 **Note:** 'Visible area' is an area marked by one or more frames named `<visible area>` or labeled `visible area`. If margins or visible area are undefined, they fallback to page/spread size.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
@@ -44,7 +44,7 @@ Reframes the given items to the page/spread's (`scope`) size/margins/visible are
 |`[target]`|`string`|`size`|`size`, `margins`, `visible` or `bleed`. *(Optional.)*|
 |`[forced]`|`boolean`|`false`|When `true` it just reframes the object without any checks. *(Optional.)*|
 
-#### Example:
+**Example:**
 
 ```js
 fitTo(doc.selection, 'page', 'bleed'); // Fits the selected objects to the page bleed
@@ -64,13 +64,13 @@ app.doScript(
 
 Computes miscellaneous page boxes of a document page.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`page`|`object`|The target page.|
 
-#### Returns:
+**Returns:**
 
 An object containing the geometric bounds of `page` and its parent spread, and of their margins, visible/safety area and bleed, using the current measurement units:
 
@@ -95,7 +95,7 @@ An object containing the geometric bounds of `page` and its parent spread, and o
 
 **Note:** 'visible'/'safety' are areas marked by one or more frames named `<visible area>` or `<safety area>` (or labeled `visible area`/`safety area`). If margins or visible/safety areas are undefined, they fallback to page/spread size.
 
-#### Example:
+**Example:**
 
 ```js
 var pageSize      = getBounds(page).page.size;      // [ 0, 0, 297, 210 ]
@@ -118,7 +118,7 @@ bounds[scope][target]; // [ 20, 20, 277, 400 ]
 
 Recursively get files from a folder and its subfolders.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
@@ -126,16 +126,16 @@ Recursively get files from a folder and its subfolders.
 |`[subfolders]`|`boolean`|`false`|If `true`, include subfolders. (Optional.)|
 |`[extension]`|`string`|`any`|Extension to include; if undefined, will match any extension. You can combine multiple extensions with regex OR, i.e. `indd|tif|txt` (Optional.)|
 
-#### Returns:
+**Returns:**
 
 An array of found folders (as objects).
 
-#### Example:
+**Example:**
 
 ```js
 var files = getFilesRecursively(folder, true, "indd");
 for (var i = 0; i < files.length; i++) {
-	// Do something with each file
+    // Do something with each file
 }
 ```
 
@@ -146,13 +146,13 @@ Author: [William Campbell](https://community.adobe.com/t5/user/viewprofilepage/u
 
 Gets a page item's drop shadow properties.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`item`|`pageItem`|The page item from which we take properties.|
 
-#### Returns:
+**Returns:**
 
 The page item's drop shadow properties (`item.transparencySettings.dropShadowSettings`).
 
@@ -160,14 +160,14 @@ The page item's drop shadow properties (`item.transparencySettings.dropShadowSet
 
 Sets a page item's drop shadow properties from a set saved with `getDropShadow()`.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`item`|`pageItem`|The page item to which we apply properties.|
 |`set`|`object`|A previously saved `transparencySettings.dropShadowSettings` properties set.|
 
-#### Example:
+**Example:**
 
 ```js
 var shadow = getDropShadow(item1);
@@ -178,7 +178,7 @@ setDropShadow(item2, shadow);
 
 Gets a page item by name, optionally from a layer.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
@@ -186,7 +186,7 @@ Gets a page item by name, optionally from a layer.
 |`target`|`object`|A `Document`, `Spread`, `Page` or a `MasterSpread`.|
 |`[layer]`|`layer`|Only look for objects from this layer. *(Optional.)*|
 
-#### Returns:
+**Returns:**
 
 The first page item with the specified `name`, optionally from the specified `layer`.
 
@@ -194,7 +194,7 @@ The first page item with the specified `name`, optionally from the specified `la
 
 Detects the user scripts folder searching for the string 'Scripts Panel' in `$.includePath`, returning a string with the path followed by '/', or `undefined`.
 
-#### Example:
+**Example:**
 
 ```js
 $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
@@ -204,19 +204,19 @@ $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
 
 Matches a string against elements of an array.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
-|`searchValue`|`string`||String to be matched.|
+|`searchValue`|`string`||The string to be matched.|
 |`array`|`array`||An array of strings with optional wildcards: `*` (zero or more characters), `?` (any character).|
 |`[isCaseSensitive]`|`boolean`|`false`|If `true` the search is case sensitive. *(Optional.)*|
 
-#### Returns:
+**Returns:**
 
 Returns `true` for match, `false` for no match.
 
-#### Example:
+**Example:**
 
 ```js
 var searchValue = 'codes';
@@ -228,7 +228,7 @@ isInArray(searchValue, array) // True: matches 2nd array element
 
 Appends a debugging line to a file saved on the desktop with the name of the running script (e.g., `active-script.log`), containing a timestamp, a stack trace, and a message.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
@@ -238,12 +238,12 @@ Appends a debugging line to a file saved on the desktop with the name of the run
 Without arguments it just appends an empty line.
 
 The first argument can also be a directive:
-- `` (empty string): append to the previous line, without separator;
-- `+`: append to the previous line, with separator;
-- `!` and `?`: stopwatch start/elapsed time (note: this is a simple, global timer);
-- `[` and `]`: mark the start/end of a block.
+- `''` (empty string): appends `message` to the previous line, without separator;
+- `+`: appends `message` to the previous line, with separator;
+- `!` and `?`: starts stopwatch/displays elapsed time (note: this is a simple, global timer);
+- `[` and `]`: marks the start/end of a block.
 
-#### Example:
+**Example:**
 
 ```js
 log('Data file: \'' + decodeURI(dataFile.name) + '\'');
@@ -261,7 +261,7 @@ log('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
 
 Moves an item to another layer, optionally sending it to the front or back.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
@@ -291,38 +291,36 @@ asd12
 asd123
 ```
 
-#### Example:
+**Example:**
 
 ```js
 array = array.sort(naturalSorter);
 ```
 
-[Source](https://stackoverflow.com/questions/2802341/javascript-natural-sort-of-alphanumerical-strings/2802804#2802804).
+Author: [kennebec](https://stackoverflow.com/users/80860/kennebec) | [Source](https://stackoverflow.com/questions/2802341/javascript-natural-sort-of-alphanumerical-strings/2802804#2802804)
 
 ## parseDataFile(_dataFile_) ⇒ \{Object\}
 
 Reads a TSV (tab-separated-values) file.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`dataFile`|`File`||A tab-separated-values file (object).|
-|`[defaultName]`|`string|string[]`||Default data file name, or an array of file names (used for `@defaults`).|
+|`[defaultName]`|`string|string[]`||The default data file name, or an array of file names (used by `@defaults`).|
 
 These data files are regular TSVs with several non-standard features:
 
 - Blank lines are ignored; everything after a `#` is ignored (comments);
-- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) and [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv));
+- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) when creating/editing TSVs);
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
+- A line may also be a directive:
+  - **`@includepath`** `reference/path/` – sets a reference path for subsequent **`@include`** directives with relative paths; it may be absolute or relative (if relative, it's always to the data file folder);
+  - **`@include`** `path/to/another.tsv` – includes another TSV file at this position; the path may be absolute or relative (if relative and a `reference/path/` was not already defined, it also defaults to the data file folder);
+  - **`@defaults`** – includes the global data file.
 
-A line may also be a _directive_:
-
-- `@includepath` `reference/path/` – sets a reference folder for subsequent relative `@include` paths; it may be absolute or relative (if relative, it's always to the data file folder);
-- `@include` `path/to/other.tsv` – includes another TSV file at this position; the path may be absolute or relative (if relative and a `reference/path/` was not already defined, it also defaults to the data file folder);
-- `@defaults` – includes the global data file;
-
-#### Returns:
+**Returns:**
 
 An object containing the records found (strings) and parsing errors, built from the main file plus all included files, structured as follows:
 
@@ -337,7 +335,7 @@ An object containing the records found (strings) and parsing errors, built from 
 }
 ```
 
-#### Example:
+**Example:**
 
 ```js
 var file, d;
@@ -424,20 +422,20 @@ See, for example, `DefaultLayers.jsx` for an actual implementation.
 
 There are some additional functions in this file, one being:
 
-#### getDataFile(_dataFile, [skipLocal]_) ⇒ \{File\} | undefined
+### getDataFile(_dataFile, [skipLocal]_) ⇒ \{File\} | undefined
 
 Gets the first occurrence of a file from a list of predefined folders.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`dataFile`|`string`||A tab-separated-values file (name).|
 |`[skipLocal]`|`boolean`|false|If `true`, don't search locally. *(Optional.)*|
 
-#### Returns:
+**Returns:**
 
-The first occurrence of `dataFile`, first searching for a local one (in the current folder or the parent folder of the active document), then a default one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
+The first occurrence of `dataFile`, first searching for a _local_ one (in the current folder or the parent folder of the active document), then a _default_ one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
 
 - Local file:
 
@@ -454,66 +452,66 @@ The first occurrence of `dataFile`, first searching for a local one (in the curr
 
 Creates a palette with two progress bars and a message; the second bar may be used for microsteps (optional).
 
-#### var pb = new ProgressBar(_title, maxValue, [maxWidth]_)
+### var pb = new ProgressBar(_title, maxValue, [maxWidth]_)
 
-Initializes the palette. On creation you can set it's width to accomodate a given message length; if omitted, no message is shown (aka mini mode). The secondary progress bar is hidden by default.
+Initializes the palette. On creation you can set `maxWidth` to accomodate a given message length; if omitted, no message is shown (aka _mini mode_). The secondary progress bar is hidden by default.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
-|`title`|`string`|Palette title.|
-|`maxValue`|`number`|Number of steps for the main progress bar.|
+|`title`|`string`|The palette title.|
+|`maxValue`|`number`|The number of steps for the main progress bar.|
 |`[maxWidth]`|`number`|Maximum message length (characters). *(Optional.)*|
 
-#### pb.msg(_[message]_) *(Optional)*
+### pb.msg(_[message]_) *(Optional)*
 
 Updates the message. If omitted, the previous message is cleared.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
-|`[message]`|`string`|Message. *(Optional.)*|
+|`[message]`|`string`|The message. *(Optional.)*|
 
-#### pb.update()
+### pb.update()
 
-Increases the value of the main progress bar and updates the counter (not shown in mini mode). Also resets & hides the secondary progress bar.
+Increases the value of the main progress bar and updates the counter (not shown in _mini mode_). Also resets & hides the secondary progress bar.
 
-#### pb.init2(_maxValue2_) *(Optional)*
+### pb.init2(_maxValue2_) *(Optional)*
 
 Sets the number of steps for the secondary progress bar (shown only if the number is greater than 2).
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
-|`maxValue2`|`number`|Number of steps for the secondary progress bar.|
+|`maxValue2`|`number`|The number of steps for the secondary progress bar.|
 
-#### pb.update2() *(Optional)*
+### pb.update2() *(Optional)*
 
 Increases the value of the secondary progress bar.
 
-#### pb.close()
+### pb.close()
 
 Closes the progress bar.
 
-#### Example:
+**Example:**
 
-**Dual progress bar:**
+**Dual progress bars:**
 
 ```js
 var steps = 100;
 var steps2 = 10;
 var progressBar = new ProgressBar('Dual progress bar demo', steps, 50);
 for (var i = 0; i < steps; i++) {
-	progressBar.update();
-	progressBar.init2(steps2);
-	for (var j = 0; j < steps2; j++) {
-		progressBar.update2();
-		progressBar.msg('Main value is ' + (i+1) + '. Secondary value is ' + (j+1) + '/' + steps2 + '.');
-		if (i === 24 && j === 5) $.sleep(2500);
-	}
+    progressBar.update();
+    progressBar.init2(steps2);
+    for (var j = 0; j < steps2; j++) {
+        progressBar.update2();
+        progressBar.msg('Main value is ' + (i + 1) + '. Secondary value is ' + (j + 1) + '/' + steps2 + '.');
+        if (i === 24 && j === 5) $.sleep(2500);
+    }
 }
 progressBar.close();
 ```
@@ -526,9 +524,9 @@ progressBar.close();
 var steps = 100;
 var progressBar = new ProgressBar('Progress bar demo', steps, 50);
 for (var i = 0; i < steps; i++) {
-	progressBar.update();
-	progressBar.msg('Progress bar value is ' + (i+1) + '.');
-	if (i === 24) $.sleep(2500);
+    progressBar.update();
+    progressBar.msg('Progress bar value is ' + (i + 1) + '.');
+    if (i === 24) $.sleep(2500);
 }
 progressBar.close();
 ```
@@ -541,8 +539,8 @@ progressBar.close();
 var steps = 100;
 var progressBar = new ProgressBar('Mini progress bar demo', steps);
 for (var i = 0; i < steps; i++) {
-	progressBar.update();
-	if (i === 24) $.sleep(2500);
+    progressBar.update();
+    if (i === 24) $.sleep(2500);
 }
 progressBar.close();
 ```
@@ -553,18 +551,18 @@ progressBar.close();
 
 Replaces a link or a list of links with a different one. A selection limits the scope.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`oldLinks`|`string` \| `string[]`|A link name, or an array of link names to be replaced.|
-|`newLink`|`string`|New link name (if same folder), or full link path.|
+|`newLink`|`string`|The new link full path (of just the name if it's in the same folder).|
 
-#### Returns:
+**Returns:**
 
 Returns `true` if a replacement was made, `false` if not.
 
-#### Example:
+**Example:**
 
 ```js
 replaceLink('link1.jpg', 'link1.psd'); // Both links are in the same folder
@@ -576,19 +574,19 @@ replaceLink([ 'link1.jpg', 'link1.png' ], 'link1.psd');
 
 Replaces a swatch or a list of swatches with a different one. The new swatch is created only if values (CMYK) are provided and it doesn't already exist.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`oldNames`|`string` \| `string[]`|A swatch name, or an array of swatch names to be replaced.|
-|`newName`|`string`|New swatch name.|
+|`newName`|`string`|The new swatch name.|
 |`[newValues]`|`number[]`|Array of 4 values in 0-100 range (CMYK).|
 
-#### Returns:
+**Returns:**
 
 Returns `true` if a replacement was made, `false` if not.
 
-#### Example:
+**Example:**
 
 ```js
 replaceSwatch('Red', 'Blue'); // 'Blue' it's supposed to exist
@@ -600,19 +598,19 @@ replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 
 Replaces a text with another.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
-|`findWhat`|`string`||Text to be replaced.|
-|`changeTo`|`string`||New text.|
+|`findWhat`|`string`||The text to be replaced.|
+|`changeTo`|`string`||The new text.|
 |`[wholeWord]`|`boolean`|`true` |Match whole words. *(Optional.)*|
 
-#### Returns:
+**Returns:**
 
 Returns `true` if a replacement was made, `false` if not.
 
-#### Example:
+**Example:**
 
 ```js
 replaceText('11.10.', '13.12.2021');
@@ -624,16 +622,16 @@ replaceText('\\\\', '\u000A', false); // Replace '\\' with Forced Line Break
 Displays a message in a scrollable list with optional filtering and/or compact mode.
 Inspired by [this](http://web.archive.org/web/20100807190517/http://forums.adobe.com/message/2869250#2869250) snippet by Peter Kahrel.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
-|`message`|`string` \| `string[]`||Message to be displayed. Can be a string or a strings array.|
-|`[title]`|`string`|`''`|Dialog title. *(Optional.)*|
+|`message`|`string` \| `string[]`||The message to be displayed. Can be a string or a strings array.|
+|`[title]`|`string`|`''`|The dialog title. *(Optional.)*|
 |`[showFilter]`|`boolean` \| `'auto'`|`false`|If `true` it shows a filtering field; `auto` shows it automatically if there are more than 20 lines. Optional wildcards: `?` (any character), space and `*` (AND), `\|` (OR). *(Optional.)*|
 |`[showCompact]`|`boolean`|`false`|If `true` duplicates are removed and the message is sorted. *(Optional.)*|
 
-#### Example:
+**Example:**
 
 ```js
 report(message, 'Sample alert');
@@ -655,15 +653,15 @@ Saves/restores some properties ('locked', 'printable', 'visible') of all layers 
 
 Truncates a string to a certain length, preserving it's end and replacing the first part with an ellipsis.
 
-#### Parameters:
+**Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`str`|`string`|The string.|
-|`length`|`number`|The length.|
+|`length`|`number`|The desired length.|
 
 ## unique(_array_) ⇒ _array_
 
 Returns an array containing only the unique elements of the original array.
 
-[Source](http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/)
+Author: [Marc Autret](https://www.indiscripts.com) | [Source](http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/)

@@ -8,7 +8,7 @@ The code is tested in Adobe InDesign CC 2020–2023 on Mac. I'm a graphic design
 
 Most scripts require at least one open document, and some require at least one object to be selected.
 
-**Visible area:** You will come across the term _visible area_ several times. This is a stroked frame that I use to mark the visible part of a layout for the client, and several scripts take it into account for certain actions. It can be created manually (just label it **\<visible area\>**), or can be automatically generated from the document name (or page margins); more details below.
+**Visible area:** You will come across the term _visible area_ several times. This is a stroked frame that I use to mark the visible part of a layout for the client, and several scripts take it into account for certain actions. It can be created manually (just rename it **\<visible area\>**), or can be automatically generated from the document name (or page margins); more details below.
 
 **Data files:** Several scripts get their input from external TSV files, first looking for a _local_ one (in the current folder or the parent folder of the active document), then a _default_ one (on the desktop, next to the running script, or in the **Indentz** root). They also match local files starting with `_`, which take precedence.
 
@@ -18,9 +18,9 @@ These data files are regular TSVs with several non-standard features:
 - The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) when creating/editing TSVs);
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 - A line may also be a directive:
-  - **`@includepath`** `reference/path/` – sets a reference path for subsequent relative **`@include`** directives; it may be absolute or relative (if relative, it's always to the data file folder);
+  - **`@includepath`** `reference/path/` – sets a reference path for subsequent **`@include`** directives with relative paths; it may be absolute or relative (if relative, it's always to the data file folder);
   - **`@include`** `path/to/another.tsv` – includes another TSV file at this position; the path may be absolute or relative (if relative and a `reference/path/` was not already defined, it also defaults to the data file folder);
-  - **`@defaults`** – includes the global data file.
+  - **`@defaults`** – includes the default data file.
 
 **Libs:** Many scripts use dynamically linked functions from **`lib/`**, which means that the folder structure should be preserved after downloading the repository. If you download the [latest release](https://github.com/pchiorean/Indentz/releases), which is statically linked, you can use any script stand-alone[^1].
 
@@ -574,7 +574,7 @@ Zooms current layout window to 300%.
 ---
 
 #### **`ZoomToSelection.jsx`**
-It resembles **Fit Selection in Window** **<small>(⌥⌘=)</small>**, but:
+It resembles **Fit Selection in Window** (`⌥⌘=`), but:
 
 - It brings the selection a little closer;
 - If the cursor is in a text frame, zooms on the whole frame;
@@ -712,7 +712,7 @@ Thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2023 Paul Chiorean \<jpeg AT basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: October 25, 2023</small>
+<small>Last updated: October 27, 2023</small>
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use every day, so it's kind of tested, but… beware. ;)
 
