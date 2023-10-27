@@ -1,5 +1,5 @@
 /*
-	Generate EAN Codes 23.10.5
+	Generate EAN Codes 23.10.27
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Inserts EAN codes into the selected frames or in a new document.
@@ -73,7 +73,7 @@ function main() {
 			ui.extOnTop = ui.options.add('checkbox { text: "Put addon text on top" }');
 			ui.extOnTop.value = false;
 	ui.actions = ui.add('group { alignChildren: [ "fill", "top" ], orientation: "column" }');
-		ui.ok = ui.actions.add('button { text: "Ok" }');
+		ui.ok = ui.actions.add('button { text: "OK" }');
 		ui.actions.add('button { text: "Cancel" }');
 
 	ui.code.onChanging = function () {

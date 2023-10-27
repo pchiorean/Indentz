@@ -1,5 +1,5 @@
 /*
-	Align to center 23.10.7
+	Align to center 23.10.27
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Aligns the selected objects to the center of the 'Align To' setting.
@@ -121,7 +121,7 @@ function main(selection) {
 			ui.actions = ui.add('group', undefined, { name: 'actions' });
 			ui.actions.orientation = 'column';
 			ui.actions.alignChildren = [ 'fill', 'top' ];
-				ui.actions.add('button { text: "Ok" }');
+				ui.actions.add('button { text: "OK" }');
 				ui.actions.add('button { text: "Cancel" }');
 
 			ui.onShow = function () {

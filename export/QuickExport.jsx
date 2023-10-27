@@ -1,5 +1,5 @@
 /*
-	Quick export 23.9.30
+	Quick export 23.10.27
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -930,7 +930,7 @@ function QuickExport() {
 						w.actions.reset = w.actions.add('button { text: "Reset", preferredSize: [ 80, 24 ] }');
 						w.actions.add('group').preferredSize.width = 50;
 						w.actions.add('button { text: "Cancel", preferredSize: [ 80, 24 ] }');
-						w.actions.ok = w.actions.add('button { text: "Ok", preferredSize: [ 80, 24 ] }');
+						w.actions.ok = w.actions.add('button { text: "OK", preferredSize: [ 80, 24 ] }');
 
 					w.list.onDeactivate = function () {
 						w.list.text = w.list.text
