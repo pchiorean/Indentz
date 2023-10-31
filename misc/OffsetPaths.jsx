@@ -1,5 +1,5 @@
 /*
-	Offset paths 23.10.7
+	Offset paths 23.10.31
 
 	Use InDesign's text wrap feature to create offset/inset paths.
 
@@ -16,19 +16,20 @@
 	https://creativepro.com/indesign-cad-tool/
 	https://www.siliconpublishing.com/blog/free-indesign-scripts/
 
-	This version: 2023/10/07 Paul Chiorean <jpeg@basement.ro>
-
+	This version: 2023/10/31 Paul Chiorean <jpeg@basement.ro>
 */
 
 /* eslint-disable no-with */
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Offset paths');
+// app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Offset paths');
+main(doc.selection);
 
 function main(selection) {
-	var i, ui, joinContours, offsetField, offset;
+	var i, j, ui, offsetField, offset, groupItems;
 	var paths = [];
+	var groupPaths = [];
 	var old = {
 		MU:  app.scriptPreferences.measurementUnit,
 		UIL: app.scriptPreferences.userInteractionLevel
@@ -58,32 +59,49 @@ function main(selection) {
 		}
 		with (ui.dialogColumns.add()) { '' }
 	}
+
 	if (ui.show()) {
 		offset = offsetField.editValue;
-		joinContours = joinCB.checkedState;
-		for (i = 0; i < selection.length; i++) paths.push(offsetPath(selection[i]));
-		if (joinContours && paths.length > 1) paths = (paths.shift()).addPath(paths);
+		for (i = 0; i < selection.length; i++) {
+			// We process each member of a group so we don't get a boring rectangle
+			if (selection[i].constructor.name === 'Group') {
+				groupItems = selection[i].pageItems.everyItem().getElements();
+				groupPaths = [];
+				for (j = 0; j < groupItems.length; j++) groupPaths.push(offsetPath(groupItems[j]));
+				if (groupPaths.length > 1) groupPaths = (groupPaths.shift()).addPath(groupPaths);
+				paths.push(groupPaths);
+			} else {
+				paths.push(offsetPath(selection[i]));
+			}
+		}
+		if (joinCB.checkedState && paths.length > 1) paths = (paths.shift()).addPath(paths);
 		app.select(paths);
 	}
+
 	ui.destroy();
 	app.scriptPreferences.measurementUnit = old.MU;
 	app.scriptPreferences.userInteractionLevel = old.UIL;
 
 	function offsetPath(item) {
-		var i, tmpItem, wrapPaths, newPath;
-		tmpItem = item.duplicate();
-		if (tmpItem.contentType === ContentType.GRAPHIC_TYPE && tmpItem.graphics.length === 1)
-			tmpItem.pageItems[0].remove();
-		tmpItem.textWrapPreferences.textWrapMode = TextWrapModes.CONTOUR;
-		tmpItem.textWrapPreferences.textWrapOffset = [ offset, offset, offset, offset ];
-		wrapPaths = tmpItem.textWrapPreferences.paths;
-		newPath = tmpItem.parent.polygons.add();
+		var i, ghostItem, wrapPaths, newPath;
+
+		// We process a duplicate of the object, stripped of content
+		ghostItem = item.duplicate();
+		if (ghostItem.pageItems.length > 0 && ghostItem.constructor.name !== 'Group')
+			ghostItem.pageItems.everyItem().remove();
+
+		ghostItem.textWrapPreferences.textWrapMode = TextWrapModes.CONTOUR;
+		ghostItem.textWrapPreferences.textWrapOffset = [ offset, offset, offset, offset ];
+		wrapPaths = ghostItem.textWrapPreferences.paths;
+		newPath = ghostItem.parent.polygons.add();
+
 		for (i = 0; i < wrapPaths.length; i++) {
 			if (i > 0) newPath.paths.add();
 			newPath.paths.item(i).pathType   = wrapPaths.item(i).pathType;
 			newPath.paths.item(i).entirePath = wrapPaths.item(i).entirePath;
 		}
-		tmpItem.remove();
+		ghostItem.remove();
+
 		return newPath;
 	}
 }
