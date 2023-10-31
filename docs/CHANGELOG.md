@@ -81,8 +81,12 @@
   **misc/Clip.jsx:** Fixed a typo from commit `bbc9444` that affected text frames clipping
 - `10/25` [`fix`](https://github.com/pchiorean/Indentz/commit/0609efb24379ac9d772aa37438039162088aeb41)
   **layout/Grid\*:** 'HW' layer and guide were created even when HW=0; fixed
-
-<!-- - `new` **ShowFonts** → **DumpFonts** -->
+- `10/26` [`fix`](https://github.com/pchiorean/Indentz/commit/893672b79fd99ea654e49f0297e1f840b6bc0675)
+  **cleanup/DocCleanup:** Don't delete text paths on empty frames
+- `10/27` [`ref`](https://github.com/pchiorean/Indentz/commit/0cd95a9e13072b7c9046ea46e3680960a6f2c5d2)
+  UI: Changed button labels from 'Ok' to 'OK'
+- `10/31` [`new`](https://github.com/pchiorean/Indentz/commit/1574bc6fbd3dfba3af8b098f6d3f22c0f613b71c)
+  **misc/OffsetPaths:** Added support for groups; in fact we process each member of 1st level groups so we don't get a boring rectangle
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -805,6 +809,7 @@
 ##### New features
 
 - `new` **lib/replaceLink:** Add page parameter
+- `brk` `?` **cleanup/DefaultLayers:** Add column for locked status
 - `new` **cleanup/DefaultSwatches:** Add groups support
 - `new` **cleanup/DefaultSwatches:** Add gradients support
 - `new` **cleanup/DefaultSwatches:** Add tints support
@@ -813,6 +818,7 @@
 - `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
 - `new` **export/QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
 - `new` **file/SpreadsToLayers**
+- `new` **misc/ShowFonts** → **cleanup/DumpFonts**
 - `new` Add an '.ini' file for user global settings
 - `new` 'Send selection to layer...'
 - `new` `?` **file/LayersToFiles**
@@ -845,21 +851,19 @@
 - `upd` **lib/report:** Make window resizable
 - `upd` Change title to 'Canceling, please wait...' when canceling batch processes
 - `upd` Use a custom object style for `<visible area>` frame
-- `brk` `?` **cleanup/DefaultLayers:** Add column for locked status
 - `upd` `?` JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
 
 ##### Removed features
 
 ##### Bug fixes
 
-- `fix` **cleanup/DocCleanup:** Exclude 'empty' text-on-path frames
 - `fix` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
-- `fix` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (for new layers respect **Preferences > File Handling " Links > Hide New layers When Updating or Relinking** setting); inhibit alert and report culprits at finish
+- `fix` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (for new layers respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking** setting); inhibit alert and report culprits at finish
 - `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `fix` **fit/TextAutoSize:** Check `baselineShift`
-- `fix` **layout/PageSizeFromFilename:** Fix errors on pages set to 1:X scale
 - `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
+- `fix` **layout/PageSizeFromFilename:** Fix errors on pages set to 1:X scale
 - `fix` Nullify large variables on exit
 - `fix` Fix `ui.onShow()` vertical dialog positioning
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
