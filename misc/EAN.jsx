@@ -1,5 +1,5 @@
 /*
-	Generate EAN Codes 23.10.27
+	Generate EAN Codes 23.10.31
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Inserts EAN codes into the selected frames or in a new document.
@@ -253,14 +253,15 @@ function main() {
 
 	/**
 	 * Makes an EAN-8, EAN-13, EAN-13+2, EAN-13+5 barcode on the current page
-	 * Taken from 'EAN Barcode Generator' (2013-11-21) by Konstantin Smorodsky
+	 * Adapted from 'EAN Barcode Generator' (2013-11-21) by Konstantin Smorodsky
 	 * https://github.com/smorodsky/ean-barcode-generator
 	 *
-	 * Changes by Paul Chiorean <jpeg@basement.ro>:
-	 * - Refactored functions.
-	 * - Return the barcode embedded in a frame;
-	 * @version 23.9.8-PC
+	 * Changes:
+	 * - Refactored functions;
+	 * - Returns the barcode embedded in a frame.
 	 * @author Konstantin Smorodsky
+	 * @contributor Paul Chiorean <jpeg@basement.ro>
+	 * @version 23.9.8-PC
 	 * @license MIT
 	 * @param {String} code - A string of 9 or 13 digits for the code.
 	 * @param {String} ext - A string of 0, 2 or 5 digits for the add-on.
