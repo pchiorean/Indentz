@@ -1,5 +1,5 @@
 /*
-	Fit frame to text 23.10.13
+	Fit frame to text 23.11.4
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Auto-sizes the text frame to the content from 'None' to 'Height Only' to 'Height and Width'
@@ -34,6 +34,8 @@ if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Fit frame to text');
 
 function main(selection) {
+	var old = {};
+
 	if (Object.prototype.hasOwnProperty.call(selection[0], 'parentTextFrames'))
 		selection = selection[0].parentTextFrames;
 
@@ -44,18 +46,27 @@ function main(selection) {
 		} else if (selection[i].constructor.name === 'TextFrame') { fitFrame2Text(selection[i]); }
 	}
 
-	function fitFrame2Text(frame) {
+	function fitFrame2Text(/*TextFrame*/frame) {
 		var align;
 		var ASR = AutoSizingReferenceEnum;
 		var VJ = VerticalJustification;
-		var old = {
-			AST: frame.textFramePreferences.autoSizingType,
+		old = {
+			AST:  frame.textFramePreferences.autoSizingType,
 			ASRP: frame.textFramePreferences.autoSizingReferencePoint
 		};
 
-		// Trim ending whitespace
-		if (!frame.overflows && /\s+$/g.test(frame.contents) && !frame.nextTextFrame)
-			frame.contents = frame.contents.replace(/\s+$/g, '');
+		// Trim ending whitespace (using Find/Change GREP to preserve text styling)
+		if (!frame.overflows
+				&& /\s+$/g.test(frame.contents)
+				&& !frame.previousTextFrame && !frame.nextTextFrame) {
+			old.findWhat = app.findGrepPreferences.findWhat;
+			old.changeTo = app.changeGrepPreferences.changeTo;
+			app.findGrepPreferences.findWhat   = '\\s+$';
+			app.changeGrepPreferences.changeTo = '';
+			frame.changeGrep();
+			app.findGrepPreferences.findWhat   = old.findWhat;
+			app.changeGrepPreferences.changeTo = old.changeTo;
+		}
 
 		// Disable hyphenation for single lines
 		if (!frame.overflows && frame.lines.length === 1) frame.lines[0].hyphenation = false;
