@@ -2,7 +2,7 @@
 	Tile all 23.2.22
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
-	Invokes different window tiling options, depending on current spread orientation.
+	Invokes different window tiling options, depending on the current spread orientation.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
