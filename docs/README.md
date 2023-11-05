@@ -1,16 +1,14 @@
 # Indentz
 
-This is a collection of InDesign scripts that I use to improve my DTP workflow, which often involves repetitive, tedious, or time-consuming operations. The scripts are not designed for long documents with flowing text, because I usually work with single-page documents. With few exceptions, these are simple scripts, with minimal interaction, and, apart from warnings, do their job silently. I use a series of [keyboard shortcuts](https://creativepro.com/assigning-keyboard-shortcuts-scripts/) to run them (suggestions below).
+This is a collection of InDesign scripts that I use to improve my DTP workflow, which often involves repetitive, tedious, or time-consuming operations. The scripts are not designed for long documents with flowing text, because I usually work with single-page documents. With few exceptions, these are simple scripts, with minimal interaction, and, apart from warnings, do their job silently. I use a series of [keyboard shortcuts](https://creativepro.com/assigning-keyboard-shortcuts-scripts/) to run them (suggestions below). The code is tested in Adobe InDesign CC 2020–2024 on Mac.
 
-The code is tested in Adobe InDesign CC 2020–2023 on Mac. I'm a graphic designer, not a programmer, so be prepared for oversights and bugs (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
+I'm a graphic designer, not a programmer (I started doing this at the beginning of the Covid-19 pandemic), so be prepared for bugs and oversights (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
 ## Preamble
 
 Most scripts require at least one open document, and some require at least one object to be selected.
 
-**Visible area:** You will come across the term _visible area_ several times. This is a stroked frame that I use to mark the visible part of a layout for the client, and several scripts take it into account for certain actions. It can be created manually (just rename it **\<visible area\>**), or can be automatically generated from the document name (or page margins); more details below.
-
-**Data files:** Several scripts get their input from external TSV files, first looking for a _local_ one (in the current folder or the parent folder of the active document), then a _default_ one (on the desktop, next to the running script, or in the **Indentz** root). They also match local files starting with `_`, which take precedence.
+<span id="tsv">**Data files:**</span> Several scripts get their input from external TSV files, first looking for a _local_ one (in the current folder or the parent folder of the active document), then a _default_ one (on the desktop, next to the running script, or in the **Indentz** root). They also match local files starting with `_`, which take precedence.
 
 These data files are regular TSVs with several non-standard features:
 
@@ -21,6 +19,8 @@ These data files are regular TSVs with several non-standard features:
   - **`@includepath`** `reference/path/` – sets a reference path for subsequent **`@include`** directives with relative paths; it may be absolute or relative (if relative, it's always to the data file folder);
   - **`@include`** `path/to/another.tsv` – includes another TSV file at this position; the path may be absolute or relative (if relative and a `reference/path/` was not already defined, it also defaults to the data file folder);
   - **`@defaults`** – includes the default data file.
+
+**Visible area:** You will come across the term _visible area_ several times. This is a stroked frame that I use to mark the visible part of a layout for the client, and several scripts take it into account for certain actions. It can be created manually (just rename it **\<visible area\>**), or can be automatically generated from the document name (or page margins); more details below.
 
 **Libs:** Many scripts use dynamically linked functions from **`lib/`**, which means that the folder structure should be preserved after downloading the repository. If you download the [latest release](https://github.com/pchiorean/Indentz/releases), which is statically linked, you can use any script stand-alone[^1].
 
@@ -71,7 +71,7 @@ Sets some preferences for the active document. You should customize them to your
 ---
 
 #### **`DefaultLayers.jsx`**
-Adds a set of layers defined in a 6-columns [TSV data file](#preamble) named **`layers.tsv`** ([sample](samples/layers.tsv)):
+Adds a set of layers defined in a 6-columns [TSV data file](#tsv) named **`layers.tsv`** ([sample](samples/layers.tsv)):
 
 | Name              | Color      | Visible | Printable | Order  | Variants                                           |
 |:------------------|:-----------|:--------|:----------|:-------|:---------------------------------------------------|
@@ -92,12 +92,12 @@ Adds a set of layers defined in a 6-columns [TSV data file](#preamble) named **`
 - **Order**: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`);
 - **Variants**: A list of layers separated by commas that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters).
 
-**Note:** The script will display a report if run while holding down the **Ctrl** key.
+_Tip:_ The script will display a report if run while holding down the **Ctrl** key.
 
 ---
 
 #### **`DefaultSwatches.jsx`**
-Adds a set of swatches defined in a 5-columns [TSV data file](#preamble) named **`swatches.tsv`** ([sample](samples/swatches.tsv)):
+Adds a set of swatches defined in a 5-columns [TSV data file](#tsv) named **`swatches.tsv`** ([sample](samples/swatches.tsv)):
 
 | Name             | Color Model | Color Space | Values       | Variants              |
 |:-----------------|:------------|:------------|:-------------|:----------------------|
@@ -118,14 +118,14 @@ Adds a set of swatches defined in a 5-columns [TSV data file](#preamble) named *
   - 3 values in 0–100 (L), –128–127 (A and B) range for Lab.
 - **Variants**: a list of swatches separated by commas that will be replaced by the base swatch; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters).
 
-You can use [**`DumpSwatches.jsx`**](#dumpswatchesjsx) to save a tab delimited list of swatches from the active document.
+_Tip:_ The script will display a report if run while holding down the **Ctrl** key.
 
-**Note:** The script will display a report if run while holding down the **Ctrl** key.
+_Tip:_ You can use [**`DumpSwatches.jsx`**](#dumpswatchesjsx) to save a tab delimited list of swatches from the active document.
 
 ---
 
 #### **`ReplaceFonts.jsx`**
-Replaces document fonts using a 4-columns [TSV data file](#preamble) named **`fonts.tsv`** ([sample](samples/fonts.tsv)):
+Replaces document fonts using a 4-columns [TSV data file](#tsv) named **`fonts.tsv`** ([sample](samples/fonts.tsv)):
 
 | Old font family | Style   | New font family    | Style   |
 |:----------------|:--------|:-------------------|:--------|
@@ -133,14 +133,14 @@ Replaces document fonts using a 4-columns [TSV data file](#preamble) named **`fo
 | **Arial**       | Bold    | **Helvetica Neue** | Bold    |
 | ...             |         |                    |         |
 
-You can use [**`ShowFonts.jsx`**](#showfontsjsx) from [**Miscellaneous**](#miscellaneous) to get a tab delimited list of document fonts.
+_Tip:_ The script will display a report if run while holding down the **Ctrl** key.
 
-**Note:** The script will display a report if run while holding down the **Ctrl** key.
+_Tip:_ You can use [**`ShowFonts.jsx`**](#showfontsjsx) from [**Miscellaneous**](#miscellaneous) to get a tab delimited list of document fonts.
 
 ---
 
 #### **`ReplaceLinks.jsx`**
-Replaces document links using a 2-columns [TSV data file](#preamble) named **`links.tsv`** ([sample](samples/links.tsv)):
+Replaces document links using a 2-columns [TSV data file](#tsv) named **`links.tsv`** ([sample](samples/links.tsv)):
 
 | Relink to                            | Links                        |
 |:-------------------------------------|:-----------------------------|
@@ -160,16 +160,16 @@ Replaces document links using a 2-columns [TSV data file](#preamble) named **`li
     - relative to the `reference/path/` defined by a previous **`@includepath`** directive (e.g., `img3.psd` and `subfolder/img4.psd`).
 - **Links:** A list of file names separated by commas, that if present in the document, will be replaced with the link from the first column; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters). The script will also automatically match the _file names_ from the first column, thus **Links** can be empty – e.g., if `img4.psd` appears in the document, it will be replaced by the one in `subfolder/` (which is actually `reference/path/subfolder/`, because the **`@includepath`** above it redefines the reference path).
 
-You can use [**`DumpLinks.jsx`**](#dumplinksjsx) to save a list of links from the active document.
+_Tip:_ The script will display a report if run while holding down the **Ctrl** key.
 
-**Note:** The script will display a report if run while holding down the **Ctrl** key.
+_Tip:_ You can use [**`DumpLinks.jsx`**](#dumplinksjsx) to save a list of links from the active document.
 
-**Suggested shortcut:** `⌥F8`
+_Suggested shortcut:_ `⌥F8`
 
 ---
 
 #### **`ReplaceSnippets.jsx`**
-Replaces a list of text snippets using a 5-columns [TSV data file](#preamble) named **`snippets.tsv`** ([sample](samples/snippets.tsv)):
+Replaces a list of text snippets using a 5-columns [TSV data file](#tsv) named **`snippets.tsv`** ([sample](samples/snippets.tsv)):
 
 | Find what              | Change to                 | Case sensitive | Whole word | Scope |
 |:-----------------------|:--------------------------|:---------------|:-----------|:------|
@@ -187,18 +187,18 @@ Replaces a list of text snippets using a 5-columns [TSV data file](#preamble) na
 - **Whole word**: `yes` or `no` (defaults to `yes`);
 - **Scope**: Replacement will only be done if the document name matches the [regular expression](https://regex101.com) (case sensitive).
 
-For example, 'The sample is for free' will be replaced with 'Das Sample ist kostenlos' in **`Document_DE.indd`**, and with 'L'échantillon est gratuit' in **`Document_FR.indd`**.
+**Example:** 'The sample is for free' will be replaced with 'Das Sample ist kostenlos' in **`Document_DE.indd`**, and with 'L'échantillon est gratuit' in **`Document_FR.indd`**.
 
-**Note:** The script will display a report if run while holding down the **Ctrl** key.
+_Tip:_ The script will display a report if run while holding down the **Ctrl** key.
 
-**Suggested shortcut:** `⌥F6`
+_Suggested shortcut:_ `⌥F6`
 
 ---
 
 #### **`BreakLinkToStyles.jsx`**
 Unnaplies paragraph/character/object styles from the selected objects, or all objects in the document if nothing is selected.
 
-**Note:** The script will display a report if run while holding down the **Ctrl** key.
+_Tip:_ The script will display a report if run while holding down the **Ctrl** key.
 
 ---
 
@@ -218,7 +218,7 @@ Performs a sequence of actions designed to bring the document to an approximatel
 - Turns off URLs auto-updating;
 - Sets the pasteboard margins.
 
-**Suggested shortcut:** `F2`
+_Suggested shortcut:_ `F2`
 
 ---
 
@@ -230,9 +230,9 @@ Sometimes objects that have a script label attached are reused, which may create
 #### **`SwatchesCleanup.jsx`**
 Converts process RGB swatches to CMYK and renames them to 'C= M= Y= K=' format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.
 
-It contains code originally written by Marc Autret, Dave Saunders and others.
+It contains code written by Marc Autret, Dave Saunders and others.
 
-**Suggested shortcut:** `⇧F2`
+_Suggested shortcut:_ `⇧F2`
 
 ---
 
@@ -253,7 +253,7 @@ Saves a TSV file (compatible with [**`DefaultSwatches.jsx`**](#defaultswatchesjs
 
 ### Layout
 
-<small>_**Document setup – page size, margins & columns, guides.**_</small>
+<small>_**Document setup: page size, margins & columns, guides.**_</small>
 
 #### **`PageSizeFromFilename.jsx`**
 Sets the size of the page, the margins and the bleed, getting the values from the document name. It also creates a frame around the page margins that visually marks the _visible area_ of a page: a stroked frame named **\<visible area\>** on the **.visible area** layer; it will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
@@ -264,7 +264,7 @@ It works with file names structured like this:
 
 `WxH` are pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). The first pair found defines the size of the page. If a second pair is found, it defines the _visible area_. If a one- or two-digit sequence follows, it defines the bleed. The script is somewhat tolerant regarding spaces and extra stuff.
 
-Example:
+**Example:**
 
 | File name                                       | Total size | Visible area | Bleed |
 |:------------------------------------------------|:-----------|:-------------|:------|
@@ -272,9 +272,9 @@ Example:
 | **Document2\_1400x400\_700x137mm\.indd**        | 1400×400   | 700×137      | –     |
 | **Document3\_597x517\_577x500.5\_3mm V4\.indd** | 597×517    | 577×500.5    | 3     |
 
-**Note:** All dimensions are millimeters.
+_Note:_ All dimensions are in millimeters.
 
-**Suggested shortcut:** `F3`
+_Suggested shortcut:_ `F3`
 
 ---
 
@@ -286,14 +286,14 @@ Resizes the current page to its margins.
 #### **`PageSizeFromSelection.jsx`**
 Resizes the current page to the selected objects.
 
-**Suggested shortcut:** `⇧F3`
+_Suggested shortcut:_ `⇧F3`
 
 ---
 
 #### **`PageMarginsFromSelection.jsx`**
 Sets the current page margins from the selected objects.
 
-**Suggested shortcut:** `⌥F3`
+_Suggested shortcut:_ `⌥F3`
 
 ---
 
@@ -303,7 +303,9 @@ Sets the page margins and optionally a reserved area on the bottom, getting the 
 ![Page with 5% margins and 0% HW area](img/mg5hw0.png)
 ![Page with 5% margins and 10% HW area](img/mg5hw10.png)
 
-It's designed to be duplicated and renamed to customize the values, using one or two numbers separated by the `HW` keyword: the first number defines the page margins, the second one, if found, is the bottom area. `HW` can be omitted (meaning 0%), or used without a number (meaning the default 10%). Example:
+It's designed to be duplicated and renamed to customize the values, using one or two numbers separated by the `HW` keyword: the first number defines the page margins, the second one, if found, is the bottom area. `HW` can be omitted (meaning 0%), or used without a number (meaning the default 10%).
+
+**Example:**
 
 | Script name       | Margins | Bottom area |
 |:------------------|:--------|:------------|
@@ -325,12 +327,12 @@ Deletes all guides from the document.
 
 ### Align
 
-<small>_**Align page objects with ease using the numeric keypad.**_</small>
+<small>_**Align objects with ease using the numeric keypad.**_</small>
 
 #### **`AlignTo*.jsx`**
 Use the numeric keypad to align the selected objects, with a single keystroke, to the **Align To** setting (see **`ToggleAlignTo.jsx`** below).
 
-<details><summary><strong>Suggested shortcuts</strong></summary>
+<details><summary><em>Suggested shortcuts</em></summary>
 
 | Left              |    Key | Center           |    Key | Right             |    Key |
 |:------------------|-------:|:-----------------|-------:|:------------------|-------:|
@@ -347,14 +349,14 @@ Toggles **Align To** between selection, margins, page, or spread (just run it re
 
 ![Align Panel](img/alignto.png)
 
-**Suggested shortcut:** `Num0`
+_Suggested shortcut:_ `Num0`
 
 ---
 
 #### **`ResetAlignTo.jsx`**
 Resets **Align To** to default (**Align to Selection**).
 
-**Suggested shortcut:** `⌃Num0`
+_Suggested shortcut:_ `⌃Num0`
 
 ---
 
@@ -365,7 +367,7 @@ Resets **Align To** to default (**Align to Selection**).
 #### **`FitTo*.jsx`**
 These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed, or _visible area_).
 
-For example, running **`FitToPageBleed.jsx`** with these two frames selected will expand the yellow one and shrink the red frame to the page bleed:
+**Example:** Running **`FitToPageBleed.jsx`** with these two frames selected will expand the yellow one and shrink the red frame to the page bleed:
 
 ![Example](img/fit.png)
 
@@ -375,11 +377,11 @@ The refitting is done by:
 
 - _Extending_ the edges that touch or are very close to a trigger zone (which is either the target or the _visible area_). By default this snap zone is 1% of the _visible area_[^2].
 
-**Note:** Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a _clipping frame_. Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.
+_Note:_ Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a _clipping frame_. Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.
 
 The **`*Forced.jsx`** variants simply reframe the objects to the target area.
 
-<details><summary><strong>Suggested shortcuts</strong></summary>
+<details><summary><em>Suggested shortcuts</em></summary>
 
 | Page                               |      Key | Spread                               |      Key |
 |:-----------------------------------|---------:|:-------------------------------------|---------:|
@@ -392,7 +394,7 @@ The **`*Forced.jsx`** variants simply reframe the objects to the target area.
 | **FitToPageVisibleAreaForced.jsx** | `⌥⇧⌘F11` | **FitToSpreadVisibleAreaForced.jsx** | `⌥⇧⌘F12` |
 | **FitToPageBleedForced.jsx**       |  `⇧⌘F11` | **FitToSpreadBleedForced.jsx**       |  `⇧⌘F12` |
 
-**Note:** `F11` page, `F12` spread; `⌥` margins, `⌥⇧` visible area, `⇧` bleed; `⌘` forced.
+_Note:_ `F11` page, `F12` spread; `⌥` margins, `⌥⇧` visible area, `⇧` bleed; `⌘` forced.
 
 </details>
 
@@ -409,9 +411,9 @@ It's designed to be run repeatedly. Each run increases the level with one step (
 | ![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png) |
 | ![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png) |
 
-**Note:** A second run will preserve the current auto-sizing if only the alignment is changed.
+_Tip:_ A second run will preserve the current auto-sizing if you only changed the alignment.
 
-**Suggested shortcut:** `F6`
+_Suggested shortcut:_ `F6`
 
 ---
 
@@ -424,7 +426,7 @@ Scale the selected objects to the target area specified in the script name (page
 
 **`*H.jsx`** and **`*W.jsx`** variants scale to the height or width of their target.
 
-<details><summary><strong>Suggested shortcuts</strong></summary>
+<details><summary><em>Suggested shortcuts</em></summary>
 
 | Page                     |   Key | Page margins                |    Key | Spread bleed                |    Key |
 |:-------------------------|------:|:----------------------------|-------:|:----------------------------|-------:|
@@ -437,12 +439,14 @@ Scale the selected objects to the target area specified in the script name (page
 
 ### Proxy
 
+<small>_**Easily control the reference point used for transformations.**_</small>
+
 #### **`SetRefPoint*.jsx`**
 Use the numeric keypad to set the reference point used for transformations (similar to clicking the little proxy squares in the **Control** palette):
 
 ![Proxy](img/proxy.png)
 
-<details><summary><strong>Suggested shortcuts</strong></summary>
+<details><summary><em>Suggested shortcuts</em></summary>
 
 | Left                  |     Key | Center               |     Key | Right                 |     Key |
 |:----------------------|--------:|:---------------------|--------:|:----------------------|--------:|
@@ -456,6 +460,8 @@ Use the numeric keypad to set the reference point used for transformations (simi
 
 ### File
 
+<small>_**File management.**_</small>
+
 #### **`FilesToSpreads.jsx`**
 Combines the open documents, sorted alphabetically.
 
@@ -466,18 +472,20 @@ Saves each spread of the active document to a separate file.
 
 If the document name ends with a _separator_ (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`**, **`Document_B.indd`** and **`Document_C.indd`**. If a sequence is not autodetected, the script will prompt the user for one.
 
-By default the index will be appended at the end, but you can use `#` in the document name to place the index at that particular position.
+_Tip:_ By default the index will be appended at the end, but you can use `#` in the document name to place the index at that particular position.
 
 ---
 
 #### **`LayersToSpreads.jsx`**
 Moves all layers of the active document to separate spreads (the document must have a single spread).
 
-You may use **`SpreadsToFiles.jsx`** to split the result into separate documents.
+_Tip:_ You may use **`SpreadsToFiles.jsx`** to split the result into separate documents.
 
 ---
 
 ### Export
+
+<small>_**Document export and related.**_</small>
 
 #### **`QuickExport.jsx`**
 For a long time, I exported documents to PDF with [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), Peter Kahrel's "Swiss army knife", but I needed a tool tailored to my specific needs. My workflow requires frequent changes to export settings, and I wanted direct access to some of them (the native export dialog has quite a few tabs and options!). There are two selectable workflows, with the options grouped into several categories. I'm only reviewing the ones that aren't self-explanatory:
@@ -500,7 +508,7 @@ For a long time, I exported documents to PDF with [Batch Convert](https://creati
 - **Export in a custom folder:** By default the files are exported in the same folder as the source document, but you can choose a custom one.
 
 - **Add a suffix:** This string will be appended to the name of the exported files.\
-  **Note:** A preset can be 'paired' with a suffix by adding it to its name after the _last_ underscore – e.g., when you select the preset `X4_350dpi_39L300_print`, the suffix will be automatically changed to `print`.
+  _Tip:_ A preset can be 'paired' with a suffix by adding it to its name after the _last_ underscore – e.g., when you select the preset `X4_350dpi_39L300_print`, the suffix will be automatically changed to `print`.
 
 - **Sort files into subfolders by suffix**: Files will be exported in a subfolder named after the suffix, up to the first `+` character – e.g., for a suffix `print` the PDF will be exported as `print/Document_print.pdf`, and for `print+diecut` as `print/Document_print+diecut.pdf`.
 
@@ -516,9 +524,9 @@ For a long time, I exported documents to PDF with [Batch Convert](https://creati
 **Global options:**
 - **Upgrade [Converted] documents**: Will upgrade documents from previous versions of InDesign.
 
-**Note:** The settings are saved every time you run the script, but if you keep the **Opt/Alt** key pressed while clicking **Start**, the script will not update settings for the current session.
+_Tip:_ The settings are saved every time you run the script, but if you keep the **Opt/Alt** key pressed while clicking **Start**, they will not be updated for the current session.
 
-**Suggested shortcut:** `⌃E`
+_Suggested shortcut:_ `⌃E`
 
 ---
 
@@ -528,48 +536,36 @@ Creates a frame around the page margins that visually marks the _visible area_ o
 ---
 
 #### **`ShowDNPLayers.jsx`** / **`HideDNPLayers.jsx`**
-Shows/hides a hard-coded list of _do-not-print_ layers, plus all layers starting with either a dot or a hyphen.
-
-<details><summary><strong>For the full list click here</strong></summary>
+Shows/hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers:
 
 - **covered area\***
 - **visible area, rahmen, sicht\*, \*vi\?ib\***
 - **safe\*area, safe\*margins, segmentation**
 - **fold, falz**
 - **guides, grid, masuratori**
-
-</details>
 
 ---
 
 #### **`PrepareForExport.jsx`**
-Hides a hard-coded list of _do-not-print_ layers, plus all layers starting with either a dot or a hyphen.
+Hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers (see above). Additionally, it moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads and labels the spreads.
 
-<details><summary><strong>For the full list click here</strong></summary>
-
-- **covered area\***
-- **visible area, rahmen, sicht\*, \*vi\?ib\***
-- **safe\*area, safe\*margins, segmentation**
-- **fold, falz**
-- **guides, grid, masuratori**
-
-</details>
-
-Additionally, it moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads and labels the spreads.
+---
 
 ### View
+
+<small>_**Document display.**_</small>
 
 #### **`TileAll.jsx`**
 Invokes **Window ‣ Arrange ‣ Tile All Vertically**, **Tile All Horizontally**, or **Tile**, depending on the current spread orientation.
 
-**Suggested shortcut:** `⇧F4`
+_Suggested shortcut:_ `⇧F4`
 
 ---
 
 #### **`ZoomTo300Percent.jsx`**
 Zooms current layout window to 300%.
 
-**Suggested shortcut:** `⌘3`
+_Suggested shortcut:_ `⌘3`
 
 ---
 
@@ -580,14 +576,14 @@ It resembles **Fit Selection in Window** (`⌥⌘=`), but:
 - If the cursor is in a text frame, zooms on the whole frame;
 - Without anything selected zooms on the current spread.
 
-**Suggested shortcut:** `F4`
+_Suggested shortcut:_ `F4`
 
 ---
 
 #### **`ZoomToSpreads.jsx`**
 Zooms on the first 3 spreads.
 
-**Suggested shortcut:** `⌥F4`
+_Suggested shortcut:_ `⌥F4`
 
 ---
 
@@ -596,16 +592,16 @@ Zooms on the first 3 spreads.
 #### **`Clip.jsx`**
 To handle some objects, it may be useful to temporarily insert them into a container (a _clipping frame_). The script inserts the selected objects into a clipping frame or, if already clipped, restores them.
 
-**Note:** It uses the clipboard, so make sure you don't lose anything important.
+_Warning:_ It uses the clipboard, so make sure you don't lose anything important.
 
-**Suggested shortcut:** `Num*`
+_Suggested shortcut:_ `Num*`
 
 ---
 
 #### **`ClipUndo.jsx`**
-Releases one or several objects from their _clipping frames_ (you can select any objects, it will only release the clipped ones). If nothing is selected, it will release all clipped objects.
+Releases one or several objects from their _clipping frames_ (see above). If nothing is selected, it will release all clipped objects.
 
-**Suggested shortcut:** `⌃Num*`
+_Suggested shortcut:_ `⌃Num*`
 
 ---
 
@@ -614,12 +610,14 @@ This script is inspired by [**EAN Barcode Generator**](https://github.com/smorod
 
 Enter 8 or 13 digits for the code itself; if you have an add-on, add a hyphen and another 2 or 5 digits.
 
-**Suggested shortcut:** `⌥F9`
+_Suggested shortcut:_ `⌥F9`
 
 ---
 
 #### **`LabelPage.jsx`**
-Adds a custom label on the current page slug, on the **info** layer (Helvetica Regular 6 pt, fill **Registration**, stroke **Paper** 0.4 pt):
+Adds a custom label on the current page slug, on the **info** layer (Helvetica Regular 6 pt, fill **Registration**, stroke **Paper** 0.4 pt).
+
+**Example:**
 
 ![Label Page](img/labelpage.png)
 
@@ -646,11 +644,13 @@ Adds a QR code on each spread of the active document (outside _visible area_, if
 |:-----------------------------------:|:--------------------------------:|
 | ![QR on document](img/qr-ondoc.png) | ![QR on file](img/qr-onfile.png) |
 
-If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads (a _suffix_), the letter corresponding to the spread index will be appended to each code/file – e.g., for a document with three spreads named **`Document_ABC.indd`**, the script will generate **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`** and **`Document_C_QR.pdf`**.
+If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads (a _suffix_), the letter corresponding to the spread index will be appended to each code/file.
 
-You can use `|` for manually splitting the label into several lines.
+**Example:** For a document with three spreads named **`Document_ABC.indd`**, the script will generate **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`** and **`Document_C_QR.pdf`**.
 
-**Suggested shortcut:** `F9`
+_Tip:_ You can use `|` for manually splitting the label into several lines.
+
+_Suggested shortcut:_ `F9`
 
 ---
 
@@ -673,9 +673,9 @@ Does the same thing as **`QR`** but in a non-interactive way: retrieves a list o
 The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence.\
 Blank lines are ignored; everything after a `#` (comments) is ignored.
 
-You can use `|` for manually splitting the label into several lines.
+_Tip:_ You can use `|` for manually splitting the label into several lines.
 
-**Suggested shortcut:** `⇧F9`
+_Suggested shortcut:_ `⇧F9`
 
 ---
 
@@ -694,7 +694,7 @@ Shows properties and methods of a selected object for debugging purposes.
 
 Inspired by [**showProps()**](https://github.com/grefel/indesignjs/blob/version2/Allgemeine_Skripte/EigenschaftenAnzeigen.jsx) by Gregor Fellenz and [**pub.inspect()**](https://github.com/basiljs/basil.js/blob/23b60f16f3088ae9df624d6d9a52a890114fcae0/src/includes/environment.js#L722) from basil.js.
 
-**Suggested shortcut:** `F1`
+_Suggested shortcut:_ `F1`
 
 ## Install
 
@@ -709,10 +709,10 @@ The code in this project would not have been possible without the InDesign Exten
 
 Thanks to Adrian Frigioiu and others for bug reports and feedback.
 
-© 2020-2023 Paul Chiorean \<jpeg AT basement.ro\>.\
+© 2020-2023 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: October 27, 2023</small>
+<small>Last updated: November 5, 2023</small>
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use every day, so it's kind of tested, but… beware. ;)
 

@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:////Users/paul.chiorean/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.9/crossnote/dependencies/katex/katex.min.css">
+      <link rel="stylesheet" href="file:////Users/paul.chiorean/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.10/crossnote/dependencies/katex/katex.min.css">
       
       
       
@@ -25,12 +25,11 @@
       <div class="crossnote markdown-preview  ">
       
 <h1 id="indentz">Indentz </h1>
-<p>This is a collection of InDesign scripts that I use to improve my DTP workflow, which often involves repetitive, tedious, or time-consuming operations. The scripts are not designed for long documents with flowing text, because I usually work with single-page documents. With few exceptions, these are simple scripts, with minimal interaction, and, apart from warnings, do their job silently. I use a series of <a href="https://creativepro.com/assigning-keyboard-shortcuts-scripts/">keyboard shortcuts</a> to run them (suggestions below).</p>
-<p>The code is tested in Adobe InDesign CC 2020–2023 on Mac. I’m a graphic designer, not a programmer, so be prepared for oversights and bugs (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though!).</p>
+<p>This is a collection of InDesign scripts that I use to improve my DTP workflow, which often involves repetitive, tedious, or time-consuming operations. The scripts are not designed for long documents with flowing text, because I usually work with single-page documents. With few exceptions, these are simple scripts, with minimal interaction, and, apart from warnings, do their job silently. I use a series of <a href="https://creativepro.com/assigning-keyboard-shortcuts-scripts/">keyboard shortcuts</a> to run them (suggestions below). The code is tested in Adobe InDesign CC 2020–2024 on Mac.</p>
+<p>I’m a graphic designer, not a programmer (I started doing this at the beginning of the Covid-19 pandemic), so be prepared for bugs and oversights (please create an <a href="https://github.com/pchiorean/Indentz/issues">issue</a> if you encounter one, though!).</p>
 <h2 id="preamble">Preamble </h2>
 <p>Most scripts require at least one open document, and some require at least one object to be selected.</p>
-<p><strong>Visible area:</strong> You will come across the term <em>visible area</em> several times. This is a stroked frame that I use to mark the visible part of a layout for the client, and several scripts take it into account for certain actions. It can be created manually (just rename it <strong>&lt;visible area&gt;</strong>), or can be automatically generated from the document name (or page margins); more details below.</p>
-<p><strong>Data files:</strong> Several scripts get their input from external TSV files, first looking for a <em>local</em> one (in the current folder or the parent folder of the active document), then a <em>default</em> one (on the desktop, next to the running script, or in the <strong>Indentz</strong> root). They also match local files starting with <code>_</code>, which take precedence.</p>
+<p><span id="tsv"><strong>Data files:</strong></span> Several scripts get their input from external TSV files, first looking for a <em>local</em> one (in the current folder or the parent folder of the active document), then a <em>default</em> one (on the desktop, next to the running script, or in the <strong>Indentz</strong> root). They also match local files starting with <code>_</code>, which take precedence.</p>
 <p>These data files are regular TSVs with several non-standard features:</p>
 <ul>
 <li>Blank lines are ignored; everything after a <code>#</code> is ignored (comments);</li>
@@ -44,6 +43,7 @@
 </ul>
 </li>
 </ul>
+<p><strong>Visible area:</strong> You will come across the term <em>visible area</em> several times. This is a stroked frame that I use to mark the visible part of a layout for the client, and several scripts take it into account for certain actions. It can be created manually (just rename it <strong>&lt;visible area&gt;</strong>), or can be automatically generated from the document name (or page margins); more details below.</p>
 <p><strong>Libs:</strong> Many scripts use dynamically linked functions from <strong><code>lib/</code></strong>, which means that the folder structure should be preserved after downloading the repository. If you download the <a href="https://github.com/pchiorean/Indentz/releases">latest release</a>, which is statically linked, you can use any script stand-alone<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>.</p>
 <h2 id="the-scripts">The scripts </h2>
 <h3 id="cleanup">Cleanup </h3>
@@ -87,7 +87,7 @@
 </details>
 <hr>
 <h4 id="defaultlayersjsx"><strong><code>DefaultLayers.jsx</code></strong> </h4>
-<p>Adds a set of layers defined in a 6-columns <a href="#preamble">TSV data file</a> named <strong><code>layers.tsv</code></strong> (<a href="samples/layers.tsv">sample</a>):</p>
+<p>Adds a set of layers defined in a 6-columns <a href="#tsv">TSV data file</a> named <strong><code>layers.tsv</code></strong> (<a href="samples/layers.tsv">sample</a>):</p>
 <table>
 <thead>
 <tr>
@@ -167,10 +167,10 @@
 <li><strong>Order</strong>: <code>above</code> or <code>below</code> existing layers, or <code>top</code>/<code>bottom</code> (defaults to <code>above</code>);</li>
 <li><strong>Variants</strong>: A list of layers separated by commas that will be merged with the base layer; it’s case insensitive and can take simple wildcards (<code>?</code> for exactly one character and <code>*</code> for zero or more characters).</li>
 </ul>
-<p><strong>Note:</strong> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
+<p><em>Tip:</em> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
 <hr>
 <h4 id="defaultswatchesjsx"><strong><code>DefaultSwatches.jsx</code></strong> </h4>
-<p>Adds a set of swatches defined in a 5-columns <a href="#preamble">TSV data file</a> named <strong><code>swatches.tsv</code></strong> (<a href="samples/swatches.tsv">sample</a>):</p>
+<p>Adds a set of swatches defined in a 5-columns <a href="#tsv">TSV data file</a> named <strong><code>swatches.tsv</code></strong> (<a href="samples/swatches.tsv">sample</a>):</p>
 <table>
 <thead>
 <tr>
@@ -233,11 +233,11 @@
 </li>
 <li><strong>Variants</strong>: a list of swatches separated by commas that will be replaced by the base swatch; it’s case insensitive and can take simple wildcards (<code>?</code> for exactly one character and <code>*</code> for zero or more characters).</li>
 </ul>
-<p>You can use <a href="#dumpswatchesjsx"><strong><code>DumpSwatches.jsx</code></strong></a> to save a tab delimited list of swatches from the active document.</p>
-<p><strong>Note:</strong> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
+<p><em>Tip:</em> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
+<p><em>Tip:</em> You can use <a href="#dumpswatchesjsx"><strong><code>DumpSwatches.jsx</code></strong></a> to save a tab delimited list of swatches from the active document.</p>
 <hr>
 <h4 id="replacefontsjsx"><strong><code>ReplaceFonts.jsx</code></strong> </h4>
-<p>Replaces document fonts using a 4-columns <a href="#preamble">TSV data file</a> named <strong><code>fonts.tsv</code></strong> (<a href="samples/fonts.tsv">sample</a>):</p>
+<p>Replaces document fonts using a 4-columns <a href="#tsv">TSV data file</a> named <strong><code>fonts.tsv</code></strong> (<a href="samples/fonts.tsv">sample</a>):</p>
 <table>
 <thead>
 <tr>
@@ -268,11 +268,11 @@
 </tr>
 </tbody>
 </table>
-<p>You can use <a href="#showfontsjsx"><strong><code>ShowFonts.jsx</code></strong></a> from <a href="#miscellaneous"><strong>Miscellaneous</strong></a> to get a tab delimited list of document fonts.</p>
-<p><strong>Note:</strong> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
+<p><em>Tip:</em> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
+<p><em>Tip:</em> You can use <a href="#showfontsjsx"><strong><code>ShowFonts.jsx</code></strong></a> from <a href="#miscellaneous"><strong>Miscellaneous</strong></a> to get a tab delimited list of document fonts.</p>
 <hr>
 <h4 id="replacelinksjsx"><strong><code>ReplaceLinks.jsx</code></strong> </h4>
-<p>Replaces document links using a 2-columns <a href="#preamble">TSV data file</a> named <strong><code>links.tsv</code></strong> (<a href="samples/links.tsv">sample</a>):</p>
+<p>Replaces document links using a 2-columns <a href="#tsv">TSV data file</a> named <strong><code>links.tsv</code></strong> (<a href="samples/links.tsv">sample</a>):</p>
 <table>
 <thead>
 <tr>
@@ -322,12 +322,12 @@
 </li>
 <li><strong>Links:</strong> A list of file names separated by commas, that if present in the document, will be replaced with the link from the first column; it’s case insensitive and can take simple wildcards (<code>?</code> for exactly one character and <code>*</code> for zero or more characters). The script will also automatically match the <em>file names</em> from the first column, thus <strong>Links</strong> can be empty – e.g., if <code>img4.psd</code> appears in the document, it will be replaced by the one in <code>subfolder/</code> (which is actually <code>reference/path/subfolder/</code>, because the <strong><code>@includepath</code></strong> above it redefines the reference path).</li>
 </ul>
-<p>You can use <a href="#dumplinksjsx"><strong><code>DumpLinks.jsx</code></strong></a> to save a list of links from the active document.</p>
-<p><strong>Note:</strong> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
-<p><strong>Suggested shortcut:</strong> <code>⌥F8</code></p>
+<p><em>Tip:</em> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
+<p><em>Tip:</em> You can use <a href="#dumplinksjsx"><strong><code>DumpLinks.jsx</code></strong></a> to save a list of links from the active document.</p>
+<p><em>Suggested shortcut:</em> <code>⌥F8</code></p>
 <hr>
 <h4 id="replacesnippetsjsx"><strong><code>ReplaceSnippets.jsx</code></strong> </h4>
-<p>Replaces a list of text snippets using a 5-columns <a href="#preamble">TSV data file</a> named <strong><code>snippets.tsv</code></strong> (<a href="samples/snippets.tsv">sample</a>):</p>
+<p>Replaces a list of text snippets using a 5-columns <a href="#tsv">TSV data file</a> named <strong><code>snippets.tsv</code></strong> (<a href="samples/snippets.tsv">sample</a>):</p>
 <table>
 <thead>
 <tr>
@@ -384,13 +384,13 @@
 <li><strong>Whole word</strong>: <code>yes</code> or <code>no</code> (defaults to <code>yes</code>);</li>
 <li><strong>Scope</strong>: Replacement will only be done if the document name matches the <a href="https://regex101.com">regular expression</a> (case sensitive).</li>
 </ul>
-<p>For example, ‘The sample is for free’ will be replaced with ‘Das Sample ist kostenlos’ in <strong><code>Document_DE.indd</code></strong>, and with ‘L’échantillon est gratuit’ in <strong><code>Document_FR.indd</code></strong>.</p>
-<p><strong>Note:</strong> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
-<p><strong>Suggested shortcut:</strong> <code>⌥F6</code></p>
+<p><strong>Example:</strong> ‘The sample is for free’ will be replaced with ‘Das Sample ist kostenlos’ in <strong><code>Document_DE.indd</code></strong>, and with ‘L’échantillon est gratuit’ in <strong><code>Document_FR.indd</code></strong>.</p>
+<p><em>Tip:</em> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
+<p><em>Suggested shortcut:</em> <code>⌥F6</code></p>
 <hr>
 <h4 id="breaklinktostylesjsx"><strong><code>BreakLinkToStyles.jsx</code></strong> </h4>
 <p>Unnaplies paragraph/character/object styles from the selected objects, or all objects in the document if nothing is selected.</p>
-<p><strong>Note:</strong> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
+<p><em>Tip:</em> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
 <hr>
 <h4 id="doccleanupjsx"><strong><code>DocCleanup.jsx</code></strong> </h4>
 <p>Performs a sequence of actions designed to bring the document to an approximately “clean” state:</p>
@@ -408,15 +408,15 @@
 <li>Turns off URLs auto-updating;</li>
 <li>Sets the pasteboard margins.</li>
 </ul>
-<p><strong>Suggested shortcut:</strong> <code>F2</code></p>
+<p><em>Suggested shortcut:</em> <code>F2</code></p>
 <hr>
 <h4 id="removescriptlabelsjsx"><strong><code>RemoveScriptLabels.jsx</code></strong> </h4>
 <p>Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects, or all objects in the document if nothing is selected.</p>
 <hr>
 <h4 id="swatchescleanupjsx"><strong><code>SwatchesCleanup.jsx</code></strong> </h4>
 <p>Converts process RGB swatches to CMYK and renames them to ‘C=&nbsp;M=&nbsp;Y=&nbsp;K=’ format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.</p>
-<p>It contains code originally written by Marc Autret, Dave Saunders and others.</p>
-<p><strong>Suggested shortcut:</strong> <code>⇧F2</code></p>
+<p>It contains code written by Marc Autret, Dave Saunders and others.</p>
+<p><em>Suggested shortcut:</em> <code>⇧F2</code></p>
 <hr>
 <h4 id="dumplayersjsx"><strong><code>DumpLayers.jsx</code></strong> </h4>
 <p>Saves a TSV file (compatible with <a href="#defaultlayersjsx"><strong><code>DefaultLayers.jsx</code></strong></a>) containing the names and properties of the active document layers.</p>
@@ -428,14 +428,14 @@
 <p>Saves a TSV file (compatible with <a href="#defaultswatchesjsx"><strong><code>DefaultSwatches.jsx</code></strong></a>) containing the names and properties of the active document swatches.</p>
 <hr>
 <h3 id="layout">Layout </h3>
-<p><small><em><strong>Document setup – page size, margins &amp; columns, guides.</strong></em></small></p>
+<p><small><em><strong>Document setup: page size, margins &amp; columns, guides.</strong></em></small></p>
 <h4 id="pagesizefromfilenamejsx"><strong><code>PageSizeFromFilename.jsx</code></strong> </h4>
 <p>Sets the size of the page, the margins and the bleed, getting the values from the document name. It also creates a frame around the page margins that visually marks the <em>visible area</em> of a page: a stroked frame named <strong>&lt;visible area&gt;</strong> on the <strong>.visible area</strong> layer; it will use an existing <strong>Visible area</strong> swatch, or will create one with the values R=255 G=180 B=0.</p>
 <p>It works with file names structured like this:</p>
 <pre class="language-text">&lt;Name&gt;_&lt;Total size WxH&gt;[_&lt;Visible area WxH&gt;][_&lt;Bleed&gt;].indd
 </pre>
 <p><code>WxH</code> are pairs of numbers like <code>000x000</code> (where <code>000</code> means a group of at least one digit, followed or not by decimals, and optionally by <code>mm</code> or <code>cm</code>). The first pair found defines the size of the page. If a second pair is found, it defines the <em>visible area</em>. If a one- or two-digit sequence follows, it defines the bleed. The script is somewhat tolerant regarding spaces and extra stuff.</p>
-<p>Example:</p>
+<p><strong>Example:</strong></p>
 <table>
 <thead>
 <tr>
@@ -466,25 +466,26 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> All dimensions are millimeters.</p>
-<p><strong>Suggested shortcut:</strong> <code>F3</code></p>
+<p><em>Note:</em> All dimensions are in millimeters.</p>
+<p><em>Suggested shortcut:</em> <code>F3</code></p>
 <hr>
 <h4 id="pagesizefrommarginsjsx"><strong><code>PageSizeFromMargins.jsx</code></strong> </h4>
 <p>Resizes the current page to its margins.</p>
 <hr>
 <h4 id="pagesizefromselectionjsx"><strong><code>PageSizeFromSelection.jsx</code></strong> </h4>
 <p>Resizes the current page to the selected objects.</p>
-<p><strong>Suggested shortcut:</strong> <code>⇧F3</code></p>
+<p><em>Suggested shortcut:</em> <code>⇧F3</code></p>
 <hr>
 <h4 id="pagemarginsfromselectionjsx"><strong><code>PageMarginsFromSelection.jsx</code></strong> </h4>
 <p>Sets the current page margins from the selected objects.</p>
-<p><strong>Suggested shortcut:</strong> <code>⌥F3</code></p>
+<p><em>Suggested shortcut:</em> <code>⌥F3</code></p>
 <hr>
 <h4 id="pagemarginsfromscriptnamejsx"><strong><code>PageMarginsFromScriptName.jsx</code></strong> </h4>
 <p>Sets the page margins and optionally a reserved area on the bottom, getting the values from the script name, in percentages of the <em>visible area</em> or page size:</p>
 <p><img src="img/mg5hw0.png" alt="Page with 5% margins and 0% HW area">
 <img src="img/mg5hw10.png" alt="Page with 5% margins and 10% HW area"></p>
-<p>It’s designed to be duplicated and renamed to customize the values, using one or two numbers separated by the <code>HW</code> keyword: the first number defines the page margins, the second one, if found, is the bottom area. <code>HW</code> can be omitted (meaning 0%), or used without a number (meaning the default 10%). Example:</p>
+<p>It’s designed to be duplicated and renamed to customize the values, using one or two numbers separated by the <code>HW</code> keyword: the first number defines the page margins, the second one, if found, is the bottom area. <code>HW</code> can be omitted (meaning 0%), or used without a number (meaning the default 10%).</p>
+<p><strong>Example:</strong></p>
 <table>
 <thead>
 <tr>
@@ -519,10 +520,10 @@
 <p>Deletes all guides from the document.</p>
 <hr>
 <h3 id="align">Align </h3>
-<p><small><em><strong>Align page objects with ease using the numeric keypad.</strong></em></small></p>
+<p><small><em><strong>Align objects with ease using the numeric keypad.</strong></em></small></p>
 <h4 id="aligntojsx"><strong><code>AlignTo*.jsx</code></strong> </h4>
 <p>Use the numeric keypad to align the selected objects, with a single keystroke, to the <strong>Align To</strong> setting (see <strong><code>ToggleAlignTo.jsx</code></strong> below).</p>
-<details><summary><strong>Suggested shortcuts</strong></summary>
+<details><summary><em>Suggested shortcuts</em></summary>
 <table>
 <thead>
 <tr>
@@ -566,17 +567,17 @@
 <h4 id="togglealigntojsx"><strong><code>ToggleAlignTo.jsx</code></strong> </h4>
 <p>Toggles <strong>Align To</strong> between selection, margins, page, or spread (just run it repeatedly):</p>
 <p><img src="img/alignto.png" alt="Align Panel"></p>
-<p><strong>Suggested shortcut:</strong> <code>Num0</code></p>
+<p><em>Suggested shortcut:</em> <code>Num0</code></p>
 <hr>
 <h4 id="resetaligntojsx"><strong><code>ResetAlignTo.jsx</code></strong> </h4>
 <p>Resets <strong>Align To</strong> to default (<strong>Align to Selection</strong>).</p>
-<p><strong>Suggested shortcut:</strong> <code>⌃Num0</code></p>
+<p><em>Suggested shortcut:</em> <code>⌃Num0</code></p>
 <hr>
 <h3 id="fit">Fit </h3>
 <p><small><em><strong>Reframe selected objects.</strong></em></small></p>
 <h4 id="fittojsx"><strong><code>FitTo*.jsx</code></strong> </h4>
 <p>These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed, or <em>visible area</em>).</p>
-<p>For example, running <strong><code>FitToPageBleed.jsx</code></strong> with these two frames selected will expand the yellow one and shrink the red frame to the page bleed:</p>
+<p><strong>Example:</strong> Running <strong><code>FitToPageBleed.jsx</code></strong> with these two frames selected will expand the yellow one and shrink the red frame to the page bleed:</p>
 <p><img src="img/fit.png" alt="Example"></p>
 <p>The refitting is done by:</p>
 <ul>
@@ -587,9 +588,9 @@
 <p><em>Extending</em> the edges that touch or are very close to a trigger zone (which is either the target or the <em>visible area</em>). By default this snap zone is 1% of the <em>visible area</em><sup class="footnote-ref"><a href="#fn2" id="fnref2">[2]</a></sup>.</p>
 </li>
 </ul>
-<p><strong>Note:</strong> Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a <em>clipping frame</em>. Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.</p>
+<p><em>Note:</em> Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a <em>clipping frame</em>. Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.</p>
 <p>The <strong><code>*Forced.jsx</code></strong> variants simply reframe the objects to the target area.</p>
-<details><summary><strong>Suggested shortcuts</strong></summary>
+<details><summary><em>Suggested shortcuts</em></summary>
 <table>
 <thead>
 <tr>
@@ -650,7 +651,7 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> <code>F11</code> page, <code>F12</code> spread; <code>⌥</code> margins, <code>⌥⇧</code> visible area, <code>⇧</code> bleed; <code>⌘</code> forced.</p>
+<p><em>Note:</em> <code>F11</code> page, <code>F12</code> spread; <code>⌥</code> margins, <code>⌥⇧</code> visible area, <code>⇧</code> bleed; <code>⌘</code> forced.</p>
 </details>
 <hr>
 <h4 id="textautosizejsx"><strong><code>TextAutosize.jsx</code></strong> </h4>
@@ -686,15 +687,15 @@
 </tr>
 </tbody>
 </table>
-<p><strong>Note:</strong> A second run will preserve the current auto-sizing if only the alignment is changed.</p>
-<p><strong>Suggested shortcut:</strong> <code>F6</code></p>
+<p><em>Tip:</em> A second run will preserve the current auto-sizing if you only changed the alignment.</p>
+<p><em>Suggested shortcut:</em> <code>F6</code></p>
 <hr>
 <h3 id="scale">Scale </h3>
 <p><small><em><strong>Resize selected objects.</strong></em></small></p>
 <h4 id="scaletojsx"><strong><code>ScaleTo*.jsx</code></strong> </h4>
 <p>Scale the selected objects to the target area specified in the script name (page size, page margins or spread bleed). All objects are scaled together, as a group.</p>
 <p><strong><code>*H.jsx</code></strong> and <strong><code>*W.jsx</code></strong> variants scale to the height or width of their target.</p>
-<details><summary><strong>Suggested shortcuts</strong></summary>
+<details><summary><em>Suggested shortcuts</em></summary>
 <table>
 <thead>
 <tr>
@@ -728,10 +729,11 @@
 </details>
 <hr>
 <h3 id="proxy">Proxy </h3>
+<p><small><em><strong>Easily control the reference point used for transformations.</strong></em></small></p>
 <h4 id="setrefpointjsx"><strong><code>SetRefPoint*.jsx</code></strong> </h4>
 <p>Use the numeric keypad to set the reference point used for transformations (similar to clicking the little proxy squares in the <strong>Control</strong> palette):</p>
 <p><img src="img/proxy.png" alt="Proxy"></p>
-<details><summary><strong>Suggested shortcuts</strong></summary>
+<details><summary><em>Suggested shortcuts</em></summary>
 <table>
 <thead>
 <tr>
@@ -773,19 +775,21 @@
 </details>
 <hr>
 <h3 id="file">File </h3>
+<p><small><em><strong>File management.</strong></em></small></p>
 <h4 id="filestospreadsjsx"><strong><code>FilesToSpreads.jsx</code></strong> </h4>
 <p>Combines the open documents, sorted alphabetically.</p>
 <hr>
 <h4 id="spreadstofilesjsx"><strong><code>SpreadsToFiles.jsx</code></strong> </h4>
 <p>Saves each spread of the active document to a separate file.</p>
 <p>If the document name ends with a <em>separator</em> (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named <strong><code>Document_ABC.indd</code></strong> will be split into <strong><code>Document_A.indd</code></strong>, <strong><code>Document_B.indd</code></strong> and <strong><code>Document_C.indd</code></strong>. If a sequence is not autodetected, the script will prompt the user for one.</p>
-<p>By default the index will be appended at the end, but you can use <code>#</code> in the document name to place the index at that particular position.</p>
+<p><em>Tip:</em> By default the index will be appended at the end, but you can use <code>#</code> in the document name to place the index at that particular position.</p>
 <hr>
 <h4 id="layerstospreadsjsx"><strong><code>LayersToSpreads.jsx</code></strong> </h4>
 <p>Moves all layers of the active document to separate spreads (the document must have a single spread).</p>
-<p>You may use <strong><code>SpreadsToFiles.jsx</code></strong> to split the result into separate documents.</p>
+<p><em>Tip:</em> You may use <strong><code>SpreadsToFiles.jsx</code></strong> to split the result into separate documents.</p>
 <hr>
 <h3 id="export">Export </h3>
+<p><small><em><strong>Document export and related.</strong></em></small></p>
 <h4 id="quickexportjsx"><strong><code>QuickExport.jsx</code></strong> </h4>
 <p>For a long time, I exported documents to PDF with <a href="https://creativepro.com/files/kahrel/indesign/batch_convert.html">Batch Convert</a>, Peter Kahrel’s “Swiss army knife”, but I needed a tool tailored to my specific needs. My workflow requires frequent changes to export settings, and I wanted direct access to some of them (the native export dialog has quite a few tabs and options!). There are two selectable workflows, with the options grouped into several categories. I’m only reviewing the ones that aren’t self-explanatory:</p>
 <p><img src="img/script-quickexport.png" alt="Quick export">
@@ -809,7 +813,7 @@
 </li>
 <li>
 <p><strong>Add a suffix:</strong> This string will be appended to the name of the exported files.<br>
-<strong>Note:</strong> A preset can be ‘paired’ with a suffix by adding it to its name after the <em>last</em> underscore – e.g., when you select the preset <code>X4_350dpi_39L300_print</code>, the suffix will be automatically changed to <code>print</code>.</p>
+<em>Tip:</em> A preset can be ‘paired’ with a suffix by adding it to its name after the <em>last</em> underscore – e.g., when you select the preset <code>X4_350dpi_39L300_print</code>, the suffix will be automatically changed to <code>print</code>.</p>
 </li>
 <li>
 <p><strong>Sort files into subfolders by suffix</strong>: Files will be exported in a subfolder named after the suffix, up to the first <code>+</code> character – e.g., for a suffix <code>print</code> the PDF will be exported as <code>print/Document_print.pdf</code>, and for <code>print+diecut</code> as <code>print/Document_print+diecut.pdf</code>.</p>
@@ -834,15 +838,14 @@
 <ul>
 <li><strong>Upgrade [Converted] documents</strong>: Will upgrade documents from previous versions of InDesign.</li>
 </ul>
-<p><strong>Note:</strong> The settings are saved every time you run the script, but if you keep the <strong>Opt/Alt</strong> key pressed while clicking <strong>Start</strong>, the script will not update settings for the current session.</p>
-<p><strong>Suggested shortcut:</strong> <code>⌃E</code></p>
+<p><em>Tip:</em> The settings are saved every time you run the script, but if you keep the <strong>Opt/Alt</strong> key pressed while clicking <strong>Start</strong>, they will not be updated for the current session.</p>
+<p><em>Suggested shortcut:</em> <code>⌃E</code></p>
 <hr>
 <h4 id="markvisibleareajsx"><strong><code>MarkVisibleArea.jsx</code></strong> </h4>
 <p>Creates a frame around the page margins that visually marks the <em>visible area</em> of a page. It’s a stroked frame named <strong>&lt;visible area&gt;</strong> on the <strong>.visible area</strong> layer. It will use an existing <strong>Visible area</strong> swatch, or will create one with the values R=255 G=180 B=0.</p>
 <hr>
 <h4 id="showdnplayersjsx–hidednplayersjsx"><strong><code>ShowDNPLayers.jsx</code></strong> / <strong><code>HideDNPLayers.jsx</code></strong> </h4>
-<p>Shows/hides a hard-coded list of <em>do-not-print</em> layers, plus all layers starting with either a dot or a hyphen.</p>
-<details><summary><strong>For the full list click here</strong></summary>
+<p>Shows/hides all layers starting with either a dot or a hyphen, plus a hard-coded list of <em>do-not-print</em> layers:</p>
 <ul>
 <li><strong>covered area*</strong></li>
 <li><strong>visible area, rahmen, sicht*, *vi?ib*</strong></li>
@@ -850,28 +853,19 @@
 <li><strong>fold, falz</strong></li>
 <li><strong>guides, grid, masuratori</strong></li>
 </ul>
-</details>
 <hr>
 <h4 id="prepareforexportjsx"><strong><code>PrepareForExport.jsx</code></strong> </h4>
-<p>Hides a hard-coded list of <em>do-not-print</em> layers, plus all layers starting with either a dot or a hyphen.</p>
-<details><summary><strong>For the full list click here</strong></summary>
-<ul>
-<li><strong>covered area*</strong></li>
-<li><strong>visible area, rahmen, sicht*, *vi?ib*</strong></li>
-<li><strong>safe*area, safe*margins, segmentation</strong></li>
-<li><strong>fold, falz</strong></li>
-<li><strong>guides, grid, masuratori</strong></li>
-</ul>
-</details>
-<p>Additionally, it moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads and labels the spreads.</p>
+<p>Hides all layers starting with either a dot or a hyphen, plus a hard-coded list of <em>do-not-print</em> layers (see above). Additionally, it moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads and labels the spreads.</p>
+<hr>
 <h3 id="view">View </h3>
+<p><small><em><strong>Document display.</strong></em></small></p>
 <h4 id="tilealljsx"><strong><code>TileAll.jsx</code></strong> </h4>
 <p>Invokes <strong>Window ‣ Arrange ‣ Tile All Vertically</strong>, <strong>Tile All Horizontally</strong>, or <strong>Tile</strong>, depending on the current spread orientation.</p>
-<p><strong>Suggested shortcut:</strong> <code>⇧F4</code></p>
+<p><em>Suggested shortcut:</em> <code>⇧F4</code></p>
 <hr>
 <h4 id="zoomto300percentjsx"><strong><code>ZoomTo300Percent.jsx</code></strong> </h4>
 <p>Zooms current layout window to 300%.</p>
-<p><strong>Suggested shortcut:</strong> <code>⌘3</code></p>
+<p><em>Suggested shortcut:</em> <code>⌘3</code></p>
 <hr>
 <h4 id="zoomtoselectionjsx"><strong><code>ZoomToSelection.jsx</code></strong> </h4>
 <p>It resembles <strong>Fit Selection in Window</strong> (<code>⌥⌘=</code>), but:</p>
@@ -880,29 +874,30 @@
 <li>If the cursor is in a text frame, zooms on the whole frame;</li>
 <li>Without anything selected zooms on the current spread.</li>
 </ul>
-<p><strong>Suggested shortcut:</strong> <code>F4</code></p>
+<p><em>Suggested shortcut:</em> <code>F4</code></p>
 <hr>
 <h4 id="zoomtospreadsjsx"><strong><code>ZoomToSpreads.jsx</code></strong> </h4>
 <p>Zooms on the first 3 spreads.</p>
-<p><strong>Suggested shortcut:</strong> <code>⌥F4</code></p>
+<p><em>Suggested shortcut:</em> <code>⌥F4</code></p>
 <hr>
 <h3 id="miscellaneous">Miscellaneous </h3>
 <h4 id="clipjsx"><strong><code>Clip.jsx</code></strong> </h4>
 <p>To handle some objects, it may be useful to temporarily insert them into a container (a <em>clipping frame</em>). The script inserts the selected objects into a clipping frame or, if already clipped, restores them.</p>
-<p><strong>Note:</strong> It uses the clipboard, so make sure you don’t lose anything important.</p>
-<p><strong>Suggested shortcut:</strong> <code>Num*</code></p>
+<p><em>Warning:</em> It uses the clipboard, so make sure you don’t lose anything important.</p>
+<p><em>Suggested shortcut:</em> <code>Num*</code></p>
 <hr>
 <h4 id="clipundojsx"><strong><code>ClipUndo.jsx</code></strong> </h4>
-<p>Releases one or several objects from their <em>clipping frames</em> (you can select any objects, it will only release the clipped ones). If nothing is selected, it will release all clipped objects.</p>
-<p><strong>Suggested shortcut:</strong> <code>⌃Num*</code></p>
+<p>Releases one or several objects from their <em>clipping frames</em> (see above). If nothing is selected, it will release all clipped objects.</p>
+<p><em>Suggested shortcut:</em> <code>⌃Num*</code></p>
 <hr>
 <h4 id="eanjsx"><strong><code>EAN.jsx</code></strong> </h4>
 <p>This script is inspired by <a href="https://github.com/smorodsky/ean-barcode-generator"><strong>EAN Barcode Generator</strong></a> by Konstantin Smorodsky, that generates a document containing a user-provided sequence of barcodes. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I got tired of manually copy/pasting and scaling and rotating each one, so I made a version<sup class="footnote-ref"><a href="#fn3" id="fnref3">[3]</a></sup> that inserts a sequence of barcodes directly into the selected objects, in the order they were selected. If there’s multiple frames selected and only one barcode, it will be repeated. When nothing is selected, it creates a new document with each barcode on one page, like the original script.</p>
 <p>Enter 8 or 13 digits for the code itself; if you have an add-on, add a hyphen and another 2 or 5 digits.</p>
-<p><strong>Suggested shortcut:</strong> <code>⌥F9</code></p>
+<p><em>Suggested shortcut:</em> <code>⌥F9</code></p>
 <hr>
 <h4 id="labelpagejsx"><strong><code>LabelPage.jsx</code></strong> </h4>
-<p>Adds a custom label on the current page slug, on the <strong>info</strong> layer (Helvetica Regular 6&nbsp;pt, fill <strong>Registration</strong>, stroke <strong>Paper</strong> 0.4 pt):</p>
+<p>Adds a custom label on the current page slug, on the <strong>info</strong> layer (Helvetica Regular 6&nbsp;pt, fill <strong>Registration</strong>, stroke <strong>Paper</strong> 0.4 pt).</p>
+<p><strong>Example:</strong></p>
 <p><img src="img/labelpage.png" alt="Label Page"></p>
 <hr>
 <h4 id="labelpageratiosjsx"><strong><code>LabelPageRatios.jsx</code></strong> </h4>
@@ -931,9 +926,10 @@
 </tr>
 </tbody>
 </table>
-<p>If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads (a <em>suffix</em>), the letter corresponding to the spread index will be appended to each code/file – e.g., for a document with three spreads named <strong><code>Document_ABC.indd</code></strong>, the script will generate <strong><code>Document_A_QR.pdf</code></strong>, <strong><code>Document_B_QR.pdf</code></strong> and <strong><code>Document_C_QR.pdf</code></strong>.</p>
-<p>You can use <code>|</code> for manually splitting the label into several lines.</p>
-<p><strong>Suggested shortcut:</strong> <code>F9</code></p>
+<p>If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads (a <em>suffix</em>), the letter corresponding to the spread index will be appended to each code/file.</p>
+<p><strong>Example:</strong> For a document with three spreads named <strong><code>Document_ABC.indd</code></strong>, the script will generate <strong><code>Document_A_QR.pdf</code></strong>, <strong><code>Document_B_QR.pdf</code></strong> and <strong><code>Document_C_QR.pdf</code></strong>.</p>
+<p><em>Tip:</em> You can use <code>|</code> for manually splitting the label into several lines.</p>
+<p><em>Suggested shortcut:</em> <code>F9</code></p>
 <hr>
 <h4 id="qrbatchjsx"><strong><code>QRBatch.jsx</code></strong> </h4>
 <p>Does the same thing as <strong><code>QR</code></strong> but in a non-interactive way: retrieves a list of codes from a TSV data file named <strong><code>qr.tsv</code></strong> (<a href="samples/qr.tsv">sample</a>) and adds them to existing documents, or creates separate files (the suffix thingy applies here as well):</p>
@@ -976,8 +972,8 @@
 </ul>
 <p>The TSV file must be saved locally (in the active document folder); files starting with <code>_</code> take precedence.<br>
 Blank lines are ignored; everything after a <code>#</code> (comments) is ignored.</p>
-<p>You can use <code>|</code> for manually splitting the label into several lines.</p>
-<p><strong>Suggested shortcut:</strong> <code>⇧F9</code></p>
+<p><em>Tip:</em> You can use <code>|</code> for manually splitting the label into several lines.</p>
+<p><em>Suggested shortcut:</em> <code>⇧F9</code></p>
 <hr>
 <h4 id="showfontsjsx"><strong><code>ShowFonts.jsx</code></strong> </h4>
 <p>Shows all fonts used in the active document.</p>
@@ -988,7 +984,7 @@ Blank lines are ignored; everything after a <code>#</code> (comments) is ignored
 <h4 id="showpropertiesjsx"><strong><code>ShowProperties.jsx</code></strong> </h4>
 <p>Shows properties and methods of a selected object for debugging purposes.</p>
 <p>Inspired by <a href="https://github.com/grefel/indesignjs/blob/version2/Allgemeine_Skripte/EigenschaftenAnzeigen.jsx"><strong>showProps()</strong></a> by Gregor Fellenz and <a href="https://github.com/basiljs/basil.js/blob/23b60f16f3088ae9df624d6d9a52a890114fcae0/src/includes/environment.js#L722"><strong>pub.inspect()</strong></a> from basil.js.</p>
-<p><strong>Suggested shortcut:</strong> <code>F1</code></p>
+<p><em>Suggested shortcut:</em> <code>F1</code></p>
 <h2 id="install">Install </h2>
 <ol>
 <li>Clone or download from <strong>Code ‣ Download ZIP</strong>, or download the <a href="https://github.com/pchiorean/Indentz/releases">latest release</a>.</li>
@@ -999,9 +995,9 @@ Blank lines are ignored; everything after a <code>#</code> (comments) is ignored
 <h2 id="creditslicense">Credits/License </h2>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="https://community.adobe.com/t5/indesign-discussions/theunis-de-jong-1966-2020/td-p/11653669">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla’s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials, or code samples by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others. Some scripts are not originally created by me; credit is given in these cases.</p>
 <p>Thanks to Adrian Frigioiu and others for bug reports and feedback.</p>
-<p>© 2020-2023 Paul Chiorean &lt;jpeg AT basement.ro&gt;.<br>
+<p>© 2020-2023 Paul Chiorean &lt;jpeg@basement.ro&gt;.<br>
 The code is released under the <a href="LICENSE.txt">MIT License</a>.</p>
-<p><small>Last updated: October 27, 2023</small></p>
+<p><small>Last updated: November 5, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
