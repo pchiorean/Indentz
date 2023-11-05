@@ -4,7 +4,7 @@ Name          	Color      	Visible 	Printable 	Order  	Variants
 .guides       	Magenta    	yes     	no        	top    	abstände, grid, guides, masuratori, vermassung
 .segmentation 	Grid Green 	yes     	yes       	above  	segmentation, split
 .fold         	Grid Green 	yes     	yes       	above  	fold, falz
-.safety area  	Grid Green 	yes     	yes       	above  	safe*area, safe*margins
+.safety area  	Grid Green 	yes     	yes       	above  	limit*area, safe*area, safe*margins
 .visible area 	Yellow     	yes     	yes       	above  	nicht sicht*, rahmen, sicht*, *vi?ib*
 .covered area 	Red        	yes     	yes       	above  	covered area*, verdeckte flächen
 .reference    	Black      	no      	no        	bottom 	refer*, template, vorlage
@@ -13,27 +13,27 @@ Name          	Color      	Visible 	Printable 	Order  	Variants
 media         	Cyan       	no      	yes       	above
 info          	Cyan       	no      	yes       	above  	id, info copy, ratio
 placement     	Gray       	no      	yes       	above
-placeholder   	Magenta    	no      	yes       	above  	placeholder
+placeholder   	Magenta    	no      	yes       	above
 
 # Technical
-dielines      	Red        	yes     	yes       	above  	cut, cutcontour, cut*line*, decoupe, die, die*cut*, falz, mark, stanz*, sichtmass*kontur, stafo
+dielines      	Red        	yes     	yes       	above  	cut, cutcontour, cut*line*, decoupe, die, die*cut*, falz, mark, sichtmass*kontur, stafo, stanz*
 varnish       	Yellow     	no      	yes       	above  	uv
 foil          	Gold       	no      	yes       	above
 white         	Cute Teal  	no      	yes       	above
 cutout        	Gray       	no      	yes       	above
 
 # Artwork
-HW            	Light Gray 	no      	yes       	above  	*hw*, todesbalken, wh
+HW            	Light Gray 	no      	yes       	above  	*hw*, todesbalken, warnhinweis, wh
 on top        	Light Blue 	no      	yes       	above  	ecken
-disruptors    	Gold       	no      	yes       	above  	offer, preis, price, pricetag, störer
-text & logos  	Green      	no      	yes       	above  	copy, dots, headline*, hl, logo, logos, tab, text*, txt, typ?, *signet
+disruptors    	Gold       	no      	yes       	above  	offer, preis, price*, störer
+text & logos  	Green      	no      	yes       	above  	copy, dots, headline*, hl, logo*, text*, txt, typ?, *signet
 terms         	Gray       	no      	yes       	above  	disclaimer*, legal*, validity
-codes         	Grid Green 	no      	yes       	above  	code*, bar*code*, ean*, qr, qr?code
-labels over   	Gold       	no      	yes       	above  	new
-products      	Blue       	no      	yes       	above  	device*, pack*, packshot*, päckli, product*, tin*
-labels under  	Gold       	no      	yes       	above
+codes         	Grid Green 	no      	yes       	above  	bar*code*, code*, ean*, qr*
+labels above  	Gold       	no      	yes       	above  	labels, labels over, new
+products      	Blue       	no      	yes       	above  	device*, pack*, päckli, product*, tin*
+labels below  	Gold       	no      	yes       	above  	labels under
 artwork       	Light Blue 	no      	yes       	above  	aw, bullseye, design, element?, images, inner frame dot, layout*, RZ
-shard         	Light Blue 	no      	yes       	above  	brand arrow, velo_arrow, farbebene, freisteller, shard
+on bottom     	Light Blue 	no      	yes       	below  	brand arrow, farbebene, freisteller, shard*, velo_arrow
 bg            	Red        	no      	yes       	below  	back, *background*, bgg, fond, hg, hintergrund*
 
 # <Name>: layer name
