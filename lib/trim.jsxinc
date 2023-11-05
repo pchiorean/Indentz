@@ -1,0 +1,96 @@
+/**
+ * Left- and right-trims a string: '<anyspace>*XXX<anyspace>*' => 'XXX'.
+ * @author Marc Autret (IndiScripts.com)
+ * @source IdExtenso/core/Ext/$$.string.jsxinc
+ * @param {string} str - String to be trimmed.
+ * @returns {string} Returns the trimmed string.
+ */
+function trim(str) {
+	var i, j, cc;
+
+	for (j = str.length, i = -1;
+		++i < j
+		&& (
+			(cc = str.charCodeAt(i)) <= 0x0020 // Space
+			|| cc === 0x00A0 // No-break space
+			|| (cc >= 0x2000 && cc <= 0x200C) // InDesign spaces
+			|| cc === 0x2028 // Line separator
+			|| cc === 0x2029 // Paragraph separator
+			|| cc === 0x202F // Narrow no-break space
+			|| cc === 0x205F // Medium mathematical space
+			|| cc === 0x3000 // Ideographic space
+		)
+		;
+	);
+
+	while (j--
+		&& (
+			(cc = str.charCodeAt(j)) <= 0x0020 // Space
+			|| cc === 0x00A0 // No-break space
+			|| (cc >= 0x2000 && cc <= 0x200C) // InDesign spaces
+			|| cc === 0x2028 // Line separator
+			|| cc === 0x2029 // Paragraph separator
+			|| cc === 0x202F // Narrow no-break space
+			|| cc === 0x205F // Medium mathematical space
+			|| cc === 0x3000 // Ideographic space
+		)
+	);
+
+	return j < i ? '' : str.substring(i, 1 + j);
+}
+
+/**
+ * Left-trims a string: '<anyspace>*XXX' => 'XXX'.
+ * @author Marc Autret (IndiScripts.com)
+ * @source IdExtenso/core/Ext/$$.string.jsxinc
+ * @param {string} str - String to be trimmed.
+ * @returns {string} Returns the trimmed string.
+ */
+function ltrim(str) {
+	var i, j, cc;
+
+	for (j = str.length, i = -1;
+		++i < j
+		&& (
+			(cc = str.charCodeAt(i)) <= 0x0020 // Space
+			|| cc === 0x00A0 // No-break space
+			|| (cc >= 0x2000 && cc <= 0x200C) // InDesign spaces
+			|| cc === 0x2028 // Line separator
+			|| cc === 0x2029 // Paragraph separator
+			|| cc === 0x202F // Narrow no-break space
+			|| cc === 0x205F // Medium mathematical space
+			|| cc === 0x3000 // Ideographic space
+		)
+		;
+	);
+
+	return i ? str.substr(i) : str;
+}
+
+/**
+ * Right-trims a string: 'XXX<anyspace>*' => 'XXX'.
+ * @author Marc Autret (IndiScripts.com)
+ * @source IdExtenso/core/Ext/$$.string.jsxinc
+ * @param {string} str - String to be trimmed.
+ * @returns {string} Returns the trimmed string.
+ */
+function rtrim(str) {
+	var j, cc;
+
+	for (j = str.length;
+		j--
+		&& (
+			(cc = str.charCodeAt(j)) <= 0x0020 // Space
+			|| cc === 0x00A0 // No-break space
+			|| (cc >= 0x2000 && cc <= 0x200C) // InDesign spaces
+			|| cc === 0x2028 // Line separator
+			|| cc === 0x2029 // Paragraph separator
+			|| cc === 0x202F // Narrow no-break space
+			|| cc === 0x205F // Medium mathematical space
+			|| cc === 0x3000 // Ideographic space
+		)
+		;
+	);
+
+	return j < 0 ? '' : str.substring(0, 1 + j);
+}
