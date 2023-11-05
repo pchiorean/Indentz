@@ -86,7 +86,18 @@
 - `10/27` [`ref`](https://github.com/pchiorean/Indentz/commit/0cd95a9e13072b7c9046ea46e3680960a6f2c5d2)
   UI: Changed button labels from 'Ok' to 'OK'
 - `10/31` [`new`](https://github.com/pchiorean/Indentz/commit/1574bc6fbd3dfba3af8b098f6d3f22c0f613b71c)
-  **misc/OffsetPaths:** Added support for groups; in fact we process each member of 1st level groups so we don't get a boring rectangle
+  **misc/OffsetPaths:** Added support for groups; in fact we also process each member of 1st level groups so we don't get a boring rectangle
+- `11/04` [`fix`](https://github.com/pchiorean/Indentz/commit/1c519c6d425ebc25bd4fbb3568e22508602c8454)
+  **fit/TextAutoSize:** Trimming ending whitespace also affected styling; fixed
+- `11/05` [`upd`](https://github.com/pchiorean/Indentz/commit/096a21a78db9d3376d129dc3a0507286750e2068)
+  **cleanup/DocCleanup:** Added some layers to 'Show/hide layers'
+- `11/05` [`fix`](https://github.com/pchiorean/Indentz/commit/23066775d5e5f7077d5c5ee742e826fe1df46b61)
+  **cleanup/ReplaceLinks:** Filenames with commas are now actually recognized, but must be properly quoted
+- `11/05` [`new`](https://github.com/pchiorean/Indentz/commit/24bdbc580b13a4133a9f7bb2d3704eec53d7407f)
+  **lib/trim:** Added a helper function for trimming whitespace in strings (borrowed from [IdExtenso](https://github.com/indiscripts/IdExtenso/blob/master/core/Ext/%24%24.string.jsxinc) by [Marc Autret](https://indiscripts.com))
+
+<!-- - `fix` **misc/QR:** 'On file' action is missing for [Converted] docs; implement 'hasNoPath' -->
+<!-- - `fix` **export/QuickExport:** Borked UI when fonts are missing? -->
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
