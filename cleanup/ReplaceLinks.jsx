@@ -1,5 +1,5 @@
 /*
-	Replace links 23.10.21
+	Replace links 23.11.5
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces document links using a 2-column TSV file named `links.tsv`:
@@ -71,11 +71,12 @@ function main() {
 	var parsed = { header: [], data: [], errors: [] };
 	var data = { records: [], status: { info: [], warn: [], error: [] } };
 	var counter = 0;
-	var links = doc.links.everyItem().getElements();
-	var linkS = (function () {
-		var s = [];
-		for (i = 0; i < links.length; i++) s.push(links[i].name);
-		return s;
+	var docLinks = doc.links.everyItem().getElements();
+	var linksNames = (function () {
+		var i;
+		var arr = [];
+		for (i = 0; i < docLinks.length; i++) arr.push(docLinks[i].name);
+		return arr;
 	}());
 	var docHasPath = (function () {
 		var ret = false;
@@ -105,21 +106,26 @@ function main() {
 	if (data.status.error.length > 0) { report(data.status.error, title); exit(); }
 
 	// Processing
-	if (links.length > 2 && data.records.length > 2) progressBar = new ProgressBar('Replacing links', links.length);
-	for (i = 0; i < links.length; i++) {
-		if (progressBar) progressBar.update();
-		for (j = 0; j < data.records.length; j++) {
-			data.records[j].newLink = compactRelPath(data.records[j].newLink);
-			if (!isInArray(links[i].name, data.records[j].oldLinks)) continue; // Skip not matched
-			if (File(links[i].filePath).fullName === File(data.records[j].newLink).fullName // Skip self
-					&& links[i].status !== LinkStatus.LINK_OUT_OF_DATE) // [TODO] CHECK THIS SHIT
-				continue;
-			stat(data.status, data.records[j].source,
-				'Relinked \'' + decodeURI(links[i].name) + '\' with \''
-					+ decodeURI(data.records[j].newLink) + '\'.', 0);
-			links[i].relink(File(data.records[j].newLink));
-			counter++;
-			if (ScriptUI.environment.keyboardState.keyName === 'Escape') exit();
+	if (data.records.length > 0) {
+		if (docLinks.length > 2 && data.records.length > 2)
+			progressBar = new ProgressBar('Replacing links', docLinks.length);
+
+		for (i = 0; i < docLinks.length; i++) {
+			if (progressBar) progressBar.update();
+
+			for (j = 0; j < data.records.length; j++) {
+				if (!isInArray(docLinks[i].name, data.records[j].oldLinks)) continue; // Skip not matched
+				if (File(docLinks[i].filePath).fullName === File(data.records[j].newLink).fullName // Skip self
+						&& docLinks[i].status !== LinkStatus.LINK_OUT_OF_DATE) // [TODO] CHECK THIS SHIT
+					continue;
+
+				stat(data.status, data.records[j].source,
+					'Relinked \'' + decodeURI(docLinks[i].name) + '\' with \''
+						+ decodeURI(data.records[j].newLink) + '\'.', 0);
+				docLinks[i].relink(File(data.records[j].newLink));
+				counter++;
+				if (ScriptUI.environment.keyboardState.keyName === 'Escape') exit();
+			}
 		}
 	}
 
@@ -287,33 +293,47 @@ function main() {
 	}
 
 	function checkRecord(/*array*/record) {
+		var newLink, oldLinks, isLinkUsed;
 		var tmpData = {};
 
 		tmpData.source = parsed.data[i].source.join(':');
+		oldLinks = (function () {
+			var str, i;
+			var arr = [];
 
-		var newLink = (function () {
-			record[0] = compactRelPath(record[0]);
-			return record[0];
+			// Add newLink as first variant
+			str = record[0].slice(record[0].lastIndexOf('/') + 1);
+			if (record[1]) str += ',' + record[1];
+
+			// Split string by commas, using a regexp hack to protect them in quoted strings
+			arr = str.split(/["']/);
+			for (i = 0; i < arr.length; i++) if (i % 2) arr[i] = arr[i].replace(/,/g, '\\u002c');
+			str = arr.join('"');
+			str = str.replace(/["']/g, '');
+			arr = str.split(/ *, */);
+			for (i = 0; i < arr.length; i++) arr[i] = arr[i].replace(/\\u002c/g, ',');
+
+			return unique(arr);
 		}());
-		var oldLinks = (function () {
-			var o = newLink.slice(newLink.lastIndexOf('/') + 1);
-			if (record[1]) o += ',' + record[1];
-			return unique(o.split(/ *, */));
-		}());
+
+		newLink = compactRelPath(record[0].replace(/["']/g, ''));
 
 		// Check if document has at least one link from oldLinks
-		var isLinkUsed = (function () {
-			if (linkS.length > 0) {
-				for (var i = 0; i < linkS.length; i++)
-					if (isInArray(linkS[i], oldLinks)) return true;
+		isLinkUsed = (function () {
+			var i;
+
+			if (linksNames.length > 0) {
+				for (i = 0; i < linksNames.length; i++)
+					if (isInArray(linksNames[i], oldLinks)) return true;
 			}
+
 			return false;
 		}());
 
 		// Check if newLink is actually used and valid
 		if (!isLinkUsed) {
-			// stat(data.status, tmpData.source + ':1',
-			// 	'Skipped \'' + decodeURI(newLink) + '\' because it\'s not used.', 0);
+			stat(data.status, tmpData.source + ':1',
+				'Skipped \'' + decodeURI(newLink) + '\' because it\'s not used.', 0);
 			return false;
 		} else if (!File(newLink).exists) {
 			stat(data.status, tmpData.source + ':1',
