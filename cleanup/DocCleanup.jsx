@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 23.10.26
+	Document cleanup 23.11.5
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
@@ -148,6 +148,7 @@ progressBar.update();
 app.doScript(function () {
 	var layer;
 	if ((layer = doc.layers.itemByName('.guides')).isValid)       { layer.visible = true; layer.locked = false; }
+	if ((layer = doc.layers.itemByName('.fold')).isValid)         { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('.safety area')).isValid)  { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('.segmentation')).isValid) { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('.visible area')).isValid) { layer.visible = true; layer.locked = true; }
@@ -156,8 +157,10 @@ app.doScript(function () {
 	if ((layer = doc.layers.itemByName('varnish')).isValid)       { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('cutout')).isValid)        { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('HW')).isValid)            { layer.visible = true; layer.locked = true; }
+	if ((layer = doc.layers.itemByName('on top')).isValid)        { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('text & logos')).isValid)  { layer.visible = true; layer.locked = false; }
 	if ((layer = doc.layers.itemByName('artwork')).isValid)       { layer.visible = true; layer.locked = false; }
+	if ((layer = doc.layers.itemByName('on bottom')).isValid)     { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('bg')).isValid)            { layer.visible = true; layer.locked = true; }
 	if ((layer = doc.layers.itemByName('.reference')).isValid)    { layer.visible = false; layer.locked = true; }
 
