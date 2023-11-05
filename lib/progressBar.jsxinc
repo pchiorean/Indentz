@@ -30,7 +30,7 @@ function ProgressBar(title, maxValue, maxWidth) {
 	}
 	/**
 	 * Updates the message.
-	 * @method
+	 * @method msg
 	 * @param {string} [message] - Message; if omitted, the previous message is cleared.
 	 */
 	this.msg = function (message) {
@@ -42,7 +42,7 @@ function ProgressBar(title, maxValue, maxWidth) {
 	};
 	/**
 	 * Increases the value of the main progress bar and updates the counter.
-	 * @method
+	 * @method update
 	 */
 	this.update = function () {
 		pb.bar1.value++;
@@ -54,7 +54,7 @@ function ProgressBar(title, maxValue, maxWidth) {
 	};
 	/**
 	 * Sets the number of steps for the secondary progress bar.
-	 * @method
+	 * @method init2
 	 * @param {number} maxValue2 - Number of steps.
 	 */
 	this.init2 = function (maxValue2) {
@@ -65,7 +65,7 @@ function ProgressBar(title, maxValue, maxWidth) {
 	};
 	/**
 	 * Increases the value of the secondary progress bar.
-	 * @method
+	 * @method update2
 	 */
 	this.update2 = function () {
 		if (pb.bar2.maxvalue < 2) return;
@@ -75,7 +75,7 @@ function ProgressBar(title, maxValue, maxWidth) {
 	};
 	/**
 	 * Closes the progress bar.
-	 * @method
+	 * @method close
 	 */
 	this.close = function () { $.sleep(100); pb.close(); };
 

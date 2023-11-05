@@ -6,10 +6,11 @@
  * @param {string} searchValue - String to be matched.
  * @param {array} array - An array of strings; wildcards: '*' (zero or more characters), '?' (any character).
  * @param {boolean} [isCaseSensitive=false] - If `true` the search is case sensitive. (Optional.)
- * @returns {boolean} - Returns `true` for match, `false` for no match.
+ * @returns {boolean} Returns `true` for match, `false` for no match.
  * @example
  * isInArray('codes', [ 'bar*code*', 'code*', 'EAN*' ]) // Matches 2nd array element
  */
+
 function isInArray(searchValue, array, isCaseSensitive) {
 	var matchValue;
 	isCaseSensitive = Boolean(isCaseSensitive);
@@ -17,9 +18,9 @@ function isInArray(searchValue, array, isCaseSensitive) {
 
 	for (var i = 0; i < array.length; i++) {
 		matchValue = isCaseSensitive ? array[i].toString() : array[i].toLowerCase();
-		if (searchValue === matchValue) {
+		if (searchValue === matchValue) { // Try a direct match
 			return true;
-		} else if (/[?*]/g.test(matchValue)) { // Has wildcards
+		} else if (/[?*]/g.test(matchValue)) { // If it has wildcards, switch to regexp match
 			matchValue = RegExp('^'
 				+ matchValue
 					.replace(/[|^$(.)[\]{+}\\]/g, '\\$&')     // Escape regex tokens, pass '*' and '?'
