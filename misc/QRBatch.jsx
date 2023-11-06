@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 23.10.21
+	Batch QR codes 23.11.6
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds codes to existing documents or to separate files in batch mode,
@@ -55,12 +55,18 @@
 
 var status = [];
 var currentPath;
+var docHasPath = (function () {
+	var ret = false;
+	try { ret = !!doc.filePath; } catch (e) {}
+	return ret;
+}());
+
 if (app.documents.length > 0) {
 	doc = app.activeDocument;
-	if (doc && doc.saved) currentPath = doc.filePath;
+	if (doc && docHasPath) currentPath = doc.filePath;
 }
 
-main();
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Batch QR codes');
 
 function main() {
 	var i, n, ui, item, dataFile, rawData, validLines, queue, progressBar, pbWidth;

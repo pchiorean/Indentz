@@ -1,5 +1,5 @@
 /*
-	QR code 23.10.8
+	QR code 23.11.6
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a QR code to the current document or to a separate file.
@@ -33,16 +33,20 @@
 // @include 'stat.jsxinc';
 
 doc = (app.documents.length === 0) ? app.documents.add() : app.activeDocument;
-var currentPath = doc.saved ? doc.filePath : '';
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'QR code');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'QR code');
 
 function main() {
-	var baseName, suffix, ui, codeText, onDoc;
+	var baseName, suffix, ui, codeText, currentPath, onDoc;
 	var status = [];
+	var docHasPath = (function () {
+		var ret = false;
+		try { ret = !!doc.filePath; } catch (e) {}
+		return ret;
+	}());
+
+	currentPath = docHasPath ? doc.filePath : '';
 	baseName = /\./g.test(doc.name) ? doc.name.slice(0, doc.name.lastIndexOf('.')) : doc.name;
-	// baseName = baseName.replace(/_QR$/i, '');
 	suffix = RegExp('[ ._-][a-zA-Z0-9]{' + doc.spreads.length + '}$', 'i').exec(baseName);
 	suffix = (!currentPath || suffix == null) ? '' : String(suffix);
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
