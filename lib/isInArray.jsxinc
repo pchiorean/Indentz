@@ -10,7 +10,6 @@
  * @example
  * isInArray('codes', [ 'bar*code*', 'code*', 'EAN*' ]) // Matches 2nd array element
  */
-
 function isInArray(searchValue, array, isCaseSensitive) {
 	var matchValue;
 	isCaseSensitive = Boolean(isCaseSensitive);
