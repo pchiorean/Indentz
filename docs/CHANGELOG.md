@@ -95,9 +95,26 @@
   **cleanup/ReplaceLinks:** Filenames with commas are now actually recognized, but must be properly quoted
 - `11/05` [`new`](https://github.com/pchiorean/Indentz/commit/24bdbc580b13a4133a9f7bb2d3704eec53d7407f)
   **lib/trim:** Added a helper function for trimming whitespace in strings (borrowed from [IdExtenso](https://github.com/indiscripts/IdExtenso/blob/master/core/Ext/%24%24.string.jsxinc) by [Marc Autret](https://indiscripts.com))
+- `11/06` [`fix`](https://github.com/pchiorean/Indentz/commit/49111cc6e23519acb4fcca86c33629e086e3f6a0)
+  **misc/QR, QRBatch:** Fixed document path detection for '[Converted]' docs
+- `11/14` [`upd`](https://github.com/pchiorean/Indentz/commit/0e04f2861b51407d62758f68bd92c3d160862a10)
+  **export/QuickExport:** Automatically add to the suffix all visible & printable layers named '+xxxxxxx' if exporting with a 'print' preset
 
-<!-- - `fix` **misc/QR:** 'On file' action is missing for [Converted] docs; implement 'hasNoPath' -->
-<!-- - `fix` **export/QuickExport:** Borked UI when fonts are missing? -->
+##### Queued
+
+- `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
+- `fix` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
+- `fix` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (for new layers respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking** setting); inhibit alert and report culprits at finish
+- `fix` **export/QuickExport:** Borked UI when fonts are missing?
+- `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
+- `fix` **file/SpreadsToFiles:** Don't append separators if already exist
+- `fix` **fit/TextAutoSize:** Check `baselineShift`
+- `fix` **layout/PageSizeFromFilename:** Fix errors on pages set to 1:X scale
+- `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
+- `fix` `?` **export/QuickExport:** Fix low-res export for embedded .indd files
+- `fix` `transform()` and `app.transformPreferences.whenScaling`
+- `fix` Fix `ui.onShow()` vertical dialog positioning
+- `fix` Nullify large variables on exit
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -177,7 +194,7 @@
 - `03/11` [`fix`](https://github.com/pchiorean/Indentz/commit/84214f8a1cdc09d3f493188bdc1f8773404a2e3b)
   **fit/TextAutosize:** Fixed a bug that in certain circumstances reverted a frame's auto-sizing to height-only
 - `04/02` [`fix`](https://github.com/pchiorean/Indentz/commit/04edf0d97127b5472c4217d52354ff8cb16fd236)
-  **lib/ParseDataFile and related:** Converted documents actually have a path (d'oh!), so don't skip looking for the local data file
+  **lib/ParseDataFile and related:** '[Converted]' documents actually have a path (d'oh!), so don't skip looking for the local data file
 - `04/03` [`fix`](https://github.com/pchiorean/Indentz/commit/2e8d29bdc4fecffdfd75a530a3666169be7b236c)
   **cleanup/ReplaceLinks:** Forgot to update `getDataFile()` (this script has the libs included)
 - `04/03` [`fix`](https://github.com/pchiorean/Indentz/commit/55383fbc2c2805849c41355e2a27276b1bcdeb00)
@@ -826,7 +843,6 @@
 - `new` **cleanup/DefaultSwatches:** Add tints support
 - `new` **export/QuickExport:** Add a preflight option
 - `new` **export/QuickExport:** Add INDD (with or without package) export profile
-- `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
 - `new` **export/QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
 - `new` **file/SpreadsToLayers**
 - `new` **misc/ShowFonts** → **cleanup/DumpFonts**
@@ -846,7 +862,6 @@
 - `brk` **cleanup/ReplaceSnippets:** Extend Scope to layers/pages etc
 - `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
 - `brk` **export/MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
-- `upd` **export/QuickExport:** Automatically add to the suffix all visible & printable layers named '+xxxxxxx'
 - `upd` **export/QuickExport:** Create destination folder if it doesn't exist
 - `upd` **export/QuickExport:** Move hacks to advanced options, saved in settings
 - `upd` **export/Show/HideDNPLayers:** Take layers from a TSV
@@ -867,18 +882,6 @@
 ##### Removed features
 
 ##### Bug fixes
-
-- `fix` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
-- `fix` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (for new layers respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking** setting); inhibit alert and report culprits at finish
-- `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
-- `fix` **file/SpreadsToFiles:** Don't append separators if already exist
-- `fix` **fit/TextAutoSize:** Check `baselineShift`
-- `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
-- `fix` **layout/PageSizeFromFilename:** Fix errors on pages set to 1:X scale
-- `fix` Nullify large variables on exit
-- `fix` Fix `ui.onShow()` vertical dialog positioning
-- `fix` `transform()` and `app.transformPreferences.whenScaling`
-- `fix` `?` **export/QuickExport:** Fix low-res export for embedded .indd files
 
 ##### Miscellaneous
 
