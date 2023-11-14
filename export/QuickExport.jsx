@@ -1,5 +1,5 @@
 /*
-	Quick export 23.10.27
+	Quick export 23.11.14
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -25,6 +25,8 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
+
+/* eslint-disable max-depth */
 
 // @includepath '.;./lib;../lib';
 // @include 'getFilesRecursively.jsxinc';
@@ -297,26 +299,22 @@ function QuickExport() {
 					}
 				}
 
-				// Hack: Append special layers names to the suffix
+				// Append to the suffix all visible & printable layers named '+xxxxxxx'
 				if (exp.suffix.isOn.value && /^_print/i.test(suffix)) {
+					// Dielines layer has priority
 					if (((layer = doc.layers.itemByName('dielines')).isValid
 						|| (layer = doc.layers.itemByName('diecut')).isValid
 						|| (layer = doc.layers.itemByName('die cut')).isValid)
 						&& layer.visible
 						&& layer.printable
 					) suffix += '+diecut';
-					if ((layer = doc.layers.itemByName('white')).isValid
-						&& layer.visible
-						&& layer.printable
-					) suffix += '+white';
-					if ((layer = doc.layers.itemByName('foil')).isValid
-						&& layer.visible
-						&& layer.printable
-					) suffix += '+foil';
-					if ((layer = doc.layers.itemByName('varnish')).isValid
-						&& layer.visible
-						&& layer.printable
-					) suffix += '+varnish';
+
+					for (i = 0; i < doc.layers.length; i++) {
+						layer = doc.layers[i];
+						if (!layer.visible || !layer.printable) continue;
+						if (/dielines|die ?cut/g.test(layer.name)) continue;
+						if (/^\+/g.test(layer.name)) suffix += layer.name;
+					}
 				}
 
 				doExport(exp.asSpreads.value, exp.split.value, exp.preset.selection.text);
