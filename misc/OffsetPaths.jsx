@@ -1,5 +1,5 @@
 /*
-	Offset paths 23.10.31
+	Offset paths 23.11.14
 
 	Use InDesign's text wrap feature to create offset/inset paths.
 
@@ -23,8 +23,7 @@
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-// app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Offset paths');
-main(doc.selection);
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Offset paths');
 
 function main(selection) {
 	var i, j, ui, offsetField, offset, groupItems;
