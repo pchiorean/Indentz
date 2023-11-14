@@ -16,15 +16,15 @@ placement     	Gray       	no      	yes       	above
 placeholder   	Magenta    	no      	yes       	above
 
 # Technical
-dielines      	Red        	yes     	yes       	above  	cut, cutcontour, cut*line*, decoupe, die, die*cut*, falz, mark, sichtmass*kontur, stafo, stanz*
-varnish       	Yellow     	no      	yes       	above  	uv
-foil          	Gold       	no      	yes       	above
-white         	Cute Teal  	no      	yes       	above
++dielines     	Red        	yes     	yes       	above  	+dielines, cut, cutcontour, cut*line*, decoupe, die, die*cut*, falz, mark, sichtmass*kontur, stafo, stanz*
++varnish      	Yellow     	no      	yes       	above  	+varnish, uv
++foil         	Gold       	no      	yes       	above	+foil
++white        	Cute Teal  	no      	yes       	above	+white
 cutout        	Gray       	no      	yes       	above
 
 # Artwork
 HW            	Light Gray 	no      	yes       	above  	*hw*, todesbalken, warnhinweis, wh
-on top        	Light Blue 	no      	yes       	above  	ecken
+on top        	Gray       	no      	yes       	above  	ecken
 disruptors    	Gold       	no      	yes       	above  	offer, preis, price*, störer
 text & logos  	Green      	no      	yes       	above  	copy, dots, headline*, hl, logo*, text*, txt, typ?, *signet
 terms         	Gray       	no      	yes       	above  	disclaimer*, legal*, validity
@@ -33,7 +33,7 @@ labels above  	Gold       	no      	yes       	above  	labels, labels over, new
 products      	Blue       	no      	yes       	above  	device*, pack*, päckli, product*, tin*
 labels below  	Gold       	no      	yes       	above  	labels under
 artwork       	Light Blue 	no      	yes       	above  	aw, bullseye, design, element?, images, inner frame dot, layout*, RZ
-on bottom     	Light Blue 	no      	yes       	below  	brand arrow, farbebene, freisteller, shard*, velo_arrow
+on bottom     	Gray       	no      	yes       	below  	brand arrow, farbebene, freisteller, shard*, velo_arrow
 bg            	Red        	no      	yes       	below  	back, *background*, bgg, fond, hg, hintergrund*
 
 # <Name>: layer name
