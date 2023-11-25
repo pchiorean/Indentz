@@ -3,10 +3,13 @@
  * @param {string} findWhat - Text to be replaced.
  * @param {string} changeTo - New text.
  * @param {boolean} [wholeWord=true] - Match whole words. (Optional.)
+ * @param {Object} [target=app.activeDocument] - A target for `changeText()`. (Optional.)
  * @returns {boolean} - Returns `true` if a replacement was made, `false` if not.
  */
-function replaceText(findWhat, changeTo, wholeWord) {
+function replaceText(findWhat, changeTo, wholeWord, target) {
+	var result;
 	wholeWord = (wholeWord === undefined) ? true : wholeWord;
+	target = target || app.activeDocument;
 
 	app.findTextPreferences   = NothingEnum.NOTHING;
 	app.changeTextPreferences = NothingEnum.NOTHING;
@@ -21,7 +24,7 @@ function replaceText(findWhat, changeTo, wholeWord) {
 
 	app.findTextPreferences.findWhat   = findWhat;
 	app.changeTextPreferences.changeTo = changeTo;
-	var result = doc.changeText();
+	result = target.changeText();
 
 	app.findTextPreferences   = NothingEnum.NOTHING;
 	app.changeTextPreferences = NothingEnum.NOTHING;
