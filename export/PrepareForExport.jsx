@@ -1,5 +1,5 @@
 /*
-	Prepare for export 23.10.7
+	Prepare for export 23.11.25
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Hides some layers and moves objects with special colors to separate spreads.
@@ -43,10 +43,10 @@ function prepareForExport() {
 		safe:     [ 'safe*area', 'safe*margins', 'segmentation' ],
 		fold:     [ 'fold', 'falz' ],
 		guides:   [ 'guides', 'grid', 'masuratori' ],
-		dielines: [ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ],
-		varnish:  [ 'varnish', 'uv' ],
-		foil:     [ 'foil', 'silver', 'silver foil' ],
-		white:    [ 'white' ]
+		dielines: [ '+dielines', 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ],
+		varnish:  [ '+varnish', 'varnish', 'uv' ],
+		foil:     [ '+foil', '*foil' ],
+		white:    [ '+white', 'white' ]
 	};
 	var matched = { dielines: [], varnish: [], foil: [], white: [] };
 	app.scriptPreferences.enableRedraw = false;

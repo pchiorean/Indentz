@@ -1,5 +1,5 @@
 /*
-	Page size from file name 23.9.23
+	Page size from file name 23.11.25
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Sets every page size and margins according to the file name.
@@ -39,7 +39,7 @@ function main() {
 	var dimensions, firstPair, secondPair,
 		newPgSize, newMgSize, newBleed, newMargins, page, i, n;
 	var visLayerName = getLayer([ '.visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ]);
-	var dieLayerName = getLayer([ 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ]);
+	var dieLayerName = getLayer([ '+dielines', 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ]);
 	var visFrame = {
 		swatchName: 'Visible area',
 		swatchModel: ColorModel.SPOT,
