@@ -1,5 +1,5 @@
 /*
-	Clip 23.10.13
+	Clip 23.11.25
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Clips selected objects in a clipping frame (or releases them if already clipped).
@@ -10,27 +10,31 @@
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Clipping');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Clip selected objects');
 
 function main(selection) {
-	var bounds, outlines, clipFrame;
+	var bounds, outlines, clipFrame, i, n;
 	var item = selection[0];
 	var items = [];
-	var clippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
-	var clippingGroupRE = /^<(auto )?clip(ping)? group>$/i;
-	var oldURL = app.generalPreferences.ungroupRemembersLayers;
-	var oldPRL = app.clipboardPreferences.pasteRemembersLayers;
+	var isClippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
+	var isClippingGroupRE = /^<(auto )?clip(ping)? group>$/i;
+	var old = {
+		URL: app.generalPreferences.ungroupRemembersLayers,
+		PRL: app.clipboardPreferences.pasteRemembersLayers
+	};
+
+	// Remember layers when grouping/ungrouping
 	app.generalPreferences.ungroupRemembersLayers = true;
 	app.clipboardPreferences.pasteRemembersLayers = true;
 
-	// Exceptions:
 	// Only clip objects directly on spread
 	if (!/spread/i.test(item.parent.constructor.name)) {
 		alert('Can\'t clip this, try selecting the parent.');
 		cleanupAndExit();
 	}
-	// Undo if already clipped
-	if (selection.length === 1 && clippingFrameRE.test(item.name)) {
+
+	// If already clipped, release objects instead
+	if (selection.length === 1 && isClippingFrameRE.test(item.name)) {
 		undoClip(item);
 		cleanupAndExit();
 	}
@@ -38,7 +42,7 @@ function main(selection) {
 	// If multiple objects are selected, group them
 	bounds = item.visibleBounds;
 	if (selection.length > 1) {
-		for (var i = 0, n = selection.length; i < n; i++)
+		for (i = 0, n = selection.length; i < n; i++)
 			if (!selection[i].locked) items.push(selection[i]);
 		item = doc.groups.add(items);
 		item.name = '<auto clipping group>';
@@ -74,22 +78,24 @@ function main(selection) {
 	app.select(clipFrame); app.pasteInto();
 	cleanupAndExit();
 
-	function undoClip(frame) {
-		var oldSelection;
-		var child = frame.pageItems[0].duplicate();
-		child.sendToBack(frame);
-		frame.remove();
-		app.select(child);
-		if (clippingGroupRE.test(child.name)) {
-			oldSelection = child.pageItems.everyItem().getElements();
-			child.ungroup();
-			app.select(oldSelection);
+	function undoClip(container) {
+		var objects = [];
+		var payload = container.pageItems[0].duplicate();
+		payload.sendToBack(container);
+		container.remove();
+
+		if (isClippingGroupRE.test(payload.name)) {
+			objects = payload.pageItems.everyItem().getElements();
+			payload.ungroup();
+			app.select(objects, SelectionOptions.ADD_TO);
+		} else {
+			app.select(payload, SelectionOptions.ADD_TO);
 		}
 	}
 
 	function cleanupAndExit() {
-		app.generalPreferences.ungroupRemembersLayers = oldURL;
-		app.clipboardPreferences.pasteRemembersLayers = oldPRL;
+		app.generalPreferences.ungroupRemembersLayers = old.URL;
+		app.clipboardPreferences.pasteRemembersLayers = old.PRL;
 		exit();
 	}
 }

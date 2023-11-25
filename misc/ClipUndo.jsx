@@ -1,5 +1,5 @@
 /*
-	Undo clipping 23.10.7
+	Undo clip 23.11.25
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Releases selected objects from their clipping frames.
@@ -10,41 +10,57 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Unclipping');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Release clipped objects');
 
 function main() {
 	var item;
-	var items = (doc.selection.length === 0) ? doc.pageItems.everyItem().getElements() : doc.selection;
-	var clippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
-	var clippingGroupRE = /^<(auto )?clip(ping)? group>$/i;
-	var oldURL = app.generalPreferences.ungroupRemembersLayers;
-	var oldPRL = app.clipboardPreferences.pasteRemembersLayers;
+	var items = (doc.selection.length === 0)
+		? app.activeWindow.activeSpread.pageItems.everyItem().getElements()
+		: doc.selection;
+	var isClippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
+	var isClippingGroupRE = /^<(auto )?clip(ping)? group>$/i;
+	var old = {
+		URL: app.generalPreferences.ungroupRemembersLayers,
+		PRL: app.clipboardPreferences.pasteRemembersLayers
+	};
 
-	// Remember layers for grouping/ungrouping
+	// Remember layers when grouping/ungrouping
 	app.generalPreferences.ungroupRemembersLayers = true;
 	app.clipboardPreferences.pasteRemembersLayers = true;
 
 	// Restore clipped objects
 	while ((item = items.shift())) {
-		if (!/spread/i.test(item.parent.constructor.name)) continue;
-		if (!clippingFrameRE.test(item.name)) continue;
+		// Ignore embedded objects
+		if (!/spread/i.test(item.parent.constructor.name)) {
+			app.select(item, SelectionOptions.REMOVE_FROM);
+			continue;
+		}
+
+		// Ignore objects that are not clipped
+		if (!isClippingFrameRE.test(item.name)) {
+			app.select(item, SelectionOptions.REMOVE_FROM);
+			continue;
+		}
+
 		undoClip(item);
 	}
 
-	// Restore layer grouping settings
-	app.generalPreferences.ungroupRemembersLayers = oldURL;
-	app.clipboardPreferences.pasteRemembersLayers = oldPRL;
+	// Restore settings
+	app.generalPreferences.ungroupRemembersLayers = old.URL;
+	app.clipboardPreferences.pasteRemembersLayers = old.PRL;
 
-	function undoClip(frame) {
-		var oldSelection;
-		var child = frame.pageItems[0].duplicate();
-		child.sendToBack(frame);
-		frame.remove();
-		app.select(child);
-		if (clippingGroupRE.test(child.name)) {
-			oldSelection = child.pageItems.everyItem().getElements();
-			child.ungroup();
-			app.select(oldSelection);
+	function undoClip(container) {
+		var objects = [];
+		var payload = container.pageItems[0].duplicate();
+		payload.sendToBack(container);
+		container.remove();
+
+		if (isClippingGroupRE.test(payload.name)) {
+			objects = payload.pageItems.everyItem().getElements();
+			payload.ungroup();
+			app.select(objects, SelectionOptions.ADD_TO);
+		} else {
+			app.select(payload, SelectionOptions.ADD_TO);
 		}
 	}
 }
