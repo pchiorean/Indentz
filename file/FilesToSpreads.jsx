@@ -1,5 +1,5 @@
 /*
-	Files to spreads 23.9.23
+	Files to spreads 23.11.25
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Combines the open documents, sorted alphabetically.
@@ -13,21 +13,18 @@
 
 if (app.documents.length < 2) exit();
 
-var doc, name, spread, spreads;
+var target, doc, name, s, ss;
 var docs = [];
 var names = [];
 var old = {
+	APS: undefined,
 	UIL: app.scriptPreferences.userInteractionLevel
 };
 app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
 
 // Get a sorted document list
 docs = app.documents.everyItem().getElements();
-while ((doc = docs.shift())) {
-	try { names.push(doc.fullName); } catch (e) {
-		names.push(doc.name);
-	}
-}
+while ((doc = docs.shift())) try { names.push(doc.fullName); } catch (e) { names.push(doc.name); }
 names.sort(naturalSorter);
 docs = [];
 while ((name = names.shift())) docs.push(app.documents.itemByName(name));
@@ -37,10 +34,17 @@ target = docs.shift();
 old.APS = target.documentPreferences.allowPageShuffle;
 target.documentPreferences.allowPageShuffle = false;
 while ((doc = docs.shift())) {
-	spreads = doc.spreads.everyItem().getElements();
-	while ((spread = spreads.shift())) spread.duplicate(LocationOptions.AT_END, target);
+	ss = doc.spreads.everyItem().getElements();
+	while ((s = ss.shift())) s.duplicate(LocationOptions.AT_END, target);
 	doc.close(SaveOptions.ASK);
 }
+
+// Reset page numbering
+ss = target.sections.everyItem().getElements();
+s = ss.shift();
+s.continueNumbering = false;
+s.pageNumberStart = 1;
+while ((s = ss.shift())) { s.continueNumbering = true; s.remove(); }
 
 // Restore settings
 target.documentPreferences.allowPageShuffle = old.APS;
