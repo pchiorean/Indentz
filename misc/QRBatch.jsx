@@ -1,5 +1,5 @@
 /*
-	Batch QR codes 23.11.6
+	Batch QR codes 23.11.25
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Adds codes to existing documents or to separate files in batch mode,
@@ -76,7 +76,7 @@ function main() {
 		itemHeight: 24  // pixels
 	};
 	var WIN = (File.fs === 'Windows');
-	var invalidFilenameChars = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
+	var invalidFilenameCharsRE = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
 	var oldUIL = app.scriptPreferences.userInteractionLevel;
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
@@ -151,7 +151,7 @@ function main() {
 				if (!flgHeader) if (!isEmpty && !isComment) isHeader = flgHeader = true;
 				if (!isEmpty && !isComment && !isHeader) {
 					if (record[0]) {
-						if ((fC = record[0].match(invalidFilenameChars))) {
+						if ((fC = record[0].match(invalidFilenameCharsRE))) {
 							stat(status, 'Line ' + line, 'Forbidden characters in file name: \''
 								+ fC.join('\', \'') + '\'.', 1);
 						}

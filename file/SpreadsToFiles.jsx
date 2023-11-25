@@ -1,5 +1,5 @@
 /*
-	Spreads to files 23.9.22
+	Spreads to files 23.11.25
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Saves the spreads of the active document in separate files.
@@ -36,7 +36,7 @@ if (doc.spreads.length === 1) { alert('Document has only one spread.'); exit(); 
 var defaultTemplate, detectedTemplate, template, customPosition, spread, targetFile, target, progressBar, i, j;
 var r = [];
 var ADV = ScriptUI.environment.keyboardState.altKey;
-var invalidFilenameChars = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
+var invalidFilenameCharsRE = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
 var oldUIL = app.scriptPreferences.userInteractionLevel;
 var currentPath = doc.filePath;
 var baseName = (/\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf('.'))) || doc.name;
@@ -97,7 +97,7 @@ function templateFromUser(str) {
 		templateFromUser(str);
 	}
 	// -- Filename
-	if (invalidFilenameChars.test(str)) {
+	if (invalidFilenameCharsRE.test(str)) {
 		alert('You entered an invalid character, please try again.\nAvoid < > : " / \\ | ? and *.');
 		templateFromUser(str);
 	}

@@ -1,5 +1,5 @@
 /*
-	Quick export 23.11.14
+	Quick export 23.11.25
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -44,7 +44,7 @@ function QuickExport() {
 	var status = [];
 	var title = 'Quick Export';
 	var WIN = (File.fs === 'Windows');
-	var invalidFilenameChars = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
+	var invalidFilenameCharsRE = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
 	var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	var settingsFile = File(Folder.userData + '/' + script.name.replace(/.[^.]+$/, '') + '.prefs');
@@ -312,7 +312,7 @@ function QuickExport() {
 					for (i = 0; i < doc.layers.length; i++) {
 						layer = doc.layers[i];
 						if (!layer.visible || !layer.printable) continue;
-						if (/dielines|die ?cut/g.test(layer.name)) continue;
+						if (/^(dielines|die ?cut)$/g.test(layer.name)) continue;
 						if (/^\+/g.test(layer.name)) suffix += layer.name;
 					}
 				}
@@ -676,6 +676,7 @@ function QuickExport() {
 					ui[workflow].skipDNP.isOn.helpTip = 'Layers with names beginning with a dot or a hyphen\n(e.g., \'.safety area\') can be automatically skipped';
 					ui[workflow].skipDNP.add('group').preferredSize.width = ui.cWidth - 245;
 					ui[workflow].skipDNP.editList = ui[workflow].skipDNP.add('button { text: "Edit list", preferredSize: [ 64, 24 ] }');
+					ui[workflow].skipDNP.editList.helpTip = 'Edit do-not-print layers list';
 				ui[workflow].script = ui[workflow].container.add('group { orientation: "column", alignChildren: [ "left", "top" ] }');
 					ui[workflow].script._ = ui[workflow].script.add('group { orientation: "row", margins: [ 0, 0, 0, -5 ] }');
 						ui[workflow].script.isOn = ui[workflow].script._.add('checkbox { text: "Run a script:", alignment: "bottom" }');
@@ -1053,7 +1054,7 @@ function QuickExport() {
 				ui[workflow].suffix.et.onChange = function () {
 					var str = this.text
 						.replace(/^\s+|\s+$/g, '')
-						.replace(invalidFilenameChars, '')
+						.replace(invalidFilenameCharsRE, '')
 						.replace(/^_/, '');
 					if (this.text !== str) this.text = str;
 					this.parent.parent.parent.sortBySuffix.enabled = (this.text.length > 0);

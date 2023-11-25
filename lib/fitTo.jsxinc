@@ -1,5 +1,5 @@
 /*
-	FitTo 23.9.23
+	FitTo 23.11.25
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
@@ -60,7 +60,7 @@ function fitTo(items, scope, target, enforced) {
 	var SNAP_PCT = 1; // Snap distance in percent of the visible area
 	var HW_PCT = 10;  // HW size in percent of the visible area
 	var DEBUG = false;
-	var clippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
+	var isClippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
 	var item, page, pages;
 	var newSelection = [];
 	var isFitted = false;
@@ -92,6 +92,7 @@ function fitTo(items, scope, target, enforced) {
 	function fit2Bounds(obj) {
 		var bounds, T, snapDist, O;
 		bounds = getBounds(page);
+
 		// Target properties
 		T = {
 			size: bounds[scope].size,
@@ -101,6 +102,7 @@ function fitTo(items, scope, target, enforced) {
 			visibleSZ: []
 		};
 		if (!T.target) return obj;
+
 		// Target and visible area snap zones
 		snapDist = Math.min(T.visible[2] - T.visible[0], T.visible[3] - T.visible[1]) * SNAP_PCT / 100;
 		T.targetSZ = (target === 'margins')
@@ -112,6 +114,7 @@ function fitTo(items, scope, target, enforced) {
 			T.visible[0] + snapDist, T.visible[1] + snapDist,
 			T.visible[2] - snapDist, T.visible[3] - snapDist
 		];
+
 		// Object properties
 		O = {
 			// Initial bounds
@@ -125,7 +128,7 @@ function fitTo(items, scope, target, enforced) {
 			// Flags
 			isStraight: Boolean(Math.abs(obj.absoluteRotationAngle % 90) === 0),
 			isNotSkewed: Boolean(obj.absoluteShearAngle === 0),
-			hitsVSZ: [ // Track sides that hit the visible area snap zone
+			hitsVSZ: [ // Tracks sides that hit the visible area snap zone
 				Boolean(obj.geometricBounds[0] <= T.visibleSZ[0]),
 				Boolean(obj.geometricBounds[1] <= T.visibleSZ[1]),
 				Boolean(obj.geometricBounds[2] >= T.visibleSZ[2]),
@@ -139,7 +142,7 @@ function fitTo(items, scope, target, enforced) {
 
 		// -- Skip special items
 		if (!enforced && obj.name === '<visible area>') return obj;
-		if (!enforced && obj.itemLayer.name === 'dielines') return obj;
+		if (!enforced && (obj.itemLayer.name === '+dielines' || obj.itemLayer.name === 'dielines')) return obj;
 
 		// -- Enforced fit simply reframes the objects, except for orthogonal lines, which will be fitted later
 		if (enforced && obj.constructor.name !== 'GraphicLine') { obj.geometricBounds = T.target; return obj; }
@@ -166,7 +169,7 @@ function fitTo(items, scope, target, enforced) {
 			return obj;
 		}
 
-		// 1. Check if the object is eligble to be fitted
+		// 2. Check if the object is eligble to be fitted
 
 		// -- Skip if it's outside the target
 		if (O.visible[1] > T.target[3] || O.visible[3] < T.target[1]    // outside target, h
@@ -211,7 +214,7 @@ function fitTo(items, scope, target, enforced) {
 		// 4. Reframe the object to the new bounds
 
 		// -- Already clipped
-		if (clippingFrameRE.test(obj.name) && obj.pageItems[0].isValid) {
+		if (isClippingFrameRE.test(obj.name) && obj.pageItems[0].isValid) {
 			obj.geometricBounds = O.extended;
 			return obj;
 		}
@@ -290,7 +293,6 @@ function fitTo(items, scope, target, enforced) {
 			createDebugFrame('Yellow', true, false, T.visibleSZ, 'T.visibleSZ');
 			createDebugFrame('Magenta', false, false, T.target, 'T.target');
 			createDebugFrame('Magenta', true, false, T.targetSZ, 'T.targetSZ');
-			// createDebugFrame('Black', false, false, bounds.page.margins, 'bounds.page.margins');
 			layer.locked = true;
 
 			function createDebugFrame(color, /*bool*/isZone, /*bool*/isDashed, bounds, label) {
@@ -298,7 +300,6 @@ function fitTo(items, scope, target, enforced) {
 					layer,
 					LocationOptions.AT_END,
 					{
-						// name: '<debug frame>',
 						name: ('<dbg:' + label + '>') || '',
 						contentType: ContentType.UNASSIGNED,
 						fillColor: 'None',
