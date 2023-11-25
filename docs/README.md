@@ -10,7 +10,7 @@ Most scripts require at least one open document, and some require at least one o
 
 <span id="tsv">**Data files:**</span> Several scripts get their input from external TSV files, first looking for a _local_ one (in the current folder or the parent folder of the active document), then a _default_ one (on the desktop, next to the running script, or in the **Indentz** root). They also match local files starting with `_`, which take precedence.
 
-These data files are regular TSVs with several non-standard features:
+These TSV data files have several non-standard features that will confuse Excel et al.:
 
 - Blank lines are ignored; everything after a `#` is ignored (comments);
 - The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) when creating/editing TSVs);
@@ -599,7 +599,7 @@ _Suggested shortcut:_ `Num*`
 ---
 
 #### **`ClipUndo.jsx`**
-Releases one or several objects from their _clipping frames_ (see above). If nothing is selected, it will release all clipped objects.
+Releases one or several objects from their _clipping frames_ (see above). If nothing is selected, it will release all clipped objects on the current spread.
 
 _Suggested shortcut:_ `⌃Num*`
 
@@ -712,7 +712,7 @@ Thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2023 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: November 5, 2023</small>
+<small>Last updated: November 25, 2023</small>
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use every day, so it's kind of tested, but… beware. ;)
 

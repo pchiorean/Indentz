@@ -174,21 +174,37 @@ var shadow = getDropShadow(item1);
 setDropShadow(item2, shadow);
 ```
 
-## getPageItem(_name, target, [layer]_) ⇒ \{PageItem\} | undefined
+## getPageItem(_name, [target], [layer]_) ⇒ \{PageItem\} | undefined
 
 Gets a page item by name, optionally from a layer.
 
 **Parameters:**
 
-|Name|Type|Description|
-|:--:|:--:|--|
-|`name`|`string`|The name of the page item to search.|
-|`target`|`object`|A `Document`, `Spread`, `Page` or a `MasterSpread`.|
-|`[layer]`|`layer`|Only look for objects from this layer. *(Optional.)*|
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|--|
+|`name`|`string`||The name of the page item to search for.|
+|`target`|`object`|`app.activeDocument`|A container for page items. *(Optional.)*|
+|`[layer]`|`layer`||Only look for objects from this layer. *(Optional.)*|
 
 **Returns:**
 
-The first page item with the specified `name`, optionally from the specified `layer`.
+The first page item with the specified `name` from the `target`, optionally on the specified `layer`.
+
+## getTextFrame(_name, [target], [layer]_) ⇒ \{TextFrame\} | undefined
+
+Gets a text frame by name, optionally from a layer.
+
+**Parameters:**
+
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|--|
+|`name`|`string`||The name of the text frame to search for.|
+|`target`|`object`|`app.activeDocument`|A container for text frames. *(Optional.)*|
+|`[layer]`|`layer`||Only look for objects from this layer. *(Optional.)*|
+
+**Returns:**
+
+The first text frame with the specified `name` from the `target`, optionally on the specified `layer`.
 
 ## getScriptsFolder() ⇒ 'path/to/folder/' | undefined
 
@@ -594,7 +610,7 @@ replaceSwatch('Red', 'Blue', [ 100, 70, 0, 0 ]); // 'Blue' will be created if it
 replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 ```
 
-## replaceText(_findWhat, changeTo, [wholeWord]_) ⇒ \{Boolean\}
+## replaceText(_findWhat, changeTo, [wholeWord], [target]_) ⇒ \{Boolean\}
 
 Replaces a text with another.
 
@@ -605,6 +621,7 @@ Replaces a text with another.
 |`findWhat`|`string`||The text to be replaced.|
 |`changeTo`|`string`||The new text.|
 |`[wholeWord]`|`boolean`|`true` |Match whole words. *(Optional.)*|
+|`[target]`|`object`|`app.activeDocument` |A target for the `changeText()` method. *(Optional.)*|
 
 **Returns:**
 
