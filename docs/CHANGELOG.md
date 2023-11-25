@@ -9,6 +9,7 @@
   **export/QuickExport:** Now it gets the last exported file index from all subfolders
 - `07/31` [`upd`](https://github.com/pchiorean/Indentz/commit/f721aab40c27fd774c25423ffff2b1a0824e3b4d)
   **export/QuickExport:** Switched `getFilesRecursively()` to an external lib
+
 - `08/05` [`new`](https://github.com/pchiorean/Indentz/commit/868944d0557d7c199cf080107569eba6ebc6105a)
   **export/QuickExport:** Added sorting by date (`MM.DD`) and miscellaneous fixes
 - `08/05` [`fix`](https://github.com/pchiorean/Indentz/commit/632950b79926381ae88076bd94eac591bb551799)
@@ -27,6 +28,7 @@
   **export/QuickExport:** Improved persistence of output folder when saving settings
 - `08/29` [`upd`](https://github.com/pchiorean/Indentz/commit/6103d8cd5c77b0cc0507b287f5d28fba987882ba)
   **lib/log:** Improved folding block presentation
+
 - `09/04` [`fix`](https://github.com/pchiorean/Indentz/commit/ff5328e8772aec7258219ffd23c5235d7058cc51)
   **export/QuickExport:** When 'Escape' was detected, we performed the cleanup but not the exit; fixed
 - `09/04` [`new`](https://github.com/pchiorean/Indentz/commit/06b495d58ee34da17157e631311becd45f54e9b0)
@@ -68,6 +70,7 @@
   **export/QuickExport:** Skip export when fonts are missing; skip when links are to be updated but are missing
 - `09/30` [`upd`](https://github.com/pchiorean/Indentz/commit/a0741e03051dd7bdd1e3a346e2f52117b4f94077)
   **export/QuickExport:** Simplifies source updating to just 'Save' and 'Save as...' options; also fit spread in view
+
 - `10/05` [`fix`](https://github.com/pchiorean/Indentz/commit/9a329ffaf729895085ded630de446224028b1ff3)
   **misc/EAN:** Placing code fails when target frames are already populated; fixed
 - `10/06` [`fix`](https://github.com/pchiorean/Indentz/commit/d11e48a234812aa479c80d81b3c104231e08cf24)
@@ -87,6 +90,7 @@
   UI: Changed button labels from 'Ok' to 'OK'
 - `10/31` [`new`](https://github.com/pchiorean/Indentz/commit/1574bc6fbd3dfba3af8b098f6d3f22c0f613b71c)
   **misc/OffsetPaths:** Added support for groups; in fact we also process each member of 1st level groups so we don't get a boring rectangle
+
 - `11/04` [`fix`](https://github.com/pchiorean/Indentz/commit/1c519c6d425ebc25bd4fbb3568e22508602c8454)
   **fit/TextAutoSize:** Trimming ending whitespace also affected styling; fixed
 - `11/05` [`upd`](https://github.com/pchiorean/Indentz/commit/096a21a78db9d3376d129dc3a0507286750e2068)
@@ -99,22 +103,34 @@
   **misc/QR, QRBatch:** Fixed document path detection for '[Converted]' docs
 - `11/14` [`upd`](https://github.com/pchiorean/Indentz/commit/0e04f2861b51407d62758f68bd92c3d160862a10)
   **export/QuickExport:** Automatically add to the suffix all visible & printable layers named '+xxxxxxx' if exporting with a 'print' preset
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/b32fe3689e7f0e117bb32a8c4843406ddb95a057)
+  **file/FilesToSpreads:** Resets page numbering after merging files
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/f6b1b3c47f6900088a0bc8a6b690ef3efae21014)
+  **misc/Clip, ClipUndo:** Selects all released objects
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/d8831ee76da1a74236639a3a74441bc8c350c7e3)
+  **cleanup/DocCleanup; export/MarkVisibleArea, PrepareForExport; layout/PageSizeFromFilename:** Updated internal layers list (added the prefix '+' to some technical layers)
+- `11/25` [`ref`](https://github.com/pchiorean/Indentz/commit/ff3a50a5f395e77c28ffb1a55a9724bf6eaeb28b)
+  **export/QuickExport; file/SpreadsToFiles; lib/fitTo; misc/QRBatch:** Renamed several variables
+- `11/25` [`fix`](https://github.com/pchiorean/Indentz/commit/971dc3bc2eed9b7b3bb9e3d2d4f78f30eff484db)
+  **lib/getPageItem:** Fixed a typo in a variable name
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/49fafb20f8cb3fa6ab14b7cb610d8197ac9e50d7)
+  **lib/replaceText:** Added a target for `changeText()`
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/960714cabf14ac2b2297d26b4902c0c11a6c5ec9)
+  **lib/log:** Simplified block markers
 
 ##### Queued
 
-- `new` **export/QuickExport:** Add JPG, PNG & `?`TIFF export profiles
-- `fix` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
-- `fix` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (for new layers respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking** setting); inhibit alert and report culprits at finish
+- `new` **export/QuickExport:** Add JPG, PNG & INDD export profiles
+- `new` **export/QuickExport:** Add package option
+- `upd` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
+- `upd` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
+- `upd` **export/QuickExport:** Add a checkbox for `0e04f28`
 - `fix` **export/QuickExport:** Borked UI when fonts are missing?
+- `fix` `?` **export/QuickExport:** Fix low-res export for embedded .indd files
 - `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `fix` **fit/TextAutoSize:** Check `baselineShift`
-- `fix` **layout/PageSizeFromFilename:** Fix errors on pages set to 1:X scale
-- `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
-- `fix` `?` **export/QuickExport:** Fix low-res export for embedded .indd files
-- `fix` `transform()` and `app.transformPreferences.whenScaling`
-- `fix` Fix `ui.onShow()` vertical dialog positioning
-- `fix` Nullify large variables on exit
+<!-- - `ref` container, payload, isClipping... -->
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -836,15 +852,14 @@
 
 ##### New features
 
-- `new` **lib/replaceLink:** Add page parameter
 - `brk` `?` **cleanup/DefaultLayers:** Add column for locked status
 - `new` **cleanup/DefaultSwatches:** Add groups support
 - `new` **cleanup/DefaultSwatches:** Add gradients support
 - `new` **cleanup/DefaultSwatches:** Add tints support
 - `new` **export/QuickExport:** Add a preflight option
-- `new` **export/QuickExport:** Add INDD (with or without package) export profile
 - `new` **export/QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
 - `new` **file/SpreadsToLayers**
+- `new` **lib/replaceLink:** Add page parameter
 - `new` **misc/ShowFonts** → **cleanup/DumpFonts**
 - `new` Add an '.ini' file for user global settings
 - `new` 'Send selection to layer...'
@@ -865,6 +880,7 @@
 - `upd` **export/QuickExport:** Create destination folder if it doesn't exist
 - `upd` **export/QuickExport:** Move hacks to advanced options, saved in settings
 - `upd` **export/Show/HideDNPLayers:** Take layers from a TSV
+- `upd` **file/FilesToSpreads:** Also bring along the attached master pages
 - `upd` **file/SpreadsToFiles:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
 - `upd` **layout/PageMarginsFromSelection:** Set the margins of every page touched by the selection
 - `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
@@ -882,6 +898,12 @@
 ##### Removed features
 
 ##### Bug fixes
+- `fix` **misc/Clip:** Don't cut drop/inner shadows, outer glows and bevel and emboss
+- `fix` **layout/PageSizeFromFilename:** Fix errors on pages set to 1:X scale
+- `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
+- `fix` `transform()` and `app.transformPreferences.whenScaling`
+- `fix` Fix `ui.onShow()` vertical dialog positioning
+- `fix` Nullify large variables on exit
 
 ##### Miscellaneous
 
