@@ -1,7 +1,7 @@
 /**
  * Appends a debugging line to a file saved on the desktop with the name of the running script
  * (e.g. `active-script.log`). If no arguments are given, it just appends an empty line.
- * @version 23.10.21
+ * @version 23.11.25
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {string} message - A list of messages (`part1`, `part2`, `part3`, etc.) that will be
@@ -49,7 +49,7 @@ function log(/*?message list*/) {
 					.replace(/\s*$/, '');
 		}
 	};
-	var block = { start: '\u250C\u2500 ', mid: '\u2502 ', end: '\u2514\u2500 ' };
+	var block = { start: '\u250C ', mid: '\u2502 ', end: '\u2514 ' };
 	var line;
 
 	if (arguments.length === 0) line = padding;
