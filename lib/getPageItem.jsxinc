@@ -1,13 +1,13 @@
 /**
  * Returns the first page item with a specified name, optionally from a specified layer.
  * @param {string} name - The name of the page item to search.
- * @param {Object} target - A container for page items.
+ * @param {Object} [target=app.activeDocument] - A container for page items.
  * @param {String} [layer] - Look only for objects from this layer. (Optional.)
  * @returns {PageItem|false}
  */
 function getPageItem(name, target, layer) {
 	var item, items;
-	if (!target) target = app.activeDocument;
+	target = target || app.activeDocument;
 	if (Object.prototype.hasOwnProperty.call(target, 'allPageItems')) {
 		items = target.allPageItems;
 		if (layer) {
@@ -26,13 +26,13 @@ function getPageItem(name, target, layer) {
 /**
  * Returns the first text frame with a specified name, optionally from a specified layer.
  * @param {string} name - The name of the text frame to search.
- * @param {Object} target - A container for text frames.
+ * @param {Object} [target=app.activeDocument] - A container for text frames.
  * @param {String} [layer] - Look only for objects from this layer. (Optional.)
  * @returns {TextFrame|false}
  */
 function getTextFrame(name, target, layer) {
 	var item, items;
-	if (!target) target = app.activeDocument;
+	target = target || app.activeDocument;
 	if (Object.prototype.hasOwnProperty.call(target, 'allPageItems')) {
 		items = target.allPageItems;
 		if (layer) {
