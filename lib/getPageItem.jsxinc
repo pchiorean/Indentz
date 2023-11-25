@@ -40,7 +40,7 @@ function getTextFrame(name, target, layer) {
 			if (!layer.isValid) layer = undefined;
 		}
 		while ((item = items.shift())) {
-			if (frm.constructor.name !== 'TextFrame') continue;
+			if (item.constructor.name !== 'TextFrame') continue;
 			if (item.name !== name) continue;
 			if (layer) if (item.itemLayer.name !== layer.name) continue;
 			return item;
