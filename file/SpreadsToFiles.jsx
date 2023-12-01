@@ -48,6 +48,7 @@ if (/\d\s*x\s*\d/i.test(detectedTemplate)) detectedTemplate = null; // Exclude '
 if (ADV) template = templateFromUser(null); // In advanced mode always ask user
 else template = detectedTemplate ? String(detectedTemplate) : templateFromUser(null);
 if (template === String(detectedTemplate)) baseName = baseName.replace(detectedTemplate, '');
+
 // Detect custom position placeholder
 customPosition = baseName.match(/(.+?)#(.+)/);
 
@@ -56,18 +57,21 @@ for (spread = 0; spread < doc.spreads.length; spread++) {
 	// Filter out current spread
 	r = [];
 	for (i = 0; i < doc.spreads.length; i++) if (i !== spread) r.push(i);
+
 	// Get unique name
 	targetFile = File(currentPath + '/'
 		+ uniqueName(customPosition
 			? (customPosition[1] + template[spread + 1] + customPosition[2]) // Custom position
 			: (baseName + template[0] + template[spread + 1]) // Default position
 		) + '.indd');
+
 	// Disable user interaction and open a copy
 	progressBar.update();
 	doc.saveACopy(targetFile);
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.NEVER_INTERACT;
 	target = app.open(targetFile, false);
 	app.scriptPreferences.userInteractionLevel = oldUIL;
+
 	// Remove other spreads from copy and save file
 	for (j = r.length - 1; j >= 0; j--) target.spreads[r[j]].remove();
 	target.save(targetFile);
