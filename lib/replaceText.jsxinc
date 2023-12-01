@@ -1,32 +1,38 @@
 /**
  * Replaces a text with another. Unicode characters must be escaped.
  * @param {string} findWhat - Text to be replaced.
- * @param {string} changeTo - New text.
+ * @param {string} changeTo - The New text.
+ * @param {boolean} [caseSensitive=true] - Case sensitive match. (Optional.)
  * @param {boolean} [wholeWord=true] - Match whole words. (Optional.)
- * @param {Object} [target=app.activeDocument] - A target for `changeText()`. (Optional.)
- * @returns {boolean} - Returns `true` if a replacement was made, `false` if not.
+ * @param {object} [target=app.activeDocument] - A target for the `changeText()` method. (Optional.)
+ * @returns {number} Returns the number of replacements.
  */
-function replaceText(findWhat, changeTo, wholeWord, target) {
-	var result;
-	wholeWord = (wholeWord === undefined) ? true : wholeWord;
+function replaceText(findWhat, changeTo, caseSensitive, wholeWord, target) {
+	var counter = 0;
+	caseSensitive = caseSensitive || true;
+	wholeWord = wholeWord || true;
 	target = target || app.activeDocument;
+	if (/page|spread|layer/i.test(target.constructor.name)) target = target.allPageItems;
+	if (target.constructor.name !== 'Array') target = Array(target);
 
-	app.findTextPreferences   = NothingEnum.NOTHING;
+	app.findTextPreferences = NothingEnum.NOTHING;
 	app.changeTextPreferences = NothingEnum.NOTHING;
-
-	app.findChangeTextOptions.includeLockedLayersForFind  = false;
+	app.findChangeTextOptions.includeLockedLayersForFind = false;
 	app.findChangeTextOptions.includeLockedStoriesForFind = false;
-	app.findChangeTextOptions.includeHiddenLayers         = true;
-	app.findChangeTextOptions.includeMasterPages          = true;
-	app.findChangeTextOptions.includeFootnotes            = true;
-	app.findChangeTextOptions.caseSensitive               = true;
-	app.findChangeTextOptions.wholeWord                   = wholeWord;
-
-	app.findTextPreferences.findWhat   = findWhat;
+	app.findChangeTextOptions.includeHiddenLayers = true;
+	app.findChangeTextOptions.includeMasterPages = true;
+	app.findChangeTextOptions.includeFootnotes = true;
+	app.findChangeTextOptions.caseSensitive = caseSensitive;
+	app.findChangeTextOptions.wholeWord = wholeWord;
+	app.findTextPreferences.findWhat = findWhat;
 	app.changeTextPreferences.changeTo = changeTo;
-	result = target.changeText();
 
-	app.findTextPreferences   = NothingEnum.NOTHING;
+	for (var i = 0; i < target.length; i++) {
+		if (!Object.prototype.hasOwnProperty.call(target[i], 'changeText')) continue;
+		if (target[i].changeText().length > 0) counter++;
+	}
+
+	app.findTextPreferences = NothingEnum.NOTHING;
 	app.changeTextPreferences = NothingEnum.NOTHING;
-	return (result.length > 0);
+	return counter;
 }
