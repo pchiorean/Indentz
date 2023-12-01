@@ -1,50 +1,55 @@
 /**
- * Returns the first page item with a specified name, optionally from a specified layer.
- * @param {string} name - The name of the page item to search.
- * @param {Object} [target=app.activeDocument] - A container for page items.
- * @param {String} [layer] - Look only for objects from this layer. (Optional.)
- * @returns {PageItem|false}
+ * Gets all page items with a specified name from a target (optional) and a layer (optional).
+ * @param {string} name - The name of the page item to search for. '<*>' matches all items.
+ * @param {object} [target=app.activeDocument] - A container for page items. (Optional.)
+ * @param {string} [layer] - Look only for objects from this layer. (Optional.)
+ * @returns {pageItem[]|false} Returns an array of page items or `false` if nothing was found.
  */
-function getPageItem(name, target, layer) {
+function getPageItems(name, target, layer) {
 	var item, items;
+	var result = [];
 	target = target || app.activeDocument;
+	if (layer) {
+		layer = app.activeDocument.layers.item(layer);
+		if (!layer.isValid) layer = false;
+	}
+
 	if (Object.prototype.hasOwnProperty.call(target, 'allPageItems')) {
 		items = target.allPageItems;
-		if (layer) {
-			layer = app.activeDocument.layers.item(layer);
-			if (!layer.isValid) layer = undefined;
-		}
 		while ((item = items.shift())) {
-			if (item.name !== name) continue;
-			if (layer) if (item.itemLayer.name !== layer.name) continue;
-			return item;
+			if (name) if (item.name !== name && name !== '<*>') continue;
+			if (layer !== undefined) if (!layer || item.itemLayer.name !== layer.name) continue;
+			result.push(item);
 		}
+		if (result.length > 0) return result;
 	}
 	return false;
 }
 
 /**
- * Returns the first text frame with a specified name, optionally from a specified layer.
- * @param {string} name - The name of the text frame to search.
- * @param {Object} [target=app.activeDocument] - A container for text frames.
- * @param {String} [layer] - Look only for objects from this layer. (Optional.)
- * @returns {TextFrame|false}
+ * Gets all text frames with a specified name from a target (optional) and a layer (optional).
+ * @param {string} name - The name of the text frame to search for. '<*>' matches all items.
+ * @param {object} [target=app.activeDocument] - A container for text frames. (Optional.)
+ * @param {string} [layer] - Look only for objects from this layer. (Optional.)
+ * @returns {textFrame[]|false} Returns an array of text frames or `false` if nothing was found.
  */
-function getTextFrame(name, target, layer) {
+function getTextFrames(name, target, layer) {
 	var item, items;
+	var result = [];
 	target = target || app.activeDocument;
-	if (Object.prototype.hasOwnProperty.call(target, 'allPageItems')) {
-		items = target.allPageItems;
-		if (layer) {
-			layer = app.activeDocument.layers.item(layer);
-			if (!layer.isValid) layer = undefined;
-		}
+	if (layer) {
+		layer = app.activeDocument.layers.item(layer);
+		if (!layer.isValid) layer = false;
+	}
+
+	if (Object.prototype.hasOwnProperty.call(target, 'textFrames')) {
+		items = target.textFrames.everyItem().getElements();
 		while ((item = items.shift())) {
-			if (item.constructor.name !== 'TextFrame') continue;
-			if (item.name !== name) continue;
-			if (layer) if (item.itemLayer.name !== layer.name) continue;
-			return item;
+			if (name) if (item.name !== name && name !== '<*>') continue;
+			if (layer !== undefined) if (!layer || item.itemLayer.name !== layer.name) continue;
+			result.push(item);
 		}
+		if (result.length > 0) return result;
 	}
 	return false;
 }
