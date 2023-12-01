@@ -117,20 +117,20 @@
   **lib/replaceText:** Added a target for `changeText()`
 - `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/960714cabf14ac2b2297d26b4902c0c11a6c5ec9)
   **lib/log:** Simplified block markers
+- `12/01` [`brk`](https://github.com/pchiorean/Indentz/commit/d9bb8c1ac09820b0488cbbefc03bf2cea3bcf680)
+  **lib/getPageItems:** Now it returns an array of found items, or `false` if nothing was found
+- `12/01` [`brk`](https://github.com/pchiorean/Indentz/commit/69ba851c3fe4972951ad3b92b2cd19f5670dd3b5)
+  **lib/replaceText:** Added an argument for case sensitivity; extended `target` to page/spread/layer; returns the number of replacements
 
 ##### Queued
 
-- `new` **export/QuickExport:** Add JPG, PNG & INDD export profiles
-- `new` **export/QuickExport:** Add package option
+- `fix` **file/SpreadsToFiles:** Don't append separators if already exist
+- `fix` **fit/TextAutoSize:** Check `baselineShift`
 - `upd` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
 - `upd` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
 - `upd` **export/QuickExport:** Add a checkbox for `0e04f28`
-- `fix` **export/QuickExport:** Borked UI when fonts are missing?
-- `fix` `?` **export/QuickExport:** Fix low-res export for embedded .indd files
-- `fix` **cleanup/ReplaceSnippets:** Fix `\` matching
-- `fix` **file/SpreadsToFiles:** Don't append separators if already exist
-- `fix` **fit/TextAutoSize:** Check `baselineShift`
-<!-- - `ref` container, payload, isClipping... -->
+- `new` **export/QuickExport:** Add JPG, PNG & INDD export profiles
+- `new` **export/QuickExport:** Add package option
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
