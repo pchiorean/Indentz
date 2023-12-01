@@ -19,6 +19,8 @@ Adds a custom ruler guide. I use it to make grids for several brands, for which 
 |`[label]`|`string`||The label of the guide. *(Optional.)*|
 |`[preset]`|`number`||A customized set of properties (see source). *(Optional.)*|
 
+---
+
 ## alignTextToBottom(_item_) ⇒ _item_
 
 Sets a given text frame's vertical justification preference to align to bottom. Returns the text frame object.
@@ -28,6 +30,8 @@ Sets a given text frame's vertical justification preference to align to bottom. 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`item`|`textFrame`|The text frame.|
+
+---
 
 ## fitTo(_items, [scope], [target], [forced]_)
 
@@ -114,6 +118,8 @@ bounds.spread.margins; // [ 20, 20, 277, 400 ]
 bounds[scope][target]; // [ 20, 20, 277, 400 ]
 ```
 
+---
+
 ## getFilesRecursively(_folder, [subfolders], [extension]_) ⇒ \{Array\}
 
 Recursively get files from a folder and its subfolders.
@@ -141,6 +147,8 @@ for (var i = 0; i < files.length; i++) {
 
 Author: [William Campbell](https://community.adobe.com/t5/user/viewprofilepage/user-id/8505462) | 
 [Source](https://community.adobe.com/t5/indesign-discussions/get-indd-files-from-folder-and-its-subfolders/m-p/12621330#M459355)
+
+---
 
 ## getDropShadow(_item_) ⇒ \{Object\}
 
@@ -174,37 +182,41 @@ var shadow = getDropShadow(item1);
 setDropShadow(item2, shadow);
 ```
 
-## getPageItem(_name, [target], [layer]_) ⇒ \{PageItem\} | undefined
+---
 
-Gets a page item by name, optionally from a layer.
+## getPageItems(_name, [target], [layer]_) ⇒ \{Array\} of \{PageItems\} | false
 
-**Parameters:**
-
-|Name|Type|Default|Description|
-|:--:|:--:|:--:|--|
-|`name`|`string`||The name of the page item to search for.|
-|`target`|`object`|`app.activeDocument`|A container for page items. *(Optional.)*|
-|`[layer]`|`layer`||Only look for objects from this layer. *(Optional.)*|
-
-**Returns:**
-
-The first page item with the specified `name` from the `target`, optionally on the specified `layer`.
-
-## getTextFrame(_name, [target], [layer]_) ⇒ \{TextFrame\} | undefined
-
-Gets a text frame by name, optionally from a layer.
+Gets all page items with a specified name from a target (optional) and a layer (optional).
 
 **Parameters:**
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
-|`name`|`string`||The name of the text frame to search for.|
-|`target`|`object`|`app.activeDocument`|A container for text frames. *(Optional.)*|
-|`[layer]`|`layer`||Only look for objects from this layer. *(Optional.)*|
+|`name`|`string`||The name of the page item to search for. `<*>` matches all items.|
+|`[target]`|`object`|`app.activeDocument`|A container for page items. *(Optional.)*|
+|`[layer]`|`layer`||Look only for objects from this layer. *(Optional.)*|
 
 **Returns:**
 
-The first text frame with the specified `name` from the `target`, optionally on the specified `layer`.
+An array of page items with the specified `name` (or all items) from the `target`, optionally on the specified `layer`, or `false` if nothing was found. If `target` is undefined, it fallbacks to the active document; if `layer` is undefined, it fallbacks to all layers.
+
+## getTextFrames(_name, [target], [layer]_) ⇒ \{Array\} of \{TextFrames\} | false
+
+Gets all text frames with a specified name from a target (optional) and a layer (optional).
+
+**Parameters:**
+
+|Name|Type|Default|Description|
+|:--:|:--:|:--:|--|
+|`name`|`string`||The name of the text frame to search for. `<*>` matches all items.|
+|`[target]`|`object`|`app.activeDocument`|A container for text frames. *(Optional.)*|
+|`[layer]`|`layer`||Look only for objects from this layer. *(Optional.)*|
+
+**Returns:**
+
+An array of text frames with the specified `name` (or all items) from the `target`, optionally on the specified `layer`, or `false` if nothing was found. If `target` is undefined, it fallbacks to the active document; if `layer` is undefined, it fallbacks to all layers.
+
+---
 
 ## getScriptsFolder() ⇒ 'path/to/folder/' | undefined
 
@@ -215,6 +227,8 @@ Detects the user scripts folder searching for the string 'Scripts Panel' in `$.i
 ```js
 $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
 ```
+
+---
 
 ## isInArray(_searchValue, array, [isCaseSensitive]_) ⇒ \{Boolean\}
 
@@ -239,6 +253,8 @@ var searchValue = 'codes';
 var array = [ 'bar*code*', 'code*', 'EAN*' ];
 isInArray(searchValue, array) // True: matches 2nd array element
 ```
+
+---
 
 ## log(_[directive]_, _message_)
 
@@ -273,6 +289,8 @@ log('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
        timestamp                stack             message part1          part2         part3
 ```
 
+---
+
 ## moveToLayer(_item, layer, [position]_)
 
 Moves an item to another layer, optionally sending it to the front or back.
@@ -284,6 +302,8 @@ Moves an item to another layer, optionally sending it to the front or back.
 |`item`|`pageItem`|The page item to be moved.|
 |`layer`|`object`|The target layer.|
 |`[position]`|`string`|`front`/`top` or `back`/`bottom`: Sends the item to the front or back of its layer. *(Optional.)*|
+
+---
 
 ## naturalSorter(_str1, str2_) ⇒ \{Boolean\}
 
@@ -314,6 +334,8 @@ array = array.sort(naturalSorter);
 ```
 
 Author: [kennebec](https://stackoverflow.com/users/80860/kennebec) | [Source](https://stackoverflow.com/questions/2802341/javascript-natural-sort-of-alphanumerical-strings/2802804#2802804)
+
+---
 
 ## parseDataFile(_dataFile_) ⇒ \{Object\}
 
@@ -464,6 +486,8 @@ The first occurrence of `dataFile`, first searching for a _local_ one (in the cu
   4. `script/folder/dataFile`
   5. `script/folder/../dataFile`
 
+---
+
 ## progressBar
 
 Creates a palette with two progress bars and a message; the second bar may be used for microsteps (optional).
@@ -563,6 +587,8 @@ progressBar.close();
 
 ![](../docs/img/lib/progress-bar-mini.png)
 
+---
+
 ## replaceLink(_oldLinks, newLink_) ⇒ \{Boolean\}
 
 Replaces a link or a list of links with a different one. A selection limits the scope.
@@ -585,6 +611,8 @@ replaceLink('link1.jpg', 'link1.psd'); // Both links are in the same folder
 replaceLink('link1.jpg', 'path/to/link1.psd');
 replaceLink([ 'link1.jpg', 'link1.png' ], 'link1.psd');
 ```
+
+---
 
 ## replaceSwatch(_oldNames, newName, [newValues]_) ⇒ \{Boolean\}
 
@@ -610,7 +638,9 @@ replaceSwatch('Red', 'Blue', [ 100, 70, 0, 0 ]); // 'Blue' will be created if it
 replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 ```
 
-## replaceText(_findWhat, changeTo, [wholeWord], [target]_) ⇒ \{Boolean\}
+---
+
+## replaceText(_findWhat, changeTo, [caseSensitive], [wholeWord], [target]_) ⇒ \{Number\}
 
 Replaces a text with another.
 
@@ -620,19 +650,25 @@ Replaces a text with another.
 |:--:|:--:|:--:|--|
 |`findWhat`|`string`||The text to be replaced.|
 |`changeTo`|`string`||The new text.|
-|`[wholeWord]`|`boolean`|`true` |Match whole words. *(Optional.)*|
-|`[target]`|`object`|`app.activeDocument` |A target for the `changeText()` method. *(Optional.)*|
+|`[caseSensitive]`|`boolean`|`true`|Case sensitive match. *(Optional.)*|
+|`[wholeWord]`|`boolean`|`true`|Match whole words. *(Optional.)*|
+|`[target]`|`object`|`app.activeDocument`|A target for the `changeText()` method. *(Optional.)*|
 
 **Returns:**
 
-Returns `true` if a replacement was made, `false` if not.
+Returns the number of replacements.
 
 **Example:**
 
 ```js
 replaceText('11.10.', '13.12.2021');
-replaceText('\\\\', '\u000A', false); // Replace '\\' with Forced Line Break
+replaceText('\\\\', '\u000A', false, false);
+replaceText(TXT.EN.HL, TXT.LOC[i].HL, false, true, app.activeDocument.spreads[i]);
 ```
+
+_Warning:_ Unicode characters must be escaped for `findWhat`.
+
+---
 
 ## report(_message, title, [showFilter], [showCompact]_)
 
@@ -662,9 +698,13 @@ report(message, 'Sample alert', true);
 
 ![Alert with filter](../docs/img/lib/report-filter.png)
 
+---
+
 ## saveLayersState() / restoreLayersState()
 
 Saves/restores some properties ('locked', 'printable', 'visible') of all layers in the active document, using the `layersState` array.
+
+---
 
 ## truncateString(_str_) ⇒ _str_
 
@@ -676,6 +716,8 @@ Truncates a string to a certain length, preserving it's end and replacing the fi
 |:--:|:--:|--|
 |`str`|`string`|The string.|
 |`length`|`number`|The desired length.|
+
+---
 
 ## unique(_array_) ⇒ _array_
 
