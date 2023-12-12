@@ -1,5 +1,5 @@
 /*
-	Show properties 23.9.23
+	Show properties 23.12.12
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Shows properties and methods of the selected object/active document/the application.
@@ -21,9 +21,10 @@ if (app.documents.length > 0 && app.selection.length > 0) target = app.selection
 
 var methods;
 var propsList = [];
+var maxLevel = 3;
 
 // Properties
-Inspect(target);
+inspect(target);
 
 // Methods
 propsList.push('\nMETHODS:');
@@ -36,13 +37,12 @@ for (var i = 0, n = methods.length; i < n; i++) {
 
 report(propsList, target.reflect.name + ' | ' + target.toSource(), true);
 
-function Inspect(obj, prefix, level) {
+function inspect(obj, prefix, level) {
 	var val, str;
 	var props = obj.reflect.properties.sort();
 
 	prefix = prefix || '';
 	level = level || 1;
-	maxLevel = 3;
 	if (level > maxLevel) return;
 
 	for (var i = 0, n = props.length; i < n; i++) {
@@ -50,14 +50,15 @@ function Inspect(obj, prefix, level) {
 			|| props[i].toString()  === 'properties'
 			|| props[i].toString()  === 'isValid'
 			|| (props[i].toString() === 'length' && obj[props[i]] === 0)
+			|| !Object.prototype.hasOwnProperty.call(obj, props[i])
 		) continue;
 
+		str = '';
 		try {
 			val = obj[props[i]];
-			str = '';
 			if (val == null) continue;
 			switch (val.constructor.name) {
-				case 'Array'     : str = '[ ' + val + ' ] (Array)'; break;
+				case 'Array'     : str = '[ ' + val.join(', ') + ' ] (Array)'; break;
 				case 'Boolean'   : str = val + ' (Boolean)'; break;
 				case 'Color'     : str = '[ ' + val.colorValue + " ] '" + val.name + "' (Color)"; break;
 				case 'Document'  : str = "'" + val.name + "' (Document)"; break;
@@ -77,7 +78,7 @@ function Inspect(obj, prefix, level) {
 
 		if (val != null && str !== 'N/A' && val.reflect.properties.length > 1) {
 			if (/^parent.*/gi.test(props[i].toString())) continue;
-			Inspect(val, prefix + props[i] + '.', level + 1);
+			inspect(val, prefix + props[i] + '.', level + 1);
 		}
 	}
 }
