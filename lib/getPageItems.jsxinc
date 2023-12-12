@@ -1,6 +1,6 @@
 /**
- * Gets all page items with a specified name from a target (optional) and a layer (optional).
- * @param {string} name - The name of the page item to search for. '<*>' matches all items.
+ * Gets all page items with a given name from a given target and/or layer.
+ * @param {string} [name='<*>'] - The name of the page item to search for. '<*>' matches all items.
  * @param {object} [target=app.activeDocument] - A container for page items. (Optional.)
  * @param {string} [layer] - Look only for objects from this layer. (Optional.)
  * @returns {pageItem[]|false} Returns an array of page items or `false` if nothing was found.
@@ -8,6 +8,7 @@
 function getPageItems(name, target, layer) {
 	var item, items;
 	var result = [];
+	name = name || '<*>';
 	target = target || app.activeDocument;
 	if (layer) {
 		layer = app.activeDocument.layers.item(layer);
@@ -17,7 +18,7 @@ function getPageItems(name, target, layer) {
 	if (Object.prototype.hasOwnProperty.call(target, 'allPageItems')) {
 		items = target.allPageItems;
 		while ((item = items.shift())) {
-			if (name) if (item.name !== name && name !== '<*>') continue;
+			if (name !== '<*>' && item.name !== name) continue;
 			if (layer !== undefined) if (!layer || item.itemLayer.name !== layer.name) continue;
 			result.push(item);
 		}
@@ -27,8 +28,8 @@ function getPageItems(name, target, layer) {
 }
 
 /**
- * Gets all text frames with a specified name from a target (optional) and a layer (optional).
- * @param {string} name - The name of the text frame to search for. '<*>' matches all items.
+ * Gets all text frames with a given name from a given target and/or layer.
+ * @param {string} [name='<*>'] - The name of the text frame to search for. '<*>' matches all items.
  * @param {object} [target=app.activeDocument] - A container for text frames. (Optional.)
  * @param {string} [layer] - Look only for objects from this layer. (Optional.)
  * @returns {textFrame[]|false} Returns an array of text frames or `false` if nothing was found.
@@ -36,6 +37,7 @@ function getPageItems(name, target, layer) {
 function getTextFrames(name, target, layer) {
 	var item, items;
 	var result = [];
+	name = name || '<*>';
 	target = target || app.activeDocument;
 	if (layer) {
 		layer = app.activeDocument.layers.item(layer);
@@ -45,7 +47,7 @@ function getTextFrames(name, target, layer) {
 	if (Object.prototype.hasOwnProperty.call(target, 'textFrames')) {
 		items = target.textFrames.everyItem().getElements();
 		while ((item = items.shift())) {
-			if (name) if (item.name !== name && name !== '<*>') continue;
+			if (name !== '<*>' && item.name !== name) continue;
 			if (layer !== undefined) if (!layer || item.itemLayer.name !== layer.name) continue;
 			result.push(item);
 		}
