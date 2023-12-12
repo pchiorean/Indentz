@@ -1,5 +1,5 @@
 /*
-	Prepare for export 23.11.25
+	Prepare for export 23.12.12
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Hides some layers and moves objects with special colors to separate spreads.
@@ -131,7 +131,7 @@ function prepareForExport() {
 				&& thisSpread.pageItems[0].name === '<page label>')) thisSpread.remove();
 
 			// Label spread with layer name
-			addSlugInfo(nextSpread, layer.name);
+			addSlugInfo(nextSpread, layer.name.replace(/^[+.]/, ''));
 
 			// Skip nextSpread
 			i++;
