@@ -1,5 +1,5 @@
 /*
-	Page size from file name 23.11.25
+	Page size from file name 23.12.12
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Sets every page size and margins according to the file name.
@@ -182,8 +182,8 @@ function main() {
 	function markVisibleArea() {
 		var visLayer, dieLayer, oldFrame, frames;
 		var isLargePage = ((page.bounds[3] - page.bounds[1]) > 666 || (page.bounds[2] - page.bounds[0]) > 666);
-		var PM = page.marginPreferences;
-		if (PM.top + PM.left + PM.bottom + PM.right === 0) return;
+		var mgs = page.marginPreferences;
+		if (mgs.top + mgs.left + mgs.bottom + mgs.right === 0) return;
 		// Make swatch
 		if (!doc.colors.itemByName(visFrame.swatchName).isValid) {
 			doc.colors.add({
@@ -223,32 +223,33 @@ function main() {
 			}
 		}
 		// Add frames
-		page.rectangles.add({
-			name:  '<visible area>',
+		frame = page.rectangles.add({
+			name: '<visible area>',
 			label: 'visible area',
 			contentType: ContentType.UNASSIGNED,
 			fillColor: 'None',
-			strokeColor:  visFrame.swatchName,
+			strokeColor: visFrame.swatchName,
+			strokeTint: 100,
 			strokeWeight: isLargePage ? visFrame.strokeWeightL : visFrame.strokeWeightS,
 			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 			strokeType: visFrame.strokeType,
-			overprintStroke: false,
-			itemLayer: visLayerName,
 			bottomLeftCornerOption:  CornerOptions.NONE,
 			bottomRightCornerOption: CornerOptions.NONE,
 			topLeftCornerOption:     CornerOptions.NONE,
 			topRightCornerOption:    CornerOptions.NONE,
 			geometricBounds: [
-				page.bounds[0] + PM.top,
+				page.bounds[0] + mgs.top,
 				(page.side === PageSideOptions.LEFT_HAND)
-					? page.bounds[1] + PM.right
-					: page.bounds[1] + PM.left,
-				page.bounds[2] - PM.bottom,
+					? page.bounds[1] + mgs.right
+					: page.bounds[1] + mgs.left,
+				page.bounds[2] - mgs.bottom,
 				(page.side === PageSideOptions.LEFT_HAND)
-					? page.bounds[3] - PM.left
-					: page.bounds[3] - PM.right
-			]
+					? page.bounds[3] - mgs.left
+					: page.bounds[3] - mgs.right
+			],
+			itemLayer: visLayerName
 		});
+		try { frame.overprintStroke = true; } catch (e) {}
 		visLayer.locked = true;
 	}
 

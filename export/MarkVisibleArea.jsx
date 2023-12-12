@@ -1,5 +1,5 @@
 /*
-	Mark visible area 23.11.25
+	Mark visible area 23.12.12
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Creates on each page a 'visible area' frame the size of the page margins.
@@ -18,7 +18,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT
 function main() {
 	var page, mgs,
 		visLayer, dieLayer,
-		oldFrame, frames;
+		oldFrame, frame, frames;
 	var visLayerName = getLayer([ '.visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ]);
 	var dieLayerName = getLayer([ '+dielines', 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ]);
 	var visFrame = {
@@ -78,17 +78,16 @@ function main() {
 			}
 		}
 		// Add frames
-		page.rectangles.add({
-			name:  '<visible area>',
+		frame = page.rectangles.add({
+			name: '<visible area>',
 			label: 'visible area',
 			contentType: ContentType.UNASSIGNED,
 			fillColor: 'None',
-			strokeColor:  visFrame.swatchName,
+			strokeColor: visFrame.swatchName,
+			strokeTint: 100,
 			strokeWeight: isLargePage ? visFrame.strokeWeightL : visFrame.strokeWeightS,
 			strokeAlignment: StrokeAlignment.INSIDE_ALIGNMENT,
 			strokeType: visFrame.strokeType,
-			overprintStroke: false,
-			itemLayer: visLayerName,
 			bottomLeftCornerOption:  CornerOptions.NONE,
 			bottomRightCornerOption: CornerOptions.NONE,
 			topLeftCornerOption:     CornerOptions.NONE,
@@ -96,12 +95,16 @@ function main() {
 			geometricBounds: [
 				page.bounds[0] + mgs.top,
 				(page.side === PageSideOptions.LEFT_HAND)
-					? page.bounds[1] + mgs.right : page.bounds[1] + mgs.left,
+					? page.bounds[1] + mgs.right
+					: page.bounds[1] + mgs.left,
 				page.bounds[2] - mgs.bottom,
 				(page.side === PageSideOptions.LEFT_HAND)
-					? page.bounds[3] - mgs.left : page.bounds[3] - mgs.right
-			]
+					? page.bounds[3] - mgs.left
+					: page.bounds[3] - mgs.right
+			],
+			itemLayer: visLayerName
 		});
+		try { frame.overprintStroke = true; } catch (e) {}
 		visLayer.locked = true;
 	}
 
