@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:////Users/paul.chiorean/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.10/crossnote/dependencies/katex/katex.min.css">
+      <link rel="stylesheet" href="file:////Users/paul.chiorean/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.11/crossnote/dependencies/katex/katex.min.css">
       
       
       
@@ -30,7 +30,7 @@
 <h2 id="preamble">Preamble </h2>
 <p>Most scripts require at least one open document, and some require at least one object to be selected.</p>
 <p><span id="tsv"><strong>Data files:</strong></span> Several scripts get their input from external TSV files, first looking for a <em>local</em> one (in the current folder or the parent folder of the active document), then a <em>default</em> one (on the desktop, next to the running script, or in the <strong>Indentz</strong> root). They also match local files starting with <code>_</code>, which take precedence.</p>
-<p>These data files are regular TSVs with several non-standard features:</p>
+<p>These TSV data files have several non-standard features that will confuse Excel et al.:</p>
 <ul>
 <li>Blank lines are ignored; everything after a <code>#</code> is ignored (comments);</li>
 <li>The fields can be visually aligned with spaces that will be ignored at processing (I use <a href="https://code.visualstudio.com">VS&nbsp;Code</a> with <a href="https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv">Rainbow&nbsp;CSV</a> when creating/editing TSVs);</li>
@@ -887,7 +887,7 @@
 <p><em>Suggested shortcut:</em> <code>Num*</code></p>
 <hr>
 <h4 id="clipundojsx"><strong><code>ClipUndo.jsx</code></strong> </h4>
-<p>Releases one or several objects from their <em>clipping frames</em> (see above). If nothing is selected, it will release all clipped objects.</p>
+<p>Releases one or several objects from their <em>clipping frames</em> (see above). If nothing is selected, it will release all clipped objects on the current spread.</p>
 <p><em>Suggested shortcut:</em> <code>⌃Num*</code></p>
 <hr>
 <h4 id="eanjsx"><strong><code>EAN.jsx</code></strong> </h4>
@@ -992,12 +992,13 @@ Blank lines are ignored; everything after a <code>#</code> (comments) is ignored
 <li>Right-click on folder <strong>User</strong> and select <strong>Reveal in Finder/Explorer</strong>.</li>
 <li>Copy <strong>Indentz</strong> to this folder.</li>
 </ol>
-<h2 id="creditslicense">Credits/License </h2>
+<h2 id="acknowledgements">Acknowledgements </h2>
 <p>The code in this project would not have been possible without the InDesign ExtendScript API by <a href="https://community.adobe.com/t5/indesign-discussions/theunis-de-jong-1966-2020/td-p/11653669">Theunis de Jong</a> and <a href="https://www.indesignjs.de/extendscriptAPI/indesign-latest/">Gregor Fellenz</a>, Mozilla’s <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About">MDN Web Docs</a>, and also blog posts, forum posts, tutorials, or code samples by <a href="https://www.indiscripts.com">Marc Autret</a>, <a href="http://jsid.blogspot.com">Dave Saunders</a>, <a href="https://creativepro.com/files/kahrel/indesignscripts.html">Peter Kahrel</a>, <a href="https://github.com/grefel">Gregor Fellenz</a>, <a href="https://indisnip.wordpress.com">Marijan Tompa</a>, <a href="https://github.com/richardharrington/indesign-scripts">Richard Harrington</a> and many others. Some scripts are not originally created by me; credit is given in these cases.</p>
-<p>Thanks to Adrian Frigioiu and others for bug reports and feedback.</p>
+<p>Special thanks to Adrian Frigioiu and others for bug reports and feedback.</p>
+<h2 id="license">License </h2>
 <p>© 2020-2023 Paul Chiorean &lt;jpeg@basement.ro&gt;.<br>
 The code is released under the <a href="LICENSE.txt">MIT License</a>.</p>
-<p><small>Last updated: November 5, 2023</small></p>
+<p><small>Last updated: December 12, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">

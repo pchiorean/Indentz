@@ -703,16 +703,18 @@ _Suggested shortcut:_ `F1`
 3. Right-click on folder **User** and select **Reveal in Finder/Explorer**.
 4. Copy **Indentz** to this folder.
 
-## Credits/License
+## Acknowledgements
 
 The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](https://community.adobe.com/t5/indesign-discussions/theunis-de-jong-1966-2020/td-p/11653669) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials, or code samples by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts) and many others. Some scripts are not originally created by me; credit is given in these cases.
 
-Thanks to Adrian Frigioiu and others for bug reports and feedback.
+Special thanks to Adrian Frigioiu and others for bug reports and feedback.
+
+## License
 
 © 2020-2023 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: November 25, 2023</small>
+<small>Last updated: December 12, 2023</small>
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use every day, so it's kind of tested, but… beware. ;)
 

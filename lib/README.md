@@ -13,11 +13,11 @@ Adds a custom ruler guide. I use it to make grids for several brands, for which 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`target`|`object`||A `Document`, `Spread`, `Page` or a `MasterSpread`.|
-|`[layer]`|`layer`|`activeLayer`|A target layer; defaults to the active layer. *(Optional.)*|
+|`[layer]`|`layer`|`activeLayer`|A target layer; defaults to the active layer. _(Optional)_|
 |`HorV`|`string`||If the string begins with `v`, the guide is vertical, else horizontal.|
 |`location`|`number`||The location at which to place the guide relative to the current ruler zero point.|
-|`[label]`|`string`||The label of the guide. *(Optional.)*|
-|`[preset]`|`number`||A customized set of properties (see source). *(Optional.)*|
+|`[label]`|`string`||The label of the guide. _(Optional)_|
+|`[preset]`|`number`||A customized set of properties (see source). _(Optional)_|
 
 ---
 
@@ -44,9 +44,9 @@ Reframes the given items to the page/spread's _(scope)_ size/margins/visible are
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`items`|`pageItem` \| `pageItem[]`||A page item, or an array of page items to be reframed.|
-|`[scope]`|`string`|`page`|`page` or `spread`. *(Optional.)*|
-|`[target]`|`string`|`size`|`size`, `margins`, `visible` or `bleed`. *(Optional.)*|
-|`[forced]`|`boolean`|`false`|When `true` it just reframes the object without any checks. *(Optional.)*|
+|`[scope]`|`string`|`page`|`page` or `spread`. _(Optional)_|
+|`[target]`|`string`|`size`|`size`, `margins`, `visible` or `bleed`. _(Optional)_|
+|`[forced]`|`boolean`|`false`|When `true` it just reframes the object without any checks. _(Optional)_|
 
 **Example:**
 
@@ -97,7 +97,7 @@ An object containing the geometric bounds of `page` and its parent spread, and o
 };
 ```
 
-**Note:** 'visible'/'safety' are areas marked by one or more frames named `<visible area>` or `<safety area>` (or labeled `visible area`/`safety area`). If margins or visible/safety areas are undefined, they fallback to page/spread size.
+**Note:** 'visible' and 'safety' are areas marked by one or more frames named `<visible area>` or `<safety area>` (or labeled `visible area` or `safety area`). If margins or visible/safety areas are undefined, they fallback to page/spread size.
 
 **Example:**
 
@@ -129,8 +129,8 @@ Recursively get files from a folder and its subfolders.
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`folder`|`Folder`||The source folder (object).|
-|`[subfolders]`|`boolean`|`false`|If `true`, include subfolders. (Optional.)|
-|`[extension]`|`string`|`any`|Extension to include; if undefined, will match any extension. You can combine multiple extensions with regex OR, i.e. `indd|tif|txt` (Optional.)|
+|`[subfolders]`|`boolean`|`false`|If `true`, include subfolders. _(Optional)_|
+|`[extension]`|`string`|`any`|Extension to include; if undefined, will match any extension. You can combine multiple extensions with regex OR, i.e. `indd\|tif\|txt` _(Optional)_|
 
 **Returns:**
 
@@ -139,7 +139,7 @@ An array of found folders (as objects).
 **Example:**
 
 ```js
-var files = getFilesRecursively(folder, true, "indd");
+var files = getFilesRecursively(folder, true, 'indd');
 for (var i = 0; i < files.length; i++) {
     // Do something with each file
 }
@@ -158,7 +158,7 @@ Gets a page item's drop shadow properties.
 
 |Name|Type|Description|
 |:--:|:--:|--|
-|`item`|`pageItem`|The page item from which we take properties.|
+|`item`|`pageItem`|The page item from which we take the properties.|
 
 **Returns:**
 
@@ -193,12 +193,20 @@ Gets all page items with a specified name from a target (optional) and a layer (
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`name`|`string`||The name of the page item to search for. `<*>` matches all items.|
-|`[target]`|`object`|`app.activeDocument`|A container for page items. *(Optional.)*|
-|`[layer]`|`layer`||Look only for objects from this layer. *(Optional.)*|
+|`[target]`|`object`|`app.activeDocument`|A container for page items. _(Optional)_|
+|`[layer]`|`layer`||Look only for objects from this layer. _(Optional)_|
 
 **Returns:**
 
 An array of page items with the specified `name` (or all items) from the `target`, optionally on the specified `layer`, or `false` if nothing was found. If `target` is undefined, it fallbacks to the active document; if `layer` is undefined, it fallbacks to all layers.
+
+**Example:**
+
+```js
+items = getPageItems('<EAN>'); // all items named '<EAN>' from the document
+items = getPageItems('<EAN>', app.activeDocument.spreads[i]); // just from the spread `i`
+items = getPageItems('<*>', app.activeDocument.spreads[i], 'codes'); // all items from spread `i` and layer 'codes'
+```
 
 ## getTextFrames(_name, [target], [layer]_) ⇒ \{Array\} of \{TextFrames\} | false
 
@@ -209,18 +217,27 @@ Gets all text frames with a specified name from a target (optional) and a layer 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`name`|`string`||The name of the text frame to search for. `<*>` matches all items.|
-|`[target]`|`object`|`app.activeDocument`|A container for text frames. *(Optional.)*|
-|`[layer]`|`layer`||Look only for objects from this layer. *(Optional.)*|
+|`[target]`|`object`|`app.activeDocument`|A container for text frames. _(Optional)_|
+|`[layer]`|`layer`||Look only for objects from this layer. _(Optional)_|
 
 **Returns:**
 
 An array of text frames with the specified `name` (or all items) from the `target`, optionally on the specified `layer`, or `false` if nothing was found. If `target` is undefined, it fallbacks to the active document; if `layer` is undefined, it fallbacks to all layers.
 
+**Example:**
+
+```js
+items = getTextFrames('<HL>'); // all text frames named '<HL>' from the document
+items = getTextFrames('<HL>', app.activeDocument.spreads[i]); // just from the spread `i`
+items = getTextFrames('<HL>', undefined, 'text & logos'); // just from layer 'text & logos'
+items = getTextFrames('<HL>', app.activeDocument.spreads[i], 'text & logos'); // all text frames from spread `i` and layer 'text & logos'
+```
+
 ---
 
 ## getScriptsFolder() ⇒ 'path/to/folder/' | undefined
 
-Detects the user scripts folder searching for the string 'Scripts Panel' in `$.includePath`, returning a string with the path followed by '/', or `undefined`.
+Detects the user scripts folder searching for the string `Scripts Panel` in `$.includePath`, returning a string with the path followed by `/`, or `undefined`.
 
 **Example:**
 
@@ -232,7 +249,7 @@ $.evalFile(File(getScriptsFolder() + 'script.jsxinc'));
 
 ## isInArray(_searchValue, array, [isCaseSensitive]_) ⇒ \{Boolean\}
 
-Matches a string against elements of an array.
+Matches a string against elements of an array, using wildcards.
 
 **Parameters:**
 
@@ -240,7 +257,7 @@ Matches a string against elements of an array.
 |:--:|:--:|:--:|--|
 |`searchValue`|`string`||The string to be matched.|
 |`array`|`array`||An array of strings with optional wildcards: `*` (zero or more characters), `?` (any character).|
-|`[isCaseSensitive]`|`boolean`|`false`|If `true` the search is case sensitive. *(Optional.)*|
+|`[isCaseSensitive]`|`boolean`|`false`|If `true` the search is case sensitive. _(Optional)_|
 
 **Returns:**
 
@@ -272,21 +289,21 @@ Without arguments it just appends an empty line.
 The first argument can also be a directive:
 - `''` (empty string): appends `message` to the previous line, without separator;
 - `+`: appends `message` to the previous line, with separator;
-- `!` and `?`: starts stopwatch/displays elapsed time (note: this is a simple, global timer);
+- `!` and `?`: starts a stopwatch or displays elapsed time (note: this is a simple, global timer);
 - `[` and `]`: marks the start/end of a block.
 
 **Example:**
 
 ```js
-log('Data file: \'' + decodeURI(dataFile.name) + '\'');
+log('Data file: ' + decodeURI(dataFile.name));
 // <snip>
 log('+', 'Records: ' + data.length, 'Layouts: ' + layouts.length);
 ```
 
 ```
-2021-07-31 18:48:02.609 main::parseDataFile:: Data file: 'test.tsv' | Records: 14 | Layouts: 2
-└─────────────────────┘ └───────────────────┘ └───────────────────┘   └─────────┘   └────────┘
-       timestamp                stack             message part1          part2         part3
+2021-07-31 18:48:02.609 parseDataFile:: | Data file: test.tsv | Records: 14 | Layouts: 2
+└─────────────────────┘ └─────────────┘   └─────────────────┘   └─────────┘   └────────┘
+       timestamp             stack            message part1        part2         part3
 ```
 
 ---
@@ -301,13 +318,13 @@ Moves an item to another layer, optionally sending it to the front or back.
 |:--:|:--:|--|
 |`item`|`pageItem`|The page item to be moved.|
 |`layer`|`object`|The target layer.|
-|`[position]`|`string`|`front`/`top` or `back`/`bottom`: Sends the item to the front or back of its layer. *(Optional.)*|
+|`[position]`|`string`|`front`/`top` or `back`/`bottom`: Sends the item to the front or back of its layer. _(Optional)_|
 
 ---
 
 ## naturalSorter(_str1, str2_) ⇒ \{Boolean\}
 
-Used as a user-supplied function to `array.sort()`, it sorts a string array to a natural order, e.g.,
+Used as a user-supplied function to `[].sort()`; it sorts a string array to a natural order, e.g.,
 
 ```
 123asd
@@ -330,7 +347,7 @@ asd123
 **Example:**
 
 ```js
-array = array.sort(naturalSorter);
+sortedArray = array.sort(naturalSorter);
 ```
 
 Author: [kennebec](https://stackoverflow.com/users/80860/kennebec) | [Source](https://stackoverflow.com/questions/2802341/javascript-natural-sort-of-alphanumerical-strings/2802804#2802804)
@@ -346,7 +363,7 @@ Reads a TSV (tab-separated-values) file.
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`dataFile`|`File`||A tab-separated-values file (object).|
-|`[defaultName]`|`string|string[]`||The default data file name, or an array of file names (used by `@defaults`).|
+|`[defaultName]`|`string`\|`string[]`||The default data file name, or an array of file names (used by `@defaults`).|
 
 These data files are regular TSVs with several non-standard features:
 
@@ -383,7 +400,7 @@ var data = { records: [], status: { info: [], warn: [], error: [] } };
 if (!(file = getDataFile('data.tsv'))) { alert('No data file found.'); exit(); }
 
 // Get raw data from TSV
-parsed = parseDataFile(file, 'data.tsv');
+parsed = parseDataFile(file, 'default.tsv');
 if (parsed.errors.length > 0) { report(parsed.errors, title); exit(); }
 
 // Build structured data
@@ -394,7 +411,7 @@ if (data.status.error.length > 0) { report(data.status.error, title); exit(); }
 
 // Main processing
 for (var i = 0; i < data.records.length; i++) {
-    // doStuff(data.records[i]);
+    // Do something with data.records[i]
 }
 
 function checkRecord(/*array*/record) {
@@ -429,7 +446,7 @@ and `another.tsv`:
 ```csv
 Name        Color         Visible    Printable
 .reference  Black         no         no
-@include missing.tsv
+@include path/to/missing.tsv
 ```
 
 it will return an object like this:
@@ -452,15 +469,15 @@ it will return an object like this:
             source: [ "path/to/another.tsv", 2 ]
         }
     ],
-    errors: [ "path/to/another.tsv:3 :: [ERROR] File 'missing.tsv' is not found." ]
+    errors: [ "path/to/another.tsv:3 :: [ERROR] File 'path/to/missing.tsv' is not found." ]
 }
 ```
 
-See, for example, `DefaultLayers.jsx` for an actual implementation.
+See, for example, `DefaultSwatches.jsx` for an actual implementation.
 
 There are some additional functions in this file, one being:
 
-### getDataFile(_dataFile, [skipLocal]_) ⇒ \{File\} | undefined
+### getDataFile(_file, [skipLocal]_) ⇒ \{File\} | undefined
 
 Gets the first occurrence of a file from a list of predefined folders.
 
@@ -468,23 +485,25 @@ Gets the first occurrence of a file from a list of predefined folders.
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
-|`dataFile`|`string`||A tab-separated-values file (name).|
-|`[skipLocal]`|`boolean`|false|If `true`, don't search locally. *(Optional.)*|
+|`file`|`string`||A file name.|
+|`[skipLocal]`|`boolean`|false|If `true`, don't search locally. _(Optional)_|
 
 **Returns:**
 
-The first occurrence of `dataFile`, first searching for a _local_ one (in the current folder or the parent folder of the active document), then a _default_ one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
+The first occurrence of `file`, first searching for a _local_ one (in the current folder or the parent folder of the active document), then a _default_ one (on the desktop or next to the running script). It also matches local files starting with `_`, which take precedence:
 
 - Local file:
 
-  1. `current/folder/_dataFile` or `dataFile`
-  2. `current/folder/../_dataFile` or `dataFile`
+  1. `current/folder/_dataFile.tsv`
+  2. `current/folder/dataFile.tsv`
+  3. `current/folder/../_dataFile.tsv`
+  4. `current/folder/../dataFile.tsv`
 
 - Default file:
 
-  3. `~/Desktop/dataFile`
-  4. `script/folder/dataFile`
-  5. `script/folder/../dataFile`
+  5. `~/Desktop/dataFile.tsv`
+  6. `script/folder/dataFile.tsv`
+  7. `script/folder/../dataFile.tsv`
 
 ---
 
@@ -502,7 +521,7 @@ Initializes the palette. On creation you can set `maxWidth` to accomodate a give
 |:--:|:--:|--|
 |`title`|`string`|The palette title.|
 |`maxValue`|`number`|The number of steps for the main progress bar.|
-|`[maxWidth]`|`number`|Maximum message length (characters). *(Optional.)*|
+|`[maxWidth]`|`number`|Maximum message length in characters. If omitted, no message is shown (mini mode). _(Optional)_|
 
 ### pb.msg(_[message]_) *(Optional)*
 
@@ -512,7 +531,7 @@ Updates the message. If omitted, the previous message is cleared.
 
 |Name|Type|Description|
 |:--:|:--:|--|
-|`[message]`|`string`|The message. *(Optional.)*|
+|`[message]`|`string`|The message. _(Optional)_|
 
 ### pb.update()
 
@@ -538,6 +557,35 @@ Closes the progress bar.
 
 **Example:**
 
+**Mini progress bar:**
+
+```js
+var steps = 100;
+var progressBar = new ProgressBar('Mini progress bar demo', steps);
+for (var i = 0; i < steps; i++) {
+    progressBar.update();
+    if (i === 24) $.sleep(2500);
+}
+progressBar.close();
+```
+
+![](../docs/img/lib/progress-bar-mini.png)
+
+**Simple progress bar:**
+
+```js
+var steps = 100;
+var progressBar = new ProgressBar('Progress bar demo', steps, 50);
+for (var i = 0; i < steps; i++) {
+    progressBar.update();
+    progressBar.msg('Progress bar value is ' + (i + 1) + '.');
+    if (i === 24) $.sleep(2500);
+}
+progressBar.close();
+```
+
+![](../docs/img/lib/progress-bar.png)
+
 **Dual progress bars:**
 
 ```js
@@ -558,40 +606,11 @@ progressBar.close();
 
 ![](../docs/img/lib/progress-bar-dual.png)
 
-**Simple progress bar:**
-
-```js
-var steps = 100;
-var progressBar = new ProgressBar('Progress bar demo', steps, 50);
-for (var i = 0; i < steps; i++) {
-    progressBar.update();
-    progressBar.msg('Progress bar value is ' + (i + 1) + '.');
-    if (i === 24) $.sleep(2500);
-}
-progressBar.close();
-```
-
-![](../docs/img/lib/progress-bar.png)
-
-**Mini progress bar:**
-
-```js
-var steps = 100;
-var progressBar = new ProgressBar('Mini progress bar demo', steps);
-for (var i = 0; i < steps; i++) {
-    progressBar.update();
-    if (i === 24) $.sleep(2500);
-}
-progressBar.close();
-```
-
-![](../docs/img/lib/progress-bar-mini.png)
-
 ---
 
 ## replaceLink(_oldLinks, newLink_) ⇒ \{Boolean\}
 
-Replaces a link or a list of links with a different one. A selection limits the scope.
+Replaces a link or a list of links with a new one. A selection limits the scope.
 
 **Parameters:**
 
@@ -614,9 +633,9 @@ replaceLink([ 'link1.jpg', 'link1.png' ], 'link1.psd');
 
 ---
 
-## replaceSwatch(_oldNames, newName, [newValues]_) ⇒ \{Boolean\}
+## replaceSwatch(_oldNames, newName, \[CMYKvalues\]_) ⇒ \{Boolean\}
 
-Replaces a swatch or a list of swatches with a different one. The new swatch is created only if values (CMYK) are provided and it doesn't already exist.
+Replaces a swatch or a list of swatches with a new one. The new swatch is created only if values (CMYK) are provided and it doesn't already exist.
 
 **Parameters:**
 
@@ -624,7 +643,7 @@ Replaces a swatch or a list of swatches with a different one. The new swatch is 
 |:--:|:--:|--|
 |`oldNames`|`string` \| `string[]`|A swatch name, or an array of swatch names to be replaced.|
 |`newName`|`string`|The new swatch name.|
-|`[newValues]`|`number[]`|Array of 4 values in 0-100 range (CMYK).|
+|`[CMYKvalues]`|`number[]`|Array of 4 values in 0-100 range (CMYK).|
 
 **Returns:**
 
@@ -642,17 +661,17 @@ replaceSwatch([ 'Red', 'C=0 M=100 Y=100 K=0' ], 'Blue', [ 100, 70, 0, 0 ]);
 
 ## replaceText(_findWhat, changeTo, [caseSensitive], [wholeWord], [target]_) ⇒ \{Number\}
 
-Replaces a text with another.
+Replaces a text with a new one.
 
 **Parameters:**
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
-|`findWhat`|`string`||The text to be replaced.|
+|`findWhat`|`string`||The text to be replaced. Unicode characters must be escaped.|
 |`changeTo`|`string`||The new text.|
-|`[caseSensitive]`|`boolean`|`true`|Case sensitive match. *(Optional.)*|
-|`[wholeWord]`|`boolean`|`true`|Match whole words. *(Optional.)*|
-|`[target]`|`object`|`app.activeDocument`|A target for the `changeText()` method. *(Optional.)*|
+|`[caseSensitive]`|`boolean`|`true`|Case sensitive match. _(Optional)_|
+|`[wholeWord]`|`boolean`|`true`|Match whole words. _(Optional)_|
+|`[target]`|`object`|`app.activeDocument`|A target for the `changeText()` method. _(Optional)_|
 
 **Returns:**
 
@@ -666,8 +685,6 @@ replaceText('\\\\', '\u000A', false, false);
 replaceText(TXT.EN.HL, TXT.LOC[i].HL, false, true, app.activeDocument.spreads[i]);
 ```
 
-_Warning:_ Unicode characters must be escaped for `findWhat`.
-
 ---
 
 ## report(_message, title, [showFilter], [showCompact]_)
@@ -680,9 +697,9 @@ Inspired by [this](http://web.archive.org/web/20100807190517/http://forums.adobe
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`message`|`string` \| `string[]`||The message to be displayed. Can be a string or a strings array.|
-|`[title]`|`string`|`''`|The dialog title. *(Optional.)*|
-|`[showFilter]`|`boolean` \| `'auto'`|`false`|If `true` it shows a filtering field; `auto` shows it automatically if there are more than 20 lines. Optional wildcards: `?` (any character), space and `*` (AND), `\|` (OR). *(Optional.)*|
-|`[showCompact]`|`boolean`|`false`|If `true` duplicates are removed and the message is sorted. *(Optional.)*|
+|`[title]`|`string`|`''`|The dialog title. _(Optional)_|
+|`[showFilter]`|`boolean` \| `'auto'`|`false`|If `true` it shows a filtering field; `auto` shows it automatically if there are more than 20 lines. Optional wildcards: `?` (any character), space and `*` (AND), `\|` (OR). _(Optional)_|
+|`[showCompact]`|`boolean`|`false`|If `true` duplicates are removed and the message is sorted. _(Optional)_|
 
 **Example:**
 
@@ -702,7 +719,7 @@ report(message, 'Sample alert', true);
 
 ## saveLayersState() / restoreLayersState()
 
-Saves/restores some properties ('locked', 'printable', 'visible') of all layers in the active document, using the `layersState` array.
+Saves/restores some properties ('locked', 'printable', 'visible') of all layers in the active document, using a `layersState` array.
 
 ---
 
