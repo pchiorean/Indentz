@@ -379,7 +379,7 @@ function QuickExport() {
 		function updateLinks() {
 			var result = true;
 			for (var i = 0, n = doc.links.length; i < n; i++) {
-				if (!doc.links[i].parent.parent.parentPage) continue;
+				if (!Object.prototype.hasOwnProperty.call(doc.links[i].parent, 'parentPage')) continue;
 				switch (doc.links[i].status) {
 					case LinkStatus.LINK_OUT_OF_DATE:
 						doc.links[i].update();
