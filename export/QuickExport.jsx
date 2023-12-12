@@ -1,5 +1,5 @@
 /*
-	Quick export 23.11.25
+	Quick export 23.12.12
 	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -40,7 +40,7 @@
 app.doScript(QuickExport, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'QuickExport');
 
 function QuickExport() {
-	var doc, settings, ui, progressBar, elapsed;
+	var doc, settings, ui, progressBar;
 	var status = [];
 	var title = 'Quick Export';
 	var WIN = (File.fs === 'Windows');
@@ -70,7 +70,8 @@ function QuickExport() {
 				+ (minutes > 0 ? minutes + 'm ' : '')
 				+ (seconds > 0 ? seconds.toFixed(1).replace(/\.0$/, '') + 's ' : ''))
 					.replace(/\s*$/, '');
-		}
+		},
+		elapsed: 0
 	};
 
 	var VER = '3.9';
@@ -153,16 +154,16 @@ function QuickExport() {
 		cleanup();
 
 		// Show report
-		elapsed = time.stopwatchElapsed();
+		time.elapsed = time.stopwatchElapsed();
 		if (status.length > 0) {
 			report(status,
-				'Finished in ' + time.secondsToHMS(elapsed)
+				'Finished in ' + time.secondsToHMS(time.elapsed)
 					+ (status.length > 0
 						? (' | ' + status.length + ' warning' + (status.length === 1 ? '' : 's'))
 						: ''
 					),
 				'auto', false);
-		} else if (elapsed >= 10) { alert('Finished in ' + time.secondsToHMS(elapsed) + '.'); }
+		} else if (time.elapsed >= 10) { alert('Finished in ' + time.secondsToHMS(time.elapsed) + '.'); }
 	} else {
 		cleanup();
 	}
