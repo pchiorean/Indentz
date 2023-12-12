@@ -1,7 +1,7 @@
 /**
  * Replaces a text with another. Unicode characters must be escaped.
  * @param {string} findWhat - Text to be replaced.
- * @param {string} changeTo - The New text.
+ * @param {string} changeTo - The new text.
  * @param {boolean} [caseSensitive=true] - Case sensitive match. (Optional.)
  * @param {boolean} [wholeWord=true] - Match whole words. (Optional.)
  * @param {object} [target=app.activeDocument] - A target for the `changeText()` method. (Optional.)
