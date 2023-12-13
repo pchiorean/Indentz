@@ -121,6 +121,16 @@
   **lib/getPageItems:** Now it returns an array of found items, or `false` if nothing was found
 - `12/01` [`brk`](https://github.com/pchiorean/Indentz/commit/69ba851c3fe4972951ad3b92b2cd19f5670dd3b5)
   **lib/replaceText:** Added an argument for case sensitivity; extended `target` to page/spread/layer; returns the number of replacements
+- `12/12` [`fix`](https://github.com/pchiorean/Indentz/commit/be7e0ffb485b160b609ad5ee9719cd72e0030c50)
+  **export/MarkVisibleArea, layout/PageSizeFromFilename:** Fixed a situation where overprinting was attempted on pseudo-white
+- `12/12` [`fix`](https://github.com/pchiorean/Indentz/commit/aade75432b4540d7f08812b4e65f6c8d150ca7d3)
+  **export/PrepareForExport:** Removed ancillaries from layer names ('+', '.', et al.) when labeling technical spreads
+- `12/12` [`ref`](https://github.com/pchiorean/Indentz/commit/4e49f0e81f6863864e12417698f7083a3bd92516)
+  **export/QuickExport:** Tweaked timer function
+- `12/12` [`fix`](https://github.com/pchiorean/Indentz/commit/a78ec695f013e37d07264e910af1a179a7b31b7d)
+  **export/QuickExport:** Skip links in frames with no parent page (revisited)
+- `12/12` [`upd`](https://github.com/pchiorean/Indentz/commit/6f1cbad6ff5cfa0ace99e75d7b800bfc5d1f9fc7)
+  **lib/getPageItems:** Clarify that `name` is also optional: if undefined, it matches all items
 
 ##### Queued
 
