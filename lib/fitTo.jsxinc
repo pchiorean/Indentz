@@ -1,5 +1,5 @@
 /*
-	FitTo 23.11.25
+	FitTo 23.12.13
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
@@ -54,19 +54,21 @@
 // @include 'getBounds.jsxinc';
 
 function fitTo(items, scope, target, enforced) {
-	if (items.constructor.name !== 'Array') items = Array(items);
-	scope = scope || 'page';
-	target = target || 'size';
+	var doc, item, page, pages;
+	var old = {};
+	var newSelection = [];
 	var SNAP_PCT = 1; // Snap distance in percent of the visible area
 	var HW_PCT = 10;  // HW size in percent of the visible area
 	var DEBUG = false;
 	var isClippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
-	var item, page, pages;
-	var newSelection = [];
 	var isFitted = false;
-	var doc = items[0].parent.parent;
+
+	if (items.constructor.name !== 'Array') items = Array(items);
+	scope = scope || 'page';
+	target = target || 'size';
+	doc = items[0].parent.parent;
 	while (doc.constructor.name !== 'Document') doc = doc.parent;
-	var oldRO = doc.viewPreferences.rulerOrigin;
+	old.rulerOrigin = doc.viewPreferences.rulerOrigin;
 	doc.viewPreferences.rulerOrigin = RulerOrigin.SPREAD_ORIGIN;
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 
@@ -87,11 +89,11 @@ function fitTo(items, scope, target, enforced) {
 		}
 	}
 	if (newSelection.length > 0) app.select(newSelection);
-	doc.viewPreferences.rulerOrigin = oldRO;
+	doc.viewPreferences.rulerOrigin = old.rulerOrigin;
 
 	function fit2Bounds(obj) {
-		var bounds, T, snapDist, O;
-		bounds = getBounds(page);
+		var T, snapDist, O, hwRef, isOrthoLine;
+		var bounds = getBounds(page);
 
 		// Target properties
 		T = {
@@ -150,7 +152,8 @@ function fitTo(items, scope, target, enforced) {
 		// -- HW has predefined dimensions
 		if (/hw/gi.test(obj.label)
 				&& (obj.constructor.name === 'TextFrame' || obj.constructor.name === 'Rectangle')) {
-			var hwRef = (target === 'margins') ? T.target : T.size;
+			obj.redefineScaling();
+			hwRef = (target === 'margins') ? T.target : T.size;
 			if (T.visible) {
 				hwRef = T.visible;
 				if (target === 'margins') T.target = T.visible;
@@ -169,7 +172,7 @@ function fitTo(items, scope, target, enforced) {
 			return obj;
 		}
 
-		// 2. Check if the object is eligble to be fitted
+		// 2. Check if the object is eligible to be fitted
 
 		// -- Skip if it's outside the target
 		if (O.visible[1] > T.target[3] || O.visible[3] < T.target[1]    // outside target, h
@@ -234,7 +237,7 @@ function fitTo(items, scope, target, enforced) {
 		}
 
 		// -- Orthogonal lines
-		var isOrthoLine = (obj.constructor.name === 'GraphicLine'
+		isOrthoLine = (obj.constructor.name === 'GraphicLine'
 			&& obj.paths[0].entirePath.length === 2
 			&& (obj.paths[0].entirePath[0].length === 2 || obj.paths[0].entirePath[1].length === 2));
 		if (isOrthoLine && O.geometric[0] === O.geometric[2]) { // horizontal
@@ -259,9 +262,10 @@ function fitTo(items, scope, target, enforced) {
 		return clipObject(O.extended);
 
 		function clipObject(fitMode) {
+			var frame;
 			if (O.visible[0] >= T.target[0] && O.visible[1] >= T.target[1]
 				&& O.visible[2] <= T.target[2] && O.visible[3] <= T.target[3]) return obj;
-			var frame = doc.rectangles.add(
+			frame = doc.rectangles.add(
 				obj.itemLayer,
 				LocationOptions.AFTER, obj,
 				{
