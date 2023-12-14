@@ -1,5 +1,5 @@
 /*
-	Generate EAN Codes 23.10.31
+	Generate EAN Codes 23.12.14
 	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
 
 	Inserts EAN codes into the selected frames or in a new document.
@@ -93,16 +93,16 @@ function main() {
 					chr = buffer[i][j];
 					if (chr >= '0' && chr <= '9') { accumulator += chr; continue; }
 					if (chr === 'x' || chr === 'X') {
-						if (j !== 12 || barcode.length !== 0) throw Error(0);
+						if (j !== 12 || barcode.length !== 0) throw Error();
 						accumulator += 'X';
 						continue;
 					}
 					if (accumulator) { barcode.push(accumulator); accumulator = ''; }
 				}
 				barcode.push(accumulator);
-				if (barcode.length > 2) throw Error(0);
-				if (barcode[0].length !== 8 && barcode[0].length !== 12 && barcode[0].length !== 13) throw Error(0);
-				if (barcode.length === 2 && barcode[1].length !== 2 && barcode[1].length !== 5) throw Error(0);
+				if (barcode.length > 2) throw Error();
+				if (barcode[0].length !== 8 && barcode[0].length !== 12 && barcode[0].length !== 13) throw Error();
+				if (barcode.length === 2 && barcode[1].length !== 2 && barcode[1].length !== 5) throw Error();
 				barcodes.push(barcode); // [ [ code1, ext1 ], [ code2, ext2 ], ... ]
 			} catch (e) {
 				alert('Invalid barcode: ' + buffer[i] + '\nEnter 8 or 13 digits for the code and 2 or 5 digits '
@@ -240,11 +240,11 @@ function main() {
 		}
 
 		codeFrame = new BarCode(
+			page,
 			code[0].substr(0, 12), // code
 			code[1], // ext
 			ui.rightMark.value,
-			ui.extOnTop.value,
-			page
+			ui.extOnTop.value
 		);
 		codeFrame.itemLayer = codeLayer;
 
@@ -252,7 +252,7 @@ function main() {
 	}
 
 	/**
-	 * Makes an EAN-8, EAN-13, EAN-13+2, EAN-13+5 barcode on the current page
+	 * Makes an EAN-8, EAN-13, EAN-13+2, EAN-13+5 barcode
 	 * Adapted from 'EAN Barcode Generator' (2013-11-21) by Konstantin Smorodsky
 	 * https://github.com/smorodsky/ean-barcode-generator
 	 *
@@ -261,15 +261,16 @@ function main() {
 	 * - Returns the barcode embedded in a frame.
 	 * @author Konstantin Smorodsky
 	 * @contributor Paul Chiorean <jpeg@basement.ro>
-	 * @version 23.9.8-PC
+	 * @version 23.12.14-PC
 	 * @license MIT
+	 * @param {Page} [target=app.activeWindow.activePage] - The target page (it fallbacks to the active page) (optional).
 	 * @param {String} code - A string of 9 or 13 digits for the code.
-	 * @param {String} ext - A string of 0, 2 or 5 digits for the add-on.
-	 * @param {Boolean} rightMark - Append a Quiet Zone indicator (`>`).
-	 * @param {Boolean} extOnTop - Put add-on text on top
-	 * @returns {Rectangle} - The barcode as a compound path embedded in a white rectangle
+	 * @param {String} [ext] - A string of 0, 2 or 5 digits for the add-on (optional).
+	 * @param {Boolean} [rightMark=false] - Append a Quiet Zone indicator (`>`) (optional).
+	 * @param {Boolean} [extOnTop=false] - Put the add-on text on top (optional).
+	 * @returns {Rectangle} The barcode as a compound path embedded in a white rectangle.
 	 */
-	function BarCode(code, ext, rightMark, extOnTop, page) {
+	function BarCode(target, code, ext, rightMark, extOnTop) {
 		var pos, frame, oldCenter, newCenter;
 		var bcPolygon       = null;  // Main object (black)
 		var lineWidth       =  0.33; // mm
@@ -280,9 +281,9 @@ function main() {
 		var bottomMargin    =  1;
 		var leftMargin      =  4;
 		var rightMargin     =  4;
-		var firstCharEAN13  =  3.63; // Вынос левого края первой цифры
+		var firstCharEAN13  =  3.63; // Left edge of the first digit
 		var charHeight      =  2.75;
-		var charHSpace      =  0.33; // Отступ при нижнем расположении цифр
+		var charHSpace      =  0.33; // Indentation at the bottom of the digits
 		var addonCharHSpace =  0.33; // Min 0.16
 		var EANData = {
 			main: [ // See http://en.wikipedia.org/wiki/European_Article_Number
@@ -604,7 +605,7 @@ function main() {
 					if (pageItem) {
 						path = pageItem.paths.add();
 					} else {
-						pageItem = page.ovals.add();
+						pageItem = target.ovals.add();
 						path = pageItem.paths[0];
 					}
 					for (i = 0, l = pathData.length; i < l; i++) {
@@ -626,7 +627,7 @@ function main() {
 				'draw': function (center, n) {
 					var i, l, path, pathData;
 					var nData = this[n];
-					if (!(page instanceof Page)) throw Error('Need page object');
+					if (!(target instanceof Page)) throw Error('Need page object');
 					if (!(center instanceof Array) || center.length !== 2) throw Error('Bad center');
 					if (!(String(n) in this)) throw Error('Can not draw letter "' + n + '"');
 					for (i = 0, l = nData.length; i < l; i++) {
@@ -637,10 +638,11 @@ function main() {
 				}
 			}
 		};
-		page = page || app.activeWindow.activePage;
+
+		target = target || app.activeWindow.activePage;
+		ext = ext || '';
 
 		// Build code + add-on + quiet zone
-		ext = ext || '';
 		if ((code + ext).search('^[0-9]+')) return null;
 		switch (code.length) {
 			case 8:
@@ -654,8 +656,8 @@ function main() {
 		}
 		pos = getEANAddon(ext, pos, extOnTop);
 		if (rightMark) {
-			if (ext) writeChar(pos - 0.2, '>', extOnTop); // До правого края стрелки 1.65
-			else writeChar(pos + 0.25, '>'); // От последней линии до конца стрелки 2.31
+			if (ext) writeChar(pos - 0.2, '>', extOnTop); // To the right edge of the arrow 1.65
+			else writeChar(pos + 0.25, '>'); // From the last line to the end of the arrow 2.31
 		}
 
 		// Insert code in frame
@@ -756,8 +758,8 @@ function main() {
 		}
 
 		function writeBG(right) {
-			var rect = page.rectangles.add();
-			rect.applyObjectStyle(app.activeDocument.objectStyles[0]);
+			var rect = target.rectangles.add();
+			rect.applyObjectStyle(app.activeDocument.objectStyles.item(0));
 			rect.strokeColor = 'None';
 			rect.fillColor = 'Paper';
 			rect.fillTint = -1;
@@ -802,7 +804,7 @@ function main() {
 			return p;
 
 			function writeLine(width) {
-				var rect = page.rectangles.add();
+				var rect = target.rectangles.add();
 				var top = addonSymbol ? topMargin + charHeight + addonCharHSpace : topMargin;
 				rect.geometricBounds = [
 					top + 'mm',
