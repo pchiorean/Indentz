@@ -131,6 +131,8 @@
   **export/QuickExport:** Skip links in frames with no parent page (revisited)
 - `12/12` [`upd`](https://github.com/pchiorean/Indentz/commit/6f1cbad6ff5cfa0ace99e75d7b800bfc5d1f9fc7)
   **lib/getPageItems:** Clarify that `name` is also optional: if undefined, it matches all items
+- `12/13` [`fix`](https://github.com/pchiorean/Indentz/commit/226a36ec5f213beb9cfe14debf9a9d8b84940786)
+  **lib/fitTo:** Reset scaling of HW items to 100%
 
 ##### Queued
 
