@@ -606,9 +606,15 @@ _Suggested shortcut:_ `⌃Num*`
 ---
 
 #### **`EAN.jsx`**
-This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, that generates a document containing a user-provided sequence of barcodes. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I got tired of manually copy/pasting and scaling and rotating each one, so I made a version[^3] that inserts a sequence of barcodes directly into the selected objects, in the order they were selected. If there's multiple frames selected and only one barcode, it will be repeated. When nothing is selected, it creates a new document with each barcode on one page, like the original script.
+This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, that generates a document containing a user-provided sequence of barcodes. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I got tired of manually copying/pasting, scaling, and rotating each one, so I "borrowed" the part that generates the barcode[^3] and made this script to automate these operations.
 
-Enter 8 or 13 digits for the code itself; if you have an add-on, add a hyphen and another 2 or 5 digits.
+You can enter a single code or a list (enter 8 or 13 digits for the code; if you have an add-on, add a hyphen and another 2 or 5 digits).
+
+It has two modes of operation:
+
+- When nothing is selected, it creates a new document with a barcode on each page, like the original script.
+
+- For multiple objects selected, it inserts the sequence of barcodes directly into them in the order they were selected. When there is only one code but several objects, they will have the same barcode.
 
 _Suggested shortcut:_ `⌥F9`
 
@@ -714,10 +720,10 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2023 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: December 12, 2023</small>
+<small>Last updated: December 14, 2023</small>
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use every day, so it's kind of tested, but… beware. ;)
 
 [^2]: The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
 
-[^3]: I refactored the function that generates the barcode to make it standalone; the rest of the code is original.
+[^3]: I "borrowed" the barcode parsing bit, I refactored the function that generates the barcode to make it standalone, the rest of the code is original.
