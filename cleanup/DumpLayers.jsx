@@ -1,19 +1,20 @@
 /*
-	Dump layers 23.10.21
-	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
+	Dump layers 24.2.10
+	(c) 2022-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Saves document's layers to a TSV file compatible with `DefaultLayers.jsx`:
 
-	Name       | Color   | Visible | Printable | Order | Variants
-	dielines   | Magenta | yes     | yes       |       |
-	bg         | Red     | yes     | yes       |       |
-	.reference | Black   | no      | no        |       |
+	Name       | Color   | Visible | Printable | Locked | Order | Variants
+	dielines   | Magenta | yes     | yes       | yes    |
+	bg         | Red     | yes     | yes       | no     |
+	.reference | Black   | no      | no        | yes    |
 	...
 
 	<Name>: layer name;
 	<Color>: layer color (see UIColors.txt for color names);
 	<Visible>: `yes` or `no`;
 	<Printable>: `yes` or `no`;
+	<Locked>: `yes` or `no`;
 	<Order> and <Variants>: empty (see `DefaultLayers.jsx` for more info).
 	<Variants>: empty (see `DefaultLayers.jsx` for more info).
 
@@ -39,7 +40,7 @@ dataFile = File(String(doc.filePath + '/' + doc.name).replace(/\.indd$/ig, '_lay
 dataFile.open('w');
 dataFile.encoding = 'UTF-8';
 dataFile.lineFeed = 'Unix';
-dataFile.writeln('Name\tColor\tVisible\tPrintable\tOrder\tVariants'); // Header
+dataFile.writeln('Name\tColor\tVisible\tPrintable\tLocked\tOrder\tVariants'); // Header
 
 layers = doc.layers.everyItem().getElements();
 while ((l = layers.shift())) {
@@ -49,7 +50,8 @@ while ((l = layers.shift())) {
 			.replace('UIColors.', '').replace('_', ' ')
 			.toLowerCase() + '\t'
 		+ (l.visible ? 'yes' : 'no') + '\t'
-		+ (l.printable ? 'yes' : 'no')
+		+ (l.printable ? 'yes' : 'no') + '\t'
+		+ (l.locked ? 'yes' : 'no')
 	);
 }
 

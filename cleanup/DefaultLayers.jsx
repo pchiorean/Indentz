@@ -1,19 +1,20 @@
 /*
-	Default layers 23.10.21
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Default layers 24.2.10
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
-	Adds/merges layers using a 6-column TSV file named `layers.tsv`:
+	Adds/merges layers using a 7-column TSV file named `layers.tsv`:
 
-	Name       | Color   | Visible | Printable | Order | Variants
-	dielines   | Magenta | yes     | yes       | above | cut*, decoupe, die, die*cut, stanz*
-	bg         | Red     |         |           | below | back, background, bgg, fond, hg, hintergrund*
-	.reference | Black   | no      | no        | bottom
+	Name       | Color   | Visible | Printable | Locked | Order | Variants
+	dielines   | Magenta | yes     | yes       | yes    | above | cut*, decoupe, die, die*cut, stanz*
+	bg         | Red     |         |           |        | below | back, background, bgg, fond, hg, hintergrund*
+	.reference | Black   | no      | no        |        | bottom
 	...
 
 	<Name>: layer name;
 	<Color>: layer color (defaults to Light Blue; see UIColors.txt for color names);
 	<Visible>: `yes` or `no` (defaults to `yes`);
 	<Printable>: `yes` or `no` (defaults to `yes`);
+	<Locked>: `yes` or `no` (defaults to `no`);
 	<Order>: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`);
 	<Variants>: a list of layers separated by comma (`,`) that will be merged with the base layer
 	(case insensitive; `*` and `?` wildcards accepted).
@@ -61,7 +62,7 @@ function main() {
 	var title = 'Default layers';
 	var dataFileName = [ 'layers.tsv', 'layers.txt' ];
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: only errors, 1: + warnings, 2: + infos
-	var file, messages, oldActiveLayer, newLayer, tmpLayer, i;
+	var file, messages, oldActiveLayer, newLayer, tmpLayer, i, rec;
 	var parsed = { header: [], data: [], errors: [] };
 	var data = { records: [], status: { info: [], warn: [], error: [] } };
 	var counter = { add: 0, merge: 0 };
@@ -72,7 +73,7 @@ function main() {
 	}());
 
 	if (!docHasPath && VERBOSITY > 1)
-		alert('Can\'t get document path.\nThe default swatch substitution list will be used.');
+		alert('Can\'t get document path.\nThe default layer substitution list will be used.');
 
 	// Get raw data from TSV
 	if (!(file = getDataFile(dataFileName))) { // No data file found
@@ -96,49 +97,60 @@ function main() {
 	oldActiveLayer = doc.activeLayer; // Save active layer
 	doc.layers.everyItem().properties = { locked: false }; // Unlock existing layers
 
-	for (i = data.records.length - 1; i >= 0; i--) { // Layers above
-		if (data.records[i].order !== 'above' && data.records[i].order !== 'top') continue;
+	// Layers above existing layers
+	for (i = data.records.length - 1; i >= 0; i--) {
+		rec = data.records[i];
+		if (rec.order !== 'above' && rec.order !== 'top') continue;
 		newLayer = makeLayer(
-			data.records[i].name,
-			data.records[i].color,
-			data.records[i].isVisible,
-			data.records[i].isPrintable,
-			data.records[i].variants);
+			rec.name,
+			rec.color,
+			rec.isVisible,
+			rec.isPrintable,
+			rec.isLocked,
+			rec.variants);
 		if (i < data.records.length - 1) {
 			tmpLayer = doc.layers.item(data.records[i + 1].name);
 			if (tmpLayer.isValid && (newLayer.index > tmpLayer.index)) {
-				stat(data.status, data.records[i].source,
+				stat(data.status, rec.source,
 					'Moved \'' + newLayer.name + '\' above \'' + tmpLayer.name + '\'.', 0);
 				newLayer.move(LocationOptions.BEFORE, tmpLayer);
 			}
 		}
 	}
 
-	for (i = 0; i < data.records.length; i++) { // Layers below
-		if (data.records[i].order !== 'below' && data.records[i].order !== 'bottom') continue;
+	// Layers below existing layers
+	for (i = 0; i < data.records.length; i++) {
+		rec = data.records[i];
+		if (rec.order !== 'below' && rec.order !== 'bottom') continue;
 		makeLayer(
-			data.records[i].name,
-			data.records[i].color,
-			data.records[i].isVisible,
-			data.records[i].isPrintable,
-			data.records[i].variants
+			rec.name,
+			rec.color,
+			rec.isVisible,
+			rec.isPrintable,
+			rec.isLocked,
+			rec.variants
 		).move(LocationOptions.AT_END);
 	}
 
-	for (i = data.records.length - 1; i >= 0; i--) { // Top/bottom layers
-		if (data.records[i].order !== 'top') continue;
-		if (!(tmpLayer = doc.layers.item(data.records[i].name)).isValid) continue;
+	// Top layers
+	for (i = data.records.length - 1; i >= 0; i--) {
+		rec = data.records[i];
+		if (rec.order !== 'top') continue;
+		if (!(tmpLayer = doc.layers.item(rec.name)).isValid) continue;
 		if (tmpLayer.index !== 0) {
 			tmpLayer.move(LocationOptions.AT_BEGINNING);
-			stat(data.status, data.records[i].source, 'Moved \'' + tmpLayer.name + '\' at top.', 0);
+			stat(data.status, rec.source, 'Moved \'' + tmpLayer.name + '\' at top.', 0);
 		}
 	}
+
+	// Bottom layers
 	for (i = 0; i < data.records.length; i++) {
-		if (data.records[i].order !== 'bottom') continue;
-		if (!(tmpLayer = doc.layers.item(data.records[i].name)).isValid) continue;
+		rec = data.records[i];
+		if (rec.order !== 'bottom') continue;
+		if (!(tmpLayer = doc.layers.item(rec.name)).isValid) continue;
 		if (tmpLayer.index !== (doc.layers.length - 1)) {
 			tmpLayer.move(LocationOptions.AT_END);
-			stat(data.status, data.records[i].source, 'Moved \'' + tmpLayer.name + '\' at bottom.', 0);
+			stat(data.status, rec.source, 'Moved \'' + tmpLayer.name + '\' at bottom.', 0);
 		}
 	}
 
@@ -161,8 +173,9 @@ function main() {
 		tmpData.color = record[1] ? getUIColor(record[1]) : UIColors.LIGHT_BLUE;
 		tmpData.isVisible = record[2] ? (record[2].toLowerCase() === 'yes') : true;
 		tmpData.isPrintable = record[3] ? (record[3].toLowerCase() === 'yes') : true;
-		tmpData.order = record[4] ? record[4].toLowerCase() : 'below';
-		tmpData.variants = record[5] ? unique((record[0] + ',' + record[5]).split(/ *, */)) : [ record[0] ];
+		tmpData.isLocked = record[4] ? (record[4].toLowerCase() === 'yes') : false;
+		tmpData.order = record[5] ? record[5].toLowerCase() : 'below';
+		tmpData.variants = record[6] ? unique((record[0] + ',' + record[6]).split(/ *, */)) : [ record[0] ];
 
 		if (tmpData.name.length === 0) stat(data.status, tmpData.source + ':1', 'Missing layer name.', -1);
 
@@ -212,14 +225,15 @@ function main() {
 		}
 	}
 
-	function makeLayer(name, color, isVisible, isPrintable, variants) {
+	function makeLayer(name, color, isVisible, isPrintable, isLocked, variants) {
 		var targetLayer, l, oldName, layers, oldLayerVisibility;
 		targetLayer = doc.layers.item(name);
 		if (targetLayer.isValid) {
 			targetLayer.properties = {
 				layerColor: color,
-				// visible:    isVisible,
-				printable:  isPrintable
+				visible:    isVisible,
+				printable:  isPrintable,
+				locked:     isLocked
 			};
 		} else {
 			doc.activeLayer = doc.layers.firstItem();
@@ -227,10 +241,11 @@ function main() {
 				name:       name,
 				layerColor: color,
 				visible:    isVisible,
-				printable:  isPrintable
+				printable:  isPrintable,
+				locked:     isLocked
 			});
 			counter.add++;
-			stat(data.status, data.records[i].source, 'Added \'' + targetLayer.name + '\'.', 0);
+			stat(data.status, rec.source, 'Added \'' + targetLayer.name + '\'.', 0);
 		}
 		// Merge variants
 		layers = doc.layers.everyItem().getElements();
@@ -243,7 +258,7 @@ function main() {
 				targetLayer.visible = oldLayerVisibility;
 				if (oldName !== targetLayer.name) {
 					counter.merge++;
-					stat(data.status, data.records[i].source,
+					stat(data.status, rec.source,
 						'Merged \'' + oldName + '\' with \'' + targetLayer.name + '\'.', 0);
 				}
 			}
