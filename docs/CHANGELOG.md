@@ -117,6 +117,7 @@
   **lib/replaceText:** Added a target for `changeText()`
 - `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/960714cabf14ac2b2297d26b4902c0c11a6c5ec9)
   **lib/log:** Simplified block markers
+
 - `12/01` [`brk`](https://github.com/pchiorean/Indentz/commit/d9bb8c1ac09820b0488cbbefc03bf2cea3bcf680)
   **lib/getPageItems:** Now it returns an array of found items, or `false` if nothing was found
 - `12/01` [`brk`](https://github.com/pchiorean/Indentz/commit/69ba851c3fe4972951ad3b92b2cd19f5670dd3b5)
@@ -134,6 +135,17 @@
 - `12/13` [`fix`](https://github.com/pchiorean/Indentz/commit/226a36ec5f213beb9cfe14debf9a9d8b84940786)
   **lib/fitTo:** Reset scaling of HW items to 100%
 
+- `02/10` [`brk`](https://github.com/pchiorean/Indentz/commit/939a1f301d764c820b57a0a7107bcf81d9ee3083)
+  **cleanup/DefaultLayers, DumpLayers:** Added a column for the locked status of document layers
+- `02/10` [`ref`](https://github.com/pchiorean/Indentz/commit/94e06924d68fff8a67100c890c99da59d9aef41c)
+  **cleanup/DefaultSwatches:** Minor edits
+- `02/10` [`ref`](https://github.com/pchiorean/Indentz/commit/b894e604e7f62eab36498ac73d764a4c3899a38d)
+  **cleanup/ReplaceFonts, ReplaceLinks, ReplaceSnippets:** Fixed a typo in the alert message; tweaked the dialog title
+- `02/10` [`new`](https://github.com/pchiorean/Indentz/commit/7e5afe4c656508ff4e8ce371f3992ac8cdf1c9ed)
+  **cleanup/ResetLayers:** Added a script that sets the visible/printable/locked state of document layers as defined in `layers.tsv`
+- `02/10` [`upd`](https://github.com/pchiorean/Indentz/commit/73116dfeb0a29a63a8b1fab368c9ee672bd2bf29)
+  **cleanup/DocCleanup:** Replaced the hack that shows/hides layers with a proper solution that uses `layers.tsv`
+
 ##### Queued
 
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
@@ -141,6 +153,8 @@
 - `upd` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
 - `upd` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
 - `upd` **export/QuickExport:** Add a checkbox for `0e04f28`
+- `upd` **view/ZoomToSpreads:** Apply the smallest zoom value to all windows
+- `upd` Implement `try/catch/finally` when appropriate
 - `new` **export/QuickExport:** Add JPG, PNG & INDD export profiles
 - `new` **export/QuickExport:** Add package option
 
