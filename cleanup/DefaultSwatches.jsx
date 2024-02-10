@@ -1,6 +1,6 @@
 /*
-	Default swatches 23.10.21
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Default swatches 24.2.10
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Adds swatches using a 5-column TSV file named `swatches.tsv`:
 
@@ -64,7 +64,7 @@ function main() {
 	var title = 'Default swatches';
 	var dataFileName = [ 'swatches.tsv', 'swatches.txt' ];
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: only errors, 1: + warnings, 2: + infos
-	var file, messages, progressBar, i;
+	var file, messages, progressBar, i, rec;
 	var parsed = { header: [], data: [], errors: [] };
 	var data = { records: [], status: { info: [], warn: [], error: [] } };
 	var counter = { add: 0, merge: 0 };
@@ -98,13 +98,14 @@ function main() {
 	// Processing
 	if (data.records.length > 9) progressBar = new ProgressBar(title, data.records.length);
 	for (i = 0; i < data.records.length; i++) {
+		rec = data.records[i];
 		if (progressBar) progressBar.update();
 		addSwatch(
-			data.records[i].name,
-			data.records[i].model,
-			data.records[i].space,
-			data.records[i].values,
-			data.records[i].variants
+			rec.name,
+			rec.model,
+			rec.space,
+			rec.values,
+			rec.variants
 		);
 		if (ScriptUI.environment.keyboardState.keyName === 'Escape') exit();
 	}
@@ -213,9 +214,9 @@ function main() {
 					colorValue: values
 				});
 				counter.add++;
-				stat(data.status, data.records[i].source, 'Added \'' + newSwatch.name + '\'.', 0);
+				stat(data.status, rec.source, 'Added \'' + newSwatch.name + '\'.', 0);
 			} catch (e) {
-				stat(data.status, data.records[i].source, 'Could not add \'' + name + '\'.'
+				stat(data.status, rec.source, 'Could not add \'' + name + '\'.'
 					+ ' Reason: ' + e.toString().replace(/\r|\n/g, '\u00B6'), 1);
 				return false;
 			}
@@ -234,10 +235,10 @@ function main() {
 					oldName = c.name;
 					c.remove(newSwatch);
 					counter.merge++;
-					stat(data.status, data.records[i].source,
+					stat(data.status, rec.source,
 						'Merged \'' + oldName + '\' with \'' + newSwatch.name + '\'.', 0);
 				} catch (e) {
-					stat(data.status, data.records[i].source,
+					stat(data.status, rec.source,
 						'Could not merge \'' + c.name + '\' with \'' + newSwatch.name + '\'.'
 							+ ' Reason: ' + e.toString().replace(/\r|\n/g, '\u00B6'), 1);
 				}
