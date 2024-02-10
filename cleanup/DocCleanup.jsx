@@ -1,6 +1,6 @@
 ﻿/*
-	Document cleanup 23.11.25
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Document cleanup 24.2.10
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
 
@@ -18,8 +18,8 @@ var progressBar = new ProgressBar('Cleaning document', 14);
 
 progressBar.update();
 app.doScript(File(script.path + '/DefaultPrefs.jsx'),
-ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.ENTIRE_SCRIPT, 'Set preferences');
+	ScriptLanguage.JAVASCRIPT, undefined,
+	UndoModes.ENTIRE_SCRIPT, 'Set preferences');
 
 progressBar.update();
 app.doScript(function () {
@@ -85,23 +85,6 @@ UndoModes.ENTIRE_SCRIPT, 'Clear default effects');
 
 progressBar.update();
 app.doScript(function () {
-	if ((menu = app.menuActions.item('$ID/Delete Unused Layers')).enabled) menu.invoke();
-},
-ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.ENTIRE_SCRIPT, 'Delete unused layers');
-
-progressBar.update();
-app.doScript(function () {
-	var spread;
-	var spreads = doc.spreads.everyItem().getElements();
-	while ((spread = spreads.shift()))
-		if (spread.allPageItems.length === 0 && doc.spreads.length > 1) spread.remove();
-},
-ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.ENTIRE_SCRIPT, 'Delete empty spreads');
-
-progressBar.update();
-app.doScript(function () {
 	var swatch;
 	var swatches = doc.unusedSwatches;
 	while ((swatch = swatches.shift()))
@@ -109,6 +92,13 @@ app.doScript(function () {
 },
 ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Delete unused swatches');
+
+progressBar.update();
+app.doScript(function () {
+	if ((menu = app.menuActions.item('$ID/Delete Unused Layers')).enabled) menu.invoke();
+},
+ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, 'Delete unused layers');
 
 progressBar.update();
 app.doScript(function () {
@@ -146,32 +136,23 @@ UndoModes.ENTIRE_SCRIPT, 'Convert empty frames to graphic frames');
 
 progressBar.update();
 app.doScript(function () {
+	app.doScript(File(script.path + '/ResetLayers.jsx'), ScriptLanguage.JAVASCRIPT);
 	var layer;
-	if ((layer = doc.layers.itemByName('.guides')).isValid)       { layer.visible = true; layer.locked = false; }
-	if ((layer = doc.layers.itemByName('.fold')).isValid)         { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('.safety area')).isValid)  { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('.segmentation')).isValid) { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('.visible area')).isValid) { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('.covered area')).isValid) { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('+dielines')).isValid)     { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('dielines')).isValid)      { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('+varnish')).isValid)      { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('varnish')).isValid)       { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('+cutout')).isValid)       { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('cutout')).isValid)        { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('HW')).isValid)            { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('on top')).isValid)        { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('text & logos')).isValid)  { layer.visible = true; layer.locked = false; }
-	if ((layer = doc.layers.itemByName('artwork')).isValid)       { layer.visible = true; layer.locked = false; }
-	if ((layer = doc.layers.itemByName('on bottom')).isValid)     { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('bg')).isValid)            { layer.visible = true; layer.locked = true; }
-	if ((layer = doc.layers.itemByName('.reference')).isValid)    { layer.visible = false; layer.locked = true; }
-
 	if ((layer = doc.layers.itemByName('text & logos')).isValid) doc.activeLayer = layer;
 	else if ((layer = doc.layers.itemByName('artwork')).isValid) doc.activeLayer = layer;
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.ENTIRE_SCRIPT, 'Show/hide layers');
+UndoModes.ENTIRE_SCRIPT, 'Reset layers state');
+
+progressBar.update();
+app.doScript(function () {
+	var spread;
+	var spreads = doc.spreads.everyItem().getElements();
+	while ((spread = spreads.shift()))
+		if (spread.allPageItems.length === 0 && doc.spreads.length > 1) spread.remove();
+},
+ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, 'Delete empty spreads');
 
 progressBar.update();
 doc.textPreferences.showInvisibles = false;
@@ -203,5 +184,3 @@ ScriptLanguage.JAVASCRIPT, undefined,
 UndoModes.ENTIRE_SCRIPT, 'Set pasteboard size');
 
 progressBar.close();
-// app.select(null);
-// app.activeWindow.zoom(ZoomOptions.FIT_SPREAD);
