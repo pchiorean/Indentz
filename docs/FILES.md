@@ -25,6 +25,7 @@ Name                           |       Fn | Description
 `ReplaceFonts`                 |          | Replaces fonts from a substitution list
 `ReplaceLinks`                 |    `⌥F8` | Replaces document links from a substitution list
 `ReplaceSnippets`              |    `⌥F6` | Replaces text snippets from a substitution list
+`ResetLayers`                  |          | Resets the visible/printable/locked state of document layers
 `SwatchesCleanup`              |    `⇧F2` | Converts RGB swatches to CMYK, renames them to 'C= M= Y= K=' format, deletes unused
 **Export**                     |          | **Document export and related**
 `HideDNPLayers`                |          | Hides DO-NOT-PRINT layers
