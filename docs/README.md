@@ -71,17 +71,17 @@ Sets some preferences for the active document. You should customize them to your
 ---
 
 #### **`DefaultLayers.jsx`**
-Adds a set of layers defined in a 6-columns [TSV data file](#tsv) named **`layers.tsv`** ([sample](samples/layers.tsv)):
+Adds a set of layers defined in a 7-columns [TSV data file](#tsv) named **`layers.tsv`** ([sample](samples/layers.tsv)):
 
-| Name              | Color      | Visible | Printable | Order  | Variants                                           |
-|:------------------|:-----------|:--------|:----------|:-------|:---------------------------------------------------|
-| **.visible area** | Yellow     | yes     | yes       | above  | nicht sicht\*, rahmen, sicht\*, \*vi?ib\*          |
-| **dielines**      | Magenta    | yes     | yes       | above  | cut\*, decoupe, die, die\*cut, stanz\*             |
-| **text**          | Green      |         |           |        | copy, headline\*, hl, text\*, txt, typ?            |
-| **artwork**       | Light Blue | no      | yes       | above  | aw, design, element?, layout\*                     |
-| **bg**            | Red        |         |           | below  | back, \*background\*, bgg, fond, hg, hintergrund\* |
-| **.reference**    | Black      | no      | no        | bottom | refer\*, template, vorlage                         |
-| ...               |            |         |           |        |                                                    |
+| Name              | Color      | Visible | Printable | Locked | Order  | Variants                                           |
+|:------------------|:-----------|:--------|:----------|:-------|:-------|:---------------------------------------------------|
+| **.visible area** | Yellow     | yes     | yes       | yes    | above  | nicht sicht\*, rahmen, sicht\*, \*vi?ib\*          |
+| **dielines**      | Magenta    | yes     | yes       | yes    | above  | cut\*, decoupe, die, die\*cut, stanz\*             |
+| **text**          | Green      |         |           |        |        | copy, headline\*, hl, text\*, txt, typ?            |
+| **artwork**       | Light Blue | no      | yes       |        | above  | aw, design, element?, layout\*                     |
+| **bg**            | Red        |         |           |        | below  | back, \*background\*, bgg, fond, hg, hintergrund\* |
+| **.reference**    | Black      | no      | no        | yes    | bottom | refer\*, template, vorlage                         |
+| ...               |            |         |           |        |        |                                                    |
 
 **Legend:**
 
@@ -89,6 +89,7 @@ Adds a set of layers defined in a 6-columns [TSV data file](#tsv) named **`layer
 - **Color**: Layer color (defaults to `Light Blue`);
 - **Visible**: `yes` or `no` (defaults to `yes`);
 - **Printable**: `yes` or `no` (defaults to `yes`);
+- **Locked**: `yes` or `no` (defaults to `yes`);
 - **Order**: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`);
 - **Variants**: A list of layers separated by commas that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters).
 
@@ -213,7 +214,7 @@ Performs a sequence of actions designed to bring the document to an approximatel
 - Converts empty text frames to generic frames;
 - Converts empty frames to graphic frames;
 - Resets default transparency effects;
-- Resets visibility of some technical layers;
+- Resets the visible/printable/locked status of layers;
 - Hides 'invisible' characters;
 - Turns off URLs auto-updating;
 - Sets the pasteboard margins.
@@ -224,6 +225,11 @@ _Suggested shortcut:_ `F2`
 
 #### **`RemoveScriptLabels.jsx`**
 Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects, or all objects in the document if nothing is selected.
+
+---
+
+#### **`ResetLayers.jsx`**
+Resets the visible/printable/locked state of the document layers as defined in the **`layers.tsv`** data file mentioned in [**`DefaultLayers.jsx`**](#defaultlayersjsx).
 
 ---
 
@@ -717,10 +723,10 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 
 ## License
 
-© 2020-2023 Paul Chiorean \<jpeg@basement.ro\>.\
+© 2020-2024 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: December 14, 2023</small>
+<small>Last updated: February 10, 2023</small>
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use every day, so it's kind of tested, but… beware. ;)
 
