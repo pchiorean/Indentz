@@ -1,6 +1,6 @@
-﻿/*
-	Replace fonts 23.10.21
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+/*
+	Replace fonts 24.2.10
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces fonts using a 4-column TSV file named `fonts.tsv`:
 
@@ -47,7 +47,7 @@ if (!(doc = app.activeDocument)) exit();
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Replace fonts');
 
 function main() {
-	var title = 'Replace fonts';
+	var title = 'Replacing fonts';
 	var dataFileName = [ 'fonts.tsv', 'fonts.txt' ];
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: only errors, 1: + warnings, 2: + infos
 	var file, messages, i, n;
@@ -61,7 +61,7 @@ function main() {
 	}());
 
 	if (!docHasPath && VERBOSITY > 1)
-		alert('Can\'t get document path.\nThe default swatch substitution list will be used.');
+		alert('Can\'t get document path.\nThe default font substitution list will be used.');
 
 	// Get raw data from TSV
 	if (!(file = getDataFile(dataFileName))) { // No data file found

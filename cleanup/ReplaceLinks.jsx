@@ -1,6 +1,6 @@
 /*
-	Replace links 23.11.5
-	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
+	Replace links 24.2.10
+	(c) 2021-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces document links using a 2-column TSV file named `links.tsv`:
 
@@ -85,7 +85,7 @@ function main() {
 	}());
 
 	if (!docHasPath && VERBOSITY > 1)
-		alert('Can\'t get document path.\nThe default swatch substitution list will be used.');
+		alert('Can\'t get document path.\nThe default link substitution list will be used.');
 
 	// Get raw data from TSV
 	if (!(file = getDataFile(dataFileName))) { // No data file found

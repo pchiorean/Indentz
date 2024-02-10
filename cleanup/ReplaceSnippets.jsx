@@ -1,6 +1,6 @@
 ﻿/*
-	Replace text snippets 23.10.21
-	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
+	Replace text snippets 24.2.10
+	(c) 2022-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Replaces a list of snippets using a 5-column TSV file named `snippets.tsv`:
 
@@ -55,7 +55,7 @@ if (!(doc = app.activeDocument)) exit();
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Replace text snippets');
 
 function main() {
-	var title = 'Replace text snippets';
+	var title = 'Replacing text snippets';
 	var dataFileName = [ 'snippets.tsv', 'snippets.txt' ];
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: only errors, 1: + warnings, 2: + infos
 	var file, messages, i, n;
@@ -69,7 +69,7 @@ function main() {
 	}());
 
 	if (!docHasPath && VERBOSITY > 1)
-		alert('Can\'t get document path.\nThe default swatch substitution list will be used.');
+		alert('Can\'t get document path.\nThe default text snippets substitution list will be used.');
 
 	// Get raw data from TSV
 	if (!(file = getDataFile(dataFileName))) { // No data file found
