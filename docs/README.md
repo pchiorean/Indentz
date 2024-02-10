@@ -229,7 +229,7 @@ Sometimes objects that have a script label attached are reused, which may create
 ---
 
 #### **`ResetLayers.jsx`**
-Resets the visible/printable/locked state of the document layers as defined in the **`layers.tsv`** data file mentioned in [**`DefaultLayers.jsx`**](#defaultlayersjsx).
+Resets the visible/printable/locked state of the document layers using the same data file used by [**`DefaultLayers.jsx`**](#defaultlayersjsx).
 
 ---
 
