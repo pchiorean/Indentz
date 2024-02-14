@@ -9,8 +9,8 @@
  */
 function replaceText(findWhat, changeTo, caseSensitive, wholeWord, target) {
 	var counter = 0;
-	caseSensitive = caseSensitive || true;
-	wholeWord = wholeWord || true;
+	caseSensitive = Boolean(caseSensitive);
+	wholeWord = Boolean(wholeWord);
 	target = target || app.activeDocument;
 	if (/page|spread|layer/i.test(target.constructor.name)) target = target.allPageItems;
 	if (target.constructor.name !== 'Array') target = Array(target);
