@@ -145,6 +145,8 @@
   **cleanup/ResetLayers:** Added a script that sets the visible/printable/locked state of document layers as defined in `layers.tsv`
 - `02/10` [`upd`](https://github.com/pchiorean/Indentz/commit/73116dfeb0a29a63a8b1fab368c9ee672bd2bf29)
   **cleanup/DocCleanup:** Replaced the hack that shows/hides layers with a proper solution that uses `layers.tsv`
+- `02/14` [`fix`](https://github.com/pchiorean/Indentz/commit/bd6752cc9b39f15c031af1a4bbd46cf5c88Zf55f8)
+  **lib/replaceText:** Fixed bad logic when setting fallback values for `caseSensitive` and `wholeWord` arguments
 
 ##### Queued
 
