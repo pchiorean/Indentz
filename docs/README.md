@@ -612,7 +612,7 @@ _Suggested shortcut:_ `⌃Num*`
 ---
 
 #### **`EAN.jsx`**
-This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, that generates a document containing a user-provided sequence of barcodes. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I got tired of manually copying/pasting, scaling, and rotating each one, so I "borrowed" the part that generates the barcode[^3] and made this script to automate these operations.
+This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, that generates a document with barcodes from a list provided by the user. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I got tired of manually copying/pasting, scaling, and rotating each one, so I "borrowed" the part that generates the barcode[^3] and made this script to automate the operations.
 
 You can enter a single code or a list (enter 8 or 13 digits for the code; if you have an add-on, add a hyphen and another 2 or 5 digits).
 
@@ -620,7 +620,7 @@ It has two modes of operation:
 
 - When nothing is selected, it creates a new document with a barcode on each page, like the original script.
 
-- For multiple objects selected, it inserts the sequence of barcodes directly into them in the order they were selected. When there is only one code but several objects, they will have the same barcode.
+- When multiple objects are selected, barcodes are inserted sequentially into them. If only one code is provided, all objects get the same code.
 
 _Suggested shortcut:_ `⌥F9`
 
@@ -726,7 +726,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2024 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: February 10, 2023</small>
+<small>Last updated: February 27, 2023</small>
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use every day, so it's kind of tested, but… beware. ;)
 
