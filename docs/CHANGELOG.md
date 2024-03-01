@@ -148,6 +148,9 @@
 - `02/14` [`fix`](https://github.com/pchiorean/Indentz/commit/bd6752cc9b39f15c031af1a4bbd46cf5c88Zf55f8)
   **lib/replaceText:** Fixed bad logic when setting fallback values for `caseSensitive` and `wholeWord` arguments
 
+- `03/01` [`upd`](https://github.com/pchiorean/Indentz/commit/41ce49afc0d7f3434401252c7cb10ff4e31827ba)
+  **layout/GuidesAdd, PageMarginsFromScriptName and related:** HW guides are now added to the '.guides' layer
+
 ##### Queued
 
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
