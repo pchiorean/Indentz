@@ -1,6 +1,6 @@
 /*
-	Add page guides 23.10.7
-	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
+	Add page guides 24.3.1
+	(c) 2021-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Adds guides on pages' edges and inner centers or selected objects' edges.
 
@@ -16,13 +16,12 @@ if (!(doc = app.activeDocument)) exit();
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Add page guides');
 
 function main() {
-	var hwLayer, guidesLayer, page, guide, s, i, n;
+	var guidesLayer, page, guide, margins, s, i, n;
 	var guides = doc.guides.everyItem().getElements();
 	var items = doc.selection;
 	var targetBounds = [];
 	var flgExit = false;
 	var guidesLayerName = '.guides';
-	var hwLayerName = 'HW';
 	var HW = 10 / 100;
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 	doc.guidePreferences.guidesLocked = false;
@@ -40,11 +39,6 @@ function main() {
 			printable: false,
 			locked: false
 		});
-	}
-	hwLayer = doc.layers.item(hwLayerName);
-	if (hwLayer.isValid) {
-		hwLayer.properties = { locked: false };
-		guidesLayer.move(LocationOptions.BEFORE, hwLayer);
 	}
 
 	if (items.length > 0) { // Selection guides
@@ -78,33 +72,32 @@ function main() {
 		// Add guides
 		for (i = 0; i < doc.pages.length; i++) {
 			page = doc.pages[i];
-			mgbounds = mgBounds(page);
+			margins = mgBounds(page);
 			pageSize = { width: page.bounds[3] - page.bounds[1], height: page.bounds[2] - page.bounds[0] };
-			innerSize = { width: mgbounds[3] - mgbounds[1], height: mgbounds[2] - mgbounds[0] };
-			addGuide(page/*.parent*/, guidesLayer, 'h', page.bounds[0], 'top', 'g');
-			addGuide(page/*.parent*/, guidesLayer, 'v', page.bounds[1], 'left', 'g');
-			addGuide(page/*.parent*/, guidesLayer, 'h', page.bounds[2], 'bottom', 'g');
-			addGuide(page/*.parent*/, guidesLayer, 'v', page.bounds[3], 'right', 'g');
-			addGuide(page, guidesLayer, 'v', mgbounds[1] + innerSize.width / 2, 'middle', 'x');
-			addGuide(page, guidesLayer, 'h', mgbounds[0] + innerSize.height * (1 - HW) / 2, 'middle', 'x');
-			addGuide(page, (hwLayer.isValid ? hwLayer : guidesLayer), 'h',
-				(mgbounds[2] - innerSize.height * HW), 'HW', 's');
+			innerSize = { width: margins[3] - margins[1], height: margins[2] - margins[0] };
+			addGuide(page, guidesLayer, 'h', page.bounds[0], 'top', 'g');
+			addGuide(page, guidesLayer, 'v', page.bounds[1], 'left', 'g');
+			addGuide(page, guidesLayer, 'h', page.bounds[2], 'bottom', 'g');
+			addGuide(page, guidesLayer, 'v', page.bounds[3], 'right', 'g');
+			addGuide(page, guidesLayer, 'v', margins[1] + innerSize.width / 2, 'middle', 'x');
+			addGuide(page, guidesLayer, 'h', margins[0] + innerSize.height * (1 - HW) / 2, 'middle', 'x');
+			addGuide(page, guidesLayer, 'h', (margins[2] - innerSize.height * HW), 'HW', 's');
 		}
 	}
 
 	function mgBounds(target) {
 		var PSO = PageSideOptions;
-		var margins = {
+		var mg = {
 			top:    target.marginPreferences.top,
 			left:   target.marginPreferences.left,
 			bottom: target.marginPreferences.bottom,
 			right:  target.marginPreferences.right
 		};
 		return [
-			target.bounds[0] + margins.top,
-			(target.side === PSO.LEFT_HAND) ? target.bounds[1] + margins.right : target.bounds[1] + margins.left,
-			page.bounds[2] - margins.bottom,
-			(target.side === PSO.LEFT_HAND) ? target.bounds[3] - margins.left : target.bounds[3] - margins.right
+			target.bounds[0] + mg.top,
+			(target.side === PSO.LEFT_HAND) ? target.bounds[1] + mg.right : target.bounds[1] + mg.left,
+			page.bounds[2] - mg.bottom,
+			(target.side === PSO.LEFT_HAND) ? target.bounds[3] - mg.left : target.bounds[3] - mg.right
 		];
 	}
 }

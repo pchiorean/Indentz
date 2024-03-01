@@ -1,6 +1,6 @@
 /*
-	Page margins from script name 23.10.25
-	(c) 2022-2023 Paul Chiorean <jpeg@basement.ro>
+	Page margins from script name 24.3.1
+	(c) 2022-2024 Paul Chiorean <jpeg@basement.ro>
 
 	By default it sets the page margins to 5% of the visible/page area for
 	all document pages. Renaming the script (e.g., Margins<XX>HW<YY>.jsx) you
@@ -20,9 +20,8 @@ if (!(doc = app.activeDocument)) exit();
 app.doScript(grid, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Set margins');
 
 function grid() {
-	var oldActiveLayer, guidesLayer, hwLayer, page, tgBounds, tgSize, MG, RE;
+	var oldActiveLayer, guidesLayer, page, tgBounds, tgSize, MG, RE;
 	var guidesLayerName = '.guides';
-	var hwLayerName = 'HW';
 	var MG_PCT = 5;
 	var HW_PCT = 10;
 
@@ -40,7 +39,7 @@ function grid() {
 		} else { MG_PCT = Number(RE[0]); HW_PCT = Number(RE[1]); } // First 2 numbers => MG / HW
 	} else if (!/hw/i.test(File($.fileName).name)) { HW_PCT = 0; } // No match => zero HW
 
-	// Add layers
+	// Create guides layer
 	oldActiveLayer = doc.activeLayer;
 	guidesLayer = doc.layers.item(guidesLayerName);
 	if (guidesLayer.isValid) {
@@ -53,20 +52,6 @@ function grid() {
 			printable: false,
 			locked: false
 		}).move(LocationOptions.AT_BEGINNING);
-	}
-	if (HW_PCT > 0) {
-		hwLayer = doc.layers.item(hwLayerName);
-		if (hwLayer.isValid) {
-			hwLayer.properties = { visible: true, locked: false };
-		} else {
-			hwLayer = doc.layers.add({
-				name: hwLayerName,
-				layerColor: UIColors.LIGHT_GRAY,
-				visible: true,
-				printable: true,
-				locked: false
-			}).move(LocationOptions.BEFORE, guidesLayer);
-		}
 	}
 	doc.activeLayer = oldActiveLayer;
 
@@ -91,6 +76,6 @@ function grid() {
 		// Common guides
 		addGuide(page, guidesLayer, 'h', tgBounds[0] + tgSize.height * (1 - HW_PCT / 100) / 2, 'middle', 'x');
 		addGuide(page, guidesLayer, 'v', tgBounds[1] + tgSize.width / 2, 'middle', 'x');
-		if (hwLayer) addGuide(page, hwLayer, 'h', tgBounds[0] + tgSize.height * (1 - HW_PCT / 100), 'hw', 's');
+		addGuide(page, guidesLayer, 'h', tgBounds[0] + tgSize.height * (1 - HW_PCT / 100), 'hw', 's');
 	}
 }
