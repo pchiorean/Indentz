@@ -33,6 +33,8 @@ These TSV data files have several non-standard features that will confuse Excel 
 #### **`DefaultPrefs.jsx`**
 Sets some preferences for the active document. You should customize them to your workflow by editing the script.
 
+_Note:_ Many scripts in this collection assume these settings as defaults because they suit my environment – the scripts are rather minimalist, without sophisticated error-catching; this means that it is possible, for example, to try to scale a locked object (or guide) and the script will fail (see **Prevent Selection of Locked Objects**).
+
 <details><summary><strong>Click here for details</strong></summary>
 
 **Application:**
@@ -159,7 +161,7 @@ Replaces document links using a 2-columns [TSV data file](#tsv) named **`links.t
   - A relative path which is:
     - relative by default to the document **`Links`** folder (e.g., `img2.psd`);
     - relative to the `reference/path/` defined by a previous **`@includepath`** directive (e.g., `img3.psd` and `subfolder/img4.psd`).
-- **Links:** A list of file names separated by commas, that if present in the document, will be replaced with the link from the first column; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters). The script will also automatically match the _file names_ from the first column, thus **Links** can be empty – e.g., if `img4.psd` appears in the document, it will be replaced by the one in `subfolder/` (which is actually `reference/path/subfolder/`, because the **`@includepath`** above it redefines the reference path).
+- **Links:** A list of file names separated by commas, that if present in the document, will be replaced with the link from the first column; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters). The script will also automatically match the _file names_ from the first column, so **Links** can be empty – e.g., if `img4.psd` appears in the document, it will be replaced by the one in `subfolder/` (which is actually `reference/path/subfolder/`, because the **`@includepath`** above it redefines the reference path).
 
 _Tip:_ The script will display a report if run while holding down the **Ctrl** key.
 
@@ -204,7 +206,7 @@ _Tip:_ The script will display a report if run while holding down the **Ctrl** k
 ---
 
 #### **`DocCleanup.jsx`**
-Performs a sequence of actions designed to bring the document to an approximately "clean" state:
+Performs a sequence of actions designed to bring the document to an approximately 'clean' state:
 
 - Sets some preferences (it runs [**`DefaultPrefs.jsx`**](#defaultprefsjsx));
 - Unlocks all objects and resets their scaling to 100%;
@@ -373,15 +375,15 @@ _Suggested shortcut:_ `⌃Num0`
 #### **`FitTo*.jsx`**
 These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed, or _visible area_).
 
-**Example:** Running **`FitToPageBleed.jsx`** with these two frames selected will expand the yellow one and shrink the red frame to the page bleed:
+**Example:** Running **`FitToPageBleed.jsx`** with the following frames selected will extend the yellow one and shrink the red frame to the page bleed:
 
 ![Example](img/fit.png)
 
-The refitting is done by:
+The reframing is done by:
 
-- _Shrinking_ the edges that hang outside the target area;
+- _Extending_ the edges that touch or are very close to a trigger zone (which is either the target or the _visible area_). By default this snap zone is 1% of the _visible area_[^2];
 
-- _Extending_ the edges that touch or are very close to a trigger zone (which is either the target or the _visible area_). By default this snap zone is 1% of the _visible area_[^2].
+- _Shrinking_ the edges that hang outside the target area.
 
 _Note:_ Rectangular frames and straight lines are simply reframed; rotated objects, ovals, groups etc., are first inserted into a _clipping frame_. Only clipped objects, straight frames and lines are extended. Frames with an embedded object are only extended to the limits of that object.
 
@@ -494,7 +496,7 @@ _Tip:_ You may use **`SpreadsToFiles.jsx`** to split the result into separate do
 <small>_**Document export and related.**_</small>
 
 #### **`QuickExport.jsx`**
-For a long time, I exported documents to PDF with [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), Peter Kahrel's "Swiss army knife", but I needed a tool tailored to my specific needs. My workflow requires frequent changes to export settings, and I wanted direct access to some of them (the native export dialog has quite a few tabs and options!). There are two selectable workflows, with the options grouped into several categories. I'm only reviewing the ones that aren't self-explanatory:
+For a long time, I exported documents to PDF with [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), Peter Kahrel's 'Swiss army knife', but I needed a tool tailored to my specific needs. My workflow requires frequent changes to export settings, and I wanted direct access to some of them (the native export dialog has quite a few tabs and options!). There are two selectable workflows, with the options grouped into several categories. I'm only reviewing the ones that aren't self-explanatory:
 
 ![Quick export](img/script-quickexport.png)
 ![](img/script-quickexport-legend.svg)
@@ -612,7 +614,7 @@ _Suggested shortcut:_ `⌃Num*`
 ---
 
 #### **`EAN.jsx`**
-This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, that generates a document with barcodes from a list provided by the user. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I got tired of manually copying/pasting, scaling, and rotating each one, so I "borrowed" the part that generates the barcode[^3] and made this script to automate the operations.
+This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, that generates a document with barcodes from a list provided by the user. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I got tired of manually copying/pasting, scaling, and rotating each one, so I 'borrowed' the part that generates the barcode[^3] and made this script to automate the operations.
 
 You can enter a single code or a list (enter 8 or 13 digits for the code; if you have an add-on, add a hyphen and another 2 or 5 digits).
 
@@ -726,10 +728,10 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2024 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: February 27, 2023</small>
+<small>Last updated: April 8, 2023</small>
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use every day, so it's kind of tested, but… beware. ;)
 
 [^2]: The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
 
-[^3]: I "borrowed" the barcode parsing bit, I refactored the function that generates the barcode to make it standalone, the rest of the code is original.
+[^3]: I 'borrowed' the barcode parsing bit, I refactored the function that generates the barcode to make it standalone, the rest of the code is original.
