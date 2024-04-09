@@ -854,6 +854,9 @@
 <p><em>Tip:</em> The settings are saved every time you run the script, but if you keep the <strong>Opt/Alt</strong> key pressed while clicking <strong>Start</strong>, they will not be updated for the current session.</p>
 <p><em>Suggested shortcut:</em> <code>⌃E</code></p>
 <hr>
+<h4 id="marksafetyareajsx"><strong><code>MarkSafetyArea.jsx</code></strong> </h4>
+<p>Creates a frame around the page margins that visually marks the <em>safety area</em> of a page. It’s a stroked frame named <strong>&lt;safety area&gt;</strong> on the <strong>.safety area</strong> layer. It will use an existing <strong>Safety area</strong> swatch, or will create one with the values R=0 G=180 B=255.</p>
+<hr>
 <h4 id="markvisibleareajsx"><strong><code>MarkVisibleArea.jsx</code></strong> </h4>
 <p>Creates a frame around the page margins that visually marks the <em>visible area</em> of a page. It’s a stroked frame named <strong>&lt;visible area&gt;</strong> on the <strong>.visible area</strong> layer. It will use an existing <strong>Visible area</strong> swatch, or will create one with the values R=255 G=180 B=0.</p>
 <hr>
@@ -912,7 +915,7 @@
 <p>When nothing is selected, it creates a new document with a barcode on each page, like the original script.</p>
 </li>
 <li>
-<p>When multiple objects are selected, barcodes are inserted sequentially into them. If only one code is provided, all objects get the same code.</p>
+<p>When multiple objects are selected, the barcodes are inserted sequentially into them. If only one code is provided, all objects get the same code.</p>
 </li>
 </ul>
 <p><em>Suggested shortcut:</em> <code>⌥F9</code></p>
@@ -930,7 +933,7 @@
 <blockquote>
 <p>When you apply a Contour-type text wrap to an object, you’re creating a path around that object—and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create a new path from those geometric coordinates.</p>
 </blockquote>
-<p>I fixed some bugs and added a default value, an option to join contours, and support for undoing.</p>
+<p>I fixed some bugs, added a default value, an option to join contours, and undo support.</p>
 <hr>
 <h4 id="qrjsx"><strong><code>QR.jsx</code></strong> </h4>
 <p>Adds a QR code on each spread of the active document (outside <em>visible area</em>, if possible), or to separate PDF files:</p>
@@ -1020,11 +1023,11 @@ Blank lines are ignored; everything after a <code>#</code> (comments) is ignored
 <h2 id="license">License </h2>
 <p>© 2020-2024 Paul Chiorean &lt;jpeg@basement.ro&gt;.<br>
 The code is released under the <a href="LICENSE.txt">MIT License</a>.</p>
-<p><small>Last updated: April 8, 2023</small></p>
+<p><small>Last updated: April 9, 2023</small></p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>Releases may be a little old. The latest version is in the <a href="https://github.com/pchiorean/Indentz/tree/dev">dev</a> branch, which is what I actually use every day, so it’s kind of tested, but… beware. 😉 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+<li id="fn1" class="footnote-item"><p>Releases may be a little old. The latest version is in the <a href="https://github.com/pchiorean/Indentz/tree/dev">dev</a> branch, which is what I actually use daily, so it’s kind of tested, but… beware. 😉 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
 </li>
 <li id="fn2" class="footnote-item"><p>The value is configurable by editing the constant <code>SNAP_PCT</code> from <code>fitTo()</code>. <a href="#fnref2" class="footnote-backref">↩︎</a></p>
 </li>

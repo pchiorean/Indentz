@@ -538,6 +538,11 @@ _Suggested shortcut:_ `⌃E`
 
 ---
 
+#### **`MarkSafetyArea.jsx`**
+Creates a frame around the page margins that visually marks the _safety area_ of a page. It's a stroked frame named **\<safety area\>** on the **.safety area** layer. It will use an existing **Safety area** swatch, or will create one with the values R=0 G=180 B=255.
+
+---
+
 #### **`MarkVisibleArea.jsx`**
 Creates a frame around the page margins that visually marks the _visible area_ of a page. It's a stroked frame named **\<visible area\>** on the **.visible area** layer. It will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
 
@@ -622,7 +627,7 @@ It has two modes of operation:
 
 - When nothing is selected, it creates a new document with a barcode on each page, like the original script.
 
-- When multiple objects are selected, barcodes are inserted sequentially into them. If only one code is provided, all objects get the same code.
+- When multiple objects are selected, the barcodes are inserted sequentially into them. If only one code is provided, all objects get the same code.
 
 _Suggested shortcut:_ `⌥F9`
 
@@ -647,7 +652,7 @@ This is a slightly modified version of [**OffsetPath**](https://creativepro.com/
 
 > When you apply a Contour-type text wrap to an object, you’re creating a path around that object—and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create a new path from those geometric coordinates.
 
-I fixed some bugs and added a default value, an option to join contours, and support for undoing.
+I fixed some bugs, added a default value, an option to join contours, and undo support.
 
 ---
 
@@ -728,9 +733,9 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2024 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: April 8, 2023</small>
+<small>Last updated: April 9, 2023</small>
 
-[^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use every day, so it's kind of tested, but… beware. ;)
+[^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use daily, so it's kind of tested, but… beware. ;)
 
 [^2]: The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
 
