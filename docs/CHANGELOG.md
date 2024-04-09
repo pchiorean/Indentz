@@ -151,8 +151,13 @@
 - `03/01` [`upd`](https://github.com/pchiorean/Indentz/commit/41ce49afc0d7f3434401252c7cb10ff4e31827ba)
   **layout/GuidesAdd, PageMarginsFromScriptName and related:** HW guides are now added to the '.guides' layer
 
+- `04/09` [`new`](https://github.com/pchiorean/Indentz/commit/ab132a2c434ee6e54c837dd87011072cbd3f41b9)
+  **export/MarkSafetyArea:** Added a script to mark the _safety area_ of a page
+
 ##### Queued
 
+- `brk` Use *safety area* for **Grid\***
+- `fix` **:** A document can have a name but it's not saved yet (new UI)
 - `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - `fix` **fit/TextAutoSize:** Check `baselineShift`
 - `upd` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
