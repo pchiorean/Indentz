@@ -29,6 +29,7 @@ Name                           |       Fn | Description
 `SwatchesCleanup`              |    `⇧F2` | Converts RGB swatches to CMYK, renames them to 'C= M= Y= K=' format, deletes unused
 **Export**                     |          | **Document export and related**
 `HideDNPLayers`                |          | Hides DO-NOT-PRINT layers
+`MarkSafetyArea`               |          | Creates on each page a 'safety area' frame the size of the page margins
 `MarkVisibleArea`              |          | Creates on each page a 'visible area' frame the size of the page margins
 `PrepareForExport`             |          | Hides some layers and moves objects with special colors to separate spreads
 `QuickExport`                  |          | Exports open .indd documents or a folder with several configurable PDF presets
