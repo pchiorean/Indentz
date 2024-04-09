@@ -733,7 +733,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2024 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: April 9, 2023</small>
+<small>Last updated: April 9, 2024</small>
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use daily, so it's kind of tested, but… beware. ;)
 
