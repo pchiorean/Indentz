@@ -153,20 +153,22 @@
 
 - `04/09` [`new`](https://github.com/pchiorean/Indentz/commit/ab132a2c434ee6e54c837dd87011072cbd3f41b9)
   **export/MarkSafetyArea:** Added a script to mark the _safety area_ of a page
+- `04/13` [`fix`](https://github.com/pchiorean/Indentz/commit/063af9356010d70aa054432ab7dcd32ec773e9fe)
+  **layout/PageSizeFromFilename:** Added space to dimension pairs separators ('filename 000x000_000x000' are now recognized); added some checks for page size/margin values
 
 ##### Queued
 
-- `brk` Use *safety area* for **Grid\***
-- `fix` **:** A document can have a name but it's not saved yet (new UI)
-- `fix` **file/SpreadsToFiles:** Don't append separators if already exist
-- `fix` **fit/TextAutoSize:** Check `baselineShift`
-- `upd` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
-- `upd` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
-- `upd` **export/QuickExport:** Add a checkbox for `0e04f28`
-- `upd` **view/ZoomToSpreads:** Apply the smallest zoom value to all windows
-- `upd` Implement `try/catch/finally` when appropriate
-- `new` **export/QuickExport:** Add JPG, PNG & INDD export profiles
-- `new` **export/QuickExport:** Add package option
+- [ ] `brk` Use *safety area* for **Grid\***
+- [ ] `fix` **:** A document can have a name but it's not saved yet (new UI)
+- [ ] `fix` **file/SpreadsToFiles:** Don't append separators if already exist
+- [ ] `fix` **fit/TextAutoSize:** Check `baselineShift`
+- [ ] `upd` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
+- [ ] `upd` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
+- [ ] `upd` **export/QuickExport:** Add a checkbox for `0e04f28`
+- [ ] `upd` **view/ZoomToSpreads:** Apply the smallest zoom value to all windows
+- [ ] `upd` Implement `try/catch/finally` when appropriate
+- [ ] `new` **export/QuickExport:** Add JPG, PNG & INDD export profiles
+- [ ] `new` **export/QuickExport:** Add package option
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
