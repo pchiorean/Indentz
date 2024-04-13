@@ -1,6 +1,6 @@
 /*
-	Page size from file name 23.12.12
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Page size from file name 24.4.13
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Sets every page size and margins according to the file name.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
@@ -32,13 +32,11 @@ if (!(doc = app.activeDocument)) exit();
 // @includepath '.;./lib;../lib';
 // @include 'isInArray.jsxinc';
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
-	UndoModes.ENTIRE_SCRIPT, 'Set page dimensions');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Set page dimensions');
 
 function main() {
-	var dimensions, firstPair, secondPair,
-		newPgSize, newMgSize, newBleed, newMargins, page, i, n;
-	var visLayerName = getLayer([ '.visible area', 'rahmen', 'sicht*', '*vi?ib*', 'vis?*' ]);
+	var dimensions, firstPair, secondPair, newPgSize, newMgSize, newBleed, newMargins, page, i, n;
+	var visLayerName = getLayer([ '.visible area', 'rahmen', 'sicht*', '*visib*', '*vizib*', 'vis*area' ]);
 	var dieLayerName = getLayer([ '+dielines', 'dielines', 'cut', 'cut*line*', 'decoupe', 'die', 'die*cut', 'stanz*' ]);
 	var visFrame = {
 		swatchName: 'Visible area',
@@ -50,23 +48,24 @@ function main() {
 		strokeType: '$ID/Canned Dashed 3x2'
 	};
 	var visAreaRE = /^<?(visible|safe) area>?$/i;
-	// Dimensons: match '_000[.0] [mm] x 000[.0] [mm]' pairs
+	// pairsRE: match '_000[.0] [mm] x 000[.0] [mm]' dimension pairs
 	// 1. [_-]                  // '_' or '-' separator between pairs
 	// 2. \d+([.,]\d+)?([cm]m)? // group 1: digits, optional decimals, optional cm/mm
 	// 3. x                     // 'x' separator between groups
 	// 4. \d+([.,]\d+)?(cm|mm)? // group 2
-	// 5. (?!x)(?!\d)           // discard if more groups (to avoid 000x00x00 et al)
-	var pairsRE = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig;
-	// Bleed: match '_00 [mm]' after '0 [mm]'
+	// 5. (?!x)(?!\d)           // discard if more groups (to avoid 000x000x000 et al)
+	var pairsRE = /[ _-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig;
+	// bleedRE: match '_00 [mm]' after '0 [mm]'
 	// 1. \d(?:[cm]m)?          // 1 digit followed by optional mm/cm (non-capturing group)
 	// 2. [_+]                  // '_' or '+' separator
 	// 3. (\d{1,2})             // 1 or 2 digits (capturing group #1)
 	// 4. (?:[cm]m)             // mandatory mm/cm (non-capturing group)
 	var bleedRE = /\d\s*(?:[cm]m)?[_+](\d{1,2})\s*(?:[cm]m)/i;
-	var ISO216SubsetRE = /A[1-7]\b/;
+	var ISO216SubsetRE = /A[1-7]\b/; // Common 'A' sizes (https://en.wikipedia.org/wiki/ISO_216)
 	var baseName = (/\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf('.'))) || doc.name;
-	var isCombo = /[_-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*\+\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig.test(decodeURI(doc.name));
-	var isSpread = false;
+	// isCombo: documents with multiple dimensions (000x000+000x000)
+	var isCombo = /[ _-]\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*\+\s*\d+([.,]\d+)?\s*([cm]m)?\s*x\s*\d+([.,]\d+)?\s*([cm]m)?\s*(?!x)\s*(?!\d)/ig.test(decodeURI(doc.name));
+	var isSpread = false; // Multipage spreads
 	var old = {
 		horizontalMeasurementUnits: doc.viewPreferences.horizontalMeasurementUnits,
 		verticalMeasurementUnits:   doc.viewPreferences.verticalMeasurementUnits,
@@ -74,17 +73,18 @@ function main() {
 		enableAutoAdjustMargins:    doc.adjustLayoutPreferences.enableAutoAdjustMargins,
 		objectsMoveWithPage:        app.generalPreferences.objectsMoveWithPage
 	};
+
 	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 	doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;
-	doc.viewPreferences.verticalMeasurementUnits   = MeasurementUnits.MILLIMETERS;
-	doc.adjustLayoutPreferences.enableAdjustLayout      = false;
+	doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
+	doc.adjustLayoutPreferences.enableAdjustLayout = false;
 	doc.adjustLayoutPreferences.enableAutoAdjustMargins = false;
 	app.generalPreferences.objectsMoveWithPage = false;
 
+	// Get dimensions from the filename, using `pairsRE` to match dimension pairs;
+	// if no pairs are found, try to match common 'A' sizes
 	dimensions = baseName.match(pairsRE);
-	newBleed = bleedRE.exec(baseName);
-	// If no dimension pairs are found, try to match common 'A' sizes
-	if (dimensions == null) {
+	if (dimensions == null) { // No dimension pairs found
 		dimensions = baseName.match(ISO216SubsetRE);
 		if (dimensions == null) cleanupAndExit();
 		switch (dimensions[0]) {
@@ -96,35 +96,51 @@ function main() {
 			case 'A6': newPgSize = { width: 105, height: 148 }; break;
 			case 'A7': newPgSize = { width:  74, height: 105 }; break;
 		}
-	} else if (isCombo) {
+	} else if (isCombo) { // Skip documents with multiple dimensions (000x000+000x000)
 		cleanupAndExit();
 	} else {
-		// Sanitize dimensions array
+		// Clean-up values
 		for (i = 0, n = dimensions.length; i < n; i++) {
-			dimensions[i] = dimensions[i].replace(/[_-]/g,  ''); // Remove underscores
-			dimensions[i] = dimensions[i].replace(/\s/g,    ''); // Remove whitespace
+			dimensions[i] = dimensions[i].replace(/[ _-]/g, ''); // Remove separators
+			dimensions[i] = dimensions[i].replace(/\s/g, '');    // Remove whitespace
 			dimensions[i] = dimensions[i].replace(/[cm]m/g, ''); // Remove cm/mm
-			dimensions[i] = dimensions[i].replace(/,/g,    '.'); // Replace commas with dots
+			dimensions[i] = dimensions[i].replace(/,/g, '.');    // Replace commas with dots
 		}
-		// Check number of pairs; if two pairs are found (page size & page margins), page size is the largest
-		// -- First pair
+
+		// Get page size and margins: if two pairs are found, the larger is the page size
 		firstPair = dimensions[0].split(/x/ig);
 		firstPair[0] = Number(firstPair[0]);
 		firstPair[1] = Number(firstPair[1]);
 		newPgSize = { width: firstPair[0], height: firstPair[1] };
-		// -- Second pair
-		if (dimensions.length === 2) {
+		newMgSize = { width: 0, height: 0 };
+		if (dimensions.length > 1) {
 			secondPair = dimensions[1].split(/x/ig);
 			secondPair[0] = Number(secondPair[0]);
 			secondPair[1] = Number(secondPair[1]);
-			if (newPgSize.width >= secondPair[0] && newPgSize.height >= secondPair[1]) {
+			if (firstPair[0] >= secondPair[0] && firstPair[1] >= secondPair[1]) {
 				newMgSize = { width: secondPair[0], height: secondPair[1] };
 			} else if (newPgSize.width <= secondPair[0] && newPgSize.height <= secondPair[1]) {
-				newMgSize = newPgSize;
 				newPgSize = { width: secondPair[0], height: secondPair[1] };
+				newMgSize = { width: firstPair[0], height: firstPair[1] };
 			} else {
-				alert('Dimensions are wrong.'); cleanupAndExit();
+				alert('Can\'t set page size, please check the values.'); cleanupAndExit();
 			}
+		}
+		// -- Page size: minimum 1 pt, maximum 15552 pt
+		if (UnitValue(newPgSize.width + newPgSize.height, 'mm').as('pt') < 2
+				|| UnitValue(newPgSize.width + newPgSize.height, 'mm').as('pt') > 15552 * 2) {
+			alert('Page size is out of bounds. The values must be between '
+				+ UnitValue('1 pt').as('mm').toFixed(2).replace(/\.?0+$/, '') + ' and '
+				+ UnitValue('15552 pt').as('mm').toFixed(2).replace(/\.?0+$/, '') + ' mm.');
+			cleanupAndExit();
+		}
+		// -- Margins: minimum 0 pt, maximum 10000 pt
+		if (UnitValue(newMgSize.width + newMgSize.height, 'mm').as('pt') > 10000 * 2) {
+			alert('Margins are out of bounds. The values must be between 0 and '
+				+ UnitValue('10000 pt').as('mm').toFixed(2).replace(/\.?0+$/, '') + ' mm.');
+			cleanupAndExit();
+		}
+		if (newMgSize.width + newMgSize.height > 0) {
 			newMargins = {
 				top:    (newPgSize.height - newMgSize.height) / 2,
 				left:   (newPgSize.width  - newMgSize.width)  / 2,
@@ -133,7 +149,8 @@ function main() {
 			};
 		}
 	}
-	// Resize pages
+
+	// Resize pages and set margins
 	for (i = 0, n = doc.pages.length; i < n; i++) {
 		page = doc.pages[i];
 		if (page.parent.pages.length > 1) { isSpread = true; continue; } // Skip multipage spreads
@@ -161,11 +178,15 @@ function main() {
 			markVisibleArea();
 		}
 	}
+
 	// Set document size and bleed
 	if (!isSpread) {
-		doc.documentPreferences.pageWidth  = newPgSize.width;
-		doc.documentPreferences.pageHeight = newPgSize.height;
+		try {
+			doc.documentPreferences.pageWidth  = newPgSize.width;
+			doc.documentPreferences.pageHeight = newPgSize.height;
+		} catch (e) {}
 	}
+	newBleed = bleedRE.exec(baseName);
 	if (newBleed) {
 		doc.documentPreferences.documentBleedUniformSize = true;
 		doc.documentPreferences.documentBleedTopOffset = newBleed[1];
@@ -184,6 +205,7 @@ function main() {
 		var isLargePage = ((page.bounds[3] - page.bounds[1]) > 666 || (page.bounds[2] - page.bounds[0]) > 666);
 		var mgs = page.marginPreferences;
 		if (mgs.top + mgs.left + mgs.bottom + mgs.right === 0) return;
+
 		// Make swatch
 		if (!doc.colors.itemByName(visFrame.swatchName).isValid) {
 			doc.colors.add({
@@ -193,6 +215,7 @@ function main() {
 				colorValue: visFrame.swatchValue
 			});
 		}
+
 		// Make layer
 		visLayer = doc.layers.item(visLayerName);
 		dieLayer = doc.layers.item(dieLayerName);
@@ -213,15 +236,16 @@ function main() {
 			if (dieLayer.isValid) visLayer.move(LocationOptions.before, dieLayer);
 			else visLayer.move(LocationOptions.AT_BEGINNING);
 		}
+
 		// Remove old frames
 		frames = page.rectangles.everyItem().getElements();
 		while ((oldFrame = frames.shift())) {
-			if (visAreaRE.test(oldFrame.label) || visAreaRE.test(oldFrame.name)
-				/* && oldFrame.itemLayer == visLayer */) {
+			if (visAreaRE.test(oldFrame.label) || visAreaRE.test(oldFrame.name)) {
 				oldFrame.locked = false;
 				oldFrame.remove();
 			}
 		}
+
 		// Add frames
 		frame = page.rectangles.add({
 			name: '<visible area>',
