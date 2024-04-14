@@ -1,6 +1,6 @@
 /**
- * Gets all page items with a given name from a given target and/or layer.
- * @param {string} [name='<*>'] - The name of the page item to search for. '<*>' matches all items.
+ * Gets all page items with a given name/label from a given target and/or layer.
+ * @param {string} [name='<*>'] - The name/label of the page item to search for. '<*>' matches all items.
  * @param {object} [target=app.activeDocument] - A container for page items. (Optional.)
  * @param {string} [layer] - Look only for objects from this layer. (Optional.)
  * @returns {pageItem[]|false} Returns an array of page items or `false` if nothing was found.
@@ -18,7 +18,7 @@ function getPageItems(name, target, layer) {
 	if (Object.prototype.hasOwnProperty.call(target, 'allPageItems')) {
 		items = target.allPageItems;
 		while ((item = items.shift())) {
-			if (name !== '<*>' && item.name !== name) continue;
+			if (name !== '<*>' && item.name !== name && item.label !== name) continue;
 			if (layer !== undefined) if (!layer || item.itemLayer.name !== layer.name) continue;
 			result.push(item);
 		}
@@ -28,8 +28,8 @@ function getPageItems(name, target, layer) {
 }
 
 /**
- * Gets all text frames with a given name from a given target and/or layer.
- * @param {string} [name='<*>'] - The name of the text frame to search for. '<*>' matches all items.
+ * Gets all text frames with a given name/label from a given target and/or layer.
+ * @param {string} [name='<*>'] - The name/label of the text frame to search for. '<*>' matches all items.
  * @param {object} [target=app.activeDocument] - A container for text frames. (Optional.)
  * @param {string} [layer] - Look only for objects from this layer. (Optional.)
  * @returns {textFrame[]|false} Returns an array of text frames or `false` if nothing was found.
@@ -47,7 +47,7 @@ function getTextFrames(name, target, layer) {
 	if (Object.prototype.hasOwnProperty.call(target, 'textFrames')) {
 		items = target.textFrames.everyItem().getElements();
 		while ((item = items.shift())) {
-			if (name !== '<*>' && item.name !== name) continue;
+			if (name !== '<*>' && item.name !== name && item.label !== name) continue;
 			if (layer !== undefined) if (!layer || item.itemLayer.name !== layer.name) continue;
 			result.push(item);
 		}
