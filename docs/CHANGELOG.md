@@ -155,6 +155,8 @@
   **export/MarkSafetyArea:** Added a script to mark the _safety area_ of a page
 - `04/13` [`fix`](https://github.com/pchiorean/Indentz/commit/063af9356010d70aa054432ab7dcd32ec773e9fe)
   **layout/PageSizeFromFilename:** Added space to dimension pairs separators ('filename 000x000_000x000' are now recognized); added some checks for page size/margin values
+- `04/14` [`upd`](https://github.com/pchiorean/Indentz/commit/bf4a58a2ed15572a7b78712028f3088fa44173d9)
+  **lib/getPageItems:** Also match items by label
 
 ##### Queued
 
