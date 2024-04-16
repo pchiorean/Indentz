@@ -157,6 +157,8 @@
   **layout/PageSizeFromFilename:** Added space to dimension pairs separators ('filename 000x000_000x000' are now recognized); added some checks for page size/margin values
 - `04/14` [`upd`](https://github.com/pchiorean/Indentz/commit/bf4a58a2ed15572a7b78712028f3088fa44173d9)
   **lib/getPageItems:** Also match items by label
+- `04/16` [`upd`](https://github.com/pchiorean/Indentz/commit/490bc72f6fc6268630e538e98a17967fda15303a)
+  **lib/addGuide:** Relaxed guides view threshold to 100%
 
 ##### Queued
 
