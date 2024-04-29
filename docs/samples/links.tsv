@@ -1,7 +1,7 @@
 Relink to                   	Links
 /absolute/path/to/img1.psd  	img1_lowres.jpg, img1-rgb.*
 img2.psd                    	img2.*
-@includepath reference/path
+@includepath base/path
 img3.psd
 subfolder/img4.psd
 
@@ -9,7 +9,7 @@ subfolder/img4.psd
 # - An absolute path of the form `/absolute/path/to/img1.psd`
 # - A relative path which is:
 #   - relative (by default) to the document `Links` folder
-#   - relative to `reference/path/` defined by a previous `@includepath` directive
+#   - relative to `base/path/` defined by a previous `@includepath` directive
 #     (`img3.psd` and `subfolder/img4.psd`)
 # <Links>: A list of file names separated by commas, that if present in the document, will be
 # replaced with the link from the first column; it's case insensitive and can take simple
