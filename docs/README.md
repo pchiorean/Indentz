@@ -10,19 +10,19 @@ Most scripts require at least one open document, and some require at least one o
 
 <span id="tsv">**Data files:**</span> Several scripts get their input from external TSV files, first looking for a _local_ one (in the current folder or the parent folder of the active document), then a _default_ one (on the desktop, next to the running script, or in the **Indentz** root). They also match local files starting with `_`, which take precedence.
 
-These TSV data files have several non-standard features that will confuse Excel et al.:
+These TSV data files can have several non-standard features that will confuse Excel et al.:
 
 - Blank lines are ignored; everything after a `#` is ignored (comments);
 - The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) when creating/editing TSVs);
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 - A line may also be a directive:
-  - **`@includepath`** `reference/path/` – sets a reference path for subsequent **`@include`** directives with relative paths; it may be absolute or relative (if relative, it's always to the data file folder);
-  - **`@include`** `path/to/another.tsv` – includes another TSV file at this position; the path may be absolute or relative (if relative and a `reference/path/` was not already defined, it also defaults to the data file folder);
-  - **`@defaults`** – includes the default data file.
+  - **`@includepath`** `base/path/` – sets a base path for subsequent **`@include`** directives with relative paths; the path may be absolute or relative (if relative, it's always to the data file folder);
+  - **`@include`** `path/to/another.tsv` – includes another TSV file at this position; the path may be absolute or relative (if relative and a `base/path/` was not already defined, it also defaults to the data file folder);
+  - **`@defaults`** – includes the default data file (see **Data files** above).
 
-**Visible area:** You will come across the term _visible area_ several times. This is a stroked frame that I use to mark the visible part of a layout for the client, and several scripts take it into account for certain actions. It can be created manually (just rename it **\<visible area\>**), or can be automatically generated from the document name (or page margins); more details below.
+**Visible area** or **Safety area:** These are frames that I use to visually mark the visible part of a layout or its safety/type area; several scripts take them into account for some actions. The frames can be created manually (named **\<visible area\>** or **\<safety area\>**), or can be automatically generated from the document name or page margins (more details below). The **Export** section contains scripts that can show or hide these frames.
 
-**Libs:** Many scripts use dynamically linked functions from **`lib/`**, which means that the folder structure should be preserved after downloading the repository. If you download the [latest release](https://github.com/pchiorean/Indentz/releases), which is statically linked, you can use any script stand-alone[^1].
+**Libs:** Many scripts use dynamically linked functions from **`lib/`**, which means that the folder structure should be preserved after downloading the repository. If you download [releases](https://github.com/pchiorean/Indentz/releases), which are statically linked, you can use any script stand-alone[^1].
 
 ## The scripts
 
@@ -31,9 +31,9 @@ These TSV data files have several non-standard features that will confuse Excel 
 <small>_**Defaults and cleanup.**_</small>
 
 #### **`DefaultPrefs.jsx`**
-Sets some preferences for the active document. You should customize them to your workflow by editing the script.
+Sets some preferences for the active document. You should customize them to your workflow by editing the script (unfortunately the preferences are scattered in so many places that it's difficult to guide you).
 
-_Note:_ Many scripts in this collection assume these settings as defaults because they suit my environment – the scripts are rather minimalist, without sophisticated error-catching; this means that it is possible, for example, to try to scale a locked object (or guide) and the script will fail (see **Prevent Selection of Locked Objects**).
+_Note:_ Many scripts in this collection assume these settings as defaults because they suit my environment – e.g., is possible to try to scale a locked object (or guide) and the script will fail (see **Prevent Selection of Locked Objects**).
 
 <details><summary><strong>Click here for details</strong></summary>
 
@@ -280,7 +280,7 @@ It works with file names structured like this:
 | **Document2\_1400x400\_700x137mm\.indd**        | 1400×400   | 700×137      | –     |
 | **Document3\_597x517\_577x500.5\_3mm V4\.indd** | 597×517    | 577×500.5    | 3     |
 
-_Note:_ All dimensions are in millimeters.
+_Note:_ Dimensions are always in millimeters.
 
 _Suggested shortcut:_ `F3`
 
@@ -375,7 +375,7 @@ _Suggested shortcut:_ `⌃Num0`
 #### **`FitTo*.jsx`**
 These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed, or _visible area_).
 
-**Example:** Running **`FitToPageBleed.jsx`** with the following frames selected will extend the yellow one and shrink the red frame to the page bleed:
+**Example:** Running **`FitToPageBleed.jsx`** with the following frames selected will extend the yellow one and will shrink the red one to the page bleed:
 
 ![Example](img/fit.png)
 
@@ -419,7 +419,7 @@ It's designed to be run repeatedly. Each run increases the level with one step (
 | ![Vertical Justification Center](img/verticaljustification-C.png) | ![center-left](img/textautosize-CL.png) | ![center](img/textautosize-C.png) | ![center-right](img/textautosize-CR.png) |
 | ![Vertical Justification Bottom](img/verticaljustification-B.png) | ![bottom-left](img/textautosize-BL.png) | ![bottom-center](img/textautosize-BC.png) | ![bottom-right](img/textautosize-BR.png) |
 
-_Tip:_ A second run will preserve the current auto-sizing if you only changed the alignment.
+_Tip:_ A second run will preserve the current auto-sizing if you only change the alignment.
 
 _Suggested shortcut:_ `F6`
 
@@ -430,7 +430,7 @@ _Suggested shortcut:_ `F6`
 <small>_**Resize selected objects.**_</small>
 
 #### **`ScaleTo*.jsx`**
-Scale the selected objects to the target area specified in the script name (page size, page margins or spread bleed). All objects are scaled together, as a group.
+Scale the selected objects to the target area specified in the script name (page size, page margins or spread bleed). Objects are scaled together, as a group.
 
 **`*H.jsx`** and **`*W.jsx`** variants scale to the height or width of their target.
 
@@ -478,16 +478,14 @@ Combines the open documents, sorted alphabetically.
 #### **`SpreadsToFiles.jsx`**
 Saves each spread of the active document to a separate file.
 
-If the document name ends with a _separator_ (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`**, **`Document_B.indd`** and **`Document_C.indd`**. If a sequence is not autodetected, the script will prompt the user for one.
+If the document name ends with a _separator_ (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`**, **`Document_B.indd`** and **`Document_C.indd`**. If a sequence is not autodetected, the script will prompt you for one.
 
-_Tip:_ By default the index will be appended at the end, but you can use `#` in the document name to place the index at that particular position.
+_Tip:_ By default the index will be appended at the end, but you can use a `#` in the document name to place the index at that particular position.
 
 ---
 
 #### **`LayersToSpreads.jsx`**
 Moves all layers of the active document to separate spreads (the document must have a single spread).
-
-_Tip:_ You may use **`SpreadsToFiles.jsx`** to split the result into separate documents.
 
 ---
 
@@ -549,7 +547,7 @@ Creates a frame around the page margins that visually marks the _visible area_ o
 ---
 
 #### **`ShowDNPLayers.jsx`** / **`HideDNPLayers.jsx`**
-Shows/hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers:
+Shows or hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers:
 
 - **covered area\***
 - **visible area, rahmen, sicht\*, \*vi\?ib\***
@@ -612,7 +610,7 @@ _Suggested shortcut:_ `Num*`
 ---
 
 #### **`ClipUndo.jsx`**
-Releases one or several objects from their _clipping frames_ (see above). If nothing is selected, it will release all clipped objects on the current spread.
+Releases one or several objects from their _clipping frames_ (see above). If nothing is selected, it will release all clipped objects from the current spread.
 
 _Suggested shortcut:_ `⌃Num*`
 
@@ -733,7 +731,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2024 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: April 9, 2024</small>
+<small>Last updated: April 29, 2024</small>
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use daily, so it's kind of tested, but… beware. ;)
 
