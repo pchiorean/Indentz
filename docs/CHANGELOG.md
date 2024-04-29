@@ -159,13 +159,19 @@
   **lib/getPageItems:** Also match items by label
 - `04/16` [`upd`](https://github.com/pchiorean/Indentz/commit/490bc72f6fc6268630e538e98a17967fda15303a)
   **lib/addGuide:** Relaxed guides view threshold to 100%
+- `04/29` [`upd`](https://github.com/pchiorean/Indentz/commit/017227456b12abf809778a1963b55535fcd30b8b)
+  **cleanup/DocCleanup:** Simplified logic that sets the pasteboard size
+- `04/29` [`upd`](https://github.com/pchiorean/Indentz/commit/f0d895814ae386dc6893f1f84c4c1b1b11b6eb8e)
+  **lib/fitTo:** Ignore items on the guides layer
+- `04/29` [`fix`](https://github.com/pchiorean/Indentz/commit/7349c36f79f33a501ffbf37a893b3a6ef2edb9eb)
+  **layout/PageMarginsFromScriptName:** Don't add a HW guide when HW is not defined
 
 ##### Queued
 
-- [ ] `brk` Use *safety area* for **Grid\***
-- [ ] `fix` **:** A document can have a name but it's not saved yet (new UI)
+- [ ] `fix` **layout/PageSizeFromFilename:** A document can have a name when it's not saved (new UI)
 - [ ] `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - [ ] `fix` **fit/TextAutoSize:** Check `baselineShift`
+- [ ] `brk` `?` Use *safety area* in **PageMarginsFromScriptName**
 - [ ] `upd` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
 - [ ] `upd` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
 - [ ] `upd` **export/QuickExport:** Add a checkbox for `0e04f28`
