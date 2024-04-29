@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 24.2.10
+	Document cleanup 24.4.29
 	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
@@ -159,25 +159,15 @@ doc.textPreferences.showInvisibles = false;
 
 progressBar.update();
 app.doScript(function () {
-	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
-	var pbMargins = { w: 50, h: 50 };
+	var pbMargins = { w: 50, h: 10 };
 	var spread = {
 		w: doc.spreads[0].pages.lastItem().bounds[3] - doc.spreads[0].pages.firstItem().bounds[1],
 		h: doc.spreads[0].pages.lastItem().bounds[2] - doc.spreads[0].pages.firstItem().bounds[0]
 	};
-	spread.aspect = spread.w / spread.h;
-	// Fix large sizes
-	var mult1K = {
-		w: Math.min(Math.max(Math.floor((spread.w / 1000) % 1000), 1.0), 2),
-		h: Math.min(Math.max(Math.floor((spread.h / 1000) % 1000), 0.5), 1)
-	};
-	pbMargins.w *= (spread.w >= 1000 ? mult1K.w * 5 : 3);
-	pbMargins.h *= (spread.h >= 1000 ? 1 : mult1K.h);
-	// Fix leaderboards
-	if (spread.aspect > 4.95) {
-		pbMargins.w /= 3;
-		pbMargins.h /= 5;
-	} /* else if (spread.aspect > 4.95) { pbMargins.h /= 2.5; } */
+	var isLarge = (spread.w >= UnitValue('1000 mm') || spread.h >= UnitValue('1000 mm'));
+	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
+	pbMargins.w *= (isLarge ? 5 : 1);
+	pbMargins.h *= (isLarge ? 5 : 1);
 	doc.pasteboardPreferences.pasteboardMargins = [ pbMargins.w, pbMargins.h ];
 },
 ScriptLanguage.JAVASCRIPT, undefined,
