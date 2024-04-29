@@ -1,6 +1,6 @@
 /*
-	FitTo 23.12.13
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	FitTo 24.4.29
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Reframes the given items to the page/spread's size/margins/visible area/bleed: the edges of items or
 	clipping frames that cross the target will be confined; ones that touch it or are very close (1% snap zone)
@@ -145,6 +145,7 @@ function fitTo(items, scope, target, enforced) {
 		// -- Skip special items
 		if (!enforced && obj.name === '<visible area>') return obj;
 		if (!enforced && (obj.itemLayer.name === '+dielines' || obj.itemLayer.name === 'dielines')) return obj;
+		if (!enforced && (obj.itemLayer.name === '.guides' || obj.itemLayer.name === 'guides')) return obj;
 
 		// -- Enforced fit simply reframes the objects, except for orthogonal lines, which will be fitted later
 		if (enforced && obj.constructor.name !== 'GraphicLine') { obj.geometricBounds = T.target; return obj; }
