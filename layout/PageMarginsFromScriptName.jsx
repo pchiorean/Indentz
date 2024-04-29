@@ -1,5 +1,5 @@
 /*
-	Page margins from script name 24.3.1
+	Page margins from script name 24.4.29
 	(c) 2022-2024 Paul Chiorean <jpeg@basement.ro>
 
 	By default it sets the page margins to 5% of the visible/page area for
@@ -76,6 +76,6 @@ function grid() {
 		// Common guides
 		addGuide(page, guidesLayer, 'h', tgBounds[0] + tgSize.height * (1 - HW_PCT / 100) / 2, 'middle', 'x');
 		addGuide(page, guidesLayer, 'v', tgBounds[1] + tgSize.width / 2, 'middle', 'x');
-		addGuide(page, guidesLayer, 'h', tgBounds[0] + tgSize.height * (1 - HW_PCT / 100), 'hw', 's');
+		if (HW_PCT > 0) addGuide(page, guidesLayer, 'h', tgBounds[0] + tgSize.height * (1 - HW_PCT / 100), 'hw', 's');
 	}
 }
