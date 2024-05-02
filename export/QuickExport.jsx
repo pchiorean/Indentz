@@ -1,6 +1,6 @@
 /*
-	Quick export 23.12.12
-	(c) 2021-2023 Paul Chiorean <jpeg@basement.ro>
+	Quick export 24.5.3
+	(c) 2021-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
 
@@ -307,6 +307,7 @@ function QuickExport() {
 						|| (layer = doc.layers.itemByName('diecut')).isValid
 						|| (layer = doc.layers.itemByName('die cut')).isValid)
 						&& layer.visible
+						&& (layer.allPageItems.length > 0)
 						&& layer.printable
 					) suffix += '+diecut';
 
@@ -314,7 +315,7 @@ function QuickExport() {
 						layer = doc.layers[i];
 						if (!layer.visible || !layer.printable) continue;
 						if (/^(dielines|die ?cut)$/g.test(layer.name)) continue;
-						if (/^\+/g.test(layer.name)) suffix += layer.name;
+						if (/^\+/g.test(layer.name) && (layer.allPageItems.length > 0)) suffix += layer.name;
 					}
 				}
 
