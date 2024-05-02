@@ -166,6 +166,15 @@
 - `04/29` [`fix`](https://github.com/pchiorean/Indentz/commit/7349c36f79f33a501ffbf37a893b3a6ef2edb9eb)
   **layout/PageMarginsFromScriptName:** Don't add a HW guide when HW is not defined
 
+- `05/02` [`fix`](https://github.com/pchiorean/Indentz/commit/e3807dff227133b184dae3b49c73edf56fcdb5d9)
+  **misc/Clip, ClipUndo:** Ignore empty clipping frames
+- `05/03` [`fix`](https://github.com/pchiorean/Indentz/commit/a5c81828dd9455242c4869ec14818ccfdecc68fd)
+  **export/QuickExport:** Check if '+' layers are populated
+- `05/03` [`fix`](https://github.com/pchiorean/Indentz/commit/10ef1174d36e9218e7a9ce4b995f813ca1af0c4e)
+  **export/QuickExport:** Fixed parent page detection
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/57601da8ef021c1e6efd0528e3060b055c81bbef)
+  **export/QuickExport:** Improved report for overflowed text
+
 ##### Queued
 
 - [ ] `fix` **layout/PageSizeFromFilename:** A document can have a name when it's not saved (new UI)
@@ -177,6 +186,7 @@
 - [ ] `upd` **export/QuickExport:** Add a checkbox for `0e04f28`
 - [ ] `upd` **view/ZoomToSpreads:** Apply the smallest zoom value to all windows
 - [ ] `upd` Implement `try/catch/finally` when appropriate
+- [ ] `upd` `?` `while/do` –> `for...of` (see [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of))
 - [ ] `new` **export/QuickExport:** Add JPG, PNG & INDD export profiles
 - [ ] `new` **export/QuickExport:** Add package option
 
