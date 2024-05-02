@@ -1,6 +1,6 @@
 /*
-	Undo clip 23.11.25
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Undo clip 24.5.2
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Releases selected objects from their clipping frames.
 
@@ -50,8 +50,11 @@ function main() {
 	app.clipboardPreferences.pasteRemembersLayers = old.PRL;
 
 	function undoClip(container) {
+		var payload;
 		var objects = [];
-		var payload = container.pageItems[0].duplicate();
+
+		if (container.pageItems.length === 0) return;
+		payload = container.pageItems[0].duplicate();
 		payload.sendToBack(container);
 		container.remove();
 

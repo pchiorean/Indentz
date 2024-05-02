@@ -1,6 +1,6 @@
 /*
-	Clip 23.11.25
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Clip 24.5.2
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Clips selected objects in a clipping frame (or releases them if already clipped).
 
@@ -79,8 +79,11 @@ function main(selection) {
 	cleanupAndExit();
 
 	function undoClip(container) {
+		var payload;
 		var objects = [];
-		var payload = container.pageItems[0].duplicate();
+
+		if (container.pageItems.length === 0) return;
+		payload = container.pageItems[0].duplicate();
 		payload.sendToBack(container);
 		container.remove();
 
