@@ -378,9 +378,15 @@ function QuickExport() {
 		}
 
 		function updateLinks() {
+			var hasParentPage;
 			var result = true;
 			for (var i = 0, n = doc.links.length; i < n; i++) {
-				if (!Object.prototype.hasOwnProperty.call(doc.links[i].parent, 'parentPage')) continue;
+				hasParentPage = (function (lnk) {
+					var ret = false;
+					try { ret = !!lnk.parent.parentPage.toSource(); } catch (e) {}
+					return ret;
+				}(doc.links[i]));
+				if (!hasParentPage) continue;
 				switch (doc.links[i].status) {
 					case LinkStatus.LINK_OUT_OF_DATE:
 						doc.links[i].update();
@@ -392,7 +398,7 @@ function QuickExport() {
 						"Link '"
 							+ doc.links[i].name
 							+ "' not found on page "
-							+ doc.links[i].parent.parent.parentPage.name
+							+ doc.links[i].parent.parentPage.name
 							+ '.'
 						, 1);
 				}
