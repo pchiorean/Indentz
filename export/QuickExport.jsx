@@ -370,7 +370,9 @@ function QuickExport() {
 					stat(status, decodeURI(doc.name),
 					'Text overflows on page '
 						+ frm.parentPage.name
-						+ '.'
+						+ ': \''
+						+ frm.contents.substr(0, 32).replace(/\r|\n/g, '\u00B6') + '...'
+						+ '\''
 					, 1);
 				}
 			}
