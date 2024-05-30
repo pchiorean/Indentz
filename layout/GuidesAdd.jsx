@@ -1,5 +1,5 @@
 /*
-	Add page guides 24.3.1
+	Add page guides 24.5.30
 	(c) 2021-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Adds guides on pages' edges and inner centers or selected objects' edges.
@@ -22,7 +22,9 @@ function main() {
 	var targetBounds = [];
 	var flgExit = false;
 	var guidesLayerName = '.guides';
+	var ADV = ScriptUI.environment.keyboardState.altKey;
 	var HW = 10 / 100;
+
 	app.scriptPreferences.measurementUnit = MeasurementUnits.POINTS;
 	doc.guidePreferences.guidesLocked = false;
 	doc.guidePreferences.guidesShown = true;
@@ -59,10 +61,10 @@ function main() {
 		}
 
 		// Add guides
-		addGuide(page.parent, guidesLayer, 'h', targetBounds[0]);
-		addGuide(page.parent, guidesLayer, 'v', targetBounds[1]);
-		addGuide(page.parent, guidesLayer, 'h', targetBounds[2]);
-		addGuide(page.parent, guidesLayer, 'v', targetBounds[3]);
+		addGuide((ADV ? page.parent : page), guidesLayer, 'h', targetBounds[0]);
+		addGuide((ADV ? page.parent : page), guidesLayer, 'v', targetBounds[1]);
+		addGuide((ADV ? page.parent : page), guidesLayer, 'h', targetBounds[2]);
+		addGuide((ADV ? page.parent : page), guidesLayer, 'v', targetBounds[3]);
 	} else { // Page guides
 		// If old guides exist, remove them and exit (undo mode)
 		while ((guide = guides.shift()))
@@ -75,13 +77,13 @@ function main() {
 			margins = mgBounds(page);
 			pageSize = { width: page.bounds[3] - page.bounds[1], height: page.bounds[2] - page.bounds[0] };
 			innerSize = { width: margins[3] - margins[1], height: margins[2] - margins[0] };
-			addGuide(page, guidesLayer, 'h', page.bounds[0], 'top', 'g');
-			addGuide(page, guidesLayer, 'v', page.bounds[1], 'left', 'g');
-			addGuide(page, guidesLayer, 'h', page.bounds[2], 'bottom', 'g');
-			addGuide(page, guidesLayer, 'v', page.bounds[3], 'right', 'g');
-			addGuide(page, guidesLayer, 'v', margins[1] + innerSize.width / 2, 'middle', 'x');
-			addGuide(page, guidesLayer, 'h', margins[0] + innerSize.height * (1 - HW) / 2, 'middle', 'x');
-			addGuide(page, guidesLayer, 'h', (margins[2] - innerSize.height * HW), 'HW', 's');
+			addGuide((ADV ? page.parent : page), guidesLayer, 'h', page.bounds[0], 'top', 'g');
+			addGuide((ADV ? page.parent : page), guidesLayer, 'v', page.bounds[1], 'left', 'g');
+			addGuide((ADV ? page.parent : page), guidesLayer, 'h', page.bounds[2], 'bottom', 'g');
+			addGuide((ADV ? page.parent : page), guidesLayer, 'v', page.bounds[3], 'right', 'g');
+			addGuide((ADV ? page.parent : page), guidesLayer, 'v', margins[1] + innerSize.width / 2, 'middle', 'x');
+			addGuide((ADV ? page.parent : page), guidesLayer, 'h', margins[0] + innerSize.height * (1 - HW) / 2, 'middle', 'x');
+			addGuide((ADV ? page.parent : page), guidesLayer, 'h', (margins[2] - innerSize.height * HW), 'HW', 's');
 		}
 	}
 
