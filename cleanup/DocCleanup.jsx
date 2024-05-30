@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 24.4.29
+	Document cleanup 24.5.30
 	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
@@ -15,6 +15,7 @@ if (!(doc = app.activeDocument)) exit();
 
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 var progressBar = new ProgressBar('Cleaning document', 14);
+app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 
 progressBar.update();
 app.doScript(File(script.path + '/DefaultPrefs.jsx'),
@@ -127,6 +128,7 @@ app.doScript(function () {
 			&& item.fillColor.name === 'None'
 			&& item.strokeColor.name === 'None'
 			&& item.strokeWeight === 0
+			// Skip dielines
 			&& (item.itemLayer !== '+dielines' || item.itemLayer !== 'dielines')
 		) item.contentType = ContentType.GRAPHIC_TYPE;
 	}
@@ -138,7 +140,9 @@ progressBar.update();
 app.doScript(function () {
 	app.doScript(File(script.path + '/ResetLayers.jsx'), ScriptLanguage.JAVASCRIPT);
 	var layer;
-	if ((layer = doc.layers.itemByName('text & logos')).isValid) doc.activeLayer = layer;
+	// Set active layer
+	if ((layer = doc.layers.itemByName('copy')).isValid) doc.activeLayer = layer;
+	else if ((layer = doc.layers.itemByName('text & logos')).isValid) doc.activeLayer = layer;
 	else if ((layer = doc.layers.itemByName('artwork')).isValid) doc.activeLayer = layer;
 },
 ScriptLanguage.JAVASCRIPT, undefined,
@@ -165,7 +169,7 @@ app.doScript(function () {
 		h: doc.spreads[0].pages.lastItem().bounds[2] - doc.spreads[0].pages.firstItem().bounds[0]
 	};
 	var isLarge = (spread.w >= UnitValue('1000 mm') || spread.h >= UnitValue('1000 mm'));
-	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
+
 	pbMargins.w *= (isLarge ? 5 : 1);
 	pbMargins.h *= (isLarge ? 5 : 1);
 	doc.pasteboardPreferences.pasteboardMargins = [ pbMargins.w, pbMargins.h ];
