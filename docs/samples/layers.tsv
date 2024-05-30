@@ -2,7 +2,7 @@ Name          	Color      	Visible 	Printable 	Locked 	Order  	Variants
 
 # Do-not-print layers
 .guides       	Magenta    	yes     	no        	no     	top    	guides
-.grid         	Magenta    	no      	no        	no     	top    	abstände, grid, masuratori, measures, vermassung
+.grid         	Magenta    	no      	no        	no     	top    	abst?nd*, grid, masuratori, measures, vermassung
 .segmentation 	Grid Green 	yes     	yes       	yes    	above  	segmentation, split
 .fold         	Grid Green 	yes     	yes       	yes    	above  	fold, falz
 .safety area  	Grid Green 	yes     	yes       	yes    	above  	limit*area, safe*area, safe*margins
@@ -24,17 +24,22 @@ placement     	Gray       	yes     	yes       	no     	above
 cutout        	Gray       	yes     	yes       	yes    	above
 
 # Artwork
-HW            	Light Gray 	yes     	yes       	yes    	above  	*hw*, todesbalken, warnhinweis, wh
+HW            	Light Gray 	yes     	yes       	yes    	above  	health warning, *hw*, todesbalken, warnhinweis, wh
 on top        	Charcoal   	yes     	yes       	yes    	above  	corners, ecken
 disruptors    	Gold       	yes     	yes       	no     	above  	offer, preis, price*, störer
-text & logos  	Green      	yes     	yes       	no     	above  	copy, dots, headline*, hl, logo*, text*, txt, typ?, *signet
+logos         	Teal       	yes     	yes       	no     	above  	logo*
+EN            	Green      	yes     	yes       	no     	above
+DE            	Green      	yes     	yes       	no     	above
+FR            	Green      	yes     	yes       	no     	above
+IT            	Green      	yes     	yes       	no     	above
+copy          	Green      	yes     	yes       	no     	above  	headline*, hl, text*logos, text?, txt, typ?
 terms         	Gray       	yes     	yes       	no     	above  	disclaimer*, legal*, validity
 codes         	Grid Green 	yes     	yes       	no     	above  	bar*code*, code*, ean*, qr*
 labels above  	Gold       	yes     	yes       	no     	above  	labels, labels over, new
 products      	Blue       	yes     	yes       	no     	above  	device*, pack*, päckli, product*, tin*
 labels below  	Gold       	yes     	yes       	no     	above  	labels under
 artwork       	Light Blue 	yes     	yes       	no     	above  	aw, bullseye, design, element?, images, inner frame dot, layout*, RZ
-on bottom     	Charcoal   	yes     	yes       	yes    	below  	brand arrow, bühne, farbebene, freisteller, shard*, velo_arrow
+on bottom     	Charcoal   	yes     	yes       	yes    	below  	brand arrow, buehne, bühne, farbebene, freisteller, shard*, velo_arrow
 bg            	Red        	yes     	yes       	yes    	below  	back, *background*, bgg, fond, hg, hintergrund*
 
 # <Name>: layer name
