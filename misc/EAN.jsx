@@ -1,6 +1,6 @@
 /*
-	Generate EAN Codes 23.12.14
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Generate EAN Codes 24.5.30
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Inserts EAN codes into the selected frames or in a new document.
 
@@ -41,7 +41,7 @@ function main() {
 	var barcodes = [];
 	var selection = [];
 	var codeLayerName = 'codes';
-	var txtLayerName = 'text & logos';
+	var txtLayerName = 'copy';
 	if (app.layoutWindows.length > 0) selection = app.selection;
 	rows = Math.min(Math.max(6, selection.length), 20); // Keep list rows between 6 and 20
 
