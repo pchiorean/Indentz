@@ -167,17 +167,23 @@
   **layout/PageMarginsFromScriptName:** Don't add a HW guide when HW is not defined
 
 - `05/02` [`fix`](https://github.com/pchiorean/Indentz/commit/e3807dff227133b184dae3b49c73edf56fcdb5d9)
-  **misc/Clip, ClipUndo:** Ignore empty clipping frames
+  **misc/Clip, ClipUndo:** Empty clipping frames are now ignored
 - `05/03` [`fix`](https://github.com/pchiorean/Indentz/commit/a5c81828dd9455242c4869ec14818ccfdecc68fd)
-  **export/QuickExport:** Check if '+' layers are populated
+  **export/QuickExport:** Empty '+xxxxxxx' layers are now ignored
 - `05/03` [`fix`](https://github.com/pchiorean/Indentz/commit/10ef1174d36e9218e7a9ce4b995f813ca1af0c4e)
   **export/QuickExport:** Fixed parent page detection
 - `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/57601da8ef021c1e6efd0528e3060b055c81bbef)
   **export/QuickExport:** Improved report for overflowed text
+- `05/30` [`upd`](https://github.com/pchiorean/Indentz/commit/a96a77f127c02781bfe25383a74c5a657583057a)
+  **misc/EAN:** Renamed 'text & logos' layer to 'copy'
+- `05/30` [`upd`](https://github.com/pchiorean/Indentz/commit/616bbec1bba53007e15608eb2962606e58e9f99f)
+  **layout/GuidesAdd:** Added an option to use spread guides
+- `05/30` [`fix`](https://github.com/pchiorean/Indentz/commit/5cad91bbc4559786a56f6950babdd6c28c859ef6)
+  **cleanup/DocCleanup:** Fixed setting pasteboard size
 
 ##### Queued
 
-- [ ] `fix` **layout/PageSizeFromFilename:** A document can have a name when it's not saved (new UI)
+- [ ] `fix` `?` **layout/PageSizeFromFilename:** A document can have a name even if not saved (in the new UI)
 - [ ] `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - [ ] `fix` **fit/TextAutoSize:** Check `baselineShift`
 - [ ] `brk` `?` Use *safety area* in **PageMarginsFromScriptName**
@@ -189,10 +195,12 @@
 - [ ] `upd` `?` `while/do` –> `for...of` (see [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of))
 - [ ] `new` **export/QuickExport:** Add JPG, PNG & INDD export profiles
 - [ ] `new` **export/QuickExport:** Add package option
+- [ ] `new` **layout/Grid\* and HW:** Get `HW_PCT` from page guide or object tag (`hw10`, `hw15`, etc.); fallback to `10`
+- [ ] `doc` **cleanup/BreakLinkToStyles:** Add to changelog
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
-#### [23.7.18](https://github.com/pchiorean/Indentz/releases/tag/23.7.18)
+### [23.7.18](https://github.com/pchiorean/Indentz/releases/tag/23.7.18)
 
 ##### New features
 
@@ -302,7 +310,7 @@
 - `06/30` [`ref`](https://github.com/pchiorean/Indentz/commit/70a977ea8c011194c9078231965eba09889be620)
   **export/QuickExport:** Removed main panel label
 
-#### [23.2.1](https://github.com/pchiorean/Indentz/releases/tag/23.2.1)
+### [23.2.1](https://github.com/pchiorean/Indentz/releases/tag/23.2.1)
 
 ##### New features
 
@@ -388,7 +396,7 @@
 - `01/29` [`ref`](https://github.com/pchiorean/Indentz/commit/a6049074c5ece2b8115eeaaae9a0a734b456b4cf)
   **lib/fitTo:** Small improvements to the code legibility
 
-#### [22.11.10](https://github.com/pchiorean/Indentz/releases/tag/22.11.10)
+### [22.11.10](https://github.com/pchiorean/Indentz/releases/tag/22.11.10)
 
 ##### New features
 
@@ -461,7 +469,7 @@
 - `11/09` [`ref`](https://github.com/pchiorean/Indentz/commit/f1940a37cdf5cf5588e53fa57afe70f3bf52f2fc)
   **scale/ScaleTo...:** Minor changes to scaling function
 
-#### [22.9.25](https://github.com/pchiorean/Indentz/releases/tag/22.9.25)
+### [22.9.25](https://github.com/pchiorean/Indentz/releases/tag/22.9.25)
 
 ##### New features
 
@@ -524,7 +532,7 @@
 - [`doc`](https://github.com/pchiorean/Indentz/commit/c6559f2827361c20aa3f172a0743a9e8549f73ea)
   **lib/parseDataFile and related:** Changed 'prefixed' to 'starting'
 
-#### [22.8.22](https://github.com/pchiorean/Indentz/releases/tag/22.8.22)
+### [22.8.22](https://github.com/pchiorean/Indentz/releases/tag/22.8.22)
 
 ##### New features
 
@@ -597,7 +605,7 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/00415e83ac739a5c3c0328358f0d38a6af1185c0)
   Added an `#includepath` directive with a list of fallback folders
 
-#### [22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
+### [22.6.11](https://github.com/pchiorean/Indentz/releases/tag/22.6.11)
 
 ##### New features
 
@@ -638,7 +646,7 @@
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2d43649c6fcb012b8ab4ed28901059245415829a)
   **lib/Report:** Increased maximum width
 
-#### [22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
+### [22.4.11](https://github.com/pchiorean/Indentz/releases/tag/22.4.11)
 
 ##### New features
 
@@ -689,7 +697,7 @@
 - [`doc`](https://github.com/pchiorean/Indentz/commit/14f7688731f5ba609c84530fee67600a55248e0b)
   **lib/ReplaceLink, ReplaceLinks:** Clarified/removed a mention about local links
 
-#### [22.3.11](https://github.com/pchiorean/Indentz/releases/tag/22.3.11)
+### [22.3.11](https://github.com/pchiorean/Indentz/releases/tag/22.3.11)
 
 ##### New features
 
@@ -732,7 +740,7 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/5fbd56abfeb7a46fd5e8bec0bb2e48d419573a90)
   Renamed **lib/isIn** to **isInArray**
 
-#### [22.2.9](https://github.com/pchiorean/Indentz/releases/tag/22.2.9)
+### [22.2.9](https://github.com/pchiorean/Indentz/releases/tag/22.2.9)
 
 ##### New features
 
@@ -899,7 +907,7 @@
 - [`doc`](https://github.com/pchiorean/Indentz/commit/c8dd950b8167d4a30148c866da25e91694f9416c)
   Added a changelog
 
-#### [21.9.20](https://github.com/pchiorean/Indentz/tree/723c2fe6c71c9d5a4586f2b7685628fe0d788258)
+### [21.9.20](https://github.com/pchiorean/Indentz/tree/723c2fe6c71c9d5a4586f2b7685628fe0d788258)
 
 - [`ref`](https://github.com/pchiorean/Indentz/commit/51bb19d2d7074181c5acacc8dd52931bfd3263c5)
   [`upd`](https://github.com/pchiorean/Indentz/commit/8982a3fde7956ac83372ba140a773a05dff929e2)
