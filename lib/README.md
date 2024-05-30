@@ -371,8 +371,8 @@ These data files are regular TSVs with several non-standard features:
 - The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) when creating/editing TSVs);
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 - A line may also be a directive:
-  - **`@includepath`** `reference/path/` – sets a reference path for subsequent **`@include`** directives with relative paths; it may be absolute or relative (if relative, it's always to the data file folder);
-  - **`@include`** `path/to/another.tsv` – includes another TSV file at this position; the path may be absolute or relative (if relative and a `reference/path/` was not already defined, it also defaults to the data file folder);
+  - **`@includepath`** `base/path/` – sets a base path for subsequent **`@include`** directives with relative paths; it may be absolute or relative (if relative, it's always to the data file folder);
+  - **`@include`** `path/to/another.tsv` – includes another TSV file at this position; the path may be absolute or relative (if relative and a `base/path/` was not already defined, it also defaults to the data file folder);
   - **`@defaults`** – includes the global data file.
 
 **Returns:**
