@@ -1,8 +1,8 @@
 /*
-	Dump layers 24.2.10
+	Dump layers 24.6.16
 	(c) 2022-2024 Paul Chiorean <jpeg@basement.ro>
 
-	Saves document's layers to a TSV file compatible with `DefaultLayers.jsx`:
+	Saves document's layers to a TSV file compatible with `AddLayers.jsx`:
 
 	Name       | Color   | Visible | Printable | Locked | Order | Variants
 	dielines   | Magenta | yes     | yes       | yes    |
@@ -15,8 +15,8 @@
 	<Visible>: `yes` or `no`;
 	<Printable>: `yes` or `no`;
 	<Locked>: `yes` or `no`;
-	<Order> and <Variants>: empty (see `DefaultLayers.jsx` for more info).
-	<Variants>: empty (see `DefaultLayers.jsx` for more info).
+	<Order> and <Variants>: empty (see `AddLayers.jsx` for more info).
+	<Variants>: empty (see `AddLayers.jsx` for more info).
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

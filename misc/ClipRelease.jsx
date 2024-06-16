@@ -1,5 +1,5 @@
 /*
-	Undo clip 24.5.2
+	Release clip 24.6.16
 	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Releases selected objects from their clipping frames.

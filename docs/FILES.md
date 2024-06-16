@@ -13,18 +13,18 @@ Name                           |       Fn | Description
 `ResetAlignTo`                 |  `⌃Num0` | Resets the 'Align To' setting to default
 `ToggleAlignTo`                |   `Num0` | Toggles the 'Align To' setting
 **Cleanup**                    |          | **Defaults and cleanup**
-`BreakLinkToStyles`            |          | Unnaplies paragraph/character/object styles from all or selected objects
-`DefaultLayers`                |          | Adds/merges layers from a list
+`AddLayers`                    |          | Adds/merges layers from a list
+`AddSwatches`                  |          | Adds/merges swatches from a list
 `DefaultPrefs`                 |          | Sets default preferences
-`DefaultSwatches`              |          | Adds swatches from a list
 `DocCleanup`                   |     `F2` | Changes some settings, cleans up swatches/layers/pages and other things
-`DumpLayers`                   |          | Saves document's layers to a TSV file compatible with `DefaultLayers`
+`DumpLayers`                   |          | Saves document's layers to a TSV file compatible with `AddLayers`
 `DumpLinks`                    |          | Saves document's links to a TSV file compatible with `ReplaceLinks`
-`DumpSwatches`                 |          | Saves document's swatches to a TSV file compatible with `DefaultSwatches`
+`DumpSwatches`                 |          | Saves document's swatches to a TSV file compatible with `AddSwatches`
 `RemoveScriptLabels`           |          | Removes all script labels from all or selected objects
+`RemoveStyles`                 |          | Removes paragraph/character/object styles from all or selected objects
 `ReplaceFonts`                 |          | Replaces fonts from a substitution list
 `ReplaceLinks`                 |    `⌥F8` | Replaces document links from a substitution list
-`ReplaceSnippets`              |    `⌥F6` | Replaces text snippets from a substitution list
+`ReplaceTextSnippets`          |    `⌥F6` | Replaces text snippets from a substitution list
 `ResetLayers`                  |          | Resets the visible/printable/locked state of document layers
 `SwatchesCleanup`              |    `⇧F2` | Converts RGB swatches to CMYK, renames them to 'C= M= Y= K=' format, deletes unused
 **Export**                     |          | **Document export and related**
@@ -35,9 +35,9 @@ Name                           |       Fn | Description
 `QuickExport`                  |          | Exports open .indd documents or a folder with several configurable PDF presets
 `ShowDNPLayers`                |          | Shows DO-NOT-PRINT layers
 **File**                       |          | **File management**
-`FilesToSpreads`               |          | Combines the open documents, sorted alphabetically
+`JoinDocs`                     |          | Combines the open documents, sorted alphabetically
 `LayersToSpreads`              |          | Moves layers of the active document to separate spreads
-`SpreadsToFiles`               |          | Saves the spreads of the active document in separate files
+`SplitDocBySpreads`            |          | Saves the spreads of the active document in separate files
 **Fit**                        |          | **Reframe selected objects**
 `FitToPage`                    |    `F11` | Reframes the selected objects to the page size
 `FitToPageBleed`               |   `⇧F11` | Reframes the selected objects to the page bleed
@@ -66,7 +66,7 @@ Name                           |       Fn | Description
 `PageSizeFromSelection`        |    `⇧F3` | Sets the page size to the selected objects bounds
 **Miscellaneous**              |          | **Scripts that do not fall into the other categories**
 `Clip`                         |   `Num*` | Clips selected objects in a clipping frame (or releases them if already clipped)
-`ClipUndo`                     |  `⌃Num*` | Releases selected objects from their clipping frames
+`ClipRelease`                  |  `⌃Num*` | Releases selected objects from their clipping frames
 `EAN`                          |    `⌥F9` | Inserts EAN codes into the selected frames or in a new document
 `LabelPage`                    |          | Adds a custom label on the current page's slug
 `LabelPageRatios`              |          | Adds a label with the page/visible area/margins' ratios on each page's slug
@@ -76,6 +76,7 @@ Name                           |       Fn | Description
 `ShowFonts`                    |          | Shows all fonts used in the current document
 `ShowProfiles`                 |          | Shows all color profiles available to a document
 `ShowProperties`               |     `F1` | Shows properties and methods of the selected object/active document/the application
+`SplitSpreadsByLayers`         |          | Splits or joins document spreads using special layers
 **Proxy**                      |          | **Easily control the reference point used for transformations**
 `SetRefPointToB`               |  `⌃Num2` | Sets 'Transform Reference Point' to bottom
 `SetRefPointToBL`              |  `⌃Num1` | Sets 'Transform Reference Point' to bottom-left

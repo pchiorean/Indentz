@@ -1,5 +1,5 @@
 /*
-	Default layers 24.2.10
+	Add/merge layers 24.6.16
 	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Adds/merges layers using a 7-column TSV file named `layers.tsv`:
@@ -59,7 +59,7 @@ if (!(doc = app.activeDocument)) exit();
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Default layers');
 
 function main() {
-	var title = 'Default layers';
+	var title = 'Add/merge layers';
 	var dataFileName = [ 'layers.tsv', 'layers.txt' ];
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: only errors, 1: + warnings, 2: + infos
 	var file, messages, oldActiveLayer, newLayer, tmpLayer, i, rec;

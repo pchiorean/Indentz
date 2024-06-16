@@ -1,8 +1,8 @@
 /*
-	Default swatches 24.2.10
+	Add swatches 24.6.16
 	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
-	Adds swatches using a 5-column TSV file named `swatches.tsv`:
+	Adds/merges swatches using a 5-column TSV file named `swatches.tsv`:
 
 	Name       | Color Model | Color Space | Values       | Variants
 	Rich Black | process     | cmyk        | 60 40 40 100 |
@@ -61,7 +61,7 @@ if (!(doc = app.activeDocument)) exit();
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Default swatches');
 
 function main() {
-	var title = 'Default swatches';
+	var title = 'Add/merge swatches';
 	var dataFileName = [ 'swatches.tsv', 'swatches.txt' ];
 	var VERBOSITY = ScriptUI.environment.keyboardState.ctrlKey ? 2 : 1; // 0: only errors, 1: + warnings, 2: + infos
 	var file, messages, progressBar, i, rec;

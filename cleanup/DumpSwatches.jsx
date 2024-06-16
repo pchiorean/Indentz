@@ -1,8 +1,8 @@
 /*
-	Dump swatches 23.10.21
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Dump swatches 24.6.16
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
-	Saves document's swatches to a TSV file compatible with `DefaultSwatches.jsx`:
+	Saves document's swatches to a TSV file compatible with `AddSwatches.jsx`:
 
 	Name       | Color Model | Color Space | Values       | Variants
 	Rich Black | process     | cmyk        | 60 40 40 100 |
@@ -14,7 +14,7 @@
 	<Color Model>: `process` or `spot`;
 	<Color Space>: `cmyk`, `rgb` or `lab`;
 	<Values>: list of values, depends on the color model & space;
-	<Variants>: empty (see `DefaultSwatches.jsx` for more info).
+	<Variants>: empty (see `AddSwatches.jsx` for more info).
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

@@ -1,8 +1,8 @@
 /*
-	Break link to styles 24.6.16
+	Remove styles 24.6.16
 	(c) 2022-2024 Paul Chiorean <jpeg@basement.ro>
 
-	Unnaplies paragraph/character/object styles from all or selected objects.
+	Removes paragraph/character/object styles from all or selected objects.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/

@@ -1,6 +1,6 @@
 /*
-	Files to spreads 23.11.25
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Join documents 24.6.16
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Combines the open documents, sorted alphabetically.
 

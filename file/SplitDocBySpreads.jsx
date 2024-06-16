@@ -1,6 +1,6 @@
 /*
-	Spreads to files 23.11.25
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Split document by spreads 24.6.16
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Saves the spreads of the active document in separate files.
 

@@ -473,7 +473,7 @@ it will return an object like this:
 }
 ```
 
-See, for example, `DefaultSwatches.jsx` for an actual implementation.
+See, for example, `AddSwatches.jsx` for an actual implementation.
 
 There are some additional functions in this file, one being:
 
