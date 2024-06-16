@@ -181,6 +181,13 @@
 - `05/30` [`fix`](https://github.com/pchiorean/Indentz/commit/5cad91bbc4559786a56f6950babdd6c28c859ef6)
   **cleanup/DocCleanup:** Fixed setting pasteboard size
 
+- `06/16` [`new`](https://github.com/pchiorean/Indentz/commit/d569b739c4ac96247b8447105cf32fea63cc4455)
+  **misc/SplitByLayers:** Added a script that splits or joins document spreads using special layers
+- `06/16` [`upd`](https://github.com/pchiorean/Indentz/commit/7adabb261f3684ce9d4fdf1413e05ec88cbed402)
+  **cleanup/BreakLinkToStyles:** Also remove orphan styles and groups
+- `06/16` [`org`](https://github.com/pchiorean/Indentz/commit/ad78d3a4774c539ef6f97a4d35159f9b3a7ac545)
+  Renamed some scripts, preparing for a general reorganization
+
 ##### Queued
 
 - [ ] `fix` `?` **layout/PageSizeFromFilename:** A document can have a name even if not saved (in the new UI)
@@ -192,7 +199,7 @@
 - [ ] `upd` **export/QuickExport:** Add a checkbox for `0e04f28`
 - [ ] `upd` **view/ZoomToSpreads:** Apply the smallest zoom value to all windows
 - [ ] `upd` Implement `try/catch/finally` when appropriate
-- [ ] `upd` `?` `while/do` –> `for...of` (see [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of))
+- [ ] `ref` `?` Implement `for...of` when appropriate (see [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of))
 - [ ] `new` **export/QuickExport:** Add JPG, PNG & INDD export profiles
 - [ ] `new` **export/QuickExport:** Add package option
 - [ ] `new` **layout/Grid\* and HW:** Get `HW_PCT` from page guide or object tag (`hw10`, `hw15`, etc.); fallback to `10`
