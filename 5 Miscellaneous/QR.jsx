@@ -1,6 +1,6 @@
 /*
-	QR code 23.11.6
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	QR code 24.6.27
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Adds a QR code to the current document or to a separate file.
 
@@ -75,6 +75,7 @@ function main() {
 		ui.ondoc.onClick = function () { onDoc = true; ui.close(); };
 		ui.actions.add('button { text: "Cancel" }');
 	ui.onShow = function () {
+		ui.label.text = baseName;
 		ui.frameLocation = [
 			(app.activeWindow.bounds[1] + app.activeWindow.bounds[3] - ui.frameSize.width) / 2,
 			(app.activeWindow.bounds[0] + app.activeWindow.bounds[2] - ui.frameSize.height) / 2
