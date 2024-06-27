@@ -569,7 +569,7 @@ for (var i = 0; i < steps; i++) {
 progressBar.close();
 ```
 
-![](../docs/img/lib/progress-bar-mini.png)
+![](./img/progress-bar-mini.png)
 
 **Simple progress bar:**
 
@@ -584,7 +584,7 @@ for (var i = 0; i < steps; i++) {
 progressBar.close();
 ```
 
-![](../docs/img/lib/progress-bar.png)
+![](./img/progress-bar.png)
 
 **Dual progress bars:**
 
@@ -604,7 +604,7 @@ for (var i = 0; i < steps; i++) {
 progressBar.close();
 ```
 
-![](../docs/img/lib/progress-bar-dual.png)
+![](./img/progress-bar-dual.png)
 
 ---
 
@@ -707,13 +707,13 @@ Inspired by [this](http://web.archive.org/web/20100807190517/http://forums.adobe
 report(message, 'Sample alert');
 ```
 
-![Standard alert](../docs/img/lib/report.png)
+![Standard alert](./img/report.png)
 
 ```js
 report(message, 'Sample alert', true);
 ```
 
-![Alert with filter](../docs/img/lib/report-filter.png)
+![Alert with filter](./img/report-filter.png)
 
 ---
 

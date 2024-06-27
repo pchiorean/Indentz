@@ -26,88 +26,18 @@ These TSV data files can have several non-standard features that will confuse Ex
 
 ## The scripts
 
-### Align
+Because there are quite a lot of files, I've sorted them into groups related to their target: the document; pages or spreads; objects on page; the application environment.
 
-<small>_**Align objects with ease using the numeric keypad.**_</small>
+### Document
 
-#### **`AlignTo*.jsx`**
-Use the numeric keypad to align the selected objects, with a single keystroke, to the **Align To** setting (see **`ToggleAlignTo.jsx`** below).
+<small>_**Scripts that work at the document level.**_</small>
 
-<details><summary><em>Suggested shortcuts</em></summary>
+#### Assets
 
-| Left              |    Key | Center           |    Key | Right             |    Key |
-|:------------------|-------:|:-----------------|-------:|:------------------|-------:|
-| **AlignToTL.jsx** | `Num7` | **AlignToT.jsx** | `Num8` | **AlignToTR.jsx** | `Num9` |
-| **AlignToL.jsx**  | `Num4` | **AlignToC.jsx** | `Num5` | **AlignToR.jsx**  | `Num6` |
-| **AlignToBL.jsx** | `Num1` | **AlignToB.jsx** | `Num2` | **AlignToBR.jsx** | `Num3` |
+<small>_**Layers, swatches, fonts, links etc.**_</small>
 
-</details>
+##### **`AddLayers.jsx`**
 
----
-
-#### **`ToggleAlignTo.jsx`**
-Toggles **Align To** between selection, margins, page, or spread (just run it repeatedly):
-
-![Align Panel](img/alignto.png)
-
-_Suggested shortcut:_ `Num0`
-
----
-
-#### **`ResetAlignTo.jsx`**
-Resets **Align To** to default (**Align to Selection**).
-
-_Suggested shortcut:_ `⌃Num0`
-
----
-
-### Cleanup
-
-<small>_**Defaults and cleanup.**_</small>
-
-#### **`DefaultPrefs.jsx`**
-Sets some preferences for the active document. You should customize them to your workflow by editing the script (unfortunately the preferences are scattered in so many places that it's difficult to guide you).
-
-_Note:_ Many scripts in this collection assume these settings as defaults because they suit my environment – e.g., is possible to try to scale a locked object (or guide) and the script will fail (see **Prevent Selection of Locked Objects**).
-
-<details><summary><strong>Click here for details</strong></summary>
-
-**Application:**
-> **Preferences ‣ General:** Prevent Selection of Locked Objects\
-> **Preferences ‣ Display Performance:** Preserve Object-Level Display Settings\
-> **Preferences ‣ File Handling:** Always Save Preview Images with Documents\
-> **View ‣ Screen Mode:** Normal\
-> **View ‣ Grids & Guides:** Snap to Guides; Smart Guides\
-> **Windows ‣ Layers:** Ungroup Remembers Layers; Paste Remembers Layers\
-> **Windows ‣ Objects & Layout ‣ Transform:** Reference Point: Center; Adjust Stroke Weight when Scaling; Adjust Effects when Scaling\
-> **Windows ‣ Output ‣ Preflight:** Off
-
-**Document:**
-> **Adjust Layout:** Off\
-> **Document Intent:** Print\
-> **Rulers:** Zero Point: Reset\
-> **Preferences ‣ Type:** Use Typographer's Quotes; Apply Leading to Entire Paragraphs\
-> **Preferences ‣ Units & Increments ‣ Keyboard Increments:** Cursor Key: 0.2 mm; Size/Leading: 0.5 pt; Baseline Shift: 0.1 pt; Kerning/Tracking: 5/1000 em\
-> **Preferences ‣ Units & Increments ‣ Ruler Units:** Origin: Spread; Units: Millimeters\
-> **Preferences ‣ Units & Increments ‣ Other Units:** Stroke: Points\
-> **Preferences ‣ Grids:** Baseline Grid Color: R=230 G=230 B=230\
-> **Preferences ‣ Guides & Pasteboard:** Preview Background Color: Light Gray\
-> **Edit ‣ Transparency Blend Space:** Document CMYK\
-> **View:** Show Rulers\
-> **View ‣ Extras:** Show Frame Edges\
-> **View ‣ Grids & Guides:** Show Guides; Unlock Guides; Snap to Guides\
-> **Windows ‣ Color:** Fill: None; Stroke: None\
-> **Windows ‣ Effects:** Blending Mode: Normal; Opacity: 100%\
-> **Windows ‣ Output ‣ Attributes:** Nonprinting: Off\
-> **Windows ‣ Pages:** Allow Document Pages to Shuffle\
-> **Windows ‣ Text Wrap:** No text wrap\
-> **Windows ‣ Type & Tables ‣ Paragraph:** Shading: Off
-
-</details>
-
----
-
-#### **`DefaultLayers.jsx`**
 Adds a set of layers defined in a 7-columns [TSV data file](#tsv) named **`layers.tsv`** ([sample](samples/layers.tsv)):
 
 | Name              | Color      | Visible | Printable | Locked | Order  | Variants                                           |
@@ -132,9 +62,8 @@ Adds a set of layers defined in a 7-columns [TSV data file](#tsv) named **`layer
 
 _Tip:_ The script will display a report if run while holding down the **Ctrl** key.
 
----
+##### **`AddSwatches.jsx`**
 
-#### **`DefaultSwatches.jsx`**
 Adds a set of swatches defined in a 5-columns [TSV data file](#tsv) named **`swatches.tsv`** ([sample](samples/swatches.tsv)):
 
 | Name             | Color Model | Color Space | Values       | Variants              |
@@ -160,9 +89,8 @@ _Tip:_ The script will display a report if run while holding down the **Ctrl** k
 
 _Tip:_ You can use [**`DumpSwatches.jsx`**](#dumpswatchesjsx) to save a tab delimited list of swatches from the active document.
 
----
+##### **`ReplaceFonts.jsx`**
 
-#### **`ReplaceFonts.jsx`**
 Replaces document fonts using a 4-columns [TSV data file](#tsv) named **`fonts.tsv`** ([sample](samples/fonts.tsv)):
 
 | Old font family | Style   | New font family    | Style   |
@@ -175,9 +103,8 @@ _Tip:_ The script will display a report if run while holding down the **Ctrl** k
 
 _Tip:_ You can use [**`ShowFonts.jsx`**](#showfontsjsx) from [**Miscellaneous**](#miscellaneous) to get a tab delimited list of document fonts.
 
----
+##### **`ReplaceLinks.jsx`**
 
-#### **`ReplaceLinks.jsx`**
 Replaces document links using a 2-columns [TSV data file](#tsv) named **`links.tsv`** ([sample](samples/links.tsv)):
 
 | Relink to                       | Links                        |
@@ -206,9 +133,8 @@ _Tip:_ You can use [**`DumpLinks.jsx`**](#dumplinksjsx) to save a list of links 
 
 _Suggested shortcut:_ `⌥F8`
 
----
+##### **`ReplaceTextSnippets.jsx`**
 
-#### **`ReplaceSnippets.jsx`**
 Replaces a list of text snippets using a 5-columns [TSV data file](#tsv) named **`snippets.tsv`** ([sample](samples/snippets.tsv)):
 
 | Find what              | Change to                 | Case sensitive | Whole word | Scope |
@@ -233,74 +159,28 @@ _Tip:_ The script will display a report if run while holding down the **Ctrl** k
 
 _Suggested shortcut:_ `⌥F6`
 
----
+##### **`ResetLayers.jsx`**
 
-#### **`BreakLinkToStyles.jsx`**
-Unnaplies paragraph/character/object styles from the selected objects, or all objects in the document if nothing is selected.
+Resets the visible/printable/locked state of the document layers using the same data file used by [**`AddLayers.jsx`**](#addlayersjsx).
 
-_Tip:_ The script will display a report if run while holding down the **Ctrl** key.
+##### **`DumpLayers.jsx`**
 
----
+Saves a TSV file (compatible with [**`AddLayers.jsx`**](#addlayersjsx)) containing the names and properties of the active document layers.
 
-#### **`DocCleanup.jsx`**
-Performs a sequence of actions designed to bring the document to an approximately 'clean' state:
+##### **`DumpLinks.jsx`**
 
-- Sets some preferences (it runs [**`DefaultPrefs.jsx`**](#defaultprefsjsx));
-- Unlocks all objects and resets their scaling to 100%;
-- Deletes hidden objects (after confirmation);
-- Deletes empty frames (after confirmation);
-- Deletes unused swatches, layers and spreads;
-- Converts empty text frames to generic frames;
-- Converts empty frames to graphic frames;
-- Resets default transparency effects;
-- Resets the visible/printable/locked status of layers;
-- Hides 'invisible' characters;
-- Turns off URLs auto-updating;
-- Sets the pasteboard margins.
-
-_Suggested shortcut:_ `F2`
-
----
-
-#### **`RemoveScriptLabels.jsx`**
-Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects, or all objects in the document if nothing is selected.
-
----
-
-#### **`ResetLayers.jsx`**
-Resets the visible/printable/locked state of the document layers using the same data file used by [**`DefaultLayers.jsx`**](#defaultlayersjsx).
-
----
-
-#### **`SwatchesCleanup.jsx`**
-Converts process RGB swatches to CMYK and renames them to 'C= M= Y= K=' format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.
-
-It contains code written by Marc Autret, Dave Saunders and others.
-
-_Suggested shortcut:_ `⇧F2`
-
----
-
-#### **`DumpLayers.jsx`**
-Saves a TSV file (compatible with [**`DefaultLayers.jsx`**](#defaultlayersjsx)) containing the names and properties of the active document layers.
-
----
-
-#### **`DumpLinks.jsx`**
 Saves a TSV file (compatible with [**`ReplaceLinks.jsx`**](#replacelinksjsx)) containing the links of the active document.
 
----
+##### **`DumpSwatches.jsx`**
 
-#### **`DumpSwatches.jsx`**
-Saves a TSV file (compatible with [**`DefaultSwatches.jsx`**](#defaultswatchesjsx)) containing the names and properties of the active document swatches.
+Saves a TSV file (compatible with [**`AddSwatches.jsx`**](#addswatchesjsx)) containing the names and properties of the active document swatches.
 
----
-
-### Export
+#### Export
 
 <small>_**Document export and related.**_</small>
 
-#### **`QuickExport.jsx`**
+##### **`QuickExport.jsx`**
+
 For a long time, I exported documents to PDF with [Batch Convert](https://creativepro.com/files/kahrel/indesign/batch_convert.html), Peter Kahrel's 'Swiss army knife', but I needed a tool tailored to my specific needs. My workflow requires frequent changes to export settings, and I wanted direct access to some of them (the native export dialog has quite a few tabs and options!). There are two selectable workflows, with the options grouped into several categories. I'm only reviewing the ones that aren't self-explanatory:
 
 ![Quick export](img/script-quickexport.png)
@@ -341,23 +221,13 @@ _Tip:_ The settings are saved every time you run the script, but if you keep the
 
 _Suggested shortcut:_ `⌃E`
 
----
+##### **`PrepareForExport.jsx`**
 
-#### **`MarkSafetyArea.jsx`**
-Creates a frame around the page margins that visually marks the _safety area_ of a page. It's a stroked frame named **\<safety area\>** on the **.safety area** layer. It will use an existing **Safety area** swatch, or will create one with the values R=0 G=180 B=255.
+Hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers (see above). Additionally, it moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads and labels the spreads.
 
-_Tip:_ This script is designed to be run with [**`QuickExport.jsx`**](#quickexportjsx).
+_Tip:_ The script is designed to be run with [**`QuickExport.jsx`**](#quickexportjsx).
 
----
-
-#### **`MarkVisibleArea.jsx`**
-Creates a frame around the page margins that visually marks the _visible area_ of a page. It's a stroked frame named **\<visible area\>** on the **.visible area** layer. It will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
-
-_Tip:_ This script is designed to be run with [**`QuickExport.jsx`**](#quickexportjsx).
-
----
-
-#### **`ShowDNPLayers.jsx`** / **`HideDNPLayers.jsx`**
+##### **`ShowDNPLayers.jsx`** and **`HideDNPLayers.jsx`**
 Shows or hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers:
 
 - **covered area\***
@@ -366,45 +236,281 @@ Shows or hides all layers starting with either a dot or a hyphen, plus a hard-co
 - **fold, falz**
 - **guides, grid, masuratori**
 
+_Tip:_ The scripts are designed to be run with [**`QuickExport.jsx`**](#quickexportjsx).
+
+#### Housekeeping
+
+<small>_**Defaults and cleanup.**_</small>
+
+##### **`DefaultPrefs.jsx`**
+
+Sets some preferences for the active document. You should customize them to your workflow by editing the script (unfortunately the preferences are scattered in so many places that it's difficult to guide you).
+
+_Note:_ Many scripts in this collection assume these settings as defaults because they suit my environment – e.g., is possible to try to scale a locked object (or guide) and the script will fail (see **Prevent Selection of Locked Objects**).
+
+<details><summary><strong>Click here for details</strong></summary>
+
+**Application:**
+> **Preferences ‣ General:** Prevent Selection of Locked Objects\
+> **Preferences ‣ Display Performance:** Preserve Object-Level Display Settings\
+> **Preferences ‣ File Handling:** Always Save Preview Images with Documents\
+> **View ‣ Screen Mode:** Normal\
+> **View ‣ Grids & Guides:** Snap to Guides; Smart Guides\
+> **Windows ‣ Layers:** Ungroup Remembers Layers; Paste Remembers Layers\
+> **Windows ‣ Objects & Layout ‣ Transform:** Reference Point: Center; Adjust Stroke Weight when Scaling; Adjust Effects when Scaling\
+> **Windows ‣ Output ‣ Preflight:** Off
+
+**Document:**
+> **Adjust Layout:** Off\
+> **Document Intent:** Print\
+> **Rulers:** Zero Point: Reset\
+> **Preferences ‣ Type:** Use Typographer's Quotes; Apply Leading to Entire Paragraphs\
+> **Preferences ‣ Units & Increments ‣ Keyboard Increments:** Cursor Key: 0.2 mm; Size/Leading: 0.5 pt; Baseline Shift: 0.1 pt; Kerning/Tracking: 5/1000 em\
+> **Preferences ‣ Units & Increments ‣ Ruler Units:** Origin: Spread; Units: Millimeters\
+> **Preferences ‣ Units & Increments ‣ Other Units:** Stroke: Points\
+> **Preferences ‣ Grids:** Baseline Grid Color: R=230 G=230 B=230\
+> **Preferences ‣ Guides & Pasteboard:** Preview Background Color: Light Gray\
+> **Edit ‣ Transparency Blend Space:** Document CMYK\
+> **View:** Show Rulers\
+> **View ‣ Extras:** Show Frame Edges\
+> **View ‣ Grids & Guides:** Show Guides; Unlock Guides; Snap to Guides\
+> **Windows ‣ Color:** Fill: None; Stroke: None\
+> **Windows ‣ Effects:** Blending Mode: Normal; Opacity: 100%\
+> **Windows ‣ Output ‣ Attributes:** Nonprinting: Off\
+> **Windows ‣ Pages:** Allow Document Pages to Shuffle\
+> **Windows ‣ Text Wrap:** No text wrap\
+> **Windows ‣ Type & Tables ‣ Paragraph:** Shading: Off
+
+</details>
+
+##### **`DocCleanup.jsx`**
+
+Performs a sequence of actions designed to bring the document to an approximately 'clean' state:
+
+- Sets some preferences (it runs [**`DefaultPrefs.jsx`**](#defaultprefsjsx));
+- Unlocks all objects and resets their scaling to 100%;
+- Deletes hidden objects (after confirmation);
+- Deletes empty frames (after confirmation);
+- Deletes unused swatches, layers and spreads;
+- Converts empty text frames to generic frames;
+- Converts empty frames to graphic frames;
+- Resets default transparency effects;
+- Resets the visible/printable/locked status of layers;
+- Hides 'invisible' characters;
+- Turns off URLs auto-updating;
+- Sets the pasteboard margins.
+
+_Suggested shortcut:_ `F2`
+
+##### **`RemoveScriptLabels.jsx`**
+
+Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects, or all objects in the document if nothing is selected.
+
+##### **`RemoveStyles.jsx`**
+
+Unnaplies paragraph/character/object styles from the selected objects, or all objects in the document if nothing is selected.
+
+_Tip:_ The script will display a report if run while holding down the **Ctrl** key.
+
+##### **`SwatchesCleanup.jsx`**
+
+Converts process RGB swatches to CMYK and renames them to 'C= M= Y= K=' format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.
+
+It contains code written by Marc Autret, Dave Saunders and others.
+
+_Suggested shortcut:_ `⇧F2`
+
+### Page
+
+<small>_**Scripts that work at the page/spread level.**_</small>
+
+#### Guides
+
+<small>_**Guides, labels and markings.**_</small>
+
+##### **`GuidesAdd.jsx`**
+
+If any page objects are selected, we add guides around them.
+
+If nothing is selected, guides are added to the page edges and the middle of the page margins. A second run deletes the guides.
+
+_Tip:_ If **Opt** is also pressed, we'll use spread guides.
+
+##### **`GuidesDelete.jsx`**
+
+Deletes all guides from the document.
+
+##### **`LabelPage.jsx`**
+
+Adds a custom label on the current page slug, on the **info** layer (Helvetica Regular 6 pt, fill **Registration**, stroke **Paper** 0.4 pt).
+
+**Example:**
+
+![Label Page](img/labelpage.png)
+
+##### **`LabelPageRatios.jsx`**
+
+Adds on the slug of each page a label with the page size ratio, _visible area_ ratio (if defined), and page margins ratio.
+
+##### **`MarkSafetyArea.jsx`**
+
+Creates a frame around the page margins that visually marks the _safety area_ of a page. It's a stroked frame named **\<safety area\>** on the **.safety area** layer. It will use an existing **Safety area** swatch, or will create one with the values R=0 G=180 B=255.
+
 _Tip:_ This script is designed to be run with [**`QuickExport.jsx`**](#quickexportjsx).
 
----
+##### **`MarkVisibleArea.jsx`**
 
-#### **`PrepareForExport.jsx`**
-Hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers (see above). Additionally, it moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads and labels the spreads.
+Creates a frame around the page margins that visually marks the _visible area_ of a page. It's a stroked frame named **\<visible area\>** on the **.visible area** layer. It will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
 
 _Tip:_ This script is designed to be run with [**`QuickExport.jsx`**](#quickexportjsx).
 
----
+#### Layout
 
-### File
+<small>_**Page size and margins.**_</small>
 
-<small>_**File management.**_</small>
+##### **`PageMarginsFromScriptName.jsx`**
 
-#### **`FilesToSpreads.jsx`**
+Sets the page margins and optionally a reserved area on the bottom, getting the values from the script name, in percentages of the _visible area_ or page size:
+
+![Page with 5% margins and 0% HW area](img/mg5hw0.png)
+![Page with 5% margins and 10% HW area](img/mg5hw10.png)
+
+It's designed to be duplicated and renamed to customize the values, using one or two numbers separated by the `HW` keyword: the first number defines the page margins, the second one, if found, is the bottom area. `HW` can be omitted (meaning 0%), or used without a number (meaning the default 10%).
+
+**Example:**
+
+| Script name       | Margins | Bottom area |
+|:------------------|:--------|:------------|
+| **MG4.jsx**       |    4%   |      –      |
+| **MG5HW.jsx**     |    5%   |     10%     |
+| **MG5\_HW10.jsx** |    5%   |     10%     |
+
+##### **`PageMarginsFromSelection.jsx`**
+
+Sets the current page margins from the selected objects.
+
+_Suggested shortcut:_ `⌥F3`
+
+##### **`PageSizeFromFilename.jsx`**
+
+Sets the size of the page, the margins and the bleed, getting the values from the document name. It also creates a frame around the page margins that visually marks the _visible area_ of a page: a stroked frame named **\<visible area\>** on the **.visible area** layer; it will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
+
+It works with file names structured like this:
+
+    <Name>_<Total size WxH>[_<Visible area WxH>][_<Bleed>].indd
+
+`WxH` are pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). The first pair found defines the size of the page. If a second pair is found, it defines the _visible area_. If a one- or two-digit sequence follows, it defines the bleed. The script is somewhat tolerant regarding spaces and extra stuff.
+
+**Example:**
+
+| File name                                       | Total size | Visible area | Bleed |
+|:------------------------------------------------|:-----------|:-------------|:------|
+| **Document1\_315x55\.indd**                     | 315×55     | –            | –     |
+| **Document2\_1400x400\_700x137mm\.indd**        | 1400×400   | 700×137      | –     |
+| **Document3\_597x517\_577x500.5\_3mm V4\.indd** | 597×517    | 577×500.5    | 3     |
+
+_Note:_ Dimensions are always in millimeters.
+
+_Suggested shortcut:_ `F3`
+
+##### **`PageSizeFromMargins.jsx`**
+
+Resizes the current page to its margins.
+
+##### **`PageSizeFromSelection.jsx`**
+
+Resizes the current page to the selected objects.
+
+_Suggested shortcut:_ `⇧F3`
+
+#### Spreads
+
+<small>_**Juggling layers and spreads.**_</small>
+
+##### **`JoinDocs.jsx`**
+
 Combines the open documents, sorted alphabetically.
 
----
+##### **`LayersToSpreads.jsx`**
 
-#### **`SpreadsToFiles.jsx`**
+Moves all layers of the active document to separate spreads (the document must have a single spread).
+
+##### **`SplitDocBySpreads.jsx`**
+
 Saves each spread of the active document to a separate file.
 
-If the document name ends with a _separator_ (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named **`Document_ABC.indd`** will be split into **`Document_A.indd`**, **`Document_B.indd`** and **`Document_C.indd`**. If a sequence is not autodetected, the script will prompt you for one.
+If the document name ends with a _separator_ (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads, each saved spread will have the letter corresponding to its index appended to its name – e.g., a document with three spreads named `Document_ABC.indd` will be split into `Document_A.indd`, `Document_B.indd` and `Document_C.indd`. If a sequence is not autodetected, the script will prompt you for one.
 
 _Tip:_ By default the index will be appended at the end, but you can use a `#` in the document name to place the index at that particular position.
 
----
+##### **`SplitSpreadsByLayers.jsx`**
 
-#### **`LayersToSpreads.jsx`**
-Moves all layers of the active document to separate spreads (the document must have a single spread).
+Splits or joins the active document spreads using a list of predefined layers.
 
----
+It essentially allows for splitting a single spread into multiple language-specific spreads or combining multiple language-specific spreads into a single spread.
 
-### Fit
+The default layers are **DE**, **FR**, **IT**; edit the variable `layers` to customize them to your needs.
 
-<small>_**Reframe selected objects.**_</small>
+### Object
 
-#### **`FitTo*.jsx`**
+<small>_**Scripts that work at the object level.**_</small>
+
+#### Align
+
+<small>_**Align objects using the numeric keypad.**_</small>
+
+##### **`AlignTo*.jsx`**
+
+Use the numeric keypad to align the selected objects, with a single keystroke, to the **Align To** setting (see below).
+
+<details><summary><em>Suggested shortcuts</em></summary>
+
+| Left              |    Key | Center           |    Key | Right             |    Key |
+|:------------------|-------:|:-----------------|-------:|:------------------|-------:|
+| **AlignToTL.jsx** | `Num7` | **AlignToT.jsx** | `Num8` | **AlignToTR.jsx** | `Num9` |
+| **AlignToL.jsx**  | `Num4` | **AlignToC.jsx** | `Num5` | **AlignToR.jsx**  | `Num6` |
+| **AlignToBL.jsx** | `Num1` | **AlignToB.jsx** | `Num2` | **AlignToBR.jsx** | `Num3` |
+
+</details>
+
+##### **`ToggleAlignTo.jsx`**
+
+Toggles **Align To** between selection, margins, page, or spread (just run it repeatedly):
+
+![Align Panel](img/alignto.png)
+
+_Suggested shortcut:_ `Num0`
+
+##### **`ResetAlignTo.jsx`**
+
+Resets **Align To** to default (**Align to Selection**).
+
+_Suggested shortcut:_ `⌃Num0`
+
+#### Clipping
+
+<small>_**Insert or remove objects from clipping frames.**_</small>
+
+##### **`Clip.jsx`**
+
+The script inserts the selected objects into a _clipping frame_ or, if already clipped, restores them.
+
+_Warning:_ It uses the clipboard, so make sure you don't lose anything important.
+
+_Suggested shortcut:_ `Num*`
+
+##### **`ClipRelease.jsx`**
+
+Releases one or several objects from their _clipping frames_. If nothing is selected, it will release all clipped objects from the current spread.
+
+_Suggested shortcut:_ `⌃Num*`
+
+#### Fitting
+
+<small>_**Reframe objects to a target area.**_</small>
+
+##### **`FitTo*.jsx`**
+
 These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed, or _visible area_).
 
 **Example:** Running **`FitToPageBleed.jsx`** with the following frames selected will extend the yellow one and will shrink the red one to the page bleed:
@@ -438,9 +544,8 @@ _Note:_ `F11` page, `F12` spread; `⌥` margins, `⌥⇧` visible area, `⇧` bl
 
 </details>
 
----
+##### **`TextAutosize.jsx`**
 
-#### **`TextAutosize.jsx`**
 Auto-sizes the selected text frames to their content.
 
 It's designed to be run repeatedly. Each run increases the level with one step (from **None** to **Height Only**, from **Height Only** to **Height and Width**), except single lines, which are always set **Height and Width**. The reference point is set by the first paragraph's alignment and the text frame's vertical justification:
@@ -455,91 +560,12 @@ _Tip:_ A second run will preserve the current auto-sizing if you only change the
 
 _Suggested shortcut:_ `F6`
 
----
+#### Proxy
 
-### Layout
+<small>_**Set the reference point used for transformations.**_</small>
 
-<small>_**Document setup: page size, margins & columns, guides.**_</small>
+##### **`SetRefPoint*.jsx`**
 
-#### **`PageSizeFromFilename.jsx`**
-Sets the size of the page, the margins and the bleed, getting the values from the document name. It also creates a frame around the page margins that visually marks the _visible area_ of a page: a stroked frame named **\<visible area\>** on the **.visible area** layer; it will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
-
-It works with file names structured like this:
-
-    <Name>_<Total size WxH>[_<Visible area WxH>][_<Bleed>].indd
-
-`WxH` are pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). The first pair found defines the size of the page. If a second pair is found, it defines the _visible area_. If a one- or two-digit sequence follows, it defines the bleed. The script is somewhat tolerant regarding spaces and extra stuff.
-
-**Example:**
-
-| File name                                       | Total size | Visible area | Bleed |
-|:------------------------------------------------|:-----------|:-------------|:------|
-| **Document1\_315x55\.indd**                     | 315×55     | –            | –     |
-| **Document2\_1400x400\_700x137mm\.indd**        | 1400×400   | 700×137      | –     |
-| **Document3\_597x517\_577x500.5\_3mm V4\.indd** | 597×517    | 577×500.5    | 3     |
-
-_Note:_ Dimensions are always in millimeters.
-
-_Suggested shortcut:_ `F3`
-
----
-
-#### **`PageSizeFromMargins.jsx`**
-Resizes the current page to its margins.
-
----
-
-#### **`PageSizeFromSelection.jsx`**
-Resizes the current page to the selected objects.
-
-_Suggested shortcut:_ `⇧F3`
-
----
-
-#### **`PageMarginsFromSelection.jsx`**
-Sets the current page margins from the selected objects.
-
-_Suggested shortcut:_ `⌥F3`
-
----
-
-#### **`PageMarginsFromScriptName.jsx`**
-Sets the page margins and optionally a reserved area on the bottom, getting the values from the script name, in percentages of the _visible area_ or page size:
-
-![Page with 5% margins and 0% HW area](img/mg5hw0.png)
-![Page with 5% margins and 10% HW area](img/mg5hw10.png)
-
-It's designed to be duplicated and renamed to customize the values, using one or two numbers separated by the `HW` keyword: the first number defines the page margins, the second one, if found, is the bottom area. `HW` can be omitted (meaning 0%), or used without a number (meaning the default 10%).
-
-**Example:**
-
-| Script name       | Margins | Bottom area |
-|:------------------|:--------|:------------|
-| **MG4.jsx**       |    4%   |      –      |
-| **MG5HW.jsx**     |    5%   |     10%     |
-| **MG5\_HW10.jsx** |    5%   |     10%     |
-
----
-
-#### **`GuidesAdd.jsx`**
-If any page objects are selected, we add guides around them.
-
-If nothing is selected, guides are added to the page edges and the middle of the page margins. A second run deletes the guides.
-
-_Tip:_ If **Opt** is also pressed, we'll use spread guides.
-
----
-
-#### **`GuidesDelete.jsx`**
-Deletes all guides from the document.
-
----
-
-### Proxy
-
-<small>_**Easily control the reference point used for transformations.**_</small>
-
-#### **`SetRefPoint*.jsx`**
 Use the numeric keypad to set the reference point used for transformations (similar to clicking the little proxy squares in the **Control** palette):
 
 ![Proxy](img/proxy.png)
@@ -554,13 +580,12 @@ Use the numeric keypad to set the reference point used for transformations (simi
 
 </details>
 
----
+#### Scaling
 
-### Scale
+<small>_**Scale selected objects to a target area.**_</small>
 
-<small>_**Resize selected objects.**_</small>
+##### **`ScaleTo*.jsx`**
 
-#### **`ScaleTo*.jsx`**
 Scale the selected objects to the target area specified in the script name (page size, page margins or spread bleed). Objects are scaled together, as a group.
 
 **`*H.jsx`** and **`*W.jsx`** variants scale to the height or width of their target.
@@ -574,66 +599,57 @@ Scale the selected objects to the target area specified in the script name (page
 
 </details>
 
----
+#### Other
 
-### View
+##### **`OffsetPaths.jsx`**
 
-<small>_**Document display.**_</small>
+This is a slightly modified version of [**OffsetPath**](https://creativepro.com/indesign-cad-tool/) by Olav Martin Kvern, which uses a clever method to create paths around selected objects at a custom offset distance:
 
-#### **`TileAll.jsx`**
+> When you apply a Contour-type text wrap to an object, you’re creating a path around that object—and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create a new path from those geometric coordinates.
+
+I fixed some bugs, added a default value, an option to join contours, and undo support.
+
+### Application
+
+<small>_**Scripts that operate at the application environment.**_</small>
+
+#### Zoom
+
+##### **`TileAll.jsx`**
+
 Invokes **Window ‣ Arrange ‣ Tile All Vertically**, **Tile All Horizontally**, or **Tile**, depending on the current spread orientation.
 
 _Suggested shortcut:_ `⇧F4`
 
----
+##### **`ZoomTo300Percent.jsx`**
 
-#### **`ZoomTo300Percent.jsx`**
 Zooms current layout window to 300%.
 
 _Suggested shortcut:_ `⌘3`
 
----
+##### **`ZoomToSelection.jsx`**
 
-#### **`ZoomToSelection.jsx`**
 It resembles **Fit Selection in Window** (`⌥⌘=`), but:
 
 - It brings the selection a little closer;
 - If the cursor is in a text frame, zooms on the whole frame;
 - Without anything selected zooms on the current spread.
 
-_Note:_ It's really a hack and it works only when **UI Sizing** is set to **Small**.
+_Note:_ It's really a hack and it assumes that **UI Sizing** is set to **Small**.
 
 _Suggested shortcut:_ `F4`
 
----
+##### **`ZoomToSpreads.jsx`**
 
-#### **`ZoomToSpreads.jsx`**
 Zooms on the first 3 spreads.
 
 _Suggested shortcut:_ `⌥F4`
 
----
-
 ### Miscellaneous
 
-#### **`Clip.jsx`**
-To handle some objects, it may be useful to temporarily insert them into a container (a _clipping frame_). The script inserts the selected objects into a clipping frame or, if already clipped, restores them.
+##### **`EAN.jsx`**
 
-_Warning:_ It uses the clipboard, so make sure you don't lose anything important.
-
-_Suggested shortcut:_ `Num*`
-
----
-
-#### **`ClipUndo.jsx`**
-Releases one or several objects from their _clipping frames_ (see above). If nothing is selected, it will release all clipped objects from the current spread.
-
-_Suggested shortcut:_ `⌃Num*`
-
----
-
-#### **`EAN.jsx`**
-This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, that generates a document with barcodes from a list provided by the user. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I got tired of manually placing, scaling, and rotating each one, so I 'borrowed' the part that generates the barcode[^3] and made this script to automate the operations.
+This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, that generates a document with barcodes from a list provided by the user. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I got tired of manually placing, scaling, and rotating each one, so I 'borrowed' the part that generates the barcode and made this script to automate the operations.
 
 You can enter a single code or a list (enter 8 or 13 digits for the code; if you have an add-on, add a hyphen and another 2 or 5 digits).
 
@@ -645,32 +661,8 @@ It has two modes of operation:
 
 _Suggested shortcut:_ `⌥F9`
 
----
+##### **`QR.jsx`**
 
-#### **`LabelPage.jsx`**
-Adds a custom label on the current page slug, on the **info** layer (Helvetica Regular 6 pt, fill **Registration**, stroke **Paper** 0.4 pt).
-
-**Example:**
-
-![Label Page](img/labelpage.png)
-
----
-
-#### **`LabelPageRatios.jsx`**
-Adds on the slug of each page a label with the page size ratio, _visible area_ ratio (if defined), and page margins ratio.
-
----
-
-#### **`OffsetPaths.jsx`**
-This is a slightly modified version of [**OffsetPath**](https://creativepro.com/indesign-cad-tool/) by Olav Martin Kvern, which uses a clever method to create paths around selected objects at a custom offset distance:
-
-> When you apply a Contour-type text wrap to an object, you’re creating a path around that object—and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create a new path from those geometric coordinates.
-
-I fixed some bugs, added a default value, an option to join contours, and undo support.
-
----
-
-#### **`QR.jsx`**
 Adds a QR code on each spread of the active document (outside _visible area_, if possible), or to separate PDF files:
 
 |             On document             |             On file              |
@@ -685,9 +677,8 @@ _Tip:_ You can use `|` for manually splitting the label into several lines.
 
 _Suggested shortcut:_ `F9`
 
----
+##### **`QRBatch.jsx`**
 
-#### **`QRBatch.jsx`**
 Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV data file named **`qr.tsv`** ([sample](samples/qr.tsv)) and adds them to existing documents, or creates separate files (the suffix thingy applies here as well):
 
 | File name          | Code   | On doc |
@@ -710,19 +701,16 @@ _Tip:_ You can use `|` for manually splitting the label into several lines.
 
 _Suggested shortcut:_ `⇧F9`
 
----
+##### **`ShowFonts.jsx`**
 
-#### **`ShowFonts.jsx`**
 Shows all fonts used in the active document.
 
----
+##### **`ShowProfiles.jsx`**
 
-#### **`ShowProfiles.jsx`**
 Shows all color profiles available to InDesign.
 
----
+##### **`ShowProperties.jsx`**
 
-#### **`ShowProperties.jsx`**
 Shows properties and methods of a selected object for debugging purposes.
 
 Inspired by [**showProps()**](https://github.com/grefel/indesignjs/blob/version2/Allgemeine_Skripte/EigenschaftenAnzeigen.jsx) by Gregor Fellenz and [**pub.inspect()**](https://github.com/basiljs/basil.js/blob/23b60f16f3088ae9df624d6d9a52a890114fcae0/src/includes/environment.js#L722) from basil.js.
@@ -747,10 +735,8 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2024 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-<small>Last updated: May 29, 2024</small>
+<small>Last updated: June 27, 2024</small>
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use daily, so it's kind of tested, but… beware. ;)
 
 [^2]: The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
-
-[^3]: I 'borrowed' the barcode parsing bit, I refactored the function that generates the barcode to make it standalone, the rest of the code is original.
