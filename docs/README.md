@@ -322,8 +322,6 @@ It contains code written by Marc Autret, Dave Saunders and others.
 
 _Suggested shortcut:_ `⇧F2`
 
----
-
 ## Page
 
 _Scripts that work at the page/spread level._
@@ -458,8 +456,6 @@ Splits or joins the active document spreads using a list of predefined layers.
 It essentially allows for splitting a single spread into multiple language-specific spreads or combining multiple language-specific spreads into a single spread.
 
 The default layers are **DE**, **FR**, **IT**; edit the variable `layers` to customize them to your needs.
-
----
 
 ## Object
 
@@ -629,8 +625,6 @@ This is a slightly modified version of [**OffsetPath**](https://creativepro.com/
 
 I fixed some bugs, added a default value, an option to join contours, and undo support.
 
----
-
 ## Application
 
 _Scripts that operate at the application environment._
@@ -666,8 +660,6 @@ _Suggested shortcut:_ `F4`
 Zooms on the first 3 spreads.
 
 _Suggested shortcut:_ `⌥F4`
-
----
 
 ## Miscellaneous
 
