@@ -50,7 +50,7 @@
 	SOFTWARE.
 */
 
-// @includepath '.;./lib;../lib';
+// @includepath '.;./lib;../lib;../../lib';
 // @include 'getBounds.jsxinc';
 
 function fitTo(items, scope, target, enforced) {
