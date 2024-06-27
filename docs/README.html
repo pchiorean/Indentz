@@ -366,6 +366,7 @@
 <p>Saves a TSV file (compatible with <a href="#replacelinksjsx"><strong><code>ReplaceLinks.jsx</code></strong></a>) containing the links of the active document.</p>
 <h5 id="dumpswatchesjsx"><strong><code>DumpSwatches.jsx</code></strong> </h5>
 <p>Saves a TSV file (compatible with <a href="#addswatchesjsx"><strong><code>AddSwatches.jsx</code></strong></a>) containing the names and properties of the active document swatches.</p>
+<hr>
 <h4 id="export">Export </h4>
 <p><small><em><strong>Document export and related.</strong></em></small></p>
 <h5 id="quickexportjsx"><strong><code>QuickExport.jsx</code></strong> </h5>
@@ -431,6 +432,7 @@
 <li><strong>guides, grid, masuratori</strong></li>
 </ul>
 <p><em>Tip:</em> The scripts are designed to be run with <a href="#quickexportjsx"><strong><code>QuickExport.jsx</code></strong></a>.</p>
+<hr>
 <h4 id="housekeeping">Housekeeping </h4>
 <p><small><em><strong>Defaults and cleanup.</strong></em></small></p>
 <h5 id="defaultprefsjsx"><strong><code>DefaultPrefs.jsx</code></strong> </h5>
@@ -497,6 +499,7 @@
 <p>Converts process RGB swatches to CMYK and renames them to ‘C=&nbsp;M=&nbsp;Y=&nbsp;K=’ format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.</p>
 <p>It contains code written by Marc Autret, Dave Saunders and others.</p>
 <p><em>Suggested shortcut:</em> <code>⇧F2</code></p>
+<hr>
 <h3 id="page">Page </h3>
 <p><small><em><strong>Scripts that work at the page/spread level.</strong></em></small></p>
 <h4 id="guides">Guides </h4>
@@ -519,6 +522,7 @@
 <h5 id="markvisibleareajsx"><strong><code>MarkVisibleArea.jsx</code></strong> </h5>
 <p>Creates a frame around the page margins that visually marks the <em>visible area</em> of a page. It’s a stroked frame named <strong>&lt;visible area&gt;</strong> on the <strong>.visible area</strong> layer. It will use an existing <strong>Visible area</strong> swatch, or will create one with the values R=255 G=180 B=0.</p>
 <p><em>Tip:</em> This script is designed to be run with <a href="#quickexportjsx"><strong><code>QuickExport.jsx</code></strong></a>.</p>
+<hr>
 <h4 id="layout">Layout </h4>
 <p><small><em><strong>Page size and margins.</strong></em></small></p>
 <h5 id="pagemarginsfromscriptnamejsx"><strong><code>PageMarginsFromScriptName.jsx</code></strong> </h5>
@@ -600,6 +604,7 @@
 <h5 id="pagesizefromselectionjsx"><strong><code>PageSizeFromSelection.jsx</code></strong> </h5>
 <p>Resizes the current page to the selected objects.</p>
 <p><em>Suggested shortcut:</em> <code>⇧F3</code></p>
+<hr>
 <h4 id="spreads">Spreads </h4>
 <p><small><em><strong>Juggling layers and spreads.</strong></em></small></p>
 <h5 id="joindocsjsx"><strong><code>JoinDocs.jsx</code></strong> </h5>
@@ -614,6 +619,7 @@
 <p>Splits or joins the active document spreads using a list of predefined layers.</p>
 <p>It essentially allows for splitting a single spread into multiple language-specific spreads or combining multiple language-specific spreads into a single spread.</p>
 <p>The default layers are <strong>DE</strong>, <strong>FR</strong>, <strong>IT</strong>; edit the variable <code>layers</code> to customize them to your needs.</p>
+<hr>
 <h3 id="object">Object </h3>
 <p><small><em><strong>Scripts that work at the object level.</strong></em></small></p>
 <h4 id="align">Align </h4>
@@ -667,6 +673,7 @@
 <h5 id="resetaligntojsx"><strong><code>ResetAlignTo.jsx</code></strong> </h5>
 <p>Resets <strong>Align To</strong> to default (<strong>Align to Selection</strong>).</p>
 <p><em>Suggested shortcut:</em> <code>⌃Num0</code></p>
+<hr>
 <h4 id="clipping">Clipping </h4>
 <p><small><em><strong>Insert or remove objects from clipping frames.</strong></em></small></p>
 <h5 id="clipjsx"><strong><code>Clip.jsx</code></strong> </h5>
@@ -676,6 +683,7 @@
 <h5 id="clipreleasejsx"><strong><code>ClipRelease.jsx</code></strong> </h5>
 <p>Releases one or several objects from their <em>clipping frames</em>. If nothing is selected, it will release all clipped objects from the current spread.</p>
 <p><em>Suggested shortcut:</em> <code>⌃Num*</code></p>
+<hr>
 <h4 id="fitting">Fitting </h4>
 <p><small><em><strong>Reframe objects to a target area.</strong></em></small></p>
 <h5 id="fittojsx"><strong><code>FitTo*.jsx</code></strong> </h5>
@@ -791,6 +799,7 @@
 </table>
 <p><em>Tip:</em> A second run will preserve the current auto-sizing if you only change the alignment.</p>
 <p><em>Suggested shortcut:</em> <code>F6</code></p>
+<hr>
 <h4 id="proxy">Proxy </h4>
 <p><small><em><strong>Set the reference point used for transformations.</strong></em></small></p>
 <h5 id="setrefpointjsx"><strong><code>SetRefPoint*.jsx</code></strong> </h5>
@@ -836,6 +845,7 @@
 </tbody>
 </table>
 </details>
+<hr>
 <h4 id="scaling">Scaling </h4>
 <p><small><em><strong>Scale selected objects to a target area.</strong></em></small></p>
 <h5 id="scaletojsx"><strong><code>ScaleTo*.jsx</code></strong> </h5>
@@ -873,6 +883,7 @@
 </tbody>
 </table>
 </details>
+<hr>
 <h4 id="other">Other </h4>
 <h5 id="offsetpathsjsx"><strong><code>OffsetPaths.jsx</code></strong> </h5>
 <p>This is a slightly modified version of <a href="https://creativepro.com/indesign-cad-tool/"><strong>OffsetPath</strong></a> by Olav Martin Kvern, which uses a clever method to create paths around selected objects at a custom offset distance:</p>
@@ -880,6 +891,7 @@
 <p>When you apply a Contour-type text wrap to an object, you’re creating a path around that object—and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create a new path from those geometric coordinates.</p>
 </blockquote>
 <p>I fixed some bugs, added a default value, an option to join contours, and undo support.</p>
+<hr>
 <h3 id="application">Application </h3>
 <p><small><em><strong>Scripts that operate at the application environment.</strong></em></small></p>
 <h4 id="zoom">Zoom </h4>
@@ -901,6 +913,7 @@
 <h5 id="zoomtospreadsjsx"><strong><code>ZoomToSpreads.jsx</code></strong> </h5>
 <p>Zooms on the first 3 spreads.</p>
 <p><em>Suggested shortcut:</em> <code>⌥F4</code></p>
+<hr>
 <h3 id="miscellaneous">Miscellaneous </h3>
 <h5 id="eanjsx"><strong><code>EAN.jsx</code></strong> </h5>
 <p>This script is inspired by <a href="https://github.com/smorodsky/ean-barcode-generator"><strong>EAN Barcode Generator</strong></a> by Konstantin Smorodsky, that generates a document with barcodes from a list provided by the user. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I got tired of manually placing, scaling, and rotating each one, so I ‘borrowed’ the part that generates the barcode and made this script to automate the operations.</p>

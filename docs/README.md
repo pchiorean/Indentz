@@ -175,6 +175,8 @@ Saves a TSV file (compatible with [**`ReplaceLinks.jsx`**](#replacelinksjsx)) co
 
 Saves a TSV file (compatible with [**`AddSwatches.jsx`**](#addswatchesjsx)) containing the names and properties of the active document swatches.
 
+---
+
 #### Export
 
 <small>_**Document export and related.**_</small>
@@ -237,6 +239,8 @@ Shows or hides all layers starting with either a dot or a hyphen, plus a hard-co
 - **guides, grid, masuratori**
 
 _Tip:_ The scripts are designed to be run with [**`QuickExport.jsx`**](#quickexportjsx).
+
+---
 
 #### Housekeeping
 
@@ -320,6 +324,8 @@ It contains code written by Marc Autret, Dave Saunders and others.
 
 _Suggested shortcut:_ `⇧F2`
 
+---
+
 ### Page
 
 <small>_**Scripts that work at the page/spread level.**_</small>
@@ -363,6 +369,8 @@ _Tip:_ This script is designed to be run with [**`QuickExport.jsx`**](#quickexpo
 Creates a frame around the page margins that visually marks the _visible area_ of a page. It's a stroked frame named **\<visible area\>** on the **.visible area** layer. It will use an existing **Visible area** swatch, or will create one with the values R=255 G=180 B=0.
 
 _Tip:_ This script is designed to be run with [**`QuickExport.jsx`**](#quickexportjsx).
+
+---
 
 #### Layout
 
@@ -423,6 +431,8 @@ Resizes the current page to the selected objects.
 
 _Suggested shortcut:_ `⇧F3`
 
+---
+
 #### Spreads
 
 <small>_**Juggling layers and spreads.**_</small>
@@ -450,6 +460,8 @@ Splits or joins the active document spreads using a list of predefined layers.
 It essentially allows for splitting a single spread into multiple language-specific spreads or combining multiple language-specific spreads into a single spread.
 
 The default layers are **DE**, **FR**, **IT**; edit the variable `layers` to customize them to your needs.
+
+---
 
 ### Object
 
@@ -487,6 +499,8 @@ Resets **Align To** to default (**Align to Selection**).
 
 _Suggested shortcut:_ `⌃Num0`
 
+---
+
 #### Clipping
 
 <small>_**Insert or remove objects from clipping frames.**_</small>
@@ -504,6 +518,8 @@ _Suggested shortcut:_ `Num*`
 Releases one or several objects from their _clipping frames_. If nothing is selected, it will release all clipped objects from the current spread.
 
 _Suggested shortcut:_ `⌃Num*`
+
+---
 
 #### Fitting
 
@@ -560,6 +576,8 @@ _Tip:_ A second run will preserve the current auto-sizing if you only change the
 
 _Suggested shortcut:_ `F6`
 
+---
+
 #### Proxy
 
 <small>_**Set the reference point used for transformations.**_</small>
@@ -580,6 +598,8 @@ Use the numeric keypad to set the reference point used for transformations (simi
 
 </details>
 
+---
+
 #### Scaling
 
 <small>_**Scale selected objects to a target area.**_</small>
@@ -599,6 +619,8 @@ Scale the selected objects to the target area specified in the script name (page
 
 </details>
 
+---
+
 #### Other
 
 ##### **`OffsetPaths.jsx`**
@@ -608,6 +630,8 @@ This is a slightly modified version of [**OffsetPath**](https://creativepro.com/
 > When you apply a Contour-type text wrap to an object, you’re creating a path around that object—and you can specify an offset distance. The text wrap path is accessible via scripting. That means that we could apply a text wrap with a given offset, then capture the path and path points of that path, turn off text wrap, and then create a new path from those geometric coordinates.
 
 I fixed some bugs, added a default value, an option to join contours, and undo support.
+
+---
 
 ### Application
 
@@ -644,6 +668,8 @@ _Suggested shortcut:_ `F4`
 Zooms on the first 3 spreads.
 
 _Suggested shortcut:_ `⌥F4`
+
+---
 
 ### Miscellaneous
 
