@@ -193,7 +193,7 @@ For a long time, I exported documents to PDF with [Batch Convert](https://creati
 **Preset options:** After selecting an Adobe PDF Preset you can easily override some of its options.
 
 **Document actions:**
-- **Skip do-not-print layers** will not export layers with names beginning with a dot or a hyphen (e.g., **.safety area**); you can also define a custom list with **Edit list**.
+- **Skip do-not-print layers** will not export layers with names beginning with a dot or a hyphen (e.g., **.safety area**) plus a default list of _do-not-print_ layers (see [**`Show/HideDNPLayers`**](#showdnplayersjsx-and-hidednplayersjsx)); you can also define a custom list with **Edit list**.
 
 - **Run a script** will run a JavaScript or AppleScript before exporting – e.g., one of the other scripts from this section.
 
@@ -223,7 +223,7 @@ _Suggested shortcut:_ `⌃E`
 
 #### **`PrepareForExport.jsx`**
 
-Hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers (see above). Additionally, it moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads and labels the spreads.
+Hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers (see below). Additionally, it moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads and labels the spreads.
 
 _Tip:_ The script is designed to be run with [**`QuickExport.jsx`**](#quickexportjsx).
 
@@ -246,9 +246,9 @@ _Defaults and cleanup._
 
 #### **`DefaultPrefs.jsx`**
 
-Sets some preferences for the active document. You should customize them to your workflow by editing the script (unfortunately the preferences are scattered in so many places that it's difficult to guide you).
+Sets some preferences for the active document. You should customize them to your workflow by editing the script (unfortunately the preferences are scattered in so many places that it's for me difficult to guide you).
 
-_Note:_ Many scripts in this collection assume these settings as defaults because they suit my environment – e.g., is possible to try to scale a locked object (or guide) and the script will fail (see **Prevent Selection of Locked Objects**).
+_Note:_ Many scripts in this collection assume these settings as defaults because they suit _my_ environment – e.g., is possible to try to scale a locked object (or guide) and the script will fail (see **Prevent Selection of Locked Objects**).
 
 <details><summary><strong>Click here for details</strong></summary>
 
@@ -751,7 +751,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2024 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-Last updated: July 1, 2024
+Last updated: July 19, 2024
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use daily, so it's kind of tested, but… beware. ;)
 

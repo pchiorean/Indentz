@@ -378,7 +378,7 @@
 <p><strong>Document actions:</strong></p>
 <ul>
 <li>
-<p><strong>Skip do-not-print layers</strong> will not export layers with names beginning with a dot or a hyphen (e.g., <strong>.safety area</strong>); you can also define a custom list with <strong>Edit list</strong>.</p>
+<p><strong>Skip do-not-print layers</strong> will not export layers with names beginning with a dot or a hyphen (e.g., <strong>.safety area</strong>) plus a default list of <em>do-not-print</em> layers (see <a href="#showdnplayersjsx-and-hidednplayersjsx"><strong><code>Show/HideDNPLayers</code></strong></a>); you can also define a custom list with <strong>Edit list</strong>.</p>
 </li>
 <li>
 <p><strong>Run a script</strong> will run a JavaScript or AppleScript before exporting – e.g., one of the other scripts from this section.</p>
@@ -419,7 +419,7 @@
 <p><em>Tip:</em> The settings are saved every time you run the script, but if you keep the <strong>Opt/Alt</strong> key pressed while clicking <strong>Start</strong>, they will not be updated for the current session.</p>
 <p><em>Suggested shortcut:</em> <code>⌃E</code></p>
 <h4 id="prepareforexportjsx"><strong><code>PrepareForExport.jsx</code></strong> </h4>
-<p>Hides all layers starting with either a dot or a hyphen, plus a hard-coded list of <em>do-not-print</em> layers (see above). Additionally, it moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads and labels the spreads.</p>
+<p>Hides all layers starting with either a dot or a hyphen, plus a hard-coded list of <em>do-not-print</em> layers (see below). Additionally, it moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads and labels the spreads.</p>
 <p><em>Tip:</em> The script is designed to be run with <a href="#quickexportjsx"><strong><code>QuickExport.jsx</code></strong></a>.</p>
 <h4 id="showdnplayersjsx-and-hidednplayersjsx"><strong><code>ShowDNPLayers.jsx</code></strong> and <strong><code>HideDNPLayers.jsx</code></strong> </h4>
 <p>Shows or hides all layers starting with either a dot or a hyphen, plus a hard-coded list of <em>do-not-print</em> layers:</p>
@@ -435,8 +435,8 @@
 <h3 id="housekeeping">Housekeeping </h3>
 <p><em>Defaults and cleanup.</em></p>
 <h4 id="defaultprefsjsx"><strong><code>DefaultPrefs.jsx</code></strong> </h4>
-<p>Sets some preferences for the active document. You should customize them to your workflow by editing the script (unfortunately the preferences are scattered in so many places that it’s difficult to guide you).</p>
-<p><em>Note:</em> Many scripts in this collection assume these settings as defaults because they suit my environment – e.g., is possible to try to scale a locked object (or guide) and the script will fail (see <strong>Prevent Selection of Locked Objects</strong>).</p>
+<p>Sets some preferences for the active document. You should customize them to your workflow by editing the script (unfortunately the preferences are scattered in so many places that it’s for me difficult to guide you).</p>
+<p><em>Note:</em> Many scripts in this collection assume these settings as defaults because they suit <em>my</em> environment – e.g., is possible to try to scale a locked object (or guide) and the script will fail (see <strong>Prevent Selection of Locked Objects</strong>).</p>
 <details><summary><strong>Click here for details</strong></summary>
 <p><strong>Application:</strong></p>
 <blockquote>
@@ -1007,7 +1007,7 @@ Blank lines are ignored; everything after a <code>#</code> (comments) is ignored
 <h2 id="license">License </h2>
 <p>© 2020-2024 Paul Chiorean &lt;jpeg@basement.ro&gt;.<br>
 The code is released under the <a href="LICENSE.txt">MIT License</a>.</p>
-<p>Last updated: July 1, 2024</p>
+<p>Last updated: July 19, 2024</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
