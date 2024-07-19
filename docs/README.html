@@ -47,7 +47,7 @@
 <p><strong>Libs:</strong> Many scripts use dynamically linked functions from <strong><code>lib/</code></strong>, which means that the folder structure should be preserved after downloading the repository. If you download <a href="https://github.com/pchiorean/Indentz/releases">releases</a>, which are statically linked, you can use any script stand-alone<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>.</p>
 <p>Because there are quite a lot of files, I’ve sorted them into groups related to their target: the document; pages or spreads; objects on page; the application environment.</p>
 <h2 id="document">Document </h2>
-<p><em>Scripts that work at the document level.</em></p>
+<p><em>Scripts that operate at the document level.</em></p>
 <h3 id="assets">Assets </h3>
 <p><em>Layers, swatches, fonts, links etc.</em></p>
 <h4 id="addlayersjsx"><strong><code>AddLayers.jsx</code></strong> </h4>
@@ -499,9 +499,9 @@
 <p>It contains code written by Marc Autret, Dave Saunders and others.</p>
 <p><em>Suggested shortcut:</em> <code>⇧F2</code></p>
 <h2 id="page">Page </h2>
-<p><em>Scripts that work at the page/spread level.</em></p>
+<p><em>Scripts that operate at the page/spread level.</em></p>
 <h3 id="guides">Guides </h3>
-<p><em>Guides, labels and markings.</em></p>
+<p><em>Guides, labels and page markings.</em></p>
 <h4 id="guidesaddjsx"><strong><code>GuidesAdd.jsx</code></strong> </h4>
 <p>If any page objects are selected, we add guides around them.</p>
 <p>If nothing is selected, guides are added to the page edges and the middle of the page margins. A second run deletes the guides.</p>
@@ -618,7 +618,7 @@
 <p>It essentially allows for splitting a single spread into multiple language-specific spreads or combining multiple language-specific spreads into a single spread.</p>
 <p>The default layers are <strong>DE</strong>, <strong>FR</strong>, <strong>IT</strong>; edit the variable <code>layers</code> to customize them to your needs.</p>
 <h2 id="object">Object </h2>
-<p><em>Scripts that work at the object level.</em></p>
+<p><em>Scripts that operate at the object level.</em></p>
 <h3 id="align">Align </h3>
 <p><em>Align objects using the numeric keypad.</em></p>
 <h4 id="aligntojsx"><strong><code>AlignTo*.jsx</code></strong> </h4>
@@ -681,7 +681,7 @@
 <p>Releases one or several objects from their <em>clipping frames</em>. If nothing is selected, it will release all clipped objects from the current spread.</p>
 <p><em>Suggested shortcut:</em> <code>⌃Num*</code></p>
 <hr>
-<h3 id="fitting">Fitting </h3>
+<h3 id="fit">Fit </h3>
 <p><em>Reframe objects to a target area.</em></p>
 <h4 id="fittojsx"><strong><code>FitTo*.jsx</code></strong> </h4>
 <p>These scripts reframe the selected objects to the target area specified in the script name (page/spread or their margins, bleed, or <em>visible area</em>).</p>
@@ -843,7 +843,7 @@
 </table>
 </details>
 <hr>
-<h3 id="scaling">Scaling </h3>
+<h3 id="scale">Scale </h3>
 <p><em>Scale selected objects to a target area.</em></p>
 <h4 id="scaletojsx"><strong><code>ScaleTo*.jsx</code></strong> </h4>
 <p>Scale the selected objects to the target area specified in the script name (page size, page margins or spread bleed). Objects are scaled together, as a group.</p>
@@ -1007,7 +1007,7 @@ Blank lines are ignored; everything after a <code>#</code> (comments) is ignored
 <h2 id="license">License </h2>
 <p>© 2020-2024 Paul Chiorean &lt;jpeg@basement.ro&gt;.<br>
 The code is released under the <a href="LICENSE.txt">MIT License</a>.</p>
-<p>Last updated: June 27, 2024</p>
+<p>Last updated: July 1, 2024</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">

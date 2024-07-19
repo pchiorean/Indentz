@@ -28,7 +28,7 @@ Because there are quite a lot of files, I've sorted them into groups related to 
 
 ## Document
 
-_Scripts that work at the document level._
+_Scripts that operate at the document level._
 
 ### Assets
 
@@ -324,11 +324,11 @@ _Suggested shortcut:_ `⇧F2`
 
 ## Page
 
-_Scripts that work at the page/spread level._
+_Scripts that operate at the page/spread level._
 
 ### Guides
 
-_Guides, labels and markings._
+_Guides, labels and page markings._
 
 #### **`GuidesAdd.jsx`**
 
@@ -459,7 +459,7 @@ The default layers are **DE**, **FR**, **IT**; edit the variable `layers` to cus
 
 ## Object
 
-_Scripts that work at the object level._
+_Scripts that operate at the object level._
 
 ### Align
 
@@ -515,7 +515,7 @@ _Suggested shortcut:_ `⌃Num*`
 
 ---
 
-### Fitting
+### Fit
 
 _Reframe objects to a target area._
 
@@ -594,7 +594,7 @@ Use the numeric keypad to set the reference point used for transformations (simi
 
 ---
 
-### Scaling
+### Scale
 
 _Scale selected objects to a target area._
 
@@ -751,7 +751,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2024 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-Last updated: June 27, 2024
+Last updated: July 1, 2024
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use daily, so it's kind of tested, but… beware. ;)
 
