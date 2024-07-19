@@ -651,7 +651,7 @@ It resembles **Fit Selection in Window** (`⌥⌘=`), but:
 - If the cursor is in a text frame, zooms on the whole frame;
 - Without anything selected zooms on the current spread.
 
-_Note:_ It's really a hack and it assumes that **UI Sizing** is set to **Small**.
+_Note:_ It's really a hack and it assumes that **UI Sizing** is set to **Small** and **Application Frame** is used. Also, the variables `HC` and `VC` must be customized to your particular workspace. :)
 
 _Suggested shortcut:_ `F4`
 
@@ -673,7 +673,7 @@ It has two modes of operation:
 
 - When nothing is selected, it creates a new document with a barcode on each page, like the original script.
 
-- When multiple objects are selected, the barcodes are inserted sequentially into them. If only one code is provided, all objects get it.
+- When multiple objects are selected, the barcodes are inserted sequentially into them. If only one code is provided, all objects are getting it.
 
 _Suggested shortcut:_ `⌥F9`
 
@@ -689,7 +689,7 @@ If the document name ends with a separator (space/dot/underline/hyphen) followed
 
 **Example:** For a document with three spreads named **`Document_ABC.indd`**, the script will generate **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`** and **`Document_C_QR.pdf`**.
 
-_Tip:_ You can use `|` for manually splitting the label into several lines.
+_Tip:_ The script does a decent job breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
 
 _Suggested shortcut:_ `F9`
 
@@ -713,7 +713,7 @@ Does the same thing as **`QR`** but in a non-interactive way: retrieves a list o
 The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence.\
 Blank lines are ignored; everything after a `#` (comments) is ignored.
 
-_Tip:_ You can use `|` for manually splitting the label into several lines.
+_Tip:_ The script does a decent job breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
 
 _Suggested shortcut:_ `⇧F9`
 

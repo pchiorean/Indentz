@@ -904,7 +904,7 @@
 <li>If the cursor is in a text frame, zooms on the whole frame;</li>
 <li>Without anything selected zooms on the current spread.</li>
 </ul>
-<p><em>Note:</em> It’s really a hack and it assumes that <strong>UI Sizing</strong> is set to <strong>Small</strong>.</p>
+<p><em>Note:</em> It’s really a hack and it assumes that <strong>UI Sizing</strong> is set to <strong>Small</strong> and <strong>Application Frame</strong> is used. Also, the variables <code>HC</code> and <code>VC</code> must be customized to your particular workspace. 😃</p>
 <p><em>Suggested shortcut:</em> <code>F4</code></p>
 <h4 id="zoomtospreadsjsx"><strong><code>ZoomToSpreads.jsx</code></strong> </h4>
 <p>Zooms on the first 3 spreads.</p>
@@ -919,7 +919,7 @@
 <p>When nothing is selected, it creates a new document with a barcode on each page, like the original script.</p>
 </li>
 <li>
-<p>When multiple objects are selected, the barcodes are inserted sequentially into them. If only one code is provided, all objects get it.</p>
+<p>When multiple objects are selected, the barcodes are inserted sequentially into them. If only one code is provided, all objects are getting it.</p>
 </li>
 </ul>
 <p><em>Suggested shortcut:</em> <code>⌥F9</code></p>
@@ -941,7 +941,7 @@
 </table>
 <p>If the document name ends with a separator (space/dot/underline/hyphen) followed by a sequence of digits or letters equal to the number of spreads (a <em>suffix</em>), the letter corresponding to the spread index will be appended to each code/file.</p>
 <p><strong>Example:</strong> For a document with three spreads named <strong><code>Document_ABC.indd</code></strong>, the script will generate <strong><code>Document_A_QR.pdf</code></strong>, <strong><code>Document_B_QR.pdf</code></strong> and <strong><code>Document_C_QR.pdf</code></strong>.</p>
-<p><em>Tip:</em> You can use <code>|</code> for manually splitting the label into several lines.</p>
+<p><em>Tip:</em> The script does a decent job breaking the label into multiple lines, but you can use <code>|</code> to insert manual line breaks.</p>
 <p><em>Suggested shortcut:</em> <code>F9</code></p>
 <h4 id="qrbatchjsx"><strong><code>QRBatch.jsx</code></strong> </h4>
 <p>Does the same thing as <strong><code>QR</code></strong> but in a non-interactive way: retrieves a list of codes from a TSV data file named <strong><code>qr.tsv</code></strong> (<a href="samples/qr.tsv">sample</a>) and adds them to existing documents, or creates separate files (the suffix thingy applies here as well):</p>
@@ -984,7 +984,7 @@
 </ul>
 <p>The TSV file must be saved locally (in the active document folder); files starting with <code>_</code> take precedence.<br>
 Blank lines are ignored; everything after a <code>#</code> (comments) is ignored.</p>
-<p><em>Tip:</em> You can use <code>|</code> for manually splitting the label into several lines.</p>
+<p><em>Tip:</em> The script does a decent job breaking the label into multiple lines, but you can use <code>|</code> to insert manual line breaks.</p>
 <p><em>Suggested shortcut:</em> <code>⇧F9</code></p>
 <h4 id="showfontsjsx"><strong><code>ShowFonts.jsx</code></strong> </h4>
 <p>Shows all fonts used in the active document.</p>
