@@ -187,6 +187,10 @@
   **cleanup/BreakLinkToStyles:** Also remove orphan styles and groups
 - `06/16` [`org`](https://github.com/pchiorean/Indentz/commit/ad78d3a4774c539ef6f97a4d35159f9b3a7ac545)
   Renamed some scripts, preparing for a general reorganization
+- `06/27` [`org`](https://github.com/pchiorean/Indentz/commit/d35062972cdde467cd5245562f446800aa2d317a)
+  Reorganized the scripts to a new folder scheme
+- `06/27` [`upd`](https://github.com/pchiorean/Indentz/commit/0eafbac8b16b4f1ef2b707c77d5b0b7a6e255a5f)
+  **Miscellaneous/QR:** The code text defaults to the file name
 
 ##### Queued
 
@@ -194,6 +198,7 @@
 - [ ] `fix` **file/SpreadsToFiles:** Don't append separators if already exist
 - [ ] `fix` **fit/TextAutoSize:** Check `baselineShift`
 - [ ] `brk` `?` Use *safety area* in **PageMarginsFromScriptName**
+- [ ] `upd` Tweak when *ESC* key status is read
 - [ ] `upd` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
 - [ ] `upd` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
 - [ ] `upd` **export/QuickExport:** Add a checkbox for `0e04f28`
