@@ -190,7 +190,10 @@
 - `06/27` [`org`](https://github.com/pchiorean/Indentz/commit/d35062972cdde467cd5245562f446800aa2d317a)
   Reorganized the scripts to a new folder scheme
 - `06/27` [`upd`](https://github.com/pchiorean/Indentz/commit/0eafbac8b16b4f1ef2b707c77d5b0b7a6e255a5f)
-  **Miscellaneous/QR:** The code text defaults to the file name
+  **QR:** The code text now defaults to the file name
+
+- `07/20` [`fix`](https://github.com/pchiorean/Indentz/commit/d727fd8bb607ebdcc342f96803c24adbc861e1f9)
+  **QuickExport:** When adding a suffix was disabled, it also ignored 'Sort files into subfolders by suffix'. Fixed.
 
 ##### Queued
 
