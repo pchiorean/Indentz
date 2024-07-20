@@ -1,5 +1,5 @@
 /*
-	Quick export 24.5.3
+	Quick export 24.7.20
 	(c) 2021-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -198,7 +198,7 @@ function QuickExport() {
 
 		// Documents loop
 		while ((doc = docs.shift())) {
-			// Open docs (optionally upgrade from old versions)
+			// Open document (optionally upgrade from old versions)
 			if (isFolderMode) {
 				if (doc.exists) {
 					doc = app.open(doc);
@@ -264,9 +264,8 @@ function QuickExport() {
 				baseFolder = decodeURI(doc.filePath);
 				if (exp.destination.isOn.value) baseFolder = beautifyPath(Folder(exp.destination.path));
 
-				// Get suffix
-				suffix = '';
-				if (exp.suffix.isOn.value) suffix = exp.suffix.et.text ? ('_' + exp.suffix.et.text) : '';
+				// Get initial suffix
+				suffix = exp.suffix.et.text ? ('_' + exp.suffix.et.text) : '';
 
 				// Create subfolders
 				destFolder = baseFolder;
@@ -283,6 +282,9 @@ function QuickExport() {
 					subDate = time.MMDD;
 					if (!Folder(destFolder + '/' + subDate).exists) Folder(destFolder + '/' + subDate).create();
 				}
+
+				// Reset the suffix if not needed
+				if (!exp.suffix.isOn.value) suffix = '';
 
 				// Run script
 				if (exp.script.isOn.value) {
@@ -327,7 +329,7 @@ function QuickExport() {
 				doc.viewPreferences.horizontalMeasurementUnits = old.horizontalMeasurementUnits;
 				doc.viewPreferences.verticalMeasurementUnits = old.verticalMeasurementUnits;
 
-				// Update documents
+				// Update document
 				if (exp.docSave.value) {
 					app.activeWindow.activePage = doc.spreads[0].pages[0];
 					app.activeWindow.zoom(ZoomOptions.FIT_SPREAD);
