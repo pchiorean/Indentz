@@ -4,7 +4,7 @@
 
 	Inserts EAN codes into the selected frames or in a new document.
 
-	The code that generates the EAN code (`BarCode()`) was borrowed
+	The code that generates the EAN code (`BarCode()`) is refactored
 	from 'EAN Barcode Generator' by Konstantin Smorodsky.
 	https://github.com/smorodsky/ean-barcode-generator
 
