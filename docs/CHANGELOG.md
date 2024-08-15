@@ -193,7 +193,10 @@
   **QR:** The code text now defaults to the file name
 
 - `07/20` [`fix`](https://github.com/pchiorean/Indentz/commit/d727fd8bb607ebdcc342f96803c24adbc861e1f9)
-  **QuickExport:** When adding a suffix was disabled, it also ignored 'Sort files into subfolders by suffix'. Fixed.
+  **QuickExport:** When adding a suffix was disabled, it also ignored 'Sort files into subfolders by suffix'; fixed
+
+- `08/15` [`fix`](https://github.com/pchiorean/Indentz/commit/6144add86ec3c4acef0085bb6a92773a26166d6c)
+  **DocCleanup:** When cleaning text frames skip threaded ones
 
 ##### Queued
 
