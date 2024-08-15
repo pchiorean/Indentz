@@ -1,4 +1,62 @@
-## [Development version](https://github.com/pchiorean/Indentz/compare/23.7.18...dev)
+<!-- ## [Development version](https://github.com/pchiorean/Indentz/compare/23.7.18...dev)
+
+##### Queued
+
+- [ ] `fix` **SplitDocBySpreads:** Don't append separators if already exist
+- [ ] `fix` **TextAutoSize:** Check `baselineShift`
+- [ ] `brk` `?` Use *safety area* in **PageMarginsFromScriptName**
+- [ ] `upd` Tweak the moment when *ESC* key status is read
+- [ ] `upd` **ReplaceLinks, QuickExport:** Restore cropping mode when relinking files
+- [ ] `upd` **ReplaceLinks, QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
+- [ ] `upd` **QuickExport:** Add a checkbox for `0e04f28`
+- [ ] `upd` **ZoomToSpreads:** Apply the smallest zoom value to all windows
+- [ ] `upd` Implement `try/catch/finally` when appropriate
+- [ ] `ref` `?` Implement `for...of` when appropriate (see [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of))
+- [ ] `new` **QuickExport:** Add JPG, PNG & INDD export profiles
+- [ ] `new` **QuickExport:** Add package option
+- [ ] `new` **Grid\* and HW:** Get `HW_PCT` from page guide or object tag (`hw10`, `hw15`, etc.); fallback to `10` -->
+
+## [Releases](https://github.com/pchiorean/Indentz/releases)
+
+### [24.8.15](https://github.com/pchiorean/Indentz/releases/tag/24.8.15)
+
+##### New features
+
+- `08/05` [`new`](https://github.com/pchiorean/Indentz/commit/868944d0557d7c199cf080107569eba6ebc6105a)
+  **export/QuickExport:** Added sorting by date (`MM.DD`) and miscellaneous fixes
+- `08/05` [`new`](https://github.com/pchiorean/Indentz/commit/f2ecc11eb80cf50bdd50ca7cc79730e03bf6ea5e)
+  **lib/log:** Added directives for start/end of blocks (`^` and `$`)
+- `08/21` [`new`](https://github.com/pchiorean/Indentz/commit/9dfb241366dfa79765ff5db67b9775d1f1dab15c)
+  **lib/parseDataFile, stat:** Moved `stat()` to a separate file
+- `09/04` [`new`](https://github.com/pchiorean/Indentz/commit/06b495d58ee34da17157e631311becd45f54e9b0)
+          [`fix`](https://github.com/pchiorean/Indentz/commit/ddd2dedf4c73c89145692dddec285fed60dbb24e)
+  **export/QuickExport:** Added an elapsed time alert at the end (for durations longer than 9 seconds)
+- `09/11` [`new`](https://github.com/pchiorean/Indentz/commit/a1500c1b6ee88e04ea79e57fa6420e966da0108c)
+  **misc/EAN:** Sequentially insert a list of barcodes into all selected objects;
+  embedding is done by `contentPlace()` method, so the clipboard is no longer modified
+- `09/23` [`new`](https://github.com/pchiorean/Indentz/commit/5a41bd99dea26be6bd649511fc42a65c358b801b)
+  **lib/log:** Added a stopwatch (`!`/`?`); changed directives for blocks to `[`/`]`
+- `10/31` [`new`](https://github.com/pchiorean/Indentz/commit/1574bc6fbd3dfba3af8b098f6d3f22c0f613b71c)
+  **misc/OffsetPaths:** Added support for groups; in fact we also process each member of 1st level groups so we don't get a boring rectangle
+- `11/05` [`new`](https://github.com/pchiorean/Indentz/commit/24bdbc580b13a4133a9f7bb2d3704eec53d7407f)
+  **lib/trim:** Added a helper function for trimming whitespace in strings (borrowed from [IdExtenso](https://github.com/indiscripts/IdExtenso/blob/master/core/Ext/%24%24.string.jsxinc) by [Marc Autret](https://indiscripts.com))
+- `02/10` [`new`](https://github.com/pchiorean/Indentz/commit/7e5afe4c656508ff4e8ce371f3992ac8cdf1c9ed)
+  **cleanup/ResetLayers:** Added a script that sets the visible/printable/locked state of document layers as defined in `layers.tsv`
+- `04/09` [`new`](https://github.com/pchiorean/Indentz/commit/ab132a2c434ee6e54c837dd87011072cbd3f41b9)
+  **export/MarkSafetyArea:** Added a script to mark the _safety area_ of a page
+- `06/16` [`new`](https://github.com/pchiorean/Indentz/commit/d569b739c4ac96247b8447105cf32fea63cc4455)
+  **misc/SplitByLayers:** Added a script that splits or joins document spreads using special layers
+
+##### Breaking changes
+
+- `12/01` [`brk`](https://github.com/pchiorean/Indentz/commit/d9bb8c1ac09820b0488cbbefc03bf2cea3bcf680)
+  **lib/getPageItems:** Now it returns an array of found items, or `false` if nothing was found
+- `12/01` [`brk`](https://github.com/pchiorean/Indentz/commit/69ba851c3fe4972951ad3b92b2cd19f5670dd3b5)
+  **lib/replaceText:** Added an argument for case sensitivity; extended `target` to page/spread/layer; returns the number of replacements
+- `02/10` [`brk`](https://github.com/pchiorean/Indentz/commit/939a1f301d764c820b57a0a7107bcf81d9ee3083)
+  **cleanup/DefaultLayers, DumpLayers:** Added a column for the locked status of document layers
+
+##### Updates
 
 - `07/21` [`upd`](https://github.com/pchiorean/Indentz/commit/4bfef0ec89bd1b19e0b7b06e1825efb1a8048c12)
   **misc/LabelPageRatios:** Improved label info: page ‣ visible ‣ margins: displays the page ratio and the visible area ratio;
@@ -9,40 +67,12 @@
   **export/QuickExport:** Now it gets the last exported file index from all subfolders
 - `07/31` [`upd`](https://github.com/pchiorean/Indentz/commit/f721aab40c27fd774c25423ffff2b1a0824e3b4d)
   **export/QuickExport:** Switched `getFilesRecursively()` to an external lib
-
-- `08/05` [`new`](https://github.com/pchiorean/Indentz/commit/868944d0557d7c199cf080107569eba6ebc6105a)
-  **export/QuickExport:** Added sorting by date (`MM.DD`) and miscellaneous fixes
-- `08/05` [`fix`](https://github.com/pchiorean/Indentz/commit/632950b79926381ae88076bd94eac591bb551799)
-  **lib/getFilesRecursively:** Fixed a missing backslash in the regex expression
-- `08/05` [`new`](https://github.com/pchiorean/Indentz/commit/f2ecc11eb80cf50bdd50ca7cc79730e03bf6ea5e)
-  **lib/log:** Added directives for start/end of blocks (`^` and `$`)
-- `08/06` [`ref`](https://github.com/pchiorean/Indentz/commit/0f5e5c46bf55272edcd10a28a890f7c4f8fb3736)
-  **export/QuickExport:** Tidy up; add some comments
-- `08/17` [`fix`](https://github.com/pchiorean/Indentz/commit/bbc94446bcbaded81ec592042e4398f6385b97b0)
-  **misc/Clip:** Text frames are width-fitted by temporarily outlining the text; this fix skips color-filled frames
-- `08/21` [`new`](https://github.com/pchiorean/Indentz/commit/9dfb241366dfa79765ff5db67b9775d1f1dab15c)
-  **lib/parseDataFile, stat:** Moved `stat()` to a separate file
 - `08/21` [`upd`](https://github.com/pchiorean/Indentz/commit/ecc6a3c37c8615f5219728b375ff28b28ef289c0)
   **cleanup/DefaultLayers; export/QuickExport; misc/QR, QRBatch:** Switched to `stat()` for error reporting
 - `08/29` [`upd`](https://github.com/pchiorean/Indentz/commit/a223444bf91c64ba5eeab2e41f38b3c1e03d196a)
   **export/QuickExport:** Improved persistence of output folder when saving settings
 - `08/29` [`upd`](https://github.com/pchiorean/Indentz/commit/6103d8cd5c77b0cc0507b287f5d28fba987882ba)
   **lib/log:** Improved folding block presentation
-
-- `09/04` [`fix`](https://github.com/pchiorean/Indentz/commit/ff5328e8772aec7258219ffd23c5235d7058cc51)
-  **export/QuickExport:** When 'Escape' was detected, we performed the cleanup but not the exit; fixed
-- `09/04` [`new`](https://github.com/pchiorean/Indentz/commit/06b495d58ee34da17157e631311becd45f54e9b0)
-          [`fix`](https://github.com/pchiorean/Indentz/commit/ddd2dedf4c73c89145692dddec285fed60dbb24e)
-  **export/QuickExport:** Added an elapsed time alert at the end (for durations longer than 9 seconds)
-- `09/04` [`ref`](https://github.com/pchiorean/Indentz/commit/ddd2dedf4c73c89145692dddec285fed60dbb24e)
-  **export/QuickExport:** Added `beautifyPath()` to simplify platform-dependent path display
-- `09/06` [`fix`](https://github.com/pchiorean/Indentz/commit/fe6dc8d64277a367c86f9d63feca006531eebf10)
-  **export/QuickExport:** Do cleanup before displaying the report
-- `09/11` [`new`](https://github.com/pchiorean/Indentz/commit/a1500c1b6ee88e04ea79e57fa6420e966da0108c)
-  **misc/EAN:** Sequentially insert a list of barcodes into all selected objects;
-  embedding is done by `contentPlace()` method, so the clipboard is no longer modified
-- `09/11` [`fix`](https://github.com/pchiorean/Indentz/commit/473ef02662d0f51dcd8f9c30d736c70719d23781)
-  **view/ZoomToSelection, ZoomToSpreads:** Fixed the acceptable zoom range
 - `09/12` [`upd`](https://github.com/pchiorean/Indentz/commit/d58f5c3bf2a3dedef7e136fc800bedc85bfb0dd1)
   **export/QuickExport:** Improved timer display: 'Xh Xm Xs'
 - `09/23` [`upd`](https://github.com/pchiorean/Indentz/commit/992ab910c86dae5a10895e187950d793e7a91c29)
@@ -50,27 +80,73 @@
 - `09/23` [`upd`](https://github.com/pchiorean/Indentz/commit/1cad44d2b866aa7f81a4e0646a9f3016914fa4fc)
           [`ref`](https://github.com/pchiorean/Indentz/commit/1f9cbe80447a5187c8c1425a223aef82bc6a5f3b)
   **lib/isInArray:** Skip regex matching when no wildcards
-- `09/23` [`new`](https://github.com/pchiorean/Indentz/commit/5a41bd99dea26be6bd649511fc42a65c358b801b)
-  **lib/log:** Added a stopwatch (`!`/`?`); changed directives for blocks to `[`/`]`
 - `09/23` [`upd`](https://github.com/pchiorean/Indentz/commit/772c7aaeda9d637ee31039de5d28c353d02eee1e)
   **file/FilesToSpreads:** Used natural sorting for files
-- `09/23` [`fix`](https://github.com/pchiorean/Indentz/commit/c27c6887e2ea1d295e10193bfdae4122208eaab8)
-  **layout/PageMarginsFromScriptName:** Included missing `getBounds()` (d'oh!)
 - `09/25` [`upd`](https://github.com/pchiorean/Indentz/commit/f988b4860386a48702971d4587fcd78203d32048)
   **cleanup/DefaultSwatches:** Added lowercase self as a default variant; this fixes case variations
+- `09/30` [`upd`](https://github.com/pchiorean/Indentz/commit/a0741e03051dd7bdd1e3a346e2f52117b4f94077)
+  **export/QuickExport:** Simplifies source updating to just 'Save' and 'Save as...' options; also fit spread in view
+- `11/05` [`upd`](https://github.com/pchiorean/Indentz/commit/096a21a78db9d3376d129dc3a0507286750e2068)
+  **cleanup/DocCleanup:** Added some layers to 'Show/hide layers'
+- `11/14` [`upd`](https://github.com/pchiorean/Indentz/commit/0e04f2861b51407d62758f68bd92c3d160862a10)
+  **export/QuickExport:** Automatically add to the suffix all visible & printable layers named '+xxxxxxx' if exporting with a 'print' preset
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/b32fe3689e7f0e117bb32a8c4843406ddb95a057)
+  **file/FilesToSpreads:** Resets page numbering after merging files
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/f6b1b3c47f6900088a0bc8a6b690ef3efae21014)
+  **misc/Clip, ClipUndo:** Selects all released objects
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/d8831ee76da1a74236639a3a74441bc8c350c7e3)
+  **cleanup/DocCleanup; export/MarkVisibleArea, PrepareForExport; layout/PageSizeFromFilename:** Updated internal layers list (added the prefix '+' to some technical layers)
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/49fafb20f8cb3fa6ab14b7cb610d8197ac9e50d7)
+  **lib/replaceText:** Added a target for `changeText()`
+- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/960714cabf14ac2b2297d26b4902c0c11a6c5ec9)
+  **lib/log:** Simplified block markers
+- `12/12` [`upd`](https://github.com/pchiorean/Indentz/commit/6f1cbad6ff5cfa0ace99e75d7b800bfc5d1f9fc7)
+  **lib/getPageItems:** Clarify that `name` is also optional: if undefined, it matches all items
+- `02/10` [`upd`](https://github.com/pchiorean/Indentz/commit/73116dfeb0a29a63a8b1fab368c9ee672bd2bf29)
+  **cleanup/DocCleanup:** Replaced the hack that shows/hides layers with a proper solution that uses `layers.tsv`
+- `03/01` [`upd`](https://github.com/pchiorean/Indentz/commit/41ce49afc0d7f3434401252c7cb10ff4e31827ba)
+  **layout/GuidesAdd, PageMarginsFromScriptName and related:** HW guides are now added to the '.guides' layer
+- `04/14` [`upd`](https://github.com/pchiorean/Indentz/commit/bf4a58a2ed15572a7b78712028f3088fa44173d9)
+  **lib/getPageItems:** Also match items by label
+- `04/16` [`upd`](https://github.com/pchiorean/Indentz/commit/490bc72f6fc6268630e538e98a17967fda15303a)
+  **lib/addGuide:** Relaxed guides view threshold to 100%
+- `04/29` [`upd`](https://github.com/pchiorean/Indentz/commit/017227456b12abf809778a1963b55535fcd30b8b)
+  **cleanup/DocCleanup:** Simplified logic that sets the pasteboard size
+- `04/29` [`upd`](https://github.com/pchiorean/Indentz/commit/f0d895814ae386dc6893f1f84c4c1b1b11b6eb8e)
+  **lib/fitTo:** Ignore items on the guides layer
+- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/57601da8ef021c1e6efd0528e3060b055c81bbef)
+  **export/QuickExport:** Improved report for overflowed text
+- `05/30` [`upd`](https://github.com/pchiorean/Indentz/commit/a96a77f127c02781bfe25383a74c5a657583057a)
+  **misc/EAN:** Renamed 'text & logos' layer to 'copy'
+- `05/30` [`upd`](https://github.com/pchiorean/Indentz/commit/616bbec1bba53007e15608eb2962606e58e9f99f)
+  **layout/GuidesAdd:** Added an option to use spread guides
+- `06/16` [`upd`](https://github.com/pchiorean/Indentz/commit/7adabb261f3684ce9d4fdf1413e05ec88cbed402)
+  **cleanup/BreakLinkToStyles:** Also remove orphan styles and groups
+- `06/27` [`upd`](https://github.com/pchiorean/Indentz/commit/0eafbac8b16b4f1ef2b707c77d5b0b7a6e255a5f)
+  **QR:** The code text now defaults to the file name
+
+##### Bug fixes
+
+- `08/05` [`fix`](https://github.com/pchiorean/Indentz/commit/632950b79926381ae88076bd94eac591bb551799)
+  **lib/getFilesRecursively:** Fixed a missing backslash in the regex expression
+- `08/17` [`fix`](https://github.com/pchiorean/Indentz/commit/bbc94446bcbaded81ec592042e4398f6385b97b0)
+  **misc/Clip:** Text frames are width-fitted by temporarily outlining the text; this fix skips color-filled frames
+- `09/04` [`fix`](https://github.com/pchiorean/Indentz/commit/ff5328e8772aec7258219ffd23c5235d7058cc51)
+  **export/QuickExport:** When 'Escape' was detected, we performed the cleanup but not the exit; fixed
+- `09/06` [`fix`](https://github.com/pchiorean/Indentz/commit/fe6dc8d64277a367c86f9d63feca006531eebf10)
+  **export/QuickExport:** Do cleanup before displaying the report
+- `09/11` [`fix`](https://github.com/pchiorean/Indentz/commit/473ef02662d0f51dcd8f9c30d736c70719d23781)
+  **view/ZoomToSelection, ZoomToSpreads:** Fixed the acceptable zoom range
+- `09/23` [`fix`](https://github.com/pchiorean/Indentz/commit/c27c6887e2ea1d295e10193bfdae4122208eaab8)
+  **layout/PageMarginsFromScriptName:** Included missing `getBounds()` (d'oh!)
 - `09/26` [`fix`](https://github.com/pchiorean/Indentz/commit/5e64db84026be92536d5e1c5363380641aa69ff3)
   **cleanup/ReplaceLinks:** Included missing `stat()` (d'oh!)
 - `09/29` [`fix`](https://github.com/pchiorean/Indentz/commit/0bc45eac1631ef28c131215d5422f275b9b6b3ff)
   **export/QuickExport:** When checking for the last exported file index limit search to the base folder + destination subfolders
-- `09/29` [`ref`](https://github.com/pchiorean/Indentz/commit/ba1f2d72ef172c67632b8e117a003dd8cbb6a21c)
-  **cleanup/DocCleanup, ReplaceLinks; misc/EAN, QR, QRBatch:** Tweaked progress bar titles
 - `09/29` [`fix`](https://github.com/pchiorean/Indentz/commit/fbde0d900d87d2cfcbacb3b8ebd367cfa245ac07)
   **misc/EAN.jsx:** List height was supposed to grow depending on selection; fixed
 - `09/29` [`fix`](https://github.com/pchiorean/Indentz/commit/d54a2281a9b13128d765038a52c09dddca0ec9aa)
   **export/QuickExport:** Skip export when fonts are missing; skip when links are to be updated but are missing
-- `09/30` [`upd`](https://github.com/pchiorean/Indentz/commit/a0741e03051dd7bdd1e3a346e2f52117b4f94077)
-  **export/QuickExport:** Simplifies source updating to just 'Save' and 'Save as...' options; also fit spread in view
-
 - `10/05` [`fix`](https://github.com/pchiorean/Indentz/commit/9a329ffaf729895085ded630de446224028b1ff3)
   **misc/EAN:** Placing code fails when target frames are already populated; fixed
 - `10/06` [`fix`](https://github.com/pchiorean/Indentz/commit/d11e48a234812aa479c80d81b3c104231e08cf24)
@@ -86,137 +162,63 @@
   **layout/Grid\*:** 'HW' layer and guide were created even when HW=0; fixed
 - `10/26` [`fix`](https://github.com/pchiorean/Indentz/commit/893672b79fd99ea654e49f0297e1f840b6bc0675)
   **cleanup/DocCleanup:** Don't delete text paths on empty frames
-- `10/27` [`ref`](https://github.com/pchiorean/Indentz/commit/0cd95a9e13072b7c9046ea46e3680960a6f2c5d2)
-  UI: Changed button labels from 'Ok' to 'OK'
-- `10/31` [`new`](https://github.com/pchiorean/Indentz/commit/1574bc6fbd3dfba3af8b098f6d3f22c0f613b71c)
-  **misc/OffsetPaths:** Added support for groups; in fact we also process each member of 1st level groups so we don't get a boring rectangle
-
 - `11/04` [`fix`](https://github.com/pchiorean/Indentz/commit/1c519c6d425ebc25bd4fbb3568e22508602c8454)
   **fit/TextAutoSize:** Trimming ending whitespace also affected styling; fixed
-- `11/05` [`upd`](https://github.com/pchiorean/Indentz/commit/096a21a78db9d3376d129dc3a0507286750e2068)
-  **cleanup/DocCleanup:** Added some layers to 'Show/hide layers'
 - `11/05` [`fix`](https://github.com/pchiorean/Indentz/commit/23066775d5e5f7077d5c5ee742e826fe1df46b61)
   **cleanup/ReplaceLinks:** Filenames with commas are now actually recognized, but must be properly quoted
-- `11/05` [`new`](https://github.com/pchiorean/Indentz/commit/24bdbc580b13a4133a9f7bb2d3704eec53d7407f)
-  **lib/trim:** Added a helper function for trimming whitespace in strings (borrowed from [IdExtenso](https://github.com/indiscripts/IdExtenso/blob/master/core/Ext/%24%24.string.jsxinc) by [Marc Autret](https://indiscripts.com))
 - `11/06` [`fix`](https://github.com/pchiorean/Indentz/commit/49111cc6e23519acb4fcca86c33629e086e3f6a0)
   **misc/QR, QRBatch:** Fixed document path detection for '[Converted]' docs
-- `11/14` [`upd`](https://github.com/pchiorean/Indentz/commit/0e04f2861b51407d62758f68bd92c3d160862a10)
-  **export/QuickExport:** Automatically add to the suffix all visible & printable layers named '+xxxxxxx' if exporting with a 'print' preset
-- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/b32fe3689e7f0e117bb32a8c4843406ddb95a057)
-  **file/FilesToSpreads:** Resets page numbering after merging files
-- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/f6b1b3c47f6900088a0bc8a6b690ef3efae21014)
-  **misc/Clip, ClipUndo:** Selects all released objects
-- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/d8831ee76da1a74236639a3a74441bc8c350c7e3)
-  **cleanup/DocCleanup; export/MarkVisibleArea, PrepareForExport; layout/PageSizeFromFilename:** Updated internal layers list (added the prefix '+' to some technical layers)
-- `11/25` [`ref`](https://github.com/pchiorean/Indentz/commit/ff3a50a5f395e77c28ffb1a55a9724bf6eaeb28b)
-  **export/QuickExport; file/SpreadsToFiles; lib/fitTo; misc/QRBatch:** Renamed several variables
 - `11/25` [`fix`](https://github.com/pchiorean/Indentz/commit/971dc3bc2eed9b7b3bb9e3d2d4f78f30eff484db)
   **lib/getPageItem:** Fixed a typo in a variable name
-- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/49fafb20f8cb3fa6ab14b7cb610d8197ac9e50d7)
-  **lib/replaceText:** Added a target for `changeText()`
-- `11/25` [`upd`](https://github.com/pchiorean/Indentz/commit/960714cabf14ac2b2297d26b4902c0c11a6c5ec9)
-  **lib/log:** Simplified block markers
-
-- `12/01` [`brk`](https://github.com/pchiorean/Indentz/commit/d9bb8c1ac09820b0488cbbefc03bf2cea3bcf680)
-  **lib/getPageItems:** Now it returns an array of found items, or `false` if nothing was found
-- `12/01` [`brk`](https://github.com/pchiorean/Indentz/commit/69ba851c3fe4972951ad3b92b2cd19f5670dd3b5)
-  **lib/replaceText:** Added an argument for case sensitivity; extended `target` to page/spread/layer; returns the number of replacements
 - `12/12` [`fix`](https://github.com/pchiorean/Indentz/commit/be7e0ffb485b160b609ad5ee9719cd72e0030c50)
   **export/MarkVisibleArea, layout/PageSizeFromFilename:** Fixed a situation where overprinting was attempted on pseudo-white
 - `12/12` [`fix`](https://github.com/pchiorean/Indentz/commit/aade75432b4540d7f08812b4e65f6c8d150ca7d3)
   **export/PrepareForExport:** Removed ancillaries from layer names ('+', '.', et al.) when labeling technical spreads
-- `12/12` [`ref`](https://github.com/pchiorean/Indentz/commit/4e49f0e81f6863864e12417698f7083a3bd92516)
-  **export/QuickExport:** Tweaked timer function
 - `12/12` [`fix`](https://github.com/pchiorean/Indentz/commit/a78ec695f013e37d07264e910af1a179a7b31b7d)
   **export/QuickExport:** Skip links in frames with no parent page (revisited)
-- `12/12` [`upd`](https://github.com/pchiorean/Indentz/commit/6f1cbad6ff5cfa0ace99e75d7b800bfc5d1f9fc7)
-  **lib/getPageItems:** Clarify that `name` is also optional: if undefined, it matches all items
 - `12/13` [`fix`](https://github.com/pchiorean/Indentz/commit/226a36ec5f213beb9cfe14debf9a9d8b84940786)
   **lib/fitTo:** Reset scaling of HW items to 100%
-
-- `02/10` [`brk`](https://github.com/pchiorean/Indentz/commit/939a1f301d764c820b57a0a7107bcf81d9ee3083)
-  **cleanup/DefaultLayers, DumpLayers:** Added a column for the locked status of document layers
-- `02/10` [`ref`](https://github.com/pchiorean/Indentz/commit/94e06924d68fff8a67100c890c99da59d9aef41c)
-  **cleanup/DefaultSwatches:** Minor edits
-- `02/10` [`ref`](https://github.com/pchiorean/Indentz/commit/b894e604e7f62eab36498ac73d764a4c3899a38d)
-  **cleanup/ReplaceFonts, ReplaceLinks, ReplaceSnippets:** Fixed a typo in the alert message; tweaked the dialog title
-- `02/10` [`new`](https://github.com/pchiorean/Indentz/commit/7e5afe4c656508ff4e8ce371f3992ac8cdf1c9ed)
-  **cleanup/ResetLayers:** Added a script that sets the visible/printable/locked state of document layers as defined in `layers.tsv`
-- `02/10` [`upd`](https://github.com/pchiorean/Indentz/commit/73116dfeb0a29a63a8b1fab368c9ee672bd2bf29)
-  **cleanup/DocCleanup:** Replaced the hack that shows/hides layers with a proper solution that uses `layers.tsv`
 - `02/14` [`fix`](https://github.com/pchiorean/Indentz/commit/bd6752cc9b39f15c031af1a4bbd46cf5c88Zf55f8)
   **lib/replaceText:** Fixed bad logic when setting fallback values for `caseSensitive` and `wholeWord` arguments
-
-- `03/01` [`upd`](https://github.com/pchiorean/Indentz/commit/41ce49afc0d7f3434401252c7cb10ff4e31827ba)
-  **layout/GuidesAdd, PageMarginsFromScriptName and related:** HW guides are now added to the '.guides' layer
-
-- `04/09` [`new`](https://github.com/pchiorean/Indentz/commit/ab132a2c434ee6e54c837dd87011072cbd3f41b9)
-  **export/MarkSafetyArea:** Added a script to mark the _safety area_ of a page
 - `04/13` [`fix`](https://github.com/pchiorean/Indentz/commit/063af9356010d70aa054432ab7dcd32ec773e9fe)
   **layout/PageSizeFromFilename:** Added space to dimension pairs separators ('filename 000x000_000x000' are now recognized); added some checks for page size/margin values
-- `04/14` [`upd`](https://github.com/pchiorean/Indentz/commit/bf4a58a2ed15572a7b78712028f3088fa44173d9)
-  **lib/getPageItems:** Also match items by label
-- `04/16` [`upd`](https://github.com/pchiorean/Indentz/commit/490bc72f6fc6268630e538e98a17967fda15303a)
-  **lib/addGuide:** Relaxed guides view threshold to 100%
-- `04/29` [`upd`](https://github.com/pchiorean/Indentz/commit/017227456b12abf809778a1963b55535fcd30b8b)
-  **cleanup/DocCleanup:** Simplified logic that sets the pasteboard size
-- `04/29` [`upd`](https://github.com/pchiorean/Indentz/commit/f0d895814ae386dc6893f1f84c4c1b1b11b6eb8e)
-  **lib/fitTo:** Ignore items on the guides layer
 - `04/29` [`fix`](https://github.com/pchiorean/Indentz/commit/7349c36f79f33a501ffbf37a893b3a6ef2edb9eb)
   **layout/PageMarginsFromScriptName:** Don't add a HW guide when HW is not defined
-
 - `05/02` [`fix`](https://github.com/pchiorean/Indentz/commit/e3807dff227133b184dae3b49c73edf56fcdb5d9)
   **misc/Clip, ClipUndo:** Empty clipping frames are now ignored
 - `05/03` [`fix`](https://github.com/pchiorean/Indentz/commit/a5c81828dd9455242c4869ec14818ccfdecc68fd)
   **export/QuickExport:** Empty '+xxxxxxx' layers are now ignored
 - `05/03` [`fix`](https://github.com/pchiorean/Indentz/commit/10ef1174d36e9218e7a9ce4b995f813ca1af0c4e)
   **export/QuickExport:** Fixed parent page detection
-- `05/03` [`upd`](https://github.com/pchiorean/Indentz/commit/57601da8ef021c1e6efd0528e3060b055c81bbef)
-  **export/QuickExport:** Improved report for overflowed text
-- `05/30` [`upd`](https://github.com/pchiorean/Indentz/commit/a96a77f127c02781bfe25383a74c5a657583057a)
-  **misc/EAN:** Renamed 'text & logos' layer to 'copy'
-- `05/30` [`upd`](https://github.com/pchiorean/Indentz/commit/616bbec1bba53007e15608eb2962606e58e9f99f)
-  **layout/GuidesAdd:** Added an option to use spread guides
 - `05/30` [`fix`](https://github.com/pchiorean/Indentz/commit/5cad91bbc4559786a56f6950babdd6c28c859ef6)
   **cleanup/DocCleanup:** Fixed setting pasteboard size
+- `07/20` [`fix`](https://github.com/pchiorean/Indentz/commit/d727fd8bb607ebdcc342f96803c24adbc861e1f9)
+  **QuickExport:** When adding a suffix was disabled, it also ignored 'Sort files into subfolders by suffix'; fixed
+- `08/15` [`fix`](https://github.com/pchiorean/Indentz/commit/6144add86ec3c4acef0085bb6a92773a26166d6c)
+  **DocCleanup:** When cleaning text frames skip threaded ones
 
-- `06/16` [`new`](https://github.com/pchiorean/Indentz/commit/d569b739c4ac96247b8447105cf32fea63cc4455)
-  **misc/SplitByLayers:** Added a script that splits or joins document spreads using special layers
-- `06/16` [`upd`](https://github.com/pchiorean/Indentz/commit/7adabb261f3684ce9d4fdf1413e05ec88cbed402)
-  **cleanup/BreakLinkToStyles:** Also remove orphan styles and groups
+##### Miscellaneous
+
+- `08/06` [`ref`](https://github.com/pchiorean/Indentz/commit/0f5e5c46bf55272edcd10a28a890f7c4f8fb3736)
+  **export/QuickExport:** Tidy up; add some comments
+- `09/04` [`ref`](https://github.com/pchiorean/Indentz/commit/ddd2dedf4c73c89145692dddec285fed60dbb24e)
+  **export/QuickExport:** Added `beautifyPath()` to simplify platform-dependent path display
+- `09/29` [`ref`](https://github.com/pchiorean/Indentz/commit/ba1f2d72ef172c67632b8e117a003dd8cbb6a21c)
+  **cleanup/DocCleanup, ReplaceLinks; misc/EAN, QR, QRBatch:** Tweaked progress bar titles
+- `10/27` [`ref`](https://github.com/pchiorean/Indentz/commit/0cd95a9e13072b7c9046ea46e3680960a6f2c5d2)
+  UI: Changed button labels from 'Ok' to 'OK'
+- `11/25` [`ref`](https://github.com/pchiorean/Indentz/commit/ff3a50a5f395e77c28ffb1a55a9724bf6eaeb28b)
+  **export/QuickExport; file/SpreadsToFiles; lib/fitTo; misc/QRBatch:** Renamed several variables
+- `12/12` [`ref`](https://github.com/pchiorean/Indentz/commit/4e49f0e81f6863864e12417698f7083a3bd92516)
+  **export/QuickExport:** Tweaked timer function
+- `02/10` [`ref`](https://github.com/pchiorean/Indentz/commit/94e06924d68fff8a67100c890c99da59d9aef41c)
+  **cleanup/DefaultSwatches:** Minor edits
+- `02/10` [`ref`](https://github.com/pchiorean/Indentz/commit/b894e604e7f62eab36498ac73d764a4c3899a38d)
+  **cleanup/ReplaceFonts, ReplaceLinks, ReplaceSnippets:** Fixed a typo in the alert message; tweaked the dialog title
 - `06/16` [`org`](https://github.com/pchiorean/Indentz/commit/ad78d3a4774c539ef6f97a4d35159f9b3a7ac545)
   Renamed some scripts, preparing for a general reorganization
 - `06/27` [`org`](https://github.com/pchiorean/Indentz/commit/d35062972cdde467cd5245562f446800aa2d317a)
   Reorganized the scripts to a new folder scheme
-- `06/27` [`upd`](https://github.com/pchiorean/Indentz/commit/0eafbac8b16b4f1ef2b707c77d5b0b7a6e255a5f)
-  **QR:** The code text now defaults to the file name
-
-- `07/20` [`fix`](https://github.com/pchiorean/Indentz/commit/d727fd8bb607ebdcc342f96803c24adbc861e1f9)
-  **QuickExport:** When adding a suffix was disabled, it also ignored 'Sort files into subfolders by suffix'; fixed
-
-- `08/15` [`fix`](https://github.com/pchiorean/Indentz/commit/6144add86ec3c4acef0085bb6a92773a26166d6c)
-  **DocCleanup:** When cleaning text frames skip threaded ones
-
-##### Queued
-
-- [ ] `fix` `?` **layout/PageSizeFromFilename:** A document can have a name even if not saved (in the new UI)
-- [ ] `fix` **file/SpreadsToFiles:** Don't append separators if already exist
-- [ ] `fix` **fit/TextAutoSize:** Check `baselineShift`
-- [ ] `brk` `?` Use *safety area* in **PageMarginsFromScriptName**
-- [ ] `upd` Tweak when *ESC* key status is read
-- [ ] `upd` **cleanup/ReplaceLinks, export/QuickExport:** Restore cropping mode when relinking files
-- [ ] `upd` **cleanup/ReplaceLinks, export/QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
-- [ ] `upd` **export/QuickExport:** Add a checkbox for `0e04f28`
-- [ ] `upd` **view/ZoomToSpreads:** Apply the smallest zoom value to all windows
-- [ ] `upd` Implement `try/catch/finally` when appropriate
-- [ ] `ref` `?` Implement `for...of` when appropriate (see [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of))
-- [ ] `new` **export/QuickExport:** Add JPG, PNG & INDD export profiles
-- [ ] `new` **export/QuickExport:** Add package option
-- [ ] `new` **layout/Grid\* and HW:** Get `HW_PCT` from page guide or object tag (`hw10`, `hw15`, etc.); fallback to `10`
-- [ ] `doc` **cleanup/BreakLinkToStyles:** Add to changelog
-
-## [Releases](https://github.com/pchiorean/Indentz/releases)
 
 ### [23.7.18](https://github.com/pchiorean/Indentz/releases/tag/23.7.18)
 
