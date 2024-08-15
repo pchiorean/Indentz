@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 24.6.17
+	Document cleanup 24.8.15
 	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
@@ -107,16 +107,16 @@ app.doScript(function () {
 	var items = doc.allPageItems;
 	while ((item = items.shift())) {
 		if (item.constructor.name !== 'TextFrame') continue;
+		if (item.previousTextFrame || item.nextTextFrame) continue;
 		if (item.textFramePreferences.verticalJustification !== VerticalJustification.TOP_ALIGN) continue;
 		if (item.textFramePreferences.autoSizingType !== AutoSizingTypeEnum.OFF) continue;
-		if (!item.overflows && /\s+$/g.test(item.contents) && !item.nextTextFrame)
-			item.contents = item.contents.replace(/\s+$/g, '');
+		if (!item.overflows && /\s+$/g.test(item.contents)) item.contents = item.contents.replace(/\s+$/g, '');
 		if (!item.overflows && item.lines.length === 1) item.lines[0].hyphenation = false;
 		if (!item.overflows && item.contents.length === 0) item.contentType = ContentType.UNASSIGNED;
 	}
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.ENTIRE_SCRIPT, 'Convert empty text frames to generic frames');
+UndoModes.ENTIRE_SCRIPT, 'Clean text frames');
 
 progressBar.update();
 app.doScript(function () {
