@@ -1,0 +1,309 @@
+<!DOCTYPE html><html><head>
+      <title>NEWS</title>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      
+      <link rel="stylesheet" href="file:////Users/paul.chiorean/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.13/crossnote/dependencies/katex/katex.min.css">
+      
+      
+      
+      
+      
+      <style>
+      code[class*=language-],pre[class*=language-]{color:#333;background:0 0;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;word-wrap:normal;line-height:1.4;-moz-tab-size:8;-o-tab-size:8;tab-size:8;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none}pre[class*=language-]{padding:.8em;overflow:auto;border-radius:3px;background:#f5f5f5}:not(pre)>code[class*=language-]{padding:.1em;border-radius:.3em;white-space:normal;background:#f5f5f5}.token.blockquote,.token.comment{color:#969896}.token.cdata{color:#183691}.token.doctype,.token.macro.property,.token.punctuation,.token.variable{color:#333}.token.builtin,.token.important,.token.keyword,.token.operator,.token.rule{color:#a71d5d}.token.attr-value,.token.regex,.token.string,.token.url{color:#183691}.token.atrule,.token.boolean,.token.code,.token.command,.token.constant,.token.entity,.token.number,.token.property,.token.symbol{color:#0086b3}.token.prolog,.token.selector,.token.tag{color:#63a35c}.token.attr-name,.token.class,.token.class-name,.token.function,.token.id,.token.namespace,.token.pseudo-class,.token.pseudo-element,.token.url-reference .token.variable{color:#795da3}.token.entity{cursor:help}.token.title,.token.title .token.punctuation{font-weight:700;color:#1d3e81}.token.list{color:#ed6a43}.token.inserted{background-color:#eaffea;color:#55a532}.token.deleted{background-color:#ffecec;color:#bd2c00}.token.bold{font-weight:700}.token.italic{font-style:italic}.language-json .token.property{color:#183691}.language-markup .token.tag .token.punctuation{color:#333}.language-css .token.function,code.language-css{color:#0086b3}.language-yaml .token.atrule{color:#63a35c}code.language-yaml{color:#183691}.language-ruby .token.function{color:#333}.language-markdown .token.url{color:#795da3}.language-makefile .token.symbol{color:#795da3}.language-makefile .token.variable{color:#183691}.language-makefile .token.builtin{color:#0086b3}.language-bash .token.keyword{color:#0086b3}pre[data-line]{position:relative;padding:1em 0 1em 3em}pre[data-line] .line-highlight-wrapper{position:absolute;top:0;left:0;background-color:transparent;display:block;width:100%}pre[data-line] .line-highlight{position:absolute;left:0;right:0;padding:inherit 0;margin-top:1em;background:hsla(24,20%,50%,.08);background:linear-gradient(to right,hsla(24,20%,50%,.1) 70%,hsla(24,20%,50%,0));pointer-events:none;line-height:inherit;white-space:pre}pre[data-line] .line-highlight:before,pre[data-line] .line-highlight[data-end]:after{content:attr(data-start);position:absolute;top:.4em;left:.6em;min-width:1em;padding:0 .5em;background-color:hsla(24,20%,50%,.4);color:#f4f1ef;font:bold 65%/1.5 sans-serif;text-align:center;vertical-align:.3em;border-radius:999px;text-shadow:none;box-shadow:0 1px #fff}pre[data-line] .line-highlight[data-end]:after{content:attr(data-end);top:auto;bottom:.4em}html body{font-family:'Helvetica Neue',Helvetica,'Segoe UI',Arial,freesans,sans-serif;font-size:16px;line-height:1.6;color:#333;background-color:#fff;overflow:initial;box-sizing:border-box;word-wrap:break-word}html body>:first-child{margin-top:0}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{line-height:1.2;margin-top:1em;margin-bottom:16px;color:#000}html body h1{font-size:2.25em;font-weight:300;padding-bottom:.3em}html body h2{font-size:1.75em;font-weight:400;padding-bottom:.3em}html body h3{font-size:1.5em;font-weight:500}html body h4{font-size:1.25em;font-weight:600}html body h5{font-size:1.1em;font-weight:600}html body h6{font-size:1em;font-weight:600}html body h1,html body h2,html body h3,html body h4,html body h5{font-weight:600}html body h5{font-size:1em}html body h6{color:#5c5c5c}html body strong{color:#000}html body del{color:#5c5c5c}html body a:not([href]){color:inherit;text-decoration:none}html body a{color:#08c;text-decoration:none}html body a:hover{color:#00a3f5;text-decoration:none}html body img{max-width:100%}html body>p{margin-top:0;margin-bottom:16px;word-wrap:break-word}html body>ol,html body>ul{margin-bottom:16px}html body ol,html body ul{padding-left:2em}html body ol.no-list,html body ul.no-list{padding:0;list-style-type:none}html body ol ol,html body ol ul,html body ul ol,html body ul ul{margin-top:0;margin-bottom:0}html body li{margin-bottom:0}html body li.task-list-item{list-style:none}html body li>p{margin-top:0;margin-bottom:0}html body .task-list-item-checkbox{margin:0 .2em .25em -1.8em;vertical-align:middle}html body .task-list-item-checkbox:hover{cursor:pointer}html body blockquote{margin:16px 0;font-size:inherit;padding:0 15px;color:#5c5c5c;background-color:#f0f0f0;border-left:4px solid #d6d6d6}html body blockquote>:first-child{margin-top:0}html body blockquote>:last-child{margin-bottom:0}html body hr{height:4px;margin:32px 0;background-color:#d6d6d6;border:0 none}html body table{margin:10px 0 15px 0;border-collapse:collapse;border-spacing:0;display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}html body table th{font-weight:700;color:#000}html body table td,html body table th{border:1px solid #d6d6d6;padding:6px 13px}html body dl{padding:0}html body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}html body dl dd{padding:0 16px;margin-bottom:16px}html body code{font-family:Menlo,Monaco,Consolas,'Courier New',monospace;font-size:.85em;color:#000;background-color:#f0f0f0;border-radius:3px;padding:.2em 0}html body code::after,html body code::before{letter-spacing:-.2em;content:'\00a0'}html body pre>code{padding:0;margin:0;word-break:normal;white-space:pre;background:0 0;border:0}html body .highlight{margin-bottom:16px}html body .highlight pre,html body pre{padding:1em;overflow:auto;line-height:1.45;border:#d6d6d6;border-radius:3px}html body .highlight pre{margin-bottom:0;word-break:normal}html body pre code,html body pre tt{display:inline;max-width:initial;padding:0;margin:0;overflow:initial;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}html body pre code:after,html body pre code:before,html body pre tt:after,html body pre tt:before{content:normal}html body blockquote,html body dl,html body ol,html body p,html body pre,html body ul{margin-top:0;margin-bottom:16px}html body kbd{color:#000;border:1px solid #d6d6d6;border-bottom:2px solid #c7c7c7;padding:2px 4px;background-color:#f0f0f0;border-radius:3px}@media print{html body{background-color:#fff}html body h1,html body h2,html body h3,html body h4,html body h5,html body h6{color:#000;page-break-after:avoid}html body blockquote{color:#5c5c5c}html body pre{page-break-inside:avoid}html body table{display:table}html body img{display:block;max-width:100%;max-height:100%}html body code,html body pre{word-wrap:break-word;white-space:pre}}.markdown-preview{width:100%;height:100%;box-sizing:border-box}.markdown-preview ul{list-style:disc}.markdown-preview ul ul{list-style:circle}.markdown-preview ul ul ul{list-style:square}.markdown-preview ol{list-style:decimal}.markdown-preview ol ol,.markdown-preview ul ol{list-style-type:lower-roman}.markdown-preview ol ol ol,.markdown-preview ol ul ol,.markdown-preview ul ol ol,.markdown-preview ul ul ol{list-style-type:lower-alpha}.markdown-preview .newpage,.markdown-preview .pagebreak{page-break-before:always}.markdown-preview pre.line-numbers{position:relative;padding-left:3.8em;counter-reset:linenumber}.markdown-preview pre.line-numbers>code{position:relative}.markdown-preview pre.line-numbers .line-numbers-rows{position:absolute;pointer-events:none;top:1em;font-size:100%;left:0;width:3em;letter-spacing:-1px;border-right:1px solid #999;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}.markdown-preview pre.line-numbers .line-numbers-rows>span{pointer-events:none;display:block;counter-increment:linenumber}.markdown-preview pre.line-numbers .line-numbers-rows>span:before{content:counter(linenumber);color:#999;display:block;padding-right:.8em;text-align:right}.markdown-preview .mathjax-exps .MathJax_Display{text-align:center!important}.markdown-preview:not([data-for=preview]) .code-chunk .code-chunk-btn-group{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .status{display:none}.markdown-preview:not([data-for=preview]) .code-chunk .output-div{margin-bottom:16px}.markdown-preview .md-toc{padding:0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link div,.markdown-preview .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}.markdown-preview .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}.scrollbar-style::-webkit-scrollbar{width:8px}.scrollbar-style::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}.scrollbar-style::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode]){position:relative;width:100%;height:100%;top:0;left:0;margin:0;padding:0;overflow:auto}html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{position:relative;top:0;min-height:100vh}@media screen and (min-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em calc(50% - 457px + 2em)}}@media screen and (max-width:914px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode]) .markdown-preview{font-size:14px!important;padding:1em}}@media print{html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{display:none}}html body[for=html-export]:not([data-presentation-mode]) #sidebar-toc-btn{position:fixed;bottom:8px;left:8px;font-size:28px;cursor:pointer;color:inherit;z-index:99;width:32px;text-align:center;opacity:.4}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] #sidebar-toc-btn{opacity:1}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc{position:fixed;top:0;left:0;width:300px;height:100%;padding:32px 0 48px 0;font-size:14px;box-shadow:0 0 4px rgba(150,150,150,.33);box-sizing:border-box;overflow:auto;background-color:inherit}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar{width:8px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-track{border-radius:10px;background-color:transparent}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc::-webkit-scrollbar-thumb{border-radius:5px;background-color:rgba(150,150,150,.66);border:4px solid rgba(150,150,150,.66);background-clip:content-box}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc a{text-decoration:none}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc{padding:0 16px}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link{display:inline;padding:.25rem 0}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link div,html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper .md-toc-link p{display:inline}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .md-sidebar-toc .md-toc .md-toc-link-wrapper.highlighted .md-toc-link{font-weight:800}html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{left:300px;width:calc(100% - 300px);padding:2em calc(50% - 457px - 300px / 2);margin:0;box-sizing:border-box}@media screen and (max-width:1274px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{padding:2em}}@media screen and (max-width:450px){html body[for=html-export]:not([data-presentation-mode])[html-show-sidebar-toc] .markdown-preview{width:100%}}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .markdown-preview{left:50%;transform:translateX(-50%)}html body[for=html-export]:not([data-presentation-mode]):not([html-show-sidebar-toc]) .md-sidebar-toc{display:none}
+/* Please visit the URL below for more information: */
+/*   https://shd101wyy.github.io/markdown-preview-enhanced/#/customize-css */
+
+      </style>
+      <!-- The content below will be included at the end of the <head> element. --><script type="text/javascript">
+  document.addEventListener("DOMContentLoaded", function () {
+    // your code here
+  });
+</script></head><body for="html-export">
+    
+    
+      <div class="crossnote markdown-preview  ">
+      
+<h2 id="whats-new-in-24815httpsgithubcompchioreanindentzreleasestag24815">What’s new in <a href="https://github.com/pchiorean/Indentz/releases/tag/24.8.15">24.8.15</a> </h2>
+<p>Long time no see – it’s been over a year since the previous release. 😦 There are no major updates, though: there’s one breaking change and three new scripts, some new features and many minor updates and bug fixes.</p>
+<p>Also, since there are quite a lot of files, I’ve organized them into a new scheme related to their scope: document, page/spread, objects on page, and application environment. Some scripts were renamed as follows:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Old name</th>
+<th style="text-align:left">New name</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">BreakLinkToStyles</td>
+<td style="text-align:left">RemoveStyles</td>
+</tr>
+<tr>
+<td style="text-align:left">ClipUndo</td>
+<td style="text-align:left">ClipRelease</td>
+</tr>
+<tr>
+<td style="text-align:left">DefaultLayers</td>
+<td style="text-align:left">AddLayers</td>
+</tr>
+<tr>
+<td style="text-align:left">DefaultSwatches</td>
+<td style="text-align:left">AddSwatches</td>
+</tr>
+<tr>
+<td style="text-align:left">FilesToSpreads</td>
+<td style="text-align:left">JoinDocs</td>
+</tr>
+<tr>
+<td style="text-align:left">ReplaceSnippets</td>
+<td style="text-align:left">ReplaceTextSnippets</td>
+</tr>
+<tr>
+<td style="text-align:left">SpreadsToFiles</td>
+<td style="text-align:left">SplitDocBySpreads</td>
+</tr>
+</tbody>
+</table>
+<h3 id="document">Document </h3>
+<h4 id="assets">Assets </h4>
+<ul>
+<li>
+<p><strong>AddLayers:</strong></p>
+<ul>
+<li>
+<p><code>brk</code> Finally, I added a new column for the layers’ locked state. When I originally made the script I didn’t need this property, but later I discovered that I keep adding hacks to <strong>DocCleanup</strong> to lock certain layers. 😃 This is a breaking change, meaning that you will have to manually update all your <code>layers.tsv</code> files to 7 columns (see <a href="README.html">README</a> for more info):</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th style="text-align:left">Color</th>
+<th style="text-align:left">Visible</th>
+<th style="text-align:left">Printable</th>
+<th style="text-align:left"><em>Locked</em></th>
+<th style="text-align:left">Order</th>
+<th style="text-align:left">Variants</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">…</td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>AddSwatches:</strong></p>
+<ul>
+<li>
+<p>Every swatch automatically gets two new implicit variants along its Color Value Name: its lowercase name (this also fixes case variations), and the alternative spelling of its Color Value Name (‘cXmXyXkX’ or ‘rXgXbX’ or ‘lXaXbX’). So, if you have this line:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th style="text-align:left">Color Model</th>
+<th style="text-align:left">Color Space</th>
+<th style="text-align:left">Values</th>
+<th style="text-align:left">Variants</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Rich Black</strong></td>
+<td style="text-align:left">process</td>
+<td style="text-align:left">cmyk</td>
+<td style="text-align:left">60 40 40 100</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<p>all document swatches named <strong>rich black</strong> (and other case variations), <strong>C=60 M=40 Y=40 K=100</strong>, or <strong>c60m40y40k100</strong> will be merged with <strong>Rich Black</strong>.</p>
+</li>
+</ul>
+</li>
+<li>
+<p><strong>ReplaceLinks:</strong></p>
+<ul>
+<li>Filenames containing commas are now properly recognized, but they must be quoted.</li>
+</ul>
+</li>
+<li>
+<p><code>new</code> <strong>ResetLayers:</strong></p>
+<ul>
+<li>A new script that (re)sets the visible/printable/locked state of document layers to their state defined in <code>layers.tsv</code>.</li>
+</ul>
+</li>
+</ul>
+<h4 id="export">Export </h4>
+<ul>
+<li><strong>QuickExport:</strong>
+<ul>
+<li><code>new</code> Added an option to sort exported files in subfolders by date; the index added to the file names when <strong>Overwrite existing files</strong> is disabled takes these subfolders into account.</li>
+<li><code>new</code> Added an elapsed time report when the export takes longer than 9 seconds.</li>
+<li>When you export with a preset whose name ends with ‘_print’, the exported filename will have all visible and printable layers beginning with ‘+’ appended to the suffix (for example, if there is a visible and printable layer named ‘+varnish’, the exported filename will have the suffix ‘_print+varnish’).</li>
+<li>The options for updating documents were simplified to just ‘Save’ and ‘Save as’.</li>
+<li>When <strong>Add a suffix</strong> was disabled, it ignored <strong>Sort files into subfolders by suffix</strong>. This is fixed: you can sort by suffix without adding it to the file names.</li>
+<li>Skip export when fonts are missing; skip export when links are set to be updated but are missing.</li>
+<li>Fixed aborting the export when ‘Escape’ was detected.</li>
+<li>Small additional fixes and some improvements to error reports.</li>
+</ul>
+</li>
+</ul>
+<h4 id="housekeeping">Housekeeping </h4>
+<ul>
+<li>
+<p><strong>DocCleanup:</strong></p>
+<ul>
+<li>When deleting empty frames, those having type on path are preserved.</li>
+<li>Replaced a hack used to lock certain layers with a proper solution that uses the layers’ state from <code>layers.tsv</code>.</li>
+<li>When cleaning text frames skip threaded ones.</li>
+<li>Simplified the logic that sets the pasteboard size.</li>
+</ul>
+</li>
+<li>
+<p><strong>RemoveStyles:</strong></p>
+<ul>
+<li>In addition to breaking links to object/paragraph/character styles, it will remove orphaned styles and groups.</li>
+</ul>
+</li>
+</ul>
+<h3 id="page">Page </h3>
+<h4 id="guides">Guides </h4>
+<ul>
+<li>
+<p><strong>GuidesAdd:</strong></p>
+<ul>
+<li>By default, it adds page guides; added an option to use spread guides if run while pressing <strong>Opt/Alt</strong>.</li>
+<li>Changed guides view threshold to 100%.</li>
+</ul>
+</li>
+<li>
+<p><strong>LabelPageRatios:</strong></p>
+<ul>
+<li>Improved label info to display the page ratio and the visible area ratio; if the visible area is not defined, it falls back to the margins ratio.</li>
+</ul>
+</li>
+<li>
+<p><code>new</code> <strong>MarkSafetyArea:</strong></p>
+<ul>
+<li>A new script to mark the <em>safety area</em> of a page by creating a frame around the page margins.</li>
+</ul>
+</li>
+</ul>
+<h4 id="layout">Layout </h4>
+<ul>
+<li>
+<p><strong>PageMarginsFromScriptName:</strong></p>
+<ul>
+<li>When HW was zero it still added a HW guide; fixed.</li>
+</ul>
+</li>
+<li>
+<p><strong>PageSizeFromFilename:</strong></p>
+<ul>
+<li>Improved detection of size pairs (e.g., ‘Filename 000x000_000x000’ is now recognized).</li>
+<li>Added checks to ensure that page sizes and margins are within valid limits.</li>
+</ul>
+</li>
+</ul>
+<h4 id="spreads">Spreads </h4>
+<ul>
+<li>
+<p><strong>SplitDocBySpreads:</strong></p>
+<ul>
+<li>After merging documents the page numbering will be reset to start at 1.</li>
+<li>The open documents are merged in a natural sorting order.</li>
+</ul>
+</li>
+<li>
+<p><code>new</code> <strong>SplitSpreadsByLayers:</strong></p>
+<ul>
+<li>Added a script that splits/combines the active document spreads using a list of predefined layers (‘DE’, ‘FR’, ‘IT’): elements from these layers, depending on the initial number of document spreads, are either distributed into multiple spreads or combined into a single spread.</li>
+</ul>
+</li>
+</ul>
+<h3 id="object">Object </h3>
+<h4 id="clipping">Clipping </h4>
+<ul>
+<li>
+<p><strong>Clip:</strong></p>
+<ul>
+<li>Color-filled text frames were clipped ignoring their background; fixed.</li>
+<li>Empty clipping frames are now ignored.</li>
+</ul>
+</li>
+<li>
+<p><strong>Clip, ClipUndo:</strong></p>
+<ul>
+<li>When releasing objects from their clipping frames, only those released will remain selected.</li>
+</ul>
+</li>
+</ul>
+<h4 id="fit">Fit </h4>
+<ul>
+<li><strong>TextAutoSize:</strong>
+<ul>
+<li>Text frames labeled ‘hw’ will be processed regularly.</li>
+<li>When trimming ending whitespaces sometimes the styling was affected; fixed by using native <strong>Find/Change GREP</strong>.</li>
+<li>Items on the ‘.guides’ layer are now ignored.</li>
+</ul>
+</li>
+</ul>
+<h4 id="other">Other </h4>
+<ul>
+<li><strong>OffsetPaths:</strong>
+<ul>
+<li><code>new</code> You can create an offset path around groups (it processes 1<sup>st</sup> level objects so we don’t get a boring rectangle).</li>
+</ul>
+</li>
+</ul>
+<h3 id="miscellaneous">Miscellaneous </h3>
+<ul>
+<li>
+<p><strong>EAN:</strong></p>
+<ul>
+<li><code>new</code> You can sequentially insert a list of barcodes into multiple objects (in the order they were selected).</li>
+<li>List height was supposed to grow depending on selection; fixed.</li>
+<li>Placing code failed when target frames were already populated; fixed.</li>
+</ul>
+</li>
+<li>
+<p><strong>QR:</strong></p>
+<ul>
+<li>The code text now defaults to the file name.</li>
+</ul>
+</li>
+<li>
+<p><strong>QR, QRBatch:</strong></p>
+<ul>
+<li>Fixed document path detection for ‘[Converted]’ documents.</li>
+<li>The fill and stroke were using document defaults; now are set explicitly.</li>
+</ul>
+</li>
+</ul>
+<h3 id="other-1">Other </h3>
+<ul>
+<li>HW guides are now added to the ‘.guides’ layer.</li>
+<li>Overprinting was attempted on pseudo-white when marking the <em>visible area</em>; fixed.</li>
+</ul>
+<p>For other changes not mentioned here see the full <a href="CHANGELOG.md">changelog</a>.</p>
+
+      </div>
+      
+      
+    
+    
+    
+    
+    
+    
+  
+    </body></html>
