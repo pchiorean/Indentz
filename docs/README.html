@@ -45,7 +45,7 @@
 </ul>
 <p><strong>Visible area</strong> or <strong>Safety area:</strong> These are frames that I use to visually mark the visible part of a layout or its safety/type area; several scripts take them into account for some actions. The frames can be created manually (named <strong>&lt;visible area&gt;</strong> or <strong>&lt;safety area&gt;</strong>), or can be automatically generated from the document name or page margins (more details below). The <strong>Export</strong> section contains scripts that can show or hide these frames.</p>
 <p><strong>Libs:</strong> Many scripts use dynamically linked functions from <strong><code>lib/</code></strong>, which means that the folder structure should be preserved after downloading the repository. If you download <a href="https://github.com/pchiorean/Indentz/releases">releases</a>, which are statically linked, you can use any script stand-alone<sup class="footnote-ref"><a href="#fn1" id="fnref1">[1]</a></sup>.</p>
-<p>Because there are quite a lot of files, I’ve sorted them into groups related to their target: the document; pages or spreads; objects on page; the application environment.</p>
+<p>Because there are quite a lot of files, I’ve sorted them into groups related to their scope: the document; the page/spread; the objects on page; the application environment.</p>
 <h2 id="document">Document </h2>
 <p><em>Scripts that operate at the document level.</em></p>
 <h3 id="assets">Assets </h3>
@@ -205,6 +205,28 @@
 </li>
 <li><strong>Variants</strong>: a list of swatches separated by commas that will be replaced by the base swatch; it’s case insensitive and can take simple wildcards (<code>?</code> for exactly one character and <code>*</code> for zero or more characters).</li>
 </ul>
+<p>Every swatch automatically gets three implicit variants: its lowercase name (this also fixes case variations), its Color Value Name (‘C=X M=X Y=X K=X’ or ‘R=X G=X B=X’ or ‘L=X a=X b=X’) and its alternative spelling (‘cXmXyXkX’ or ‘rXgXbX’ or ‘lXaXbX’). So, if you have this line:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Name</th>
+<th style="text-align:left">Color Model</th>
+<th style="text-align:left">Color Space</th>
+<th style="text-align:left">Values</th>
+<th style="text-align:left">Variants</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>Rich Black</strong></td>
+<td style="text-align:left">process</td>
+<td style="text-align:left">cmyk</td>
+<td style="text-align:left">60 40 40 100</td>
+<td style="text-align:left"></td>
+</tr>
+</tbody>
+</table>
+<p>all document swatches named <strong>rich black</strong> (and all case variations), <strong>C=60 M=40 Y=40 K=100</strong>, or <strong>c60m40y40k100</strong> will be merged with <strong>Rich Black</strong>.</p>
 <p><em>Tip:</em> The script will display a report if run while holding down the <strong>Ctrl</strong> key.</p>
 <p><em>Tip:</em> You can use <a href="#dumpswatchesjsx"><strong><code>DumpSwatches.jsx</code></strong></a> to save a tab delimited list of swatches from the active document.</p>
 <h4 id="replacefontsjsx"><strong><code>ReplaceFonts.jsx</code></strong> </h4>
@@ -378,7 +400,7 @@
 <p><strong>Document actions:</strong></p>
 <ul>
 <li>
-<p><strong>Skip do-not-print layers</strong> will not export layers with names beginning with a dot or a hyphen (e.g., <strong>.safety area</strong>) plus a default list of <em>do-not-print</em> layers (see <a href="#showdnplayersjsx-and-hidednplayersjsx"><strong><code>Show/HideDNPLayers</code></strong></a>); you can also define a custom list with <strong>Edit list</strong>.</p>
+<p><strong>Skip do-not-print layers</strong> will not export layers with names beginning with a dot or a hyphen (e.g., <strong>.safety area</strong>) plus a default list of <em>do-not-print</em> layers (see <a href="#dnplayersshowjsx-and-dnplayershidejsx"><strong><code>Show/DNPLayersHide</code></strong></a>); you can also define a custom list with <strong>Edit list</strong>.</p>
 </li>
 <li>
 <p><strong>Run a script</strong> will run a JavaScript or AppleScript before exporting – e.g., one of the other scripts from this section.</p>
@@ -421,7 +443,7 @@
 <h4 id="prepareforexportjsx"><strong><code>PrepareForExport.jsx</code></strong> </h4>
 <p>Hides all layers starting with either a dot or a hyphen, plus a hard-coded list of <em>do-not-print</em> layers (see below). Additionally, it moves all page objects from <strong>varnish</strong>, <strong>uv</strong>, <strong>foil</strong>, <strong>silver</strong> and <strong>white</strong> to separate spreads and labels the spreads.</p>
 <p><em>Tip:</em> The script is designed to be run with <a href="#quickexportjsx"><strong><code>QuickExport.jsx</code></strong></a>.</p>
-<h4 id="showdnplayersjsx-and-hidednplayersjsx"><strong><code>ShowDNPLayers.jsx</code></strong> and <strong><code>HideDNPLayers.jsx</code></strong> </h4>
+<h4 id="dnplayersshowjsx-and-dnplayershidejsx"><strong><code>DNPLayersShow.jsx</code></strong> and <strong><code>DNPLayersHide.jsx</code></strong> </h4>
 <p>Shows or hides all layers starting with either a dot or a hyphen, plus a hard-coded list of <em>do-not-print</em> layers:</p>
 <ul>
 <li><strong>covered area*</strong></li>
@@ -1007,11 +1029,11 @@ Blank lines are ignored; everything after a <code>#</code> (comments) is ignored
 <h2 id="license">License </h2>
 <p>© 2020-2024 Paul Chiorean &lt;jpeg@basement.ro&gt;.<br>
 The code is released under the <a href="LICENSE.txt">MIT License</a>.</p>
-<p>Last updated: July 19, 2024</p>
+<p>Last updated: August 15, 2024</p>
 <hr class="footnotes-sep">
 <section class="footnotes">
 <ol class="footnotes-list">
-<li id="fn1" class="footnote-item"><p>Releases may be a little old. The latest version is in the <a href="https://github.com/pchiorean/Indentz/tree/dev">dev</a> branch, which is what I actually use daily, so it’s kind of tested, but… beware. 😉 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
+<li id="fn1" class="footnote-item"><p>Releases may be a little old. The latest version is in the <a href="https://github.com/pchiorean/Indentz/tree/dev">dev</a> branch, which is what I actually use daily, so it’s relatively tested, but… beware. 😉 <a href="#fnref1" class="footnote-backref">↩︎</a></p>
 </li>
 <li id="fn2" class="footnote-item"><p>The value is configurable by editing the constant <code>SNAP_PCT</code> from <code>fitTo()</code>. <a href="#fnref2" class="footnote-backref">↩︎</a></p>
 </li>

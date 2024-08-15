@@ -24,7 +24,7 @@ These TSV data files can have several non-standard features that will confuse Ex
 
 **Libs:** Many scripts use dynamically linked functions from **`lib/`**, which means that the folder structure should be preserved after downloading the repository. If you download [releases](https://github.com/pchiorean/Indentz/releases), which are statically linked, you can use any script stand-alone[^1].
 
-Because there are quite a lot of files, I've sorted them into groups related to their target: the document; pages or spreads; objects on page; the application environment.
+Because there are quite a lot of files, I've sorted them into groups related to their scope: the document; the page/spread; the objects on page; the application environment.
 
 ## Document
 
@@ -82,6 +82,14 @@ Adds a set of swatches defined in a 5-columns [TSV data file](#tsv) named **`swa
   - 4 values in 0–100 range for CMYK;
   - 3 values in 0–100 (L), –128–127 (A and B) range for Lab.
 - **Variants**: a list of swatches separated by commas that will be replaced by the base swatch; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters).
+
+Every swatch automatically gets three implicit variants: its lowercase name (this also fixes case variations), its Color Value Name ('C=X M=X Y=X K=X' or 'R=X G=X B=X' or 'L=X a=X b=X') and its alternative spelling ('cXmXyXkX' or 'rXgXbX' or 'lXaXbX'). So, if you have this line:
+
+|Name|Color Model|Color Space|Values|Variants|
+|:-|:-|:-|:-|:-|
+|**Rich Black**|process|cmyk|60 40 40 100||
+
+all document swatches named **rich black** (and all case variations), **C=60 M=40 Y=40 K=100**, or **c60m40y40k100** will be merged with **Rich Black**.
 
 _Tip:_ The script will display a report if run while holding down the **Ctrl** key.
 
@@ -193,7 +201,7 @@ For a long time, I exported documents to PDF with [Batch Convert](https://creati
 **Preset options:** After selecting an Adobe PDF Preset you can easily override some of its options.
 
 **Document actions:**
-- **Skip do-not-print layers** will not export layers with names beginning with a dot or a hyphen (e.g., **.safety area**) plus a default list of _do-not-print_ layers (see [**`Show/HideDNPLayers`**](#showdnplayersjsx-and-hidednplayersjsx)); you can also define a custom list with **Edit list**.
+- **Skip do-not-print layers** will not export layers with names beginning with a dot or a hyphen (e.g., **.safety area**) plus a default list of _do-not-print_ layers (see [**`Show/DNPLayersHide`**](#dnplayersshowjsx-and-dnplayershidejsx)); you can also define a custom list with **Edit list**.
 
 - **Run a script** will run a JavaScript or AppleScript before exporting – e.g., one of the other scripts from this section.
 
@@ -227,7 +235,7 @@ Hides all layers starting with either a dot or a hyphen, plus a hard-coded list 
 
 _Tip:_ The script is designed to be run with [**`QuickExport.jsx`**](#quickexportjsx).
 
-#### **`ShowDNPLayers.jsx`** and **`HideDNPLayers.jsx`**
+#### **`DNPLayersShow.jsx`** and **`DNPLayersHide.jsx`**
 Shows or hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers:
 
 - **covered area\***
@@ -751,8 +759,8 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2024 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-Last updated: July 19, 2024
+Last updated: August 15, 2024
 
-[^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use daily, so it's kind of tested, but… beware. ;)
+[^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use daily, so it's relatively tested, but… beware. ;)
 
 [^2]: The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
