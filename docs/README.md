@@ -13,7 +13,7 @@ Most scripts require at least one open document, and some require at least one o
 These TSV data files can have several non-standard features that will confuse Excel et al.:
 
 - Blank lines are ignored; everything after a `#` is ignored (comments);
-- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) when creating/editing TSVs);
+- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) to create/edit TSVs);
 - A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment.
 - A line may also be a directive:
   - **`@includepath`** `base/path/` – sets a base path for subsequent **`@include`** directives with relative paths; the path may be absolute or relative (if relative, it's always to the data file folder);
@@ -201,7 +201,7 @@ For a long time, I exported documents to PDF with [Batch Convert](https://creati
 **Preset options:** After selecting an Adobe PDF Preset you can easily override some of its options.
 
 **Document actions:**
-- **Skip do-not-print layers** will not export layers with names beginning with a dot or a hyphen (e.g., **.safety area**) plus a default list of _do-not-print_ layers (see [**`Show/DNPLayersHide`**](#dnplayersshowjsx-and-dnplayershidejsx)); you can also define a custom list with **Edit list**.
+- **Skip do-not-print layers** will not export layers with names beginning with a dot or a hyphen (e.g., **.safety area**) plus a default list of _do-not-print_ layers (see [**`DNPLayersHide`**](#dnplayersshowjsx-and-dnplayershidejsx) below); you can also define a custom list with **Edit list**.
 
 - **Run a script** will run a JavaScript or AppleScript before exporting – e.g., one of the other scripts from this section.
 
@@ -759,7 +759,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2024 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](LICENSE.txt).
 
-Last updated: August 15, 2024
+Last updated: November 5, 2024
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use daily, so it's relatively tested, but… beware. ;)
 
