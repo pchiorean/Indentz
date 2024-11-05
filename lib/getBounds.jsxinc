@@ -63,7 +63,6 @@
 	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 	SOFTWARE.
 */
-
 function getBounds(page) {
 	var PSO = PageSideOptions;
 	var visAreaRE = /^<?visible area>?$/i;
