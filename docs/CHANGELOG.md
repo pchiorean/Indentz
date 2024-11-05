@@ -1,11 +1,16 @@
-<!-- ## [Development version](https://github.com/pchiorean/Indentz/compare/23.7.18...dev)
+## [Development version](https://github.com/pchiorean/Indentz/compare/24.8.15...dev)
+
+- `11/05` [`upd`](https://github.com/pchiorean/Indentz/commit/bae7688a502b60fb8bf9a22666d84511d603d28a)
+  **Document/Export/QuickExport:** Changed default export profiles to `_LowRes` and `_HighRes`
+- `11/05` [`fix`](https://github.com/pchiorean/Indentz/commit/65cb8ffec75fca68f74c91f0c0251c50f98da8f6)
+  **Object/Fit/TextAutosize:** Skip color-filled text frames
 
 ##### Queued
 
 - [ ] `fix` **SplitDocBySpreads:** Don't append separators if already exist
 - [ ] `fix` **TextAutoSize:** Check `baselineShift`
-- [ ] `brk` `?` Use *safety area* in **PageMarginsFromScriptName**
-- [ ] `upd` Tweak the moment when *ESC* key status is read
+- [ ] `brk` `?` Use _safety area_ in **PageMarginsFromScriptName**
+- [ ] `upd` Tweak the moment when _ESC_ key status is read
 - [ ] `upd` **ReplaceLinks, QuickExport:** Restore cropping mode when relinking files
 - [ ] `upd` **ReplaceLinks, QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
 - [ ] `upd` **QuickExport:** Add a checkbox for `0e04f28`
@@ -14,7 +19,7 @@
 - [ ] `ref` `?` Implement `for...of` when appropriate (see [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of))
 - [ ] `new` **QuickExport:** Add JPG, PNG & INDD export profiles
 - [ ] `new` **QuickExport:** Add package option
-- [ ] `new` **Grid\* and HW:** Get `HW_PCT` from page guide or object tag (`hw10`, `hw15`, etc.); fallback to `10` -->
+- [ ] `new` **Grid\* and HW:** Get `HW_PCT` from page guide or object tag (`hw10`, `hw15`, etc.); fallback to `10`
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
