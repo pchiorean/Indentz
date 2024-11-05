@@ -1,6 +1,6 @@
 /*
-	Fit frame to text 23.11.4
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Fit frame to text 24.11.5
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Auto-sizes the text frame to the content from 'None' to 'Height Only' to 'Height and Width'
 	(single lines are always auto-sized 'Height and Width'). A second run increases auto-sizing.
@@ -67,6 +67,9 @@ function main(selection) {
 			app.findGrepPreferences.findWhat   = old.findWhat;
 			app.changeGrepPreferences.changeTo = old.changeTo;
 		}
+
+		// Skip color-filled frames
+		if (frame.fillColor.name !== 'None' || frame.strokeColor.name !== 'None') return;
 
 		// Disable hyphenation for single lines
 		if (!frame.overflows && frame.lines.length === 1) frame.lines[0].hyphenation = false;
