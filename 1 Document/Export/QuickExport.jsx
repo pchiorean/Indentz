@@ -1,5 +1,5 @@
 /*
-	Quick export 24.7.20
+	Quick export 24.11.5
 	(c) 2021-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -74,12 +74,12 @@ function QuickExport() {
 		elapsed: 0
 	};
 
-	var VER = '3.9';
+	var VER = '4.0';
 	var defaults = {
 		workflow1: {
 			active: true,
-			label: 'Preview',
-			presetName: '_preview',
+			label: 'For approval',
+			presetName: '_LowRes',
 			presetOptions: {
 				cropMarks: true,
 				pageInfo: true,
@@ -106,8 +106,8 @@ function QuickExport() {
 		},
 		workflow2: {
 			active: false,
-			label: 'Print',
-			presetName: '_print',
+			label: 'Final',
+			presetName: '_HighRes',
 			presetOptions: {
 				cropMarks: true,
 				pageInfo: true,
@@ -303,7 +303,7 @@ function QuickExport() {
 				}
 
 				// Append to the suffix all visible & printable layers named '+xxxxxxx'
-				if (exp.suffix.isOn.value && /^_print/i.test(suffix)) {
+				if (exp.suffix.isOn.value && /^_(print|High ?Res)/i.test(suffix)) {
 					// Dielines layer has priority
 					if (((layer = doc.layers.itemByName('dielines')).isValid
 						|| (layer = doc.layers.itemByName('diecut')).isValid
@@ -311,7 +311,7 @@ function QuickExport() {
 						&& layer.visible
 						&& (layer.allPageItems.length > 0)
 						&& layer.printable
-					) suffix += '+diecut';
+					) suffix += '+dielines';
 
 					for (i = 0; i < doc.layers.length; i++) {
 						layer = doc.layers[i];
