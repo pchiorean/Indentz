@@ -19,7 +19,7 @@ Also, since there are quite a lot of files, I've organized them into a new schem
 #### Assets
 
 - **AddLayers:**
-  - `brk` Finally, I added a new column for the layers' locked state. When I originally made the script I didn't need this property, but later I discovered that I keep adding hacks to **DocCleanup** to lock certain layers. :) This is a breaking change, meaning that you will have to manually update all your `layers.tsv` files to 7 columns (see [README](README.html) for more info):
+  - `brk` Finally, I added a new column for the layers' locked state. When I originally made the script I didn't need this property, but later I discovered that I keep adding hacks to **DocCleanup** to lock certain layers. :) This is a breaking change, meaning that you will have to manually update all your `layers.tsv` files to 7 columns (see [README](README.html#addlayersjsx) for more info):
 
     |Name|Color|Visible|Printable|_Locked_|Order|Variants|
     |:-|:-|:-|:-|:-|:-|:-|
@@ -45,8 +45,8 @@ Also, since there are quite a lot of files, I've organized them into a new schem
 - **QuickExport:**
   - `new` Added an option to sort exported files in subfolders by date; the index added to the file names when **Overwrite existing files** is disabled takes these subfolders into account.
   - `new` Added an elapsed time report when the export takes longer than 9 seconds.
-  - When you export with a preset whose name ends with '_print', the exported filename will have all visible and printable layers beginning with '+' appended to the suffix (for example, if there is a visible and printable layer named '+varnish', the exported filename will have the suffix '_print+varnish').
-  - The options for updating documents were simplified to just 'Save' and 'Save as'.
+  - When you export with a preset whose name ends with '_print', the exported file name will have all visible and printable layers beginning with '+' appended to the suffix (for example, if there is a visible and printable layer named '+varnish', the exported file name will have the suffix '_print+varnish').
+  - The options for updating documents were simplified to just **Save** and **Save as**.
   - When **Add a suffix** was disabled, it ignored **Sort files into subfolders by suffix**. This is fixed: you can sort by suffix without adding it to the file names.
   - Skip export when fonts are missing; skip export when links are set to be updated but are missing.
   - Fixed aborting the export when 'Escape' was detected.
@@ -56,8 +56,8 @@ Also, since there are quite a lot of files, I've organized them into a new schem
 
 - **DocCleanup:**
   - When deleting empty frames, those having type on path are preserved.
-  - Replaced a hack used to lock certain layers with a proper solution that uses the layers' state from `layers.tsv`.
   - When cleaning text frames skip threaded ones.
+  - Replaced a hack used to lock certain layers with a proper solution that uses the layers' state from `layers.tsv`.
   - Simplified the logic that sets the pasteboard size.
 
 - **RemoveStyles:**
@@ -93,7 +93,7 @@ Also, since there are quite a lot of files, I've organized them into a new schem
   - The open documents are merged in a natural sorting order.
 
 - `new` **SplitSpreadsByLayers:**
-  - Added a script that splits/combines the active document spreads using a list of predefined layers ('DE', 'FR', 'IT'): elements from these layers, depending on the initial number of document spreads, are either distributed into multiple spreads or combined into a single spread.
+  - A new script that splits/combines the active document spreads using a list of predefined layers ('DE', 'FR', 'IT'): elements from these layers, depending on the initial number of document spreads, are either distributed into multiple spreads or combined into a single spread.
 
 ### Object
 
@@ -103,7 +103,7 @@ Also, since there are quite a lot of files, I've organized them into a new schem
   - Color-filled text frames were clipped ignoring their background; fixed.
   - Empty clipping frames are now ignored.
 
-- **Clip, ClipUndo:**
+- **Clip, ClipRelease:**
   - When releasing objects from their clipping frames, only those released will remain selected.
 
 #### Fit

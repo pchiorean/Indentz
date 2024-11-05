@@ -3,7 +3,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       
-      <link rel="stylesheet" href="file:////Users/paul.chiorean/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.13/crossnote/dependencies/katex/katex.min.css">
+      <link rel="stylesheet" href="file:////Users/paul.chiorean/.vscode/extensions/shd101wyy.markdown-preview-enhanced-0.8.14/crossnote/dependencies/katex/katex.min.css">
       
       
       
@@ -72,7 +72,7 @@
 <p><strong>AddLayers:</strong></p>
 <ul>
 <li>
-<p><code>brk</code> Finally, I added a new column for the layers’ locked state. When I originally made the script I didn’t need this property, but later I discovered that I keep adding hacks to <strong>DocCleanup</strong> to lock certain layers. 😃 This is a breaking change, meaning that you will have to manually update all your <code>layers.tsv</code> files to 7 columns (see <a href="README.html">README</a> for more info):</p>
+<p><code>brk</code> Finally, I added a new column for the layers’ locked state. When I originally made the script I didn’t need this property, but later I discovered that I keep adding hacks to <strong>DocCleanup</strong> to lock certain layers. 😃 This is a breaking change, meaning that you will have to manually update all your <code>layers.tsv</code> files to 7 columns (see <a href="README.html#addlayersjsx">README</a> for more info):</p>
 <table>
 <thead>
 <tr>
@@ -148,8 +148,8 @@
 <ul>
 <li><code>new</code> Added an option to sort exported files in subfolders by date; the index added to the file names when <strong>Overwrite existing files</strong> is disabled takes these subfolders into account.</li>
 <li><code>new</code> Added an elapsed time report when the export takes longer than 9 seconds.</li>
-<li>When you export with a preset whose name ends with ‘_print’, the exported filename will have all visible and printable layers beginning with ‘+’ appended to the suffix (for example, if there is a visible and printable layer named ‘+varnish’, the exported filename will have the suffix ‘_print+varnish’).</li>
-<li>The options for updating documents were simplified to just ‘Save’ and ‘Save as’.</li>
+<li>When you export with a preset whose name ends with ‘_print’, the exported file name will have all visible and printable layers beginning with ‘+’ appended to the suffix (for example, if there is a visible and printable layer named ‘+varnish’, the exported file name will have the suffix ‘_print+varnish’).</li>
+<li>The options for updating documents were simplified to just <strong>Save</strong> and <strong>Save as</strong>.</li>
 <li>When <strong>Add a suffix</strong> was disabled, it ignored <strong>Sort files into subfolders by suffix</strong>. This is fixed: you can sort by suffix without adding it to the file names.</li>
 <li>Skip export when fonts are missing; skip export when links are set to be updated but are missing.</li>
 <li>Fixed aborting the export when ‘Escape’ was detected.</li>
@@ -163,8 +163,8 @@
 <p><strong>DocCleanup:</strong></p>
 <ul>
 <li>When deleting empty frames, those having type on path are preserved.</li>
-<li>Replaced a hack used to lock certain layers with a proper solution that uses the layers’ state from <code>layers.tsv</code>.</li>
 <li>When cleaning text frames skip threaded ones.</li>
+<li>Replaced a hack used to lock certain layers with a proper solution that uses the layers’ state from <code>layers.tsv</code>.</li>
 <li>Simplified the logic that sets the pasteboard size.</li>
 </ul>
 </li>
@@ -226,7 +226,7 @@
 <li>
 <p><code>new</code> <strong>SplitSpreadsByLayers:</strong></p>
 <ul>
-<li>Added a script that splits/combines the active document spreads using a list of predefined layers (‘DE’, ‘FR’, ‘IT’): elements from these layers, depending on the initial number of document spreads, are either distributed into multiple spreads or combined into a single spread.</li>
+<li>A new script that splits/combines the active document spreads using a list of predefined layers (‘DE’, ‘FR’, ‘IT’): elements from these layers, depending on the initial number of document spreads, are either distributed into multiple spreads or combined into a single spread.</li>
 </ul>
 </li>
 </ul>
@@ -241,7 +241,7 @@
 </ul>
 </li>
 <li>
-<p><strong>Clip, ClipUndo:</strong></p>
+<p><strong>Clip, ClipRelease:</strong></p>
 <ul>
 <li>When releasing objects from their clipping frames, only those released will remain selected.</li>
 </ul>
