@@ -1,17 +1,28 @@
-Name                 	Color Model 	Color Space 	Values       	Variants
+Name               	Color Model 	Color Space 	Values       	Variants
 # Rich blacks
-C=60 M=40 Y=40 K=100 	process     	cmyk        	60 40 40 100
-C=40 M=5 Y=5 K=100   	process     	cmyk        	40 5 5 100
+Rich Black         	process     	cmyk        	60 40 40 100
+Rich Black (text)  	process     	cmyk        	40 5 5 100
+Cool Black         	process     	cmyk        	70 35 40 100
+Warm Black         	process     	cmyk        	35 60 60 100
 
 # Special colors
-Safety area          	spot        	rgb         	0 180 255    	Safety margins
-Covered area         	spot        	rgb         	255 0 128    	verdeckter bereich
-Visible area         	spot        	rgb         	255 180 0    	safe area, visible mark
-Cut                  	spot        	rgb         	255 0 0      	cut, artios?couper, final cut
-Fold                 	spot        	rgb         	0 128 255    	fold, artios?raineur
-Glue                 	spot        	rgb         	255 222 0
-White                	spot        	rgb         	255 255 200
-Varnish              	spot        	rgb         	200 255 100
+Placeholder        	spot        	cmyk        	0 100 0 0    	platzhalter
+Grid               	spot        	cmyk        	50 0 100 0   	abstand
+Annotation         	spot        	rgb         	0 153 68     	artios_annotation
+Print registration 	spot        	rgb         	0 99 42      	artios_print registration
+Dielines           	spot        	rgb         	255 0 0
+Perforation        	spot        	rgb         	255 0 128    	stanzstanzung, stanzlöcher
+Seam               	spot        	rgb         	0 0 0        	nacht
+Cut                	spot        	rgb         	255 0 0      	artios_couper, artios_cut, artios_schnitt, artios_taglia, die?cut, final cut, lochung, schneid*
+Fold               	spot        	rgb         	0 128 255    	artios_crease, artios_cordone, artios_raineur, artios_reverse crease, crease, falz, artios_rillung, rill, rillen
+Glue               	spot        	rgb         	255 222 0    	klebestelle*
+White              	spot        	rgb         	255 255 200
+Varnish            	spot        	rgb         	200 255 100  	artios_outside coating
+Covered area       	spot        	rgb         	255 0 128    	verdeckter bereich
+Visible area       	spot        	rgb         	255 180 0    	rahmen, safe area, visible mark
+Safety area        	spot        	rgb         	0 180 255    	freihalten, randabstand, safe*margins, schutzzone
+Segmentation       	spot        	rgb         	0 128 255    	split
+Placement          	process     	cmyk        	0 0 0 100
 
 # <Name>: swatch name
 # <Color model>: `process` or `spot` (defaults to `process`)
