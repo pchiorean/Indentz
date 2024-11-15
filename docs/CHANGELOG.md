@@ -4,6 +4,8 @@
   **Document/Export/QuickExport:** Changed default export profiles to `_LowRes` and `_HighRes`
 - `11/05` [`fix`](https://github.com/pchiorean/Indentz/commit/65cb8ffec75fca68f74c91f0c0251c50f98da8f6)
   **Object/Fit/TextAutosize:** Skip color-filled text frames
+- `11/15` [`fix`](https://github.com/pchiorean/Indentz/commit/6f096ee60c7c0fcfb6c9fa406b9f2720e8caba76)
+  **Document/Export/QuickExport:** Added fallback for settings: when the user folder can't be detected (OneDrive anyone?), the settings will be saved next to the script
 
 ##### Queued
 
