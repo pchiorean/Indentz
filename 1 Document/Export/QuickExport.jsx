@@ -1,5 +1,5 @@
 /*
-	Quick export 24.11.5
+	Quick export 24.11.15
 	(c) 2021-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -40,14 +40,13 @@
 app.doScript(QuickExport, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'QuickExport');
 
 function QuickExport() {
-	var doc, settings, ui, progressBar;
+	var doc, settings, settingsFile, ui, progressBar;
 	var status = [];
 	var title = 'Quick Export';
 	var WIN = (File.fs === 'Windows');
 	var invalidFilenameCharsRE = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
 	var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
-	var settingsFile = File(Folder.userData + '/' + script.name.replace(/.[^.]+$/, '') + '.prefs');
 	var old = {
 		measurementUnit: app.scriptPreferences.measurementUnit,
 		userInteractionLevel: app.scriptPreferences.userInteractionLevel,
@@ -144,6 +143,15 @@ function QuickExport() {
 		version: VER
 	};
 
+	// Resolve settings location: if user data folder is not detected (OneDrive?), fallback to script location
+	if (Folder.userData) {
+		if (!Folder(Folder.userData + '/.indentz/').exists) Folder(Folder.userData + '/.indentz/').create();
+		settingsFile = File(Folder.userData + '/.indentz/' + script.name.replace(/.[^.]+$/, '') + '.prefs');
+	} else {
+		settingsFile = File(script.fullName.replace(/.[^.]+$/, '') + '.prefs');
+	}
+
+	// Main
 	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
 	app.pdfExportPreferences.viewPDF = false;
@@ -1206,7 +1214,9 @@ function QuickExport() {
 			reset: function () {
 				if (settingsFile.exists)
 					alert('Preferences were reset.\nEither the file was an old version, or it was corrupt.');
-				try { settingsFile.remove(); } catch (e) {}
+				try {
+					settingsFile.remove();
+				} catch (e) {}
 				settings = defaults;
 			}
 		};
@@ -1248,7 +1258,7 @@ function QuickExport() {
 				ui.actions.add('button { text: "Cancel", preferredSize: [ 80, 24 ], properties: { name: "cancel" } }');
 				ui.actions.ok = ui.actions.add('button { text: "Start", preferredSize: [ 80, 24 ], properties: { name: "ok" } }');
 
-		// UI events
+		// Events
 
 		// Input source
 		if (isFolderMode) {
