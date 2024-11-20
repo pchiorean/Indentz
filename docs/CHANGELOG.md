@@ -6,6 +6,8 @@
   **Object/Fit/TextAutosize:** Skip color-filled text frames
 - `11/15` [`fix`](https://github.com/pchiorean/Indentz/commit/6f096ee60c7c0fcfb6c9fa406b9f2720e8caba76)
   **Document/Export/QuickExport:** Added fallback for settings: when the user folder can't be detected (OneDrive anyone?), the settings will be saved next to the script
+- `11/20` [`fix`](https://github.com/pchiorean/Indentz/commit/9a60f60067e7d2ec72b72e638c31464036e2e764)
+  **Document/Export/QuickExport:** Adding unnamed colors was done by calling the menu by name, and this causes problems when changing application language; fixed by using the menu ID
 
 ##### Queued
 
