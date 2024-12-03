@@ -1,5 +1,5 @@
 /*
-	Page size from file name 24.4.13
+	Page size from file name 24.12.3
 	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Sets every page size and margins according to the file name.
@@ -273,7 +273,7 @@ function main() {
 			],
 			itemLayer: visLayerName
 		});
-		try { frame.overprintStroke = true; } catch (e) {}
+		try { frame.overprintStroke = false; } catch (e) {}
 		visLayer.locked = true;
 	}
 
