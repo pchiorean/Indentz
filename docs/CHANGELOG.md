@@ -1,29 +1,18 @@
 ## [Development version](https://github.com/pchiorean/Indentz/compare/24.8.15...dev)
 
 - `11/05` [`upd`](https://github.com/pchiorean/Indentz/commit/bae7688a502b60fb8bf9a22666d84511d603d28a)
-  **Document/Export/QuickExport:** Changed default export profiles to `_LowRes` and `_HighRes`
+  **QuickExport:** Changed default export profiles to `_LowRes` and `_HighRes`
 - `11/05` [`fix`](https://github.com/pchiorean/Indentz/commit/65cb8ffec75fca68f74c91f0c0251c50f98da8f6)
-  **Object/Fit/TextAutosize:** Skip color-filled text frames
+  **TextAutosize:** Skip color-filled text frames
 - `11/15` [`fix`](https://github.com/pchiorean/Indentz/commit/6f096ee60c7c0fcfb6c9fa406b9f2720e8caba76)
-  **Document/Export/QuickExport:** Added fallback for settings: when the user folder can't be detected (OneDrive anyone?), the settings will be saved next to the script
+  **QuickExport:** Added fallback for settings: when the user folder can't be detected (OneDrive anyone?), the settings will be saved next to the script
 - `11/20` [`fix`](https://github.com/pchiorean/Indentz/commit/9a60f60067e7d2ec72b72e638c31464036e2e764)
-  **Document/Export/QuickExport:** Adding unnamed colors was done by calling the menu by name, and this causes problems when changing application language; fixed by using the menu ID
+  **QuickExport:** Adding unnamed colors was done by calling the menu by name, and this causes problems when changing application language; fixed by using the menu ID
+- `12/03` [`upd`](https://github.com/pchiorean/Indentz/commit/b367fd693b575c705794e8dbde146a349f658031)
+          [`upd`](https://github.com/pchiorean/Indentz/commit/8f88fbcb38b22333115dabe329eeb5dcb253ae6e)
+  **MarkSafety/VisibleArea, PageSizeFromFilename:** By user request the visible and safety area markings will not overprint
 
 ##### Queued
-
-- [ ] `fix` **SplitDocBySpreads:** Don't append separators if already exist
-- [ ] `fix` **TextAutoSize:** Check `baselineShift`
-- [ ] `brk` `?` Use _safety area_ in **PageMarginsFromScriptName**
-- [ ] `upd` Tweak the moment when _ESC_ key status is read
-- [ ] `upd` **ReplaceLinks, QuickExport:** Restore cropping mode when relinking files
-- [ ] `upd` **ReplaceLinks, QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
-- [ ] `upd` **QuickExport:** Add a checkbox for `0e04f28`
-- [ ] `upd` **ZoomToSpreads:** Apply the smallest zoom value to all windows
-- [ ] `upd` Implement `try/catch/finally` when appropriate
-- [ ] `ref` `?` Implement `for...of` when appropriate (see [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of))
-- [ ] `new` **QuickExport:** Add JPG, PNG & INDD export profiles
-- [ ] `new` **QuickExport:** Add package option
-- [ ] `new` **Grid\* and HW:** Get `HW_PCT` from page guide or object tag (`hw10`, `hw15`, etc.); fallback to `10`
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -947,55 +936,66 @@
 
 ##### New features
 
-- `brk` `?` **cleanup/DefaultLayers:** Add column for locked status
-- `new` **cleanup/DefaultSwatches:** Add groups support
-- `new` **cleanup/DefaultSwatches:** Add gradients support
-- `new` **cleanup/DefaultSwatches:** Add tints support
-- `new` **export/QuickExport:** Add a preflight option
-- `new` **export/QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
-- `new` **file/SpreadsToLayers**
+- `new` **AddSwatches:** Add gradients support
+- `new` **AddSwatches:** Add groups support
+- `new` **AddSwatches:** Add tints support
+- `new` **Grid\* and HW:** Get `HW_PCT` from page guide or object tag (`hw10`, `hw15`, etc.); fallback to `10`
+- `new` **QuickExport:** Add a preflight option
+- `new` **QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
+- `new` **QuickExport:** Add JPG, PNG & INDD export profiles
+- `new` **QuickExport:** Add package option
+- `new` **Send selection to layer...**
+- `new` **ShowFonts** → **DumpFonts**
+- `new` **SpreadsToLayers**
 - `new` **lib/replaceLink:** Add page parameter
-- `new` **misc/ShowFonts** → **cleanup/DumpFonts**
 - `new` Add an '.ini' file for user global settings
-- `new` 'Send selection to layer...'
-- `new` `?` **file/LayersToFiles**
 
 ##### Updates
 
-- `brk` **cleanup/DefaultLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
-- `upd` **cleanup/DefaultSwatches:** `checkRecord()`: 'Values' ‣ 'Color Space' ‣ 'Color Model' ‣ 'Variants' ‣ 'Name'.\
   If swatch name is missing, generate a Color Value Name. If color space is missing, use a default depending on color values number and range
-- `upd` **cleanup/DefaultSwatches:** `checkRecord()`: Validate color values (number and range) depending on color space
-- `upd` **cleanup/DocCleanup:** Delete empty color groups
-- `upd` **cleanup/ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
-- `brk` **cleanup/ReplaceSnippets:** Add regexp/grep suport
-- `brk` **cleanup/ReplaceSnippets:** Extend Scope to layers/pages etc
-- `brk` **export/MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
-- `brk` **export/MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
-- `upd` **export/QuickExport:** Create destination folder if it doesn't exist
-- `upd` **export/QuickExport:** Move hacks to advanced options, saved in settings
-- `upd` **export/Show/HideDNPLayers:** Take layers from a TSV
-- `upd` **file/FilesToSpreads:** Also bring along the attached master pages
-- `upd` **file/SpreadsToFiles:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
-- `upd` **layout/PageMarginsFromSelection:** Set the margins of every page touched by the selection
-- `upd` **layout/PageSizeFromFilename:** Use real units (mm, cm, px) when detected
-- `upd` **layout/PageSizeFromSelection:** Use outlined text bounds for text frames
-- `upd` **layout/PageSizeFromSelection:** Without selection fit all pages to their contents
+- `brk` `?` Use _safety area_ in **PageMarginsFromScriptName**
+- `brk` **AddLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
+- `brk` **MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
+- `brk` **MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
+- `brk` **ReplaceTextSnippets:** Add regexp/grep suport
+- `brk` **ReplaceTextSnippets:** Extend Scope to layers/pages etc
+- `upd` **AddSwatches:** `checkRecord()`: 'Values' ‣ 'Color Space' ‣ 'Color Model' ‣ 'Variants' ‣ 'Name'.\
+- `upd` **AddSwatches:** `checkRecord()`: Validate color values (number and range) depending on color space
+- `upd` **DNPLayersHide/Show:** Take layers from a TSV
+- `upd` **DocCleanup:** Delete empty color groups
+- `upd` **JoinDocs:** Also bring along the attached master pages
+- `upd` **PageMarginsFromSelection:** Set the margins of every page touched by the selection
+- `upd` **PageSizeFromFilename:** Use real units (mm, cm, px) when detected
+- `upd` **PageSizeFromSelection:** Use outlined text bounds for text frames
+- `upd` **PageSizeFromSelection:** Without selection fit all pages to their contents
+- `upd` **QuickExport:** Add a checkbox for `0e04f28`
+- `upd` **QuickExport:** Create destination folder if it doesn't exist
+- `upd` **QuickExport:** Move hacks to advanced options, saved in settings
+- `upd` **ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
+- `upd` **ReplaceLinks, QuickExport:** Restore cropping mode when relinking files
+- `upd` **ReplaceLinks, QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
+- `upd` **SplitDocBySpreads:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
+- `upd` **ZoomToSpreads:** Apply the smallest zoom value to all windows
 - `upd` **lib/log:** Update string formatting (see [this](https://github.com/SerenityOS/serenity/blob/c61bb1706f4fd4bdc6363df93e0d8f31709123ff/Documentation/StringFormatting.md) spec)
 - `upd` **lib/replaceText:** Add grep matching
 - `upd` **lib/replaceText:** Take an array of strings as input
 - `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
 - `upd` **lib/report:** Make window resizable
-- `upd` Change title to 'Canceling, please wait...' when canceling batch processes
-- `upd` Use a custom object style for `<visible area>` frame
 - `upd` `?` JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
+- `upd` Change title to 'Canceling, please wait...' when canceling batch processes
+- `upd` Implement `try/catch/finally` when appropriate
+- `upd` Tweak the moment when _ESC_ key status is read
+- `upd` Use a custom object style for `<visible area>` frame
+- `ref` `?` Implement `for...of` when appropriate (see [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of))
 
 ##### Removed features
 
 ##### Bug fixes
-- `fix` **misc/Clip:** Don't cut drop/inner shadows, outer glows and bevel and emboss
-- `fix` **layout/PageSizeFromFilename:** Fix errors on pages set to 1:X scale
-- `fix` **layout/PageSizeFromFilename:** Limit detected bleed to max values
+- `fix` **Clip:** Don't cut drop/inner shadows, outer glows and bevel and emboss
+- `fix` **PageSizeFromFilename:** Fix errors on pages set to 1:X scale
+- `fix` **PageSizeFromFilename:** Limit detected bleed to max values
+- `fix` **SplitDocBySpreads:** Don't append separators if already exist
+- `fix` **TextAutoSize:** Check `baselineShift`
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
 - `fix` Fix `ui.onShow()` vertical dialog positioning
 - `fix` Nullify large variables on exit
