@@ -1,6 +1,6 @@
 /*
-	Mark visible area 23.12.12
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Mark visible area 24.12.3
+	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Creates on each page a 'visible area' frame the size of the page margins.
 
@@ -104,7 +104,7 @@ function main() {
 			],
 			itemLayer: visLayerName
 		});
-		try { frame.overprintStroke = true; } catch (e) {}
+		try { frame.overprintStroke = false; } catch (e) {}
 		visLayer.locked = true;
 	}
 

@@ -1,5 +1,5 @@
 /*
-	Mark safety area 24.4.9
+	Mark safety area 24.12.3
 	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
 	Creates on each page a 'safety area' frame the size of the page margins.
@@ -104,7 +104,7 @@ function main() {
 			],
 			itemLayer: saLayerName
 		});
-		try { frame.overprintStroke = true; } catch (e) {}
+		try { frame.overprintStroke = false; } catch (e) {}
 		saLayer.locked = true;
 	}
 
