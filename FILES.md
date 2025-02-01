@@ -36,6 +36,7 @@ Name                             |     Fn | Description
 **FitToSpreadVisibleArea**       |  ⌥⇧F12 | Reframes the selected objects to the spread visible area
 **FitToSpreadVisibleAreaForced** | ⌥⇧⌘F12 | Reframes the selected objects to the spread visible area, forced
 **GuidesAdd**                    |        | Adds guides on pages' edges and inner centers or selected objects' edges
+**GuidesCollect**                |        | Moves all guides to the '.guides' layer
 **GuidesDelete**                 |        | Deletes all guides from the document
 **HideDNPLayers**                |        | Hides _do not print_ layers
 **JoinDocs**                     |   ⇧⌘F7 | Combines the open documents, sorted alphabetically

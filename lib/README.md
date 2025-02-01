@@ -23,13 +23,15 @@ Adds a custom ruler guide. I use it to make grids for several brands, for which 
 
 ## alignTextToBottom(_item_) ⇒ _item_
 
-Sets a given text frame's vertical justification preference to align to bottom. Returns the text frame object.
+Sets a given text frame's vertical justification preference to align to bottom.
 
 **Parameters:**
 
 |Name|Type|Description|
 |:--:|:--:|--|
 |`item`|`textFrame`|The text frame.|
+
+**Returns** the text frame object.
 
 ---
 
@@ -47,6 +49,8 @@ Reframes the given items to the page/spread's _(scope)_ size/margins/visible are
 |`[scope]`|`string`|`page`|`page` or `spread`. _(Optional)_|
 |`[target]`|`string`|`size`|`size`, `margins`, `visible` or `bleed`. _(Optional)_|
 |`[forced]`|`boolean`|`false`|When `true` it just reframes the object without any checks. _(Optional)_|
+
+**Returns** an array of fitted items (as objects).
 
 **Example:**
 
@@ -132,9 +136,7 @@ Recursively get files from a folder and its subfolders.
 |`[subfolders]`|`boolean`|`false`|If `true`, include subfolders. _(Optional)_|
 |`[extension]`|`string`|`any`|Extension to include; if undefined, will match any extension. You can combine multiple extensions with regex OR, i.e. `indd\|tif\|txt` _(Optional)_|
 
-**Returns:**
-
-An array of found folders (as objects).
+**Returns** an array of found folders (as objects).
 
 **Example:**
 
@@ -160,9 +162,7 @@ Gets a page item's drop shadow properties.
 |:--:|:--:|--|
 |`item`|`pageItem`|The page item from which we take the properties.|
 
-**Returns:**
-
-The page item's drop shadow properties (`item.transparencySettings.dropShadowSettings`).
+**Returns** the page item's drop shadow properties (`item.transparencySettings.dropShadowSettings`).
 
 ## setDropShadow(_item, set_)
 
@@ -259,9 +259,7 @@ Matches a string against elements of an array, using wildcards.
 |`array`|`array`||An array of strings with optional wildcards: `*` (zero or more characters), `?` (any character).|
 |`[isCaseSensitive]`|`boolean`|`false`|If `true` the search is case sensitive. _(Optional)_|
 
-**Returns:**
-
-Returns `true` for match, `false` for no match.
+**Returns** `true` for match, `false` for no match.
 
 **Example:**
 
@@ -619,9 +617,7 @@ Replaces a link or a list of links with a new one. A selection limits the scope.
 |`oldLinks`|`string` \| `string[]`|A link name, or an array of link names to be replaced.|
 |`newLink`|`string`|The new link full path (of just the name if it's in the same folder).|
 
-**Returns:**
-
-Returns `true` if a replacement was made, `false` if not.
+**Returns** `true` if a replacement was made, `false` if not.
 
 **Example:**
 
@@ -645,9 +641,7 @@ Replaces a swatch or a list of swatches with a new one. The new swatch is create
 |`newName`|`string`|The new swatch name.|
 |`[CMYKvalues]`|`number[]`|Array of 4 values in 0-100 range (CMYK).|
 
-**Returns:**
-
-Returns `true` if a replacement was made, `false` if not.
+**Returns** `true` if a replacement was made, `false` if not.
 
 **Example:**
 
@@ -673,9 +667,7 @@ Replaces a text with a new one.
 |`[wholeWord]`|`boolean`|`true`|Match whole words. _(Optional)_|
 |`[target]`|`object`|`app.activeDocument`|A target for the `changeText()` method. _(Optional)_|
 
-**Returns:**
-
-Returns the number of replacements.
+**Returns** the number of replacements.
 
 **Example:**
 
@@ -738,6 +730,6 @@ Truncates a string to a certain length, preserving it's end and replacing the fi
 
 ## unique(_array_) ⇒ _array_
 
-Returns an array containing only the unique elements of the original array.
+**Returns** an array containing only the unique elements of the original array.
 
 Author: [Marc Autret](https://www.indiscripts.com) | [Source](http://indisnip.wordpress.com/2010/08/24/findchange-missing-font-with-scripting/)
