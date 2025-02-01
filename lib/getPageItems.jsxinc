@@ -15,8 +15,8 @@ function getPageItems(name, target, layer) {
 		if (!layer.isValid) layer = false;
 	}
 
-	if (Object.prototype.hasOwnProperty.call(target, 'allPageItems')) {
-		items = target.allPageItems;
+	if (Object.prototype.hasOwnProperty.call(target, 'pageItems')) {
+		items = target.pageItems.everyItem().getElements();
 		while ((item = items.shift())) {
 			if (name !== '<*>' && item.name !== name && item.label !== name) continue;
 			if (layer !== undefined) if (!layer || item.itemLayer.name !== layer.name) continue;
