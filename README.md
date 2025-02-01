@@ -129,8 +129,8 @@ Replaces document links using a 2-columns [TSV data file](#tsv) named `links.tsv
 - **Relink to:**
   - An absolute path of the form `/absolute/path/to/img1.psd`;
   - A relative path which is:
-	- relative by default to the document **`Links`** folder (e.g., `img2.psd`);
-	- relative to the `base/path/` defined by a previous **`@includepath`** directive (e.g., `img3.psd` and `subfolder/img4.psd`).
+    - relative by default to the document **`Links`** folder (e.g., `img2.psd`);
+    - relative to the `base/path/` defined by a previous **`@includepath`** directive (e.g., `img3.psd` and `subfolder/img4.psd`).
 - **Links:** A list of file names separated by commas, that if present in the document, will be replaced with the link from the first column; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters). The script will also automatically match the _file names_ from the first column, so **Links** can be empty – e.g., if `img4.psd` appears in the document, it will be replaced by the one in `subfolder/` (which is actually `base/path/subfolder/`, because the **`@includepath`** above it redefines the base path).
 
 _Warning:_ If a file name contains commas you must quote it.
@@ -380,6 +380,10 @@ If nothing is selected, guides are added to the page edges and the middle of the
 
 _Tip:_ If **Opt** is also pressed, we'll use spread guides.
 
+#### **GuidesCollect**
+
+Moves all guides to the **.guides** layer.
+
 #### **GuidesDelete**
 
 Deletes all guides from the document.
@@ -425,7 +429,7 @@ Sets the size and margins of every page and the bleed, getting the values from t
 
 It works with file names structured like this:
 
-	<Name>_<Total size WxH>[_<Visible area WxH>][_<Bleed>].indd
+    <Name>_<Total size WxH>[_<Visible area WxH>][_<Bleed>].indd
 
 `WxH` are pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). The first pair found defines the size of the page. If a second pair is found, it defines the _visible area_. If a one- or two-digit sequence follows, it defines the bleed. The script is reasonably tolerant to whitespace and extra stuff.
 
