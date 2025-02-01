@@ -1,7 +1,7 @@
 Name                             |     Fn | Description
-:-                               |     -: | :-
-**AddLayers**                    |        | Adds/merges layers from a list
-**AddSwatches**                  |        | Adds/merges swatches from a list
+:------------------------------- | -----: | :----------
+**AddLayers**                    |   ⌥⌘F2 | Adds/merges layers from a list
+**AddSwatches**                  |   ⇧⌘F2 | Adds/merges swatches from a list
 **AlignToB**                     |   Num2 | Aligns the selected objects to the bottom of the 'Align To' setting
 **AlignToBL**                    |   Num1 | Aligns the selected objects to the bottom-left of the 'Align To' setting
 **AlignToBR**                    |   Num3 | Aligns the selected objects to the bottom-right of the 'Align To' setting
@@ -18,7 +18,7 @@ Name                             |     Fn | Description
 **DumpLayers**                   |        | Saves document's layers to a TSV file compatible with **AddLayers**
 **DumpLinks**                    |        | Saves document's links to a TSV file compatible with **ReplaceLinks**
 **DumpSwatches**                 |        | Saves document's swatches to a TSV file compatible with **AddSwatches**
-**EAN**                          |    ⌥F9 | Inserts EAN codes into the selected frames or in a new document
+**EAN**                          |     F9 | Inserts EAN codes into the selected frames or in a new document
 **FitToPage**                    |    F11 | Reframes the selected objects to the page size
 **FitToPageBleed**               |   ⇧F11 | Reframes the selected objects to the page bleed
 **FitToPageBleedForced**         |  ⇧⌘F11 | Reframes the selected objects to the page bleed, forced
@@ -38,7 +38,7 @@ Name                             |     Fn | Description
 **GuidesAdd**                    |        | Adds guides on pages' edges and inner centers or selected objects' edges
 **GuidesDelete**                 |        | Deletes all guides from the document
 **HideDNPLayers**                |        | Hides _do not print_ layers
-**JoinDocs**                     |        | Combines the open documents, sorted alphabetically
+**JoinDocs**                     |   ⇧⌘F7 | Combines the open documents, sorted alphabetically
 **LabelPage**                    |        | Adds a custom label on the current page's slug
 **LabelPageRatios**              |        | Adds a label with the page/visible area/margins' ratios on each page's slug
 **LayersToSpreads**              |        | Moves layers of the active document to separate spreads
@@ -51,9 +51,9 @@ Name                             |     Fn | Description
 **PageSizeFromMargins**          |        | Sets the page size to the page margins
 **PageSizeFromSelection**        |    ⇧F3 | Sets the page size to the selected objects bounds
 **PrepareForExport**             |        | Hides some layers and moves objects with special colors to separate spreads
-**QR**                           |     F9 | Adds a QR code to the current document or to a separate file
-**QRBatch**                      |    ⇧F9 | Adds codes from a list to existing documents or to separate files, in batch mode
-**QuickExport**                  |        | Exports open .indd documents or a folder with several configurable PDF presets
+**QR**                           |        | Adds a QR code to the current document or to a separate file
+**QRBatch**                      |        | Adds codes from a list to existing documents or to separate files, in batch mode
+**QuickExport**                  |     ⌃E | Exports open .indd documents or a folder with several configurable PDF presets
 **RemoveScriptLabels**           |        | Removes all script labels from all or selected objects
 **RemoveStyles**                 |        | Removes paragraph/character/object styles from all or selected objects
 **ReplaceFonts**                 |        | Replaces fonts from a substitution list
@@ -62,13 +62,13 @@ Name                             |     Fn | Description
 **ResetAlignTo**                 |  ⌃Num0 | Resets the 'Align To' setting to default
 **ResetLayers**                  |        | Resets the visible/printable/locked state of document layers
 **ScaleToPageMargins**           |    ⌥F5 | Scales the selected objects to the page margins
-**ScaleToPageMarginsH**          |   ⌃⌥F5 | Scales the selected objects to the page top/bottom margins
+**ScaleToPageMarginsH**          |   ⌥⌘F5 | Scales the selected objects to the page top/bottom margins
 **ScaleToPageMarginsW**          |        | Scales the selected objects to the page left/right margins
 **ScaleToPageSize**              |     F5 | Scales the selected objects to the page size
-**ScaleToPageSizeH**             |    ^F5 | Scales the selected objects to the page top/bottom size
+**ScaleToPageSizeH**             |    ⌘F5 | Scales the selected objects to the page top/bottom size
 **ScaleToPageSizeW**             |        | Scales the selected objects to the page left/right size
 **ScaleToSpreadBleed**           |    ⇧F5 | Scales the selected objects to the spread bleed
-**ScaleToSpreadBleedH**          |   ⌃⇧F5 | Scales the selected objects to the spread bleed top/bottom size
+**ScaleToSpreadBleedH**          |   ⇧⌘F5 | Scales the selected objects to the spread bleed top/bottom size
 **ScaleToSpreadBleedW**          |        | Scales the selected objects to the spread bleed left/right size
 **SetRefPointToB**               |  ⌃Num2 | Sets 'Transform Reference Point' to bottom
 **SetRefPointToBL**              |  ⌃Num1 | Sets 'Transform Reference Point' to bottom-left
@@ -84,7 +84,7 @@ Name                             |     Fn | Description
 **ShowProfiles**                 |        | Shows all color profiles available to a document
 **ShowProperties**               |     F1 | Shows properties and methods of the selected object/active document/the application
 **SplitDocBySpreads**            |        | Saves the spreads of the active document in separate files
-**SplitSpreadsByLayers**         |        | Splits or joins document spreads using special layers
+**SplitSpreadsByLayers**         |   ⌥⌘F7 | Splits or joins document spreads using special layers
 **SwatchesCleanup**              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to 'C= M= Y= K=' format, deletes unused
 **TextAutosize**                 |     F6 | Auto-sizes the text frame to the content
 **TileAll**                      |    ⇧F4 | Invokes different window tiling options, depending on the current spread orientation
