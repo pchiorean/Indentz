@@ -1,6 +1,6 @@
 # Indentz
 
-This is a collection of InDesign scripts that I use to improve my DTP workflow, which often involves repetitive, tedious, or time-consuming operations. The scripts are not designed for long documents with flowing text – I usually work with single-page documents. With few exceptions, these are simple scripts, with minimal interaction, and, apart from warnings, do their job silently. I use a series of [keyboard shortcuts](https://creativepro.com/assigning-keyboard-shortcuts-scripts/) to run them (suggestions below). The code is tested in Adobe InDesign CC 2020–2024 on Mac.
+This is a collection of InDesign scripts that I use to improve my DTP workflow, which often involves repetitive, tedious, or time-consuming operations. The scripts are not designed for long documents with flowing text – I usually work with single-page documents. With few exceptions, these are simple scripts, with minimal interaction, and, apart from warnings, do their job silently. I use a series of [keyboard shortcuts](https://creativepro.com/assigning-keyboard-shortcuts-scripts/) to run them (suggestions below). The code is tested in Adobe InDesign CC 2020–2025 on Mac.
 
 I'm a graphic designer, not a programmer (I started doing this at the beginning of the Covid-19 pandemic), so be prepared for bugs and oversights (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
@@ -217,7 +217,7 @@ For a long time, I exported documents to PDF with [**Batch Convert**](https://cr
 
 - **Sort files into subfolders by date**: Files will be exported in a subfolder named `MM.DD` (current month/day).
 
-- **Overwrite existing files:** The files will be overwritten if the destination is the same. If unchecked, the files will get unique names by incrementing their index – for example, we'll export as `Document_preview3.pdf` if there is already a `Document_preview2.pdf` in the export folder or its subfolders.
+- **Overwrite existing files:** The files will be overwritten if the destination is the same. If unchecked, the files will get unique names by incrementing their index – for example, we'll export `Document_preview3.pdf` if there is already a `Document_preview2.pdf` in the export folder or its subfolders.
 
 **Source update:**
 - **Save modified documents:** Will update source documents after export – e.g., if you want to preserve changes made by a script.
@@ -299,7 +299,7 @@ _Note:_ Many scripts in this collection assume these settings as defaults becaus
 
 Performs a sequence of actions designed to bring the document to an approximately 'clean' state:
 
-- Sets default preferences by running [**`DefaultPrefs`**](#defaultprefs));
+- Sets default preferences by running [**`DefaultPrefs`**](#defaultprefs);
 - Unlocks all objects and resets their scaling to 100%;
 - Deletes hidden objects (after confirmation);
 - Deletes empty frames (after confirmation);
@@ -374,11 +374,11 @@ _Page geometry, guides and markings._
 
 #### **GuidesAdd**
 
-If any page objects are selected, we add guides around them.
+If any page objects are selected, it adds guides around them.
 
 If nothing is selected, guides are added to the page edges and the middle of the page margins. A second run deletes the guides.
 
-_Tip:_ If **Opt** is also pressed, we'll use spread guides.
+_Tip:_ If **Opt** is also pressed, it will use spread guides.
 
 #### **GuidesCollect**
 
@@ -431,7 +431,7 @@ It works with file names structured like this:
 
     <Name>_<Total size WxH>[_<Visible area WxH>][_<Bleed>].indd
 
-`WxH` are pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). The first pair found defines the size of the page. If a second pair is found, it defines the _visible area_. If a one- or two-digit sequence follows, it defines the bleed. The script is reasonably tolerant to whitespace and extra stuff.
+`WxH` are pairs of numbers like `000x000` (where `000` means a group of at least one digit, followed or not by decimals, and optionally by `mm` or `cm`). The first pair found sets the size of the page. If a second pair is found, it sets the _visible area_. If a one- or two-digit sequence follows, it sets the bleed. The script is reasonably tolerant to whitespace and extra stuff.
 
 **Example:**
 
@@ -484,7 +484,7 @@ _Tip:_ By default the index will be appended at the end, but you can use a `#` i
 Splits or joins the active document spreads using a list of predefined layers.
 
 I use it for multi-language documents, so the defaults are **DE**, **FR**, **IT**, but the layers can be layout variants etc. 
-Given a spread containing these three layers, the script divides it into three spreads, each containing items from its corresponding layer (the other layers are untouched). Given three spreads, the script joins them into one spread, populating the predefined layers with their corresponding items.
+Given a spread containing these three layers, the script splits it into three spreads, each containing items from its corresponding layer (the other layers are untouched). Given three spreads, the script joins them into one spread, populating the predefined layers with their corresponding items.
 
 _Note:_ Edit the variable `layers` to customize the predefined layers to your needs.
 
@@ -504,7 +504,7 @@ _Suggested shortcut:_ `⇧F4`
 
 #### **ZoomTo300Percent**
 
-Zooms current layout window to 300%.
+Zooms current layout window to 300%. It complements the predefined 100% (`⌘1`), 200% (`⌘2`) and 400% (`⌘4`) zoom levels.
 
 _Suggested shortcut:_ `⌘3`
 
@@ -564,7 +564,7 @@ _Suggested shortcut:_ `⌃Num0`
 
 ---
 
-### Clipping
+### Clip
 
 _Insert or remove objects from clipping frames._
 
@@ -698,7 +698,7 @@ I fixed some bugs, added a default value, an option to join contours, and undo.
 
 #### **EAN**
 
-This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, that generates a document with barcodes from a list provided by the user. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I got tired of manually placing, scaling, and rotating each one, so I 'borrowed' the part that generates the barcode and made this script to automate the operations.
+This script is inspired by [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator) by Konstantin Smorodsky, that generates a document with barcodes from a list provided by the user. Occasionally, I work on flyers where I have dozens of barcodes to fill in, and I got tired of manually placing, scaling, and rotating each one, so I 'borrowed' the function that generates the barcode and made this script to automate the operations.
 
 You can enter a single code or a list (enter 8 or 13 digits for the code; if you have an add-on, add a hyphen and another 2 or 5 digits).
 
@@ -724,8 +724,6 @@ If the document name ends with a separator (space/dot/underline/hyphen) followed
 
 _Tip:_ The script does a decent job breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
 
-_Suggested shortcut:_ `F9`
-
 #### **QRBatch**
 
 Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV data file named **`qr.tsv`** ([sample](samples/qr.tsv)) and adds them to existing documents, or creates separate files (the suffix thingy applies here as well):
@@ -747,8 +745,6 @@ The TSV file must be saved locally (in the active document folder); files starti
 Blank lines are ignored; everything after a `#` (comments) is ignored.
 
 _Tip:_ The script does a decent job of breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
-
-_Suggested shortcut:_ `⇧F9`
 
 ## Install
 
