@@ -1293,7 +1293,7 @@ function QuickExport() {
 			}
 		};
 
-		// Show / Close
+		// Show/Close
 		ui.onShow = function () {
 			prefs.read();
 			if (settings.position !== '') {

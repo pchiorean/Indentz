@@ -14,7 +14,7 @@ function getDropShadow(item) {
  * @param {object} set - A set of previously saved `dropShadowSettings` properties.
  * @example setDropShadow(obj2, shadow);
  */
- function setDropShadow(item, set) {
+function setDropShadow(item, set) {
 	item.transparencySettings.dropShadowSettings.properties = {
 		angle: set.angle,
 		blendMode: set.blendMode,
