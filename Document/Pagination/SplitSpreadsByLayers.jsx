@@ -1,5 +1,5 @@
 /*
-	Split/join spreads by layers 25.2.1
+	Split/join spreads by layers 25.2.5
 	(c) 2025 Paul Chiorean <jpeg@basement.ro>
 
 	Splits or joins document spreads using a list of layers.
@@ -40,7 +40,7 @@ function main() {
 				if (i === j) continue; // Skip self
 
 				items = getPageItems('<*>', doc.spreads[i], layer.name);
-				if (!items) continue; // Skip empty layers
+				if (items.length === 0) continue; // Skip empty layers
 
 				while ((item = items.shift())) try { item.remove(); } catch (_) {}
 			}
@@ -52,7 +52,7 @@ function main() {
 		for (i = 0; i < layers.used.length; i++) {
 			layer = layers.used[i];
 			items = getPageItems('<*>', doc, layer.name);
-			if (!items) continue; // Skip empty layers
+			if (items.length === 0) continue; // Skip empty layers
 
 			items = getPageItems('<*>', items[0].parentPage.parent, layer.name);
 			while ((item = items.shift())) {

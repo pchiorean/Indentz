@@ -3,7 +3,7 @@
  * @param {string} [name='<*>'] - The name/label of the page item to search for. '<*>' matches all items.
  * @param {object} [target=app.activeDocument] - A container for page items. (Optional.)
  * @param {string} [layer] - Look only for objects from this layer. (Optional.)
- * @returns {pageItem[]|false} Returns an array of page items or `false` if nothing was found.
+ * @returns {pageItem[]} Returns an array of page items.
  */
 function getPageItems(name, target, layer) {
 	var item, items;
@@ -22,9 +22,8 @@ function getPageItems(name, target, layer) {
 			if (layer !== undefined) if (!layer || item.itemLayer.name !== layer.name) continue;
 			result.push(item);
 		}
-		if (result.length > 0) return result;
 	}
-	return false;
+	return result;
 }
 
 /**
@@ -32,7 +31,7 @@ function getPageItems(name, target, layer) {
  * @param {string} [name='<*>'] - The name/label of the text frame to search for. '<*>' matches all items.
  * @param {object} [target=app.activeDocument] - A container for text frames. (Optional.)
  * @param {string} [layer] - Look only for objects from this layer. (Optional.)
- * @returns {textFrame[]|false} Returns an array of text frames or `false` if nothing was found.
+ * @returns {textFrame[]} Returns an array of text frames.
  */
 function getTextFrames(name, target, layer) {
 	var item, items;
@@ -51,7 +50,6 @@ function getTextFrames(name, target, layer) {
 			if (layer !== undefined) if (!layer || item.itemLayer.name !== layer.name) continue;
 			result.push(item);
 		}
-		if (result.length > 0) return result;
 	}
-	return false;
+	return result;
 }

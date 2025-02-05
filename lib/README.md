@@ -184,7 +184,7 @@ setDropShadow(item2, shadow);
 
 ---
 
-## getPageItems(_name, [target], [layer]_) ⇒ \{Array\} of \{PageItems\} | false
+## getPageItems(_name, [target], [layer]_) ⇒ \{Array\} of \{PageItems\}
 
 Gets all page items with a specified name from a target (optional) and a layer (optional).
 
@@ -198,7 +198,7 @@ Gets all page items with a specified name from a target (optional) and a layer (
 
 **Returns:**
 
-An array of page items with the specified `name` (or all items) from the `target`, optionally on the specified `layer`, or `false` if nothing was found. If `target` is undefined, it fallbacks to the active document; if `layer` is undefined, it fallbacks to all layers.
+An array of page items with the specified `name` (or all items) from the `target`, optionally on the specified `layer`. If `target` is undefined, it fallbacks to the active document; if `layer` is undefined, it fallbacks to all layers.
 
 **Example:**
 
