@@ -21,11 +21,10 @@
   **SplitSpreadsByLayers:** Tolerate slight spreads/layers mismatches
 - `02/01` [`new`](https://github.com/pchiorean/Indentz/commit/173cd433b778fab2decfcf30109710c9e743a955)
   **GuidesCollect:** Added a script that moves all document guides to the '.guides' layer
+- `02/05` [`brk`](https://github.com/pchiorean/Indentz/commit/38744d051e6703f95ee2d31c9a7a2538a07dbefe)
+  **lib/getPageItems, SplitSpreadsByLayers:** Fixed **getPageItems** to always return an array, eliminating result ambiguity
 
 ##### Queued
-
-- **getPageItems:** Always return an array (check other libs for `return false;`)
-- **README:** Check shortcuts suggestions
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -1023,7 +1022,6 @@
 ##### Bug fixes
 - `fix` **Clip:** Don't cut drop/inner shadows, outer glows and bevel and emboss
 - `fix` **PageSizeFromFilename:** Fix errors on pages set to 1:X scale
-- `fix` **PageSizeFromFilename:** Limit detected bleed to max values
 - `fix` **SplitDocBySpreads:** Don't append separators if already exist
 - `fix` **TextAutoSize:** Check `baselineShift`
 - `fix` `transform()` and `app.transformPreferences.whenScaling`
@@ -1032,7 +1030,7 @@
 
 ##### Miscellaneous
 
-- `doc` Add a mention about canceling the ongoing operation with 'Esc'
+- `doc` When detecting 'Esc', ask user if it wants to cancel the ongoing operation (but 'Esc' will also cancel the prompt?)
 
 ---
 
