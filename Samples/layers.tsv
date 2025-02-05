@@ -42,7 +42,7 @@ artwork       	Light Blue 	yes     	yes       	no     	above  	aw, bullseye, des
 on bottom     	Charcoal   	yes     	yes       	yes    	below  	brand arrow, buehne, bühne, farbebene, freisteller, shard*, velo_arrow
 bg            	Red        	yes     	yes       	yes    	below  	back, *background*, bgg, fond, hg, hintergrund*
 
-# <Name>: layer name
+# <Name>: layer name; a dot prefix lets QuickExport optionally hide the layer during document export;
 # <Color>: layer color (defaults to Light Blue)
 # <Visible>: ``yes` or `no` (defaults to `yes`)
 # <Printable>: `yes` or `no` (defaults to `yes`)
