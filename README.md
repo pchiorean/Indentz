@@ -195,43 +195,52 @@ _Document export and related._
 
 📍 _Suggested shortcut:_ ⌃E
 
-While Peter Kahrel's [**Batch Convert**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script is a 'Swiss army knife' PDF export tool, I needed a custom solution for my workflow that requires frequent changes to export settings; I also wanted direct access to some of them – the native export dialog has quite a few tabs and options and requires far too many clicks for my liking.
-
-There are two selectable workflows, with the options grouped into several categories. I will only list those that are not self-explanatory:
+Batch exports all open **.indd** documents or all documents from a selected folder using up to two customizable PDF presets. While Peter Kahrel's [**Batch Convert**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script is like a 'Swiss Army knife' export tool, this script is specifically designed to streamline workflows that need frequent PDF setting adjustments. It reduces the tedious clicking through multiple tabs and options in InDesign's native export dialog. (It also gave me a great opportunity to explore [ScriptUI](https://extendscript.docsforadobe.dev/user-interface-tools/scriptui-programming-model.html) development ;)).
 
 ![Quick export](.img/script-quickexport.png)
 ![](.img/script-quickexport-legend.svg)
 
-**Source folder:** By default, all open documents will be exported. If nothing is open, this option allows you to select a folder as the source.
+Two workflows are available, with options organized into several categories:
 
-**Workflow:** Active workflow(s) and their labels. At least a workflow must be active.
+**Source folder:** By default, the script exports all open documents. If no documents are open, you can select a source folder, optionally including its subfolders.
 
-**Preset options:** After selecting an Adobe PDF Preset you can easily override some of its options.
+**Workflow:** Choose which workflow(s) to use – at least one must be selected. The label is only informative.
+
+**Preset options:** Select an Adobe PDF Preset and customize specific settings as needed.
 
 **Document actions:**
-- **Skip do-not-print layers** will not export layers with names beginning with a dot or a hyphen (e.g., **.safety area**) plus a default list of _do-not-print_ layers (see [**`DNPLayersHide`**](#dnplayersshow-and-dnplayershide) below); you can also define a custom list with **Edit list**.
 
-- **Run a script** will run a JavaScript or AppleScript before exporting – e.g., one of the other scripts from this section.
+- **Update out of date links**: Updates all modified links before export.
+
+- **Skip do-not-print layers:** Excludes layers whose names start with a dot or hyphen (like **.safety area**) and layers from the default _do-not-print_ list (see [**`DNPLayersHide`**](#dnplayersshow-and-dnplayershide) below). You can modify this list using the **Edit list** button.
+
+- **Run a script**: Executes a JavaScript or AppleScript before export – e.g., one of the other scripts from this sectio. ;)
 
 **Output options:**
-- **Export in a custom folder:** Files export to the source document's folder by default. You can specify a different folder if needed.
 
-- **Add a suffix:** This string will be appended to the name of the exported files.
+- **Export in a custom folder:** Choose a different output location instead of the default source document folder.
+
+- **Add a suffix:** Appends this text to the exported file names.
   > 🎓 Add a suffix to a preset by including it after the _last_ underscore. For example, selecting preset `X4_350dpi_39L300_HighRes` will automatically set the suffix to `HighRes`.
 
-- **Sort files into subfolders by suffix**: Files will be sorted into subfolders matching their suffix name, using the text before the first `+` character. For example, `HighRes/` for suffix `HighRes`, and also `HighRes/` for suffix `HighRes+Diecut`.
+- **Sort files into subfolders by suffix**: Creates subfolders named after the suffix and sorts files accordingly.
+  > 🎓 It only uses the text before the first `+` character – for example, it creates `HighRes/` for the suffix `HighRes` and `HighRes/` for the suffix `HighRes+Diecut`.
 
-- **Sort files into subfolders by date**: Files will be exported in a subfolder named `MM.DD` (current month/day).
+- **Sort files into subfolders by date**: Creates subfolders named `MM.DD` (current month/day) and sorts files accordingly.
 
-- **Overwrite existing files:** Files will be overwritten if saved to the same location. If unchecked, files will get unique names with incremented numbers – for example, if `Document_LowRes2.pdf` exists anywhere in the export folder or its subfolders, the new file will be named `Document_LowRes3.pdf`.
+- **Export as separate pages/spreads**: Creates individual PDF files for each page or spread instead of a single multi-page document.
+
+- **Overwrite existing files:** Overwrites files with matching names if saved to the same location. If unchecked, files will get unique names with incremented numbers – for example, if `Document_LowRes2.pdf` exists anywhere in the export folder or its subfolders, the new file will be named `Document_LowRes3.pdf`.
 
 **Source update:**
-- **Save modified documents:** Updates source documents after export – e.g., to preserve any script-applied changes.
 
-- **Use 'Save as...' to reduce size:** This is particularly helpful for documents that have been edited multiple times, as regular saves can accumulate and increase the file size.
+- **Save modified documents:** Preserves changes made during export, including any script modifications.
+
+- **Use 'Save as...' to reduce size:** Helps minimize file size, especially for frequently edited documents, as regular saves can accumulate and increase the file size.
 
 **Global options:**
-- **Upgrade [Converted] documents**: Will upgrade documents from previous versions of InDesign.
+
+- **Upgrade [Converted] documents**: Converts documents from older InDesign versions to the current version.
 
 > 🎓 Settings are automatically saved each time you run the script. However, holding the **Opt/Alt** key while clicking **Start** will prevent settings from updating during the current session.
 
@@ -756,12 +765,14 @@ The code in this project would not have been possible without the InDesign Exten
 
 Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 
+I also thank DeepL, Grammarly and lately Claude for helping me 'massage' my language into more natural English. :)
+
 ## License
 
 © 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: February 6, 2025
+Last updated: February 8, 2025
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 
