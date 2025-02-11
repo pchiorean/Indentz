@@ -792,33 +792,33 @@
 ##### New features
 
 - [`brk`](https://github.com/pchiorean/Indentz/commit/3e49e0e84168940d265b77f541bb967f441c7d8e)
-  **QR 4.0, QRBatch 3.0:** Added suffix support (see [`SpreadsToFiles`](README.md#file))
+  **QR, QRBatch:** Added suffix support (see [`SpreadsToFiles`](README.md#file))
 - [`upd`](https://github.com/pchiorean/Indentz/commit/bcdc2ad7b12709b748396a9f0104b36c710953d1)
   **lib/ProgressBar:** Added a second (optional) progress bar
 - [`upd`](https://github.com/pchiorean/Indentz/commit/0fc73f2d1574cd5cc5747276a3fd544e6028e103)
-  **QuickExport 2.19:** Cancel exporting if 'Esc' is pressed
+  **QuickExport:** Cancel exporting if 'Esc' is pressed
 - [`new`](https://github.com/pchiorean/Indentz/commit/b0cec7208c5c08d82bd5efeb48850e01e2fc8677)
-  **QuickExport 2.17:** Added a 'Save as…' option for removing cruft and reducing documents size
+  **QuickExport:** Added a 'Save as…' option for removing cruft and reducing documents size
 - [`upd`](https://github.com/pchiorean/Indentz/commit/111a3d78ecd478439ae568d6d045e04ecaa6acfd)
-  **QR 3.7, QRBatch 2.9:** Added a checkbox for uppercase text
+  **QR, QRBatch:** Added a checkbox for uppercase text
 - [`upd`](https://github.com/pchiorean/Indentz/commit/f42cda93e86b35d8874c6d7224ca960c88d815ba)
-  **QuickExport 2.13:** When exporting files to subfolders, a '+' in the suffix will truncate the subfolder name
+  **QuickExport:** When exporting files to subfolders, a '+' in the suffix will truncate the subfolder name
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2813627388fe29db705688f4e942141d0e86d7f3)
-  **lib/ParseDataFile 2.1:** You can now use backslash at the end of a line to split long lines
+  **lib/ParseDataFile:** You can now use backslash at the end of a line to split long lines
 - [`brk`](https://github.com/pchiorean/Indentz/commit/3151eda817f88cc2e83e97e3f3c2f4edc222f073)
-  **lib/ParseDataFile 2.0:** Extended reporting granularity (fatal, warning, info, etc)
+  **lib/ParseDataFile:** Extended reporting granularity (fatal, warning, info, etc)
 - [`new`](https://github.com/pchiorean/Indentz/commit/3f151932a2dfe434649999dd97f91739e5f5e3be)
   Added **GuidesAdd:** Adds guides on pages' edges and inner centers or on selected objects' edges (mostly a template script)
 - [`new`](https://github.com/pchiorean/Indentz/commit/3d4e0ad39ff33bf1da6adb89c222788a8b821086)
   Added **ReplaceLinks:** Replaces document links from a substitution list
 - [`upd`](https://github.com/pchiorean/Indentz/commit/06f2e5c3dfa7ee2076c2373e7b7dc990c95f727f)
-  **DocCleanup 2.9:** Added a step to clear default effects
+  **DocCleanup:** Added a step to clear default effects
 - [`new`](https://github.com/pchiorean/Indentz/commit/d4f8e98b9df3bcc142537be1d865804456d11ab7)
   Added **ScaleToSpreadBleed/H/W**
 - [`upd`](https://github.com/pchiorean/Indentz/commit/80a4332a3d2b2abd59a5b58e63c8fc9da5fe82ea)
   **lib/IsIn:** Added wildcards support
 - [`new`](https://github.com/pchiorean/Indentz/commit/dc2e515a744d3ace9beedbfb0362765088c31857)
-  Added **OffsetPath 1.2** by [Olav Martin Kvern](https://www.siliconpublishing.com/blog/free-indesign-scripts/) 
+  Added **OffsetPath** by [Olav Martin Kvern](https://www.siliconpublishing.com/blog/free-indesign-scripts/) 
   to `/misc` (it uses InDesign's text wrap feature to create offset/inset paths)
 - [`new`](https://github.com/pchiorean/Indentz/commit/793b29ad840c757da623c7478c1151da8c02a4c0)
   Added **FindFile**, **IsIn** to `/lib`
@@ -826,99 +826,99 @@
 ##### Updates
 
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2b8e886f04ebaf4fb912540a2183fe1a941ba403)
-  **QuickExport 2.20:** Added a second progress bar when exporting separate pages
+  **QuickExport:** Added a second progress bar when exporting separate pages
 - [`upd`](https://github.com/pchiorean/Indentz/commit/21e174597e2a5409f5536616be6ee7c6bebb9774)
-  **QuickExport 2.18:** Input files are now sorted in natural order
+  **QuickExport:** Input files are now sorted in natural order
 - [`upd`](https://github.com/pchiorean/Indentz/commit/832e27f6050f82b3e52d7a901bfa40be93974077)
-  **QR 3.6.1, QRBatch 2.8.1:** The on-page label now has insets on both left and right sides
+  **QR, QRBatch:** The on-page label now has insets on both left and right sides
 - [`brk`](https://github.com/pchiorean/Indentz/commit/f27f115aef8e122a05eccb0720bd359dfc11fae8#diff-0e70c2dc31abbf14f06d436fe1ed2bef11090416ae8c43bbfc1c17e48e9dae3c)
-  **lib/FitTo 6.0:** Changed input to a page items array argument instead of the current document selection
+  **lib/FitTo:** Changed input to a page items array argument instead of the current document selection
 - [`upd`](https://github.com/pchiorean/Indentz/commit/4442267f8e239e1721eeba8cbfb4513199d3761b)
-  **DefaultLayers 3.4, DefaultSwatches 4.6, ReplaceFonts 2.3, ReplaceLinks 1.3:**
+  **DefaultLayers, DefaultSwatches, ReplaceFonts, ReplaceLinks:**
   Improved the error alert for missing data files; added a check for converted documents
 - [`upd`](https://github.com/pchiorean/Indentz/commit/fd7aa42014aa30da5763db74ade92da2c66a7c33)
-  **DefaultPrefs 1.5:** Disabled layout adjustment
+  **DefaultPrefs:** Disabled layout adjustment
 - [`upd`](https://github.com/pchiorean/Indentz/commit/3926a97cf7225ee060e09e49e11778382ec0bd8e)
-  **QR 3.6, QRBatch 2.8:** If it fits, the code will now be aligned outside visible area, instead of margins
+  **QR, QRBatch:** If it fits, the code will now be aligned outside visible area, instead of margins
 - [`upd`](https://github.com/pchiorean/Indentz/commit/f512575295740bed67d12fe24210aefc77ab4f58)
-  **ReplaceLinks 1.2:** Update out-of-date links
+  **ReplaceLinks:** Update out-of-date links
 - [`upd`](https://github.com/pchiorean/Indentz/commit/614255fcf2c98b63fa22d2e4cb1ecef00162b796)
-  **LabelPage 1.3, LabelPageRatios 2.2, PrepareForExport 2.3:** Aligned page label to crop marks
+  **LabelPage, LabelPageRatios, PrepareForExport:** Aligned page label to crop marks
 - [`upd`](https://github.com/pchiorean/Indentz/commit/3b48f362a0b451f959da7bbea8ef83fb736e0e30)
-  **lib/Report 2.1.1:** Relaxed minimum window width for very small messages
+  **lib/Report:** Relaxed minimum window width for very small messages
 - [`upd`](https://github.com/pchiorean/Indentz/commit/b8df97aaa527928efb83bdb3b5541632b5e275a9)
-  **lib/Debug 1.1:** Display `NL` and `CR` as paragraph marks
+  **lib/Debug:** Display `NL` and `CR` as paragraph marks
 - [`upd`](https://github.com/pchiorean/Indentz/commit/04d1189abba4fbd8bc2202e048a685f7b71be878)
-  **QuickExport 2.15:** Report overflowed text; don't report missing links from the pasteboard
+  **QuickExport:** Report overflowed text; don't report missing links from the pasteboard
 - [`upd`](https://github.com/pchiorean/Indentz/commit/3d884512a1fd6afb74691951486090cd49840cad)
-  **DefaultLayers 3.3, DefaultSwatches 4.5, ReplaceFonts 2.2, ReplaceLinks 1.1:** Improved data parsing and error reporting
+  **DefaultLayers, DefaultSwatches, ReplaceFonts, ReplaceLinks:** Improved data parsing and error reporting
 - [`upd`](https://github.com/pchiorean/Indentz/commit/0a37098dd76b71f41e52b75e7898f637b92a60f2)
-  **lib/Report 2.1:** Updated sorting to ['natural ordering'](https://github.com/litejs/natural-compare-lite)
+  **lib/Report:** Updated sorting to ['natural ordering'](https://github.com/litejs/natural-compare-lite)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/7a1ef66fc2aabfffed3528bf83b41ba8f01c20eb)
   **lib/ReplaceSwatch:** Return replacement status (boolean)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/2fd1abc1aaed806c20f40a4a8eb39a69e5882599)
-  **QuickExport 2.12:** Moved crop marks at 1 mm from trimbox; don't include printer's marks if no bleed
+  **QuickExport:** Moved crop marks at 1 mm from trimbox; don't include printer's marks if no bleed
 - [`upd`](https://github.com/pchiorean/Indentz/commit/4e1e7021326a1afc48c2e40c9ce54c1279b3cdd2)
-  **OffsetPath 2.0:** Fixed container-objects; added option to join contours; streamlined logic
+  **OffsetPath:** Fixed container-objects; added option to join contours; streamlined logic
 - [`upd`](https://github.com/pchiorean/Indentz/commit/6dfd0aea063fe89f67fb228e73f0c6bc378e0619)
-  **lib/ProgressBar, QRBatch 2.7.1, QuickExport 2.11.2, SpreadsToFiles 1.7.9:** Centered progress bar in parent window
+  **lib/ProgressBar, QRBatch, QuickExport, SpreadsToFiles:** Centered progress bar in parent window
 - [`upd`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
-  **Debug 1.0:** Updated description, simplified arguments parsing, updated `trunc/pad` function
+  **Debug:** Updated description, simplified arguments parsing, updated `trunc/pad` function
 - [`upd`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
-  **HW 2.7:** Also match old `<safe area>` frames as visible area marks
+  **HW:** Also match old `<safe area>` frames as visible area marks
 - [`upd`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c#diff-88f86d8b713ae55352e6f1412b825214bd1c2a159f50d5f73a8c1a705d20bbca)
-  **ShowProfiles 1.5:** Profiles are only available with a document opened, so create a temporary one
+  **ShowProfiles:** Profiles are only available with a document opened, so create a temporary one
 
 ##### Removed features
 
 - [`ref`](https://github.com/pchiorean/Indentz/commit/1b87d73e8725849e2828e1381ed4e5aa97a9375e)
-  **QuickExport 2.21:** Removed advanced mode 'Save prefs' button
+  **QuickExport:** Removed advanced mode 'Save prefs' button
 
 ##### Bug fixes
 
 - [`fix`](https://github.com/pchiorean/Indentz/commit/bdd052c38198a876b8682bc04f34e0da6bc2711c)
-  **QRBatch 2.9.2:** Forgot to pass along the uppercase checkbox value (d'oh!)
+  **QRBatch:** Forgot to pass along the uppercase checkbox value (d'oh!)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/43439885e332b7b44e1b759c4e87b95eb9fe9799)
-  **TextAutosize 2.5.2:** Hopefully fixed hyphenated lines breaking
+  **TextAutosize:** Hopefully fixed hyphenated lines breaking
 - [`fix`](https://github.com/pchiorean/Indentz/commit/a96c262e49cbd6bdd4c109d1babb5edf95b12baf)
-  **QuickExport 2.16.1:** Fixed a bug when skipping page information on pages with small widths
+  **QuickExport:** Fixed a bug when skipping page information on pages with small widths
 - [`fix`](https://github.com/pchiorean/Indentz/commit/c0a3cdb490067d57a54997ee4b702146223483c4)
-  **QR 3.7.1, QRBatch 2.9.1:** Made the label uppercase by default
+  **QR, QRBatch:** Made the label uppercase by default
 - [`fix`](https://github.com/pchiorean/Indentz/commit/30f24d7d4e40d29c3f5af26d80e8a4c21baea8fe)
-  **lib/GetBounds 5.1.3:** Get the parent doc from the `page` argument, don't rely on the global `doc` variable (d'oh!)
+  **lib/GetBounds:** Get the parent doc from the `page` argument, don't rely on the global `doc` variable (d'oh!)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/2492a2f1c1dd3efc4c17172bf056f40613531401)
-  **lib/FitTo 5.5.6:** Relaxed 'object is transformed' rule to not clip 90°-rotated objects (fix regression from v5.5.4)
+  **lib/FitTo:** Relaxed 'object is transformed' rule to not clip 90°-rotated objects (fix regression from v5.5.4)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ce1cf13f2750d04d9cf83fcd82e0759ef674309d)
-  **lib/FitTo 5.5.5:** Don't move forced-fit lines to `[0, 0]`
+  **lib/FitTo:** Don't move forced-fit lines to `[0, 0]`
 - [`fix`](https://github.com/pchiorean/Indentz/commit/f40cdc1e437a43f68b7e4ae3188d1ba8b5300c69)
-  **lib/FitTo 5.5.4:** Transformed containers and text frames are now clipped
+  **lib/FitTo:** Transformed containers and text frames are now clipped
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ba80564a179e9664f582efddd3fe132c8a07fb6b)
-  **QuickExport 2.16:** Don't include page information when pages/spreads widths are less than 335 pt
+  **QuickExport:** Don't include page information when pages/spreads widths are less than 335 pt
 - [`fix`](https://github.com/pchiorean/Indentz/commit/6895b3b0136908211a2a07983579916d4f4f00ac)
-  **LabelPage 1.3.1, LabelPageRatios 2.2.1, PrepareForExport 2.3.1:** Added a white outline to labels
+  **LabelPage, LabelPageRatios, PrepareForExport:** Added a white outline to labels
 - [`fix`](https://github.com/pchiorean/Indentz/commit/70b7ac39278a7974143ce58516b140cb4d9f5930)
-  **ShowFonts 1.4.6:** Fixed name reporting for missing fonts
+  **ShowFonts:** Fixed name reporting for missing fonts
 - [`upd`](https://github.com/pchiorean/Indentz/commit/453707ad0ead37df7319644ea5435bc22a03d553)
-  **QuickExport 2.14:** When exporting separate pages don't add a counter if doc has a single page/spread
+  **QuickExport:** When exporting separate pages don't add a counter if doc has a single page/spread
 - [`fix`](https://github.com/pchiorean/Indentz/commit/5661ea64bf4dbdf14900448bcd68796fbbc55eae)
-  **DefaultLayers 3.3.1, DefaultSwatches 4.5.1, ReplaceFonts 2.2.1, ReplaceLinks 1.1.1:**
+  **DefaultLayers, DefaultSwatches, ReplaceFonts, ReplaceLinks:**
   Changed 'No data file found' alert verbosity level to `info`
 - [`fix`](https://github.com/pchiorean/Indentz/commit/611b773f2176621a1808ede3acfe874e3a2a9343)
-  **lib/ParseDataFile 2.2:** Fixed clash between general errors and record checking errors
+  **lib/ParseDataFile:** Fixed clash between general errors and record checking errors
 - [`fix`](https://github.com/pchiorean/Indentz/commit/a1fdedb3fedfb614c1c47abdaeb49c6c13f96684)
-  **SpreadsToFiles 1.7.12:** Fixed separator validation (regex fuckup)
+  **SpreadsToFiles:** Fixed separator validation (regex fuckup)
 - [`fix`](https://github.com/pchiorean/Indentz/commit/0ba9127a29db63820b5e7e3fe85c73cb3e34a2cc)
   **lib/ParseInfo:** Fixed reporting errors from included files
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ec0903a428aa608a66acf8716b90ec94dd790ca6)
-  **lib/Bounds 5.1.1:** Fixed typo on `page.visible[3]`
+  **lib/Bounds:** Fixed typo on `page.visible[3]`
 - [`fix`](https://github.com/pchiorean/Indentz/commit/95c744efa420c35c41e966293bdac5b72fb059b8)
-  **QuickExport 2.11.3:** Fixed clash with regex tokens when uniquifying filenames
+  **QuickExport:** Fixed clash with regex tokens when uniquifying filenames
 - [`fix`](https://github.com/pchiorean/Indentz/commit/c171770fc5ba3ca001ef43817d11055b8c6b95e4)
-  **PrepareForExport 2.2.2:** Hidden layers are now ignored
+  **PrepareForExport:** Hidden layers are now ignored
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
-  **Clip 2.7, ClipUndo 2.5:** Only clip objects directly on spread
+  **Clip, ClipUndo:** Only clip objects directly on spread
 - [`fix`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
-  **QRBatch 2.7:** Converted documents are now skipped and reported
+  **QRBatch:** Converted documents are now skipped and reported
 
 ##### Miscellaneous
 
@@ -937,16 +937,16 @@
 - [`ref`](https://github.com/pchiorean/Indentz/commit/ba06d623062e3035f4d3a57d79533018cbd3614f)
   Updated helper functions
 - [`doc`](https://github.com/pchiorean/Indentz/commit/3cea9b3575c7c3668339387a4c3606509f4550dc)
-  **SpreadsToFiles 1.7.10:** Added an example to the prompt message
+  **SpreadsToFiles:** Added an example to the prompt message
 - [`doc`](https://github.com/pchiorean/Indentz/commit/1fde6d6ab06a5381d591e557e46dab0b8f11895c)
   Updated description for some of the stubs in `/lib`
 - [`ref`](https://github.com/pchiorean/Indentz/commit/63d365a6b1931cbe2ba0d7b0d6009437acac4bd6)
   [`ref`](https://github.com/pchiorean/Indentz/commit/a4fe6767f5dc757fd8aa28173b90c32adb38fb0a)
   Renamed **lib/Bounds** to **GetBounds** and **lib/FindFile** to **GetDataFile**
 - [`ref`](https://github.com/pchiorean/Indentz/commit/6cee3420533728fb3c117ba8928389edf3a5ed1e)
-  **lib/GetBounds 5.1.2, HW 2.7.1, PageSizeFromFilename 2.1.4, VisibleArea 3.2.1:** Renamed visible area regex
+  **lib/GetBounds, HW, PageSizeFromFilename, VisibleArea:** Renamed visible area regex
 - [`ref`](https://github.com/pchiorean/Indentz/commit/6e897670752ff918136c540a57a4a46cd78ab786)
-  **lib/Debug 1.0.1:** Changed context separator to '::'
+  **lib/Debug:** Changed context separator to '::'
 - [`ref`](https://github.com/pchiorean/Indentz/commit/2da0f1ff8c6da4aa0508041674447df5ad558768)
   Renamed **OffsetPath** to **OffsetPaths**
 - [`ref`](https://github.com/pchiorean/Indentz/commit/793b29ad840c757da623c7478c1151da8c02a4c0)
