@@ -23,6 +23,8 @@
   **GuidesCollect:** Added a script that moves all document guides to the '.guides' layer
 - `02/05` [`brk`](https://github.com/pchiorean/Indentz/commit/38744d051e6703f95ee2d31c9a7a2538a07dbefe)
   **lib/getPageItems, SplitSpreadsByLayers:** Fixed **getPageItems** to always return an array, eliminating result ambiguity
+- `02/11` [`ref`](https://github.com/pchiorean/Indentz/commit/0d151e606a28dec598b98aa4f5f071f344731710)
+  **lib/log:** Changed context separator to '::'
 
 ##### Queued
 
