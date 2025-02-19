@@ -1,6 +1,6 @@
 /*
-	Quick export 24.11.15
-	(c) 2021-2024 Paul Chiorean <jpeg@basement.ro>
+	Quick export 25.2.19
+	(c) 2021-2025 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
 
@@ -73,7 +73,7 @@ function QuickExport() {
 		elapsed: 0
 	};
 
-	var VER = '4.0';
+	var VER = '4.5';
 	var defaults = {
 		workflow1: {
 			active: true,
@@ -96,8 +96,8 @@ function QuickExport() {
 			outputOptions: {
 				destination: { active: false, value: '' },
 				suffix: { active: true, value: '' },
-				sortBySuffix: true,
-				sortByDate: false,
+				sortInSubfolders: { active: true, value: '' },
+				sortByDate: { active: true, value: '' },
 				split: false,
 				overwrite: false,
 				docSave: { active: true, saveAs: false }
@@ -124,8 +124,8 @@ function QuickExport() {
 			outputOptions: {
 				destination: { active: false, value: '' },
 				suffix: { active: true, value: '' },
-				sortBySuffix: true,
-				sortByDate: false,
+				sortInSubfolders: { active: true, value: '' },
+				sortByDate: { active: true, value: '' },
 				split: false,
 				overwrite: false,
 				docSave: { active: true, saveAs: false }
@@ -178,7 +178,7 @@ function QuickExport() {
 	exit();
 
 	function main() {
-		var name, maxCounter, exp, suffix, layer, baseFolder, destFolder, subSuffix, subDate;
+		var name, maxCounter, exp, suffix, layer, baseFolder, destFolder, subFolder;
 		var names = [];
 		var docs = [];
 		var layersState = [];
@@ -188,7 +188,7 @@ function QuickExport() {
 
 		// Get documents list
 		if (isFolderMode) {
-			docs = getFilesRecursively(Folder(ui.input.source.path), ui.input.options.subfolders.value, 'indd')
+			docs = getFilesRecursively(Folder(ui.input.source.path), ui.input.options.includeSubfolders.value, 'indd')
 				.sort(naturalSorter);
 			if (docs.length === 0) { alert('No InDesign documents found.'); cleanup(); exit(); }
 		} else {
@@ -277,24 +277,23 @@ function QuickExport() {
 
 				// Create subfolders
 				destFolder = baseFolder;
-				subSuffix = '';
-				subDate = '';
-				if (exp.sortBySuffix.value && suffix) {
-					subSuffix = suffix.replace(/^_/, '')
+				subFolder = '';
+				if (exp.sortInSubfolders.isOn.value && exp.sortInSubfolders.et.text.length > 0) {
+					subFolder = exp.sortInSubfolders.et.text.replace(/^_/, '')
 						.replace(/\+.*$/, '')
 						.replace(/^\s+|\s+$/g, '');
-					destFolder = baseFolder + '/' + subSuffix;
+					destFolder = baseFolder + '/' + subFolder;
 					if (!Folder(destFolder).exists) Folder(destFolder).create();
 				}
-				if (exp.sortByDate.value) {
-					subDate = time.MMDD;
-					if (!Folder(destFolder + '/' + subDate).exists) Folder(destFolder + '/' + subDate).create();
+				if (exp.sortByDate.isOn.value && exp.sortByDate.et.text.length > 0) {
+					if (!Folder(destFolder + '/' + exp.sortByDate.et.text).exists)
+						Folder(destFolder + '/' + exp.sortByDate.et.text).create();
 				}
 
 				// Reset the suffix if not needed
 				if (!exp.suffix.isOn.value) suffix = '';
 
-				// Run script
+				// Run a script
 				if (exp.script.isOn.value) {
 					runScript(File(exp.script.path));
 					app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
@@ -562,11 +561,12 @@ function QuickExport() {
 				nextIndex = exp.overwrite.value ? lastIndex : lastIndex + 1;
 				nextIndex = nextIndex > 1 ? String(nextIndex) : '';
 
-				return destFolder                                 // Base folder + [suffix]
-					+ (exp.sortByDate.value ? '/' + subDate : '') // [Date subfolder]
-					+ '/' + filename                              // Base filename
-					+ (!suffix && nextIndex ? ' ' : '')           // [Separator]
-					+ nextIndex                                   // Index
+				return destFolder
+					+ (exp.sortByDate.isOn.value ? '/'
+						+ exp.sortByDate.et.text : '')  // [Date subfolder]
+					+ '/' + filename                    // Base filename
+					+ (!suffix && nextIndex ? ' ' : '') // [Separator]
+					+ nextIndex                         // Index
 					+ '.pdf';
 			}
 
@@ -717,14 +717,23 @@ function QuickExport() {
 					ui[workflow].destination.folder = ui[workflow].destination.add('edittext');
 					ui[workflow].destination.folder.preferredSize = [ ui.cWidth, 24 ];
 				ui[workflow].suffix = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, 0 ] }');
-					ui[workflow].suffix.isOn = ui[workflow].suffix.add('checkbox { text: "Add a suffix:", alignment: "bottom", preferredSize: [ 125, -1 ] }');
+					ui[workflow].suffix.isOn = ui[workflow].suffix.add('checkbox { text: "Append a suffix:", alignment: "bottom", preferredSize: [ 164, -1 ] }');
 					ui[workflow].suffix.isOn.helpTip = 'Append a suffix to the exported file name';
-					ui[workflow].suffix.et = ui[workflow].suffix.add('edittext { preferredSize: [ 159, 24 ] }');
+					ui[workflow].suffix.et = ui[workflow].suffix.add('edittext { preferredSize: [ 120, 24 ] }');
 					ui[workflow].suffix.et.helpTip = 'Append this text to the exported file name';
-				ui[workflow].sortBySuffix = ui[workflow].container.add('checkbox { text: "Sort files into subfolders by suffix" }');
-				ui[workflow].sortBySuffix.helpTip = 'Use the suffix field as the destination subfolder.\nNote: everything after a \'+\' is ignored (e.g., files with\na \'print+diecut\' suffix will be exported to \'print\')';
-				ui[workflow].sortByDate = ui[workflow].container.add('checkbox { text: "Sort files into subfolders by date" }');
-				ui[workflow].sortByDate.helpTip = 'Sort in subfolders with the current date (\'MM.DD\')';
+				ui[workflow].sortInSubfolders = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, 0 ] }');
+					ui[workflow].sortInSubfolders.isOn = ui[workflow].sortInSubfolders.add('checkbox { text: "Sort files into subfolder:", alignment: "bottom", preferredSize: [ 164, -1 ] }');
+					ui[workflow].sortInSubfolders.isOn.helpTip = 'Export files into subfolders';
+					ui[workflow].sortInSubfolders.et = ui[workflow].sortInSubfolders.add('edittext { preferredSize: [ 120, 24 ] }');
+					ui[workflow].sortInSubfolders.et.helpTip = 'Export files into this subfolder';
+				ui[workflow].sortByDate = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, 0 ] }');
+					ui[workflow].sortByDate.isOn = ui[workflow].sortByDate.add('checkbox { text: "Sort files by date into:", alignment: "bottom", preferredSize: [ 164, -1 ] }');
+					ui[workflow].sortByDate.isOn.helpTip = 'Export files into subfolders by date (\'MM.DD\')';
+					ui[workflow].sortByDate.et = ui[workflow].sortByDate.add('edittext { preferredSize: [ 46, 24 ] }');
+					ui[workflow].sortByDate.et.helpTip = 'MM.DD, where MM: 01\u201312; DD: 01\u201331';
+					ui[workflow].sortByDate.et.text = time.MMDD;
+					ui[workflow].sortByDate.now = ui[workflow].sortByDate.add('button { text: "Today", preferredSize: [ 64, 24 ] }');
+					ui[workflow].sortByDate.now.helpTip = 'Reset to today';
 				ui[workflow].split = ui[workflow].container.add('checkbox { text: "Export as separate pages/spreads" }');
 				ui[workflow].overwrite = ui[workflow].container.add('checkbox { text: "Overwrite existing files" }');
 
@@ -742,6 +751,8 @@ function QuickExport() {
 					ui[workflow].customBleed.isOn.onClick();
 					ui[workflow].skipDNP.isOn.onClick();
 					ui[workflow].suffix.isOn.onClick();
+					ui[workflow].sortInSubfolders.isOn.onClick();
+					ui[workflow].sortByDate.isOn.onClick();
 					ui[workflow].script.isOn.onClick();
 					ui[workflow].destination.isOn.onClick();
 					ui[workflow].docSave.onClick();
@@ -779,6 +790,12 @@ function QuickExport() {
 
 					ui[workflow].suffix.et.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
 					ui[workflow].suffix.isOn.onClick();
+
+					ui[workflow].sortInSubfolders.et.text
+						= /_/g.test(str)
+							? str.replace(/^.*_/, '').replace(/\+.*$/, '')
+							: '';
+					ui[workflow].sortInSubfolders.isOn.onClick();
 
 					this.helpTip = (function (/*pdfExportPreset*/preset) {
 						var msg = [];
@@ -1067,7 +1084,6 @@ function QuickExport() {
 
 				ui[workflow].suffix.isOn.onClick = function () {
 					this.parent.et.enabled = this.value;
-					this.parent.parent.parent.sortBySuffix.enabled = (this.value && this.parent.et.text.length > 0);
 					this.parent.et.onChange();
 				};
 
@@ -1077,11 +1093,52 @@ function QuickExport() {
 						.replace(invalidFilenameCharsRE, '')
 						.replace(/^_/, '');
 					if (this.text !== str) this.text = str;
-					this.parent.parent.parent.sortBySuffix.enabled = (this.text.length > 0);
 				};
 
 				ui[workflow].suffix.et.onDeactivate = function () {
 					this.onChange();
+				};
+
+				ui[workflow].sortInSubfolders.isOn.onClick = function () {
+					this.parent.et.enabled = this.value;
+					this.parent.et.onChange();
+				};
+
+				ui[workflow].sortInSubfolders.et.onChange = function () {
+					var str = this.text
+						.replace(/^\s+|\s+$/g, '')
+						.replace(invalidFilenameCharsRE, '')
+						.replace(/^_/, '');
+					if (this.text !== str) this.text = str;
+				};
+
+				ui[workflow].sortInSubfolders.et.onDeactivate = function () {
+					this.onChange();
+				};
+
+				ui[workflow].sortByDate.isOn.onClick = function () {
+					this.parent.now.enabled = this.value;
+					this.parent.et.enabled = this.value;
+				};
+
+				ui[workflow].sortByDate.et.onDeactivate = function () {
+					var md, str;
+					str = this.text
+						.replace(/^\s+|\s+$/g, '')
+						.replace(',', '.')
+						.replace(/[^\d.]/gi, '');
+					md = str.match(/^(\d{1,2})\.(\d{1,2})$/i);
+					if (md && Number(md[1]) >= 1 && Number(md[1]) <= 12
+							&& Number(md[2]) >= 1 && Number(md[2]) <= 31) {
+						this.text = zeroPad(Number(md[1]), 2) + '.' + zeroPad(Number(md[2]), 2);
+					} else {
+						alert('Invalid date\nEnter an MM.DD string, where\nMM: 1\u201312\nDD: 1\u201331.');
+						this.parent.now.onClick();
+					}
+				};
+
+				ui[workflow].sortByDate.now.onClick = function () {
+					ui[workflow].sortByDate.et.text = time.MMDD;
 				};
 
 				ui[workflow].docSave.onClick = function () {
@@ -1101,30 +1158,31 @@ function QuickExport() {
 					ui[workflow].label.text = settings[workflow].label;
 					ui[workflow].preset.selection
 						= findPresetIndex(settings[workflow].presetName, ui[workflow].preset.items);
-					ui[workflow].cropMarks.value         = settings[workflow].presetOptions.cropMarks;
-					ui[workflow].pageInfo.value          = settings[workflow].presetOptions.pageInfo;
-					ui[workflow].slugArea.value          = settings[workflow].presetOptions.slugArea;
-					ui[workflow].asSpreads.value         = settings[workflow].presetOptions.asSpreads;
-					ui[workflow].customDPI.isOn.value    = settings[workflow].presetOptions.customDPI.active;
-					ui[workflow].customDPI.et.text       = settings[workflow].presetOptions.customDPI.value;
-					ui[workflow].customBleed.isOn.value  = settings[workflow].presetOptions.customBleed.active;
-					ui[workflow].customBleed.et.text     = settings[workflow].presetOptions.customBleed.value;
-					ui[workflow].exportLayers.value      = settings[workflow].presetOptions.exportLayers;
-					ui[workflow].updateLinks.value       = settings[workflow].docActions.updateLinks;
-					ui[workflow].skipDNP.isOn.value      = settings[workflow].docActions.skipDNP;
-					ui[workflow].script.file.text        = settings[workflow].docActions.script.value;
-					ui[workflow].script.isOn.value       = settings[workflow].docActions.script.active;
-					ui[workflow].destination.folder.text = settings[workflow].outputOptions.destination.value;
-					ui[workflow].destination.path        = settings[workflow].outputOptions.destination.value;
-					ui[workflow].destination.isOn.value  = settings[workflow].outputOptions.destination.active;
-					ui[workflow].suffix.et.text          = settings[workflow].outputOptions.suffix.value;
-					ui[workflow].suffix.isOn.value       = settings[workflow].outputOptions.suffix.active;
-					ui[workflow].sortBySuffix.value      = settings[workflow].outputOptions.sortBySuffix;
-					ui[workflow].sortByDate.value        = settings[workflow].outputOptions.sortByDate;
-					ui[workflow].split.value             = settings[workflow].outputOptions.split;
-					ui[workflow].overwrite.value         = settings[workflow].outputOptions.overwrite;
-					ui[workflow].docSave.value           = settings[workflow].outputOptions.docSave.active;
-					ui[workflow].saveAs.value            = settings[workflow].outputOptions.docSave.saveAs;
+					ui[workflow].cropMarks.value             = settings[workflow].presetOptions.cropMarks;
+					ui[workflow].pageInfo.value              = settings[workflow].presetOptions.pageInfo;
+					ui[workflow].slugArea.value              = settings[workflow].presetOptions.slugArea;
+					ui[workflow].asSpreads.value             = settings[workflow].presetOptions.asSpreads;
+					ui[workflow].customDPI.isOn.value        = settings[workflow].presetOptions.customDPI.active;
+					ui[workflow].customDPI.et.text           = settings[workflow].presetOptions.customDPI.value;
+					ui[workflow].customBleed.isOn.value      = settings[workflow].presetOptions.customBleed.active;
+					ui[workflow].customBleed.et.text         = settings[workflow].presetOptions.customBleed.value;
+					ui[workflow].exportLayers.value          = settings[workflow].presetOptions.exportLayers;
+					ui[workflow].updateLinks.value           = settings[workflow].docActions.updateLinks;
+					ui[workflow].skipDNP.isOn.value          = settings[workflow].docActions.skipDNP;
+					ui[workflow].script.file.text            = settings[workflow].docActions.script.value;
+					ui[workflow].script.isOn.value           = settings[workflow].docActions.script.active;
+					ui[workflow].destination.folder.text     = settings[workflow].outputOptions.destination.value;
+					ui[workflow].destination.path            = settings[workflow].outputOptions.destination.value;
+					ui[workflow].destination.isOn.value      = settings[workflow].outputOptions.destination.active;
+					ui[workflow].suffix.et.text              = settings[workflow].outputOptions.suffix.value;
+					ui[workflow].suffix.isOn.value           = settings[workflow].outputOptions.suffix.active;
+					ui[workflow].sortInSubfolders.et.text    = settings[workflow].outputOptions.sortInSubfolders.value;
+					ui[workflow].sortInSubfolders.isOn.value = settings[workflow].outputOptions.sortInSubfolders.active;
+					ui[workflow].sortByDate.isOn.value       = settings[workflow].outputOptions.sortByDate.active;
+					ui[workflow].split.value                 = settings[workflow].outputOptions.split;
+					ui[workflow].overwrite.value             = settings[workflow].outputOptions.overwrite;
+					ui[workflow].docSave.value               = settings[workflow].outputOptions.docSave.active;
+					ui[workflow].saveAs.value                = settings[workflow].outputOptions.docSave.saveAs;
 				}
 				ui.actions.updateVersion.value = settings.updateVersion;
 				ui.actions.docClose.value = settings.docClose;
@@ -1182,8 +1240,14 @@ function QuickExport() {
 							active: ui[workflow].suffix.isOn.value,
 							value:  ui[workflow].suffix.et.text
 						},
-						sortBySuffix: ui[workflow].sortBySuffix.value,
-						sortByDate:   ui[workflow].sortByDate.value,
+						sortInSubfolders: {
+							active: ui[workflow].sortInSubfolders.isOn.value,
+							value:  ui[workflow].sortInSubfolders.et.text
+						},
+						sortByDate: {
+							active: ui[workflow].sortByDate.isOn.value,
+							value:  ui[workflow].sortByDate.et.text
+						},
 						split: ui[workflow].split.value,
 						overwrite: ui[workflow].overwrite.value,
 						docSave: {
@@ -1236,7 +1300,7 @@ function QuickExport() {
 					ui.input.source.folder.preferredSize = [ ui.wWidth - 114, 24 ];
 					ui.input.source.browse = ui.input.source.add('button { text: "Browse", preferredSize: [ 80, 24 ] }');
 				ui.input.options = ui.input.add('group { orientation: "row" }');
-					ui.input.options.subfolders = ui.input.options.add('checkbox { text: "Include subfolders" }');
+					ui.input.options.includeSubfolders = ui.input.options.add('checkbox { text: "Include subfolders" }');
 		}
 
 		// Workflows
