@@ -1,5 +1,5 @@
 /*
-	Quick export 25.2.19
+	Quick export 25.2.21
 	(c) 2021-2025 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -725,7 +725,7 @@ function QuickExport() {
 					ui[workflow].sortInSubfolders.isOn = ui[workflow].sortInSubfolders.add('checkbox { text: "Sort files into subfolder:", alignment: "bottom", preferredSize: [ 164, -1 ] }');
 					ui[workflow].sortInSubfolders.isOn.helpTip = 'Export files into subfolders';
 					ui[workflow].sortInSubfolders.et = ui[workflow].sortInSubfolders.add('edittext { preferredSize: [ 120, 24 ] }');
-					ui[workflow].sortInSubfolders.et.helpTip = 'Export files into this subfolder';
+					ui[workflow].sortInSubfolders.et.helpTip = 'Export files into this subfolder\nNote: everything after a \'+\' is ignored';
 				ui[workflow].sortByDate = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, 0 ] }');
 					ui[workflow].sortByDate.isOn = ui[workflow].sortByDate.add('checkbox { text: "Sort files by date into:", alignment: "bottom", preferredSize: [ 164, -1 ] }');
 					ui[workflow].sortByDate.isOn.helpTip = 'Export files into subfolders by date (\'MM.DD\')';
@@ -1108,7 +1108,8 @@ function QuickExport() {
 					var str = this.text
 						.replace(/^\s+|\s+$/g, '')
 						.replace(invalidFilenameCharsRE, '')
-						.replace(/^_/, '');
+						.replace(/^_/, '')
+						.replace(/\+.*$/, '');
 					if (this.text !== str) this.text = str;
 				};
 
