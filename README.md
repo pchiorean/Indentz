@@ -26,7 +26,7 @@ These TSV data files can have several non-standard features that will confuse Ex
 
 **Libs:** Many scripts use dynamically linked functions from **`lib/`**, which means that the folder structure should be preserved after downloading the repository. If you download [releases](https://github.com/pchiorean/Indentz/releases)[^1] (which are statically linked), you can use every script stand-alone.
 
-Because there are quite a lot of files, the files are organized into categories based on their scope: document/spread/page-level, object-level, and miscellaneous.
+The scripts are organized into three categories based on their scope: document/spread/page-level, object-level, and miscellaneous, making it easier to navigate through the large number of files.
 
 ## Document
 
@@ -119,7 +119,7 @@ Replaces document fonts using a 4-columns [TSV data file](#tsv) named `fonts.tsv
 
 Replaces document links using a 2-columns [TSV data file](#tsv) named `links.tsv` ([sample](Samples/links.tsv)):
 
-| Relink to                       | Links                        |
+| Relink to                       | Document links               |
 |:--------------------------------|:-----------------------------|
 | **/absolute/path/to/img1.psd**  | img1_lowres.jpg, img1-rgb.\* |
 | **img2.psd**                    | img2.\*                      |
@@ -220,13 +220,13 @@ Two workflows are available, with options organized into several categories:
 
 - **Export in a custom folder:** Choose a different output location instead of the default source document folder.
 
-- **Add a suffix:** Appends this text to the exported file names.
+- **Append a suffix:** Appends this text to the exported file names.
   > 🎓 Add a suffix to a preset by including it after the _last_ underscore. For example, selecting preset `X4_350dpi_39L300_HighRes` will automatically set the suffix to `HighRes`.
 
-- **Sort files into subfolders by suffix**: Creates subfolders named after the suffix and sorts files accordingly.
-  > 🎓 It only uses the text before the first `+` character – for example, it creates `HighRes/` for the suffix `HighRes` and `HighRes/` for the suffix `HighRes+Diecut`.
+- **Sort files into subfolder:** Exports files into a subfolder of the selected output location. It defaults to the current suffix.
+  > ⚠️ **Warning:** The text following a `+` is ignored (e.g., `HighRes+Diecut` becomes `HighRes`).
 
-- **Sort files into subfolders by date**: Creates subfolders named `MM.DD` (current month/day) and sorts files accordingly.
+- **Sort files by date into**: Exports files into a subfolder named `MM.DD` (month.day). It defaults to the current date.
 
 - **Export as separate pages/spreads**: Creates individual PDF files for each page or spread instead of a single multi-page document.
 
@@ -448,7 +448,7 @@ It works with file names structured like this:
 
 Dimensions use `WxH` format (e.g., `000x000`, where `000` represents one or more digits, optional decimals, and optional `mm` or `cm` units). The first pair sets page size, the second pair (if present) defines the _visible area_, and a following one- or two-digit number sets bleed. The script handles extra spaces and characters flexibly.
 
-> ⚠️ **Warning:** For now the units are ignored: dimensions are always in millimeters.
+> ⚠️ **Warning:** The units are ignored: dimensions are always in millimeters.
 
 **Example:**
 
@@ -765,14 +765,12 @@ The code in this project would not have been possible without the InDesign Exten
 
 Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 
-I also thank DeepL, Grammarly and lately Claude for helping me 'massage' my language into more natural English. :)
-
 ## License
 
 © 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: February 8, 2025
+Last updated: February 21, 2025
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 
