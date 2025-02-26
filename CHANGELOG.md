@@ -8,11 +8,9 @@
   **QuickExport:** Added fallback for settings: when the user folder can't be detected (OneDrive anyone?), the settings will be saved next to the script
 - `11/20` [`fix`](https://github.com/pchiorean/Indentz/commit/9a60f60067e7d2ec72b72e638c31464036e2e764)
   **QuickExport:** Adding unnamed colors was done by calling the menu by name, and this causes problems when changing application language; fixed by using the menu ID
-
 - `12/03` [`upd`](https://github.com/pchiorean/Indentz/commit/b367fd693b575c705794e8dbde146a349f658031)
           [`upd`](https://github.com/pchiorean/Indentz/commit/8f88fbcb38b22333115dabe329eeb5dcb253ae6e)
   **MarkSafety/VisibleArea, PageSizeFromFilename:** By user request the visible and safety area markings will not overprint
-
 - `02/01` [`upd`](https://github.com/pchiorean/Indentz/commit/19ddea0123c761cc9833a63b21d679882e3a1583)
   **fitTo:** Also return the fitted items as array (d'oh!)
 - `02/01` [`upd`](https://github.com/pchiorean/Indentz/commit/52c5b0c94de3641bcdb40dc24737e6c5ea0cf89d)
@@ -25,8 +23,22 @@
   **lib/getPageItems, SplitSpreadsByLayers:** Fixed **getPageItems** to always return an array, eliminating result ambiguity
 - `02/11` [`ref`](https://github.com/pchiorean/Indentz/commit/0d151e606a28dec598b98aa4f5f071f344731710)
   **lib/log:** Changed context separator to '::'
+- `02/19` [`brk`](https://github.com/pchiorean/Indentz/commit/f517ca2f11f9024c9396a3db8b29b5b38ed8df13)
+  **QuickExport:** Improved sorting in subfolders: made subfolder and date fields user editable; this required an upgrade to settings
+- `02/21` [`fix`](https://github.com/pchiorean/Indentz/commit/13a1427f3ced071d2ac2202bd5b9bafdde96c10a)
+  **QuickExport:** Manually entered input was not processed to remove all text after '+'; fixed
+- `02/26` [`upd`](https://github.com/pchiorean/Indentz/commit/2d78d21f1d8722c1ab4106b3833249d94cae04a7)
+  **QuickExport:** Relaxed subfolder validation to allow '\' for relative paths
 
 ##### Queued
+
+- **QuickExport:**
+  - [x] Sort files into subfolder: remove the '+' part after user input
+  - [-] Sort files into subfolder: uncheck if no suffix
+  - [ ] Sanitize filenames
+  - [ ] Check folder creation success
+  - [ ] When detecting unique file name, ignore file extension
+  - [ ] Sync all help tips with the revised README
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -45,6 +57,7 @@
 
 
 ##### Miscellaneous
+
 -->
 
 ### [24.8.15](https://github.com/pchiorean/Indentz/releases/tag/24.8.15)
@@ -983,15 +996,13 @@
 
 ##### Updates
 
-  If swatch name is missing, generate a Color Value Name. If color space is missing, use a default depending on color values number and range
 - `brk` `?` Use _safety area_ in **PageMarginsFromScriptName**
 - `brk` **AddLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
 - `brk` **MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
 - `brk` **MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
 - `brk` **ReplaceTextSnippets:** Add regexp/grep suport
-- `brk` **ReplaceTextSnippets:** Extend Scope to layers/pages etc
-- `upd` **AddSwatches:** `checkRecord()`: 'Values' ‣ 'Color Space' ‣ 'Color Model' ‣ 'Variants' ‣ 'Name'.\
-- `upd` **AddSwatches:** `checkRecord()`: Validate color values (number and range) depending on color space
+- `brk` **ReplaceTextSnippets:** Extend scope to layers/pages etc
+- `upd` **AddSwatches:** `checkRecord()`: Validate color values (number and range) depending on color space: 'Values' ‣ 'Color Space' ‣ 'Color Model' ‣ 'Variants' ‣ 'Name'. If swatch name is missing, generate a Color Value Name. If color space is missing, use a default depending on color values number and range
 - `upd` **DNPLayersHide/Show:** Take layers from a TSV
 - `upd` **DocCleanup:** Delete empty color groups
 - `upd` **JoinDocs:** Also bring along the attached master pages
@@ -999,7 +1010,7 @@
 - `upd` **PageSizeFromFilename:** Use real units (mm, cm, px) when detected
 - `upd` **PageSizeFromSelection:** Use outlined text bounds for text frames
 - `upd` **PageSizeFromSelection:** Without selection fit all pages to their contents
-- `upd` **QuickExport:** Add a checkbox for `0e04f28`
+- `upd` **QuickExport:** Add a checkbox for `0e04f28` ('+xxxxxxx')
 - `upd` **QuickExport:** Create destination folder if it doesn't exist
 - `upd` **QuickExport:** Move hacks to advanced options, saved in settings
 - `upd` **ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
@@ -1013,9 +1024,9 @@
 - `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
 - `upd` **lib/report:** Make window resizable
 - `upd` `?` JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
+- `upd` Tweak the moment when _ESC_ key status is read; ask user if it wants to cancel the ongoing operation (but 'Esc' will also cancel the prompt?)
 - `upd` Change title to 'Canceling, please wait...' when canceling batch processes
 - `upd` Implement `try/catch/finally` when appropriate
-- `upd` Tweak the moment when _ESC_ key status is read
 - `upd` Use a custom object style for `<visible area>` frame
 - `ref` `?` Implement `for...of` when appropriate (see [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of))
 
@@ -1031,8 +1042,6 @@
 - `fix` Nullify large variables on exit
 
 ##### Miscellaneous
-
-- `doc` When detecting 'Esc', ask user if it wants to cancel the ongoing operation (but 'Esc' will also cancel the prompt?)
 
 ---
 
