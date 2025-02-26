@@ -1,5 +1,5 @@
 /*
-	Quick export 25.2.21
+	Quick export 25.2.26
 	(c) 2021-2025 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -45,6 +45,7 @@ function QuickExport() {
 	var title = 'Quick Export';
 	var WIN = (File.fs === 'Windows');
 	var invalidFilenameCharsRE = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
+	var invalidFilenameCharsRElaxed = /[<>:"\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
 	var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	var old = {
@@ -1107,7 +1108,7 @@ function QuickExport() {
 				ui[workflow].sortInSubfolders.et.onChange = function () {
 					var str = this.text
 						.replace(/^\s+|\s+$/g, '')
-						.replace(invalidFilenameCharsRE, '')
+						.replace(invalidFilenameCharsRElaxed, '')
 						.replace(/^_/, '')
 						.replace(/\+.*$/, '');
 					if (this.text !== str) this.text = str;
