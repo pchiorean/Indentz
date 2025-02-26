@@ -496,7 +496,7 @@ When a document name ends with a _separator_ (space, dot, underscore, or hyphen)
 
 📍 _Suggested shortcut:_ ⌥⌘F7
 
-Splits one spread into multiple spreads or combines multiple spreads into one, using predefined layers (default: **DE**, **FR**, **IT**). When splitting, each new spread contains items from its corresponding layer. When joining, items from each spread are distributed into their respective layers in the combined spread. Other layers remain unchanged.
+Splits one spread into multiple spreads or combines multiple spreads into one, using predefined layers (default: **EN**, **DE**, **FR**, **IT**). When splitting, each new spread contains items from its corresponding layer. When joining, items from each spread are distributed into their respective layers in the combined spread. Other layers remain unchanged.
 
 > 🎓 Edit the variable `layers.master` to customize the predefined layers to your needs.
 
@@ -770,7 +770,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: February 21, 2025
+Last updated: February 26, 2025
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 
