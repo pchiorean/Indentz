@@ -905,7 +905,7 @@ function QuickExport() {
 						this.parent.et.text = '';
 						this.parent.et.helpTip = 'Sampling is disabled';
 					} else if (this.parent.et.enabled) {
-						this.parent.et.helpTip = 'Enter a number between 9 and 2400 (dpi)';
+						this.parent.et.helpTip = 'Valid interval: 9\u20132400 dpi';
 						this.parent.et.onDeactivate();
 					} else {
 						this.parent.et.text = pdfExpPreset.colorBitmapSamplingDPI;
@@ -919,6 +919,7 @@ function QuickExport() {
 						.replace(',', '.')
 					);
 					if (isNaN(this.text) || this.text < 9 || this.text > 2400) {
+						alert('Out of bounds\nEnter a value between 9 and 2400.');
 						this.parent.isOn.value = false;
 						this.parent.isOn.onClick();
 					}
@@ -927,7 +928,7 @@ function QuickExport() {
 				ui[workflow].customBleed.isOn.onClick = function () {
 					this.parent.et.enabled = this.value;
 					if (this.parent.et.enabled) {
-						this.parent.et.helpTip = 'Enter a value between 0 and 152.4 (mm)';
+						this.parent.et.helpTip = 'Valid interval: 0\u2013152.4 mm';
 						this.parent.et.onDeactivate();
 					} else {
 						this.parent.et.text = '';
@@ -936,12 +937,12 @@ function QuickExport() {
 				};
 
 				ui[workflow].customBleed.et.onDeactivate = function () {
-					if (this.text === '') this.text = '0';
 					this.text = Number(this.text
 						.replace(/[^\d.,]/gi, '')
 						.replace(',', '.')
 					);
-					if (isNaN(this.text) || UnitValue(this.text, 'mm').as('pt') > 432.0001) {
+					if (UnitValue(this.text, 'mm').as('pt') > 432.0001) {
+						alert('Out of bounds\nEnter a value between 0 and 152.4.');
 						this.parent.isOn.value = false;
 						this.parent.isOn.onClick();
 					}
@@ -1095,7 +1096,7 @@ function QuickExport() {
 						.replace(/^\s+|\s+$/g, '')
 						.replace(invalidFilenameCharsRE, '')
 						.replace(/^_/, '');
-					if (this.text !== str) this.text = str;
+					if (str !== this.text) this.text = str;
 				};
 
 				ui[workflow].suffix.et.onDeactivate = function () {
