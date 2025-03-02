@@ -1,5 +1,5 @@
 /*
-	Split/join spreads by layers 25.2.5
+	Split/join spreads by layers 25.2.26
 	(c) 2025 Paul Chiorean <jpeg@basement.ro>
 
 	Splits or joins document spreads using a list of layers.
@@ -18,7 +18,7 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT
 function main() {
 	var item, items, layer, i, j;
 	var layers = {
-		master: [ 'DE', 'FR', 'IT' ],
+		master: [ 'EN', 'DE', 'FR', 'IT' ],
 		used: []
 	};
 
