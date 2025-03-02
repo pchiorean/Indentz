@@ -147,9 +147,9 @@ function QuickExport() {
 	// Resolve settings location: if user data folder is not detected (OneDrive?), fallback to script location
 	if (Folder.userData) {
 		if (!Folder(Folder.userData + '/.indentz/').exists) Folder(Folder.userData + '/.indentz/').create();
-		settingsFile = File(Folder.userData + '/.indentz/' + script.name.replace(/.[^.]+$/, '') + '.prefs');
+		settingsFile = File(Folder.userData + '/.indentz/' + getFileName(script.name) + '.prefs');
 	} else {
-		settingsFile = File(script.fullName.replace(/.[^.]+$/, '') + '.prefs');
+		settingsFile = File(getFileName(script.fullName) + '.prefs');
 	}
 
 	// Main
@@ -555,8 +555,7 @@ function QuickExport() {
 					+ '(?:.*)$'               // [NC: Extra stuff]
 					, 'i');
 				for (var i = 0, n = filesList.length; i < n; i++) {
-					fileIndex = fileIndexRE.exec(decodeURI(filesList[i].name)
-						.replace(/\.[^.]+$/, '')); // Strip extension
+					fileIndex = fileIndexRE.exec(getFileName(decodeURI(filesList[i].name)));
 					if (fileIndex)
 						lastIndex = Math.max(lastIndex, isNaN(fileIndex[1]) ? 1 : Number(fileIndex[1]));
 				}
@@ -1501,6 +1500,10 @@ function QuickExport() {
 				}
 			}
 		}
+	}
+
+	function getFileName(/*string*/fn) {
+		return (/\./g.test(fn) && fn.slice(0, fn.lastIndexOf('.'))) || fn;
 	}
 
 	function beautifyPath(/*File|Folder*/f) {
