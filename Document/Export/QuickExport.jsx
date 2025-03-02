@@ -45,7 +45,7 @@ function QuickExport() {
 	var title = 'Quick Export';
 	var WIN = (File.fs === 'Windows');
 	var invalidFilenameCharsRE = /[<>:"\/\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
-	var invalidFilenameCharsRElaxed = /[<>:"\\|?*]/g; // https://gist.github.com/doctaphred/d01d05291546186941e1b7ddc02034d3
+	var invalidFilenameCharsRElaxed = /[<>:"\\|?*]/g;
 	var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	var old = {
@@ -74,7 +74,7 @@ function QuickExport() {
 		elapsed: 0
 	};
 
-	var VER = '4.5';
+	var VER = '5.0';
 	var defaults = {
 		workflow1: {
 			active: true,
@@ -96,6 +96,7 @@ function QuickExport() {
 			},
 			outputOptions: {
 				destination: { active: false, value: '' },
+				prefix: { active: true, value: '' },
 				suffix: { active: true, value: '' },
 				sortInSubfolders: { active: true, value: '' },
 				sortByDate: { active: true, value: '' },
@@ -124,6 +125,7 @@ function QuickExport() {
 			},
 			outputOptions: {
 				destination: { active: false, value: '' },
+				prefix: { active: true, value: '' },
 				suffix: { active: true, value: '' },
 				sortInSubfolders: { active: true, value: '' },
 				sortByDate: { active: true, value: '' },
@@ -179,7 +181,7 @@ function QuickExport() {
 	exit();
 
 	function main() {
-		var name, maxCounter, exp, suffix, layer, baseFolder, destFolder, subFolder;
+		var name, maxCounter, exp, prefix, suffix, layer, baseFolder, destFolder, subFolder;
 		var names = [];
 		var docs = [];
 		var layersState = [];
@@ -273,7 +275,8 @@ function QuickExport() {
 				baseFolder = decodeURI(doc.filePath);
 				if (exp.destination.isOn.value) baseFolder = beautifyPath(Folder(exp.destination.path));
 
-				// Get initial suffix
+				// Get initial prefix/suffix
+				prefix = exp.prefix.et.text ? exp.prefix.et.text : '';
 				suffix = exp.suffix.et.text ? ('_' + exp.suffix.et.text) : '';
 
 				// Create subfolders
@@ -291,7 +294,8 @@ function QuickExport() {
 						Folder(destFolder + '/' + exp.sortByDate.et.text).create();
 				}
 
-				// Reset the suffix if not needed
+				// Reset prefix/suffix if not needed
+				if (!exp.prefix.isOn.value) prefix = '';
 				if (!exp.suffix.isOn.value) suffix = '';
 
 				// Run a script
@@ -502,7 +506,7 @@ function QuickExport() {
 					}
 
 					// Get a unique file path for export
-					destination = getUniquePath(destination + suffix);
+					destination = getUniquePath(prefix + destination + suffix);
 					destination += '.pdf';
 
 					// Get page range
@@ -523,7 +527,7 @@ function QuickExport() {
 					exportToPDF(destination, range, app.pdfExportPresets.item(preset));
 				}
 			} else { // Export all pages
-				destination = getUniquePath(baseName + suffix);
+				destination = getUniquePath(prefix + baseName + suffix);
 				destination += '.pdf';
 
 				progressBar.update();
@@ -718,6 +722,11 @@ function QuickExport() {
 						ui[workflow].destination.browse = ui[workflow].destination._.add('button { text: "Browse", preferredSize: [ 64, 24 ] }');
 					ui[workflow].destination.folder = ui[workflow].destination.add('edittext');
 					ui[workflow].destination.folder.preferredSize = [ ui.cWidth, 24 ];
+				ui[workflow].prefix = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, 0 ] }');
+					ui[workflow].prefix.isOn = ui[workflow].prefix.add('checkbox { text: "Prepend a prefix:", alignment: "bottom", preferredSize: [ 164, -1 ] }');
+					ui[workflow].prefix.isOn.helpTip = 'Prepend a prefix to the exported file name';
+					ui[workflow].prefix.et = ui[workflow].prefix.add('edittext { preferredSize: [ 120, 24 ] }');
+					ui[workflow].prefix.et.helpTip = 'Prepend this text to the exported file name';
 				ui[workflow].suffix = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, 0 ] }');
 					ui[workflow].suffix.isOn = ui[workflow].suffix.add('checkbox { text: "Append a suffix:", alignment: "bottom", preferredSize: [ 164, -1 ] }');
 					ui[workflow].suffix.isOn.helpTip = 'Append a suffix to the exported file name';
@@ -752,6 +761,7 @@ function QuickExport() {
 					ui[workflow].customDPI.isOn.onClick();
 					ui[workflow].customBleed.isOn.onClick();
 					ui[workflow].skipDNP.isOn.onClick();
+					ui[workflow].prefix.isOn.onClick();
 					ui[workflow].suffix.isOn.onClick();
 					ui[workflow].sortInSubfolders.isOn.onClick();
 					ui[workflow].sortByDate.isOn.onClick();
@@ -789,6 +799,8 @@ function QuickExport() {
 									.toFixed(2)
 									.replace(/\.?0+$/, '');
 					}
+
+					ui[workflow].prefix.isOn.onClick();
 
 					ui[workflow].suffix.et.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
 					ui[workflow].suffix.isOn.onClick();
@@ -1085,6 +1097,22 @@ function QuickExport() {
 					this.onChange();
 				};
 
+				ui[workflow].prefix.isOn.onClick = function () {
+					this.parent.et.enabled = this.value;
+					this.parent.et.onChange();
+				};
+
+				ui[workflow].prefix.et.onChange = function () {
+					var str = this.text
+						.replace(/^\s+|\s+$/g, '')
+						.replace(invalidFilenameCharsRE, '');
+					if (str !== this.text) this.text = str;
+				};
+
+				ui[workflow].prefix.et.onDeactivate = function () {
+					this.onChange();
+				};
+
 				ui[workflow].suffix.isOn.onClick = function () {
 					this.parent.et.enabled = this.value;
 					this.parent.et.onChange();
@@ -1178,6 +1206,8 @@ function QuickExport() {
 					ui[workflow].destination.folder.text     = settings[workflow].outputOptions.destination.value;
 					ui[workflow].destination.path            = settings[workflow].outputOptions.destination.value;
 					ui[workflow].destination.isOn.value      = settings[workflow].outputOptions.destination.active;
+					ui[workflow].prefix.et.text              = settings[workflow].outputOptions.prefix.value;
+					ui[workflow].prefix.isOn.value           = settings[workflow].outputOptions.prefix.active;
 					ui[workflow].suffix.et.text              = settings[workflow].outputOptions.suffix.value;
 					ui[workflow].suffix.isOn.value           = settings[workflow].outputOptions.suffix.active;
 					ui[workflow].sortInSubfolders.et.text    = settings[workflow].outputOptions.sortInSubfolders.value;
@@ -1239,6 +1269,10 @@ function QuickExport() {
 						destination: {
 							active: ui[workflow].destination.isOn.value,
 							value:  ui[workflow].destination.path || ''
+						},
+						prefix: {
+							active: ui[workflow].prefix.isOn.value,
+							value:  ui[workflow].prefix.et.text
 						},
 						suffix: {
 							active: ui[workflow].suffix.isOn.value,
