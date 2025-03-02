@@ -64,9 +64,9 @@ Adds a set of layers defined in a 7-columns [TSV data file](#tsv) named `layers.
 - **Order**: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`);
 - **Variants**: A list of layers separated by commas that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters).
 
-> 💡 **Tips:**
-> - You can use [**`DumpLayers`**](#dumplayers) to save a tab delimited list of swatches from the active document.
-> - The script will display a report if run while holding down the **Ctrl** key.
+💡 **Tips:**
+- You can use [**`DumpLayers`**](#dumplayers) to save a tab delimited list of swatches from the active document.
+- The script will display a report if run while holding down the **Ctrl** key.
 
 #### **AddSwatches**
 
@@ -99,9 +99,9 @@ Every swatch automatically gets three implicit variants: its lowercase name (thi
 
 all document swatches named **rich black** (and all case variations), **C=60 M=40 Y=40 K=100**, or **c60m40y40k100** will be merged with **Rich Black**.
 
-> 💡 **Tips:**
-> - You can use [**`DumpSwatches`**](#dumpswatches) to save a tab delimited list of swatches from the active document.
-> - The script will display a report if run while holding down the **Ctrl** key.
+💡 **Tips:**
+- You can use [**`DumpSwatches`**](#dumpswatches) to save a tab delimited list of swatches from the active document.
+- The script will display a report if run while holding down the **Ctrl** key.
 
 #### **ReplaceFonts**
 
@@ -113,9 +113,9 @@ Replaces document fonts using a 4-columns [TSV data file](#tsv) named `fonts.tsv
 | **Arial**       | Bold    | **Helvetica Neue** | Bold    |
 | ...             |         |                    |         |
 
-> 💡 **Tips:**
-> - You can use [**`ShowFonts`**](#showfonts) to get a tab delimited list of document fonts.
-> - The script will display a report if run while holding down the **Ctrl** key.
+💡 **Tips:**
+- You can use [**`ShowFonts`**](#showfonts) to get a tab delimited list of document fonts.
+- The script will display a report if run while holding down the **Ctrl** key.
 
 #### **ReplaceLinks**
 
@@ -143,9 +143,9 @@ Replaces document links using a 2-columns [TSV data file](#tsv) named `links.tsv
 
 **Warning:** If a file name contains commas you must quote it.
 
-> 💡 **Tips:**
-> - You can use [**`DumpLinks`**](#dumplinks) to save a list of links from the active document.
-> - The script will display a report if run while holding down the **Ctrl** key.
+💡 **Tips:**
+- You can use [**`DumpLinks`**](#dumplinks) to save a list of links from the active document.
+- The script will display a report if run while holding down the **Ctrl** key.
 
 #### **ReplaceTextSnippets**
 
@@ -171,7 +171,7 @@ Replaces a list of text snippets using a 5-columns [TSV data file](#tsv) named `
 
 **Example:** 'The sample is for free' will be replaced with 'Das Sample ist kostenlos' in `Document_DE.indd`, and with 'L'échantillon est gratuit' in `Document_FR.indd`.
 
-> 💡 **Tip:** The script will display a report if run while holding down the **Ctrl** key.
+💡 **Tip:** The script will display a report if run while holding down the **Ctrl** key.
 
 #### **ResetLayers**
 
@@ -228,11 +228,11 @@ Two workflows are available, with options organized into several categories:
 
 - **Prepend a prefix:** Prepends this text to the exported file names.
 
-- **Append a suffix:** Appends this text to the exported file names.
-  > 💡 **Tip:** You can attach a suffix to a preset by including it after the _last_ underscore. For example, selecting preset `X4_350dpi_39L300_HighRes` will automatically set the suffix to `HighRes`.
+- **Append a suffix:** Appends this text to the exported file names.\
+  💡 **Tip:** You can attach a suffix to a preset by including it after the _last_ underscore. For example, selecting preset `X4_350dpi_39L300_HighRes` will automatically set the suffix to `HighRes`.
 
-- **Sort files into subfolder:** Exports files into a subfolder of the selected output location. It defaults to the current suffix.
-  > ⚠️ **Warning:** The text following a `+` is ignored (e.g., `HighRes+Diecut` becomes `HighRes`).
+- **Sort files into subfolder:** Exports files into a subfolder of the selected output location. It defaults to the current suffix.\
+  ⚠️ **Warning:** The text following a `+` is ignored (e.g., `HighRes+Diecut` becomes `HighRes`).
 
 - **Sort files by date into**: Exports files into a subfolder named `MM.DD` (month.day). It defaults to the current date.
 
@@ -250,13 +250,13 @@ Two workflows are available, with options organized into several categories:
 
 - **Upgrade [Converted] documents**: Converts documents from older InDesign versions to the current version.
 
-> 💡 **Tip:** Settings are automatically saved each time you run the script. However, holding the **Opt/Alt** key while clicking **Start** will prevent settings from updating during the current session.
+💡 **Tip:** Settings are automatically saved each time you run the script. However, holding the **Opt/Alt** key while clicking **Start** will prevent settings from updating during the current session.
 
 #### **PrepareForExport**
 
 Hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers (see below). Additionally, it moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads and labels the spreads.
 
-> 💡 **Tip:** The script is designed to be run with [**`QuickExport`**](#quickexport).
+💡 **Tip:** The script is designed to be run with [**`QuickExport`**](#quickexport).
 
 #### **DNPLayersShow** and **DNPLayersHide**
 Shows or hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers:
@@ -267,7 +267,7 @@ Shows or hides all layers starting with either a dot or a hyphen, plus a hard-co
 - **fold, falz**
 - **guides, grid, masuratori**
 
-> 💡 **Tip:** The scripts are designed to be run with [**`QuickExport`**](#quickexport).
+💡 **Tip:** The scripts are designed to be run with [**`QuickExport`**](#quickexport).
 
 ---
 
@@ -343,7 +343,7 @@ Sometimes objects that have a script label attached are reused, which may create
 
 Unnaplies paragraph/character/object styles from the selected objects, or all objects in the document if nothing is selected.
 
-> 💡 **Tip:** The script will display a report if run while holding down the **Ctrl** key.
+💡 **Tip:** The script will display a report if run while holding down the **Ctrl** key.
 
 #### **SwatchesCleanup**
 
@@ -399,7 +399,7 @@ When objects are selected, adds guides around their boundaries.
 
 When nothing is selected, adds guides at page edges and margin centers. Running the script again removes these guides.
 
-> 💡 **Tip:** If **Opt** is also pressed, it will use spread guides.
+💡 **Tip:** If **Opt** is also pressed, it will use spread guides.
 
 #### **GuidesCollect**
 
@@ -413,13 +413,13 @@ Deletes all guides from the document.
 
 Creates a frame around the page margins that visually marks the _safety area_ of a page. It's a stroked frame named **\<safety area\>** on the **.safety area** layer. It uses an existing **Safety area** swatch or creates one with R=0 G=180 B=255.
 
-> 💡 **Tip:** This script is designed to be run with [**`QuickExport`**](#quickexport).
+💡 **Tip:** This script is designed to be run with [**`QuickExport`**](#quickexport).
 
 #### **MarkVisibleArea**
 
 Creates a frame around the page margins that visually marks the _visible area_ of a page. It's a stroked frame named **\<visible area\>** on the **.visible area** layer. It uses an existing **Visible area** swatch or creates one with R=255 G=180 B=0.
 
-> 💡 **Tip:** This script is designed to be run with [**`QuickExport`**](#quickexport).
+💡 **Tip:** This script is designed to be run with [**`QuickExport`**](#quickexport).
 
 #### **PageMarginsFromScriptName**
 
@@ -456,7 +456,7 @@ It works with file names structured like this:
 
 Dimensions use `WxH` format (e.g., `000x000`, where `000` represents one or more digits, optional decimals, and optional `mm` or `cm` units). The first pair sets page size, the second pair (if present) defines the _visible area_, and a following one- or two-digit number sets bleed. The script handles extra spaces and characters flexibly.
 
-> ⚠️ **Warning:** The units are ignored: dimensions are always in millimeters.
+⚠️ **Warning:** The units are ignored: dimensions are always in millimeters.
 
 **Example:**
 
@@ -498,7 +498,7 @@ Saves each spread of the active document to a separate file.
 
 When a document name ends with a _separator_ (space, dot, underscore, or hyphen) followed by characters matching the number of spreads, each split file will include the corresponding character in its name. For example, `Document_ABC.indd` with three spreads becomes `Document_A.indd`, `Document_B.indd`, and `Document_C.indd`. If no sequence is detected, you'll be prompted to provide one.
 
-> 💡 **Tip:** The index is added to the end of the file name by default, but placing a `#` anywhere in the file name determines where the index will appear instead.
+💡 **Tip:** The index is added to the end of the file name by default, but placing a `#` anywhere in the file name determines where the index will appear instead.
 
 #### **SplitSpreadsByLayers**
 
@@ -506,7 +506,7 @@ When a document name ends with a _separator_ (space, dot, underscore, or hyphen)
 
 Splits one spread into multiple spreads or combines multiple spreads into one, using predefined layers (default: **EN**, **DE**, **FR**, **IT**). When splitting, each new spread contains items from its corresponding layer. When joining, items from each spread are distributed into their respective layers in the combined spread. Other layers remain unchanged.
 
-> 💡 **Tip:** Edit the variable `layers.master` to customize the predefined layers to your needs.
+💡 **Tip:** Edit the variable `layers.master` to customize the predefined layers to your needs.
 
 ---
 
@@ -592,7 +592,7 @@ _Insert or remove objects from clipping frames._
 
 Inserts the selected objects into a _clipping frame_ or, if already clipped, restores them.
 
-> ⚠️ **Warning:** It uses the clipboard, so make sure you don't lose anything important.
+⚠️ **Warning:** It uses the clipboard, so make sure you don't lose anything important.
 
 #### **ClipRelease**
 
@@ -621,7 +621,7 @@ _Reframe objects to a target area._
 | **FitToPageVisibleAreaForced.jsx** | ⌥⇧⌘F11 | **FitToSpreadVisibleAreaForced.jsx** | ⌥⇧⌘F12 |
 | **FitToPageBleedForced.jsx**       |  ⇧⌘F11 | **FitToSpreadBleedForced.jsx**       |  ⇧⌘F12 |
 
-> 💡 F11: page • F12: spread • ⌥: margins • ⌥⇧: visible area • ⇧: bleed • ⌘: forced
+💡 F11: page • F12: spread • ⌥: margins • ⌥⇧: visible area • ⇧: bleed • ⌘: forced
 
 </details>
 
@@ -653,7 +653,7 @@ Running it repeatedly increases the auto-sizing levels (from **None** to **Heigh
 | ![Vertical Justification Center](.img/verticaljustification-C.png) | ![center-left](.img/textautosize-CL.png) | ![center](.img/textautosize-C.png) | ![center-right](.img/textautosize-CR.png) |
 | ![Vertical Justification Bottom](.img/verticaljustification-B.png) | ![bottom-left](.img/textautosize-BL.png) | ![bottom-center](.img/textautosize-BC.png) | ![bottom-right](.img/textautosize-BR.png) |
 
-> 💡 **Tip:** Running it again while only changing alignment will maintain the current auto-sizing setting.
+💡 **Tip:** Running it again while only changing alignment will maintain the current auto-sizing setting.
 
 ---
 
@@ -736,7 +736,7 @@ Adds a QR code on each spread of the active document (outside _visible area_, if
 
 When the document name ends with a separator (space, dot, underscore, or hyphen) and a sequence of characters matching the number of spreads (a _suffix_), each generated file will include its corresponding character. For example, **`Document_ABC.indd`** with three spreads will create **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`**, and **`Document_C_QR.pdf`**.
 
-> 💡 **Tip:** The script does a decent job breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
+💡 **Tip:** The script does a decent job breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
 
 #### **QRBatch**
 
@@ -758,7 +758,7 @@ Does the same thing as **`QR`** but in a non-interactive way: retrieves a list o
 The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence.\
 Blank lines are ignored; everything after a `#` (comments) is ignored.
 
-> 💡 **Tip:** The script does a decent job of breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
+💡 **Tip:** The script does a decent job of breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
 
 ## Install
 
