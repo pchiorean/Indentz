@@ -10,8 +10,6 @@ Most scripts require at least one open document, and some require at least one o
 
 <span id="tsv">**Data files:**</span> Several scripts read data from TSV files, searching in this order: _local_ files (current or parent folder; local files starting with `_` are prioritized), then _default_ ones (on the desktop, in the script folder or **Indentz** root).
 
-![TSV sample](.img/tsv.png)
-
 These TSV data files can have several non-standard features that will confuse Excel et al.:
 
 - Blank lines are ignored; everything after a `#` is ignored (comments);
@@ -21,6 +19,12 @@ These TSV data files can have several non-standard features that will confuse Ex
   - **`@includepath`** `base/path/` – sets a base path for subsequent **`@include`** directives with relative paths; the path may be absolute or relative to the data file folder;
   - **`@include`** `path/to/another.tsv` – includes another TSV file at this position; the path may be absolute or relative to the data file folder (or to a `base/path/` set previously);
   - **`@defaults`** – includes the _default_ data file (see above).
+
+<details><summary><strong>Sample</strong></summary>
+
+![TSV sample](.img/tsv.png)
+
+</details>
 
 **Visible area** or **Safety area:** These are frames that I use to visually mark the visible part of a layout or its safety/type area; several scripts take them into account for some actions. The frames can be created manually (just name them **\<visible area\>** or **\<safety area\>**), or can be automatically generated from the document name or page margins (more details below). The [**Export**](#export) section contains scripts that can show or hide these frames.
 
@@ -60,9 +64,9 @@ Adds a set of layers defined in a 7-columns [TSV data file](#tsv) named `layers.
 - **Order**: `above` or `below` existing layers, or `top`/`bottom` (defaults to `above`);
 - **Variants**: A list of layers separated by commas that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters).
 
-> 🎓 You can use [**`DumpLayers`**](#dumplayers) to save a tab delimited list of swatches from the active document.
-
-> 💡 The script will display a report if run while holding down the **Ctrl** key.
+> 💡 **Tips:**
+> - You can use [**`DumpLayers`**](#dumplayers) to save a tab delimited list of swatches from the active document.
+> - The script will display a report if run while holding down the **Ctrl** key.
 
 #### **AddSwatches**
 
@@ -95,9 +99,9 @@ Every swatch automatically gets three implicit variants: its lowercase name (thi
 
 all document swatches named **rich black** (and all case variations), **C=60 M=40 Y=40 K=100**, or **c60m40y40k100** will be merged with **Rich Black**.
 
-> 🎓 You can use [**`DumpSwatches`**](#dumpswatches) to save a tab delimited list of swatches from the active document.
-
-> 💡 The script will display a report if run while holding down the **Ctrl** key.
+> 💡 **Tips:**
+> - You can use [**`DumpSwatches`**](#dumpswatches) to save a tab delimited list of swatches from the active document.
+> - The script will display a report if run while holding down the **Ctrl** key.
 
 #### **ReplaceFonts**
 
@@ -109,13 +113,13 @@ Replaces document fonts using a 4-columns [TSV data file](#tsv) named `fonts.tsv
 | **Arial**       | Bold    | **Helvetica Neue** | Bold    |
 | ...             |         |                    |         |
 
-> 🎓 You can use [**`ShowFonts`**](#showfonts) to get a tab delimited list of document fonts.
-
-> 💡 The script will display a report if run while holding down the **Ctrl** key.
+> 💡 **Tips:**
+> - You can use [**`ShowFonts`**](#showfonts) to get a tab delimited list of document fonts.
+> - The script will display a report if run while holding down the **Ctrl** key.
 
 #### **ReplaceLinks**
 
-📍 _Suggested shortcut:_ ⌥F8
+⌘ _Suggested shortcut:_ ⌥F8
 
 Replaces document links using a 2-columns [TSV data file](#tsv) named `links.tsv` ([sample](Samples/links.tsv)):
 
@@ -139,13 +143,13 @@ Replaces document links using a 2-columns [TSV data file](#tsv) named `links.tsv
 
 **Warning:** If a file name contains commas you must quote it.
 
-> 🎓 You can use [**`DumpLinks`**](#dumplinks) to save a list of links from the active document.
-
-> 💡 The script will display a report if run while holding down the **Ctrl** key.
+> 💡 **Tips:**
+> - You can use [**`DumpLinks`**](#dumplinks) to save a list of links from the active document.
+> - The script will display a report if run while holding down the **Ctrl** key.
 
 #### **ReplaceTextSnippets**
 
-📍 _Suggested shortcut:_ ⌥F6
+⌘ _Suggested shortcut:_ ⌥F6
 
 Replaces a list of text snippets using a 5-columns [TSV data file](#tsv) named `snippets.tsv` ([sample](Samples/snippets.tsv)):
 
@@ -167,7 +171,7 @@ Replaces a list of text snippets using a 5-columns [TSV data file](#tsv) named `
 
 **Example:** 'The sample is for free' will be replaced with 'Das Sample ist kostenlos' in `Document_DE.indd`, and with 'L'échantillon est gratuit' in `Document_FR.indd`.
 
-> 💡 The script will display a report if run while holding down the **Ctrl** key.
+> 💡 **Tip:** The script will display a report if run while holding down the **Ctrl** key.
 
 #### **ResetLayers**
 
@@ -193,7 +197,7 @@ _Document export and related._
 
 #### **QuickExport**
 
-📍 _Suggested shortcut:_ ⌃E
+⌘ _Suggested shortcut:_ ⌃E
 
 Batch exports all open **.indd** documents or all documents from a selected folder using up to two customizable PDF presets. While Peter Kahrel's [**Batch Convert**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script is like a 'Swiss Army knife' export tool, this script is specifically designed to streamline workflows that need frequent PDF setting adjustments. It reduces the tedious clicking through multiple tabs and options in InDesign's native export dialog. (It also gave me a great opportunity to explore [ScriptUI](https://extendscript.docsforadobe.dev/user-interface-tools/scriptui-programming-model.html) development ;)).
 
@@ -202,7 +206,9 @@ Batch exports all open **.indd** documents or all documents from a selected fold
 
 Two workflows are available, with options organized into several categories:
 
-**Source folder:** By default, the script exports all open documents. If no documents are open, you can select a source folder, optionally including its subfolders.
+**Source folder:** By default, the script exports all open documents. If no documents are open, you can select a source folder, optionally including its subfolders:
+
+![Source folder](.img/script-quickexport-batch.png)
 
 **Workflow:** Choose which workflow(s) to use – at least one must be selected. The label is only informative.
 
@@ -214,14 +220,16 @@ Two workflows are available, with options organized into several categories:
 
 - **Skip do-not-print layers:** Excludes layers whose names start with a dot or hyphen (like **.safety area**) and layers from the default _do-not-print_ list (see [**`DNPLayersHide`**](#dnplayersshow-and-dnplayershide) below). You can modify this list using the **Edit list** button.
 
-- **Run a script**: Executes a JavaScript or AppleScript before export – e.g., one of the other scripts from this sectio. ;)
+- **Run a script**: Executes a JavaScript or AppleScript before export – e.g., one of the other scripts from this section.
 
 **Output options:**
 
 - **Export in a custom folder:** Choose a different output location instead of the default source document folder.
 
+- **Prepend a prefix:** Prepends this text to the exported file names.
+
 - **Append a suffix:** Appends this text to the exported file names.
-  > 🎓 Add a suffix to a preset by including it after the _last_ underscore. For example, selecting preset `X4_350dpi_39L300_HighRes` will automatically set the suffix to `HighRes`.
+  > 💡 **Tip:** You can attach a suffix to a preset by including it after the _last_ underscore. For example, selecting preset `X4_350dpi_39L300_HighRes` will automatically set the suffix to `HighRes`.
 
 - **Sort files into subfolder:** Exports files into a subfolder of the selected output location. It defaults to the current suffix.
   > ⚠️ **Warning:** The text following a `+` is ignored (e.g., `HighRes+Diecut` becomes `HighRes`).
@@ -242,13 +250,13 @@ Two workflows are available, with options organized into several categories:
 
 - **Upgrade [Converted] documents**: Converts documents from older InDesign versions to the current version.
 
-> 🎓 Settings are automatically saved each time you run the script. However, holding the **Opt/Alt** key while clicking **Start** will prevent settings from updating during the current session.
+> 💡 **Tip:** Settings are automatically saved each time you run the script. However, holding the **Opt/Alt** key while clicking **Start** will prevent settings from updating during the current session.
 
 #### **PrepareForExport**
 
 Hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers (see below). Additionally, it moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads and labels the spreads.
 
-> 💡 The script is designed to be run with [**`QuickExport`**](#quickexport).
+> 💡 **Tip:** The script is designed to be run with [**`QuickExport`**](#quickexport).
 
 #### **DNPLayersShow** and **DNPLayersHide**
 Shows or hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers:
@@ -259,7 +267,7 @@ Shows or hides all layers starting with either a dot or a hyphen, plus a hard-co
 - **fold, falz**
 - **guides, grid, masuratori**
 
-> 💡 The scripts are designed to be run with [**`QuickExport`**](#quickexport).
+> 💡 **Tip:** The scripts are designed to be run with [**`QuickExport`**](#quickexport).
 
 ---
 
@@ -310,7 +318,7 @@ Many scripts in this collection assume these settings as defaults because they s
 
 #### **DocCleanup**
 
-📍 _Suggested shortcut:_ F2
+⌘ _Suggested shortcut:_ F2
 
 Performs a sequence of actions designed to bring the document to an approximately 'clean' state:
 
@@ -335,11 +343,11 @@ Sometimes objects that have a script label attached are reused, which may create
 
 Unnaplies paragraph/character/object styles from the selected objects, or all objects in the document if nothing is selected.
 
-> 💡 The script will display a report if run while holding down the **Ctrl** key.
+> 💡 **Tip:** The script will display a report if run while holding down the **Ctrl** key.
 
 #### **SwatchesCleanup**
 
-📍 _Suggested shortcut:_ ⇧F2
+⌘ _Suggested shortcut:_ ⇧F2
 
 Converts process RGB swatches to CMYK and renames them to 'C= M= Y= K=' format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.
 
@@ -373,7 +381,7 @@ Shows all color profiles available to InDesign.
 
 #### **ShowProperties**
 
-📍 _Suggested shortcut:_ F1
+⌘ _Suggested shortcut:_ F1
 
 Shows properties and methods of a selected object for debugging purposes.
 
@@ -391,7 +399,7 @@ When objects are selected, adds guides around their boundaries.
 
 When nothing is selected, adds guides at page edges and margin centers. Running the script again removes these guides.
 
-> 🎓 If **Opt** is also pressed, it will use spread guides.
+> 💡 **Tip:** If **Opt** is also pressed, it will use spread guides.
 
 #### **GuidesCollect**
 
@@ -405,17 +413,17 @@ Deletes all guides from the document.
 
 Creates a frame around the page margins that visually marks the _safety area_ of a page. It's a stroked frame named **\<safety area\>** on the **.safety area** layer. It uses an existing **Safety area** swatch or creates one with R=0 G=180 B=255.
 
-> 💡 This script is designed to be run with [**`QuickExport`**](#quickexport).
+> 💡 **Tip:** This script is designed to be run with [**`QuickExport`**](#quickexport).
 
 #### **MarkVisibleArea**
 
 Creates a frame around the page margins that visually marks the _visible area_ of a page. It's a stroked frame named **\<visible area\>** on the **.visible area** layer. It uses an existing **Visible area** swatch or creates one with R=255 G=180 B=0.
 
-> 💡 This script is designed to be run with [**`QuickExport`**](#quickexport).
+> 💡 **Tip:** This script is designed to be run with [**`QuickExport`**](#quickexport).
 
 #### **PageMarginsFromScriptName**
 
-📍 _Suggested shortcut:_ ⌥F3
+⌘ _Suggested shortcut:_ ⌥F3
 
 Sets the page margins and optionally a reserved area on the bottom, getting the values from the script name, in percentages of the _visible area_ or page size.
 
@@ -438,7 +446,7 @@ Sets the current page margins from the selected objects.
 
 #### **PageSizeFromFilename**
 
-📍 _Suggested shortcut:_ F3
+⌘ _Suggested shortcut:_ F3
 
 Adjusts page size, margins, and bleed based on the document name. It also creates a stroked frame named **\<visible area\>** around page margins on the **.visible area** layer. Uses an existing **Visible area** swatch or creates one with R=255 G=180 B=0.
 
@@ -464,7 +472,7 @@ Resizes the current page to its margins.
 
 #### **PageSizeFromSelection**
 
-📍 _Suggested shortcut:_ ⇧F3
+⌘ _Suggested shortcut:_ ⇧F3
 
 Resizes the current page to the selected objects.
 
@@ -476,7 +484,7 @@ _Juggling layers and spreads._
 
 #### **JoinDocs**
 
-📍 _Suggested shortcut:_ ⇧⌘F7
+⌘ _Suggested shortcut:_ ⇧⌘F7
 
 Combines all open documents, sorted alphabetically by name.
 
@@ -490,15 +498,15 @@ Saves each spread of the active document to a separate file.
 
 When a document name ends with a _separator_ (space, dot, underscore, or hyphen) followed by characters matching the number of spreads, each split file will include the corresponding character in its name. For example, `Document_ABC.indd` with three spreads becomes `Document_A.indd`, `Document_B.indd`, and `Document_C.indd`. If no sequence is detected, you'll be prompted to provide one.
 
-> 🎓 The index is added to the end of the file name by default, but placing a `#` anywhere in the file name determines where the index will appear instead.
+> 💡 **Tip:** The index is added to the end of the file name by default, but placing a `#` anywhere in the file name determines where the index will appear instead.
 
 #### **SplitSpreadsByLayers**
 
-📍 _Suggested shortcut:_ ⌥⌘F7
+⌘ _Suggested shortcut:_ ⌥⌘F7
 
 Splits one spread into multiple spreads or combines multiple spreads into one, using predefined layers (default: **EN**, **DE**, **FR**, **IT**). When splitting, each new spread contains items from its corresponding layer. When joining, items from each spread are distributed into their respective layers in the combined spread. Other layers remain unchanged.
 
-> 🎓 Edit the variable `layers.master` to customize the predefined layers to your needs.
+> 💡 **Tip:** Edit the variable `layers.master` to customize the predefined layers to your needs.
 
 ---
 
@@ -508,19 +516,19 @@ _Zooming pages and objects._
 
 #### **TileAll**
 
-📍 _Suggested shortcut:_ ⇧F4
+⌘ _Suggested shortcut:_ ⇧F4
 
 Invokes **Window ‣ Arrange ‣ Tile All Vertically**, **Tile All Horizontally**, or **Tile**, depending on the current spread orientation.
 
 #### **ZoomTo300Percent**
 
-📍 _Suggested shortcut:_ ⌘3
+⌘ _Suggested shortcut:_ ⌘3
 
 Zooms current layout window to 300%. It complements the predefined 100% (`⌘1`), 200% (`⌘2`) and 400% (`⌘4`) zoom levels.
 
 #### **ZoomToSelection**
 
-📍 _Suggested shortcut:_ F4
+⌘ _Suggested shortcut:_ F4
 
 It resembles **Fit Selection in Window** (`⌥⌘=`), but:
 
@@ -532,7 +540,7 @@ It's sort of hack-ish and it assumes that **UI Sizing** is set to **Small** and 
 
 #### **ZoomToSpreads**
 
-📍 _Suggested shortcut:_ ⌥F4
+⌘ _Suggested shortcut:_ ⌥F4
 
 Zooms on the first 3 spreads.
 
@@ -546,7 +554,7 @@ _Align objects using the numeric keypad._
 
 #### **AlignTo\***
 
-<details><summary>📍 <em>Suggested shortcuts: </em>Num<em> digits</em></summary>
+<details><summary>⌘ <em>Suggested shortcuts: </em>Num<em> digits</em></summary>
 
 | Left              |  Key | Center           |  Key | Right             |  Key |
 |:------------------|-----:|:-----------------|-----:|:------------------|-----:|
@@ -560,7 +568,7 @@ Use the numeric keypad to align the selected objects, with a single keystroke, t
 
 #### **ToggleAlignTo**
 
-📍 _Suggested shortcut:_ Num0
+⌘ _Suggested shortcut:_ Num0
 
 Toggles **Align To** between selection, margins, page, or spread (just run it repeatedly):
 
@@ -568,7 +576,7 @@ Toggles **Align To** between selection, margins, page, or spread (just run it re
 
 #### **ResetAlignTo**
 
-📍 _Suggested shortcut:_ ⌃Num0
+⌘ _Suggested shortcut:_ ⌃Num0
 
 Resets **Align To** to default (**Align to Selection**).
 
@@ -580,7 +588,7 @@ _Insert or remove objects from clipping frames._
 
 #### **Clip**
 
-📍 _Suggested shortcut:_ Num\*
+⌘ _Suggested shortcut:_ Num\*
 
 Inserts the selected objects into a _clipping frame_ or, if already clipped, restores them.
 
@@ -588,7 +596,7 @@ Inserts the selected objects into a _clipping frame_ or, if already clipped, res
 
 #### **ClipRelease**
 
-📍 _Suggested shortcut:_ ⌃Num\*
+⌘ _Suggested shortcut:_ ⌃Num\*
 
 Releases one or several objects from their _clipping frames_. If nothing is selected, it will release all clipped objects from the current spread.
 
@@ -600,7 +608,7 @@ _Reframe objects to a target area._
 
 #### **FitTo\***
 
-<details><summary>📍 <em>Suggested shortcuts: </em>F11, F12<em> with modifiers</em></summary>
+<details><summary>⌘ <em>Suggested shortcuts: </em>F11, F12<em> with modifiers</em></summary>
 
 | Page                               |    Key | Spread                               |    Key |
 |:-----------------------------------|-------:|:-------------------------------------|-------:|
@@ -633,7 +641,7 @@ The **`*Forced`** variants simply reframe the objects to the target area.
 
 #### **TextAutosize**
 
-📍 _Suggested shortcut:_ F6
+⌘ _Suggested shortcut:_ F6
 
 Auto-sizes the selected text frames to their content.
 
@@ -645,7 +653,7 @@ Running it repeatedly increases the auto-sizing levels (from **None** to **Heigh
 | ![Vertical Justification Center](.img/verticaljustification-C.png) | ![center-left](.img/textautosize-CL.png) | ![center](.img/textautosize-C.png) | ![center-right](.img/textautosize-CR.png) |
 | ![Vertical Justification Bottom](.img/verticaljustification-B.png) | ![bottom-left](.img/textautosize-BL.png) | ![bottom-center](.img/textautosize-BC.png) | ![bottom-right](.img/textautosize-BR.png) |
 
-> 🎓 Running it again while only changing alignment will maintain the current auto-sizing setting.
+> 💡 **Tip:** Running it again while only changing alignment will maintain the current auto-sizing setting.
 
 ---
 
@@ -655,7 +663,7 @@ _Set the reference point used for transformations._
 
 #### **SetRefPoint\***
 
-<details><summary>📍 <em>Suggested shortcuts: </em>⌃Num<em> digits</em></summary>
+<details><summary>⌘ <em>Suggested shortcuts: </em>⌃Num<em> digits</em></summary>
 
 | Left                  |   Key | Center               |   Key | Right                 |   Key |
 |:----------------------|------:|:---------------------|------:|:----------------------|------:|
@@ -677,7 +685,7 @@ _Scale selected objects to a target area._
 
 #### **ScaleTo\***
 
-<details><summary>📍 <em>Suggested shortcuts: </em>F5<em> with modifiers</em></summary>
+<details><summary>⌘ <em>Suggested shortcuts: </em>F5<em> with modifiers</em></summary>
 
 | Page                     | Key | Page margins                |  Key | Spread bleed                |  Key |
 |:-------------------------|----:|:----------------------------|-----:|:----------------------------|-----:|
@@ -706,7 +714,7 @@ I fixed some bugs, added a default value, an option to join contours, and undo.
 
 #### **EAN**
 
-📍 _Suggested shortcut:_ F9
+⌘ _Suggested shortcut:_ F9
 
 Based on Konstantin Smorodsky's [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator), that generates barcodes from a list provided by the user, this script gets a step further by automating the placement, scaling, and rotation of barcodes in a document, eliminating the need for manual adjustments.
 
@@ -728,7 +736,7 @@ Adds a QR code on each spread of the active document (outside _visible area_, if
 
 When the document name ends with a separator (space, dot, underscore, or hyphen) and a sequence of characters matching the number of spreads (a _suffix_), each generated file will include its corresponding character. For example, **`Document_ABC.indd`** with three spreads will create **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`**, and **`Document_C_QR.pdf`**.
 
-> 🎓 The script does a decent job breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
+> 💡 **Tip:** The script does a decent job breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
 
 #### **QRBatch**
 
@@ -750,7 +758,7 @@ Does the same thing as **`QR`** but in a non-interactive way: retrieves a list o
 The TSV file must be saved locally (in the active document folder); files starting with `_` take precedence.\
 Blank lines are ignored; everything after a `#` (comments) is ignored.
 
-> 🎓 The script does a decent job of breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
+> 💡 **Tip:** The script does a decent job of breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
 
 ## Install
 
@@ -770,7 +778,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: February 26, 2025
+Last updated: March 2, 2025
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 
