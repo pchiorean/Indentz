@@ -1,5 +1,5 @@
 /*
-	Quick export 25.2.26
+	Quick export 25.3.2
 	(c) 2021-2025 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -312,7 +312,7 @@ function QuickExport() {
 
 				// Append to the suffix all visible & printable layers named '+xxxxxxx'
 				if (exp.suffix.isOn.value && /^_(print|High ?Res)/i.test(suffix)) {
-					// Dielines layer has priority
+					// Hack: Dielines layer has priority
 					if (((layer = doc.layers.itemByName('dielines')).isValid
 						|| (layer = doc.layers.itemByName('diecut')).isValid
 						|| (layer = doc.layers.itemByName('die cut')).isValid)
@@ -503,6 +503,7 @@ function QuickExport() {
 
 					// Get a unique file path for export
 					destination = getUniquePath(destination + suffix);
+					destination += '.pdf';
 
 					// Get page range
 					if (asSpreads) { // Export as spreads
@@ -523,6 +524,7 @@ function QuickExport() {
 				}
 			} else { // Export all pages
 				destination = getUniquePath(baseName + suffix);
+				destination += '.pdf';
 
 				progressBar.update();
 				progressBar.msg(baseFolder === decodeURI(doc.filePath)
@@ -533,27 +535,28 @@ function QuickExport() {
 			}
 
 			function getUniquePath(/*string*/filename) {
-				var pdfFiles, fileIndexRE, fileIndex, lastIndex, nextIndex;
+				var filesList, fileIndexRE, fileIndex, lastIndex, nextIndex;
 
-				// Get a list of existing PDFs from the base folder and recursively from the destination folder
-				pdfFiles = getFilesRecursively(Folder(baseFolder), false, 'pdf');
+				// Get a list of files from the base folder and recursively from the destination folder
+				filesList = getFilesRecursively(Folder(baseFolder), false, undefined);
 				if (destFolder !== baseFolder)
-					pdfFiles = pdfFiles.concat(getFilesRecursively(Folder(destFolder), true, 'pdf'));
-				if (pdfFiles.length > 1) pdfFiles = unique(pdfFiles.sort(naturalSorter));
+					filesList = filesList.concat(getFilesRecursively(Folder(destFolder), true, undefined));
+				if (filesList.length > 1) filesList = unique(filesList.sort(naturalSorter));
 
 				// Get the last index by matching 'filename [separator] ([previous index]) [stuff]
 				lastIndex = 0;
 				fileIndexRE = RegExp('^'
 					+ filename.replace(regexTokensRE, '\\$&') // Escape regex tokens
-					+ '(?:[ _-]*)'            // [Separator]
+					+ '(?:[ _-]*)'            // [NC: Separator]
 					+ '(\\d+)?'               // [Previous index]
-					+ '(?:[ _-]*v *\\d*)?'    // [Ancillary: 'vX']
-					+ '(?:[ _-]*copy *\\d*)?' // [Ancillary: 'copyX']
-					+ '(?:[ _-]*v *\\d*)?'    // [Ancillary: 'vX']
-					+ '(?:.*)$'               // [Extra stuff]
+					+ '(?:[ _-]*v *\\d*)?'    // [NC: Ancillary: 'vX']
+					+ '(?:[ _-]*copy *\\d*)?' // [NC: Ancillary: 'copyX']
+					+ '(?:[ _-]*v *\\d*)?'    // [NC: Ancillary: 'vX']
+					+ '(?:.*)$'               // [NC: Extra stuff]
 					, 'i');
-				for (var i = 0, n = pdfFiles.length; i < n; i++) {
-					fileIndex = fileIndexRE.exec(decodeURI(pdfFiles[i].name).replace(/\.pdf$/i, ''));
+				for (var i = 0, n = filesList.length; i < n; i++) {
+					fileIndex = fileIndexRE.exec(decodeURI(filesList[i].name)
+						.replace(/\.[^.]+$/, '')); // Strip extension
 					if (fileIndex)
 						lastIndex = Math.max(lastIndex, isNaN(fileIndex[1]) ? 1 : Number(fileIndex[1]));
 				}
@@ -567,8 +570,7 @@ function QuickExport() {
 						+ exp.sortByDate.et.text : '')  // [Date subfolder]
 					+ '/' + filename                    // Base filename
 					+ (!suffix && nextIndex ? ' ' : '') // [Separator]
-					+ nextIndex                         // Index
-					+ '.pdf';
+					+ nextIndex;                        // Index
 			}
 
 			function exportToPDF(/*string*/filename, /*string|Enum*/pageRange, /*pdfExportPreset*/pdfPreset) {
