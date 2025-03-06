@@ -11,6 +11,7 @@
 - `12/03` [`upd`](https://github.com/pchiorean/Indentz/commit/b367fd693b575c705794e8dbde146a349f658031)
           [`upd`](https://github.com/pchiorean/Indentz/commit/8f88fbcb38b22333115dabe329eeb5dcb253ae6e)
   **MarkSafety/VisibleArea, PageSizeFromFilename:** By user request the visible and safety area markings will not overprint
+
 - `02/01` [`upd`](https://github.com/pchiorean/Indentz/commit/19ddea0123c761cc9833a63b21d679882e3a1583)
   **fitTo:** Also return the fitted items as array (d'oh!)
 - `02/01` [`upd`](https://github.com/pchiorean/Indentz/commit/52c5b0c94de3641bcdb40dc24737e6c5ea0cf89d)
@@ -22,43 +23,46 @@
 - `02/05` [`brk`](https://github.com/pchiorean/Indentz/commit/38744d051e6703f95ee2d31c9a7a2538a07dbefe)
   **lib/getPageItems, SplitSpreadsByLayers:** Fixed **getPageItems** to always return an array, eliminating result ambiguity
 - `02/11` [`ref`](https://github.com/pchiorean/Indentz/commit/0d151e606a28dec598b98aa4f5f071f344731710)
-  **lib/log:** Changed context separator to '::'
+  **lib/log:** Changed context separator to '[]'
 - `02/19` [`brk`](https://github.com/pchiorean/Indentz/commit/f517ca2f11f9024c9396a3db8b29b5b38ed8df13)
   **QuickExport:** Improved sorting in subfolders: made subfolder and date fields user editable; this required an upgrade to settings
 - `02/21` [`fix`](https://github.com/pchiorean/Indentz/commit/13a1427f3ced071d2ac2202bd5b9bafdde96c10a)
   **QuickExport:** Manually entered input was not processed to remove all text after '+'; fixed
 - `02/26` [`upd`](https://github.com/pchiorean/Indentz/commit/2d78d21f1d8722c1ab4106b3833249d94cae04a7)
   **QuickExport:** Relaxed subfolder validation to allow '\' for relative paths
+- `02/26` [`upd`](https://github.com/pchiorean/Indentz/commit/cbb5e48ba17ab46170a88b7d436594787f611239)
+          [`upd`](https://github.com/pchiorean/Indentz/commit/067ed0ffb35899abc893a45884a3a8e8cb4d6dd6)
+  **SplitSpreadsByLayers:** Added 'EN' to the list of default layers
+- `03/02` [`upd`](https://github.com/pchiorean/Indentz/commit/6a259a0c928ece418a158cb135db3eb579847b6c)
+  **QuickExport:** When detecting unique file name, ignore file extension
+- `03/02` [`upd`](https://github.com/pchiorean/Indentz/commit/440a9fd03b0887dd033c6ac80a5457d12ee5a23b)
+  **QuickExport:** Add alerts for custom DPI and custom bleed out of bounds values
+- `03/02` [`fix`](https://github.com/pchiorean/Indentz/commit/cfe64c66dd2a1fcdfce1e30ced5e1b0998174f09)
+  **QuickExport:** Fixed file name detection when the file has no extension
+- `03/02` [`brk`](https://github.com/pchiorean/Indentz/commit/f9e07b5ab7e3b5bd3c930742c551fa7853351723)
+  **QuickExport:** Added a prefix field
+- `03/02` [`ref`](https://github.com/pchiorean/Indentz/commit/7a5f74f0ea32356836f98063491bf2629531478f)
+  **lib/log:** Reverted to '[]' as context separator, but more compact
 
 ##### Queued
 
 - **QuickExport:**
   - [x] Sort files into subfolder: remove the '+' part after user input
-  - [-] Sort files into subfolder: uncheck if no suffix
-  - [ ] Sanitize filenames
+  - [x] When detecting unique file name, ignore file extension
   - [ ] Check folder creation success
-  - [ ] When detecting unique file name, ignore file extension
+  - [ ] Sanitize filenames
   - [ ] Sync all help tips with the revised README
+  - [ ] Restore layers state on cancel
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
 <!-- ### [25.2.1](https://github.com/pchiorean/Indentz/releases/tag/25.2.1)
 
 ##### New features
-
-
 ##### Breaking changes
-
-
 ##### Updates
-
-
 ##### Bug fixes
-
-
-##### Miscellaneous
-
--->
+##### Miscellaneous -->
 
 ### [24.8.15](https://github.com/pchiorean/Indentz/releases/tag/24.8.15)
 
