@@ -43,6 +43,15 @@
   **QuickExport:** Added a prefix field
 - `03/02` [`ref`](https://github.com/pchiorean/Indentz/commit/7a5f74f0ea32356836f98063491bf2629531478f)
   **lib/log:** Reverted to '[]' as context separator, but more compact
+- `03/09` [`brk`](https://github.com/pchiorean/Indentz/commit/659b1b58d031e03bc650fd99031a96bc2e19bc5d)
+          [`ref`](https://github.com/pchiorean/Indentz/commit/477edb1762a45b12c43469b4d96f61a559c81db2)
+          [`org`](https://github.com/pchiorean/Indentz/commit/96e750ec8a68e6ee6f0743de5eca9d78989ad8a0)
+  **SplitSpreadsByOptions:** No more hardcoded default option-specific layers! The options will now be detected from the layer name using this format: '\<layer name\>:\<option\>' (e.g., 'copy: de_CH')
+- `03/09` [`new`](https://github.com/pchiorean/Indentz/commit/5d8cf0908ece6ab31fbc99d0b1225917c1bcb2cd)
+          [`new`](https://github.com/pchiorean/Indentz/commit/3d4b09d031f2896056c03e72bd83068560e1078f)
+  **ShowOrHideOptions:** Shows or hides option-specific layers, the options being detected from the layer name using this format: '\<layer name\>:\<option\>' (e.g., 'copy: de_CH')
+- `03/09` [`upd`](https://github.com/pchiorean/Indentz/commit/37cf63e9b03b3d133a85ff74c299828e920eccb2)
+  **SplitSpreadsByOptions:** Delete optionless spreads
 
 ##### Queued
 
