@@ -500,13 +500,23 @@ When a document name ends with a _separator_ (space, dot, underscore, or hyphen)
 
 💡 **Tip:** The index is added to the end of the file name by default, but placing a `#` anywhere in the file name determines where the index will appear instead.
 
-#### **SplitSpreadsByLayers**
+#### **ShowOrHideOptions**
+
+⌘ _Suggested shortcut:_ ⌘F7
+
+When your document have multiple options (such as languages), you can use a colon (`:`) in layer names to specify them – for example, **copy: de_CH**, **copy: fr_CH**, **copy: it_CH** for Swiss German, French, and Italian options. Any number of these option layers are supported.
+
+This script shows or hides the option-specific layers:
+
+![Show/Hide Options]()
+
+#### **SplitSpreadsByOptions**
 
 ⌘ _Suggested shortcut:_ ⌥⌘F7
 
-Splits one spread into multiple spreads or combines multiple spreads into one, using predefined layers (default: **EN**, **DE**, **FR**, **IT**). When splitting, each new spread contains items from its corresponding layer. When joining, items from each spread are distributed into their respective layers in the combined spread. Other layers remain unchanged.
+When your document have multiple options (such as languages), you can use a colon (`:`) in layer names to specify them – for example, **copy: de_CH**, **copy: fr_CH**, **copy: it_CH** for Swiss German, French, and Italian options. Any number of these option layers are supported.
 
-💡 **Tip:** Edit the variable `layers.master` to customize the predefined layers to your needs.
+This script splits document spreads based on these options (creating individual spreads with items from their corresponding option) or combines them (merging items from separate spreads into their respective layers within a combined spread). Only the option-specific layers are modified.
 
 ---
 
@@ -778,7 +788,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: March 2, 2025
+Last updated: March 9, 2025
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 
