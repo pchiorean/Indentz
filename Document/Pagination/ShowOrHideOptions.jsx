@@ -1,5 +1,5 @@
 /*
-	Show/hide options 25.3.8
+	Show/hide options 25.3.9
 	(c) 2025 Paul Chiorean <jpeg@basement.ro>
 
 	Shows or hides option-specific layers.
@@ -13,8 +13,7 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-// app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Show/Hide Options');
-main();
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Show/Hide Options');
 
 function main() {
 	var layer, option, i, l;
@@ -33,17 +32,16 @@ function main() {
 			optionVisibility[layer.name.match(optionRE)[1]] = true;
 		}
 	}
-	for (var key in optionLayers)
-		if (Object.prototype.hasOwnProperty.call(optionLayers, key)) optionNames.push(key);
-	if (optionNames.length === 0) exit();
+	for (var key in optionLayers) if (Object.prototype.hasOwnProperty.call(optionLayers, key)) optionNames.push(key);
+	if (optionNames.length === 0) exit(); // Exit if no option-specific layers exist
 
 	// Build a list of corresponding layers and get each option's visibility
 	for (i = 0; i < doc.layers.length; i++) {
 		layer = doc.layers[i];
 		if (optionRE.test(layer.name)) {
-			optionLayers[layer.name.match(optionRE)[1]].push(layer);
-			optionVisibility[layer.name.match(optionRE)[1]]
-				= optionVisibility[layer.name.match(optionRE)[1]] && layer.visible;
+			option = layer.name.match(optionRE)[1];
+			optionLayers[option].push(layer);
+			optionVisibility[option] = optionVisibility[option] && layer.visible;
 		}
 	}
 
@@ -51,7 +49,6 @@ function main() {
 
 	for (i = 0; i < optionNames.length; i++) {
 		option = optionNames[i];
-
 		for (l = 0; l < optionLayers[option].length; l++) {
 			layer = optionLayers[option][l];
 			layer.visible = optionVisibility[option];
@@ -73,7 +70,7 @@ function main() {
 			ui.main.layout[i].cb.value = optionVisibility[optionNames[i]];
 			ui.main.layout[i].label
 				= ui.main.layout[i].add('edittext { text: "' + optionNames[i] + '", preferredSize: [ 120, -1 ], properties: { readonly: true } }');
-			}
+		}
 
 		ui.actions = ui.add('group { orientation: "row", margins: [ -1, 4, -1, -1 ], alignChildren: [ "center", "center" ] }');
 		ui.actions.cancel = ui.actions.add('button { text: "Cancel", preferredSize: [ 80, 24 ], properties: { name: "cancel" } }');
@@ -82,8 +79,7 @@ function main() {
 		// Callbacks
 		ui.actions.cancel.onClick = function () { ui.close(false); };
 		ui.actions.ok.onClick = function () {
-			for (i = 0; i < optionNames.length; i++)
-				optionVisibility[optionNames[i]] = ui.main.layout[i].cb.value;
+			for (i = 0; i < optionNames.length; i++) optionVisibility[optionNames[i]] = ui.main.layout[i].cb.value;
 			ui.close(true);
 		};
 
