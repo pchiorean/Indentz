@@ -508,7 +508,7 @@ When your document have multiple options (such as languages), you can use a colo
 
 This script shows or hides the option-specific layers:
 
-![Show/Hide Options]()
+![Show/Hide Options](.img/script-showhideoptions.png)
 
 #### **SplitSpreadsByOptions**
 
