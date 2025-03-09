@@ -82,10 +82,11 @@ Name                             |     Fn | Description
 **SetRefPointToTR**              |  ⌃Num9 | Sets 'Transform Reference Point' to top-right
 **ShowDNPLayers**                |        | Shows _do not print_ layers
 **ShowFonts**                    |        | Shows all fonts used in the current document
+**ShowOrHideOptions**            |    ⌘F7 | Shows or hides option-specific layers
 **ShowProfiles**                 |        | Shows all color profiles available to a document
 **ShowProperties**               |     F1 | Shows properties and methods of the selected object/active document/the application
 **SplitDocBySpreads**            |        | Saves the spreads of the active document in separate files
-**SplitSpreadsByLayers**         |   ⌥⌘F7 | Splits or joins document spreads using special layers
+**SplitSpreadsByOptions**        |   ⌥⌘F7 | Splits or joins document spreads by option-specific layers
 **SwatchesCleanup**              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to 'C= M= Y= K=' format, deletes unused
 **TextAutosize**                 |     F6 | Auto-sizes the text frame to the content
 **TileAll**                      |    ⇧F4 | Invokes different window tiling options, depending on the current spread orientation
