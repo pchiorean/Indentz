@@ -13,7 +13,6 @@ Name                             |     Fn | Description
 **AlignToTR**                    |   Num9 | Aligns the selected objects to the top-right of the 'Align To' setting
 **Clip**                         |  Num\* | Clips selected objects in a clipping frame (or releases them if already clipped)
 **ClipRelease**                  | ⌃Num\* | Releases selected objects from their clipping frames
-**DefaultPrefs**                 |        | Sets default preferences
 **DocCleanup**                   |     F2 | Changes some settings, cleans up swatches/layers/pages and other things
 **DumpLayers**                   |        | Saves document's layers to a TSV file compatible with **AddLayers**
 **DumpLinks**                    |        | Saves document's links to a TSV file compatible with **ReplaceLinks**
@@ -71,6 +70,7 @@ Name                             |     Fn | Description
 **ScaleToSpreadBleed**           |    ⇧F5 | Scales the selected objects to the spread bleed
 **ScaleToSpreadBleedH**          |   ⇧⌘F5 | Scales the selected objects to the spread bleed top/bottom size
 **ScaleToSpreadBleedW**          |        | Scales the selected objects to the spread bleed left/right size
+**SetDefaultPrefs**              |        | Sets default preferences
 **SetRefPointToB**               |  ⌃Num2 | Sets 'Transform Reference Point' to bottom
 **SetRefPointToBL**              |  ⌃Num1 | Sets 'Transform Reference Point' to bottom-left
 **SetRefPointToBR**              |  ⌃Num3 | Sets 'Transform Reference Point' to bottom-right

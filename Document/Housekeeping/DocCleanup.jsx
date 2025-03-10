@@ -1,6 +1,6 @@
 ﻿/*
-	Document cleanup 24.8.15
-	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
+	Document cleanup 25.3.10
+	(c) 2020-2025 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
 
@@ -18,7 +18,7 @@ var progressBar = new ProgressBar('Cleaning document', 14);
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 
 progressBar.update();
-app.doScript(File(script.path + '/DefaultPrefs.jsx'),
+app.doScript(File(script.path + '/SetDefaultPrefs.jsx'),
 	ScriptLanguage.JAVASCRIPT, undefined,
 	UndoModes.ENTIRE_SCRIPT, 'Set preferences');
 
