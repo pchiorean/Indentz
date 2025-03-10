@@ -1,6 +1,6 @@
 /*
-	Default preferences 23.10.7
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Set default preferences 25.3.10
+	(c) 2020-2025 Paul Chiorean <jpeg@basement.ro>
 
 	Sets default preferences.
 
