@@ -275,7 +275,7 @@ Shows or hides all layers starting with either a dot or a hyphen, plus a hard-co
 
 _Defaults and clean-up._
 
-#### **DefaultPrefs**
+#### **SetDefaultPrefs**
 
 Sets some preferences for the active document. You should customize them to your workflow by editing the script. Unfortunately the preferences are scattered in so many places that it's difficult for me to guide you – but [this](https://www.indesignjs.de/extendscriptAPI/indesign-latest/) will definitely help.
 
@@ -322,7 +322,7 @@ Many scripts in this collection assume these settings as defaults because they s
 
 Performs a sequence of actions designed to bring the document to an approximately 'clean' state:
 
-- Sets default preferences by running [**`DefaultPrefs`**](#defaultprefs);
+- Sets default preferences by running [**`SetDefaultPrefs`**](#setdefaultprefs);
 - Unlocks all objects and resets their scaling to 100%;
 - Deletes hidden objects (after confirmation);
 - Deletes empty frames (after confirmation);
@@ -788,7 +788,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: March 9, 2025
+Last updated: March 10, 2025
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 
