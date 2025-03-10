@@ -226,7 +226,7 @@
 		"max-depth": [
 			"error",
 			{
-				"max": 4
+				"max": 5
 			}
 		],
 		"max-len": [
