@@ -1,62 +1,89 @@
 ## [Development version](https://github.com/pchiorean/Indentz/compare/24.8.15...dev)
 
-- `11/05` [`upd`](https://github.com/pchiorean/Indentz/commit/bae7688a502b60fb8bf9a22666d84511d603d28a)
-  **QuickExport:** Changed default export profiles to `_LowRes` and `_HighRes`
-- `11/05` [`fix`](https://github.com/pchiorean/Indentz/commit/65cb8ffec75fca68f74c91f0c0251c50f98da8f6)
-  **TextAutosize:** Skip color-filled text frames
-- `11/15` [`fix`](https://github.com/pchiorean/Indentz/commit/6f096ee60c7c0fcfb6c9fa406b9f2720e8caba76)
-  **QuickExport:** Added fallback for settings: when the user folder can't be detected (OneDrive anyone?), the settings will be saved next to the script
-- `11/20` [`fix`](https://github.com/pchiorean/Indentz/commit/9a60f60067e7d2ec72b72e638c31464036e2e764)
-  **QuickExport:** Adding unnamed colors was done by calling the menu by name, and this causes problems when changing application language; fixed by using the menu ID
-- `12/03` [`upd`](https://github.com/pchiorean/Indentz/commit/b367fd693b575c705794e8dbde146a349f658031)
-          [`upd`](https://github.com/pchiorean/Indentz/commit/8f88fbcb38b22333115dabe329eeb5dcb253ae6e)
-  **MarkSafety/VisibleArea, PageSizeFromFilename:** By user request the visible and safety area markings will not overprint
+- [`11/05`](https://github.com/pchiorean/Indentz/commits/dev/?since=2024-11-05&until=2024-11-05)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/bae7688a502b60fb8bf9a22666d84511d603d28a)
+	**QuickExport:** Changed default export profiles to `_LowRes` and `_HighRes`
+- [`11/05`](https://github.com/pchiorean/Indentz/commits/dev/?since=2024-11-05&until=2024-11-05)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/65cb8ffec75fca68f74c91f0c0251c50f98da8f6)
+	**TextAutosize:** Skip color-filled text frames
+- [`11/15`](https://github.com/pchiorean/Indentz/commits/dev/?since=2024-11-15&until=2024-11-15)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/6f096ee60c7c0fcfb6c9fa406b9f2720e8caba76)
+	**QuickExport:** Added fallback for settings: when the user folder can't be detected (OneDrive anyone?), the settings will be saved next to the script
+- [`11/20`](https://github.com/pchiorean/Indentz/commits/dev/?since=2024-11-20&until=2024-11-20)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/9a60f60067e7d2ec72b72e638c31464036e2e764)
+	**QuickExport:** Adding unnamed colors was done by calling the menu by name, and this causes problems when changing application language; fixed by using the menu ID
+- [`12/03`](https://github.com/pchiorean/Indentz/commits/dev/?since=2024-12-03&until=2024-12-03)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/b367fd693b575c705794e8dbde146a349f658031)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/8f88fbcb38b22333115dabe329eeb5dcb253ae6e)
+	**MarkSafety/VisibleArea, PageSizeFromFilename:** By user request the visible and safety area markings will not overprint
 
-- `02/01` [`upd`](https://github.com/pchiorean/Indentz/commit/19ddea0123c761cc9833a63b21d679882e3a1583)
-  **fitTo:** Also return the fitted items as array (d'oh!)
-- `02/01` [`upd`](https://github.com/pchiorean/Indentz/commit/52c5b0c94de3641bcdb40dc24737e6c5ea0cf89d)
-  **getPageItems:** Now will only get 1st level items
-- `02/01` [`upd`](https://github.com/pchiorean/Indentz/commit/7abc92a6890ae8318b4537cd1f165f6c1ad13546)
-  **SplitSpreadsByLayers:** Tolerate slight spreads/layers mismatches
-- `02/01` [`new`](https://github.com/pchiorean/Indentz/commit/173cd433b778fab2decfcf30109710c9e743a955)
-  **GuidesCollect:** Added a script that moves all document guides to the '.guides' layer
-- `02/05` [`brk`](https://github.com/pchiorean/Indentz/commit/38744d051e6703f95ee2d31c9a7a2538a07dbefe)
-  **lib/getPageItems, SplitSpreadsByLayers:** Fixed **getPageItems** to always return an array, eliminating result ambiguity
-- `02/11` [`ref`](https://github.com/pchiorean/Indentz/commit/0d151e606a28dec598b98aa4f5f071f344731710)
-  **lib/log:** Changed context separator to '[]'
-- `02/19` [`brk`](https://github.com/pchiorean/Indentz/commit/f517ca2f11f9024c9396a3db8b29b5b38ed8df13)
-  **QuickExport:** Improved sorting in subfolders: made subfolder and date fields user editable; this required an upgrade to settings
-- `02/21` [`fix`](https://github.com/pchiorean/Indentz/commit/13a1427f3ced071d2ac2202bd5b9bafdde96c10a)
-  **QuickExport:** Manually entered input was not processed to remove all text after '+'; fixed
-- `02/26` [`upd`](https://github.com/pchiorean/Indentz/commit/2d78d21f1d8722c1ab4106b3833249d94cae04a7)
-  **QuickExport:** Relaxed subfolder validation to allow '\' for relative paths
-- `02/26` [`upd`](https://github.com/pchiorean/Indentz/commit/cbb5e48ba17ab46170a88b7d436594787f611239)
-          [`upd`](https://github.com/pchiorean/Indentz/commit/067ed0ffb35899abc893a45884a3a8e8cb4d6dd6)
-  **SplitSpreadsByLayers:** Added 'EN' to the list of default layers
-- `03/02` [`upd`](https://github.com/pchiorean/Indentz/commit/6a259a0c928ece418a158cb135db3eb579847b6c)
-  **QuickExport:** When detecting unique file name, ignore file extension
-- `03/02` [`upd`](https://github.com/pchiorean/Indentz/commit/440a9fd03b0887dd033c6ac80a5457d12ee5a23b)
-  **QuickExport:** Add alerts for custom DPI and custom bleed out of bounds values
-- `03/02` [`fix`](https://github.com/pchiorean/Indentz/commit/cfe64c66dd2a1fcdfce1e30ced5e1b0998174f09)
-  **QuickExport:** Fixed file name detection when the file has no extension
-- `03/02` [`brk`](https://github.com/pchiorean/Indentz/commit/f9e07b5ab7e3b5bd3c930742c551fa7853351723)
-  **QuickExport:** Added a prefix field
-- `03/02` [`ref`](https://github.com/pchiorean/Indentz/commit/7a5f74f0ea32356836f98063491bf2629531478f)
-  **lib/log:** Reverted to '[]' as context separator, but more compact
-- `03/09` [`brk`](https://github.com/pchiorean/Indentz/commit/659b1b58d031e03bc650fd99031a96bc2e19bc5d)
-          [`ref`](https://github.com/pchiorean/Indentz/commit/477edb1762a45b12c43469b4d96f61a559c81db2)
-          [`org`](https://github.com/pchiorean/Indentz/commit/96e750ec8a68e6ee6f0743de5eca9d78989ad8a0)
-  **SplitSpreadsByOptions:** No more hardcoded default option-specific layers! The options will now be detected from the layer name using this format: '\<layer name\>:\<option\>' (e.g., 'copy: de_CH')
-- `03/09` [`new`](https://github.com/pchiorean/Indentz/commit/5d8cf0908ece6ab31fbc99d0b1225917c1bcb2cd)
-          [`new`](https://github.com/pchiorean/Indentz/commit/3d4b09d031f2896056c03e72bd83068560e1078f)
-  **ShowOrHideOptions:** Shows or hides option-specific layers, the options being detected from the layer name using this format: '\<layer name\>:\<option\>' (e.g., 'copy: de_CH')
-- `03/09` [`upd`](https://github.com/pchiorean/Indentz/commit/37cf63e9b03b3d133a85ff74c299828e920eccb2)
-  **SplitSpreadsByOptions:** Delete optionless spreads
+- [`02/01`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-01&until=2025-02-01)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/19ddea0123c761cc9833a63b21d679882e3a1583)
+	**fitTo:** Also return the fitted items as array (d'oh!)
+- [`02/01`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-01&until=2025-02-01)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/52c5b0c94de3641bcdb40dc24737e6c5ea0cf89d)
+	**getPageItems:** Now will only get 1st level items
+- [`02/01`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-01&until=2025-02-01)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/7abc92a6890ae8318b4537cd1f165f6c1ad13546)
+	**SplitSpreadsByLayers:** Tolerate slight spreads/layers mismatches
+- [`02/01`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-01&until=2025-02-01)
+	[`new`](https://github.com/pchiorean/Indentz/commit/173cd433b778fab2decfcf30109710c9e743a955)
+	**GuidesCollect:** Added a script that moves all document guides to the '.guides' layer
+- [`02/05`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-05&until=2025-02-05)
+	[`brk`](https://github.com/pchiorean/Indentz/commit/38744d051e6703f95ee2d31c9a7a2538a07dbefe)
+	**lib/getPageItems, SplitSpreadsByLayers:** Fixed **getPageItems** to always return an array, eliminating result ambiguity
+- [`02/11`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-11&until=2025-02-11)
+	[`ref`](https://github.com/pchiorean/Indentz/commit/0d151e606a28dec598b98aa4f5f071f344731710)
+	**lib/log:** Changed context separator to `[]`
+- [`02/19`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-19&until=2025-02-19)
+	[`brk`](https://github.com/pchiorean/Indentz/commit/f517ca2f11f9024c9396a3db8b29b5b38ed8df13)
+	**QuickExport:** Improved sorting in subfolders: made subfolder and date fields user editable; this required an upgrade to settings
+- [`02/21`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-21&until=2025-02-21)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/13a1427f3ced071d2ac2202bd5b9bafdde96c10a)
+	**QuickExport:** Manually entered input was not processed to remove all text after `+`; fixed
+- [`02/26`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-26&until=2025-02-26)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/2d78d21f1d8722c1ab4106b3833249d94cae04a7)
+	**QuickExport:** Relaxed subfolder validation to allow `\` for relative paths
+- [`02/26`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-26&until=2025-02-26)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/cbb5e48ba17ab46170a88b7d436594787f611239)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/067ed0ffb35899abc893a45884a3a8e8cb4d6dd6)
+	**SplitSpreadsByLayers:** Added 'EN' to the list of default layers
+- [`03/02`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-02&until=2025-03-02)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/6a259a0c928ece418a158cb135db3eb579847b6c)
+	**QuickExport:** When detecting unique file name, ignore file extension
+- [`03/02`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-02&until=2025-03-02)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/440a9fd03b0887dd033c6ac80a5457d12ee5a23b)
+	**QuickExport:** Add alerts for custom DPI and custom bleed out of bounds values
+- [`03/02`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-02&until=2025-03-02)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/cfe64c66dd2a1fcdfce1e30ced5e1b0998174f09)
+	**QuickExport:** Fixed file name detection when the file has no extension
+- [`03/02`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-02&until=2025-03-02)
+	[`brk`](https://github.com/pchiorean/Indentz/commit/f9e07b5ab7e3b5bd3c930742c551fa7853351723)
+	**QuickExport:** Added a prefix field
+- [`03/02`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-02&until=2025-03-02)
+	[`ref`](https://github.com/pchiorean/Indentz/commit/7a5f74f0ea32356836f98063491bf2629531478f)
+	**lib/log:** Reverted to `[]` as context separator, but more compact
+- [`03/09`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-09&until=2025-03-09)
+	[`brk`](https://github.com/pchiorean/Indentz/commit/659b1b58d031e03bc650fd99031a96bc2e19bc5d)
+	[`ref`](https://github.com/pchiorean/Indentz/commit/477edb1762a45b12c43469b4d96f61a559c81db2)
+	[`org`](https://github.com/pchiorean/Indentz/commit/96e750ec8a68e6ee6f0743de5eca9d78989ad8a0)
+  **SplitSpreadsByLayers** → **SplitSpreadsByOptions:** No more hardcoded default option-specific layers! The options will now be detected from the layer name using this format: `<layer name>:<option>` (e.g., 'copy: de_CH')
+- [`03/09`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-09&until=2025-03-09)
+	[`new`](https://github.com/pchiorean/Indentz/commit/5d8cf0908ece6ab31fbc99d0b1225917c1bcb2cd)
+  [`new`](https://github.com/pchiorean/Indentz/commit/3d4b09d031f2896056c03e72bd83068560e1078f)
+  **ShowOrHideOptions:** Shows or hides option-specific layers, the options being detected from the layer name using this format: `<layer name>:<option>` (e.g., 'copy: de_CH')
+- [`03/09`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-09&until=2025-03-09)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/37cf63e9b03b3d133a85ff74c299828e920eccb2)
+	**SplitSpreadsByOptions:** Delete optionless spreads
+- [`03/10`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-10&until=2025-03-10)
+	[`org`](https://github.com/pchiorean/Indentz/commit/9c5712977cc8cb1da313c2a5783341ff0974c36f)
+	[`ref`](https://github.com/pchiorean/Indentz/commit/da8163acf02e97450fae27abcf1a0ffd94b5ecba)
+	**DefaultPrefs** → **SetDefaultPrefs:** Renamed: added the verb to script name
 
 ##### Queued
 
 - **QuickExport:**
-  - [x] Sort files into subfolder: remove the '+' part after user input
+  - [x] Sort files into subfolder: remove the `+` part after user input
   - [x] When detecting unique file name, ignore file extension
   - [ ] Check folder creation success
   - [ ] Sanitize filenames
@@ -65,7 +92,7 @@
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
-<!-- ### [25.2.1](https://github.com/pchiorean/Indentz/releases/tag/25.2.1)
+<!-- ### [0.0.0](https://github.com/pchiorean/Indentz/releases/tag/0.0.0)
 
 ##### New features
 ##### Breaking changes
@@ -996,7 +1023,7 @@
 - `new` **AddSwatches:** Add gradients support
 - `new` **AddSwatches:** Add groups support
 - `new` **AddSwatches:** Add tints support
-- `new` **Grid\* and HW:** Get `HW_PCT` from page guide or object tag (`hw10`, `hw15`, etc.); fallback to `10`
+- `new` **Grid\*** and **HW:** Get `HW_PCT` from page guide or object tag (`hw10`, `hw15`, etc.); fallback to `10`
 - `new` **QuickExport:** Add a preflight option
 - `new` **QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
 - `new` **QuickExport:** Add JPG, PNG & INDD export profiles
