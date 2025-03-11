@@ -1,46 +1,46 @@
-Name          	Color      	Visible 	Printable 	Locked 	Order  	Variants
+Name            	Color      	Visible 	Printable 	Locked 	Order  	Variants
 
 # Do-not-print layers
-.guides       	Magenta    	yes     	no        	no     	top    	guides
-.grid         	Magenta    	no      	no        	no     	top    	abst?nd*, grid, masuratori, measures, vermassung
-.segmentation 	Grid Green 	yes     	yes       	yes    	above  	segmentation, split
-.fold         	Grid Green 	yes     	yes       	yes    	above  	fold, falz
-.safety area  	Grid Green 	yes     	yes       	yes    	above  	limit*area, safe*area, safe*margins
-.visible area 	Yellow     	yes     	yes       	yes    	above  	nicht sicht*, rahmen, sicht*, *visib*, *vizib*, vis*area
-.covered area 	Yellow     	yes     	yes       	yes    	above  	covered area*, verdeckte flächen
-.reference    	Black      	no      	no        	yes    	bottom 	refer*, template, vorlage
+.guides         	Magenta    	yes     	no        	no     	top    	guides
+.grid           	Magenta    	no      	no        	no     	top    	abst?nd*, grid, masuratori, measures, vermassung
+.segmentation   	Grid Green 	yes     	yes       	yes    	above  	segmentation, split
+.fold preview   	Grid Green 	yes     	yes       	yes    	above  	fold, falz
+.safety area    	Grid Green 	yes     	yes       	yes    	above  	limit*area, safe*area, safe*margins
+.visible area   	Yellow     	yes     	yes       	yes    	above  	nicht sicht*, rahmen, sicht*, *visib*, *vizib*, vis*area
+.covered area   	Yellow     	yes     	yes       	yes    	above  	covered area*, verdeckte flächen
+.reference      	Black      	no      	no        	yes    	bottom 	refer*, template, vorlage
 
 # Technical
-+dielines     	Red        	yes     	yes       	yes    	above  	dielines, cut, cutcontour, cut*line*, decoupe, die, die*cut*, falz, mark, sichtmass*kontur, stafo, stanz*
-+varnish      	Yellow     	yes     	yes       	yes    	above  	varnish, uv
-+foil         	Gold       	yes     	yes       	yes    	above  	foil
-+white        	Cute Teal  	yes     	yes       	yes    	above  	white
++dielines       	Red        	yes     	yes       	yes    	above  	dielines, cut, cutcontour, cut*line*, decoupe, die, die*cut*, falz, mark, sichtmass*kontur, stafo, stanz*
++varnish        	Yellow     	yes     	yes       	yes    	above  	varnish, uv
++foil           	Gold       	yes     	yes       	yes    	above  	foil
++white          	Cute Teal  	yes     	yes       	yes    	above  	white
 
 # Misc
-media         	Cyan       	yes     	yes       	no     	above
-info          	Cyan       	yes     	yes       	no     	above  	id, info copy, ratio
-placeholder   	Magenta    	yes     	yes       	no     	above
-placement     	Gray       	yes     	yes       	no     	above
-cutout        	Gray       	yes     	yes       	yes    	above
+media           	Cyan       	yes     	yes       	no     	above
+info            	Cyan       	yes     	yes       	yes    	above  	id, info copy, ratio
+placeholder     	Magenta    	yes     	yes       	yes    	above  	placeholder, fpo
+placement       	Gray       	yes     	yes       	no     	above
+cutout          	Gray       	yes     	yes       	yes    	above
+separator       	Gray       	yes     	yes       	yes    	above
 
 # Artwork
-HW            	Light Gray 	yes     	yes       	yes    	above  	health warning, *hw*, todesbalken, warnhinweis, wh
-on top        	Charcoal   	yes     	yes       	yes    	above  	corners, ecken
-disruptors    	Gold       	yes     	yes       	no     	above  	offer, preis, price*, störer
-logos         	Teal       	yes     	yes       	no     	above  	logo*
-EN            	Green      	yes     	yes       	no     	above
-DE            	Green      	yes     	yes       	no     	above
-FR            	Green      	yes     	yes       	no     	above
-IT            	Green      	yes     	yes       	no     	above
-copy          	Green      	yes     	yes       	no     	above  	headline*, hl, text*logos, text?, txt, typ?
-terms         	Gray       	yes     	yes       	no     	above  	disclaimer*, legal*, validity
-codes         	Grid Green 	yes     	yes       	no     	above  	bar*code*, code*, ean*, qr*
-labels above  	Gold       	yes     	yes       	no     	above  	labels, labels over, new
-products      	Blue       	yes     	yes       	no     	above  	device*, pack*, päckli, product*, tin*
-labels below  	Gold       	yes     	yes       	no     	above  	labels under
-artwork       	Light Blue 	yes     	yes       	no     	above  	aw, bullseye, design, element?, images, inner frame dot, layout*, RZ
-on bottom     	Charcoal   	yes     	yes       	yes    	below  	brand arrow, buehne, bühne, farbebene, freisteller, shard*, velo_arrow
-bg            	Red        	yes     	yes       	yes    	below  	back, *background*, bgg, fond, hg, hintergrund*
+HW              	Light Gray 	yes     	yes       	yes    	above  	health warning, *hw*, todesbalken, warnhinweis, wh
+on top          	Charcoal   	yes     	yes       	yes    	above  	corners, ecken
+disruptors      	Gold       	yes     	yes       	no     	above  	offer, preis, price*, störer
+logos           	Teal       	yes     	yes       	no     	above  	logo*
+language: de_CH 	Green      	yes     	yes       	no     	above
+language: fr_CH 	Green      	yes     	yes       	no     	above
+language: it_CH 	Green      	yes     	yes       	no     	above
+copy            	Green      	yes     	yes       	no     	above  	headline*, hl, text*, txt*, typ?
+terms           	Gray       	yes     	yes       	no     	above  	disclaimer*, legal*, validity
+codes           	Gray       	yes     	yes       	no     	above  	bar*code*, code*, ean*, qr*
+labels          	Gold       	yes     	yes       	no     	above  	labels above, labels over, new
+products        	Blue       	yes     	yes       	no     	above  	device*, pack*, päckli, product*, tin*
+labels below    	Gold       	yes     	yes       	no     	above
+artwork         	Light Blue 	yes     	yes       	no     	above  	aw, bullseye, design, element?, images, inner frame dot, layout*, RZ
+on bottom       	Charcoal   	yes     	yes       	yes    	below  	brand arrow, buehne, bühne, farbebene, freisteller, shard*, velo_arrow
+bg              	Red        	yes     	yes       	yes    	below  	back, *background*, bgg, fond, hg, hintergrund*
 
 # <Name>: layer name; a dot prefix lets QuickExport optionally hide the layer during document export;
 # <Color>: layer color (defaults to Light Blue)
