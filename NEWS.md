@@ -1,3 +1,56 @@
+## What's new in ...
+
+(This is work in progress.)
+
+Simplified the folder scheme to only three categories (**Document**, **Objects** and **Other**), making it easier to navigate. Some scripts were renamed as follows:
+
+|Old name|New name|
+|:-|:-|
+|**DefaultPrefs**|**SetDefaultPrefs**|
+|**SplitSpreadsByLayers**|**SplitSpreadsByOptions**|
+
+### Document
+
+#### Assets
+
+- **SwatchesCleanup:**
+  - Unnamed colors were added by calling the menu **Add Unnamed Colors** by name, and this name varies with application language; fixed.
+
+#### Export
+
+- **QuickExport:**
+  - Changed default export profiles to `_LowRes` and `_HighRes`.
+  - When the user folder can't be detected (OneDrive anyone?), the settings are saved next to the script.
+  - The subfolder and date fields are now user editable.
+  - Allow `\` in subfolder names so you can use relative paths.
+  - Added an optionally file name prefix.
+  - The index of exported files will be incremented regardless of the file format.
+  - When manually inserting an out of bounds value for custom DPI or custom bleed the script will display an error message instead of resetting the value.
+  - Manually entered suffixes were not processed to remove text after `+`; fixed.
+
+#### Layout
+
+- `new` **GuidesCollect:**
+  - A new script that moves all document guides to the **.guides** layer
+
+- **MarkSafety/VisibleArea**, **PageSizeFromFilename:**
+  - By user request the visible and safety area markings will not overprint.
+
+#### Pagination
+
+- `new` **ShowOrHideOptions:**
+  - A new script that shows or hides option-specific layers (see below).
+
+- **SplitSpreadsByOptions:**
+  - `brk` No more hardcoded default option-specific layers! When your document have multiple options (such as languages), you can now use a colon (`:`) in layer names to specify them using this format: `<layer name>:<option>` – for example, **language: de_CH**, **language: fr_CH**, **language: it_CH** for Swiss German, French, and Italian options. Any number of these option layers are supported.
+
+### Objects
+
+#### Fit
+
+- **TextAutosize:**
+  - Color-filled text frames are now skipped.
+
 ## What's new in [24.8.15](https://github.com/pchiorean/Indentz/releases/tag/24.8.15)
 
 Long time no see – it's been over a year since the previous release. :( There are no major updates, though: there's one breaking change and three new scripts, some new features and many minor updates and bug fixes.
@@ -6,13 +59,13 @@ Also, since there are quite a lot of files, I've organized them into a new schem
 
 |Old name|New name|
 |:-|:-|
-|BreakLinkToStyles|RemoveStyles|
-|ClipUndo|ClipRelease|
-|DefaultLayers|AddLayers|
-|DefaultSwatches|AddSwatches|
-|FilesToSpreads|JoinDocs|
-|ReplaceSnippets|ReplaceTextSnippets|
-|SpreadsToFiles|SplitDocBySpreads|
+|**BreakLinkToStyles**|**RemoveStyles**|
+|**ClipUndo**|**ClipRelease**|
+|**DefaultLayers**|**AddLayers**|
+|**DefaultSwatches**|**AddSwatches**|
+|**FilesToSpreads**|**JoinDocs**|
+|**ReplaceSnippets**|**ReplaceTextSnippets**|
+|**SpreadsToFiles**|**SplitDocBySpreads**|
 
 ### Document
 
