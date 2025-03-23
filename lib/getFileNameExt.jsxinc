@@ -1,0 +1,3 @@
+function getFileName(/*string*/fn) { return (/\./g.test(fn) && fn.slice(0, fn.lastIndexOf('.'))) || fn; }
+
+function getFileExt(/*string*/fn) { return (/\./g.test(fn) && fn.slice(fn.lastIndexOf('.') + 1)) || ''; }
