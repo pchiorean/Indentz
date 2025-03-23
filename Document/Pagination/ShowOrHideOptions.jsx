@@ -1,5 +1,5 @@
 /*
-	Show/hide options 25.3.9
+	Show/hide options 25.3.23
 	(c) 2025 Paul Chiorean <jpeg@basement.ro>
 
 	Shows or hides option-specific layers.
@@ -60,16 +60,17 @@ function main() {
 		var ui = new Window('dialog { orientation: "column", margins: 16, spacing: 10, alignChildren: [ "fill", "top" ] }');
 		ui.text = 'Show/Hide Options';
 
-		ui.main = ui.add('panel { orientation: "column", margins: 10, preferredSize: [ 170, -1 ] }');
+		ui.main = ui.add('panel { orientation: "column", margins: 10, spacing: "5", preferredSize: [ 170, -1 ] }');
 		ui.main.alignChildren = [ 'fill', 'top' ];
 
 		for (i = 0; i < optionNames.length; i++) {
 			ui.main.layout[i] = ui.main.add('group { orientation: "row", preferredSize: [ -1, 24 ] }');
 			ui.main.layout[i].cb
 				= ui.main.layout[i].add('checkbox { alignment: "bottom", preferredSize: [ 15, -1 ] }');
+			ui.main.layout[i].cb.active = (i === 0);
 			ui.main.layout[i].cb.value = optionVisibility[optionNames[i]];
 			ui.main.layout[i].label
-				= ui.main.layout[i].add('edittext { text: "' + optionNames[i] + '", preferredSize: [ 120, -1 ], properties: { readonly: true } }');
+				= ui.main.layout[i].add('statictext { text: "' + optionNames[i] + '", preferredSize: [ 120, -1 ] }');
 		}
 
 		ui.actions = ui.add('group { orientation: "row", margins: [ -1, 4, -1, -1 ], alignChildren: [ "center", "center" ] }');
