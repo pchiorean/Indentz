@@ -16,7 +16,6 @@
 	[`upd`](https://github.com/pchiorean/Indentz/commit/b367fd693b575c705794e8dbde146a349f658031)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/8f88fbcb38b22333115dabe329eeb5dcb253ae6e)
 	**MarkSafety/VisibleArea, PageSizeFromFilename:** By user request the visible and safety area markings will not overprint
-
 - [`02/01`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-01&until=2025-02-01)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/19ddea0123c761cc9833a63b21d679882e3a1583)
 	**fitTo:** Also return the fitted items as array (d'oh!)
@@ -79,16 +78,26 @@
 	[`org`](https://github.com/pchiorean/Indentz/commit/9c5712977cc8cb1da313c2a5783341ff0974c36f)
 	[`ref`](https://github.com/pchiorean/Indentz/commit/da8163acf02e97450fae27abcf1a0ffd94b5ecba)
 	**DefaultPrefs** → **SetDefaultPrefs:** Renamed: added the verb to script name
+<!-- Not in NEWS -->
+- [`04/11`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-04-11&until=2025-04-11)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/28b8900e14dff194f3d60747863cbcea5981c78e)
+	**QuickExport:** When detecting unique file name, ignore source documents
+
+---
 
 ##### Queued
 
 - **QuickExport:**
   - [x] Sort files into subfolder: remove the `+` part after user input
   - [x] When detecting unique file name, ignore file extension
+  - [x] Fix: Ignore source documents when getting the unique name for output
+  - [ ] Fix: When skipping a document for missing links, it doesn't respect 'Save modified documents' on close
+  - [ ] Unlink the subfolder and the preset suffix: link it with the preset label
   - [ ] Check folder creation success
   - [ ] Sanitize filenames
   - [ ] Sync all help tips with the revised README
   - [ ] Restore layers state on cancel
+  - [ ] Progress bar: add a message while updating \[Converted\] documents
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
