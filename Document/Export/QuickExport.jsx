@@ -1,5 +1,5 @@
 /*
-	Quick export 25.3.2
+	Quick export 25.4.11
 	(c) 2021-2025 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -541,10 +541,11 @@ function QuickExport() {
 			function getUniquePath(/*string*/filename) {
 				var filesList, fileIndexRE, fileIndex, lastIndex, nextIndex;
 
-				// Get a list of files from the base folder and recursively from the destination folder
-				filesList = getFilesRecursively(Folder(baseFolder), false, undefined);
+				// Get a list of files from the base folder and recursively
+				// from the destination folder, excluding sources
+				filesList = getFilesRecursively(Folder(baseFolder), false, '(?!indd$)[^.]*');
 				if (destFolder !== baseFolder)
-					filesList = filesList.concat(getFilesRecursively(Folder(destFolder), true, undefined));
+					filesList = filesList.concat(getFilesRecursively(Folder(destFolder), true, '(?!indd$)[^.]*'));
 				if (filesList.length > 1) filesList = unique(filesList.sort(naturalSorter));
 
 				// Get the last index by matching 'filename [separator] ([previous index]) [stuff]
@@ -627,12 +628,12 @@ function QuickExport() {
 						= Math.min(app.pdfExportPreferences.bleedTop + 1, UnitValue('72 pt').as('mm'));
 				}
 
-				// Hack: Omit printer's marks if bleed is zero --
+				// Hack: Omit printer's marks if bleed is zero
 				// if ((doc.documentPreferences.documentBleedTopOffset
 				// 		+ doc.documentPreferences.documentBleedInsideOrLeftOffset
 				// 		+ doc.documentPreferences.documentBleedBottomOffset
 				// 		+ doc.documentPreferences.documentBleedOutsideOrRightOffset === 0)
-				// 		&& !app.pdfExportPreferences.includeSlugWithPDF) { // -- but not if user wants slug
+				// 		&& !app.pdfExportPreferences.includeSlugWithPDF) { // Include PM if user wants slug
 				// 	app.pdfExportPreferences.cropMarks = false;
 				// 	app.pdfExportPreferences.pageInformationMarks = false;
 				// }
