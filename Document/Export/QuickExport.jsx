@@ -74,11 +74,11 @@ function QuickExport() {
 		elapsed: 0
 	};
 
-	var VER = '5.0';
+	var VER = '5.1';
 	var defaults = {
 		workflow1: {
 			active: true,
-			label: 'For approval',
+			label: 'Approval',
 			presetName: '_LowRes',
 			presetOptions: {
 				cropMarks: true,
@@ -96,9 +96,9 @@ function QuickExport() {
 			},
 			outputOptions: {
 				destination: { active: false, value: '' },
-				prefix: { active: true, value: '' },
-				suffix: { active: true, value: '' },
-				sortInSubfolders: { active: true, value: '' },
+				prefix: { active: false, value: '' },
+				suffix: { active: true, value: 'LowRes' },
+				sortInSubfolders: { active: true, value: 'Approval' },
 				sortByDate: { active: true, value: '' },
 				split: false,
 				overwrite: false,
@@ -120,21 +120,21 @@ function QuickExport() {
 			},
 			docActions: {
 				updateLinks: true,
-				skipDNP: false,
+				skipDNP: true,
 				script: { active: false, value: '' }
 			},
 			outputOptions: {
 				destination: { active: false, value: '' },
-				prefix: { active: true, value: '' },
-				suffix: { active: true, value: '' },
-				sortInSubfolders: { active: true, value: '' },
-				sortByDate: { active: true, value: '' },
-				split: false,
-				overwrite: false,
-				docSave: { active: true, saveAs: false }
+				prefix: { active: false, value: '' },
+				suffix: { active: true, value: 'HighRes' },
+				sortInSubfolders: { active: true, value: 'Final' },
+				sortByDate: { active: false, value: '' },
+				split: true,
+				overwrite: true,
+				docSave: { active: true, saveAs: true }
 			}
 		},
-		updateVersion: false,
+		updateVersion: true,
 		docClose: true,
 		dnpLayers: 'covered area*'
 			+ '\nfold,falz'
@@ -806,11 +806,11 @@ function QuickExport() {
 					ui[workflow].suffix.et.text = /_/g.test(str) ? str.replace(/^.*_/, '') : '';
 					ui[workflow].suffix.isOn.onClick();
 
-					ui[workflow].sortInSubfolders.et.text
-						= /_/g.test(str)
-							? str.replace(/^.*_/, '').replace(/\+.*$/, '')
-							: '';
-					ui[workflow].sortInSubfolders.isOn.onClick();
+					// ui[workflow].sortInSubfolders.et.text
+					// 	= /_/g.test(str)
+					// 		? str.replace(/^.*_/, '').replace(/\+.*$/, '')
+					// 		: '';
+					// ui[workflow].sortInSubfolders.isOn.onClick();
 
 					this.helpTip = (function (/*pdfExportPreset*/preset) {
 						var msg = [];
