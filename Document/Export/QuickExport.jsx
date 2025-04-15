@@ -1,5 +1,5 @@
 /*
-	Quick export 25.4.11
+	Quick export 25.4.15
 	(c) 2021-2025 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -148,8 +148,8 @@ function QuickExport() {
 
 	// Resolve settings location: if user data folder is not detected (OneDrive?), fallback to script location
 	if (Folder.userData) {
-		if (!Folder(Folder.userData + '/.indentz/').exists) Folder(Folder.userData + '/.indentz/').create();
-		settingsFile = File(Folder.userData + '/.indentz/' + getFileName(script.name) + '.prefs');
+		if (!Folder(Folder.userData + '/Indentz/').exists) Folder(Folder.userData + '/Indentz/').create();
+		settingsFile = File(Folder.userData + '/Indentz/' + getFileName(script.name) + '.prefs');
 	} else {
 		settingsFile = File(getFileName(script.fullName) + '.prefs');
 	}
