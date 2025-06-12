@@ -1,5 +1,5 @@
 /*
-	Set default preferences 25.3.10
+	Set default preferences 25.6.6
 	(c) 2020-2025 Paul Chiorean <jpeg@basement.ro>
 
 	Sets default preferences.
@@ -52,7 +52,8 @@ app.doScript(function () {
 		documentPreferences: {
 			allowPageShuffle: false,
 			preserveLayoutWhenShuffling: true,
-			intent: DocumentIntentOptions.PRINT_INTENT
+			intent: DocumentIntentOptions.PRINT_INTENT,
+			overprintBlack: true
 		},
 		gridPreferences: {
 			baselineColor: [ 230, 230, 230 ]
