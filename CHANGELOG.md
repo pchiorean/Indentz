@@ -66,11 +66,11 @@
 	[`brk`](https://github.com/pchiorean/Indentz/commit/659b1b58d031e03bc650fd99031a96bc2e19bc5d)
 	[`ref`](https://github.com/pchiorean/Indentz/commit/477edb1762a45b12c43469b4d96f61a559c81db2)
 	[`org`](https://github.com/pchiorean/Indentz/commit/96e750ec8a68e6ee6f0743de5eca9d78989ad8a0)
-  **SplitSpreadsByLayers** → **SplitSpreadsByOptions:** No more hardcoded default option-specific layers! The options will now be detected from the layer name using this format: `<layer name>:<option>` (e.g., 'copy: de_CH')
+	**SplitSpreadsByLayers** → **SplitSpreadsByOptions:** No more hardcoded default option-specific layers! The options will now be detected from the layer name using this format: `<layer name>:<option>` (e.g., 'copy: de_CH')
 - [`03/09`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-09&until=2025-03-09)
 	[`new`](https://github.com/pchiorean/Indentz/commit/5d8cf0908ece6ab31fbc99d0b1225917c1bcb2cd)
-  [`new`](https://github.com/pchiorean/Indentz/commit/3d4b09d031f2896056c03e72bd83068560e1078f)
-  **ShowOrHideOptions:** Shows or hides option-specific layers, the options being detected from the layer name using this format: `<layer name>:<option>` (e.g., 'copy: de_CH')
+	[`new`](https://github.com/pchiorean/Indentz/commit/3d4b09d031f2896056c03e72bd83068560e1078f)
+	**ShowOrHideOptions:** Shows or hides option-specific layers, the options being detected from the layer name using this format: `<layer name>:<option>` (e.g., 'copy: de_CH')
 - [`03/09`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-09&until=2025-03-09)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/37cf63e9b03b3d133a85ff74c299828e920eccb2)
 	**SplitSpreadsByOptions:** Delete optionless spreads
@@ -82,22 +82,29 @@
 - [`04/11`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-04-11&until=2025-04-11)
 	[`fix`](https://github.com/pchiorean/Indentz/commit/28b8900e14dff194f3d60747863cbcea5981c78e)
 	**QuickExport:** When detecting unique file name, ignore source documents
+- [`04/15`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-04-15&until=2025-04-15)
+	[`ref`](https://github.com/pchiorean/Indentz/commit/03279a215b3d1bff1448627b1c830beaea07e83a)
+	**QuickExport:** Changed settings location to a visible folder
+- [`04/15`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-04-15&until=2025-04-15)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/fd46cf41ae30e4bae60a05ff7407c5b690560759)
+	**QuickExport:** The subfolder is no longer linked with the preset suffix; bumped settings version
+- [`06/06`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-06-06&until=2025-06-06)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/19e721ebeb914d48a39baf7e62cc6bd7f7f84776)
+	**SetDefaultPrefs:** Set `overprintBlack` to `true`
 
 ---
 
 ##### Queued
 
 - **QuickExport:**
-  - [x] Sort files into subfolder: remove the `+` part after user input
-  - [x] When detecting unique file name, ignore file extension
-  - [x] Fix: Ignore source documents when getting the unique name for output
   - [ ] Fix: When skipping a document for missing links, it doesn't respect 'Save modified documents' on close
-  - [ ] Unlink the subfolder and the preset suffix: link it with the preset label
   - [ ] Check folder creation success
   - [ ] Sanitize filenames
   - [ ] Sync all help tips with the revised README
   - [ ] Restore layers state on cancel
   - [ ] Progress bar: add a message while updating \[Converted\] documents
+- **SplitDocBySpreads:**
+  - [ ] Fix: assets' order is mangled
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -1041,7 +1048,7 @@
 - `new` **ShowFonts** → **DumpFonts**
 - `new` **SpreadsToLayers**
 - `new` **lib/replaceLink:** Add page parameter
-- `new` Add an '.ini' file for user global settings
+- `new` Add an '.ini' file for user global settings (see mpv.conf)
 
 ##### Updates
 
