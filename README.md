@@ -2,9 +2,9 @@
 
 This is a collection of InDesign scripts that I use to improve my DTP workflow, which often involves repetitive, tedious, or time-consuming tasks. Designed primarily for single-page documents rather than long, text-heavy ones, these simple scripts run with minimal user interaction (except for essential warnings) and are designed to be triggered via [keyboard shortcuts](https://creativepro.com/assigning-keyboard-shortcuts-scripts/). Tested in Adobe InDesign CC 2020–2025 on Mac.
 
-I'm a graphic designer, not a programmer (I started doing this at the beginning of the Covid-19 pandemic), so be prepared for bugs and oversights (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
+I'm a graphic designer, not a programmer (I started doing this at the beginning of the Covid-19 pandemic), so be prepared for some bugs and oversights (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
-## Preamble
+## Preliminaries
 
 Most scripts require at least one open document, and some require at least one object to be selected.
 
@@ -13,10 +13,10 @@ Most scripts require at least one open document, and some require at least one o
 These TSV data files can have several non-standard features that will confuse Excel et al.:
 
 - Blank lines are ignored; everything after a `#` is ignored (comments);
-- The fields can be visually aligned with spaces that will be ignored at processing (I use [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) to work with TSVs);
-- A very long line can be broken into multiple lines with a backslash (`\`) added at the end of each segment;
+- Fields can be visually aligned using spaces that will be ignored during processing (I use [VS Code](https://code.visualstudio.com) with [Rainbow CSV](https://marketplace.visualstudio.com/items?itemName=mechatroner.rainbow-csv) to work with TSVs);
+- A very long line can be split across multiple lines by adding a backslash (`\`) at the end of each segment;
 - A line may also be a directive:
-  - **`@includepath`** `base/path/` – sets a base path for subsequent **`@include`** directives with relative paths; the path may be absolute or relative to the data file folder;
+  - **`@includepath`** `base/path/` – sets a base path for subsequent `@include` directives with relative paths; the path may be absolute or relative to the data file folder;
   - **`@include`** `path/to/another.tsv` – includes another TSV file at this position; the path may be absolute or relative to the data file folder (or to a `base/path/` set previously);
   - **`@defaults`** – includes the _default_ data file (see above).
 
@@ -26,9 +26,9 @@ These TSV data files can have several non-standard features that will confuse Ex
 
 </details>
 
-**Visible area** or **Safety area:** These are frames that I use to visually mark the visible part of a layout or its safety/type area; several scripts take them into account for some actions. The frames can be created manually (just name them **\<visible area\>** or **\<safety area\>**), or can be automatically generated from the document name or page margins (more details below). The [**Export**](#export) section contains scripts that can show or hide these frames.
+**Visible area** or **Safety area:** These are frames used to visually mark the visible part of a layout or its safety/type area; several scripts use them as reference for certain actions. The frames can be created manually (simply name them **\<visible area\>** or **\<safety area\>**), or automatically generated from the document name or page margins (details below). Some scripts in the [**Export**](#export) section can show or hide these frames.
 
-**Libs:** Many scripts use dynamically linked functions from **`lib/`**, which means that the folder structure should be preserved after downloading the repository. If you download [releases](https://github.com/pchiorean/Indentz/releases)[^1] (which are statically linked), you can use every script stand-alone.
+**Libs:** Many scripts use dynamically linked functions from `lib/`, so the folder structure should be maintained after downloading the repository. If you download [releases](https://github.com/pchiorean/Indentz/releases)[^1] (which are statically linked), you can use each script independently.
 
 The scripts are organized into three categories based on their scope: document/spread/page-level, object-level, and miscellaneous, making it easier to navigate through the large number of files.
 
@@ -56,7 +56,7 @@ Adds a set of layers defined in a 7-columns [TSV data file](#tsv) named `layers.
 
 **Legend:**
 
-- **Name**: Layer name; a dot prefix lets [QuickExport](#quickexport) optionally hide the layer during document export;
+- **Name**: Layer name; a dot prefix lets [**QuickExport**](#quickexport) optionally hide the layer during document export;
 - **Color**: Layer color (defaults to `Light Blue`);
 - **Visible**: `yes` or `no` (defaults to `yes`);
 - **Printable**: `yes` or `no` (defaults to `yes`);
@@ -65,7 +65,7 @@ Adds a set of layers defined in a 7-columns [TSV data file](#tsv) named `layers.
 - **Variants**: A list of layers separated by commas that will be merged with the base layer; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters).
 
 💡 **Tips:**
-- You can use [**`DumpLayers`**](#dumplayers) to save a tab delimited list of swatches from the active document.
+- You can use [**DumpLayers**](#dumplayers) to save a tab delimited list of swatches from the active document.
 - The script will display a report if run while holding down the **Ctrl** key.
 
 #### **AddSwatches**
@@ -100,7 +100,7 @@ Every swatch automatically gets three implicit variants: its lowercase name (thi
 all document swatches named **rich black** (and all case variations), **C=60 M=40 Y=40 K=100**, or **c60m40y40k100** will be merged with **Rich Black**.
 
 💡 **Tips:**
-- You can use [**`DumpSwatches`**](#dumpswatches) to save a tab delimited list of swatches from the active document.
+- You can use [**DumpSwatches**](#dumpswatches) to save a tab delimited list of swatches from the active document.
 - The script will display a report if run while holding down the **Ctrl** key.
 
 #### **ReplaceFonts**
@@ -114,7 +114,7 @@ Replaces document fonts using a 4-columns [TSV data file](#tsv) named `fonts.tsv
 | ...             |         |                    |         |
 
 💡 **Tips:**
-- You can use [**`ShowFonts`**](#showfonts) to get a tab delimited list of document fonts.
+- You can use [**ShowFonts**](#showfonts) to get a tab delimited list of document fonts.
 - The script will display a report if run while holding down the **Ctrl** key.
 
 #### **ReplaceLinks**
@@ -138,13 +138,13 @@ Replaces document links using a 2-columns [TSV data file](#tsv) named `links.tsv
   - An absolute path of the form `/absolute/path/to/img1.psd`;
   - A relative path which is:
     - relative by default to the document **`Links`** folder (e.g., `img2.psd`);
-    - relative to the `base/path/` defined by a previous **`@includepath`** directive (e.g., `img3.psd` and `subfolder/img4.psd`).
-- **Links:** A list of file names separated by commas, that if present in the document, will be replaced with the link from the first column; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters). The script will also automatically match the _file names_ from the first column, so **Links** can be empty – e.g., if `img4.psd` appears in the document, it will be replaced by the one in `subfolder/` (which is actually `base/path/subfolder/`, because the **`@includepath`** above it redefines the base path).
+    - relative to the `base/path/` defined by a previous `@includepath` directive (e.g., `img3.psd` and `subfolder/img4.psd`).
+- **Links:** A list of file names separated by commas, that if present in the document, will be replaced with the link from the first column; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters). The script will also automatically match the _file names_ from the first column, so **Links** can be empty – e.g., if `img4.psd` appears in the document, it will be replaced by the one in `subfolder/` (which is actually `base/path/subfolder/`, because the `@includepath` above it redefines the base path).
 
-**Warning:** If a file name contains commas you must quote it.
+⚠️ **Warning:** If a file name contains commas you must quote it.
 
 💡 **Tips:**
-- You can use [**`DumpLinks`**](#dumplinks) to save a list of links from the active document.
+- You can use [**DumpLinks**](#dumplinks) to save a list of links from the active document.
 - The script will display a report if run while holding down the **Ctrl** key.
 
 #### **ReplaceTextSnippets**
@@ -175,19 +175,19 @@ Replaces a list of text snippets using a 5-columns [TSV data file](#tsv) named `
 
 #### **ResetLayers**
 
-Resets the visible/printable/locked state of the document layers using the same data file used by [**`AddLayers`**](#addlayers).
+Resets the visible/printable/locked state of the document layers using the same data file used by [**AddLayers**](#addlayers).
 
 #### **DumpLayers**
 
-Saves a TSV file compatible with [**`AddLayers`**](#addlayers) containing the names and properties of the active document layers.
+Saves a TSV file compatible with [**AddLayers**](#addlayers) containing the names and properties of the active document layers.
 
 #### **DumpLinks**
 
-Saves a TSV file compatible with [**`ReplaceLinks`**](#replacelinks) containing the links of the active document.
+Saves a TSV file compatible with [**ReplaceLinks**](#replacelinks) containing the links of the active document.
 
 #### **DumpSwatches**
 
-Saves a TSV file compatible with [**`AddSwatches`**](#addswatches) containing the names and properties of the active document swatches.
+Saves a TSV file compatible with [**AddSwatches**](#addswatches) containing the names and properties of the active document swatches.
 
 ---
 
@@ -199,7 +199,7 @@ _Document export and related._
 
 ⌘ _Suggested shortcut:_ ⌃E
 
-Batch exports all open **.indd** documents or all documents from a selected folder using up to two customizable PDF presets. While Peter Kahrel's [**Batch Convert**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script is like a 'Swiss Army knife' export tool, this script is specifically designed to streamline workflows that need frequent PDF setting adjustments. It reduces the tedious clicking through multiple tabs and options in InDesign's native export dialog. (It also gave me a great opportunity to explore [ScriptUI](https://extendscript.docsforadobe.dev/user-interface-tools/scriptui-programming-model.html) development ;)).
+Batch exports all open `.indd` documents or all documents from a selected folder using up to two customizable PDF presets. While Peter Kahrel's [**Batch Convert**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script is like a 'Swiss Army knife' export tool, this script is specifically designed to streamline workflows that need frequent PDF setting adjustments. It reduces the tedious clicking through multiple tabs and options in InDesign's native export dialog. (It also gave me a great opportunity to explore [ScriptUI](https://extendscript.docsforadobe.dev/user-interface-tools/scriptui-programming-model.html) development 😉).
 
 ![Quick export](.img/script-quickexport.png)
 ![](.img/script-quickexport-legend.svg)
@@ -218,7 +218,7 @@ Two workflows are available, with options organized into several categories:
 
 - **Update out of date links**: Updates all modified links before export.
 
-- **Skip do-not-print layers:** Excludes layers whose names start with a dot or hyphen (like **.safety area**) and layers from the default _do-not-print_ list (see [**`DNPLayersHide`**](#dnplayersshow-and-dnplayershide) below). You can modify this list using the **Edit list** button.
+- **Skip do-not-print layers:** Excludes layers whose names start with a dot or hyphen (like **.safety area**) and layers from the default _do-not-print_ list (see [**DNPLayersHide**](#dnplayersshow-and-dnplayershide) below). You can modify this list using the **Edit list** button.
 
 - **Run a script**: Executes a JavaScript or AppleScript before export – e.g., one of the other scripts from this section.
 
@@ -228,10 +228,12 @@ Two workflows are available, with options organized into several categories:
 
 - **Prepend a prefix:** Prepends this text to the exported file names.
 
-- **Append a suffix:** Appends this text to the exported file names.\
+- **Append a suffix:** Appends this text to the exported file names.
+
   💡 **Tip:** You can attach a suffix to a preset by including it after the _last_ underscore. For example, selecting preset `X4_350dpi_39L300_HighRes` will automatically set the suffix to `HighRes`.
 
-- **Sort files into subfolder:** Exports files into a subfolder of the selected output location. It defaults to the current suffix.\
+- **Sort files into subfolder:** Exports files into a subfolder of the selected output location. It defaults to the current suffix.
+
   ⚠️ **Warning:** The text following a `+` is ignored (e.g., `HighRes+Diecut` becomes `HighRes`).
 
 - **Sort files by date into**: Exports files into a subfolder named `MM.DD` (month.day). It defaults to the current date.
@@ -256,7 +258,7 @@ Two workflows are available, with options organized into several categories:
 
 Hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers (see below). Additionally, it moves all page objects from **varnish**, **uv**, **foil**, **silver** and **white** to separate spreads and labels the spreads.
 
-💡 **Tip:** The script is designed to be run with [**`QuickExport`**](#quickexport).
+💡 **Tip:** The script is designed to be run with [**QuickExport**](#quickexport).
 
 #### **DNPLayersShow** and **DNPLayersHide**
 Shows or hides all layers starting with either a dot or a hyphen, plus a hard-coded list of _do-not-print_ layers:
@@ -267,7 +269,7 @@ Shows or hides all layers starting with either a dot or a hyphen, plus a hard-co
 - **fold, falz**
 - **guides, grid, masuratori**
 
-💡 **Tip:** The scripts are designed to be run with [**`QuickExport`**](#quickexport).
+💡 **Tip:** The scripts are designed to be run with [**QuickExport**](#quickexport).
 
 ---
 
@@ -322,7 +324,7 @@ Many scripts in this collection assume these settings as defaults because they s
 
 Performs a sequence of actions designed to bring the document to an approximately 'clean' state:
 
-- Sets default preferences by running [**`SetDefaultPrefs`**](#setdefaultprefs);
+- Sets default preferences by running [**SetDefaultPrefs**](#setdefaultprefs);
 - Unlocks all objects and resets their scaling to 100%;
 - Deletes hidden objects (after confirmation);
 - Deletes empty frames (after confirmation);
@@ -385,7 +387,7 @@ Shows all color profiles available to InDesign.
 
 Shows properties and methods of a selected object for debugging purposes.
 
-Inspired by [**showProps()**](https://github.com/grefel/indesignjs/blob/710e237354a44782d36a0fdd98866abb5845728d/Allgemeine_Skripte/EigenschaftenAnzeigen.jsx#L11) by Gregor Fellenz and [**pub.inspect()**](https://github.com/basiljs/basil.js/blob/23b60f16f3088ae9df624d6d9a52a890114fcae0/src/includes/environment.js#L722) from **basil.js**.
+Inspired by [**showProps()**](https://github.com/grefel/indesignjs/blob/710e237354a44782d36a0fdd98866abb5845728d/Allgemeine_Skripte/EigenschaftenAnzeigen.jsx#L11) by Gregor Fellenz and [**pub.inspect()**](https://github.com/basiljs/basil.js/blob/23b60f16f3088ae9df624d6d9a52a890114fcae0/src/includes/environment.js#L722) from [**basil.js**](https://basiljs2.netlify.app).
 
 ---
 
@@ -413,13 +415,13 @@ Deletes all guides from the document.
 
 Creates a frame around the page margins that visually marks the _safety area_ of a page. It's a stroked frame named **\<safety area\>** on the **.safety area** layer. It uses an existing **Safety area** swatch or creates one with R=0 G=180 B=255.
 
-💡 **Tip:** This script is designed to be run with [**`QuickExport`**](#quickexport).
+💡 **Tip:** This script is designed to be run with [**QuickExport**](#quickexport).
 
 #### **MarkVisibleArea**
 
 Creates a frame around the page margins that visually marks the _visible area_ of a page. It's a stroked frame named **\<visible area\>** on the **.visible area** layer. It uses an existing **Visible area** swatch or creates one with R=255 G=180 B=0.
 
-💡 **Tip:** This script is designed to be run with [**`QuickExport`**](#quickexport).
+💡 **Tip:** This script is designed to be run with [**QuickExport**](#quickexport).
 
 #### **PageMarginsFromScriptName**
 
@@ -643,11 +645,11 @@ These scripts reframe selected objects to fit the target area specified in the s
 
 Simple rectangles and lines are directly reframed. Rotated objects, ovals, groups etc. are placed in clipping frames. Only clipped objects, straight frames, and lines will be extended. Frames with embedded content are limited to their content boundaries.
 
-**Example:** Running **`FitToPageBleed`** with the following frames selected will extend the yellow one and will reduce the red one to the page bleed:
+**Example:** Running **FitToPageBleed** with the following frames selected will extend the yellow one and will reduce the red one to the page bleed:
 
 ![Example](.img/fit.png)
 
-The **`*Forced`** variants simply reframe the objects to the target area.
+The **\*Forced** variants simply reframe the objects to the target area.
 
 #### **TextAutosize**
 
@@ -706,7 +708,7 @@ _Scale selected objects to a target area._
 
 Scales all selected objects as a group to match the target area specified in the script name (page size, margins, or spread bleed).
 
-**`*H`** and **`*W`** variants scale to the height or width of their target.
+**\*H** and **\*W** variants scale to the height or width of their target.
 
 ---
 
@@ -744,13 +746,13 @@ Adds a QR code on each spread of the active document (outside _visible area_, if
 |:-----------------------------------:|:--------------------------------:|
 | ![QR on document](.img/qr-ondoc.png) | ![QR on file](.img/qr-onfile.png) |
 
-When the document name ends with a separator (space, dot, underscore, or hyphen) and a sequence of characters matching the number of spreads (a _suffix_), each generated file will include its corresponding character. For example, **`Document_ABC.indd`** with three spreads will create **`Document_A_QR.pdf`**, **`Document_B_QR.pdf`**, and **`Document_C_QR.pdf`**.
+When the document name ends with a separator (space, dot, underscore, or hyphen) and a sequence of characters matching the number of spreads (a _suffix_), each generated file will include its corresponding character. For example, `Document_ABC.indd` with three spreads will create `Document_A_QR.pdf`, `Document_B_QR.pdf`, and `Document_C_QR.pdf`.
 
 💡 **Tip:** The script does a decent job breaking the label into multiple lines, but you can use `|` to insert manual line breaks.
 
 #### **QRBatch**
 
-Does the same thing as **`QR`** but in a non-interactive way: retrieves a list of codes from a TSV data file named **`qr.tsv`** ([sample](Samples/qr.tsv)) and adds them to existing documents, or creates separate files (the suffix thingy applies here as well):
+Does the same thing as **QR** but in a non-interactive way: retrieves a list of codes from a TSV data file named `qr.tsv` ([sample](Samples/qr.tsv)) and adds them to existing documents, or creates separate files (the suffix thingy applies here as well):
 
 | File name          | Code   | On doc |
 |:-------------------|:-------|:------:|
@@ -788,8 +790,8 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: March 10, 2025
+Last updated: April 8, 2025
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 
-[^2]: The value is configurable by editing the constant `SNAP_PCT` from `fitTo()`.
+[^2]: The value is configurable by editing the constant `SNAP_PCT` from **fitTo()**.
