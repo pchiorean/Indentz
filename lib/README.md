@@ -352,6 +352,18 @@ Author: [kennebec](https://stackoverflow.com/users/80860/kennebec) | [Source](ht
 
 ---
 
+## overrideMasterItems(_spread_)
+
+Overrides master items on all pages of a given spread.
+
+**Parameters:**
+
+|Name|Type|Description|
+|:--:|:--:|--|
+|`spread`|`object`|The target spread.|
+
+---
+
 ## parseDataFile(_dataFile_) ⇒ \{Object\}
 
 Reads a TSV (tab-separated-values) file.

@@ -337,6 +337,10 @@ Performs a sequence of actions designed to bring the document to an approximatel
 - Turns off URLs auto-updating;
 - Sets the pasteboard margins.
 
+#### **OverrideMasterItems**
+
+Overrides master items on all pages.
+
 #### **RemoveScriptLabels**
 
 Sometimes objects that have a script label attached are reused, which may create problems later. The script deletes the labels of the selected objects, or all objects in the document if nothing is selected.
@@ -790,7 +794,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: April 8, 2025
+Last updated: July 12, 2025
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 
