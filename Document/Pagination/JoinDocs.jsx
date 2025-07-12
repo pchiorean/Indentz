@@ -1,8 +1,8 @@
 /*
-	Join documents 24.6.16
-	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
+	Join documents 25.7.12
+	(c) 2020-2025 Paul Chiorean <jpeg@basement.ro>
 
-	Combines the open documents, sorted alphabetically.
+	Combines all open documents, sorted alphabetically.
 
 	Released under MIT License:
 	https://choosealicense.com/licenses/mit/
@@ -10,42 +10,59 @@
 
 // @includepath '.;./lib;../lib;../../lib';
 // @include 'naturalSorter.jsxinc';
+// @include 'overrideMasterItems.jsxinc';
 
 if (app.documents.length < 2) exit();
 
-var target, doc, name, s, ss;
-var docs = [];
-var names = [];
-var old = {
-	APS: undefined,
-	UIL: app.scriptPreferences.userInteractionLevel
-};
-app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Join documents');
 
-// Get a sorted document list
-docs = app.documents.everyItem().getElements();
-while ((doc = docs.shift())) try { names.push(doc.fullName); } catch (e) { names.push(doc.name); }
-names.sort(naturalSorter);
-docs = [];
-while ((name = names.shift())) docs.push(app.documents.itemByName(name));
+function main() {
+	var target, doc, docName, spread;
+	var docs = [];
+	var docNames = [];
+	var spreads = [];
+	var old = {
+		APS: undefined,
+		MU: app.scriptPreferences.measurementUnit,
+		UIL: app.scriptPreferences.userInteractionLevel
+	};
+	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
 
-// Disable page shuffle and join spreads
-target = docs.shift();
-old.APS = target.documentPreferences.allowPageShuffle;
-target.documentPreferences.allowPageShuffle = false;
-while ((doc = docs.shift())) {
-	ss = doc.spreads.everyItem().getElements();
-	while ((s = ss.shift())) s.duplicate(LocationOptions.AT_END, target);
-	doc.close(SaveOptions.ASK);
+	// Get a sorted document list
+	docs = app.documents.everyItem().getElements();
+	while ((doc = docs.shift())) try { docNames.push(doc.fullName); } catch (e) { docNames.push(doc.name); }
+	docNames.sort(naturalSorter);
+	docs = [];
+	while ((docName = docNames.shift())) docs.push(app.documents.itemByName(docName));
+
+	// Prepare the first document as target
+	target = docs.shift();
+	target.layers.everyItem().properties = { locked: false };
+	old.APS = target.documentPreferences.allowPageShuffle;
+	target.documentPreferences.allowPageShuffle = false;
+	spreads = target.spreads.everyItem().getElements();
+	while ((spread = spreads.shift())) overrideMasterItems(spread);
+
+	// Collect spreads from other documents
+	while ((doc = docs.shift())) {
+		doc.layers.everyItem().properties = { locked: false };
+		spreads = doc.spreads.everyItem().getElements();
+		while ((spread = spreads.shift())) {
+			overrideMasterItems(spread);
+			spread.duplicate(LocationOptions.AT_END, target);
+		}
+		doc.close(SaveOptions.ASK);
+	}
+
+	// Reset page numbering
+	spreads = target.sections.everyItem().getElements();
+	spread = spreads.shift();
+	spread.continueNumbering = false;
+	spread.pageNumberStart = 1;
+	while ((spread = spreads.shift())) { spread.continueNumbering = true; spread.remove(); }
+
+	// Restore settings
+	target.documentPreferences.allowPageShuffle = old.APS;
+	app.scriptPreferences.measurementUnit = old.MU;
+	app.scriptPreferences.userInteractionLevel = old.UIL;
 }
-
-// Reset page numbering
-ss = target.sections.everyItem().getElements();
-s = ss.shift();
-s.continueNumbering = false;
-s.pageNumberStart = 1;
-while ((s = ss.shift())) { s.continueNumbering = true; s.remove(); }
-
-// Restore settings
-target.documentPreferences.allowPageShuffle = old.APS;
-app.scriptPreferences.userInteractionLevel = old.UIL;
