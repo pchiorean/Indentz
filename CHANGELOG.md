@@ -91,20 +91,33 @@
 - [`06/06`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-06-06&until=2025-06-06)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/19e721ebeb914d48a39baf7e62cc6bd7f7f84776)
 	**SetDefaultPrefs:** Set `overprintBlack` to `true`
+- [`07/12`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-07-12&until=2025-07-12)
+	[`new`](https://github.com/pchiorean/Indentz/commit/d1e5ab64450ae57f3f5804940e1184dd2fa7cc63)
+	**lib/overrideMasterItems:** Override master items on every page of a given spread
+- [`07/12`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-07-12&until=2025-07-12)
+	[`new`](https://github.com/pchiorean/Indentz/commit/d1e5ab64450ae57f3f5804940e1184dd2fa7cc63)
+	**OverrideMasterItems:** Override master items on every page
+- [`07/12`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-07-12&until=2025-07-12)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/858004d6f7417ff0efa60f193bc78a2f3a2a5448)
+	**JoinDocs:** Override master items on every page before joining
 
 ---
 
 ##### Queued
 
 - **QuickExport:**
-  - [ ] Fix: When skipping a document for missing links, it doesn't respect 'Save modified documents' on close
+  - [ ] Fix: When skipping a document for missing links, it doesn't respect 'Save modified documents' on close[^1]
+  - [ ] Fix: Restore layers state on cancel[^1]
   - [ ] Check folder creation success
   - [ ] Sanitize filenames
   - [ ] Sync all help tips with the revised README
-  - [ ] Restore layers state on cancel
-  - [ ] Progress bar: add a message while updating \[Converted\] documents
+  - [ ] Progress bar: add a message while updating converted documents
 - **SplitDocBySpreads:**
-  - [ ] Fix: assets' order is mangled
+  - [ ] Fix: Assets' order is mangled
+- **DocCleanup:**
+  - [ ] Change units to points when doc dimensions are in pixels
+
+[^1]: Wrap the execution in a `try/finally` so cleaning always runs, even on early returns or exceptions, rather than calling it manually at each return point
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
