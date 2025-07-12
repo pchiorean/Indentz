@@ -1,0 +1,24 @@
+function overrideMasterItems(spread) {
+	var page, oItem, oldC, newC, i, j;
+	var mItems = [];
+
+	for (i = 0; i < spread.pages.length; i++) {
+		mItems = [];
+		page = spread.pages[i];
+
+		for (j = 0; j < page.masterPageItems.length; j++) mItems.push(page.masterPageItems[j]);
+		if (mItems.length === 0) continue;
+
+		for (j = 0; j < mItems.length; j++) {
+			try {
+				oldC = mItems[j].resolve(AnchorPoint.CENTER_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
+				oItem = mItems[j].override(page);
+				oItem.locked = false;
+				newC = oItem.resolve(AnchorPoint.CENTER_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
+				oItem.move(undefined, [ oldC[0][0] - newC[0][0], oldC[0][1] - newC[0][1] ]);
+				newC = oItem.resolve(AnchorPoint.CENTER_ANCHOR, CoordinateSpaces.SPREAD_COORDINATES);
+			} catch (e) { }
+		}
+		page.appliedMaster = NothingEnum.NOTHING;
+	}
+}
