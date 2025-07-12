@@ -38,13 +38,14 @@ Name                             |     Fn | Description
 **GuidesCollect**                |        | Moves all guides to the '.guides' layer
 **GuidesDelete**                 |        | Deletes all guides from the document
 **HideDNPLayers**                |        | Hides _do not print_ layers
-**JoinDocs**                     |   ⇧⌘F7 | Combines the open documents, sorted alphabetically
+**JoinDocs**                     |   ⇧⌘F7 | Combines all open documents, sorted alphabetically
 **LabelPage**                    |        | Adds a custom label on the current page's slug
 **LabelPageRatios**              |        | Adds a label with the page/visible area/margins' ratios on each page's slug
 **LayersToSpreads**              |        | Moves layers of the active document to separate spreads
 **MarkSafetyArea**               |        | Creates on each page a 'safety area' frame the size of the page margins
 **MarkVisibleArea**              |        | Creates on each page a 'visible area' frame the size of the page margins
 **OffsetPaths**                  |        | Uses InDesign's text wrap feature to create offset/inset paths
+**OverrideMasterItems**          |        | Overrides master items on all pages
 **PageMarginsFromScriptName**    |        | Sets page margins and HW from the script name
 **PageMarginsFromSelection**     |    ⌥F3 | Sets the page margins to the selected objects bounds
 **PageSizeFromFilename**         |     F3 | Sets every page size and margins according to the file name
