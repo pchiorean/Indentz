@@ -1,5 +1,5 @@
 /*
-	Split/join spreads by options 25.3.9
+	Split/join spreads by options 25.7.14
 	(c) 2025 Paul Chiorean <jpeg@basement.ro>
 
 	Splits or joins document spreads by option-specific layers.
@@ -90,7 +90,7 @@ function main() {
 				items = getPageItems('<*>', doc, layer.name);
 				if (items.length === 0) continue; // Skip empty layers
 				items = getPageItems('<*>', items[0].parentPage.parent, layer.name);
-				while ((item = items.shift())) try { item.duplicate(doc.spreads[0]); item.remove(); } catch (_) {}
+				while ((item = items.pop())) try { item.duplicate(doc.spreads[0]); item.remove(); } catch (_) {}
 			}
 		}
 
