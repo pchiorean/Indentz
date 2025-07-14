@@ -20,36 +20,48 @@ Simplified the folder scheme to only three categories (**Document**, **Objects**
 
 - **QuickExport:**
   - Changed default export profiles to `_LowRes` and `_HighRes`.
-  - When the user folder can't be detected (OneDrive anyone?), the settings are saved next to the script.
-  - The subfolder and date fields are now user editable.
+  - The settings folder is no longer hidden; also, when the user folder can't be detected (OneDrive, anyone?), settings are saved alongside the script.
+  - The subfolder and date fields are now user-editable.
   - Allow `\` in subfolder names so you can use relative paths.
-  - Added an optionally file name prefix.
-  - The index of exported files will be incremented regardless of the file format.
-  - When manually inserting an out of bounds value for custom DPI or custom bleed the script will display an error message instead of resetting the value.
-  - Manually entered suffixes were not processed to remove text after `+`; fixed.
+  - The subfolder is no longer linked to the preset suffix.
+  - Added an optional filename prefix.
+  - The index of exported files now increments for formats other than PDF (but ignores source documents).
+  - When manually entering an out-of-bounds value for custom DPI or custom bleed, the script displays an error message instead of resetting the value.
+  - Manually entered suffixes weren't processed to remove text after `+`; fixed.
+
+#### Housekeeping
+
+- `new` **OverrideMasterItems:**
+  - A new script that overrides master items on every page.
+
+- **SetDefaultPrefs:**
+  - Set **Appearance of Black** to overprint '[Black]' swatch at 100%.
 
 #### Layout
 
 - `new` **GuidesCollect:**
-  - A new script that moves all document guides to the **.guides** layer
+  - A new script that moves all document guides to the **.guides** layer.
 
 - **MarkSafety/VisibleArea**, **PageSizeFromFilename:**
-  - By user request the visible and safety area markings will not overprint.
+  - By user request the visible and safety area markings will not overprint anymore.
 
 #### Pagination
+
+- **JoinDocs:**
+  - Before joining open documents, all master items will be overriden on every page.
 
 - `new` **ShowOrHideOptions:**
   - A new script that shows or hides option-specific layers (see below).
 
 - **SplitSpreadsByOptions:**
-  - `brk` No more hardcoded default option-specific layers! When your document have multiple options (such as languages), you can now use a colon (`:`) in layer names to specify them using this format: `<layer name>:<option>` – for example, **language: de_CH**, **language: fr_CH**, **language: it_CH** for Swiss German, French, and Italian options. Any number of these option layers are supported.
+  - `brk` Option-specific layers are now detected by their layer names. When your document has multiple options (such as languages), you can use a colon (`:`) in layer names to specify them with this format: `<layer name>:<option>` – for example, **language:de_CH**, **language:fr_CH**, **language:it_CH** for Swiss German, French, and Italian options. Any number of option layers is supported.
 
 ### Objects
 
 #### Fit
 
 - **TextAutosize:**
-  - Color-filled text frames are now skipped.
+  - Text frames with color fill applied are now skipped.
 
 ## What's new in [24.8.15](https://github.com/pchiorean/Indentz/releases/tag/24.8.15)
 
@@ -96,11 +108,11 @@ Also, since there are quite a lot of files, I've organized them into a new schem
 #### Export
 
 - **QuickExport:**
-  - `new` Added an option to sort exported files in subfolders by date; the index added to the file names when **Overwrite existing files** is disabled takes these subfolders into account.
+  - `new` Added an option to sort exported files in subfolders by date; the index added to the filenames when **Overwrite existing files** is disabled takes these subfolders into account.
   - `new` Added an elapsed time report when the export takes longer than 9 seconds.
-  - When you export with a preset whose name ends with '_print', the exported file name will have all visible and printable layers beginning with '+' appended to the suffix (for example, if there is a visible and printable layer named '+varnish', the exported file name will have the suffix '_print+varnish').
+  - When you export with a preset whose name ends with '_print', the exported filename will have all visible and printable layers beginning with '+' appended to the suffix (for example, if there is a visible and printable layer named '+varnish', the exported filename will have the suffix '_print+varnish').
   - The options for updating documents were simplified to just **Save** and **Save as**.
-  - When **Add a suffix** was disabled, it ignored **Sort files into subfolders by suffix**. This is fixed: you can sort by suffix without adding it to the file names.
+  - When **Add a suffix** was disabled, it ignored **Sort files into subfolders by suffix**. This is fixed: you can sort by suffix without adding it to the filenames.
   - Skip export when fonts are missing; skip export when links are set to be updated but are missing.
   - Fixed aborting the export when 'Escape' was detected.
   - Small additional fixes and some improvements to error reports.
@@ -179,7 +191,7 @@ Also, since there are quite a lot of files, I've organized them into a new schem
   - Placing code failed when target frames were already populated; fixed.
 
 - **QR:**
-  - The code text now defaults to the file name.
+  - The code text now defaults to the filename.
 
 - **QR, QRBatch:**
   - Fixed document path detection for '[Converted]' documents.
@@ -355,14 +367,14 @@ For other fixes and improvements not mentioned here see the full [changelog](htt
 - **PrepareForExport:** Dielines are no longer moved to separate page.
 
 ### File
-- **SpreadsToFiles:** `new` Added a custom positioning placeholder character – if the file name contains a `#`, the index will be placed in that position.
+- **SpreadsToFiles:** `new` Added a custom positioning placeholder character – if the filename contains a `#`, the index will be placed in that position.
 
 ### Fit
 - Protected the `<visible area>` frames and items on `dielines` layer from reframing (they *will* reframe in enforced mode).
 
 ### Other
 - Added a button for saving the reports to file.
-- Relaxed the list of invalid file name characters (`<` `>` `:` `"` `\` `/` `\` `|` `?` `*`).
+- Relaxed the list of invalid filename characters (`<` `>` `:` `"` `\` `/` `\` `|` `?` `*`).
 - Enforced straight corners to new rectangles and text frames.
 - Added an `#includepath` directive with a list of fallback folders.
 
