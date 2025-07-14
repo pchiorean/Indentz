@@ -1,5 +1,5 @@
 /*
-	Quick export 25.4.15
+	Quick export 25.7.14
 	(c) 2021-2025 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -683,7 +683,7 @@ function QuickExport() {
 						ui[workflow].slugArea = ui[workflow].po.c1.add('checkbox { text: "Include slug area", preferredSize: [ -1, 24 ] }');
 					ui[workflow].po.c2 = ui[workflow].po.add('group { orientation: "column", spacing: 5, alignChildren: [ "left", "top" ] }');
 						ui[workflow].asSpreads = ui[workflow].po.c2.add('checkbox { text: "Export as spreads" }');
-						ui[workflow].asSpreads.helpTip = 'Exports pages together as if they\nwere printed on the same sheet';
+						ui[workflow].asSpreads.helpTip = 'Export pages together as if they\nwere printed on the same sheet';
 						ui[workflow].customDPI = ui[workflow].po.c2.add('group { orientation: "row" }');
 							ui[workflow].customDPI.isOn = ui[workflow].customDPI.add('checkbox { text: "Custom DPI:", alignment: "bottom", preferredSize: [ 104, -1 ] }');
 							ui[workflow].customDPI.isOn.helpTip = 'Override profile resolution';
@@ -693,21 +693,21 @@ function QuickExport() {
 							ui[workflow].customBleed.isOn.helpTip = 'Override document bleed';
 							ui[workflow].customBleed.et = ui[workflow].customBleed.add('edittext { characters: 4, justify: "center", preferredSize: [ 45, 24 ] }');
 				ui[workflow].exportLayers = ui[workflow].container.add('checkbox { text: "Create Acrobat layers" }');
-				ui[workflow].exportLayers.helpTip = 'Saves each InDesign layer as an Acrobat layer\nwithin the PDF (available for PDF 1.5 or later)';
+				ui[workflow].exportLayers.helpTip = 'Save each InDesign layer as an Acrobat layer\nwithin the PDF (available for PDF 1.5 or later)';
 
 				// Document actions
 				ui[workflow].container.add('panel { alignment: "fill" }');
 				ui[workflow].updateLinks = ui[workflow].container.add('checkbox { text: "Update out of date links" }');
 				ui[workflow].skipDNP = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, -5 ] }');
 					ui[workflow].skipDNP.isOn = ui[workflow].skipDNP.add('checkbox { text: "Skip do-not-print layers", alignment: "bottom" }');
-					ui[workflow].skipDNP.isOn.helpTip = 'Layers with names beginning with a dot or a hyphen\n(e.g., \'.safety area\') can be automatically skipped';
+					ui[workflow].skipDNP.isOn.helpTip = 'Exclude layers whose names start with\na dot or hyphen (e.g., \'.safety area\') and\nlayers from the do-not-print layers list';
 					ui[workflow].skipDNP.add('group').preferredSize.width = ui.cWidth - 245;
 					ui[workflow].skipDNP.editList = ui[workflow].skipDNP.add('button { text: "Edit list", preferredSize: [ 64, 24 ] }');
 					ui[workflow].skipDNP.editList.helpTip = 'Edit do-not-print layers list';
 				ui[workflow].script = ui[workflow].container.add('group { orientation: "column", alignChildren: [ "left", "top" ] }');
 					ui[workflow].script._ = ui[workflow].script.add('group { orientation: "row", margins: [ 0, 0, 0, -5 ] }');
 						ui[workflow].script.isOn = ui[workflow].script._.add('checkbox { text: "Run a script:", alignment: "bottom" }');
-						ui[workflow].script.isOn.helpTip = 'Run a JavaScript or AppleScript before exporting';
+						ui[workflow].script.isOn.helpTip = 'Run a JavaScript or AppleScript\nbefore exporting';
 						ui[workflow].script._.add('group').preferredSize.width = ui.cWidth - 176;
 						ui[workflow].script.browse = ui[workflow].script._.add('button { text: "Browse", preferredSize: [ 64, 24 ] }');
 					ui[workflow].script.file = ui[workflow].script.add('edittext');
@@ -718,14 +718,14 @@ function QuickExport() {
 				ui[workflow].destination = ui[workflow].container.add('group { orientation: "column", alignChildren: [ "left", "top" ] }');
 					ui[workflow].destination._ = ui[workflow].destination.add('group { orientation: "row", margins: [ 0, 0, 0, -5 ] }');
 						ui[workflow].destination.isOn = ui[workflow].destination._.add('checkbox { text: "Export in a custom folder:", alignment: "bottom" }');
-						ui[workflow].destination.isOn.helpTip = 'By default the files are exported in the same folder as\nthe source document, but you can choose a custom one';
+						ui[workflow].destination.isOn.helpTip = 'Choose a different output\nlocation instead of the default\nsource document folder';
 						ui[workflow].destination._.add('group').preferredSize.width = ui.cWidth - 254;
 						ui[workflow].destination.browse = ui[workflow].destination._.add('button { text: "Browse", preferredSize: [ 64, 24 ] }');
 					ui[workflow].destination.folder = ui[workflow].destination.add('edittext');
 					ui[workflow].destination.folder.preferredSize = [ ui.cWidth, 24 ];
 				ui[workflow].prefix = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, 0 ] }');
 					ui[workflow].prefix.isOn = ui[workflow].prefix.add('checkbox { text: "Prepend a prefix:", alignment: "bottom", preferredSize: [ 164, -1 ] }');
-					ui[workflow].prefix.isOn.helpTip = 'Prepend a prefix to the exported filename';
+					ui[workflow].prefix.isOn.helpTip = 'Prepend a text to the exported filenames';
 					ui[workflow].prefix.et = ui[workflow].prefix.add('edittext { preferredSize: [ 120, 24 ] }');
 					ui[workflow].prefix.et.helpTip = 'Prepend this text to the exported filename';
 				ui[workflow].suffix = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, 0 ] }');
@@ -735,14 +735,14 @@ function QuickExport() {
 					ui[workflow].suffix.et.helpTip = 'Append this text to the exported filename';
 				ui[workflow].sortInSubfolders = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, 0 ] }');
 					ui[workflow].sortInSubfolders.isOn = ui[workflow].sortInSubfolders.add('checkbox { text: "Sort files into subfolder:", alignment: "bottom", preferredSize: [ 164, -1 ] }');
-					ui[workflow].sortInSubfolders.isOn.helpTip = 'Export files into subfolders';
+					ui[workflow].sortInSubfolders.isOn.helpTip = 'Export files into subfolders\nof the selected output location';
 					ui[workflow].sortInSubfolders.et = ui[workflow].sortInSubfolders.add('edittext { preferredSize: [ 120, 24 ] }');
-					ui[workflow].sortInSubfolders.et.helpTip = 'Export files into this subfolder\nNote: everything after a \'+\' is ignored';
+					ui[workflow].sortInSubfolders.et.helpTip = 'Export files into this subfolder.\nNote: everything after \'+\' is ignored';
 				ui[workflow].sortByDate = ui[workflow].container.add('group { orientation: "row", margins: [ 0, -5, 0, 0 ] }');
 					ui[workflow].sortByDate.isOn = ui[workflow].sortByDate.add('checkbox { text: "Sort files by date into:", alignment: "bottom", preferredSize: [ 164, -1 ] }');
-					ui[workflow].sortByDate.isOn.helpTip = 'Export files into subfolders by date (\'MM.DD\')';
+					ui[workflow].sortByDate.isOn.helpTip = 'Export files into subfolders\nby date (\'MM.DD\')';
 					ui[workflow].sortByDate.et = ui[workflow].sortByDate.add('edittext { preferredSize: [ 46, 24 ] }');
-					ui[workflow].sortByDate.et.helpTip = 'MM.DD, where MM: 01\u201312; DD: 01\u201331';
+					ui[workflow].sortByDate.et.helpTip = 'MM.DD\nMM: 01\u201312\nDD: 01\u201331';
 					ui[workflow].sortByDate.et.text = time.MMDD;
 					ui[workflow].sortByDate.now = ui[workflow].sortByDate.add('button { text: "Today", preferredSize: [ 64, 24 ] }');
 					ui[workflow].sortByDate.now.helpTip = 'Reset to today';
@@ -1352,11 +1352,11 @@ function QuickExport() {
 		// Actions
 		ui.actions = ui.add('group { orientation: "row", alignChildren: [ "left", "center" ], margins: [ -1, 4, -1, -1 ] }');
 			ui.actions.updateVersion = ui.actions.add('checkbox { text: "Upgrade [Converted] documents", alignment: "bottom" }');
-			ui.actions.updateVersion.helpTip = 'Automatically upgrade [Converted] documents\n(if unchecked, they will be skipped)';
+			ui.actions.updateVersion.helpTip = 'Automatically upgrade [Converted] documents\n(if unchecked, these will be skipped)';
 			ui.actions.docClose = ui.actions.add('checkbox { text: "Close documents after export", alignment: "bottom" }');
 			ui.actions.docClose.value = true;
 			ui.actions.docClose.enabled = !isFolderMode;
-			if (isFolderMode) ui.actions.docClose.helpTip = 'In batch folder mode documents are always closed after export';
+			if (isFolderMode) ui.actions.docClose.helpTip = 'In batch folder mode documents\nare always closed after export';
 			ui.actions.add('group').preferredSize.width = ui.wWidth - 598;
 				ui.actions.add('button { text: "Cancel", preferredSize: [ 80, 24 ], properties: { name: "cancel" } }');
 				ui.actions.ok = ui.actions.add('button { text: "Start", preferredSize: [ 80, 24 ], properties: { name: "ok" } }');
@@ -1459,7 +1459,7 @@ function QuickExport() {
 							: 'Folder not found';
 					}
 				} else { // Using documents folders
-					ui[workflow].destination.folder.helpTip = 'Using documents folders';
+					ui[workflow].destination.folder.helpTip = '';
 				}
 			}
 
