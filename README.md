@@ -139,9 +139,9 @@ Replaces document links using a 2-columns [TSV data file](#tsv) named `links.tsv
   - A relative path which is:
     - relative by default to the document **`Links`** folder (e.g., `img2.psd`);
     - relative to the `base/path/` defined by a previous `@includepath` directive (e.g., `img3.psd` and `subfolder/img4.psd`).
-- **Links:** A list of file names separated by commas, that if present in the document, will be replaced with the link from the first column; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters). The script will also automatically match the _file names_ from the first column, so **Links** can be empty – e.g., if `img4.psd` appears in the document, it will be replaced by the one in `subfolder/` (which is actually `base/path/subfolder/`, because the `@includepath` above it redefines the base path).
+- **Links:** A list of filenames separated by commas, that if present in the document, will be replaced with the link from the first column; it's case insensitive and can take simple wildcards (`?` for exactly one character and `*` for zero or more characters). The script will also automatically match the _filenames_ from the first column, so **Links** can be empty – e.g., if `img4.psd` appears in the document, it will be replaced by the one in `subfolder/` (which is actually `base/path/subfolder/`, because the `@includepath` above it redefines the base path).
 
-⚠️ **Warning:** If a file name contains commas you must quote it.
+⚠️ **Warning:** If a filename contains commas you must quote it.
 
 💡 **Tips:**
 - You can use [**DumpLinks**](#dumplinks) to save a list of links from the active document.
@@ -226,9 +226,9 @@ Two workflows are available, with options organized into several categories:
 
 - **Export in a custom folder:** Choose a different output location instead of the default source document folder.
 
-- **Prepend a prefix:** Prepends this text to the exported file names.
+- **Prepend a prefix:** Prepends this text to the exported filenames.
 
-- **Append a suffix:** Appends this text to the exported file names.
+- **Append a suffix:** Appends this text to the exported filenames.
 
   💡 **Tip:** You can attach a suffix to a preset by including it after the _last_ underscore. For example, selecting preset `X4_350dpi_39L300_HighRes` will automatically set the suffix to `HighRes`.
 
@@ -456,7 +456,7 @@ Sets the current page margins from the selected objects.
 
 Adjusts page size, margins, and bleed based on the document name. It also creates a stroked frame named **\<visible area\>** around page margins on the **.visible area** layer. Uses an existing **Visible area** swatch or creates one with R=255 G=180 B=0.
 
-It works with file names structured like this:
+It works with filenames structured like this:
 
     <Name>_<Total size WxH>[_<Visible area WxH>][_<Bleed>].indd
 
@@ -466,7 +466,7 @@ Dimensions use `WxH` format (e.g., `000x000`, where `000` represents one or more
 
 **Example:**
 
-| File name                                       | Total size | Visible area | Bleed |
+| Filename                                        | Total size | Visible area | Bleed |
 |:------------------------------------------------|:-----------|:-------------|:------|
 | **Document1\_315x55\.indd**                     | 315×55     | –            | –     |
 | **Document2\_1400x400\_700x137mm\.indd**        | 1400×400   | 700×137      | –     |
@@ -504,7 +504,7 @@ Saves each spread of the active document to a separate file.
 
 When a document name ends with a _separator_ (space, dot, underscore, or hyphen) followed by characters matching the number of spreads, each split file will include the corresponding character in its name. For example, `Document_ABC.indd` with three spreads becomes `Document_A.indd`, `Document_B.indd`, and `Document_C.indd`. If no sequence is detected, you'll be prompted to provide one.
 
-💡 **Tip:** The index is added to the end of the file name by default, but placing a `#` anywhere in the file name determines where the index will appear instead.
+💡 **Tip:** The index is added to the end of the filename by default, but placing a `#` anywhere in the filename determines where the index will appear instead.
 
 #### **ShowOrHideOptions**
 
@@ -758,7 +758,7 @@ When the document name ends with a separator (space, dot, underscore, or hyphen)
 
 Does the same thing as **QR** but in a non-interactive way: retrieves a list of codes from a TSV data file named `qr.tsv` ([sample](Samples/qr.tsv)) and adds them to existing documents, or creates separate files (the suffix thingy applies here as well):
 
-| File name          | Code   | On doc |
+| Filename           | Code   | On doc |
 |:-------------------|:-------|:------:|
 | **Document 1**     | Code 1 |   +    |
 | **Document 2_ABC** | Code 2 |   +    |
@@ -767,7 +767,7 @@ Does the same thing as **QR** but in a non-interactive way: retrieves a list of 
 
 **Legend:**
 
-- **File name**: document name;
+- **Filename**: document name;
 - **Code**: any string;
 - **On doc**: any string: on existing document; empty or missing: on separate file.
 

@@ -373,7 +373,7 @@ Reads a TSV (tab-separated-values) file.
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
 |`dataFile`|`File`||A tab-separated-values file (object).|
-|`[defaultName]`|`string`\|`string[]`||The default data file name, or an array of file names (used by `@defaults`).|
+|`[defaultName]`|`string`\|`string[]`||The default data filename, or an array of filenames (used by `@defaults`).|
 
 These data files are regular TSVs with several non-standard features:
 
@@ -495,7 +495,7 @@ Gets the first occurrence of a file from a list of predefined folders.
 
 |Name|Type|Default|Description|
 |:--:|:--:|:--:|--|
-|`file`|`string`||A file name.|
+|`file`|`string`||A filename.|
 |`[skipLocal]`|`boolean`|false|If `true`, don't search locally. _(Optional)_|
 
 **Returns:**

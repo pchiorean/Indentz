@@ -11,9 +11,9 @@ subfolder/img4.psd
 #   - relative (by default) to the document `Links` folder
 #   - relative to `base/path/` defined by a previous `@includepath` directive
 #     (`img3.psd` and `subfolder/img4.psd`)
-# <Links>: A list of file names separated by commas, that if present in the document, will be
+# <Links>: A list of filenames separated by commas, that if present in the document, will be
 # replaced with the link from the first column; it's case insensitive and can take simple
-# wildcards (`?` and `*`). The script will also automatically match the file names from the
+# wildcards (`?` and `*`). The script will also automatically match the filenames from the
 # first column, thus 'Links' can be empty.
 #
 # The TSV file must be saved locally (in the active document folder or its parent) or as a global

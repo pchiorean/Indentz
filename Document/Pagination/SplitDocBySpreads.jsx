@@ -83,8 +83,8 @@ doc.close(SaveOptions.ASK);
 function templateFromUser(str) {
 	if (!str) str = detectedTemplate || defaultTemplate;
 	str = prompt('Please enter an index list.\nThe first character is the separator, the rest will be '
-		+ 'added sequentially to each file name; for example \'-123\' will split a 3-spreads document into\n\n'
-		+ 'Document-1.indd\nDocument-2.indd\nDocument-3.indd\n\nIf the file name contains a "#", the index '
+		+ 'added sequentially to each filename; for example \'-123\' will split a 3-spreads document into\n\n'
+		+ 'Document-1.indd\nDocument-2.indd\nDocument-3.indd\n\nIf the filename contains a "#", the index '
 		+ 'will be placed in that position (the separator is ignored).', str);
 	if (!str) exit();
 

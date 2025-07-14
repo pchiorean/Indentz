@@ -18,9 +18,9 @@
 	  - relative (by default) to the document `Links` folder
 	  - relative to `reference/path/` defined by a previous `@includepath` directive
 	    (`img3.psd` and `subfolder/img4.psd`)
-	<Links>: A list of file names separated by commas, that if present in the document, will be
+	<Links>: A list of filenames separated by commas, that if present in the document, will be
 	replaced with the link from the first column; it's case insensitive and can take simple
-	wildcards (`?` and `*`). The script will also automatically match the file names from the
+	wildcards (`?` and `*`). The script will also automatically match the filenames from the
 	first column, thus 'Links' can be empty.
 
 	The TSV file must be saved locally (in the active document folder or its parent) or as a global
@@ -147,7 +147,7 @@ function main() {
 	 * @author Paul Chiorean <jpeg@basement.ro>
 	 * @license MIT
 	 * @param {File} dataFile - A tab-separated-values file (object).
-	 * @param {(string|string[])} [defaultName] - Default data file name, or an array of file names (used for `@defaults`).
+	 * @param {(string|string[])} [defaultName] - Default data filename, or an array of filenames (used for `@defaults`).
 	 * @returns {{ header: [], data: [ { record: [], source: [] }, {}, ... ], errors: [] }}
 	 */
 	function parseDataFile(dataFile, defaultName) {
@@ -253,7 +253,7 @@ function main() {
 	 * @version 23.4.2
 	 * @author Paul Chiorean <jpeg@basement.ro>
 	 * @license MIT
-	 * @param {(string|string[])} name - The file name, or an array of file names.
+	 * @param {(string|string[])} name - The filename, or an array of filenames.
 	 * @param {boolean} [skipLocal=false] - If `true`, don't search locally.
 	 * @returns {File|void} - File object if found, else `undefined`.
 	 */

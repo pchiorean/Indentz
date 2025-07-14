@@ -7,7 +7,7 @@
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
  * @param {File} dataFile - A tab-separated-values file (object).
- * @param {(string|string[])} [defaultName] - Default data file name, or an array of file names (used for `@defaults`).
+ * @param {(string|string[])} [defaultName] - Default data filename, or an array of filenames (used for `@defaults`).
  * @returns {{ header: [], data: [ { record: [], source: [] }, {}, ... ], errors: [] }}
  */
 
@@ -108,7 +108,7 @@ function parseDataFile(dataFile, defaultName) {
  * @version 23.4.2
  * @author Paul Chiorean <jpeg@basement.ro>
  * @license MIT
- * @param {(string|string[])} name - The file name, or an array of file names.
+ * @param {(string|string[])} name - The filename, or an array of filenames.
  * @param {boolean} [skipLocal=false] - If `true`, don't search locally.
  * @returns {File|void} - File object if found, else `undefined`.
  */

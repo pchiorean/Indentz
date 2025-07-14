@@ -48,7 +48,7 @@ Name                             |     Fn | Description
 **OverrideMasterItems**          |        | Overrides master items on all pages
 **PageMarginsFromScriptName**    |        | Sets page margins and HW from the script name
 **PageMarginsFromSelection**     |    ⌥F3 | Sets the page margins to the selected objects bounds
-**PageSizeFromFilename**         |     F3 | Sets every page size and margins according to the file name
+**PageSizeFromFilename**         |     F3 | Sets every page size and margins according to the filename
 **PageSizeFromMargins**          |        | Sets the page size to the page margins
 **PageSizeFromSelection**        |    ⇧F3 | Sets the page size to the selected objects bounds
 **PrepareForExport**             |        | Hides some layers and moves objects with special colors to separate spreads

@@ -1,8 +1,8 @@
 /*
-	Page size from file name 24.12.3
+	Page size from filename 24.12.3
 	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
 
-	Sets every page size and margins according to the file name.
+	Sets every page size and margins according to the filename.
 	It looks for patterns like 000x000 (page size) or 000x000_000x000 (page size_page margins).
 
 	Released under MIT License:

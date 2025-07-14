@@ -152,7 +152,7 @@ function main() {
 				if (!isEmpty && !isComment && !isHeader) {
 					if (record[0]) {
 						if ((fC = record[0].match(invalidFilenameCharsRE))) {
-							stat(status, 'Line ' + line, 'Forbidden characters in file name: \''
+							stat(status, 'Line ' + line, 'Forbidden characters in filename: \''
 								+ fC.join('\', \'') + '\'.', 1);
 						}
 						if (!/\.indd$/i.test(record[0])) record[0] += '.indd';
@@ -160,7 +160,7 @@ function main() {
 							stat(status, 'Line ' + line, "File '" + record[0] + "' not found.", -1);
 						if (!record[1]) stat(status, 'Line ' + line, 'Missing code.', -1);
 						pbWidth = Math.max(pbWidth, record[0].length);
-					} else { stat(status, 'Line ' + line, ': Missing file name.', -1); }
+					} else { stat(status, 'Line ' + line, ': Missing filename.', -1); }
 					if (status.length === 0) validLines.push(line);
 				}
 				rawData.push({
