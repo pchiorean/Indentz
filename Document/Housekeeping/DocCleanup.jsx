@@ -1,5 +1,5 @@
 ﻿/*
-	Document cleanup 25.3.10
+	Document cleanup 25.7.28
 	(c) 2020-2025 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
@@ -14,7 +14,7 @@ if (!(doc = app.activeDocument)) exit();
 // @include 'progressBar.jsxinc';
 
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
-var progressBar = new ProgressBar('Cleaning document', 14);
+var progressBar = new ProgressBar('Cleaning document', 15);
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 
 progressBar.update();
@@ -32,7 +32,7 @@ app.doScript(function () {
 	hyperLinksPanel.visible = oldHLP;
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.ENTIRE_SCRIPT, 'Turn off auto update URLs');
+UndoModes.ENTIRE_SCRIPT, 'Turn off Auto update URLs');
 
 progressBar.update();
 app.doScript(function () {
@@ -82,7 +82,7 @@ app.doScript(function () {
 	if ((menu = app.menuActions.item('$ID/Clear All Transparency')).enabled) menu.invoke();
 },
 ScriptLanguage.JAVASCRIPT, undefined,
-UndoModes.ENTIRE_SCRIPT, 'Clear default effects');
+UndoModes.ENTIRE_SCRIPT, 'Clear transparency effects');
 
 progressBar.update();
 app.doScript(function () {
@@ -129,7 +129,7 @@ app.doScript(function () {
 			&& item.strokeColor.name === 'None'
 			&& item.strokeWeight === 0
 			// Skip dielines
-			&& (item.itemLayer !== '+dielines' || item.itemLayer !== 'dielines')
+			&& (!/dielines|die\s?cut/i.test(item.itemLayer.name))
 		) item.contentType = ContentType.GRAPHIC_TYPE;
 	}
 },
@@ -160,6 +160,37 @@ UndoModes.ENTIRE_SCRIPT, 'Delete empty spreads');
 
 progressBar.update();
 doc.textPreferences.showInvisibles = false;
+
+progressBar.update();
+
+app.doScript(function () {
+	var docName = (/\./g.test(doc.name) && doc.name.slice(0, doc.name.lastIndexOf('.'))) || doc.name;
+	var unitsRE = /[ _-]\s*\d+(?:[.,]\d+)?\s*x\s*\d+(?:[.,]\d+)?\s*([cm]m|px)?/i;
+	var dimensions = docName.match(unitsRE);
+
+	if (dimensions == null) return;
+	switch (dimensions[1]) {
+		case 'cm':
+			doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.CENTIMETERS;
+			doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.CENTIMETERS;
+			break;
+		case 'mm':
+			doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.MILLIMETERS;
+			doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.MILLIMETERS;
+			break;
+		case 'in':
+			doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.INCHES;
+			doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.INCHES;
+			break;
+		case 'pt':
+		case 'px':
+			doc.viewPreferences.horizontalMeasurementUnits = MeasurementUnits.POINTS;
+			doc.viewPreferences.verticalMeasurementUnits = MeasurementUnits.POINTS;
+			break;
+	}
+},
+ScriptLanguage.JAVASCRIPT, undefined,
+UndoModes.ENTIRE_SCRIPT, 'Set document units');
 
 progressBar.update();
 app.doScript(function () {
