@@ -220,7 +220,7 @@ Two workflows are available, with options organized into several categories:
 
 - **Skip do-not-print layers:** Excludes layers whose names start with a dot or hyphen (like **.safety area**) and layers from the default _do-not-print_ list (see [**DNPLayersHide**](#dnplayersshow-and-dnplayershide) below). You can modify this list using the **Edit list** button.
 
-- **Run a script**: Executes a JavaScript or AppleScript before export – e.g., one of the other scripts from this section.
+- **Run a script**: Runs a JavaScript or AppleScript before export – e.g., one of the other scripts from this section.
 
 **Output options:**
 
@@ -232,7 +232,9 @@ Two workflows are available, with options organized into several categories:
 
   💡 **Tip:** You can attach a suffix to a preset by including it after the _last_ underscore. For example, selecting preset `X4_350dpi_39L300_HighRes` will automatically set the suffix to `HighRes`.
 
-- **Sort files into subfolder:** Exports files into a subfolder of the selected output location. It defaults to the current suffix.
+- **Sort files into subfolder:** Exports files into a subfolder of the selected output location.
+
+  💡 **Tip:** You can use [relative paths](https://web.archive.org/web/20250315113948/https://www.lenovo.com/us/en/glossary/relative-path/) for the subfolder.
 
   ⚠️ **Warning:** The text following a `+` is ignored (e.g., `HighRes+Diecut` becomes `HighRes`).
 
@@ -305,6 +307,7 @@ Many scripts in this collection assume these settings as defaults because they s
 > **Preferences ‣ Units & Increments ‣ Other Units:** Stroke: Points\
 > **Preferences ‣ Grids:** Baseline Grid Color: R=230 G=230 B=230\
 > **Preferences ‣ Guides & Pasteboard:** Preview Background Color: Light Gray\
+> **Preferences ‣ Appereance of Black:** Overprint [Black] Swatch at 100%\
 > **Edit ‣ Transparency Blend Space:** Document CMYK\
 > **View:** Show Rulers\
 > **View ‣ Extras:** Show Frame Edges\
@@ -335,6 +338,7 @@ Performs a sequence of actions designed to bring the document to an approximatel
 - Resets the visible/printable/locked status of layers;
 - Hides 'invisible' characters;
 - Turns off URLs auto-updating;
+- Sets document units from the filename;
 - Sets the pasteboard margins.
 
 #### **OverrideMasterItems**
@@ -510,19 +514,19 @@ When a document name ends with a _separator_ (space, dot, underscore, or hyphen)
 
 ⌘ _Suggested shortcut:_ ⌘F7
 
-When your document have multiple options (such as languages), you can use a colon (`:`) in layer names to specify them – for example, **copy: de_CH**, **copy: fr_CH**, **copy: it_CH** for Swiss German, French, and Italian options. Any number of these option layers are supported.
-
-This script shows or hides the option-specific layers:
+Your document may have multiple option-specific layers (e.g., for different languages). This script shows or hides those option-specific layers:
 
 ![Show/Hide Options](.img/script-showhideoptions.png)
+
+The options are autodetected from layer names; just use a colon (`:`) to specify them with this format: `<layer name>:<option>` – for example, **language:de_CH**, **language:fr_CH**, **language:it_CH** for Swiss German, French, and Italian options.
 
 #### **SplitSpreadsByOptions**
 
 ⌘ _Suggested shortcut:_ ⌥⌘F7
 
-When your document have multiple options (such as languages), you can use a colon (`:`) in layer names to specify them – for example, **copy: de_CH**, **copy: fr_CH**, **copy: it_CH** for Swiss German, French, and Italian options. Any number of these option layers are supported.
+Your document may have multiple option-specific layers (e.g., for different languages). This script splits document spreads by these options, creating individual spreads for each one, or combines them by merging them into a single spread (just run the script repeatedly).
 
-This script splits document spreads based on these options (creating individual spreads with items from their corresponding option) or combines them (merging items from separate spreads into their respective layers within a combined spread). Only the option-specific layers are modified.
+The options are autodetected from layer names; just use a colon (`:`) to specify them with this format: `<layer name>:<option>` – for example, **language:de_CH**, **language:fr_CH**, **language:it_CH** for Swiss German, French, and Italian options.
 
 ---
 
@@ -738,9 +742,9 @@ It has two operating modes:
 
 - With no selection: creates a new document, placing one barcode per page (like the original script);
 
-- With objects selected: places barcodes sequentially into selected objects. If only one barcode is provided, it's applied to all selected objects.
+- With objects selected: inserts barcodes sequentially into selected objects. If only one barcode is provided, it's used for all selected objects.
 
-Enter either one barcode number (8 or 13 digits) or a list of numbers. For add-ons, append a hyphen followed by 2 or 5 additional digits.
+Enter either one barcode (8 or 13 digits) or a list of numbers. For add-ons, append a hyphen followed by 2 or 5 additional digits.
 
 #### **QR**
 
@@ -794,7 +798,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: July 12, 2025
+Last updated: July 28, 2025
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 
