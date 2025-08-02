@@ -14,28 +14,30 @@ Simplified the folder scheme to only three categories (**Document**, **Objects**
 #### Assets
 
 - **SwatchesCleanup:**
-  - Unnamed colors were added by calling the menu **Add Unnamed Colors** by name, and this name varies with application language; fixed.
+  - Unnamed colors were added by calling the menu **Add Unnamed Colors** by name, which varies depending on the application language; fixed.
 
 #### Export
 
 - **QuickExport:**
-  - Changed default export profiles to `_LowRes` and `_HighRes`.
+  - Changed default export profiles to **_LowRes** and **_HighRes**.
   - The settings folder is no longer hidden; also, when the user folder can't be detected (OneDrive, anyone?), settings are saved alongside the script.
-  - The subfolder and date fields are now user-editable.
-  - Allow `\` in subfolder names so you can use relative paths.
-  - The subfolder is no longer linked to the preset suffix.
   - Added an optional filename prefix.
+  - The subfolder and date fields are now user-editable (tip: you can use relative paths for the subfolder).
   - The index of exported files now increments for formats other than PDF (but ignores source documents).
   - When manually entering an out-of-bounds value for custom DPI or custom bleed, the script displays an error message instead of resetting the value.
-  - Manually entered suffixes weren't processed to remove text after `+`; fixed.
+  - Manually entered suffixes weren't processed to remove text after '+'; fixed.
 
 #### Housekeeping
+
+- **DocCleanup:**
+  - Sets document units if they are specified in the filename ('pt', 'px', 'mm', 'cm' and 'in').
+  - Empty frames on the dielines layers were converted to graphic frames; fixed.
 
 - `new` **OverrideMasterItems:**
   - A new script that overrides master items on every page.
 
 - **SetDefaultPrefs:**
-  - Set **Appearance of Black** to overprint '[Black]' swatch at 100%.
+  - Sets **Appearance of Black** to overprint '[Black]' swatch at 100%.
 
 #### Layout
 
@@ -54,7 +56,7 @@ Simplified the folder scheme to only three categories (**Document**, **Objects**
   - A new script that shows or hides option-specific layers (see below).
 
 - **SplitSpreadsByOptions:**
-  - `brk` Option-specific layers are now detected by their layer names. When your document has multiple options (such as languages), you can use a colon (`:`) in layer names to specify them with this format: `<layer name>:<option>` – for example, **language:de_CH**, **language:fr_CH**, **language:it_CH** for Swiss German, French, and Italian options. Any number of option layers is supported.
+  - `brk` You can now have any number of option-specific layers (e.g., layers for different languages). These options are autodetected from layer names; just use a colon (':') to add them with this format: `<layer name>:<option>` – for example, **language:de_CH**, **language:fr_CH**, **language:it_CH** for Swiss German, French, and Italian options.
 
 ### Objects
 
