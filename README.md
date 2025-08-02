@@ -518,7 +518,7 @@ Your document may have multiple option-specific layers (e.g., for different lang
 
 ![Show/Hide Options](.img/script-showhideoptions.png)
 
-The options are autodetected from layer names; just use a colon (`:`) to specify them with this format: `<layer name>:<option>` – for example, **language:de_CH**, **language:fr_CH**, **language:it_CH** for Swiss German, French, and Italian options.
+The options are autodetected from layer names; just use a colon (`:`) to specify them with this format: `<layer name>:<option>` – for example, **language: de_CH**, **language: fr_CH**, **language: it_CH** for Swiss German, French, and Italian options.
 
 #### **SplitSpreadsByOptions**
 
@@ -526,7 +526,7 @@ The options are autodetected from layer names; just use a colon (`:`) to specify
 
 Your document may have multiple option-specific layers (e.g., for different languages). This script splits document spreads by these options, creating individual spreads for each one, or combines them by merging them into a single spread (just run the script repeatedly).
 
-The options are autodetected from layer names; just use a colon (`:`) to specify them with this format: `<layer name>:<option>` – for example, **language:de_CH**, **language:fr_CH**, **language:it_CH** for Swiss German, French, and Italian options.
+The options are autodetected from layer names; just use a colon (`:`) to specify them with this format: `<layer name>:<option>` – for example, **language: de_CH**, **language: fr_CH**, **language: it_CH** for Swiss German, French, and Italian options.
 
 ---
 
@@ -798,7 +798,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: July 28, 2025
+Last updated: August 2, 2025
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 
