@@ -49,13 +49,13 @@
 	**SplitSpreadsByLayers:** Added 'EN' to the list of default layers
 - [`03/02`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-02&until=2025-03-02)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/6a259a0c928ece418a158cb135db3eb579847b6c)
-	**QuickExport:** When detecting unique file name, ignore file extension
+	**QuickExport:** When detecting unique filenames, ignore file extension
 - [`03/02`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-02&until=2025-03-02)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/440a9fd03b0887dd033c6ac80a5457d12ee5a23b)
 	**QuickExport:** Add alerts for custom DPI and custom bleed out of bounds values
 - [`03/02`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-02&until=2025-03-02)
 	[`fix`](https://github.com/pchiorean/Indentz/commit/cfe64c66dd2a1fcdfce1e30ced5e1b0998174f09)
-	**QuickExport:** Fixed file name detection when the file has no extension
+	**QuickExport:** Fixed filename detection when the file has no extension
 - [`03/02`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-03-02&until=2025-03-02)
 	[`brk`](https://github.com/pchiorean/Indentz/commit/f9e07b5ab7e3b5bd3c930742c551fa7853351723)
 	**QuickExport:** Added a prefix field
@@ -78,17 +78,16 @@
 	[`org`](https://github.com/pchiorean/Indentz/commit/9c5712977cc8cb1da313c2a5783341ff0974c36f)
 	[`ref`](https://github.com/pchiorean/Indentz/commit/da8163acf02e97450fae27abcf1a0ffd94b5ecba)
 	**DefaultPrefs** → **SetDefaultPrefs:** Renamed: added the verb to script name
-<!-- Not in NEWS -->
 - [`04/11`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-04-11&until=2025-04-11)
 	[`fix`](https://github.com/pchiorean/Indentz/commit/28b8900e14dff194f3d60747863cbcea5981c78e)
-	**QuickExport:** When detecting unique file name, ignore source documents
+	**QuickExport:** When detecting unique filenames, source documents are now ignored
 - [`04/15`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-04-15&until=2025-04-15)
 	[`ref`](https://github.com/pchiorean/Indentz/commit/03279a215b3d1bff1448627b1c830beaea07e83a)
 	**QuickExport:** Changed settings location to a visible folder
 - [`04/15`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-04-15&until=2025-04-15)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/fd46cf41ae30e4bae60a05ff7407c5b690560759)
 	**QuickExport:** The subfolder is no longer linked with the preset suffix; bumped settings version
-- [`06/06`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-06-06&until=2025-06-06)
+- [`06/12`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-06-12&until=2025-06-12)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/19e721ebeb914d48a39baf7e62cc6bd7f7f84776)
 	**SetDefaultPrefs:** Set `overprintBlack` to `true`
 - [`07/12`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-07-12&until=2025-07-12)
@@ -100,24 +99,29 @@
 - [`07/12`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-07-12&until=2025-07-12)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/858004d6f7417ff0efa60f193bc78a2f3a2a5448)
 	**JoinDocs:** Override master items on every page before joining
+- [`07/14`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-07-14&until=2025-07-14)
+	[`ref`](https://github.com/pchiorean/Indentz/commit/61b6d60420fd89862b5f35e8e7bd36b1a8d64468)
+	**Misc:** Changed spelling of 'file name' back to 'filename' :/
+- [`07/14`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-07-14&until=2025-07-14)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/bf8b50111d49a0a8200167fb4e196a9775f2de34)
+	**SplitSpreadsByOptions:** Joining mangled assets' order; fixed
+- [`07/14`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-07-14&until=2025-07-14)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/f7b5dcb532988ee5ede5547470f9ad2f5494f0b5)
+	**QuickExport:** Synced all help tips with the latest README
+- [`07/28`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-07-28&until=2025-07-28)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/930d35a5770ec6a72cff9244268aff3e70ba0c74)
+	**DocCleanup:** Detects document units from the filename; misc fixes
+<!-- Items above this line are ingested in NEWS -->
 
 ---
 
 ##### Queued
 
 - **QuickExport:**
-  - [ ] Fix: When skipping a document for missing links, it doesn't respect 'Save modified documents' on close[^1]
-  - [ ] Fix: Restore layers state on cancel[^1]
-  - [ ] Check folder creation success
-  - [ ] Sanitize filenames
-  - [ ] Sync all help tips with the revised README
-  - [ ] Progress bar: add a message while updating converted documents
-- **SplitDocBySpreads:**
-  - [ ] Fix: Assets' order is mangled
-- **DocCleanup:**
-  - [ ] Change units to points when doc dimensions are in pixels
-
-[^1]: Wrap the execution in a `try/finally` so cleaning always runs, even on early returns or exceptions, rather than calling it manually at each return point
+  - Before exporting check for unsaved files and prompt user
+  - Check folder creation success
+  - Restore layers state on cancel
+  - Sanitize filenames
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -234,7 +238,7 @@
 - `06/16` [`upd`](https://github.com/pchiorean/Indentz/commit/7adabb261f3684ce9d4fdf1413e05ec88cbed402)
   **cleanup/BreakLinkToStyles:** Also remove orphan styles and groups
 - `06/27` [`upd`](https://github.com/pchiorean/Indentz/commit/0eafbac8b16b4f1ef2b707c77d5b0b7a6e255a5f)
-  **QR:** The code text now defaults to the file name
+  **QR:** The code text now defaults to the filename
 
 ##### Bug fixes
 
@@ -411,7 +415,7 @@
 - `04/03` [`fix`](https://github.com/pchiorean/Indentz/commit/2e8d29bdc4fecffdfd75a530a3666169be7b236c)
   **cleanup/ReplaceLinks:** Forgot to update `getDataFile()` (this script has the libs included)
 - `04/03` [`fix`](https://github.com/pchiorean/Indentz/commit/55383fbc2c2805849c41355e2a27276b1bcdeb00)
-  **cleanup/ReplaceLinks:** Properly URI-decode the file names when reporting replaced links
+  **cleanup/ReplaceLinks:** Properly URI-decode the filenames when reporting replaced links
 - `04/06` [`fix`](https://github.com/pchiorean/Indentz/commit/7598eca8e4e99ca41dcf268439d79252a363e667)
   **misc/EAN:** Fixed a regression from commit `26d261d` (03/23) that made some naive assumptions about the active document and/or selection
 - `05/04` [`fix`](https://github.com/pchiorean/Indentz/commit/3b27e37768aaf98c6d31adb6c8b27a953b9f531c)
@@ -669,7 +673,7 @@
 
 - [`new`](https://github.com/pchiorean/Indentz/commit/d5f2a4c5f3cc42a26a8b63bd90539645f60ba464)
   [`fix`](https://github.com/pchiorean/Indentz/commit/65d864208e26d670c182c3996dcf300eb9ffeac4)
-  **SpreadsToFiles:** Added a custom positioning placeholder character – if the file name contains a `#`, the index will be placed in that position
+  **SpreadsToFiles:** Added a custom positioning placeholder character – if the filename contains a `#`, the index will be placed in that position
 - [`new`](https://github.com/pchiorean/Indentz/commit/0de1e18e859d5737938d345ab554fd1fe5eb2608)
   `hack` **QuickExport:** Show/hide layers starting with a dot when using a 'preview'/'print' suffix (aka DNP layers)
 - [`new`](https://github.com/pchiorean/Indentz/commit/255f33547fcfc560208cf70f3af7d26728d8c5fb)
@@ -682,7 +686,7 @@
 ##### Updates
 
 - [`upd`](https://github.com/pchiorean/Indentz/commit/17a1faec009dbf69e301196defe8c454ddbbbd97)
-  **QuickExport, QRBatch:** Relaxed the list of invalid file name characters (`<` `>` `:` `"` `\` `/` `\` `|` `?` `*`)
+  **QuickExport, QRBatch:** Relaxed the list of invalid filename characters (`<` `>` `:` `"` `\` `/` `\` `|` `?` `*`)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/aa98b48ac3e848dcf3ebfe220abd037840c9bc1a)
   **DefaultPrefs:** Changed baseline grid color to a lighter grey (`230,230,230`)
 - [`brk`](https://github.com/pchiorean/Indentz/commit/b8acc4c788519dc993a64d761cd12e9241af6ab7)
@@ -755,7 +759,7 @@
   [`upd`](https://github.com/pchiorean/Indentz/commit/2783324ef151b8416c7ea306886b17e6f69b73be)
   **lib/ParseDataFile, DefaultLayers/Swatches/ReplaceFonts/Links, QRBatch:** Trimmed trailing whitespace on import
 - [`upd`](https://github.com/pchiorean/Indentz/commit/01003af9e7d6a59f6b8a59c4626c4bf85a3db6f1)
-  **ReplaceSnippets:** Added a scope limiting column – replacement will only be done if a string appears in the file name (regex)
+  **ReplaceSnippets:** Added a scope limiting column – replacement will only be done if a string appears in the filename (regex)
 - [`upd`](https://github.com/pchiorean/Indentz/commit/46c84c90a44341c32226db552eb246ffa55bdc70)
   [`upd`](https://github.com/pchiorean/Indentz/commit/820c66f426c004b1a0fbf5faf54bce502b3d7d39)
   **PrepareForExport, Show/HideDNPLayers:** All layers starting with hyphen or dot are now included in the 'do-not-print' list
