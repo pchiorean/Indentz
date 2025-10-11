@@ -26,6 +26,7 @@ Simplified the folder scheme to only three categories (**Document**, **Objects**
   - The index of exported files now increments for formats other than PDF (but ignores source documents).
   - When manually entering an out-of-bounds value for custom DPI or custom bleed, the script displays an error message instead of resetting the value.
   - Manually entered suffixes weren't processed to remove text after '+'; fixed.
+  - Fixed a bug related to page numbering (will always use Absolute Numbering).
 
 #### Housekeeping
 
@@ -53,7 +54,10 @@ Simplified the folder scheme to only three categories (**Document**, **Objects**
   - Before joining open documents, all master items will be overriden on every page.
 
 - `new` **ShowOrHideOptions:**
-  - A new script that shows or hides option-specific layers (see below).
+  - A new script that shows or hides option-specific layers (see **SplitSpreadsByOptions**).
+
+- `new` **SortSpreadsByRatio:**
+  - A new script that sorts the spreads of the active document by ratio.
 
 - **SplitSpreadsByOptions:**
   - `brk` You can now have any number of option-specific layers (e.g., layers for different languages). These options are autodetected from layer names; just use a colon (':') to add them with this format: `<layer name>:<option>` – for example, **language:de_CH**, **language:fr_CH**, **language:it_CH** for Swiss German, French, and Italian options.
@@ -64,6 +68,8 @@ Simplified the folder scheme to only three categories (**Document**, **Objects**
 
 - **TextAutosize:**
   - Text frames with color fill applied are now skipped.
+
+For other changes not mentioned here see the full [changelog](https://github.com/pchiorean/Indentz/blob/XXXXXXX/CHANGELOG.md).
 
 ## What's new in [24.8.15](https://github.com/pchiorean/Indentz/releases/tag/24.8.15)
 
