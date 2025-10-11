@@ -110,8 +110,14 @@
 	**QuickExport:** Synced all help tips with the latest README
 - [`07/28`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-07-28&until=2025-07-28)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/930d35a5770ec6a72cff9244268aff3e70ba0c74)
-	**DocCleanup:** Detects document units from the filename; misc fixes
+	**DocCleanup:** Now detects document units from the filename; misc fixes
 <!-- Items above this line are ingested in NEWS -->
+- [`10/11`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-10-11&until=2025-10-11)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/b44d09fce38bdb341e1f76442e7683e65bc01f29)
+	**QuickExport:** Use absolute page numbering
+- [`10/11`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-10-11&until=2025-10-11)
+	[`new`](https://github.com/pchiorean/Indentz/commit/22f3cc68109bded44e51c1c383a8d3e4ca5b7099)
+	**SortSpreadsByRatio:** Sort document spreads by ratio
 
 ---
 
@@ -122,6 +128,10 @@
   - Check folder creation success
   - Restore layers state on cancel
   - Sanitize filenames
+
+- `org` **LabelPageRatios** → **LabelPageRatio**
+- `new` **LabelSpreadRatio**
+<!-- - `new` **LabelSpread** -->
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
