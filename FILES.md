@@ -86,6 +86,7 @@ Name                             |     Fn | Description
 **ShowOrHideOptions**            |    ⌘F7 | Shows or hides option-specific layers
 **ShowProfiles**                 |        | Shows all color profiles available to a document
 **ShowProperties**               |     F1 | Shows properties and methods of the selected object/active document/the application
+**SortSpreadsByRatio**           |        | Sorts document spreads by ratio
 **SplitDocBySpreads**            |        | Saves the spreads of the active document in separate files
 **SplitSpreadsByOptions**        |   ⌥⌘F7 | Splits or joins document spreads by option-specific layers
 **SwatchesCleanup**              |    ⇧F2 | Converts RGB swatches to CMYK, renames them to 'C= M= Y= K=' format, deletes unused
