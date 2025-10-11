@@ -371,11 +371,9 @@ _Page labels and miscellaneous info._
 
 #### **LabelPage**
 
-Adds a custom label on the current page slug, on the **info** layer (Helvetica Regular 6 pt, fill **Registration**, stroke **Paper** 0.4 pt).
-
-**Example:**
-
 ![Label Page](.img/labelpage.png)
+
+Adds a custom label on the current page slug, on the **info** layer (Helvetica Regular 6 pt, fill **Registration**, stroke **Paper** 0.4 pt).
 
 #### **LabelPageRatios**
 
@@ -435,14 +433,14 @@ Creates a frame around the page margins that visually marks the _visible area_ o
 
 ⌘ _Suggested shortcut:_ ⌥F3
 
+![Page with 5% margins and 0% HW area](.img/mg5hw0.png)
+![Page with 5% margins and 10% HW area](.img/mg5hw10.png)
+
 Sets the page margins and optionally a reserved area on the bottom, getting the values from the script name, in percentages of the _visible area_ or page size.
 
 This template it's designed to be duplicated and renamed using one or two numbers separated by `HW`. The first number sets the page margins, while an optional second number defines the bottom area. `HW` can be omitted (defaults to 0%) or used alone (defaults to 10%).
 
 **Example:**
-
-![Page with 5% margins and 0% HW area](.img/mg5hw0.png)
-![Page with 5% margins and 10% HW area](.img/mg5hw10.png)
 
 | Script name     | Margins | Bottom area |
 |:----------------|:--------|:------------|
@@ -502,6 +500,10 @@ Combines all open documents, sorted alphabetically by name.
 
 Moves each layer of the active document to a separate spread (the document must have a single spread).
 
+#### **SortSpreadsByRatio**
+
+Sorts the spreads of the active document by ratio.
+
 #### **SplitDocBySpreads**
 
 Saves each spread of the active document to a separate file.
@@ -510,23 +512,19 @@ When a document name ends with a _separator_ (space, dot, underscore, or hyphen)
 
 💡 **Tip:** The index is added to the end of the filename by default, but placing a `#` anywhere in the filename determines where the index will appear instead.
 
-#### **ShowOrHideOptions**
+#### **SplitSpreadsByOptions** and **ShowOrHideOptions**
 
-⌘ _Suggested shortcut:_ ⌘F7
+⌘ _Suggested shortcuts:_ ⌥⌘F7 and ⌘F7
 
-Your document may have multiple option-specific layers (e.g., for different languages). This script shows or hides those option-specific layers:
-
-![Show/Hide Options](.img/script-showhideoptions.png)
-
-The options are autodetected from layer names; just use a colon (`:`) to specify them with this format: `<layer name>:<option>` – for example, **language: de_CH**, **language: fr_CH**, **language: it_CH** for Swiss German, French, and Italian options.
-
-#### **SplitSpreadsByOptions**
-
-⌘ _Suggested shortcut:_ ⌥⌘F7
+![Split spreads by options](.img/splitspreadsbyoptions.png)
 
 Your document may have multiple option-specific layers (e.g., for different languages). This script splits document spreads by these options, creating individual spreads for each one, or combines them by merging them into a single spread (just run the script repeatedly).
 
-The options are autodetected from layer names; just use a colon (`:`) to specify them with this format: `<layer name>:<option>` – for example, **language: de_CH**, **language: fr_CH**, **language: it_CH** for Swiss German, French, and Italian options.
+The options are autodetected from layer names; just use a colon (`:`) to specify them with this format: `<layer name>:<option>` – for example, **language: de_CH**, **language: fr_CH**, **language: it_CH** for Swiss German, French, and Italian options:
+
+![Show/Hide Options](.img/script-showhideoptions.png)
+
+**ShowOrHideOptions** shows or hides the multiple option-specific layers.
 
 ---
 
@@ -590,9 +588,9 @@ Use the numeric keypad to align the selected objects, with a single keystroke, t
 
 ⌘ _Suggested shortcut:_ Num0
 
-Toggles **Align To** between selection, margins, page, or spread (just run it repeatedly):
-
 ![Align Panel](.img/alignto.png)
+
+Toggles **Align To** between selection, margins, page, or spread (just run it repeatedly).
 
 #### **ResetAlignTo**
 
@@ -645,6 +643,8 @@ _Reframe objects to a target area._
 
 </details>
 
+![Example](.img/fit.png)
+
 These scripts reframe selected objects to fit the target area specified in the script name (page/spread, margins, bleed, or _visible area_) by:
 
 - _Extending_ edges that touch or nearly touch a trigger zone (either the target area or the visible area); by default this zone is 1% of the visible area[^2];
@@ -653,15 +653,13 @@ These scripts reframe selected objects to fit the target area specified in the s
 
 Simple rectangles and lines are directly reframed. Rotated objects, ovals, groups etc. are placed in clipping frames. Only clipped objects, straight frames, and lines will be extended. Frames with embedded content are limited to their content boundaries.
 
-**Example:** Running **FitToPageBleed** with the following frames selected will extend the yellow one and will reduce the red one to the page bleed:
-
-![Example](.img/fit.png)
-
 The **\*Forced** variants simply reframe the objects to the target area.
 
 #### **TextAutosize**
 
 ⌘ _Suggested shortcut:_ F6
+
+![Text Auto-Size](.img/textautosize.png)
 
 Auto-sizes the selected text frames to their content.
 
@@ -798,7 +796,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: August 2, 2025
+Last updated: October 11, 2025
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 
