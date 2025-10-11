@@ -1,5 +1,5 @@
 /*
-	Quick export 25.7.14
+	Quick export 25.10.11
 	(c) 2021-2025 Paul Chiorean <jpeg@basement.ro>
 
 	Exports open .indd documents or a folder with several configurable PDF presets.
@@ -49,6 +49,7 @@ function QuickExport() {
 	var regexTokensRE = /[|^$(.)[\]{*+?}\\]/g;
 	var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 	var old = {
+		pageNumbering: app.generalPreferences.pageNumbering,
 		measurementUnit: app.scriptPreferences.measurementUnit,
 		userInteractionLevel: app.scriptPreferences.userInteractionLevel,
 		viewPDF: app.pdfExportPreferences.viewPDF
@@ -155,6 +156,7 @@ function QuickExport() {
 	}
 
 	// Main
+	app.generalPreferences.pageNumbering = PageNumberingOptions.ABSOLUTE;
 	app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
 	app.scriptPreferences.userInteractionLevel = UserInteractionLevels.INTERACT_WITH_ALERTS;
 	app.pdfExportPreferences.viewPDF = false;
@@ -1554,6 +1556,7 @@ function QuickExport() {
 	}
 
 	function cleanup() {
+		app.generalPreferences.pageNumbering = old.pageNumbering;
 		app.scriptPreferences.measurementUnit = old.measurementUnit;
 		app.scriptPreferences.userInteractionLevel = old.userInteractionLevel;
 		app.pdfExportPreferences.viewPDF = old.viewPDF;

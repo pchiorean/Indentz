@@ -22,6 +22,7 @@ app.doScript(function () {
 		},
 		generalPreferences: {
 			includePreview: true,
+			// pageNumbering: PageNumberingOptions.ABSOLUTE,
 			preventSelectingLockedItems: true,
 			ungroupRemembersLayers: true
 		},
