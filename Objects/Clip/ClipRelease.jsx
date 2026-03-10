@@ -1,6 +1,6 @@
 /*
-	Release clip 24.6.16
-	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
+	Release clip 26.3.10
+	(c) 2020-2026 Paul Chiorean <jpeg@basement.ro>
 
 	Releases selected objects from their clipping frames.
 
@@ -17,6 +17,7 @@ function main() {
 	var items = (doc.selection.length === 0)
 		? app.activeWindow.activeSpread.pageItems.everyItem().getElements()
 		: doc.selection;
+	var layers = [];
 	var isClippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
 	var isClippingGroupRE = /^<(auto )?clip(ping)? group>$/i;
 	var old = {
@@ -54,6 +55,16 @@ function main() {
 		var objects = [];
 
 		if (container.pageItems.length === 0) return;
+
+		// Create layers for clipped objects
+		if (container.extractLabel('clippedItemLayers') !== '') {
+			layers = container.extractLabel('clippedItemLayers').split(',,');
+			for (i = layers.length - 1; i >= 0; i--)
+				try { doc.layers.add({ name: layers[i] })
+					.move(LocationOptions.AFTER, container.itemLayer); } catch (e) {}
+		}
+
+		// Extract payload
 		payload = container.pageItems[0].duplicate();
 		payload.sendToBack(container);
 		container.remove();

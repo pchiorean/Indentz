@@ -1,6 +1,6 @@
 /*
-	Clip 24.5.2
-	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
+	Clip 26.3.10
+	(c) 2020-2026 Paul Chiorean <jpeg@basement.ro>
 
 	Clips selected objects in a clipping frame (or releases them if already clipped).
 
@@ -10,12 +10,18 @@
 
 if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 
+// @includepath '.;./lib;../lib;../../lib';
+// @include 'unique.jsxinc';
+
 app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Clip selected objects');
 
 function main(selection) {
+	var selection = doc.selection;
+
 	var bounds, outlines, clipFrame, i, n;
 	var item = selection[0];
 	var items = [];
+	var layers = [];
 	var isClippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
 	var isClippingGroupRE = /^<(auto )?clip(ping)? group>$/i;
 	var old = {
@@ -39,6 +45,10 @@ function main(selection) {
 		cleanupAndExit();
 	}
 
+	// Note layers of clipped objects
+	for (i = 0, n = selection.length; i < n; i++) layers.push(selection[i].itemLayer.name);
+	layers = unique(layers);
+
 	// If multiple objects are selected, group them
 	bounds = item.visibleBounds;
 	if (selection.length > 1) {
@@ -58,6 +68,8 @@ function main(selection) {
 		];
 		outlines[0].remove();
 	}
+
+	// Create clipping frame
 	clipFrame = doc.rectangles.add(
 		item.itemLayer,
 		LocationOptions.AFTER, item,
@@ -73,9 +85,14 @@ function main(selection) {
 			geometricBounds: bounds
 		}
 	);
+
+	clipFrame.insertLabel('clippedItemLayers', layers.join(',,'));
+
+	// Clip objects
 	clipFrame.sendToBack(item);
 	app.select(item); app.cut();
 	app.select(clipFrame); app.pasteInto();
+
 	cleanupAndExit();
 
 	function undoClip(container) {
@@ -83,6 +100,16 @@ function main(selection) {
 		var objects = [];
 
 		if (container.pageItems.length === 0) return;
+
+		// Create layers for clipped objects
+		if (container.extractLabel('clippedItemLayers') !== '') {
+			layers = container.extractLabel('clippedItemLayers').split(',,');
+			for (i = layers.length - 1; i >= 0; i--)
+				try { doc.layers.add({ name: layers[i] })
+					.move(LocationOptions.AFTER, container.itemLayer); } catch (e) {}
+		}
+
+		// Extract payload
 		payload = container.pageItems[0].duplicate();
 		payload.sendToBack(container);
 		container.remove();
