@@ -118,6 +118,9 @@
 - [`10/11`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-10-11&until=2025-10-11)
 	[`new`](https://github.com/pchiorean/Indentz/commit/22f3cc68109bded44e51c1c383a8d3e4ca5b7099)
 	**SortSpreadsByRatio:** Sort document spreads by ratio
+- [`03/10`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-03-10&until=2026-03-10)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/65505ced0855e4a1225cbd4d7a6d7a11ee99d9d5)
+	**Clip/ClipRelease:** Create missing layers when releasing clipped objects
 
 ---
 
@@ -132,6 +135,7 @@
 - `org` **LabelPageRatios** → **LabelPageRatio**
 - `new` **LabelSpreadRatio**
 <!-- - `new` **LabelSpread** -->
+- `fix` **SplitSpreadsByOptions:** Create missing layers when needed
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
