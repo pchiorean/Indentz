@@ -16,6 +16,7 @@
 	[`upd`](https://github.com/pchiorean/Indentz/commit/b367fd693b575c705794e8dbde146a349f658031)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/8f88fbcb38b22333115dabe329eeb5dcb253ae6e)
 	**MarkSafety/VisibleArea, PageSizeFromFilename:** By user request the visible and safety area markings will not overprint
+
 - [`02/01`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-01&until=2025-02-01)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/19ddea0123c761cc9833a63b21d679882e3a1583)
 	**fitTo:** Also return the fitted items as array (d'oh!)
@@ -111,16 +112,20 @@
 - [`07/28`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-07-28&until=2025-07-28)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/930d35a5770ec6a72cff9244268aff3e70ba0c74)
 	**DocCleanup:** Now detects document units from the filename; misc fixes
-<!-- Items above this line are ingested in NEWS -->
 - [`10/11`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-10-11&until=2025-10-11)
 	[`fix`](https://github.com/pchiorean/Indentz/commit/b44d09fce38bdb341e1f76442e7683e65bc01f29)
 	**QuickExport:** Use absolute page numbering
 - [`10/11`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-10-11&until=2025-10-11)
 	[`new`](https://github.com/pchiorean/Indentz/commit/22f3cc68109bded44e51c1c383a8d3e4ca5b7099)
 	**SortSpreadsByRatio:** Sort document spreads by ratio
+
 - [`03/10`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-03-10&until=2026-03-10)
 	[`fix`](https://github.com/pchiorean/Indentz/commit/65505ced0855e4a1225cbd4d7a6d7a11ee99d9d5)
 	**Clip/ClipRelease:** Create missing layers when releasing clipped objects
+- [`03/10`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-03-10&until=2026-03-10)
+	[`org`](https://github.com/pchiorean/Indentz/commit/550beda1870e0b846c53a1cc26144ed3f2688de7)
+	**LabelPageRatios:** Renamed to **LabelPageRatio**
+<!-- Items above this line are ingested in NEWS -->
 
 ---
 
@@ -132,10 +137,8 @@
   - Restore layers state on cancel
   - Sanitize filenames
 
-- `org` **LabelPageRatios** → **LabelPageRatio**
 - `new` **LabelSpreadRatio**
 <!-- - `new` **LabelSpread** -->
-- `fix` **SplitSpreadsByOptions:** Create missing layers when needed
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -161,8 +164,7 @@
           [`fix`](https://github.com/pchiorean/Indentz/commit/ddd2dedf4c73c89145692dddec285fed60dbb24e)
   **export/QuickExport:** Added an elapsed time alert at the end (for durations longer than 9 seconds)
 - `09/11` [`new`](https://github.com/pchiorean/Indentz/commit/a1500c1b6ee88e04ea79e57fa6420e966da0108c)
-  **misc/EAN:** Sequentially insert a list of barcodes into all selected objects;
-  embedding is done by `contentPlace()` method, so the clipboard is no longer modified
+  **misc/EAN:** Sequentially insert a list of barcodes into all selected objects; embedding is done by `contentPlace()` method, so the clipboard is no longer modified
 - `09/23` [`new`](https://github.com/pchiorean/Indentz/commit/5a41bd99dea26be6bd649511fc42a65c358b801b)
   **lib/log:** Added a stopwatch (`!`/`?`); changed directives for blocks to `[`/`]`
 - `10/31` [`new`](https://github.com/pchiorean/Indentz/commit/1574bc6fbd3dfba3af8b098f6d3f22c0f613b71c)
