@@ -7,6 +7,7 @@ Simplified the folder scheme to only three categories (**Document**, **Objects**
 |Old name|New name|
 |:-|:-|
 |**DefaultPrefs**|**SetDefaultPrefs**|
+|**LabelPageRatios**|**LabelPageRatio**|
 |**SplitSpreadsByLayers**|**SplitSpreadsByOptions**|
 
 ### Document
@@ -63,6 +64,11 @@ Simplified the folder scheme to only three categories (**Document**, **Objects**
   - `brk` You can now have any number of option-specific layers (e.g., layers for different languages). These options are autodetected from layer names; just use a colon (':') to add them with this format: `<layer name>:<option>` – for example, **language:de_CH**, **language:fr_CH**, **language:it_CH** for Swiss German, French, and Italian options.
 
 ### Objects
+
+#### Clip
+
+- **Clip/ClipRelease:**
+  - Clipped objects will now be released on the original layers.
 
 #### Fit
 
