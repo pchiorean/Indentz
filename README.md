@@ -1,6 +1,6 @@
 # Indentz
 
-This is a collection of InDesign scripts that I use to improve my DTP workflow, which often involves repetitive, tedious, or time-consuming tasks. Designed primarily for single-page documents rather than long, text-heavy ones, these simple scripts run with minimal user interaction (except for essential warnings) and are designed to be triggered via [keyboard shortcuts](https://creativepro.com/assigning-keyboard-shortcuts-scripts/). Tested in Adobe InDesign CC 2020–2025 on Mac.
+This is a collection of InDesign scripts that I use to improve my DTP workflow, which often involves repetitive, tedious, or time-consuming tasks. Designed primarily for single-page documents rather than long, text-heavy ones, these simple scripts run with minimal user interaction (except for essential warnings) and are designed to be triggered via [keyboard shortcuts](https://creativepro.com/assigning-keyboard-shortcuts-scripts/). Tested in Adobe InDesign CC 2020–2026 on Mac.
 
 I'm a graphic designer, not a programmer (I started doing this at the beginning of the Covid-19 pandemic), so be prepared for some bugs and oversights (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
@@ -375,7 +375,7 @@ _Page labels and miscellaneous info._
 
 Adds a custom label on the current page slug, on the **info** layer (Helvetica Regular 6 pt, fill **Registration**, stroke **Paper** 0.4 pt).
 
-#### **LabelPageRatios**
+#### **LabelPageRatio**
 
 Adds a label on each page's slug showing the page size ratio, _visible area_ ratio (when defined), and margin ratio.
 
@@ -796,7 +796,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: October 11, 2025
+Last updated: March 10, 2026
 
 [^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 

@@ -40,7 +40,7 @@ Name                             |     Fn | Description
 **HideDNPLayers**                |        | Hides _do not print_ layers
 **JoinDocs**                     |   ⇧⌘F7 | Combines all open documents, sorted alphabetically
 **LabelPage**                    |        | Adds a custom label on the current page's slug
-**LabelPageRatios**              |        | Adds a label with the page/visible area/margins' ratios on each page's slug
+**LabelPageRatio**               |        | Adds a label with the page/visible area/margins' ratios on each page's slug
 **LayersToSpreads**              |        | Moves layers of the active document to separate spreads
 **MarkSafetyArea**               |        | Creates on each page a 'safety area' frame the size of the page margins
 **MarkVisibleArea**              |        | Creates on each page a 'visible area' frame the size of the page margins
