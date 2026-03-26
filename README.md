@@ -793,7 +793,7 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 
 ## License
 
-© 2020-2025 Paul Chiorean \<jpeg@basement.ro\>.\
+© 2020-2026 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
 Last updated: March 10, 2026
