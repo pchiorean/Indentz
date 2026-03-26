@@ -1334,7 +1334,7 @@ function QuickExport() {
 
 		// Input source
 		if (isFolderMode) {
-			ui.input = ui.add('panel { text: "Select a source folder", orientation: "column", margins: [ 10, 15, 10, 5 ] }');
+			ui.input = ui.add('panel { text: "Source folder", orientation: "column", margins: [ 10, 15, 10, 5 ] }');
 			ui.input.alignChildren = 'left';
 				ui.input.source = ui.input.add('group { orientation: "row" }');
 					ui.input.source.folder = ui.input.source.add('edittext');
