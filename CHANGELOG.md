@@ -132,13 +132,14 @@
 ##### Queued
 
 - **QuickExport:**
-  - Before exporting check for unsaved files and prompt user
-  - Check folder creation success
-  - Restore layers state on cancel
-  - Sanitize filenames
+  - [ ] Before exporting check for unsaved files and prompt user
+  - [ ] Check folder creation success
+  - [ ] Restore layers state on cancel
+  - [ ] Sanitize filenames
 
+- `new` **LabelSpread**
 - `new` **LabelSpreadRatio**
-<!-- - `new` **LabelSpread** -->
+- `new` **SwitchSAwithVA**
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
