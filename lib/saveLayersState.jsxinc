@@ -10,7 +10,6 @@ function saveLayersState() {
 			printable: l.printable,
 			visible:   l.visible
 		});
-		if (l.locked) l.locked = false;
 	}
 }
 
