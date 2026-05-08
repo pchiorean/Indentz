@@ -57,7 +57,7 @@ function parseDataFile(dataFile, defaultName) {
 						include[2] = Folder(dataFile.path).absoluteURI + '/' + include[2];
 					include[2] = compactRelPath(include[2]);
 					if (Folder(include[2]).exists) includeFolder = Folder(include[2]);
-					else stat(parsed.errors, src.join(':'), 'Folder \'' + include[2] + '\' is not found.', -1);
+					else stat(parsed.errors, src.join(':'), 'Folder \'' + decodeURI(include[2]) + '\' is not found.', -1);
 				} else {
 					stat(parsed.errors, src.join(':'), '\'' + record + '\' is malformed (see docs).', -1);
 				}
