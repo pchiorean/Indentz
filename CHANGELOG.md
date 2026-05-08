@@ -125,7 +125,18 @@
 - [`03/10`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-03-10&until=2026-03-10)
 	[`org`](https://github.com/pchiorean/Indentz/commit/550beda1870e0b846c53a1cc26144ed3f2688de7)
 	**LabelPageRatios:** Renamed to **LabelPageRatio**
+
 <!-- Items above this line are ingested in NEWS -->
+
+- [`05/08`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-05-08&until=2026-05-08)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/4f6257ba5f1c919c0072e751994ad36cbba1934e)
+	**SplitSpreadsByOptions:** Locked layers were silently ignored; fixed
+- [`05/08`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-05-08&until=2026-05-08)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/036b61d8434626787ed85f09d03e966465710276)
+	**lib/saveLayersState:** Removed misplaced unlocking action when saving state
+- [`05/08`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-05-08&until=2026-05-08)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/eb9b7c482f7a400fed9ff189cc9eef57ba1da0b1)
+	**lib/parseDataFile:** Properly URI-decode paths when reporting missing folders	
 
 ---
 
