@@ -1,6 +1,6 @@
 /*
-	Split/join spreads by options 25.7.14
-	(c) 2025 Paul Chiorean <jpeg@basement.ro>
+	Split/join spreads by options 26.5.8
+	(c) 2026 Paul Chiorean <jpeg@basement.ro>
 
 	Splits or joins document spreads by option-specific layers.
 
@@ -15,6 +15,7 @@ if (!(doc = app.activeDocument)) exit();
 
 // @includepath '.;./lib;../lib;../../lib';
 // @include 'getPageItems.jsxinc';
+// @include 'saveLayersState.jsxinc';
 
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Split/join spreads by options');
 
@@ -27,6 +28,9 @@ function main() {
 	var optionVisibility = {};
 
 	app.scriptPreferences.enableRedraw = false;
+	saveLayersState();
+	doc.layers.everyItem().locked = false;
+
 
 	// Build a list of options
 	for (i = 0; i < doc.layers.length; i++) {
@@ -104,4 +108,6 @@ function main() {
 			+ '\' (' + optionNames.length + ' options).'
 		);
 	}
+
+	restoreLayersState();
 }
