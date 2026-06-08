@@ -136,7 +136,10 @@
 	**lib/saveLayersState:** Removed misplaced unlocking action when saving state
 - [`05/08`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-05-08&until=2026-05-08)
 	[`fix`](https://github.com/pchiorean/Indentz/commit/eb9b7c482f7a400fed9ff189cc9eef57ba1da0b1)
-	**lib/parseDataFile:** Properly URI-decode paths when reporting missing folders	
+	**lib/parseDataFile:** Properly URI-decode paths when reporting missing folders
+- [`06/08`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-06-08&until=2026-06-08)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/d734d88b7a5bf09e1f7f8bfada4d7470f133e528)
+	**SplitDocBySpreads:** Removed UI; now it just splits the file without user interaction
 
 ---
 
