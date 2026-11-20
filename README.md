@@ -4,7 +4,7 @@ This is a collection of InDesign scripts that I use to improve my DTP workflow, 
 
 I'm a graphic designer, not a programmer (I started doing this at the beginning of the Covid-19 pandemic), so be prepared for some bugs and oversights (please create an [issue](https://github.com/pchiorean/Indentz/issues) if you encounter one, though!).
 
-## Preliminaries
+## Prerequisites
 
 Most scripts require at least one open document, and some require at least one object to be selected.
 
@@ -34,11 +34,11 @@ The scripts are organized into three categories based on their scope: document/s
 
 ## Document
 
-_Scripts that operate at the document, spread or page level._
+<sub>_Scripts that operate at the document, spread or page level._</sub>
 
 ### Assets
 
-_Layers, swatches, fonts, links etc._
+<sub>_Layers, swatches, fonts, links etc._</sub>
 
 #### **AddLayers**
 
@@ -119,7 +119,7 @@ Replaces document fonts using a 4-columns [TSV data file](#tsv) named `fonts.tsv
 
 #### **ReplaceLinks**
 
-⌘ _Suggested shortcut:_ ⌥F8
+<sub>⌘ _Suggested shortcut:_ ⌥F8</sub>
 
 Replaces document links using a 2-columns [TSV data file](#tsv) named `links.tsv` ([sample](Samples/links.tsv)):
 
@@ -149,7 +149,7 @@ Replaces document links using a 2-columns [TSV data file](#tsv) named `links.tsv
 
 #### **ReplaceTextSnippets**
 
-⌘ _Suggested shortcut:_ ⌥F6
+<sub>⌘ _Suggested shortcut:_ ⌥F6</sub>
 
 Replaces a list of text snippets using a 5-columns [TSV data file](#tsv) named `snippets.tsv` ([sample](Samples/snippets.tsv)):
 
@@ -193,11 +193,11 @@ Saves a TSV file compatible with [**AddSwatches**](#addswatches) containing the 
 
 ### Export
 
-_Document export and related._
+<sub>_Document export and related._</sub>
 
 #### **QuickExport**
 
-⌘ _Suggested shortcut:_ ⌃E
+<sub>⌘ _Suggested shortcut:_ ⌃E</sub>
 
 Batch exports all open `.indd` documents or all documents from a selected folder using up to two customizable PDF presets. While Peter Kahrel's [**Batch Convert**](https://creativepro.com/files/kahrel/indesign/batch_convert.html) script is like a 'Swiss Army knife' export tool, this script is specifically designed to streamline workflows that need frequent PDF setting adjustments. It reduces the tedious clicking through multiple tabs and options in InDesign's native export dialog. (It also gave me a great opportunity to explore [ScriptUI](https://extendscript.docsforadobe.dev/user-interface-tools/scriptui-programming-model.html) development 😉).
 
@@ -277,7 +277,7 @@ Shows or hides all layers starting with either a dot or a hyphen, plus a hard-co
 
 ### Housekeeping
 
-_Defaults and clean-up._
+<sub>_Defaults and clean-up._</sub>
 
 #### **SetDefaultPrefs**
 
@@ -323,7 +323,7 @@ Many scripts in this collection assume these settings as defaults because they s
 
 #### **DocCleanup**
 
-⌘ _Suggested shortcut:_ F2
+<sub>⌘ _Suggested shortcut:_ F2</sub>
 
 Performs a sequence of actions designed to bring the document to an approximately 'clean' state:
 
@@ -357,7 +357,7 @@ Unnaplies paragraph/character/object styles from the selected objects, or all ob
 
 #### **SwatchesCleanup**
 
-⌘ _Suggested shortcut:_ ⇧F2
+<sub>⌘ _Suggested shortcut:_ ⇧F2</sub>
 
 Converts process RGB swatches to CMYK and renames them to 'C= M= Y= K=' format. It also deletes unused swatches and removes duplicates. Spot colors are not changed.
 
@@ -367,7 +367,7 @@ Concocted with code written by Marc Autret, Dave Saunders and others.
 
 ### Information
 
-_Page labels and miscellaneous info._
+<sub>_Page labels and miscellaneous info._</sub>
 
 #### **LabelPage**
 
@@ -389,7 +389,7 @@ Shows all color profiles available to InDesign.
 
 #### **ShowProperties**
 
-⌘ _Suggested shortcut:_ F1
+<sub>⌘ _Suggested shortcut:_ F1</sub>
 
 Shows properties and methods of a selected object for debugging purposes.
 
@@ -399,7 +399,7 @@ Inspired by [**showProps()**](https://github.com/grefel/indesignjs/blob/710e2373
 
 ### Layout
 
-_Page geometry, guides and markings._
+<sub>_Page geometry, guides and markings._</sub>
 
 #### **GuidesAdd**
 
@@ -431,7 +431,7 @@ Creates a frame around the page margins that visually marks the _visible area_ o
 
 #### **PageMarginsFromScriptName**
 
-⌘ _Suggested shortcut:_ ⌥F3
+<sub>⌘ _Suggested shortcut:_ ⌥F3</sub>
 
 ![Page with 5% margins and 0% HW area](.img/mg5hw0.png)
 ![Page with 5% margins and 10% HW area](.img/mg5hw10.png)
@@ -454,7 +454,7 @@ Sets the current page margins from the selected objects.
 
 #### **PageSizeFromFilename**
 
-⌘ _Suggested shortcut:_ F3
+<sub>⌘ _Suggested shortcut:_ F3</sub>
 
 Adjusts page size, margins, and bleed based on the document name. It also creates a stroked frame named **\<visible area\>** around page margins on the **.visible area** layer. Uses an existing **Visible area** swatch or creates one with R=255 G=180 B=0.
 
@@ -480,7 +480,7 @@ Resizes the current page to its margins.
 
 #### **PageSizeFromSelection**
 
-⌘ _Suggested shortcut:_ ⇧F3
+<sub>⌘ _Suggested shortcut:_ ⇧F3</sub>
 
 Resizes the current page to the selected objects.
 
@@ -488,11 +488,11 @@ Resizes the current page to the selected objects.
 
 ### Pagination
 
-_Juggling layers and spreads._
+<sub>_Juggling layers and spreads._</sub>
 
 #### **JoinDocs**
 
-⌘ _Suggested shortcut:_ ⇧⌘F7
+<sub>⌘ _Suggested shortcut:_ ⇧⌘F7</sub>
 
 Combines all open documents, sorted alphabetically by name.
 
@@ -514,7 +514,7 @@ When a document name ends with a _separator_ (space, dot, underscore, or hyphen)
 
 #### **SplitSpreadsByOptions** and **ShowOrHideOptions**
 
-⌘ _Suggested shortcuts:_ ⌥⌘F7 and ⌘F7
+<sub>⌘ _Suggested shortcuts:_ ⌥⌘F7 and ⌘F7</sub>
 
 ![Split spreads by options](.img/splitspreadsbyoptions.png)
 
@@ -530,23 +530,23 @@ The options are autodetected from layer names; just use a colon (`:`) to specify
 
 ### Zoom
 
-_Zooming pages and objects._
+<sub>_Zooming pages and objects._</sub>
 
 #### **TileAll**
 
-⌘ _Suggested shortcut:_ ⇧F4
+<sub>⌘ _Suggested shortcut:_ ⇧F4</sub>
 
 Invokes **Window ‣ Arrange ‣ Tile All Vertically**, **Tile All Horizontally**, or **Tile**, depending on the current spread orientation.
 
 #### **ZoomTo300Percent**
 
-⌘ _Suggested shortcut:_ ⌘3
+<sub>⌘ _Suggested shortcut:_ ⌘3</sub>
 
 Zooms current layout window to 300%. It complements the predefined 100% (`⌘1`), 200% (`⌘2`) and 400% (`⌘4`) zoom levels.
 
 #### **ZoomToSelection**
 
-⌘ _Suggested shortcut:_ F4
+<sub>⌘ _Suggested shortcut:_ F4</sub>
 
 It resembles **Fit Selection in Window** (`⌥⌘=`), but:
 
@@ -558,17 +558,17 @@ It's sort of hack-ish and it assumes that **UI Sizing** is set to **Small** and 
 
 #### **ZoomToSpreads**
 
-⌘ _Suggested shortcut:_ ⌥F4
+<sub>⌘ _Suggested shortcut:_ ⌥F4</sub>
 
 Zooms on the first 3 spreads.
 
 ## Objects
 
-_Scripts that operate at the object level._
+<sub>_Scripts that operate at the object level._</sub>
 
 ### Align
 
-_Align objects using the numeric keypad._
+<sub>_Align objects using the numeric keypad._</sub>
 
 #### **AlignTo\***
 
@@ -586,7 +586,7 @@ Use the numeric keypad to align the selected objects, with a single keystroke, t
 
 #### **ToggleAlignTo**
 
-⌘ _Suggested shortcut:_ Num0
+<sub>⌘ _Suggested shortcut:_ Num0</sub>
 
 ![Align Panel](.img/alignto.png)
 
@@ -594,7 +594,7 @@ Toggles **Align To** between selection, margins, page, or spread (just run it re
 
 #### **ResetAlignTo**
 
-⌘ _Suggested shortcut:_ ⌃Num0
+<sub>⌘ _Suggested shortcut:_ ⌃Num0</sub>
 
 Resets **Align To** to default (**Align to Selection**).
 
@@ -602,11 +602,11 @@ Resets **Align To** to default (**Align to Selection**).
 
 ### Clip
 
-_Insert or remove objects from clipping frames._
+<sub>_Insert or remove objects from clipping frames._</sub>
 
 #### **Clip**
 
-⌘ _Suggested shortcut:_ Num\*
+<sub>⌘ _Suggested shortcut:_ Num\*</sub>
 
 Inserts the selected objects into a _clipping frame_ or, if already clipped, restores them.
 
@@ -614,7 +614,7 @@ Inserts the selected objects into a _clipping frame_ or, if already clipped, res
 
 #### **ClipRelease**
 
-⌘ _Suggested shortcut:_ ⌃Num\*
+<sub>⌘ _Suggested shortcut:_ ⌃Num\*</sub>
 
 Releases one or several objects from their _clipping frames_. If nothing is selected, it will release all clipped objects from the current spread.
 
@@ -622,7 +622,7 @@ Releases one or several objects from their _clipping frames_. If nothing is sele
 
 ### Fit
 
-_Reframe objects to a target area._
+<sub>_Reframe objects to a target area._</sub>
 
 #### **FitTo\***
 
@@ -657,7 +657,7 @@ The **\*Forced** variants simply reframe the objects to the target area.
 
 #### **TextAutosize**
 
-⌘ _Suggested shortcut:_ F6
+<sub>⌘ _Suggested shortcut:_ F6</sub>
 
 ![Text Auto-Size](.img/textautosize.png)
 
@@ -677,7 +677,7 @@ Running it repeatedly increases the auto-sizing levels (from **None** to **Heigh
 
 ### Proxy
 
-_Set the reference point used for transformations._
+<sub>_Set the reference point used for transformations._</sub>
 
 #### **SetRefPoint\***
 
@@ -699,7 +699,7 @@ Use the numeric keypad to set the reference point used for transformations (simi
 
 ### Scale
 
-_Scale selected objects to a target area._
+<sub>_Scale selected objects to a target area._</sub>
 
 #### **ScaleTo\***
 
@@ -732,7 +732,7 @@ I fixed some bugs, added a default value, an option to join contours, and undo.
 
 #### **EAN**
 
-⌘ _Suggested shortcut:_ F9
+<sub>⌘ _Suggested shortcut:_ F9</sub>
 
 Based on Konstantin Smorodsky's [**EAN Barcode Generator**](https://github.com/smorodsky/ean-barcode-generator), that generates barcodes from a list provided by the user, this script gets a step further by automating the placement, scaling, and rotation of barcodes in a document, eliminating the need for manual adjustments.
 
@@ -787,7 +787,7 @@ Blank lines are ignored; everything after a `#` (comments) is ignored.
 
 ## Acknowledgements
 
-The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](https://community.adobe.com/t5/indesign-discussions/theunis-de-jong-1966-2020/td-p/11653669) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials, or code samples by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts), [Konstantin Smorodsky](https://github.com/smorodsky), [Olav Martin Kvern](https://www.linkedin.com/in/olav-kvern-9827071/) and many others. Some scripts are not originally created by me; credit is given in these cases.
+The code in this project would not have been possible without the InDesign ExtendScript API by [Theunis de Jong](https://community.adobe.com/t5/indesign-discussions/theunis-de-jong-1966-2020/td-p/11653669) and [Gregor Fellenz](https://www.indesignjs.de/extendscriptAPI/indesign-latest/), Mozilla's [MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/About), and also blog posts, forum posts, tutorials, or code samples by [Marc Autret](https://www.indiscripts.com), [Dave Saunders](http://jsid.blogspot.com), [Peter Kahrel](https://creativepro.com/files/kahrel/indesignscripts.html), [Gregor Fellenz](https://github.com/grefel), [Marijan Tompa](https://indisnip.wordpress.com), [Richard Harrington](https://github.com/richardharrington/indesign-scripts), [Konstantin Smorodsky](https://github.com/smorodsky), [Olav Martin Kvern](https://www.linkedin.com/in/olav-kvern-9827071/) and many others. Some scripts are not originally created by me; where applicable, the original authors are acknowledged.
 
 Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 
@@ -796,8 +796,8 @@ Special thanks to Adrian Frigioiu and others for bug reports and feedback.
 © 2020-2026 Paul Chiorean \<jpeg@basement.ro\>.\
 The code is released under the [MIT License](License.txt).
 
-Last updated: March 10, 2026
+<sub>Last updated: July 7, 2026</sub>
 
-[^1]: Releases may be a little old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
+[^1]: Releases may be old. The latest version is in the [dev](https://github.com/pchiorean/Indentz/tree/dev) branch, which is what I actually use, so it's relatively tested, but… beware. ;)
 
 [^2]: The value is configurable by editing the constant `SNAP_PCT` from **fitTo()**.
