@@ -1,5 +1,7 @@
 ## [Development version](https://github.com/pchiorean/Indentz/compare/24.8.15...dev)
 
+<!-- 2024 -->
+
 - [`11/05`](https://github.com/pchiorean/Indentz/commits/dev/?since=2024-11-05&until=2024-11-05)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/bae7688a502b60fb8bf9a22666d84511d603d28a)
 	**QuickExport:** Changed default export profiles to `_LowRes` and `_HighRes`
@@ -16,6 +18,8 @@
 	[`upd`](https://github.com/pchiorean/Indentz/commit/b367fd693b575c705794e8dbde146a349f658031)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/8f88fbcb38b22333115dabe329eeb5dcb253ae6e)
 	**MarkSafety/VisibleArea, PageSizeFromFilename:** By user request the visible and safety area markings will not overprint
+
+<!-- 2025 -->
 
 - [`02/01`](https://github.com/pchiorean/Indentz/commits/dev/?since=2025-02-01&until=2025-02-01)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/19ddea0123c761cc9833a63b21d679882e3a1583)
@@ -119,6 +123,8 @@
 	[`new`](https://github.com/pchiorean/Indentz/commit/22f3cc68109bded44e51c1c383a8d3e4ca5b7099)
 	**SortSpreadsByRatio:** Sort document spreads by ratio
 
+<!-- 2026 -->
+
 - [`03/10`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-03-10&until=2026-03-10)
 	[`fix`](https://github.com/pchiorean/Indentz/commit/65505ced0855e4a1225cbd4d7a6d7a11ee99d9d5)
 	**Clip/ClipRelease:** Create missing layers when releasing clipped objects
@@ -139,21 +145,28 @@
 	**lib/parseDataFile:** Properly URI-decode paths when reporting missing folders
 - [`06/08`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-06-08&until=2026-06-08)
 	[`upd`](https://github.com/pchiorean/Indentz/commit/d734d88b7a5bf09e1f7f8bfada4d7470f133e528)
-	**SplitDocBySpreads:** Removed UI; now it just splits the file without user interaction
-
----
-
-##### Queued
-
-- **QuickExport:**
-  - [ ] Before exporting check for unsaved files and prompt user
-  - [ ] Check folder creation success
-  - [ ] Restore layers state on cancel
-  - [ ] Sanitize filenames
-
-- `new` **LabelSpread**
-- `new` **LabelSpreadRatio**
-- `new` **SwitchSAwithVA**
+	**SplitDocBySpreads:** Removed user prompt; splits spreads without interaction
+- [`11/22`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-11-22&until=2026-11-22)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/a5b9037133191a9205521ce4d624f69422454b5b)
+	**DocCleanup:** Switched trailing whitespace trimming to GREP
+- [`11/22`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-11-22&until=2026-11-22)
+	[`fix`](https://github.com/pchiorean/Indentz/commit/50da78b66324557487ae64b48e9d3ca338104413)
+	**TileAll:** Spread zooming was borked; fixed by using proper syntax ;)
+- [`11/22`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-11-22&until=2026-11-22)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/d2aa3b3d6ab1128da61b46339fc419a06b9a521b)
+	**TextAutosize:** Use `try/catch` when sizing to resolve rare corner cases
+- [`11/22`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-11-22&until=2026-11-22)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/045519274e98004195d5ce155816e7612cf3a7ac)
+	**Clip:** Added an optional 'grid' mode when using **Opt/Alt** (useful when you want to temporarily clip something)
+- [`11/22`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-11-22&until=2026-11-22)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/d1b4acac11370af44ae43050bc9c4b2de5a53a20)
+	**JoinDocs:** After joining, we'll now remove all master leftovers ;)
+- [`11/22`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-11-22&until=2026-11-22)
+	[`upd`](https://github.com/pchiorean/Indentz/commit/9a1f0907568cb6d20a6c7a9f61a8f87db11a333e)
+	**OverrideMasterItems:** Override and also detach master pages
+- [`11/22`](https://github.com/pchiorean/Indentz/commits/dev/?since=2026-11-22&until=2026-11-22)
+	[`ref`](https://github.com/pchiorean/Indentz/commit/1c8037be8a38b45c1c093b9bfe081417bead4814)
+	**JoinDocs:** Removed some redundant steps
 
 ## [Releases](https://github.com/pchiorean/Indentz/releases)
 
@@ -162,8 +175,11 @@
 ##### New features
 ##### Breaking changes
 ##### Updates
+##### Removed features
 ##### Bug fixes
-##### Miscellaneous -->
+##### Miscellaneous
+
+-->
 
 ### [24.8.15](https://github.com/pchiorean/Indentz/releases/tag/24.8.15)
 
@@ -1079,73 +1095,6 @@
   [`upd`](https://github.com/pchiorean/Indentz/commit/8982a3fde7956ac83372ba140a773a05dff929e2)
   [`fix`](https://github.com/pchiorean/Indentz/commit/ad2434b3a0b1dd330ebea1f9f9a99f6eabcb432c)
   Autumn cleaning: added ESLint and refactored many scripts (hopefully, there are no new bugs)
-
-## Backlog
-
-##### New features
-
-- `new` **AddSwatches:** Add gradients support
-- `new` **AddSwatches:** Add groups support
-- `new` **AddSwatches:** Add tints support
-- `new` **Grid\*** and **HW:** Get `HW_PCT` from page guide or object tag (`hw10`, `hw15`, etc.); fallback to `10`
-- `new` **QuickExport:** Add a preflight option
-- `new` **QuickExport:** Add history to inputs (see page 43 of **ScriptUI** by PK)
-- `new` **QuickExport:** Add JPG, PNG & INDD export profiles
-- `new` **QuickExport:** Add package option
-- `new` **Send selection to layer...**
-- `new` **ShowFonts** → **DumpFonts**
-- `new` **SpreadsToLayers**
-- `new` **lib/replaceLink:** Add page parameter
-- `new` Add an '.ini' file for user global settings (see mpv.conf)
-
-##### Updates
-
-- `brk` `?` Use _safety area_ in **PageMarginsFromScriptName**
-- `brk` **AddLayers/Swatches/ReplaceFonts/Links:** Optional arguments: data file, verbosity level
-- `brk` **MarkVisibleArea, PrepareForExport:** Read layer variants from `layers.tsv`, fallback to defaults
-- `brk` **MarkVisibleArea:** Mark the entire spread's visible area, not individual pages
-- `brk` **ReplaceTextSnippets:** Add regexp/grep suport
-- `brk` **ReplaceTextSnippets:** Extend scope to layers/pages etc
-- `upd` **AddSwatches:** `checkRecord()`: Validate color values (number and range) depending on color space: 'Values' ‣ 'Color Space' ‣ 'Color Model' ‣ 'Variants' ‣ 'Name'. If swatch name is missing, generate a Color Value Name. If color space is missing, use a default depending on color values number and range
-- `upd` **DNPLayersHide/Show:** Take layers from a TSV
-- `upd` **DocCleanup:** Delete empty color groups
-- `upd` **JoinDocs:** Also bring along the attached master pages
-- `upd` **PageMarginsFromSelection:** Set the margins of every page touched by the selection
-- `upd` **PageSizeFromFilename:** Use real units (mm, cm, px) when detected
-- `upd` **PageSizeFromSelection:** Use outlined text bounds for text frames
-- `upd` **PageSizeFromSelection:** Without selection fit all pages to their contents
-- `upd` **QuickExport:** Add a checkbox for `0e04f28` ('+xxxxxxx')
-- `upd` **QuickExport:** Create destination folder if it doesn't exist
-- `upd` **QuickExport:** Move hacks to advanced options, saved in settings
-- `upd` **ReplaceFonts:** Borrow the good stuff from `font-substitution.jsx` by PK
-- `upd` **ReplaceLinks, QuickExport:** Restore cropping mode when relinking files
-- `upd` **ReplaceLinks, QuickExport:** When relinking layered files, try to restore layers' visibility (respect **Preferences ‣ File Handling ‣ Links ‣ Hide New layers When Updating or Relinking**); inhibit alert and report culprits at finish
-- `upd` **SplitDocBySpreads:** Split `-ABBBCC` to `-A`, `-BBB`, `-CC`
-- `upd` **ZoomToSpreads:** Apply the smallest zoom value to all windows
-- `upd` **lib/log:** Update string formatting (see [this](https://github.com/SerenityOS/serenity/blob/c61bb1706f4fd4bdc6363df93e0d8f31709123ff/Documentation/StringFormatting.md) spec)
-- `upd` **lib/replaceText:** Add grep matching
-- `upd` **lib/replaceText:** Take an array of strings as input
-- `upd` **lib/report:** Improve filtering: `-` for none of these words, `"` for exact word or phrase (or pass regex and be done with it)
-- `upd` **lib/report:** Make window resizable
-- `upd` `?` JSONify preferences (see [this](https://stackoverflow.com/a/56391294) discussion)
-- `upd` Tweak the moment when _ESC_ key status is read; ask user if it wants to cancel the ongoing operation (but 'Esc' will also cancel the prompt?)
-- `upd` Change title to 'Canceling, please wait...' when canceling batch processes
-- `upd` Implement `try/catch/finally` when appropriate
-- `upd` Use a custom object style for `<visible area>` frame
-- `ref` `?` Implement `for...of` when appropriate (see [this](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for...of))
-
-##### Removed features
-
-##### Bug fixes
-- `fix` **Clip:** Don't cut drop/inner shadows, outer glows and bevel and emboss
-- `fix` **PageSizeFromFilename:** Fix errors on pages set to 1:X scale
-- `fix` **SplitDocBySpreads:** Don't append separators if already exist
-- `fix` **TextAutoSize:** Check `baselineShift`
-- `fix` `transform()` and `app.transformPreferences.whenScaling`
-- `fix` Fix `ui.onShow()` vertical dialog positioning
-- `fix` Nullify large variables on exit
-
-##### Miscellaneous
 
 ---
 
