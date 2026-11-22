@@ -1,5 +1,5 @@
 /*
-	Join documents 26.11.21
+	Join documents 26.11.22
 	(c) 2020-2026 Paul Chiorean <jpeg@basement.ro>
 
 	Combines all open documents, sorted alphabetically.
@@ -44,7 +44,7 @@ function main() {
 	spreads = target.spreads.everyItem().getElements();
 	while ((spread = spreads.shift())) overrideMasterItems(spread);
 
-	// Collect spreads from other documents
+	// Collect spreads from other documents & override master items
 	while ((doc = docs.shift())) {
 		doc.layers.everyItem().properties = { locked: false };
 		spreads = doc.spreads.everyItem().getElements();
@@ -55,18 +55,12 @@ function main() {
 		doc.close(SaveOptions.ASK);
 	}
 
-	// Detach applied master spreads and delete unused masters
-	spreads = target.spreads.everyItem().getElements();
-	while ((spread = spreads.shift())) spread.appliedMaster = NothingEnum.NOTHING;
-
-	// Create a new empty master and delete all others
+	// Delete unused master spreads
 	var newMaster = target.masterSpreads.add();
 	masters = target.masterSpreads.everyItem().getElements();
-	for (i = masters.length - 1; i >= 0; i--) {
-		if (masters[i].isValid && masters[i] !== newMaster) {
-			masters[i].remove();
-		}
-	}
+	for (i = masters.length - 1; i >= 0; i--)
+		if (masters[i].isValid && masters[i] !== newMaster) masters[i].remove();
+
 	// Reset page numbering
 	spreads = target.sections.everyItem().getElements();
 	spread = spreads.shift();
