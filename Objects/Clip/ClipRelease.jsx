@@ -10,7 +10,8 @@
 
 if (!(doc = app.activeDocument)) exit();
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Release clipped objects');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined,
+	UndoModes.ENTIRE_SCRIPT, 'Release clipped objects');
 
 function main() {
 	var item;
@@ -59,9 +60,12 @@ function main() {
 		// Create layers for clipped objects
 		if (container.extractLabel('clippedItemLayers') !== '') {
 			layers = container.extractLabel('clippedItemLayers').split(',,');
-			for (i = layers.length - 1; i >= 0; i--)
-				try { doc.layers.add({ name: layers[i] })
-					.move(LocationOptions.AFTER, container.itemLayer); } catch (e) {}
+			for (i = layers.length - 1; i >= 0; i--) {
+				try {
+					doc.layers.add({ name: layers[i] })
+						.move(LocationOptions.AFTER, container.itemLayer);
+				} catch (e) {}
+			}
 		}
 
 		// Extract payload
