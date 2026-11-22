@@ -1,6 +1,6 @@
 /*
-	Fit frame to text 24.11.5
-	(c) 2020-2024 Paul Chiorean <jpeg@basement.ro>
+	Fit frame to text 26.6.26
+	(c) 2020-2026 Paul Chiorean <jpeg@basement.ro>
 
 	Auto-sizes the text frame to the content from 'None' to 'Height Only' to 'Height and Width'
 	(single lines are always auto-sized 'Height and Width'). A second run increases auto-sizing.
@@ -111,7 +111,7 @@ function main(selection) {
 				break;
 		}
 		if (frame.textFramePreferences.verticalJustification !== VJ.JUSTIFY_ALIGN)
-			frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
+		try { frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY; } catch(e) {}
 
 		// Fix first baseline offset
 		switch (align) {
@@ -127,7 +127,7 @@ function main(selection) {
 		}
 		frame.textFramePreferences.firstBaselineOffset = FirstBaseline.CAP_HEIGHT;
 		frame.textFramePreferences.useNoLineBreaksForAutoSizing = true;
-		frame.textFramePreferences.autoSizingType = old.AST;
+		try { frame.textFramePreferences.autoSizingType = old.AST; } catch(e) {}
 
 		// Set auto-sizing reference point for alignment
 		switch (align) {
@@ -177,15 +177,15 @@ function main(selection) {
 
 		// Auto-size frame, 2nd pass
 		if (frame.textFramePreferences.verticalJustification === VJ.JUSTIFY_ALIGN) {
-			frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.WIDTH_ONLY;
+			try { frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.WIDTH_ONLY; } catch(e) {}
 			return;
 		}
 		if (frame.lines.length === 1) { // Single lines
-			frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
+			try { frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH; } catch(e) {}
 		} else { // Multiple lines
 			switch (frame.textFramePreferences.autoSizingType) {
 				case AutoSizingTypeEnum.OFF:
-					frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY;
+					try { frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_ONLY; } catch(e) {}
 					break;
 				case AutoSizingTypeEnum.HEIGHT_AND_WIDTH:
 				case AutoSizingTypeEnum.HEIGHT_AND_WIDTH_PROPORTIONALLY:
@@ -196,7 +196,7 @@ function main(selection) {
 					if (frame.textFramePreferences.autoSizingReferencePoint !== old.ASRP) break;
 					// Else freeze paragraphs and increase auto-sizing
 					for (var i = 0, n = frame.paragraphs.length; i < n; i++) freezePara(frame.paragraphs[i]);
-					frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH;
+					try { frame.textFramePreferences.autoSizingType = AutoSizingTypeEnum.HEIGHT_AND_WIDTH; } catch(e) {}
 					break;
 			}
 			frame.fit(FitOptions.FRAME_TO_CONTENT);
