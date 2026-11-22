@@ -1,6 +1,6 @@
 ﻿/*
-	Document cleanup 25.7.28
-	(c) 2020-2025 Paul Chiorean <jpeg@basement.ro>
+	Document cleanup 26.6.26
+	(c) 2020-2026 Paul Chiorean <jpeg@basement.ro>
 
 	Changes some settings, cleans up swatches/layers/pages and other things.
 
@@ -13,6 +13,7 @@ if (!(doc = app.activeDocument)) exit();
 // @includepath '.;./lib;../lib;../../lib';
 // @include 'progressBar.jsxinc';
 
+var old = {};
 var script = (function () { try { return app.activeScript; } catch (e) { return new File(e.fileName); } }());
 var progressBar = new ProgressBar('Cleaning document', 15);
 app.scriptPreferences.measurementUnit = MeasurementUnits.MILLIMETERS;
@@ -110,7 +111,17 @@ app.doScript(function () {
 		if (item.previousTextFrame || item.nextTextFrame) continue;
 		if (item.textFramePreferences.verticalJustification !== VerticalJustification.TOP_ALIGN) continue;
 		if (item.textFramePreferences.autoSizingType !== AutoSizingTypeEnum.OFF) continue;
-		if (!item.overflows && /\s+$/g.test(item.contents)) item.contents = item.contents.replace(/\s+$/g, '');
+		if (!item.overflows
+				&& /\s+$/g.test(item.contents)
+				&& !item.previousTextFrame && !item.nextTextFrame) {
+			old.findWhat = app.findGrepPreferences.findWhat;
+			old.changeTo = app.changeGrepPreferences.changeTo;
+			app.findGrepPreferences.findWhat   = '\\s+$';
+			app.changeGrepPreferences.changeTo = '';
+			item.changeGrep();
+			app.findGrepPreferences.findWhat   = old.findWhat;
+			app.changeGrepPreferences.changeTo = old.changeTo;
+		}
 		if (!item.overflows && item.lines.length === 1) item.lines[0].hyphenation = false;
 		if (!item.overflows && item.contents.length === 0) item.contentType = ContentType.UNASSIGNED;
 	}
