@@ -1,6 +1,6 @@
 /*
-	Join documents 25.7.12
-	(c) 2020-2025 Paul Chiorean <jpeg@basement.ro>
+	Join documents 26.11.21
+	(c) 2020-2026 Paul Chiorean <jpeg@basement.ro>
 
 	Combines all open documents, sorted alphabetically.
 
@@ -17,9 +17,10 @@ if (app.documents.length < 2) exit();
 app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT, 'Join documents');
 
 function main() {
-	var target, doc, docName, spread;
+	var target, doc, docName, spread, i;
 	var docs = [];
 	var docNames = [];
+	var masters = [];
 	var spreads = [];
 	var old = {
 		APS: undefined,
@@ -54,12 +55,28 @@ function main() {
 		doc.close(SaveOptions.ASK);
 	}
 
+	// Detach applied master spreads and delete unused masters
+	spreads = target.spreads.everyItem().getElements();
+	while ((spread = spreads.shift())) spread.appliedMaster = NothingEnum.NOTHING;
+
+	// Create a new empty master and delete all others
+	var newMaster = target.masterSpreads.add();
+	masters = target.masterSpreads.everyItem().getElements();
+	for (i = masters.length - 1; i >= 0; i--) {
+		if (masters[i].isValid && masters[i] !== newMaster) {
+			masters[i].remove();
+		}
+	}
 	// Reset page numbering
 	spreads = target.sections.everyItem().getElements();
 	spread = spreads.shift();
 	spread.continueNumbering = false;
 	spread.pageNumberStart = 1;
 	while ((spread = spreads.shift())) { spread.continueNumbering = true; spread.remove(); }
+
+	// Select and fit first spread
+	app.activeWindow.activeSpread = target.spreads[0];
+	app.activeWindow.zoom(ZoomOptions.FIT_SPREAD);
 
 	// Restore settings
 	target.documentPreferences.allowPageShuffle = old.APS;
