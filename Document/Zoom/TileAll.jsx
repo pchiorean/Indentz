@@ -1,6 +1,6 @@
 /*
-	Tile all 23.2.22
-	(c) 2020-2023 Paul Chiorean <jpeg@basement.ro>
+	Tile all 26.11.12
+	(c) 2020-2026 Paul Chiorean <jpeg@basement.ro>
 
 	Invokes different window tiling options, depending on the current spread orientation.
 
@@ -24,5 +24,4 @@ else if (R > 1) app.menuActions.item('$ID/Tile All Horizontally').invoke();
 else app.menuActions.item('$ID/Tile').invoke();
 
 app.selection = NothingEnum.NOTHING;
-for (var i = 0, n = app.windows.length; i < n; i++)
-	if (app.windows[i].constructor.name === 'LayoutWindow') app.windows[i].zoom(ZoomOptions.FIT_SPREAD);
+app.layoutWindows.everyItem().zoom(ZoomOptions.FIT_SPREAD);
