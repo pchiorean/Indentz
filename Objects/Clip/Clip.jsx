@@ -1,5 +1,5 @@
 /*
-	Clip 26.3.10
+	Clip 26.11.21
 	(c) 2020-2026 Paul Chiorean <jpeg@basement.ro>
 
 	Clips selected objects in a clipping frame (or releases them if already clipped).
@@ -13,17 +13,17 @@ if (!(doc = app.activeDocument) || doc.selection.length === 0) exit();
 // @includepath '.;./lib;../lib;../../lib';
 // @include 'unique.jsxinc';
 
-app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection, UndoModes.ENTIRE_SCRIPT, 'Clip selected objects');
+app.doScript(main, ScriptLanguage.JAVASCRIPT, doc.selection,
+	UndoModes.ENTIRE_SCRIPT, 'Clip selected objects');
 
 function main(selection) {
-	var selection = doc.selection;
-
 	var bounds, outlines, clipFrame, i, n;
 	var item = selection[0];
 	var items = [];
 	var layers = [];
 	var isClippingFrameRE = /^<(auto )?clip(ping)? frame>$/i;
 	var isClippingGroupRE = /^<(auto )?clip(ping)? group>$/i;
+	var ADV = ScriptUI.environment.keyboardState.altKey;
 	var old = {
 		URL: app.generalPreferences.ungroupRemembersLayers,
 		PRL: app.clipboardPreferences.pasteRemembersLayers
@@ -46,14 +46,15 @@ function main(selection) {
 	}
 
 	// Note layers of clipped objects
-	for (i = 0, n = selection.length; i < n; i++) layers.push(selection[i].itemLayer.name);
+	for (i = 0, n = selection.length; i < n; i++)
+		layers.push(selection[i].itemLayer.name);
 	layers = unique(layers);
 
 	// If multiple objects are selected, group them
 	bounds = item.visibleBounds;
 	if (selection.length > 1) {
 		for (i = 0, n = selection.length; i < n; i++)
-			if (!selection[i].locked) items.push(selection[i]);
+			try { items.push(selection[i]); } catch (e) {}
 		item = doc.groups.add(items);
 		item.name = '<auto clipping group>';
 		bounds = item.visibleBounds;
@@ -76,8 +77,9 @@ function main(selection) {
 		{
 			name: '<clipping frame>',
 			label: item.label,
-			fillColor:   'None',
+			fillColor: ADV ? addSwatch('Grid', [ 50, 0, 100, 0 ]) : 'None',
 			strokeColor: 'None',
+			transparencySettings: { blendingSettings: { opacity: ADV ? 90 : 100 } },
 			bottomLeftCornerOption:  CornerOptions.NONE,
 			bottomRightCornerOption: CornerOptions.NONE,
 			topLeftCornerOption:     CornerOptions.NONE,
@@ -95,6 +97,20 @@ function main(selection) {
 
 	cleanupAndExit();
 
+	function addSwatch(name, values) {
+		if (values) {
+			if (!doc.colors.itemByName(name).isValid) {
+				doc.colors.add({
+					name:       name,
+					colorValue: values,
+					model:      ColorModel.PROCESS,
+					space:      ColorSpace.CMYK
+				});
+			}
+		}
+		return doc.colors.itemByName(name);
+	}
+
 	function undoClip(container) {
 		var payload;
 		var objects = [];
@@ -104,9 +120,12 @@ function main(selection) {
 		// Create layers for clipped objects
 		if (container.extractLabel('clippedItemLayers') !== '') {
 			layers = container.extractLabel('clippedItemLayers').split(',,');
-			for (i = layers.length - 1; i >= 0; i--)
-				try { doc.layers.add({ name: layers[i] })
-					.move(LocationOptions.AFTER, container.itemLayer); } catch (e) {}
+			for (i = layers.length - 1; i >= 0; i--) {
+				try {
+					doc.layers.add({ name: layers[i] })
+						.move(LocationOptions.AFTER, container.itemLayer);
+				} catch (e) {}
+			}
 		}
 
 		// Extract payload
