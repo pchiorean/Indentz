@@ -1,6 +1,6 @@
 /*
-	Override master items 25.7.12
-	(c) 2025 Paul Chiorean <jpeg@basement.ro>
+	Override master items 26.11.22
+	(c) 2025-2026 Paul Chiorean <jpeg@basement.ro>
 
 	Overrides master items on all pages.
 
@@ -17,5 +17,12 @@ app.doScript(main, ScriptLanguage.JAVASCRIPT, undefined, UndoModes.ENTIRE_SCRIPT
 
 function main() {
 	doc.layers.everyItem().properties = { locked: false };
-	for (var i = 0; i < doc.spreads.length; i++) overrideMasterItems(doc.spreads[i]);
+
+	var spread;
+	var spreads = doc.spreads.everyItem().getElements();
+
+	while ((spread = spreads.shift())) {
+		overrideMasterItems(spread);
+		spread.appliedMaster = NothingEnum.NOTHING;
+	}
 }
